@@ -235,8 +235,23 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
       .join('');
   };
 
-  const themeA = formatTitleCase(pA.universeTag || (activeDoc ? activeDoc.universes[0]?.name : 'Pôle A'));
-  const themeB = formatTitleCase(pB.universeTag || (activeDoc ? activeDoc.universes[1]?.name : 'Pôle B'));
+  // Décomposition du titre de la série en deux noms pour les cartes en face-à-face
+  const rawSeriesTitle = activeDoc?.title || currentDuo.documentaryTitle || '';
+  const isBeninSeries = currentDuo.documentaryId === 'finagnon-qosqorico' || rawSeriesTitle.toLowerCase().includes('benin');
+
+  const seriesParts = isBeninSeries
+    ? ['Bénin', 'Pérou']
+    : rawSeriesTitle.includes('< >')
+    ? rawSeriesTitle.split('< >')
+    : rawSeriesTitle.includes('<>')
+    ? rawSeriesTitle.split('<>')
+    : [pA.universeTag || 'Pôle A', pB.universeTag || 'Pôle B'];
+
+  const seriesNameA = isBeninSeries ? 'Bénin' : formatTitleCase(seriesParts[0]?.trim() || pA.universeTag || 'Pôle A');
+  const seriesNameB = isBeninSeries ? 'Pérou' : formatTitleCase(seriesParts[1]?.trim() || pB.universeTag || 'Pôle B');
+
+  const themeA = seriesNameA;
+  const themeB = seriesNameB;
 
   // Clean quotes helper
   const cleanQuotes = (str?: string) => {
@@ -272,16 +287,16 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
           {/* Centre absolu : Le nom de la série centré avec le symbole < > au centre mort, parfaitement aligné verticalement avec le titre et le bouton */}
           <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-[calc(50%+4px)] sm:-translate-y-[calc(50%+5px)] flex items-center justify-center pointer-events-none max-w-[44vw] sm:max-w-[48vw]">
             {(() => {
-              let title = currentDuo.documentaryTitle || '';
-              // Pour la série Bénin en duo, afficher le pays de la personne en duo à la place des points de suspension
-              if (currentDuo.documentaryId === 'finagnon-qosqorico' || title.toLowerCase().startsWith('benin')) {
-                const partnerCountry = pB.country || 'Pérou';
-                title = `Benin <> ${partnerCountry}`;
-              }
-              const parts = title.includes('< >') ? title.split('< >') : title.includes('<>') ? title.split('<>') : null;
+              const parts = isBeninSeries
+                ? ['Bénin', 'Pérou']
+                : rawSeriesTitle.includes('< >') 
+                ? rawSeriesTitle.split('< >') 
+                : rawSeriesTitle.includes('<>') 
+                ? rawSeriesTitle.split('<>') 
+                : null;
               return parts ? (
                 <div 
-                  key={`duo-series-header-${currentDuo.id}-${title}`}
+                  key={`duo-series-header-${currentDuo.id}-${isBeninSeries ? 'benin-perou' : rawSeriesTitle}`}
                   className="inline-flex items-center gap-1 sm:gap-2 h-7 sm:h-8 px-2.5 sm:px-3.5 rounded-full bg-[#A2482B] border border-[#8A3B22] shadow-xs text-[10.5px] sm:text-xs text-white pointer-events-auto select-none"
                   title={`${formatTitleCase(parts[0])} < > ${formatTitleCase(parts[1])}`}
                 >
@@ -301,7 +316,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                 </div>
               ) : (
                 <div className="inline-flex items-center h-7 sm:h-8 px-3 rounded-full bg-[#A2482B] border border-[#8A3B22] shadow-xs text-[10.5px] sm:text-xs text-white font-bold pointer-events-auto select-none truncate">
-                  {formatTitleCase(title)}
+                  {formatTitleCase(rawSeriesTitle)}
                 </div>
               );
             })()}
@@ -463,8 +478,8 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
 
                     {/* Top Header: Pole Tag on left & Mute toggle on right */}
                     <div className="relative z-10 p-2 sm:p-4 flex items-center justify-between gap-1">
-                      <span className="w-fit max-w-[85px] sm:max-w-[140px] truncate px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-[10px] sm:text-xs font-semibold text-white shadow-md shrink-0">
-                        {themeA}
+                      <span className="w-fit max-w-[95px] sm:max-w-[150px] truncate px-2.5 sm:px-3.5 py-0.5 sm:py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-[10px] sm:text-xs font-bold text-white shadow-md shrink-0">
+                        {seriesNameA}
                       </span>
 
                       <div className="flex items-center gap-1 sm:gap-2">
@@ -573,7 +588,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       </button>
                     </div>
 
-                    {/* BAS : Prénom + Âge en dessous uniquement (surélevé et sans coupure de lettre) */}
+                    {/* BAS : Prénom uniquement */}
                     <div 
                       className="relative z-20 p-2.5 sm:p-4.5 pb-4 sm:pb-6 flex flex-col pointer-events-auto cursor-pointer group/title mt-auto"
                       onClick={(e) => {
@@ -591,15 +606,6 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       <h3 className="font-editorial text-base sm:text-2xl font-bold text-white tracking-tight leading-tight pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors truncate">
                         {pA.name.split(' ')[0]}
                       </h3>
-                      <div className="flex items-center gap-1.5 mt-0.5">
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] sm:text-[11.5px] font-semibold bg-black/55 backdrop-blur-md border border-white/20 text-white shadow-xs">
-                          <span>{pA.flag || '🇧🇯'}</span>
-                          <span>{pA.country || 'Bénin'}</span>
-                          {pA.territory && (
-                            <span className="text-white/70 font-normal hidden sm:inline">• {pA.territory.split('(')[0].trim()}</span>
-                          )}
-                        </span>
-                      </div>
                     </div>
                   </div>
 
@@ -636,8 +642,8 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
 
                     {/* Top Header: Pole Tag on left & Mute toggle on right */}
                     <div className="relative z-10 p-2 sm:p-4 flex items-center justify-between gap-1">
-                      <span className="w-fit max-w-[85px] sm:max-w-[140px] truncate px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-[10px] sm:text-xs font-semibold text-white shadow-md shrink-0">
-                        {themeB}
+                      <span className="w-fit max-w-[95px] sm:max-w-[150px] truncate px-2.5 sm:px-3.5 py-0.5 sm:py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-[10px] sm:text-xs font-bold text-white shadow-md shrink-0">
+                        {seriesNameB}
                       </span>
 
                       <div className="flex items-center gap-1 sm:gap-2">
@@ -746,7 +752,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       </button>
                     </div>
 
-                    {/* BAS : Prénom + Âge en dessous uniquement (surélevé et sans coupure de lettre) */}
+                    {/* BAS : Prénom uniquement */}
                     <div 
                       className="relative z-20 p-2.5 sm:p-4.5 pb-4 sm:pb-6 flex flex-col pointer-events-auto cursor-pointer group/title mt-auto"
                       onClick={(e) => {
@@ -764,15 +770,6 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       <h3 className="font-editorial text-base sm:text-2xl font-bold text-white tracking-tight leading-tight pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors truncate">
                         {pB.name.split(' ')[0]}
                       </h3>
-                      <div className="flex items-center gap-1.5 mt-0.5">
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] sm:text-[11.5px] font-semibold bg-[#A2482B]/85 backdrop-blur-md border border-white/25 text-white shadow-xs">
-                          <span>{pB.flag || '🇵🇪'}</span>
-                          <span>{pB.country || 'Pérou'}</span>
-                          {pB.territory && (
-                            <span className="text-white/70 font-normal hidden sm:inline">• {pB.territory.split('(')[0].trim()}</span>
-                          )}
-                        </span>
-                      </div>
                     </div>
                   </div>
 
@@ -817,8 +814,8 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
 
                       {/* Header Deck : Tag pôle + switch vers l'autre pendant */}
                       <div className="relative z-10 p-3 sm:p-4 flex items-center justify-between gap-1.5">
-                        <span className="px-3 py-1 rounded-full bg-black/55 backdrop-blur-md border border-white/20 text-xs font-semibold text-white shadow-md truncate">
-                          {themeA}
+                        <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-xs font-bold text-white shadow-md truncate">
+                          {seriesNameA}
                         </span>
 
                         <div className="flex items-center gap-1.5">
@@ -941,7 +938,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       </button>
                     </div>
 
-                    {/* BAS : Prénom + Âge en dessous uniquement (surélevé et sans coupure de lettre) */}
+                    {/* BAS : Prénom uniquement */}
                     <div 
                       className="relative z-20 p-4 sm:p-5 pb-7 sm:pb-9 flex flex-col pointer-events-auto cursor-pointer group/title mt-auto"
                       onClick={(e) => {
@@ -959,15 +956,6 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       <h3 className="font-editorial text-2xl sm:text-3xl font-bold text-white tracking-tight leading-tight pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors truncate">
                         {pA.name.split(' ')[0]}
                       </h3>
-                      <div className="flex items-center gap-1.5 mt-1">
-                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-black/55 backdrop-blur-md border border-white/20 text-white shadow-xs">
-                          <span>{pA.flag || '🇧🇯'}</span>
-                          <span>{pA.country || 'Bénin'}</span>
-                          {pA.territory && (
-                            <span className="text-white/70 font-normal">• {pA.territory.split('(')[0].trim()}</span>
-                          )}
-                        </span>
-                      </div>
                     </div>
                     </div>
                   ) : (
@@ -1003,8 +991,8 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
 
                       {/* Header Deck : Tag pôle + switch vers l'autre pendant */}
                       <div className="relative z-10 p-3 sm:p-4 flex items-center justify-between gap-1.5">
-                        <span className="px-3 py-1 rounded-full bg-black/55 backdrop-blur-md border border-white/20 text-xs font-semibold text-white shadow-md truncate">
-                          {themeB}
+                        <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-xs font-bold text-white shadow-md truncate">
+                          {seriesNameB}
                         </span>
 
                         <div className="flex items-center gap-1.5">
@@ -1127,7 +1115,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       </button>
                     </div>
 
-                    {/* BAS : Prénom + Âge en dessous uniquement (surélevé et sans coupure de lettre) */}
+                    {/* BAS : Prénom uniquement */}
                     <div 
                       className="relative z-20 p-4 sm:p-5 pb-7 sm:pb-9 flex flex-col pointer-events-auto cursor-pointer group/title mt-auto"
                       onClick={(e) => {
@@ -1145,15 +1133,6 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       <h3 className="font-editorial text-2xl sm:text-3xl font-bold text-white tracking-tight leading-tight pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors truncate">
                         {pB.name.split(' ')[0]}
                       </h3>
-                      <div className="flex items-center gap-1.5 mt-1">
-                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#A2482B]/85 backdrop-blur-md border border-white/25 text-white shadow-xs">
-                          <span>{pB.flag || '🇵🇪'}</span>
-                          <span>{pB.country || 'Pérou'}</span>
-                          {pB.territory && (
-                            <span className="text-white/70 font-normal">• {pB.territory.split('(')[0].trim()}</span>
-                          )}
-                        </span>
-                      </div>
                     </div>
                     </div>
                   )}
@@ -1187,17 +1166,15 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
               <BookOpen className="w-6 h-6" />
             </div>
 
-            <div className="space-y-1 mb-3">
+            <div className="mb-4">
+              <span className="inline-block px-3 py-1 rounded-full bg-[#A2482B]/10 text-[#A2482B] text-xs font-bold tracking-wide uppercase mb-1.5">
+                Question commune
+              </span>
               <h3 className="font-editorial text-base sm:text-lg font-bold text-[#1C1917]">
                 {currentDuo.documentaryId === 'finagnon-qosqorico' || currentDuo.documentaryTitle?.toLowerCase().startsWith('benin')
-                  ? `Benin <> ${pB.country || 'Pérou'}`
+                  ? 'Bénin <> Pérou'
                   : currentDuo.documentaryTitle}
               </h3>
-              <p className="text-xs font-semibold text-[#8B6845] flex items-center justify-center gap-2">
-                <span>{pA.name.split(' ')[0]} ({pA.country || 'Bénin'} {pA.flag || '🇧🇯'})</span>
-                <span className="text-stone-400">×</span>
-                <span>{pB.name.split(' ')[0]} ({pB.country || 'Pérou'} {pB.flag || '🇵🇪'})</span>
-              </p>
             </div>
 
             <p className="font-serif-editorial text-base sm:text-lg text-stone-800 leading-relaxed italic px-2">

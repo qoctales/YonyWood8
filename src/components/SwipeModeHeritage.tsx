@@ -638,7 +638,7 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
                 </button>
               </div>
 
-              {/* BAS : PRÉNOM + BADGE PAYS & TERRITOIRE */}
+              {/* BAS : PRÉNOM UNIQUEMENT (SANS PAYS NI VILLES) */}
               <div 
                 className="relative z-20 flex flex-col pointer-events-auto cursor-pointer group/title pb-4 sm:pb-6 pl-1"
                 onClick={(e) => {
@@ -649,15 +649,6 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
                 <h3 className="font-editorial text-2xl sm:text-3xl font-bold text-white tracking-tight leading-tight pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors">
                   {effectivePerson.firstName || effectivePerson.name.split(' ')[0]}
                 </h3>
-                <div className="flex items-center gap-1.5 mt-1">
-                  <span className="inline-flex items-center gap-1 text-[11px] sm:text-xs font-semibold text-white/95 bg-black/55 backdrop-blur-md px-2.5 py-0.5 rounded-full border border-white/20 w-fit shadow-xs">
-                    <span>{effectivePerson.flag || '🇧🇯'}</span>
-                    <span>{effectivePerson.country || 'Bénin'}</span>
-                    {effectivePerson.territory && (
-                      <span className="text-white/75 font-normal">• {effectivePerson.territory.split('(')[0].trim()}</span>
-                    )}
-                  </span>
-                </div>
               </div>
             </div>
 
