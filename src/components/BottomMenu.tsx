@@ -29,7 +29,6 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
     currentScreen.type === 'protagonist_profile' || 
     currentScreen.type === 'my_forest' || 
     currentScreen.type === 'messaging' ||
-    currentScreen.type === 'admin_dashboard' ||
     currentScreen.type === 'editorial_backoffice';
 
   // Ne pas afficher le menu pendant le lecteur vidéo plein écran ou la page d'accueil d'onboarding

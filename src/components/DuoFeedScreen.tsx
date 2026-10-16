@@ -272,7 +272,12 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
           {/* Centre absolu : Le nom de la série centré avec le symbole < > au centre mort, parfaitement aligné verticalement avec le titre et le bouton */}
           <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-[calc(50%+4px)] sm:-translate-y-[calc(50%+5px)] flex items-center justify-center pointer-events-none max-w-[44vw] sm:max-w-[48vw]">
             {(() => {
-              const title = currentDuo.documentaryTitle || '';
+              let title = currentDuo.documentaryTitle || '';
+              // Pour la série Bénin en duo, afficher le pays de la personne en duo à la place des points de suspension
+              if (currentDuo.documentaryId === 'finagnon-qosqorico' || title.toLowerCase().startsWith('benin')) {
+                const partnerCountry = pB.country || 'Pérou';
+                title = `Benin <> ${partnerCountry}`;
+              }
               const parts = title.includes('< >') ? title.split('< >') : title.includes('<>') ? title.split('<>') : null;
               return parts ? (
                 <div 
@@ -586,6 +591,15 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       <h3 className="font-editorial text-base sm:text-2xl font-bold text-white tracking-tight leading-tight pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors truncate">
                         {pA.name.split(' ')[0]}
                       </h3>
+                      <div className="flex items-center gap-1.5 mt-0.5">
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] sm:text-[11.5px] font-semibold bg-black/55 backdrop-blur-md border border-white/20 text-white shadow-xs">
+                          <span>{pA.flag || '🇧🇯'}</span>
+                          <span>{pA.country || 'Bénin'}</span>
+                          {pA.territory && (
+                            <span className="text-white/70 font-normal hidden sm:inline">• {pA.territory.split('(')[0].trim()}</span>
+                          )}
+                        </span>
+                      </div>
                     </div>
                   </div>
 
@@ -750,6 +764,15 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       <h3 className="font-editorial text-base sm:text-2xl font-bold text-white tracking-tight leading-tight pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors truncate">
                         {pB.name.split(' ')[0]}
                       </h3>
+                      <div className="flex items-center gap-1.5 mt-0.5">
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] sm:text-[11.5px] font-semibold bg-[#A2482B]/85 backdrop-blur-md border border-white/25 text-white shadow-xs">
+                          <span>{pB.flag || '🇵🇪'}</span>
+                          <span>{pB.country || 'Pérou'}</span>
+                          {pB.territory && (
+                            <span className="text-white/70 font-normal hidden sm:inline">• {pB.territory.split('(')[0].trim()}</span>
+                          )}
+                        </span>
+                      </div>
                     </div>
                   </div>
 
@@ -936,6 +959,15 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       <h3 className="font-editorial text-2xl sm:text-3xl font-bold text-white tracking-tight leading-tight pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors truncate">
                         {pA.name.split(' ')[0]}
                       </h3>
+                      <div className="flex items-center gap-1.5 mt-1">
+                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-black/55 backdrop-blur-md border border-white/20 text-white shadow-xs">
+                          <span>{pA.flag || '🇧🇯'}</span>
+                          <span>{pA.country || 'Bénin'}</span>
+                          {pA.territory && (
+                            <span className="text-white/70 font-normal">• {pA.territory.split('(')[0].trim()}</span>
+                          )}
+                        </span>
+                      </div>
                     </div>
                     </div>
                   ) : (
@@ -1113,6 +1145,15 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       <h3 className="font-editorial text-2xl sm:text-3xl font-bold text-white tracking-tight leading-tight pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors truncate">
                         {pB.name.split(' ')[0]}
                       </h3>
+                      <div className="flex items-center gap-1.5 mt-1">
+                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#A2482B]/85 backdrop-blur-md border border-white/25 text-white shadow-xs">
+                          <span>{pB.flag || '🇵🇪'}</span>
+                          <span>{pB.country || 'Pérou'}</span>
+                          {pB.territory && (
+                            <span className="text-white/70 font-normal">• {pB.territory.split('(')[0].trim()}</span>
+                          )}
+                        </span>
+                      </div>
                     </div>
                     </div>
                   )}
@@ -1146,9 +1187,18 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
               <BookOpen className="w-6 h-6" />
             </div>
 
-            <h3 className="font-editorial text-base sm:text-lg font-bold text-[#1C1917] mb-3">
-              {currentDuo.documentaryTitle}
-            </h3>
+            <div className="space-y-1 mb-3">
+              <h3 className="font-editorial text-base sm:text-lg font-bold text-[#1C1917]">
+                {currentDuo.documentaryId === 'finagnon-qosqorico' || currentDuo.documentaryTitle?.toLowerCase().startsWith('benin')
+                  ? `Benin <> ${pB.country || 'Pérou'}`
+                  : currentDuo.documentaryTitle}
+              </h3>
+              <p className="text-xs font-semibold text-[#8B6845] flex items-center justify-center gap-2">
+                <span>{pA.name.split(' ')[0]} ({pA.country || 'Bénin'} {pA.flag || '🇧🇯'})</span>
+                <span className="text-stone-400">×</span>
+                <span>{pB.name.split(' ')[0]} ({pB.country || 'Pérou'} {pB.flag || '🇵🇪'})</span>
+              </p>
+            </div>
 
             <p className="font-serif-editorial text-base sm:text-lg text-stone-800 leading-relaxed italic px-2">
               « {cleanQuotes(currentDuo.centralQuestion)} »

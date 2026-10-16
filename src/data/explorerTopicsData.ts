@@ -1609,36 +1609,36 @@ const STOCK_VIDEOS = [
 ];
 
 const PEOPLE_PHOTOS = [
-  '/src/assets/images/duo_fatou_diallo_1791655364131.jpg',
-  '/src/assets/images/duo_kwame_mensah_1791655373882.jpg',
-  '/src/assets/images/duo_malik_diop_1791655290473.jpg',
-  '/src/assets/images/duo_chef_koffi_1791655309327.jpg',
-  '/src/assets/images/duo_eleonore_vance_1791655300272.jpg',
-  '/src/assets/images/duo_coach_marcus_1791806686958.jpg',
-  '/src/assets/images/duo_mawuna_medium_1791655393652.jpg',
-  '/src/assets/images/duo_pere_matthieu_1791655226601.jpg',
-  '/src/assets/images/duo_tobi_ganvie_1791655235850.jpg',
-  '/src/assets/images/duo_dah_zounon_1791655216080.jpg',
-  '/src/assets/images/malik_serene_portrait_1791705801234.jpg',
-  '/src/assets/images/eleonore_serene_portrait_1791705811898.jpg',
-  '/src/assets/images/mahougnon_esu_portrait_1791701582891.jpg',
-  '/src/assets/images/malcolm_leader_portrait_1791703662469.jpg',
-  '/src/assets/images/black_frida_kahlo_portrait_1791703672613.jpg',
-  '/src/assets/images/koffi_tisserand_benin_1789590473954.jpg'
+  '/assets/protagonists/sika-dossou.jpg',
+  '/assets/protagonists/mahougnon-zounon.jpg',
+  '/assets/protagonists/senan-agossa.jpg',
+  '/assets/protagonists/tobi-houndegla.jpg',
+  '/assets/protagonists/adjovi-blandine.jpg',
+  '/assets/protagonists/armel-hounkpatin.jpg',
+  '/assets/duos/dah-zounon.jpg',
+  '/assets/duos/tobi-ganvie.jpg',
+  '/assets/duos/chef-koffi.jpg',
+  '/assets/duos/mawuna-medium.jpg',
+  '/assets/duos/codjo-blind.jpg',
+  '/assets/duos/pere-matthieu.jpg',
+  '/src/assets/images/beninoise_femme_sika_1792164985263.jpg',
+  '/src/assets/images/beninois_sage_dossou_1792165004493.jpg',
+  '/src/assets/images/beninoise_jeune_senan_1792165025309.jpg',
+  '/src/assets/images/beninois_pecheur_tobi_1792165042006.jpg'
 ];
 
 const FIRST_NAMES = [
-  'Arouna', 'Clémence', 'Fousseni', 'Nadia', 'Mathieu', 'Sika', 'Carlos', 'Yannick',
-  'Mariama', 'Gilles', 'Sayri', 'Amara', 'Koffi', 'Hélène', 'Malik', 'Éléonore',
-  'Dah', 'Tobi', 'Fatou', 'Kenji', 'Camille', 'Inès', 'Kwame', 'Mateo',
-  'Aïssata', 'Hiroshi', 'Leïla', 'Bastien', 'Chloé', 'Samba', 'Solène', 'Ramiro'
+  'Sika', 'Mahougnon', 'Sènan', 'Koffi', 'Tobi', 'Blandine', 'Dossou', 'Marie-Antoinette',
+  'Armel', 'Félicité', 'Romuald', 'Inès', 'Codjo', 'Mawuna', 'Ayaba', 'Dieudonné',
+  'Sèdami', 'Fifamè', 'Enagnon', 'Bio', 'Arouna', 'Gildas', 'Chantal', 'Cosme',
+  'Nathalie', 'Kafui', 'Akofa', 'Houénou', 'Fousseni', 'Mariama', 'Samba', 'Eunice'
 ];
 
 const LAST_NAMES = [
-  'Kponton', 'Duval', 'Traoré', 'Benali', 'Roy', 'Dossou', 'Mendoza', 'Noah',
-  'Sylla', 'Delorme', 'Quispe', 'Tisserande', 'Houndegla', 'Saint-Amand', 'Diop', 'Vance',
-  'Zounon', 'Gomez', 'Diallo', 'Tanaka', 'Ronsard', 'Kone', 'Mensah', 'Silva',
-  'Bâ', 'Sato', 'Mansour', 'Fournier', 'Gagnon', 'Camara', 'Lambert', 'Chavez'
+  'Dossou', 'Zounon', 'Agossa', 'Houndegla', 'Adjovi', 'Hounkpatin', 'Tossou', 'Gnanvi',
+  'Kponton', 'Hazoumè', 'Vido', 'Agon', 'Zinsou', 'Senou', 'Kiki', 'Agonhossou',
+  'Houngbédji', 'Gbaguidi', 'Adanho', 'Kpossou', 'Houndété', 'Quenum', 'Assogba', 'Bio-Tchané',
+  'Koffi', 'Soglo', 'Mensah', 'Akplogan', 'Togbé', 'Danvide', 'Agbassi', 'Loko'
 ];
 
 export const BENIN_STORIES: AffiliationPerson[] = [

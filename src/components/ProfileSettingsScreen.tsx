@@ -518,7 +518,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
     if (targetProtagonist) return targetProtagonist.role;
     if (currentUser) {
       return currentUser.role === 'ADMIN' 
-        ? 'Fondateur & Administrateur YonyWood' 
+        ? 'Fondateur YonyWood' 
         : 'Coproducteur & Spectateur engagé';
     }
     return 'Passeuse de mémoires sonores & artisane';
@@ -544,7 +544,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
     if (isOwner && currentUser) {
       setUserName(currentUser.name.split(' ')[0]);
       setUserFullName(currentUser.name);
-      setUserRole(currentUser.role === 'ADMIN' ? 'Fondateur & Administrateur YonyWood' : 'Coproducteur & Spectateur');
+      setUserRole(currentUser.role === 'ADMIN' ? 'Fondateur YonyWood' : 'Coproducteur & Spectateur');
       if (currentUser.territory) setUserTerritory(`${currentUser.territory}, ${currentUser.country || 'International'}`);
       if (currentUser.bio) setUserBio(currentUser.bio);
       if (currentUser.avatarUrl) setUserPhoto(currentUser.avatarUrl);

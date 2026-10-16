@@ -15,26 +15,26 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
   {
     id: 'jesus-legba',
     slug: 'jesus-legba',
-    title: 'Èṣù < > Jésus',
-    subtitle: 'Deux traditions. Une même question de foi.',
-    centralQuestion: 'La foi',
-    shortSynopsis: 'Quand la tradition ancestrale et la foi chrétienne dialoguent d’égal à égal au Bénin face aux grands mystères humains : l’épreuve, le pardon et la réconciliation.',
-    description: 'Au Bénin, berceau du culte des ancêtres et terre de ferveur biblique, deux croyances cohabitent sous le même toit sans jamais s’affronter frontalement. Cette série met en miroir des dévots d’Èṣù — gardien des carrefours, messager de l\'invisible et protecteur des seuils — avec des pasteurs, religieuses et fidèles chrétiens tournés vers Jésus. Face aux grands mystères humains (l\'épreuve de la maladie, le pardon, le deuil, l\'abandon à une puissance supérieure), leurs rituels, louanges et oraisons silencieuses dialoguent d\'égal à égal, révélant la quête universelle d\'une foi incarnée.',
+    title: 'Ancestral <> Revealed',
+    subtitle: 'Deux traditions spirituelles. Une même question de transcendance face au mystère.',
+    centralQuestion: 'Qu’est-ce qui, un jour, vous a fait sentir que quelque chose de plus grand que vous était présent ?',
+    shortSynopsis: 'Quand la tradition ancestrale et la foi révélée dialoguent d’égal à égal face aux grands mystères humains : l’épreuve, le pardon et la transcendance.',
+    description: 'Au Bénin, berceau du culte des ancêtres et terre de ferveur biblique, deux croyances cohabitent sous le même toit sans jamais s’affronter frontalement. Cette série met en miroir des dévots de la tradition ancestrale — gardiens des carrefours, messagers de l\'invisible et protecteurs des seuils — avec des pasteurs, religieuses et fidèles chrétiens tournés vers la foi révélée. Face aux grands mystères humains (l\'épreuve de la maladie, le pardon, le deuil, l\'abandon à une puissance supérieure), leurs rituels, louanges et oraisons silencieuses dialoguent d\'égal à égal, révélant la quête universelle d\'une présence supérieure.',
     coverImage: '/assets/posters/Esu < > Jesus.png',
     posterUrl: '/assets/posters/Esu < > Jesus.png',
     teaserVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
     teaserDuration: '1:15',
     universes: [
       {
-        name: 'Èṣù',
-        tagline: 'Le gardien des carrefours et des seuils sacrés',
-        description: 'Spiritualité ancestrale où Èṣù ouvre les voies, protège les demeures et relie le monde visible aux forces cosmiques.',
+        name: 'Ancestral',
+        tagline: 'Le gardien des mémoires et des seuils sacrés',
+        description: 'Spiritualité ancestrale où les rites ouvrent les voies, protègent les demeures et relient le monde visible aux forces cosmiques.',
         territory: 'Bénin (Allada, Abomey, Ouidah)'
       },
       {
-        name: 'Jésus',
-        tagline: 'L’espérance chrétienne et le don de soi',
-        description: 'Parcours de foi ecclésiale, d’oraison silencieuse, d’accueil du prochain et d’engagement au cœur des communautés contemporaines.',
+        name: 'Revealed',
+        tagline: 'L’espérance spirituelle et le don de soi',
+        description: 'Parcours de foi révélée, d’oraison silencieuse, d’accueil du prochain et d’engagement au cœur des communautés contemporaines.',
         territory: 'Bénin (Littoral) & Diaspora'
       }
     ],
@@ -42,7 +42,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
       {
         id: 'eff-1',
         name: 'Mahougnon Zounon',
-        role: 'Gardien du sanctuaire d’Èṣù (Ouidah)',
+        role: 'Gardien du sanctuaire des mémoires ancestrales (Ouidah)',
         photoUrl: '/assets/duos/dah-zounon.jpg',
         videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
         status: 'EFFIGIE_PRINCIPALE'
@@ -59,19 +59,16 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
     questions: [
       {
         number: '01',
-        title: 'La Rencontre',
-        prompt: 'Racontez-nous un moment de votre vie où vous avez réellement rencontré votre foi. Que s\'est-il passé ?',
+        title: 'La Présence',
+        prompt: 'Qu’est-ce qui, un jour, vous a fait sentir que quelque chose de plus grand que vous était présent ?',
         posterUrl: 'https://images.unsplash.com/photo-1548625361-195b05a76bb8?auto=format&fit=crop&w=800&q=80',
         audioDuration: '0:42',
         videoAvatarUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
         audioVoiceName: 'Mahougnon & Dieudonné',
         translations: [
-          { lang: 'fr', label: 'Français', prompt: 'Racontez-nous un moment de votre vie où vous avez réellement rencontré votre foi. Que s\'est-il passé ?' },
-          { lang: 'fon', label: 'Fongbe', prompt: 'Mǐ ɖɔ xó dó hwenu e a mɔ nùɖiɖi towe nugbó nugbó é wú. Etɛ ka jɛ ?' },
-          { lang: 'quz', label: 'Quechua', prompt: 'Willawayku huk pacha kawsayniykipi maypichus iñiyta riqsirqanki. Imataq karqan ?' },
-          { lang: 'wol', label: 'Wolof', prompt: 'Nettali nu jamono ci sa dundu bu nga gisee sa ngëm dëgg dëgg. Lu xewoon ?' },
-          { lang: 'es', label: 'Español', prompt: 'Cuéntanos un momento de tu vida en el que realmente encontraste tu fe. ¿Qué ocurrió?' },
-          { lang: 'en', label: 'English', prompt: 'Tell us about a moment in your life when you truly encountered your faith. What happened?' }
+          { lang: 'fr', label: 'Français', prompt: 'Qu’est-ce qui, un jour, vous a fait sentir que quelque chose de plus grand que vous était présent ?' },
+          { lang: 'fon', label: 'Fongbe', prompt: 'Etɛ ka zɔ́n bɔ gbeɖé a mɔ ɖɔ nùɖé ɖagbe hugǎn we ɖò finɛ ?' },
+          { lang: 'en', label: 'English', prompt: 'What, one day, made you feel that something greater than you was present?' }
         ]
       },
       {
@@ -139,43 +136,43 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
   {
     id: 'finagnon-qosqorico',
     slug: 'finagnon-qosqorico',
-    title: 'Finagnon < > Qosqorico',
-    subtitle: 'Bénin < > Pérou. Deux territoires. Une même réflexion sur ce qui nous relie à un lieu.',
-    centralQuestion: 'Le territoire',
+    title: 'Benin <> ...',
+    subtitle: 'Racontez un moment où vous avez compris ce qui rend votre pays unique.',
+    centralQuestion: 'Racontez un moment où vous avez compris ce qui rend votre pays unique.',
     shortSynopsis: 'Des cités lacustres de Ganvié aux cimes sacrées de Cusco et Pisac, pêcheurs et paysans dialoguent sur l’enracinement, l’eau, la montagne et l’amour inconditionnel d’une terre.',
-    description: 'Des cités lacustres de Ganvié, bâties sur pilotis pour échapper aux razzias du Dahomey, jusqu\'aux terrasses millénaires de Pisac et Cusco au Pérou, perchées à 3 400 mètres d\'altitude. Finagnon < > Qosqorico réunit des pêcheurs toffinou et des paysans quechuas gardiens de la Pachamama. Comment habite-t-on l\'eau ou la roche sacrée ? Que ressent-on lorsqu\'il faut quitter sa lagune ou sa cordillère, et que retrouve-t-on en revenant ? Une épopée intime sur la mémoire des terres nourricières et la résistance poétique des peuples autochtones face à l\'exil.',
+    description: 'Des cités lacustres de Ganvié, bâties sur pilotis pour échapper aux razzias du Dahomey, jusqu\'aux terrasses millénaires de Pisac et Cusco au Pérou, perchées à 3 400 mètres d\'altitude. Benin <> ... réunit des pêcheurs toffinou et des paysans quechuas gardiens de la mémoire. Comment habite-t-on l\'eau ou la roche sacrée ? Que ressent-on lorsqu\'il faut quitter sa lagune ou sa cordillère, et que retrouve-t-on en revenant ? Une épopée intime sur la mémoire des terres nourricières et la résistance poétique des peuples autochtones face à l\'exil.',
     coverImage: '/assets/posters/Finagnon < > Qosqorico.png',
     posterUrl: '/assets/posters/Finagnon < > Qosqorico.png',
     teaserVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
     teaserDuration: '1:45',
     universes: [
       {
-        name: 'Finagnon',
+        name: 'Benin',
         tagline: 'La mémoire lacustre et la terre rouge du golfe de Guinée',
         description: 'Des cités sur pilotis de Ganvié aux collines argileuses, un dialogue perpétuel entre l’eau bienfaitrice et l’enracinement des aïeux.',
         territory: 'Bénin (Ganvié, Grand-Popo)'
       },
       {
-        name: 'Qosqorico',
-        tagline: 'Les cimes andines et le souffle des terrasses sacrées',
-        description: 'Entre Cusco et la Vallée Sacrée, la relation intime à la Pachamama, la pierre millénaire et la culture vivante des hauts plateaux.',
+        name: '...',
+        tagline: 'L’autre rive, les cimes et les horizons en miroir',
+        description: 'Entre cordillères et terrasses millénaires, la relation intime à la terre, la pierre sacrée et la culture vivante.',
         territory: 'Pérou (Cusco, Vallée Sacrée, Pisac)'
       }
     ],
     questions: [
       {
         number: '01',
-        title: 'Chez Soi',
-        prompt: 'Racontez-nous un moment où vous avez compris que vous étiez vraiment chez vous. Où étiez-vous et que s\'est-il passé ?',
+        title: 'Le Pays Unique',
+        prompt: 'Racontez un moment où vous avez compris ce qui rend votre pays unique.',
         audioDuration: '0:40',
         videoAvatarUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
         audioVoiceName: 'Tobi & Sayri (Bénin / Pérou)',
         translations: [
-          { lang: 'fr', label: 'Français', prompt: 'Racontez-nous un moment où vous avez compris que vous étiez vraiment chez vous. Où étiez-vous et que s\'est-il passé ?' },
+          { lang: 'fr', label: 'Français', prompt: 'Racontez un moment où vous avez compris ce qui rend votre pays unique.' },
           { lang: 'quz', label: 'Quechua', prompt: 'Willawayku maypichus yacharqanki wasiykipi kashasqaykita. Maypitaq karqanki, imataq pasarqan ?' },
           { lang: 'fon', label: 'Fongbe', prompt: 'Mǐ ɖɔ hwenu e a mɔ ɖɔ émí ɖò xwégbe nugbó é wú. Fitɛ a ka ɖè bɔ etɛ jɛ ?' },
-          { lang: 'es', label: 'Español', prompt: 'Cuéntanos un momento en el que comprendiste que realmente estabas en tu hogar. ¿Dónde estabas y qué sucedió?' },
-          { lang: 'en', label: 'English', prompt: 'Tell us about a moment when you realized you were truly home. Where were you and what happened?' }
+          { lang: 'es', label: 'Español', prompt: 'Cuéntanos un momento en el que comprendiste qué hace único a tu país.' },
+          { lang: 'en', label: 'English', prompt: 'Tell us about a moment when you realized what makes your country unique.' }
         ]
       },
       {
@@ -237,9 +234,9 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
   {
     id: 'blacks-one-beyond-eve',
     slug: 'blacks-one-beyond-eve',
-    title: 'Blacks One < > Beyond Eve',
-    subtitle: 'Deux expériences collectives. Une exploration de l\'identité et de ce que nous devenons.',
-    centralQuestion: 'L\'identité',
+    title: 'Blacks One <> Beyond Eve',
+    subtitle: 'Racontez un moment où vous avez vécu une expérience unique liée à l’identité que vous portez.',
+    centralQuestion: 'Racontez un moment où vous avez vécu une expérience unique liée à l’identité que vous portez.',
     shortSynopsis: 'D’un côté, la voix passionnée et le poing levé d’un leader noir en lutte pour ses convictions ; de l’autre, le discours vibrant d’une femme noire engagée pour la souveraineté des femmes. Deux orateurs d’exception.',
     description: 'D’un côté, la force de conviction, l’éloquence tranchante et le poing levé de Malik Diop, orateur noir élégamment vêtu, portant haut le verbe de la liberté, de la justice et de l’émancipation civique (Blacks One). De l’autre côté, le discours vibrant et passionné d’Éléonore Vance, leader et oratrice noire se battant avec dignité et ferveur pour les droits et la souveraineté des femmes (Beyond Eve). Deux voix d’une rare élégance, deux combats fraternels qui s’unissent pour affirmer nos souverainetés.',
     coverImage: '/assets/posters/Blacks One < > Beyond Eve.png',
@@ -281,15 +278,15 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
     questions: [
       {
         number: '01',
-        title: 'Qui suis-je ?',
-        prompt: 'Racontez-nous un moment de votre vie où quelque chose vous a fait comprendre qui vous étiez vraiment. Que s\'est-il passé ?',
+        title: 'L\'Identité Portée',
+        prompt: 'Racontez un moment où vous avez vécu une expérience unique liée à l’identité que vous portez.',
         audioDuration: '0:39',
         videoAvatarUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
         audioVoiceName: 'Malik & Éléonore',
         translations: [
-          { lang: 'fr', label: 'Français', prompt: 'Racontez-nous un moment de votre vie où quelque chose vous a fait comprendre qui vous étiez vraiment. Que s\'est-il passé ?' },
+          { lang: 'fr', label: 'Français', prompt: 'Racontez un moment où vous avez vécu une expérience unique liée à l’identité que vous portez.' },
           { lang: 'wol', label: 'Wolof', prompt: 'Nettali nu jamono ci sa dundu bu la yëggal koo doon dëgg dëgg. Lu xewoon ?' },
-          { lang: 'en', label: 'English', prompt: 'Tell us about a moment in your life when something made you realize who you truly were. What happened?' }
+          { lang: 'en', label: 'English', prompt: 'Tell us about a moment when you had a unique experience tied to the identity you carry.' }
         ]
       },
       {
@@ -350,41 +347,41 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
   {
     id: 'dixeat-fiat-luxe',
     slug: 'dixeat-fiat-luxe',
-    title: 'E Vivi < > Fiat Luxe',
-    subtitle: 'Ceux qui nourrissent les autres < > ceux qui créent des expériences d\'exception.',
-    centralQuestion: 'L\'expérience',
+    title: 'Fiat Luxe <> Street',
+    subtitle: 'Racontez une expérience où vous avez vu la beauté, là où vous ne l’attendiez pas.',
+    centralQuestion: 'Racontez une expérience où vous avez vu la beauté, là où vous ne l’attendiez pas.',
     shortSynopsis: 'Des marmites populaires de Dantokpa aux tables d’exception à Paris et Milan, des artisans de bouche et scénographes révèlent l’art du don, du détail et du souvenir impérissable.',
-    description: 'Dans la fumée des marmites de Dantokpa à Cotonou, E Vivi incarne l\'artisanat nourricier populaire : des femmes et cuisiniers qui se lèvent à 4h du matin pour offrir réconfort et dignité à des centaines de travailleurs avec une sauce gombo ou un igname pilé. En écho, Fiat Luxe explore la haute précision des arts de la table, de la scénographie olfactive et de l\'hospitalité d\'exception à Paris, Marrakech et Milan. Tout les sépare en apparence, sauf l\'essentiel : l\'obsession du détail, la générosité du don et la grâce de transformer un simple repas en un souvenir inoubliable.',
+    description: 'Dans la fumée des marmites de Dantokpa à Cotonou, Street incarne l\'artisanat nourricier populaire : des femmes et cuisiniers qui se lèvent à 4h du matin pour offrir réconfort et dignité à des centaines de travailleurs avec une sauce gombo ou un igname pilé. En écho, Fiat Luxe explore la haute précision des arts de la table, de la scénographie olfactive et de l\'hospitalité d\'exception à Paris, Marrakech et Milan. Tout les sépare en apparence, sauf l\'essentiel : l\'obsession du détail, la générosité du don et la grâce de transformer un simple repas en un souvenir inoubliable.',
     coverImage: '/assets/posters/E Vivi < > Fiat Luxe.png',
     posterUrl: '/assets/posters/E Vivi < > Fiat Luxe.png',
     teaserVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
     teaserDuration: '1:20',
     universes: [
       {
-        name: 'E Vivi',
-        tagline: 'L’artisanat nourricier populaire et la générosité brute',
-        description: 'La chaleur des marmites de rue, l’igname pilée au lever du jour, le partage sans fard où chaque repas est un pacte de solidarité.',
-        territory: 'Cotonou, Dantokpa & marchés ouest-africains'
-      },
-      {
         name: 'Fiat Luxe',
         tagline: 'La haute scénographie du détail et le temps suspendu',
         description: 'L’orfèvrerie des arts de la table, la scénographie olfactive, la précision du geste qui transforme l’éphémère en mémoire inoubliable.',
         territory: 'Paris, Marrakech, Milan'
+      },
+      {
+        name: 'Street',
+        tagline: 'L’artisanat nourricier populaire et la générosité brute',
+        description: 'La chaleur des marmites de rue, l’igname pilée au lever du jour, le partage sans fard où chaque repas est un pacte de solidarité.',
+        territory: 'Cotonou, Dantokpa & marchés ouest-africains'
       }
     ],
     questions: [
       {
         number: '01',
-        title: 'Le Goût',
-        prompt: 'Racontez-nous un moment où vous avez créé quelque chose pour quelqu\'un et où vous avez compris, à sa réaction, que vous lui aviez vraiment fait plaisir. Qu\'est-ce qui s\'est passé ?',
+        title: 'La Beauté Inattendue',
+        prompt: 'Racontez une expérience où vous avez vu la beauté, là où vous ne l’attendiez pas.',
         audioDuration: '0:35',
         videoAvatarUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
         audioVoiceName: 'Chef Koffi & Hélène',
         translations: [
-          { lang: 'fr', label: 'Français', prompt: 'Racontez-nous un moment où vous avez créé quelque chose pour quelqu\'un et où vous avez compris que vous lui aviez vraiment fait plaisir.' },
+          { lang: 'fr', label: 'Français', prompt: 'Racontez une expérience où vous avez vu la beauté, là où vous ne l’attendiez pas.' },
           { lang: 'fon', label: 'Fongbe', prompt: 'Mǐ ɖɔ hwenu e a bló nùɖé nú mɛɖé bɔ a mɔ ɖɔ é víví n\'i tawun é wú.' },
-          { lang: 'en', label: 'English', prompt: 'Tell us about a time when you created something for someone and realized you had truly brought them joy.' }
+          { lang: 'en', label: 'English', prompt: 'Tell us about an experience where you saw beauty where you least expected it.' }
         ]
       },
       {
@@ -443,24 +440,24 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
   {
     id: 'investors-builders',
     slug: 'investors-builders',
-    title: 'Investors < > Builders',
-    subtitle: 'Ceux qui financent le futur < > ceux qui bâtissent le réel.',
-    centralQuestion: 'L\'alliance',
+    title: 'Diasporas <> Makers',
+    subtitle: 'Racontez le moment où un lieu a changé votre façon de construire vos rêves.',
+    centralQuestion: 'Racontez le moment où un lieu a changé votre façon de construire vos rêves.',
     shortSynopsis: 'Entre l’audace du capital patient et la rigueur du terrain, une rencontre sans filtre entre investisseurs d’impact et bâtisseurs d’infrastructures.',
-    description: 'D’un côté, ceux qui allouent des capitaux, évaluent les risques et parient sur des visions à long terme. De l’autre, ceux qui conçoivent, bâtissent et transforment la matière au quotidien. Investors < > Builders explore l’alliance féconde et la confiance nécessaire entre investisseurs d’impact et bâtisseurs de terrain. Comment accorder le temps long du capital avec l’urgence de la matière ? Une réflexion profonde sur la création de valeur partagée et la souveraineté économique.',
+    description: 'D’un côté, ceux qui allouent des capitaux, évaluent les risques et parient sur des visions à long terme à travers les diasporas. De l’autre, ceux qui conçoivent, bâtissent et transforment la matière au quotidien (Makers). Diasporas <> Makers explore l’alliance féconde et la confiance nécessaire entre investisseurs d’impact et bâtisseurs de terrain. Comment accorder le temps long du capital avec l’urgence de la matière ? Une réflexion profonde sur la création de valeur partagée et la souveraineté économique.',
     coverImage: '/assets/posters/Investors < > Builders.png',
     posterUrl: '/assets/posters/Investors < > Builders.png',
     teaserVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
     teaserDuration: '1:35',
     universes: [
       {
-        name: 'Investors',
-        tagline: 'Le capital patient, l’allocation stratégique et le discernement',
-        description: 'Mécènes, fonds d’impact et investisseurs engagés qui soutiennent l’économie productive et les visions pérennes.',
+        name: 'Diasporas',
+        tagline: 'Le capital patient, l’allocation stratégique et la vision globale',
+        description: 'Mécènes, fonds d’impact et investisseurs de la diaspora qui soutiennent l’économie productive et les visions pérennes.',
         territory: 'Paris, Dakar, Abidjan & Diaspora'
       },
       {
-        name: 'Builders',
+        name: 'Makers',
         tagline: 'L’ancrage dans la matière, le prototype et la force bâtisseuse',
         description: 'Entrepreneurs d’infrastructures, ingénieurs et maîtres artisans qui construisent les piliers de l’économie concrète.',
         territory: 'Cotonou, Kigali, Nairobi, Abidjan'
@@ -487,15 +484,15 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
     questions: [
       {
         number: '01',
-        title: 'Le Pari Fondateur',
-        prompt: 'Racontez-nous le premier projet ou pari décisif où vous avez engagé vos ressources ou vos mains sans certitude de réussir. Que s\'est-il passé ?',
+        title: 'Construire ses Rêves',
+        prompt: 'Racontez le moment où un lieu a changé votre façon de construire vos rêves.',
         posterUrl: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80',
         audioDuration: '0:42',
         videoAvatarUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
         audioVoiceName: 'Fatou Diallo & Kwame Mensah',
         translations: [
-          { lang: 'fr', label: 'Français', prompt: 'Racontez-nous le premier projet ou pari décisif où vous avez engagé vos ressources ou vos mains sans certitude de réussir. Que s\'est-il passé ?' },
-          { lang: 'en', label: 'English', prompt: 'Tell us about the first decisive gamble where you committed your resources or hands without knowing if you would succeed. What happened?' }
+          { lang: 'fr', label: 'Français', prompt: 'Racontez le moment où un lieu a changé votre façon de construire vos rêves.' },
+          { lang: 'en', label: 'English', prompt: 'Tell us about the moment when a place transformed the way you build your dreams.' }
         ]
       },
       {
@@ -558,19 +555,19 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
   {
     id: 'other-eyes-sixth-sense',
     slug: 'other-eyes-sixth-sense',
-    title: 'Other Eyes < > Third Eye',
-    subtitle: 'Voir autrement. Ressentir l’invisible.',
-    centralQuestion: 'La Perception',
+    title: 'Other Sights <> Third Eye',
+    subtitle: 'Racontez une expérience qui vous a fait comprendre la difficulté, mais aussi la puissance, de votre différence.',
+    centralQuestion: 'Racontez une expérience qui vous a fait comprendre la difficulté, mais aussi la puissance, de votre différence.',
     shortSynopsis: 'Quand la non-voyance et les perceptions extrasensorielles dialoguent : que voit-on quand le monde ferme les yeux ?',
-    description: 'Une confrontation sensible et profonde entre deux manières extraordinaires de décoder le réel : d’un côté ceux qui, par la non-voyance ou l’éveil sensoriel, naviguent par l’écho, le toucher et les vibrations ; de l’autre ceux qui captent les auras, les énergies subtiles et le souffle de l’invisible. Au-delà des jugements ordinaires, leurs récits intimes révèlent la puissance insoupçonnée des sens humains.',
+    description: 'Une confrontation sensible et profonde entre deux manières extraordinaires de décoder le réel : d’un côté ceux qui, par la non-voyance ou l’éveil sensoriel, naviguent par l’écho, le toucher et les vibrations (Other Sights) ; de l’autre ceux qui captent les auras, les énergies subtiles et le souffle de l’invisible (Third Eye). Au-delà des jugements ordinaires, leurs récits intimes révèlent la puissance insoupçonnée des sens humains.',
     coverImage: '/assets/posters/Other Eyes < > Third Eye.png',
     posterUrl: '/assets/posters/Other Eyes < > Third Eye.png',
     teaserVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
     teaserDuration: '1:12',
     universes: [
       {
-        name: 'Other Eyes',
-        tagline: 'L’acuité sensorielle et la vision intérieure',
+        name: 'Other Sights',
+        tagline: 'L’acuité sensorielle, l’écoute et la vision intérieure',
         description: 'Vivre le monde par le son, le souffle du vent et la résonance tactile de la matière.',
         territory: 'Bénin (Ganvié & Cotonou)'
       },
@@ -602,15 +599,15 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
     questions: [
       {
         number: '01',
-        title: 'La Vision Intérieure',
-        prompt: 'Racontez-nous un moment où vous avez compris que vos yeux n’étaient pas nécessaires pour savoir exactement ce qui vous entourait.',
+        title: 'La Puissance de la Différence',
+        prompt: 'Racontez une expérience qui vous a fait comprendre la difficulté, mais aussi la puissance, de votre différence.',
         posterUrl: '/assets/duos/codjo-blind.jpg',
         audioDuration: '0:45',
         videoAvatarUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
         audioVoiceName: 'Codjo & Mawuna',
         translations: [
-          { lang: 'fr', label: 'Français', prompt: 'Racontez-nous un moment où vous avez compris que vos yeux n’étaient pas nécessaires pour savoir exactement ce qui vous entourait.' },
-          { lang: 'en', label: 'English', prompt: 'Tell us about a moment when you realized that eyes were not needed to perceive the reality around you.' }
+          { lang: 'fr', label: 'Français', prompt: 'Racontez une expérience qui vous a fait comprendre la difficulté, mais aussi la puissance, de votre différence.' },
+          { lang: 'en', label: 'English', prompt: 'Tell us about an experience that made you realize the difficulty, but also the power, of your difference.' }
         ]
       }
     ],
@@ -621,24 +618,24 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
   {
     id: 'coaching-unlimited',
     slug: 'coaching-unlimited',
-    title: 'Coaching < > Sans Limites',
-    subtitle: 'L’exigence du mentor dans son bureau < > l’envol d’un athlète sur les haies.',
-    centralQuestion: 'Le Dépassement',
+    title: 'Coach Me <> If You Can',
+    subtitle: 'Racontez un moment où quelqu’un vous a permis d’entrevoir un autre possible.',
+    centralQuestion: 'Racontez un moment où quelqu’un vous a permis d’entrevoir un autre possible.',
     shortSynopsis: 'Dans le silence stratégique d’un bureau où s’élabore la transformation intérieure et sur la piste rouge où une athlète saute une haie vers l’infini : briser les limites de l’impossible.',
-    description: 'D’un côté, Coach Marc, mentor d’élite au regard affûté dans son bureau tapissé de livres, qui déverrouille le potentiel mental et psychologique des bâtisseurs. De l’autre côté, Aïcha Lagat, athlète en pleine course franchissant une haie avec une puissance féline et un dépassement total de soi. Deux énergies complémentaires qui prouvent que chaque obstacle franchi sur le terrain a d’abord été apprivoisé dans la forge de l’esprit.',
+    description: 'D’un côté, Coach Marc, mentor d’élite au regard affûté dans son bureau tapissé de livres, qui déverrouille le potentiel mental et psychologique des bâtisseurs (Coach Me). De l’autre côté, Aïcha Lagat, athlète en pleine course franchissant une haie avec une puissance féline et un dépassement total de soi (If You Can). Deux énergies complémentaires qui prouvent que chaque obstacle franchi sur le terrain a d’abord été apprivoisé dans la forge de l’esprit.',
     coverImage: '/assets/posters/Coaching < > Sans Limites.png',
     posterUrl: '/assets/posters/Coaching < > Sans Limites.png',
     teaserVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
     teaserDuration: '1:24',
     universes: [
       {
-        name: 'Coaching',
+        name: 'Coach Me',
         tagline: 'La clarté stratégique, l’écoute exigeante et l’éveil des géants',
         description: 'L’intimité du cabinet où l’on déconstruit les peurs, où l’on aligne la volonté et où naît la discipline des champions.',
         territory: 'Paris, Cotonou & Montréal'
       },
       {
-        name: 'Sans Limites',
+        name: 'If You Can',
         tagline: 'L’effort brut, le franchissement d’obstacles et la transcendance du corps',
         description: 'La piste de course, le cœur qui bat à 180 pulsations, le saut au-dessus de la haie et le refus viscéral d’abandonner.',
         territory: 'Nairobi, Dakar & Lausanne'
@@ -665,15 +662,15 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
     questions: [
       {
         number: '01',
-        title: 'L’Obstacle',
-        prompt: 'Racontez-nous un moment où vous avez cru que l’obstacle devant vous était trop haut pour être franchi. Qu’avez-vous trouvé en vous ?',
+        title: 'Un Autre Possible',
+        prompt: 'Racontez un moment où quelqu’un vous a permis d’entrevoir un autre possible.',
         posterUrl: '/assets/duos/athlete-hurdle.jpg',
         audioDuration: '0:44',
         videoAvatarUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
         audioVoiceName: 'Marc & Aïcha',
         translations: [
-          { lang: 'fr', label: 'Français', prompt: 'Racontez-nous un moment où vous avez cru que l’obstacle était trop haut pour être franchi.' },
-          { lang: 'en', label: 'English', prompt: 'Tell us about a time when you thought the hurdle ahead was too high to clear. What did you discover within yourself?' }
+          { lang: 'fr', label: 'Français', prompt: 'Racontez un moment où quelqu’un vous a permis d’entrevoir un autre possible.' },
+          { lang: 'en', label: 'English', prompt: 'Tell us about a moment when someone allowed you to glimpse another possibility.' }
         ]
       },
       {
@@ -697,18 +694,18 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
   {
     id: 'focus-phd',
     slug: 'focus-phd',
-    title: 'Focus < >  PhD',
-    subtitle: 'Le regard sensible qui capte l’instant < > la rigueur de la recherche qui sonde l’universel.',
-    centralQuestion: 'L’Instant & la Preuve',
+    title: 'Pictures <> PhD',
+    subtitle: 'Racontez une découverte qui a changé votre manière d’observer un sujet ou une personne.',
+    centralQuestion: 'Racontez une découverte qui a changé votre manière d’observer un sujet ou une personne.',
     shortSynopsis: 'Quand l’instinct visuel d’une photographe documentaire traquant l’émotion humaine rencontre l’exigence intellectuelle d’une chercheuse doctorante dédiée à percer les mystères du savoir : deux manières complémentaires d’éclairer le monde.',
-    description: 'D’un côté, Clara Valmont, photographe d’auteur et reporter indépendante qui saisit l’invisible dans l’épaisseur du réel et immortalise les visages de notre époque (Focus). De l’autre côté, Dre. Éléonore Kaboré, chercheuse et docteure en sciences cognitives, qui consacre ses journées et ses nuits à élaborer des modèles pour percer les lois profondes de notre environnement (PhD). Deux regards engagés, l’un par la focale, l’autre par la thèse, unis par la même passion de révéler ce qui nous échappe.',
+    description: 'D’un côté, Clara Valmont, photographe d’auteur et reporter indépendante qui saisit l’invisible dans l’épaisseur du réel et immortalise les visages de notre époque (Pictures). De l’autre côté, Dre. Éléonore Kaboré, chercheuse et docteure en sciences cognitives, qui consacre ses journées et ses nuits à élaborer des modèles pour percer les lois profondes de notre environnement (PhD). Deux regards engagés, l’un par la focale, l’autre par la thèse, unis par la même passion de révéler ce qui nous échappe.',
     coverImage: '/assets/posters/Focus < >  PhD.jpg',
     posterUrl: '/assets/posters/Focus < >  PhD.jpg',
     teaserVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
     teaserDuration: '1:32',
     universes: [
       {
-        name: 'Focus',
+        name: 'Pictures',
         tagline: 'L’œil aux aguets, la lumière naturelle, l’instant décisif et la mémoire sensible',
         description: 'L’argentique et le capteur, la chambre noire, le silence avant le déclic et la volonté d’honorer la dignité des visages.',
         territory: 'Montréal, Paris & Dakar'
@@ -741,15 +738,15 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
     questions: [
       {
         number: '01',
-        title: 'L’Instant de Révélation',
-        prompt: 'Quel a été ce moment précis où votre regard — à travers l’objectif ou à travers vos données — a soudain fait surgir une vérité bouleversante que personne n’avait encore vue ?',
+        title: 'Changer de Regard',
+        prompt: 'Racontez une découverte qui a changé votre manière d’observer un sujet ou une personne.',
         posterUrl: '/assets/duos/photographer-focus.jpg',
         audioDuration: '0:48',
         videoAvatarUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
         audioVoiceName: 'Clara & Éléonore',
         translations: [
-          { lang: 'fr', label: 'Français', prompt: 'Quel a été ce moment précis où votre travail a fait surgir une vérité que personne n’avait encore vue ?' },
-          { lang: 'en', label: 'English', prompt: 'What was the exact moment when your gaze revealed a profound truth no one had seen before?' }
+          { lang: 'fr', label: 'Français', prompt: 'Racontez une découverte qui a changé votre manière d’observer un sujet ou une personne.' },
+          { lang: 'en', label: 'English', prompt: 'Tell us about a discovery that changed the way you observe a subject or a person.' }
         ]
       },
       {
@@ -781,67 +778,28 @@ export const getCustomDocumentaries = (): Documentary[] => {
         if (Array.isArray(parsed) && parsed.length > 0) {
           let migrated = false;
           const updated = parsed.map((doc: Documentary) => {
-            if (doc.id === 'jesus-legba' && (doc.title === 'Jésus < > Èṣù' || doc.title !== 'Èṣù < > Jésus')) {
-              migrated = true;
-              return {
-                ...doc,
-                title: 'Èṣù < > Jésus',
-                universes: [
-                  {
-                    name: 'Èṣù',
-                    tagline: 'Le gardien des carrefours et des seuils sacrés',
-                    description: 'Spiritualité ancestrale où Èṣù ouvre les voies, protège les demeures et relie le monde visible aux forces cosmiques.',
-                    territory: 'Bénin (Allada, Abomey, Ouidah)'
-                  },
-                  {
-                    name: 'Jésus',
-                    tagline: 'L’espérance chrétienne et le don de soi',
-                    description: 'Parcours de foi ecclésiale, d’oraison silencieuse, d’accueil du prochain et d’engagement au cœur des communautés contemporaines.',
-                    territory: 'Bénin (Littoral) & Diaspora'
-                  }
-                ] as [Documentary['universes'][0], Documentary['universes'][1]]
-              };
-            }
-            if (doc.id === 'dixeat-fiat-luxe' && (doc.title.includes('Dixeat') || doc.title !== 'E Vivi < > Fiat Luxe')) {
-              migrated = true;
-              return {
-                ...doc,
-                title: 'E Vivi < > Fiat Luxe',
-                description: doc.description ? doc.description.replace(/Dixeat/g, 'E Vivi').replace(/Fiat Luxe/g, 'Fiat Luxe') : doc.description,
-                universes: [
-                  {
-                    name: 'E Vivi',
-                    tagline: 'L’artisanat nourricier populaire et la générosité brute',
-                    description: 'La chaleur des marmites de rue, l’igname pilée au lever du jour, le partage sans fard où chaque repas est un pacte de solidarité.',
-                    territory: 'Cotonou, Dantokpa & marchés ouest-africains'
-                  },
-                  {
-                    name: 'Fiat Luxe',
-                    tagline: 'La haute scénographie du détail et le temps suspendu',
-                    description: 'L’orfèvrerie des arts de la table, la scénographie olfactive, la précision du geste qui transforme l’éphémère en mémoire inoubliable.',
-                    territory: 'Paris, Marrakech, Milan'
-                  }
-                ] as [Documentary['universes'][0], Documentary['universes'][1]]
-              };
-            }
             const baseDoc = INITIAL_DOCUMENTARIES.find(b => b.id === doc.id);
-            if (baseDoc && (doc.posterUrl !== baseDoc.posterUrl || doc.coverImage !== baseDoc.coverImage)) {
-              migrated = true;
-              doc = {
-                ...doc,
-                posterUrl: baseDoc.posterUrl,
-                coverImage: baseDoc.coverImage
-              };
-            }
-            if (doc.id === 'blacks-one-beyond-eve') {
-              if (baseDoc && (!doc.effigies || doc.shortSynopsis !== baseDoc.shortSynopsis)) {
+            if (baseDoc) {
+              if (
+                doc.title !== baseDoc.title || 
+                doc.subtitle !== baseDoc.subtitle || 
+                doc.centralQuestion !== baseDoc.centralQuestion ||
+                doc.posterUrl !== baseDoc.posterUrl ||
+                doc.coverImage !== baseDoc.coverImage
+              ) {
                 migrated = true;
                 return {
                   ...doc,
+                  title: baseDoc.title,
+                  subtitle: baseDoc.subtitle,
+                  centralQuestion: baseDoc.centralQuestion,
+                  universes: baseDoc.universes,
+                  questions: baseDoc.questions,
                   shortSynopsis: baseDoc.shortSynopsis,
                   description: baseDoc.description,
-                  universes: baseDoc.universes,
-                  effigies: baseDoc.effigies
+                  posterUrl: baseDoc.posterUrl,
+                  coverImage: baseDoc.coverImage,
+                  effigies: baseDoc.effigies || doc.effigies
                 };
               }
             }
@@ -909,6 +867,107 @@ export const saveCustomDocumentaries = (newDocs: Documentary[]) => {
 };
 
 export const PROTAGONISTS: Protagonist[] = [
+  {
+    id: 'sika-dossou',
+    slug: 'sika-dossou',
+    name: 'Sika Dossou',
+    age: 34,
+    role: 'Tisserande de tentures royales d’Abomey',
+    territory: 'Abomey',
+    country: 'Bénin',
+    flag: '🇧🇯',
+    bio: 'Héritière de cinq générations de femmes tisserandes de la cour royale d’Abomey, Sika crée des tentures aux motifs symboliques de courage et de dignité béninoise.',
+    photoUrl: '/assets/protagonists/sika-dossou.jpg',
+    documentaryId: 'finagnon-qosqorico',
+    universeTag: 'Benin',
+    quote: '« Chaque fil tendu sur le métier est une prière pour que la mémoire de nos reines ne s’efface jamais. »',
+    tree: {
+      passeurs: [
+        {
+          id: 'p-mama-adjovi',
+          name: 'Maman Adjovi Dossou',
+          role: 'Doyenne tisserande',
+          country: 'Bénin',
+          photo: '/assets/protagonists/adjovi-blandine.jpg'
+        }
+      ],
+      heritiers: [
+        {
+          id: 'h-senan-agossa',
+          name: 'Sènan Agossa',
+          role: 'Apprentie dessinatrice',
+          country: 'Bénin',
+          photo: '/assets/protagonists/senan-agossa.jpg'
+        }
+      ],
+      transmissions: [
+        {
+          id: 't-sika-1',
+          title: 'Le secret des teintures d’écorce royale',
+          ancestorOrMentor: 'Sa grand-mère reine-mère Kpodjito',
+          description: 'Macération des écorces d’iroko et d’indigo sauvage pour obtenir des teintes qui traversent les siècles.'
+        }
+      ],
+      duos: [
+        {
+          id: 'duo-sika-amara-ref',
+          partnerName: 'Amara',
+          partnerRole: 'Tisserande andine',
+          partnerPhoto: '/assets/protagonists/amara-tisserande.jpg',
+          duoId: 'duo-finagnon-qosqorico-01',
+          question: '« Racontez un moment où vous avez compris ce qui rend votre pays unique. »'
+        }
+      ],
+      creations: [
+        {
+          id: 'c-sika-1',
+          title: 'Tenture du Léopard Royal d’Abomey',
+          type: 'Appliqué royal sur coton tissé main',
+          description: 'Pièce cérémonielle brodée main célébrant l’intrépidité des guerrières Agojié.'
+        }
+      ],
+      projects: [
+        {
+          id: 'p-sika-1',
+          title: 'L’Atelier des Tisserandes d’Abomey',
+          stage: 'Transmission vivante',
+          description: 'Hangar communautaire pour former 20 jeunes béninoises aux arts du fil royal.'
+        }
+      ],
+      opportunities: [
+        {
+          id: 'o-sika-1',
+          title: 'Résidence de transmission du tissage royal',
+          description: 'Immersion de 2 semaines aux métiers d’Abomey pour créatrices textiles.',
+          badge: 'Résidence ouverte'
+        }
+      ],
+      needs: [
+        {
+          id: 'n-sika-1',
+          title: 'Fourniture de fil de coton biologique du Bénin',
+          urgency: 'Prioritaire',
+          description: 'Approvisionnement direct auprès des productrices du Nord-Bénin.'
+        }
+      ]
+    },
+    stories: [
+      {
+        id: 'story-sika-01',
+        title: 'Le chant de la trame au lever du soleil',
+        questionNumber: '01',
+        questionTitle: 'Le Pays Unique',
+        duration: '08:15',
+        videoDurationSeconds: 495,
+        summary: 'Sika raconte le matin où elle a compris que tisser à Abomey n’était pas un métier ordinaire, mais la garde d’une souveraineté spirituelle que nul conquérant n’a pu éteindre.',
+        videoCoverUrl: '/assets/protagonists/sika-dossou.jpg',
+        credits: [
+          { role: 'story_owner', label: 'Propriétaire de l’histoire', name: 'Sika Dossou' },
+          { role: 'director', label: 'Réalisateur', name: 'Ayaba Senou' }
+        ]
+      }
+    ]
+  },
   {
     id: 'koffi-tisserand',
     slug: 'koffi-tisserand',
@@ -2481,15 +2540,15 @@ export const DUOS: Duo[] = [
     id: 'duo-jesus-legba-01',
     slug: 'duo-jesus-legba-01',
     documentaryId: 'jesus-legba',
-    documentaryTitle: 'Èṣù < > Jésus',
+    documentaryTitle: 'Ancestral <> Revealed',
     episodeNumber: 'ÉPISODE 01',
     protagonistA: PROTAGONISTS.find(p => p.id === 'dah-zounon') || PROTAGONISTS[2],
     protagonistB: PROTAGONISTS.find(p => p.id === 'pere-matthieu') || PROTAGONISTS[3],
     questionNumber: '01',
-    questionTitle: 'La Rencontre',
-    centralQuestion: 'Racontez-nous un moment de votre vie où vous avez réellement rencontré votre foi. Que s\'est-il passé ?',
-    quoteA: '« Legba ne m’a pas parlé dans un coup de tonnerre. C’était la chaleur d’une poignée de terre d’Allada, un jour où je croyais que le monde était mort. »',
-    quoteB: '« Je suis entré dans la nef déserte de Ouidah pour fuir la brûlure du soleil. Ce n’est pas un miracle qui m’a retenu : c’était la certitude d’être attendu. »',
+    questionTitle: 'La Présence',
+    centralQuestion: 'Qu’est-ce qui, un jour, vous a fait sentir que quelque chose de plus grand que vous était présent ?',
+    quoteA: '« Ce n’était pas un coup de tonnerre. C’était la chaleur d’une poignée de terre d’Allada, un jour où je croyais que le monde était mort. »',
+    quoteB: '« Je suis entré dans la nef déserte pour fuir la brûlure du soleil. Ce n’est pas un miracle qui m’a retenu : c’était la certitude d’être attendu. »',
     coverImage: '/assets/posters/Esu < > Jesus.png',
     storyA: (PROTAGONISTS.find(p => p.id === 'dah-zounon') || PROTAGONISTS[2]).stories[0],
     storyB: (PROTAGONISTS.find(p => p.id === 'pere-matthieu') || PROTAGONISTS[3]).stories[0],
@@ -2499,13 +2558,13 @@ export const DUOS: Duo[] = [
     id: 'duo-finagnon-qosqorico-01',
     slug: 'duo-finagnon-qosqorico-01',
     documentaryId: 'finagnon-qosqorico',
-    documentaryTitle: 'Finagnon < > Qosqorico',
+    documentaryTitle: 'Benin <> ...',
     episodeNumber: 'ÉPISODE 01',
     protagonistA: PROTAGONISTS.find(p => p.id === 'tobi-houndegla') || PROTAGONISTS[0],
     protagonistB: PROTAGONISTS.find(p => p.id === 'sayri-quispe') || PROTAGONISTS[1],
     questionNumber: '01',
-    questionTitle: 'Chez Soi',
-    centralQuestion: 'Racontez-nous un moment où vous avez compris que vous étiez vraiment chez vous. Où étiez-vous et que s\'est-il passé ?',
+    questionTitle: 'Le Pays Unique',
+    centralQuestion: 'Racontez un moment où vous avez compris ce qui rend votre pays unique.',
     quoteA: '« Le jour où la pirogue a glissé dans la brume sans que j’aie besoin de regarder le rivage. Ganvié n’est pas sur la terre, mais elle est dans mon sang. »',
     quoteB: '« Quand les pieds nus touchent la roche glacée de Pisac à l’aube et que la montagne souffle son premier vent. Là, tu sais que tu n’es pas un étranger. »',
     coverImage: '/assets/posters/Finagnon < > Qosqorico.png',
@@ -2517,13 +2576,13 @@ export const DUOS: Duo[] = [
     id: 'duo-blacks-one-beyond-eve-01',
     slug: 'duo-blacks-one-beyond-eve-01',
     documentaryId: 'blacks-one-beyond-eve',
-    documentaryTitle: 'Blacks One < > Beyond Eve',
+    documentaryTitle: 'Blacks One <> Beyond Eve',
     episodeNumber: 'ÉPISODE 01',
     protagonistA: PROTAGONISTS.find(p => p.id === 'malik-diop') || PROTAGONISTS[4],
     protagonistB: PROTAGONISTS.find(p => p.id === 'eleonore-vance') || PROTAGONISTS[5],
     questionNumber: '01',
-    questionTitle: 'Ce que l’on Porte',
-    centralQuestion: 'Racontez-nous quelque chose que vous avez reçu de votre histoire, de votre famille ou de ceux qui vous ont précédé et que vous portez encore aujourd\'hui. Qu\'est-ce que cela représente pour vous ?',
+    questionTitle: 'L’Identité Portée',
+    centralQuestion: 'Racontez un moment où vous avez vécu une expérience unique liée à l’identité que vous portez.',
     quoteA: '« L’émancipation commence le jour où l’on refuse de regarder son histoire avec les yeux de ceux qui l’ont confisquée. La dignité ne se négocie pas. »',
     quoteB: '« On hérite de blessures et de silences imposés. Mon combat et mon art consistent à les fleurir et à en faire des armures de reine pour les femmes libres. »',
     coverImage: '/assets/posters/Blacks One < > Beyond Eve.png',
@@ -2535,13 +2594,13 @@ export const DUOS: Duo[] = [
     id: 'duo-dixeat-fiat-luxe-01',
     slug: 'duo-dixeat-fiat-luxe-01',
     documentaryId: 'dixeat-fiat-luxe',
-    documentaryTitle: 'E Vivi < > Fiat Luxe',
+    documentaryTitle: 'Fiat Luxe <> Street',
     episodeNumber: 'ÉPISODE 01',
     protagonistA: PROTAGONISTS.find(p => p.id === 'chef-koffi') || PROTAGONISTS[0],
     protagonistB: PROTAGONISTS.find(p => p.id === 'helene-saint-amand') || PROTAGONISTS[1],
     questionNumber: '01',
-    questionTitle: 'Le Goût',
-    centralQuestion: 'Racontez-nous un moment où vous avez créé quelque chose pour quelqu\'un et où vous avez compris, à sa réaction, que vous lui aviez vraiment fait plaisir. Qu\'est-ce qui s\'est passé ?',
+    questionTitle: 'La Beauté Inattendue',
+    centralQuestion: 'Racontez une expérience où vous avez vu la beauté, là où vous ne l’attendiez pas.',
     quoteA: '« Quand l’homme s’est assis dans la fumée et a fermé les yeux à la première cuillerée d’igname, ses larmes m’ont dit que je n’étais pas un marchand, mais un frère. »',
     quoteB: '« Ce n’est pas la coupe de cristal qui a touché cette femme, mais le fait que quelqu’un avait remarqué son angoisse et lui offrait un refuge invisible. »',
     coverImage: '/assets/posters/E Vivi < > Fiat Luxe.png',
@@ -2553,13 +2612,13 @@ export const DUOS: Duo[] = [
     id: 'duo-investors-builders-01',
     slug: 'duo-investors-builders-01',
     documentaryId: 'investors-builders',
-    documentaryTitle: 'Investors < > Builders',
+    documentaryTitle: 'Diasporas <> Makers',
     episodeNumber: 'ÉPISODE 01',
     protagonistA: PROTAGONISTS.find(p => p.id === 'fatou-diallo') || PROTAGONISTS[0],
     protagonistB: PROTAGONISTS.find(p => p.id === 'kwame-mensah') || PROTAGONISTS[1],
     questionNumber: '01',
-    questionTitle: 'Le Pari Fondateur',
-    centralQuestion: '« Racontez-nous le premier pari où vous avez engagé vos ressources ou vos mains sans certitude de réussir. »',
+    questionTitle: 'Construire ses Rêves',
+    centralQuestion: 'Racontez le moment où un lieu a changé votre façon de construire vos rêves.',
     quoteA: '« Le jour où j’ai signé ce premier financement pour l’atelier sans garantie bancaire, j’ai compris que ma responsabilité n’était pas de me protéger, mais de faire confiance. »',
     quoteB: '« Quand la voûte en terre crue a résisté à la première tornade, j’ai su que nos mains portaient une force que nulle machine ne peut remplacer. »',
     coverImage: '/assets/posters/Investors < > Builders.png',
@@ -2571,13 +2630,13 @@ export const DUOS: Duo[] = [
     id: 'duo-other-eyes-sixth-sense-01',
     slug: 'duo-other-eyes-sixth-sense-01',
     documentaryId: 'other-eyes-sixth-sense',
-    documentaryTitle: 'Other Eyes < > Third Eye',
+    documentaryTitle: 'Other Sights <> Third Eye',
     episodeNumber: 'ÉPISODE 01',
     protagonistA: PROTAGONISTS.find(p => p.id === 'codjo-blind') || PROTAGONISTS[0],
     protagonistB: PROTAGONISTS.find(p => p.id === 'mawuna-medium') || PROTAGONISTS[1],
     questionNumber: '01',
-    questionTitle: 'La Vision Intérieure',
-    centralQuestion: '« Racontez-nous un moment où vous avez compris que vos yeux n’étaient pas nécessaires pour savoir exactement ce qui vous entourait. »',
+    questionTitle: 'La Puissance de la Différence',
+    centralQuestion: 'Racontez une expérience qui vous a fait comprendre la difficulté, mais aussi la puissance, de votre différence.',
     quoteA: '« Vos yeux s’arrêtent aux formes. Mes oreilles et ma peau pénètrent l’épaisseur vivante de l’air et la cadence secrète de la nuit. »',
     quoteB: '« L’invisible n’est pas une absence, c’est une présence subtile. Le cœur doit écouter ce que les yeux ne peuvent enfermer. »',
     coverImage: '/assets/posters/Other Eyes < > Third Eye.png',
@@ -2589,7 +2648,7 @@ export const DUOS: Duo[] = [
     id: 'duo-coaching-unlimited-01',
     slug: 'duo-coaching-unlimited-01',
     documentaryId: 'coaching-unlimited',
-    documentaryTitle: 'Coaching < > Sans Limites',
+    documentaryTitle: 'Coach Me <> If You Can',
     episodeNumber: 'ÉPISODE 01',
     protagonistA: {
       id: 'coach-marc',
@@ -2605,7 +2664,7 @@ export const DUOS: Duo[] = [
       videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
       quote: '« Chaque barrière mentale que l’on fait tomber dans le calme d’un bureau déverrouille dix victoires sur le terrain. »',
       bio: 'Stratège de la haute performance humaine dans son bureau feutré.',
-      universeTag: 'Coaching',
+      universeTag: 'Coach Me',
       centralQuestion: 'Comment forger une volonté inébranlable sans détruire la vulnérabilité ?',
       storiesCount: 4,
       transmissionsCount: 3,
@@ -2615,7 +2674,7 @@ export const DUOS: Duo[] = [
           id: 'story-coach-marc-01',
           title: 'Le silence avant la décision',
           questionNumber: '01',
-          questionTitle: 'L’Obstacle',
+          questionTitle: 'Un Autre Possible',
           duration: '07:45',
           videoDurationSeconds: 465,
           summary: 'Marc partage la séance où un champion brisé a retrouvé le désir de s’entraîner.',
@@ -2638,7 +2697,7 @@ export const DUOS: Duo[] = [
       videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
       quote: '« La haie n’est pas un mur : c’est une invitation à voler une fraction de seconde de plus. »',
       bio: 'Athlète olympique en plein envol au-dessus des haies.',
-      universeTag: 'Sans Limites',
+      universeTag: 'If You Can',
       centralQuestion: 'Jusqu’où le corps peut-il obéir à la soif infinie de transcendance ?',
       storiesCount: 5,
       transmissionsCount: 2,
@@ -2648,7 +2707,7 @@ export const DUOS: Duo[] = [
           id: 'story-athlete-lagat-01',
           title: 'Le franchissement du dixième obstacle',
           questionNumber: '01',
-          questionTitle: 'L’Obstacle',
+          questionTitle: 'Un Autre Possible',
           duration: '06:30',
           videoDurationSeconds: 390,
           summary: 'Aïcha raconte la finale des championnats du monde où un faux pas à la 8e haie l’a obligée à réinventer sa foulée.',
@@ -2658,8 +2717,8 @@ export const DUOS: Duo[] = [
       ]
     } as any,
     questionNumber: '01',
-    questionTitle: 'L’Obstacle',
-    centralQuestion: '« Racontez-nous un moment où vous avez cru que l’obstacle devant vous était trop haut pour être franchi. Qu’avez-vous trouvé en vous ? »',
+    questionTitle: 'Un Autre Possible',
+    centralQuestion: 'Racontez un moment où quelqu’un vous a permis d’entrevoir un autre possible.',
     quoteA: '« Ce n’est jamais la hauteur de l’objectif qui paralyse, c’est le bruit de nos propres doutes. Dans ce bureau, on fait taire le vacarme pour entendre sa vraie puissance. »',
     quoteB: '« Quand tu es lancée à pleine vitesse et que la haie se dresse, tu ne peux plus hésiter. Tu dois faire confiance à ton impulsion et bondir. »',
     coverImage: '/assets/posters/Coaching < > Sans Limites.png',
@@ -2667,7 +2726,7 @@ export const DUOS: Duo[] = [
       id: 'story-coach-marc-01',
       title: 'Le silence avant la décision',
       questionNumber: '01',
-      questionTitle: 'L’Obstacle',
+      questionTitle: 'Un Autre Possible',
       duration: '07:45',
       videoDurationSeconds: 465,
       summary: 'Marc partage la séance où un champion brisé a retrouvé le désir de s’entraîner.',
@@ -2678,7 +2737,7 @@ export const DUOS: Duo[] = [
       id: 'story-athlete-lagat-01',
       title: 'Le franchissement du dixième obstacle',
       questionNumber: '01',
-      questionTitle: 'L’Obstacle',
+      questionTitle: 'Un Autre Possible',
       duration: '06:30',
       videoDurationSeconds: 390,
       summary: 'Aïcha raconte la finale des championnats du monde où un faux pas à la 8e haie l’a obligée à réinventer sa foulée.',
@@ -2691,7 +2750,7 @@ export const DUOS: Duo[] = [
     id: 'duo-focus-phd-01',
     slug: 'duo-focus-phd-01',
     documentaryId: 'focus-phd',
-    documentaryTitle: 'Focus < >  PhD',
+    documentaryTitle: 'Pictures <> PhD',
     episodeNumber: 'ÉPISODE 01',
     protagonistA: {
       id: 'photographer-clara',
@@ -2707,7 +2766,7 @@ export const DUOS: Duo[] = [
       videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
       quote: '« Le cadre n’enferme pas le monde : il l’oblige à se révéler. Quand tu presses le déclencheur, tu ne voles pas une image, tu reçois une confidence. »',
       bio: 'Quinze ans de reportages visuels, observant la poésie des gestes humbles.',
-      universeTag: 'Focus',
+      universeTag: 'Pictures',
       centralQuestion: 'Comment capturer l’âme d’un instant sans trahir la pudeur de celui qui vous regarde ?',
       storiesCount: 6,
       transmissionsCount: 4,
@@ -2717,7 +2776,7 @@ export const DUOS: Duo[] = [
           id: 'story-photographer-clara-01',
           title: 'L’ombre portée du pêcheur de Saint-Louis',
           questionNumber: '01',
-          questionTitle: 'L’Instant de Révélation',
+          questionTitle: 'Changer de Regard',
           duration: '09:10',
           videoDurationSeconds: 550,
           summary: 'Clara raconte l’attente de l’instant décisif sur le fleuve à l’aube.',
@@ -2750,7 +2809,7 @@ export const DUOS: Duo[] = [
           id: 'story-researcher-eleonore-01',
           title: 'L’équation qui répare les silences',
           questionNumber: '01',
-          questionTitle: 'L’Instant de Révélation',
+          questionTitle: 'Changer de Regard',
           duration: '08:15',
           videoDurationSeconds: 495,
           summary: 'Éléonore partage la joie de voir sa thèse valider le savoir oral.',
@@ -2760,8 +2819,8 @@ export const DUOS: Duo[] = [
       ]
     } as any,
     questionNumber: '01',
-    questionTitle: 'L’Instant de Révélation',
-    centralQuestion: '« Racontez-nous ce moment où votre travail — par l’œil du viseur ou par la rigueur de l’analyse — a fait jaillir une vérité qui a transformé votre regard. »',
+    questionTitle: 'Changer de Regard',
+    centralQuestion: 'Racontez une découverte qui a changé votre manière d’observer un sujet ou une personne.',
     quoteA: '« À travers l’œilleton, le monde s’arrête de courir. Tu attends le battement d’aile, la larme, le sourire : ce millième de seconde où la vie s’avoue toute entière. »',
     quoteB: '« Des mois devant les chiffres et les carnets, et soudain, la courbe s’aligne. Ce n’est plus une formule, c’est le pouls du vivant qui parle enfin. »',
     coverImage: '/assets/posters/Focus < >  PhD.jpg',
@@ -2769,7 +2828,7 @@ export const DUOS: Duo[] = [
       id: 'story-photographer-clara-01',
       title: 'L’ombre portée du pêcheur de Saint-Louis',
       questionNumber: '01',
-      questionTitle: 'L’Instant de Révélation',
+      questionTitle: 'Changer de Regard',
       duration: '09:10',
       videoDurationSeconds: 550,
       summary: 'Clara raconte l’attente de l’instant décisif sur le fleuve à l’aube.',
@@ -2780,7 +2839,7 @@ export const DUOS: Duo[] = [
       id: 'story-researcher-eleonore-01',
       title: 'L’équation qui répare les silences',
       questionNumber: '01',
-      questionTitle: 'L’Instant de Révélation',
+      questionTitle: 'Changer de Regard',
       duration: '08:15',
       videoDurationSeconds: 495,
       summary: 'Éléonore partage la joie de voir sa thèse valider le savoir oral.',
@@ -3068,7 +3127,7 @@ export const BACKOFFICE_APPLICATIONS: BackOfficeApplication[] = [
 export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
   {
     seriesId: 'jesus-legba',
-    seriesTitle: 'Èṣù < > Jésus',
+    seriesTitle: 'Ancestral <> Revealed',
     subtitle: 'Deux traditions. Une même question de foi.',
     description: 'Comment la rencontre de deux géants de la spiritualité béninoise a ouvert une chaîne vivante d\'initiations, tissant des liens inattendus entre couvents vodoun et monastères chrétiens.',
     centralQuestion: 'La foi',

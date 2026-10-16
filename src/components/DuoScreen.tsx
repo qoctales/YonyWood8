@@ -20,6 +20,9 @@ interface DuoScreenProps {
 
 export const DuoScreen: React.FC<DuoScreenProps> = ({ duoId, onNavigate }) => {
   const duo = DUOS.find(d => d.id === duoId) || DUOS[0];
+  const partnerCountry = duo.protagonistB.country || 'Pérou';
+  const isBeninSeries = duo.documentaryId === 'finagnon-qosqorico' || duo.documentaryTitle?.toLowerCase().startsWith('benin');
+  const displaySeriesTitle = isBeninSeries ? `Benin <> ${partnerCountry}` : duo.documentaryTitle;
 
   return (
     <div className="min-h-screen bg-[#F3E9D2]/40 pb-20">
@@ -34,7 +37,7 @@ export const DuoScreen: React.FC<DuoScreenProps> = ({ duoId, onNavigate }) => {
             className="text-xs font-semibold text-[#8B6845] hover:text-[#1C1917] flex items-center gap-1.5 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span>Retour à la série {duo.documentaryTitle}</span>
+            <span>Retour à la série {displaySeriesTitle}</span>
           </button>
 
           <div className="flex items-center gap-2">
@@ -44,11 +47,15 @@ export const DuoScreen: React.FC<DuoScreenProps> = ({ duoId, onNavigate }) => {
               onChange={(e) => onNavigate({ type: 'duo_detail', duoId: e.target.value })}
               className="text-xs bg-[#FFFFFF] border border-[#E7E5E4] rounded-lg px-2.5 py-1.5 text-[#1C1917]"
             >
-              {DUOS.map(item => (
-                <option key={item.id} value={item.id}>
-                  {item.documentaryTitle} — {item.protagonistA.name.split(' ')[0]} × {item.protagonistB.name.split(' ')[0]}
-                </option>
-              ))}
+              {DUOS.map(item => {
+                const itemIsBenin = item.documentaryId === 'finagnon-qosqorico' || item.documentaryTitle?.toLowerCase().startsWith('benin');
+                const itemTitle = itemIsBenin ? `Benin <> ${item.protagonistB.country || 'Pérou'}` : item.documentaryTitle;
+                return (
+                  <option key={item.id} value={item.id}>
+                    {itemTitle} — {item.protagonistA.name.split(' ')[0]} × {item.protagonistB.name.split(' ')[0]}
+                  </option>
+                );
+              })}
             </select>
           </div>
         </div>
@@ -60,9 +67,14 @@ export const DuoScreen: React.FC<DuoScreenProps> = ({ duoId, onNavigate }) => {
             NIVEAU 2 : LA CLAIRIÈRE ÉDITORIALE • {duo.episodeNumber}
           </div>
 
-          <h1 className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-normal text-[#1C1917]">
-            {duo.protagonistA.name} <span className="text-[#C89B3C] font-light">×</span> {duo.protagonistB.name}
-          </h1>
+          <div className="space-y-1">
+            <span className="inline-block px-3 py-1 rounded-full bg-[#A2482B] text-white font-bold text-xs shadow-xs mb-2">
+              {displaySeriesTitle}
+            </span>
+            <h1 className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-normal text-[#1C1917]">
+              {duo.protagonistA.name} ({duo.protagonistA.country} {duo.protagonistA.flag}) <span className="text-[#C89B3C] font-light">×</span> {duo.protagonistB.name} ({duo.protagonistB.country} {duo.protagonistB.flag})
+            </h1>
+          </div>
 
           <div className="p-5 rounded-2xl bg-[#FFFFFF] border border-[#E7E5E4] shadow-card mt-4">
             <span className="text-xs font-bold uppercase tracking-wider text-[#8B6845] block mb-1">

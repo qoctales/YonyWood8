@@ -4,7 +4,6 @@ import {
   Mail, 
   Lock, 
   User, 
-  Crown, 
   ShieldCheck, 
   ArrowRight, 
   Sparkles, 
@@ -71,21 +70,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({
       }
     } catch {
       setError('Une erreur est survenue lors de la connexion.');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  // Connexion rapide avec le compte admin officiel
-  const handleQuickAdminLogin = async () => {
-    setError(null);
-    setIsLoading(true);
-    try {
-      await login('qoctales@gmail.com', 'yonywood2026!');
-      onSuccess?.();
-      onClose();
-    } catch {
-      setError('Impossible de se connecter au compte admin.');
     } finally {
       setIsLoading(false);
     }
@@ -226,38 +210,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             )}
           </button>
 
-          {/* Séparateur pour le raccourci Administrateur */}
-          <div className="relative my-4 flex items-center justify-center">
-            <div className="border-t border-stone-800 w-full" />
-            <span className="absolute bg-[#1C1917] px-3 text-[10px] uppercase font-mono tracking-widest text-stone-500">
-              Accès Rapide Démo
-            </span>
-          </div>
 
-          {/* Bouton de connexion directe Administrateur */}
-          <button
-            type="button"
-            onClick={handleQuickAdminLogin}
-            className="w-full p-3 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-200 text-xs font-semibold flex items-center justify-between transition-all cursor-pointer group"
-          >
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-amber-500/20 flex items-center justify-center text-amber-300">
-                <Crown className="w-4 h-4" />
-              </div>
-              <div className="text-left">
-                <div className="text-[11px] font-bold text-amber-200 flex items-center gap-1.5">
-                  <span>Connexion Administrateur</span>
-                  <span className="px-1.5 py-0.5 rounded bg-amber-400 text-stone-950 text-[9px] font-black uppercase">
-                    Admin
-                  </span>
-                </div>
-                <div className="text-[10px] text-stone-400">
-                  qoctales@gmail.com (Romeo Nonvide)
-                </div>
-              </div>
-            </div>
-            <ArrowRight className="w-4 h-4 text-amber-300 group-hover:translate-x-1 transition-transform" />
-          </button>
         </form>
       </div>
     </div>
