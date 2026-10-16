@@ -489,11 +489,6 @@ export const UniverseDimensionPage: React.FC<UniverseDimensionPageProps> = ({
                 <h2 className="font-editorial text-sm font-bold text-[#1C1917]">
                   {protagonist.name}
                 </h2>
-                {protagonist.age && (
-                  <span className="text-[11px] text-[#8B6845] font-sans">
-                    • {protagonist.age} ans
-                  </span>
-                )}
               </div>
               <p className="text-[11px] text-[#68655D] flex items-center gap-1">
                 <MapPin className="w-3 h-3 text-[#C89B3C]" />

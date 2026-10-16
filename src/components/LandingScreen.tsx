@@ -213,7 +213,14 @@ export const LandingScreen: React.FC<LandingScreenProps> = ({ onNavigate }) => {
         
         {/* Gauche : Logo officiel YonyWood (taille équilibrée mobile et web) */}
         <div className="flex items-center flex-1 justify-start">
-          <YonyWoodLogo className="h-8 sm:h-10 md:h-12 w-auto select-none transition-all" />
+          <img 
+            src="/logo%20YonyWood.png?v=5" 
+            alt="YonyWood" 
+            className="h-8 sm:h-10 md:h-12 w-auto object-contain mix-blend-multiply select-none transition-all"
+            onError={(e) => {
+              (e.currentTarget as HTMLImageElement).src = '/logo-yonywood-clean.png?v=5';
+            }}
+          />
         </div>
 
         {/* Milieu : Slogan centré au milieu du header (affiché sur Web / Desktop) */}

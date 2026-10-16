@@ -638,7 +638,7 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
                 </button>
               </div>
 
-              {/* BAS : JUSTE LE PRÉNOM ET L'ÂGE (POSITION SURÉLEVÉE ET SÉCURISÉE SANS COUPURE DE LETTRES) */}
+              {/* BAS : JUSTE LE PRÉNOM (POSITION SURÉLEVÉE ET SÉCURISÉE SANS COUPURE DE LETTRES) */}
               <div 
                 className="relative z-20 flex flex-col pointer-events-auto cursor-pointer group/title pb-4 sm:pb-6 pl-1"
                 onClick={(e) => {
@@ -649,9 +649,6 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
                 <h3 className="font-editorial text-2xl sm:text-3xl font-bold text-white tracking-tight leading-tight pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors">
                   {effectivePerson.firstName || effectivePerson.name.split(' ')[0]}
                 </h3>
-                <p className="text-xs sm:text-sm text-stone-300 mt-1.5 font-medium drop-shadow flex items-center gap-1.5">
-                  <span>{effectivePerson.age ? `${effectivePerson.age} ans` : '46 ans'}</span>
-                </p>
               </div>
             </div>
 

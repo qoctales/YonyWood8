@@ -219,16 +219,11 @@ export const ProtagonistProfileScreen: React.FC<ProtagonistProfileScreenProps> =
               />
             </div>
 
-            {/* Prénom et âge harmonisés avec les cartes vidéo, sans coupure de lettre */}
+            {/* Prénom harmonisé avec les cartes vidéo, sans coupure de lettre */}
             <div className="mt-2 text-center">
               <h2 className="font-editorial text-xl sm:text-2xl font-bold text-[#1C1917] tracking-tight leading-tight pb-0.5">
                 {protagonist.name.split(' ')[0]}
               </h2>
-              {protagonist.age && (
-                <p className="text-xs sm:text-sm text-[#8B6845] font-medium font-sans mt-1">
-                  {protagonist.age} ans
-                </p>
-              )}
             </div>
           </div>
 
@@ -284,11 +279,6 @@ export const ProtagonistProfileScreen: React.FC<ProtagonistProfileScreenProps> =
             <h2 className="font-editorial text-xl sm:text-2xl font-bold text-[#1C1917] tracking-tight leading-tight pb-0.5 mt-2">
               {protagonist.name.split(' ')[0]}
             </h2>
-            {protagonist.age && (
-              <p className="text-xs sm:text-sm text-[#8B6845] font-medium font-sans mt-1">
-                {protagonist.age} ans
-              </p>
-            )}
           </div>
 
           {/* 6 Grid Directions */}
@@ -391,11 +381,6 @@ export const ProtagonistProfileScreen: React.FC<ProtagonistProfileScreenProps> =
                             <span className="text-xs font-bold text-[#1C1917]">
                               En duo avec {partner.name.split(' ')[0]}
                             </span>
-                            {partner.age && (
-                              <span className="text-[10px] text-[#8B6845]">
-                                ({partner.age} ans)
-                              </span>
-                            )}
                           </div>
                           <p className="text-[11px] text-[#68655D] truncate max-w-xs">
                             {duo.centralQuestion}

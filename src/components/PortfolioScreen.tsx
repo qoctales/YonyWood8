@@ -149,7 +149,7 @@ export const PortfolioScreen: React.FC<PortfolioScreenProps> = ({
     {
       id: 'prod-6',
       seriesId: 'other-eyes-sixth-sense',
-      seriesTitle: 'Other Eyes < > Sixth Sense',
+      seriesTitle: 'Other Eyes < > Third Eye',
       sharesCount: 15,
       sharesOnSale: 5,
       startPrice: 42,
@@ -163,7 +163,7 @@ export const PortfolioScreen: React.FC<PortfolioScreenProps> = ({
       growthRatePercent: 32.5,
       liquidityScore: 'Élevée',
       status: 'En tournage',
-      posterUrl: '/assets/posters/other-eyes-sixth-sense.png'
+      posterUrl: '/assets/posters/Other Eyes < > Third Eye.png'
     }
   ]);
 

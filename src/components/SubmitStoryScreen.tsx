@@ -1799,17 +1799,12 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                           </button>
                         </div>
 
-                        {/* BAS : Prénom et Âge en bas (exactement comme les vidéos d'Héritage) & Colonne des 3 boutons */}
+                        {/* BAS : Prénom en bas (exactement comme les vidéos d'Héritage) & Colonne des 3 boutons */}
                         <div className="relative z-20 flex items-end justify-between pointer-events-auto mt-auto">
                           <div className="text-left font-sans pr-2">
                             <h3 className="font-editorial text-2xl sm:text-3xl font-bold text-white tracking-tight leading-none drop-shadow-md">
                               {v.name.split(' ')[0]}
                             </h3>
-                            {v.age && (
-                              <p className="text-xs sm:text-sm text-stone-300 mt-1 font-medium drop-shadow">
-                                {v.age} ans
-                              </p>
-                            )}
                           </div>
 
                           {/* Pile verticale des 3 boutons d'action (Contacter avec caméra, Question, Profil) */}

@@ -558,13 +558,13 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
   {
     id: 'other-eyes-sixth-sense',
     slug: 'other-eyes-sixth-sense',
-    title: 'Other eyes < > Sixth sense',
+    title: 'Other Eyes < > Third Eye',
     subtitle: 'Voir autrement. Ressentir l’invisible.',
     centralQuestion: 'La Perception',
     shortSynopsis: 'Quand la non-voyance et les perceptions extrasensorielles dialoguent : que voit-on quand le monde ferme les yeux ?',
     description: 'Une confrontation sensible et profonde entre deux manières extraordinaires de décoder le réel : d’un côté ceux qui, par la non-voyance ou l’éveil sensoriel, naviguent par l’écho, le toucher et les vibrations ; de l’autre ceux qui captent les auras, les énergies subtiles et le souffle de l’invisible. Au-delà des jugements ordinaires, leurs récits intimes révèlent la puissance insoupçonnée des sens humains.',
-    coverImage: '/assets/posters/Other eyes < > Sixth sense.png',
-    posterUrl: '/assets/posters/Other eyes < > Sixth sense.png',
+    coverImage: '/assets/posters/Other Eyes < > Third Eye.png',
+    posterUrl: '/assets/posters/Other Eyes < > Third Eye.png',
     teaserVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
     teaserDuration: '1:12',
     universes: [
@@ -575,7 +575,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         territory: 'Bénin (Ganvié & Cotonou)'
       },
       {
-        name: 'Sixth Sense',
+        name: 'Third Eye',
         tagline: 'La résonance avec l’invisible et les auras',
         description: 'Percevoir les énergies subtiles, les présences et les mémoires des lieux.',
         territory: 'Bénin (Ouidah & Abomey)'
@@ -621,13 +621,13 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
   {
     id: 'coaching-unlimited',
     slug: 'coaching-unlimited',
-    title: 'Coaching < > Unlimited',
+    title: 'Coaching < > Sans Limites',
     subtitle: 'L’exigence du mentor dans son bureau < > l’envol d’un athlète sur les haies.',
     centralQuestion: 'Le Dépassement',
     shortSynopsis: 'Dans le silence stratégique d’un bureau où s’élabore la transformation intérieure et sur la piste rouge où une athlète saute une haie vers l’infini : briser les limites de l’impossible.',
     description: 'D’un côté, Coach Marc, mentor d’élite au regard affûté dans son bureau tapissé de livres, qui déverrouille le potentiel mental et psychologique des bâtisseurs. De l’autre côté, Aïcha Lagat, athlète en pleine course franchissant une haie avec une puissance féline et un dépassement total de soi. Deux énergies complémentaires qui prouvent que chaque obstacle franchi sur le terrain a d’abord été apprivoisé dans la forge de l’esprit.',
-    coverImage: '/assets/posters/Coaching < > Unlimited.png',
-    posterUrl: '/assets/posters/Coaching < > Unlimited.png',
+    coverImage: '/assets/posters/Coaching < > Sans Limites.png',
+    posterUrl: '/assets/posters/Coaching < > Sans Limites.png',
     teaserVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
     teaserDuration: '1:24',
     universes: [
@@ -638,7 +638,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         territory: 'Paris, Cotonou & Montréal'
       },
       {
-        name: 'Unlimited',
+        name: 'Sans Limites',
         tagline: 'L’effort brut, le franchissement d’obstacles et la transcendance du corps',
         description: 'La piste de course, le cœur qui bat à 180 pulsations, le saut au-dessus de la haie et le refus viscéral d’abandonner.',
         territory: 'Nairobi, Dakar & Lausanne'
@@ -2155,7 +2155,7 @@ export const PROTAGONISTS: Protagonist[] = [
     bio: 'Sensible aux vibrations et aux mémoires invisibles depuis son initiation au bord de la lagune sacrée de Ouidah, Mawuna capte les auras et les résonances intimes. Elle aide à réconcilier les mémoires blessées et à discerner les carrefours du destin.',
     photoUrl: '/assets/duos/mawuna-medium.jpg',
     documentaryId: 'other-eyes-sixth-sense',
-    universeTag: 'Sixth Sense',
+    universeTag: 'Third Eye',
     quote: '« L’invisible n’est pas une absence, c’est une présence trop subtile pour le regard distrait. Le cœur doit apprendre à écouter ce que les yeux ne peuvent enfermer. »',
     tree: {
       passeurs: [
@@ -2328,7 +2328,7 @@ export const PROTAGONISTS: Protagonist[] = [
     teaserVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
     quote: '« La haie n’est pas un mur : c’est une invitation à voler une fraction de seconde de plus. »',
     bio: 'Championne d’Afrique du 400m haies, Aïcha incarne la persévérance absolue et l’élégance du geste sous la pression des grands stades.',
-    universeTag: 'Unlimited',
+    universeTag: 'Sans Limites',
     centralQuestion: 'Jusqu’où le corps peut-il obéir à la soif infinie de transcendance ?',
     storiesCount: 5,
     transmissionsCount: 2,
@@ -2571,7 +2571,7 @@ export const DUOS: Duo[] = [
     id: 'duo-other-eyes-sixth-sense-01',
     slug: 'duo-other-eyes-sixth-sense-01',
     documentaryId: 'other-eyes-sixth-sense',
-    documentaryTitle: 'Other eyes < > Sixth sense',
+    documentaryTitle: 'Other Eyes < > Third Eye',
     episodeNumber: 'ÉPISODE 01',
     protagonistA: PROTAGONISTS.find(p => p.id === 'codjo-blind') || PROTAGONISTS[0],
     protagonistB: PROTAGONISTS.find(p => p.id === 'mawuna-medium') || PROTAGONISTS[1],
@@ -2580,7 +2580,7 @@ export const DUOS: Duo[] = [
     centralQuestion: '« Racontez-nous un moment où vous avez compris que vos yeux n’étaient pas nécessaires pour savoir exactement ce qui vous entourait. »',
     quoteA: '« Vos yeux s’arrêtent aux formes. Mes oreilles et ma peau pénètrent l’épaisseur vivante de l’air et la cadence secrète de la nuit. »',
     quoteB: '« L’invisible n’est pas une absence, c’est une présence subtile. Le cœur doit écouter ce que les yeux ne peuvent enfermer. »',
-    coverImage: '/assets/posters/Other eyes < > Sixth sense.png',
+    coverImage: '/assets/posters/Other Eyes < > Third Eye.png',
     storyA: (PROTAGONISTS.find(p => p.id === 'codjo-blind') || PROTAGONISTS[0]).stories[0],
     storyB: (PROTAGONISTS.find(p => p.id === 'mawuna-medium') || PROTAGONISTS[1]).stories[0],
     editorialReflection: 'Face à face entre celui qui navigue par le son et le toucher et celle qui décode les souffles invisibles : tous deux nous enseignent que voir le monde n’a jamais été une affaire de rétine, mais d’attention profonde à ce qui vibre.'
@@ -2589,7 +2589,7 @@ export const DUOS: Duo[] = [
     id: 'duo-coaching-unlimited-01',
     slug: 'duo-coaching-unlimited-01',
     documentaryId: 'coaching-unlimited',
-    documentaryTitle: 'Coaching < > Unlimited',
+    documentaryTitle: 'Coaching < > Sans Limites',
     episodeNumber: 'ÉPISODE 01',
     protagonistA: {
       id: 'coach-marc',
@@ -2638,7 +2638,7 @@ export const DUOS: Duo[] = [
       videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
       quote: '« La haie n’est pas un mur : c’est une invitation à voler une fraction de seconde de plus. »',
       bio: 'Athlète olympique en plein envol au-dessus des haies.',
-      universeTag: 'Unlimited',
+      universeTag: 'Sans Limites',
       centralQuestion: 'Jusqu’où le corps peut-il obéir à la soif infinie de transcendance ?',
       storiesCount: 5,
       transmissionsCount: 2,
@@ -2662,7 +2662,7 @@ export const DUOS: Duo[] = [
     centralQuestion: '« Racontez-nous un moment où vous avez cru que l’obstacle devant vous était trop haut pour être franchi. Qu’avez-vous trouvé en vous ? »',
     quoteA: '« Ce n’est jamais la hauteur de l’objectif qui paralyse, c’est le bruit de nos propres doutes. Dans ce bureau, on fait taire le vacarme pour entendre sa vraie puissance. »',
     quoteB: '« Quand tu es lancée à pleine vitesse et que la haie se dresse, tu ne peux plus hésiter. Tu dois faire confiance à ton impulsion et bondir. »',
-    coverImage: '/assets/posters/Coaching < > Unlimited.png',
+    coverImage: '/assets/posters/Coaching < > Sans Limites.png',
     storyA: {
       id: 'story-coach-marc-01',
       title: 'Le silence avant la décision',
@@ -3828,7 +3828,7 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
   },
   {
     seriesId: 'other-eyes-sixth-sense',
-    seriesTitle: 'Other Eyes < > Sixth Sense',
+    seriesTitle: 'Other Eyes < > Third Eye',
     subtitle: 'Voir autrement. Ressentir l’invisible.',
     description: 'Quand l’écoute vibratoire et la clairvoyance transcendent les limites du visible : une lignée de passeurs qui décodent les mémoires et le souffle du monde.',
     centralQuestion: 'La Perception',
@@ -3884,7 +3884,7 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
         territory: 'Ouidah & Abomey',
         country: 'Bénin',
         flag: '🇧🇯',
-        universeTag: 'Sixth Sense',
+        universeTag: 'Third Eye',
         photoUrl: '/assets/duos/mawuna-medium.jpg',
         isPioneer: true,
         badge: 'Première effigie',
@@ -3903,7 +3903,7 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
             territory: 'Ouidah',
             country: 'Bénin',
             flag: '🇧🇯',
-            universeTag: 'Sixth Sense',
+            universeTag: 'Third Eye',
             photoUrl: '/assets/duos/dah-zounon.jpg',
             badge: 'Invité(e)',
             invitedById: 'mawuna-medium',

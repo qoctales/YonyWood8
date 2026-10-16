@@ -929,7 +929,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
     {
       id: 'prod-6',
       seriesId: 'other-eyes-sixth-sense',
-      seriesTitle: 'Other Eyes < > Sixth Sense',
+      seriesTitle: 'Other Eyes < > Third Eye',
       sharesCount: 16,
       sharesOnSale: isOwner ? 6 : 6,
       startPrice: 42,
@@ -944,7 +944,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
       liquidityScore: 'Élevée',
       status: 'En tournage',
       videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-      posterUrl: '/assets/posters/other-eyes-sixth-sense.png'
+      posterUrl: '/assets/posters/Other Eyes < > Third Eye.png'
     }
   ]);
 

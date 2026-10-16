@@ -510,8 +510,8 @@ export const INITIAL_SERIES_ENVELOPES: SeriesEconomicEnvelope[] = [
   },
   {
     seriesId: 'other-eyes-sixth-sense',
-    seriesTitle: 'Other eyes < > Sixth sense',
-    coverImage: '/assets/posters/Other eyes < > Sixth sense.png',
+    seriesTitle: 'Other Eyes < > Third Eye',
+    coverImage: '/assets/posters/Other Eyes < > Third Eye.png',
     totalRaised: 12200,
     distributableEnvelope: 7320,
     distributedAmount: 1800,
@@ -532,8 +532,8 @@ export const INITIAL_SERIES_ENVELOPES: SeriesEconomicEnvelope[] = [
   },
   {
     seriesId: 'coaching-unlimited',
-    seriesTitle: 'Coaching < > Unlimited',
-    coverImage: '/assets/posters/coaching-unlimited.webp',
+    seriesTitle: 'Coaching < > Sans Limites',
+    coverImage: '/assets/posters/Coaching < > Sans Limites.png',
     totalRaised: 11500,
     distributableEnvelope: 6900,
     distributedAmount: 1450,
@@ -794,7 +794,7 @@ export const INITIAL_COOPTATIONS: CooptationItem[] = [
   {
     id: 'coopt-5',
     seriesId: 'coaching-unlimited',
-    seriesTitle: 'Coaching < > Unlimited',
+    seriesTitle: 'Coaching < > Sans Limites',
     referentId: 'usr-admin-romeo',
     referentName: 'Romeo Nonvide',
     referentRole: 'Référent de Cooptation',

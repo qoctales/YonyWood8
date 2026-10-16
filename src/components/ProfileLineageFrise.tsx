@@ -354,15 +354,12 @@ export const ProfileLineageFrise: React.FC<ProfileLineageFriseProps> = ({
               </button>
             )}
 
-            {/* BAS : Prénom + Âge en dessous à gauche (surélevé et sans coupure de lettre) & Boutons à droite */}
+            {/* BAS : Prénom (surélevé et sans coupure de lettre) & Boutons à droite */}
             <div className="relative z-20 p-5 sm:p-6 pb-8 sm:pb-9 flex items-end justify-between pointer-events-auto mt-auto">
               <div className="text-left font-sans">
                 <h3 className="font-editorial text-2xl sm:text-3xl font-bold text-white tracking-tight leading-tight pb-0.5 drop-shadow-md">
                   {videoModalMember.firstName || videoModalMember.name.split(' ')[0]}
                 </h3>
-                <p className="text-xs sm:text-sm text-stone-300 mt-1.5 font-medium drop-shadow">
-                  {videoModalMember.age ? `${videoModalMember.age} ans` : '42 ans'}
-                </p>
               </div>
 
               <div className="flex flex-col items-center gap-2.5 sm:gap-3 shrink-0">

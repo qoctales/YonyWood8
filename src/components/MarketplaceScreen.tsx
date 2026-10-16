@@ -85,21 +85,21 @@ const PRODUCTIONS: ProductionPoster[] = [
   },
   {
     id: 'other-eyes-sixth-sense',
-    title: 'Other eyes < > Sixth sense',
-    posterImage: '/assets/posters/Other eyes < > Sixth sense.png',
+    title: 'Other Eyes < > Third Eye',
+    posterImage: '/assets/posters/Other Eyes < > Third Eye.png',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
     sharePrice: 55
   },
   {
     id: 'coaching-unlimited',
-    title: 'Coaching < > Unlimited',
-    posterImage: '/assets/posters/Coaching < > Unlimited.png',
+    title: 'Coaching < > Sans Limites',
+    posterImage: '/assets/posters/Coaching < > Sans Limites.png',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
     sharePrice: 65
   },
   {
     id: 'focus-phd',
-    title: 'Focus < >  PhD',
+    title: 'Focus < > PhD',
     posterImage: '/assets/posters/Focus < >  PhD.jpg',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
     sharePrice: 58
@@ -167,8 +167,8 @@ const INITIAL_PEER_OFFERS: PeerOffer[] = [
     sellerId: 'codjo-voyant',
     sellerName: 'Codjo',
     sellerPhoto: '/assets/duos/codjo-blind.jpg',
-    seriesTitle: 'Other eyes < > Sixth sense',
-    posterImage: '/assets/posters/Other eyes < > Sixth sense.png',
+    seriesTitle: 'Other Eyes < > Third Eye',
+    posterImage: '/assets/posters/Other Eyes < > Third Eye.png',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
     sharesCount: 4,
     unitPrice: 59
@@ -178,8 +178,8 @@ const INITIAL_PEER_OFFERS: PeerOffer[] = [
     sellerId: 'coach-marc-seller',
     sellerName: 'Marc',
     sellerPhoto: '/assets/duos/coach-office.jpg',
-    seriesTitle: 'Coaching < > Unlimited',
-    posterImage: '/assets/posters/Coaching < > Unlimited.png',
+    seriesTitle: 'Coaching < > Sans Limites',
+    posterImage: '/assets/posters/Coaching < > Sans Limites.png',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
     sharesCount: 6,
     unitPrice: 65

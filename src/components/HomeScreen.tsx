@@ -284,9 +284,6 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigate }) => {
                             <h5 className="font-sans text-base font-bold text-[#FFFFFF] group-hover:text-[#C89B3C] transition-colors">
                               {pioneer.name}
                             </h5>
-                            <span className="text-xs font-mono text-[#C89B3C] bg-white/10 px-2 py-0.5 rounded-full">
-                              {pioneer.age} ans
-                            </span>
                           </div>
 
                           <p className="text-xs text-[#E7E5E4] font-light">
@@ -355,9 +352,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigate }) => {
                                     <h6 className="font-sans text-sm font-bold text-[#1C1917] group-hover:text-[#8B6845] transition-colors">
                                       {level2Person.name}
                                     </h6>
-                                    <span className="text-[11px] font-mono text-[#78716C]">
-                                      ({level2Person.age} ans)
-                                    </span>
+
                                   </div>
                                   <span className="text-[10px] font-semibold bg-[#C89B3C]/15 text-[#8B6845] px-2 py-0.5 rounded-full">
                                     Invité(e)
@@ -414,9 +409,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigate }) => {
                                           <h6 className="font-sans text-xs font-bold text-[#1C1917] group-hover:text-[#8B6845]">
                                             {level3Person.name}
                                           </h6>
-                                          <span className="text-[10px] font-mono text-[#78716C]">
-                                            ({level3Person.age} ans)
-                                          </span>
+
                                         </div>
                                         <span className="text-[10px] text-[#8B6845]">{level3Person.flag}</span>
                                       </div>
@@ -519,7 +512,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigate }) => {
                         {duo.protagonistA.name}
                       </h4>
                       <p className="text-[11px] text-[#78716C] font-mono">
-                        {duo.protagonistA.age ? `${duo.protagonistA.age} ans` : ''} • {duo.protagonistA.territory}
+                        {duo.protagonistA.territory}
                       </p>
                     </div>
                   </div>
@@ -545,7 +538,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigate }) => {
                         {duo.protagonistB.name}
                       </h4>
                       <p className="text-[11px] text-[#78716C] font-mono">
-                        {duo.protagonistB.age ? `${duo.protagonistB.age} ans` : ''} • {duo.protagonistB.territory}
+                        {duo.protagonistB.territory}
                       </p>
                     </div>
                   </div>
@@ -621,9 +614,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigate }) => {
                     <h4 className="font-sans text-lg font-bold text-[#1C1917]">
                       {inspectedPerson.name}
                     </h4>
-                    <span className="text-xs font-mono font-semibold text-[#8B6845] bg-[#C89B3C]/15 px-2 py-0.5 rounded-full">
-                      {inspectedPerson.age} ans
-                    </span>
+
                     <span className="text-base">{inspectedPerson.flag}</span>
                   </div>
                   <p className="text-xs text-[#57534E]">
@@ -693,7 +684,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigate }) => {
                       <span key={p.id} className="text-xs px-2.5 py-1 rounded-full bg-[#F5F5F4] text-[#1C1917] font-medium flex items-center gap-1">
                         <span>{p.flag}</span>
                         <span>{p.name}</span>
-                        <span className="text-[#78716C]">({p.age} ans)</span>
+                        
                       </span>
                     ))}
                   </div>

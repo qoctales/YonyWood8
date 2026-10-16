@@ -586,9 +586,6 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       <h3 className="font-editorial text-base sm:text-2xl font-bold text-white tracking-tight leading-tight pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors truncate">
                         {pA.name.split(' ')[0]}
                       </h3>
-                      <p className="text-[11px] sm:text-xs text-stone-300 mt-1.5 font-medium drop-shadow flex items-center gap-1.5">
-                        <span>{pA.age ? `${pA.age} ans` : '46 ans'}</span>
-                      </p>
                     </div>
                   </div>
 
@@ -753,9 +750,6 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       <h3 className="font-editorial text-base sm:text-2xl font-bold text-white tracking-tight leading-tight pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors truncate">
                         {pB.name.split(' ')[0]}
                       </h3>
-                      <p className="text-[11px] sm:text-xs text-stone-300 mt-1.5 font-medium drop-shadow flex items-center gap-1.5">
-                        <span>{pB.age ? `${pB.age} ans` : '46 ans'}</span>
-                      </p>
                     </div>
                   </div>
 
@@ -942,9 +936,6 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       <h3 className="font-editorial text-2xl sm:text-3xl font-bold text-white tracking-tight leading-tight pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors truncate">
                         {pA.name.split(' ')[0]}
                       </h3>
-                      <p className="text-xs sm:text-sm text-stone-300 mt-1.5 font-medium drop-shadow flex items-center gap-1.5">
-                        <span>{pA.age ? `${pA.age} ans` : '46 ans'}</span>
-                      </p>
                     </div>
                     </div>
                   ) : (
@@ -1122,9 +1113,6 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       <h3 className="font-editorial text-2xl sm:text-3xl font-bold text-white tracking-tight leading-tight pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors truncate">
                         {pB.name.split(' ')[0]}
                       </h3>
-                      <p className="text-xs sm:text-sm text-stone-300 mt-1.5 font-medium drop-shadow flex items-center gap-1.5">
-                        <span>{pB.age ? `${pB.age} ans` : '46 ans'}</span>
-                      </p>
                     </div>
                     </div>
                   )}

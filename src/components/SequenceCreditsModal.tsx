@@ -129,7 +129,6 @@ export const SequenceCreditsModal: React.FC<SequenceCreditsModalProps> = ({
                         </h4>
                         <p className="text-xs text-stone-400">
                           {member.roleOrCharacter}
-                          {member.age ? ` · ${member.age} ans` : ''}
                         </p>
                       </div>
                     </div>

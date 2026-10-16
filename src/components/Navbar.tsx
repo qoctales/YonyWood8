@@ -30,7 +30,14 @@ export const Navbar: React.FC<NavbarProps> = ({ currentScreen, onNavigate }) => 
           className="flex items-center cursor-pointer group select-none py-1"
           id="nav-logo"
         >
-          <YonyWoodLogo className="h-7 sm:h-8 w-auto select-none group-hover:opacity-90 transition-opacity" />
+          <img 
+            src="/logo%20YonyWood.png?v=5" 
+            alt="YonyWood" 
+            className="h-7 sm:h-8 w-auto object-contain mix-blend-multiply select-none group-hover:opacity-90 transition-opacity"
+            onError={(e) => {
+              (e.currentTarget as HTMLImageElement).src = '/logo-yonywood-clean.png?v=5';
+            }}
+          />
         </div>
 
         {/* Essential Navigation Links */}

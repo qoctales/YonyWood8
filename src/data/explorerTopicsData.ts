@@ -115,10 +115,10 @@ const seriesList: ExplorerCatalogItem[] = [
   {
     "id": "other-eyes-sixth-sense",
     "category": "series",
-    "title": "Other Eyes < > Sixth Sense",
+    "title": "Other Eyes < > Third Eye",
     "subtitle": "La perception intuitive et les mémoires subtiles du vivant.",
     "question": "Comment développez-vous l’écoute intérieure et la sensibilité aux énergies invisibles ?",
-    "photoUrl": "/assets/posters/other-eyes-sixth-sense.png",
+    "photoUrl": "/assets/posters/Other Eyes < > Third Eye.png",
     "badge": "16 pionniers cooptés",
     "accentColor": "#8B5CF6",
     "iconName": "16-series/other-eyes-sixth-sense"
@@ -126,10 +126,10 @@ const seriesList: ExplorerCatalogItem[] = [
   {
     "id": "coaching-unlimited",
     "category": "series",
-    "title": "Coaching < > Unlimited",
+    "title": "Coaching < > Sans Limites",
     "subtitle": "L’exigence du mentor dans son bureau < > l’envol d’un athlète sur les haies.",
     "question": "Racontez-nous un moment où vous avez cru que l’obstacle devant vous était trop haut pour être franchi. Qu’avez-vous trouvé en vous ?",
-    "photoUrl": "/assets/posters/coaching-unlimited.png",
+    "photoUrl": "/assets/posters/Coaching < > Sans Limites.png",
     "badge": "16 pionniers cooptés",
     "accentColor": "#EA580C",
     "iconName": "16-series/coaching-unlimited"
@@ -137,7 +137,7 @@ const seriesList: ExplorerCatalogItem[] = [
   {
     "id": "focus-phd",
     "category": "series",
-    "title": "Focus < >  PhD",
+    "title": "Focus < > PhD",
     "subtitle": "Le regard sensible qui capte l’instant < > la rigueur de la recherche qui sonde l’universel.",
     "question": "Quel a été ce moment précis où votre travail a fait surgir une vérité qui a transformé votre regard ?",
     "photoUrl": "/assets/posters/Focus < >  PhD.jpg",

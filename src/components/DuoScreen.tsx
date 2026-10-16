@@ -133,11 +133,6 @@ export const DuoScreen: React.FC<DuoScreenProps> = ({ duoId, onNavigate }) => {
                     <h3 className="font-editorial text-xl sm:text-2xl font-bold text-[#1C1917] tracking-tight leading-tight pb-0.5">
                       {duo.protagonistA.name.split(' ')[0]}
                     </h3>
-                    {duo.protagonistA.age && (
-                      <p className="text-xs sm:text-sm text-[#8B6845] font-medium font-sans">
-                        {duo.protagonistA.age} ans
-                      </p>
-                    )}
                     <button
                       onClick={() => onNavigate({ type: 'protagonist_profile', protagonistId: duo.protagonistA.id })}
                       className="inline-flex items-center gap-1 text-xs text-[#C89B3C] hover:underline pt-1 font-semibold"
@@ -244,11 +239,6 @@ export const DuoScreen: React.FC<DuoScreenProps> = ({ duoId, onNavigate }) => {
                     <h3 className="font-editorial text-xl sm:text-2xl font-bold text-[#1C1917] tracking-tight leading-tight pb-0.5">
                       {duo.protagonistB.name.split(' ')[0]}
                     </h3>
-                    {duo.protagonistB.age && (
-                      <p className="text-xs sm:text-sm text-[#8B6845] font-medium font-sans">
-                        {duo.protagonistB.age} ans
-                      </p>
-                    )}
                     <button
                       onClick={() => onNavigate({ type: 'protagonist_profile', protagonistId: duo.protagonistB.id })}
                       className="inline-flex items-center gap-1 text-xs text-[#C89B3C] hover:underline pt-1 font-semibold"

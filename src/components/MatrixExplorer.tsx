@@ -1604,24 +1604,14 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
                           />
                           <text 
                             x="0" 
-                            y="0" 
+                            y="3" 
                             textAnchor="middle" 
                             fill="#FDFBF7" 
-                            fontSize="9" 
+                            fontSize="9.5" 
                             fontWeight="600"
                             fontFamily="sans-serif"
                           >
                             {node.person.firstName || node.person.name.split(' ')[0]}
-                          </text>
-                          <text 
-                            x="0" 
-                            y="9.5" 
-                            textAnchor="middle" 
-                            fill="#D6D3D1" 
-                            fontSize="7.5" 
-                            fontFamily="sans-serif"
-                          >
-                            {node.person.age ? `${node.person.age} ans` : '42 ans'}
                           </text>
                         </g>
                       </g>
@@ -1915,9 +1905,6 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
                 <h3 className="font-editorial text-2xl sm:text-3xl font-bold text-white tracking-tight leading-tight pb-0.5 drop-shadow-md group-hover/profile:text-[#FFE7A3] transition-colors">
                   {modalPerson.firstName || modalPerson.name.split(' ')[0]}
                 </h3>
-                <p className="text-xs sm:text-sm text-stone-300 mt-1.5 font-medium drop-shadow flex items-center gap-1.5">
-                  <span>{modalPerson.age ? `${modalPerson.age} ans` : '46 ans'}</span>
-                </p>
               </div>
             </div>
 
