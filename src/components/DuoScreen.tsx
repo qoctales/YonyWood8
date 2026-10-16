@@ -130,11 +130,11 @@ export const DuoScreen: React.FC<DuoScreenProps> = ({ duoId, onNavigate }) => {
                   </div>
 
                   <div className="text-center sm:text-left space-y-0.5 font-sans">
-                    <h3 className="text-lg sm:text-xl font-bold text-[#1C1917] tracking-tight">
+                    <h3 className="font-editorial text-xl sm:text-2xl font-bold text-[#1C1917] tracking-tight leading-tight pb-0.5">
                       {duo.protagonistA.name.split(' ')[0]}
                     </h3>
                     {duo.protagonistA.age && (
-                      <p className="text-xs sm:text-sm text-[#8B6845] font-normal">
+                      <p className="text-xs sm:text-sm text-[#8B6845] font-medium font-sans">
                         {duo.protagonistA.age} ans
                       </p>
                     )}
@@ -241,11 +241,11 @@ export const DuoScreen: React.FC<DuoScreenProps> = ({ duoId, onNavigate }) => {
                   </div>
 
                   <div className="text-center sm:text-left space-y-0.5 font-sans">
-                    <h3 className="text-lg sm:text-xl font-bold text-[#1C1917] tracking-tight">
+                    <h3 className="font-editorial text-xl sm:text-2xl font-bold text-[#1C1917] tracking-tight leading-tight pb-0.5">
                       {duo.protagonistB.name.split(' ')[0]}
                     </h3>
                     {duo.protagonistB.age && (
-                      <p className="text-xs sm:text-sm text-[#8B6845] font-normal">
+                      <p className="text-xs sm:text-sm text-[#8B6845] font-medium font-sans">
                         {duo.protagonistB.age} ans
                       </p>
                     )}

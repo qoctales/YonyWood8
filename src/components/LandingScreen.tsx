@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { ViewScreen } from '../types';
 import { AuthModal } from './AuthModal';
+import { YonyWoodLogo } from './YonywoodBrandIcons';
 import onboardingFirstLook from '../assets/images/onboarding_first_look_1790631851496.jpg';
 import onboardingHowWorks from '../assets/images/onboarding_how_works_1790631863873.jpg';
 import onboardingCoCreate from '../assets/images/onboarding_co_create_1790631875973.jpg';
@@ -212,14 +213,7 @@ export const LandingScreen: React.FC<LandingScreenProps> = ({ onNavigate }) => {
         
         {/* Gauche : Logo officiel YonyWood (taille équilibrée mobile et web) */}
         <div className="flex items-center flex-1 justify-start">
-          <img 
-            src="/logo%20YonyWood.png?v=4" 
-            alt="YonyWood" 
-            className="h-8 sm:h-10 md:h-12 w-auto object-contain mix-blend-multiply select-none transition-all"
-            onError={(e) => {
-              (e.currentTarget as HTMLImageElement).src = '/logo-yonywood-clean.png?v=4';
-            }}
-          />
+          <YonyWoodLogo className="h-8 sm:h-10 md:h-12 w-auto select-none transition-all" />
         </div>
 
         {/* Milieu : Slogan centré au milieu du header (affiché sur Web / Desktop) */}

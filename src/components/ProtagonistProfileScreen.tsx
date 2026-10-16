@@ -219,13 +219,13 @@ export const ProtagonistProfileScreen: React.FC<ProtagonistProfileScreenProps> =
               />
             </div>
 
-            {/* Prénom plus petit, sans-serif, avec l'âge en dessous */}
+            {/* Prénom et âge harmonisés avec les cartes vidéo, sans coupure de lettre */}
             <div className="mt-2 text-center">
-              <h2 className="text-base font-bold text-[#1C1917] tracking-tight">
+              <h2 className="font-editorial text-xl sm:text-2xl font-bold text-[#1C1917] tracking-tight leading-tight pb-0.5">
                 {protagonist.name.split(' ')[0]}
               </h2>
               {protagonist.age && (
-                <p className="text-xs text-[#8B6845] font-normal font-sans">
+                <p className="text-xs sm:text-sm text-[#8B6845] font-medium font-sans mt-1">
                   {protagonist.age} ans
                 </p>
               )}
@@ -281,11 +281,11 @@ export const ProtagonistProfileScreen: React.FC<ProtagonistProfileScreenProps> =
                 className="w-full h-full object-cover rounded-full"
               />
             </div>
-            <h2 className="text-base font-bold text-[#1C1917] tracking-tight mt-2">
+            <h2 className="font-editorial text-xl sm:text-2xl font-bold text-[#1C1917] tracking-tight leading-tight pb-0.5 mt-2">
               {protagonist.name.split(' ')[0]}
             </h2>
             {protagonist.age && (
-              <p className="text-xs text-[#8B6845] font-normal font-sans">
+              <p className="text-xs sm:text-sm text-[#8B6845] font-medium font-sans mt-1">
                 {protagonist.age} ans
               </p>
             )}

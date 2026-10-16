@@ -181,7 +181,7 @@ export const ProtagonistTeaserModal: React.FC<ProtagonistTeaserModalProps> = ({
         <div className="relative z-10 space-y-3.5 pt-4">
           <div className="space-y-1.5">
             <div className="flex items-center gap-2">
-              <h3 className="font-editorial text-xl sm:text-2xl font-bold text-white tracking-tight">
+              <h3 className="font-editorial text-xl sm:text-2xl font-bold text-white tracking-tight leading-tight pb-0.5">
                 {protagonist.name}
               </h3>
               {protagonist.flag && <span className="text-base">{protagonist.flag}</span>}

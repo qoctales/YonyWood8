@@ -568,9 +568,9 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       </button>
                     </div>
 
-                    {/* BAS : Prénom + Âge en dessous uniquement (exactement comme sur les cartes protagonistes) */}
+                    {/* BAS : Prénom + Âge en dessous uniquement (surélevé et sans coupure de lettre) */}
                     <div 
-                      className="relative z-20 p-2.5 sm:p-4.5 flex flex-col pointer-events-auto cursor-pointer group/title mt-auto"
+                      className="relative z-20 p-2.5 sm:p-4.5 pb-4 sm:pb-6 flex flex-col pointer-events-auto cursor-pointer group/title mt-auto"
                       onClick={(e) => {
                         e.stopPropagation();
                         onNavigate({
@@ -583,10 +583,10 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       }}
                       title={`Découvrir le profil de ${pA.name}`}
                     >
-                      <h3 className="font-editorial text-base sm:text-2xl font-bold text-white tracking-tight leading-none drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors truncate">
+                      <h3 className="font-editorial text-base sm:text-2xl font-bold text-white tracking-tight leading-tight pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors truncate">
                         {pA.name.split(' ')[0]}
                       </h3>
-                      <p className="text-[11px] sm:text-xs text-stone-300 mt-1 font-medium drop-shadow flex items-center gap-1.5">
+                      <p className="text-[11px] sm:text-xs text-stone-300 mt-1.5 font-medium drop-shadow flex items-center gap-1.5">
                         <span>{pA.age ? `${pA.age} ans` : '46 ans'}</span>
                       </p>
                     </div>
@@ -735,9 +735,9 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       </button>
                     </div>
 
-                    {/* BAS : Prénom + Âge en dessous uniquement (exactement comme sur les cartes protagonistes) */}
+                    {/* BAS : Prénom + Âge en dessous uniquement (surélevé et sans coupure de lettre) */}
                     <div 
-                      className="relative z-20 p-2.5 sm:p-4.5 flex flex-col pointer-events-auto cursor-pointer group/title mt-auto"
+                      className="relative z-20 p-2.5 sm:p-4.5 pb-4 sm:pb-6 flex flex-col pointer-events-auto cursor-pointer group/title mt-auto"
                       onClick={(e) => {
                         e.stopPropagation();
                         onNavigate({
@@ -750,10 +750,10 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       }}
                       title={`Découvrir le profil de ${pB.name}`}
                     >
-                      <h3 className="font-editorial text-base sm:text-2xl font-bold text-white tracking-tight leading-none drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors truncate">
+                      <h3 className="font-editorial text-base sm:text-2xl font-bold text-white tracking-tight leading-tight pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors truncate">
                         {pB.name.split(' ')[0]}
                       </h3>
-                      <p className="text-[11px] sm:text-xs text-stone-300 mt-1 font-medium drop-shadow flex items-center gap-1.5">
+                      <p className="text-[11px] sm:text-xs text-stone-300 mt-1.5 font-medium drop-shadow flex items-center gap-1.5">
                         <span>{pB.age ? `${pB.age} ans` : '46 ans'}</span>
                       </p>
                     </div>
@@ -924,9 +924,9 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       </button>
                     </div>
 
-                    {/* BAS : Prénom + Âge en dessous uniquement (exactement comme sur les cartes protagonistes) */}
+                    {/* BAS : Prénom + Âge en dessous uniquement (surélevé et sans coupure de lettre) */}
                     <div 
-                      className="relative z-20 p-4 sm:p-5 flex flex-col pointer-events-auto cursor-pointer group/title mt-auto"
+                      className="relative z-20 p-4 sm:p-5 pb-7 sm:pb-9 flex flex-col pointer-events-auto cursor-pointer group/title mt-auto"
                       onClick={(e) => {
                         e.stopPropagation();
                         onNavigate({
@@ -939,10 +939,10 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       }}
                       title={`Découvrir le profil de ${pA.name}`}
                     >
-                      <h3 className="font-editorial text-2xl sm:text-3xl font-bold text-white tracking-tight leading-none drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors truncate">
+                      <h3 className="font-editorial text-2xl sm:text-3xl font-bold text-white tracking-tight leading-tight pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors truncate">
                         {pA.name.split(' ')[0]}
                       </h3>
-                      <p className="text-xs sm:text-sm text-stone-300 mt-1 font-medium drop-shadow flex items-center gap-1.5">
+                      <p className="text-xs sm:text-sm text-stone-300 mt-1.5 font-medium drop-shadow flex items-center gap-1.5">
                         <span>{pA.age ? `${pA.age} ans` : '46 ans'}</span>
                       </p>
                     </div>
@@ -1104,9 +1104,9 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       </button>
                     </div>
 
-                    {/* BAS : Prénom + Âge en dessous uniquement (exactement comme sur les cartes protagonistes) */}
+                    {/* BAS : Prénom + Âge en dessous uniquement (surélevé et sans coupure de lettre) */}
                     <div 
-                      className="relative z-20 p-4 sm:p-5 flex flex-col pointer-events-auto cursor-pointer group/title mt-auto"
+                      className="relative z-20 p-4 sm:p-5 pb-7 sm:pb-9 flex flex-col pointer-events-auto cursor-pointer group/title mt-auto"
                       onClick={(e) => {
                         e.stopPropagation();
                         onNavigate({
@@ -1119,10 +1119,10 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       }}
                       title={`Découvrir le profil de ${pB.name}`}
                     >
-                      <h3 className="font-editorial text-2xl sm:text-3xl font-bold text-white tracking-tight leading-none drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors truncate">
+                      <h3 className="font-editorial text-2xl sm:text-3xl font-bold text-white tracking-tight leading-tight pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors truncate">
                         {pB.name.split(' ')[0]}
                       </h3>
-                      <p className="text-xs sm:text-sm text-stone-300 mt-1 font-medium drop-shadow flex items-center gap-1.5">
+                      <p className="text-xs sm:text-sm text-stone-300 mt-1.5 font-medium drop-shadow flex items-center gap-1.5">
                         <span>{pB.age ? `${pB.age} ans` : '46 ans'}</span>
                       </p>
                     </div>

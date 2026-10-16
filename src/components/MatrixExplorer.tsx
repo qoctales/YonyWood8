@@ -1902,8 +1902,8 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
               </div>
             </div>
 
-            {/* BAS : Prénom + Âge en dessous uniquement */}
-            <div className="relative z-20 p-5 sm:p-6 flex items-end justify-between pointer-events-auto mt-auto">
+            {/* BAS : Prénom + Âge en dessous (surélevé et sans coupure de lettre) */}
+            <div className="relative z-20 p-5 sm:p-6 pb-8 sm:pb-9 flex items-end justify-between pointer-events-auto mt-auto">
               <div 
                 className="text-left font-sans cursor-pointer group/profile hover:opacity-95 transition-opacity"
                 onClick={(e) => {
@@ -1912,10 +1912,10 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
                 }}
                 title="Découvrir son univers complet"
               >
-                <h3 className="font-editorial text-2xl sm:text-3xl font-bold text-white tracking-tight leading-none drop-shadow-md group-hover/profile:text-[#FFE7A3] transition-colors">
+                <h3 className="font-editorial text-2xl sm:text-3xl font-bold text-white tracking-tight leading-tight pb-0.5 drop-shadow-md group-hover/profile:text-[#FFE7A3] transition-colors">
                   {modalPerson.firstName || modalPerson.name.split(' ')[0]}
                 </h3>
-                <p className="text-xs sm:text-sm text-stone-300 mt-1 font-medium drop-shadow flex items-center gap-1.5">
+                <p className="text-xs sm:text-sm text-stone-300 mt-1.5 font-medium drop-shadow flex items-center gap-1.5">
                   <span>{modalPerson.age ? `${modalPerson.age} ans` : '46 ans'}</span>
                 </p>
               </div>

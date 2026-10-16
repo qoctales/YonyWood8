@@ -6,7 +6,7 @@ import {
   X
 } from 'lucide-react';
 import { ViewScreen } from '../types';
-import { YonywoodLogoIcon } from './YonywoodBrandIcons';
+import { YonywoodLogoIcon, YonyWoodLogo } from './YonywoodBrandIcons';
 
 interface NavbarProps {
   currentScreen: ViewScreen;
@@ -30,14 +30,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentScreen, onNavigate }) => 
           className="flex items-center cursor-pointer group select-none py-1"
           id="nav-logo"
         >
-          <img 
-            src="/logo%20YonyWood.png?v=4" 
-            alt="YonyWood" 
-            className="h-7 sm:h-8 w-auto object-contain mix-blend-multiply select-none group-hover:opacity-90 transition-opacity"
-            onError={(e) => {
-              (e.currentTarget as HTMLImageElement).src = '/logo-yonywood-clean.png?v=4';
-            }}
-          />
+          <YonyWoodLogo className="h-7 sm:h-8 w-auto select-none group-hover:opacity-90 transition-opacity" />
         </div>
 
         {/* Essential Navigation Links */}
