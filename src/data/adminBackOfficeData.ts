@@ -593,7 +593,7 @@ export const INITIAL_PRODUCER_DOSSIERS: ProducerDossier[] = [
     supportedSeries: [
       {
         seriesId: 'investors-builders',
-        seriesTitle: 'Investors < > Builders',
+        seriesTitle: 'Diasporas < > Makers',
         proposedAmount: 12000,
         committedAmount: 10000,
         receivedAmount: 10000,
@@ -604,7 +604,7 @@ export const INITIAL_PRODUCER_DOSSIERS: ProducerDossier[] = [
       },
       {
         seriesId: 'dixeat-fiat-luxe',
-        seriesTitle: 'E Vivi < > Fiat Luxe',
+        seriesTitle: 'Fiat Luxe < > Street',
         proposedAmount: 13000,
         committedAmount: 10000,
         receivedAmount: 8000,
@@ -619,7 +619,7 @@ export const INITIAL_PRODUCER_DOSSIERS: ProducerDossier[] = [
         id: 'payout-1',
         date: '2026-03-22',
         amount: 1450,
-        seriesTitle: 'Investors < > Builders',
+        seriesTitle: 'Diasporas < > Makers',
         status: 'PAYE',
         bankRef: 'VIR-SEPA-YW-882194'
       },
@@ -627,7 +627,7 @@ export const INITIAL_PRODUCER_DOSSIERS: ProducerDossier[] = [
         id: 'payout-2',
         date: '2026-03-25',
         amount: 800,
-        seriesTitle: 'E Vivi < > Fiat Luxe',
+        seriesTitle: 'Fiat Luxe < > Street',
         status: 'PAYE',
         bankRef: 'VIR-SEPA-YW-882201'
       },
@@ -635,7 +635,7 @@ export const INITIAL_PRODUCER_DOSSIERS: ProducerDossier[] = [
         id: 'payout-3',
         date: '2026-10-15',
         amount: 2000,
-        seriesTitle: 'Investors < > Builders',
+        seriesTitle: 'Diasporas < > Makers',
         status: 'EN_ATTENTE',
         bankRef: 'EN_ATTENTE_ORDRE'
       }
@@ -705,7 +705,7 @@ export const INITIAL_PRODUCER_DOSSIERS: ProducerDossier[] = [
     supportedSeries: [
       {
         seriesId: 'finagnon-qosqorico',
-        seriesTitle: 'Finagnon < > Qosqorico',
+        seriesTitle: 'Benin < > ...',
         proposedAmount: 10000,
         committedAmount: 7500,
         receivedAmount: 5000,
@@ -741,7 +741,7 @@ export const INITIAL_COOPTATIONS: CooptationItem[] = [
   {
     id: 'coopt-2',
     seriesId: 'finagnon-qosqorico',
-    seriesTitle: 'Finagnon < > Qosqorico',
+    seriesTitle: 'Benin < > ...',
     referentId: 'usr-creator-amina',
     referentName: 'Amina Traoré',
     referentRole: 'Égérie Référente',
@@ -776,7 +776,7 @@ export const INITIAL_COOPTATIONS: CooptationItem[] = [
   {
     id: 'coopt-4',
     seriesId: 'investors-builders',
-    seriesTitle: 'Investors < > Builders',
+    seriesTitle: 'Diasporas < > Makers',
     referentId: 'usr-coopt-malik',
     referentName: 'Malik Diop',
     referentRole: 'Membre Coopté Saint-Louis',
@@ -818,7 +818,7 @@ export const INITIAL_ADVERTISING_CAMPAIGNS: AdvertisingCampaign[] = [
     targetThematiqueId: 'th-competences',
     targetThematiqueTitle: 'Compétences & Métiers d\'Art',
     targetSeriesId: 'dixeat-fiat-luxe',
-    targetSeriesTitle: 'E Vivi < > Fiat Luxe',
+    targetSeriesTitle: 'Fiat Luxe < > Street',
     format: 'HABILLAGE_THEME',
     budgetCommitted: 12500,
     budgetConsumed: 7800,
@@ -850,7 +850,7 @@ export const INITIAL_ADVERTISING_CAMPAIGNS: AdvertisingCampaign[] = [
     title: 'Campagne Agroécologie Transatlantique',
     brandName: 'BioTerroirs International',
     targetSeriesId: 'finagnon-qosqorico',
-    targetSeriesTitle: 'Finagnon < > Qosqorico',
+    targetSeriesTitle: 'Benin < > ...',
     format: 'SPOT_PRE_ROLL',
     budgetCommitted: 6000,
     budgetConsumed: 1200,
@@ -926,7 +926,7 @@ export const INITIAL_AUDIT_LOGS: AdminAuditLog[] = [
     action: 'Validation de versement de dividendes',
     targetId: 'payout-1',
     targetTitle: 'Versement 1 450 € — Culture Invest',
-    justification: 'Palier d\'audience 90k dépassé sur Investors < > Builders, ordre de virement SEPA émis.'
+    justification: 'Palier d\'audience 90k dépassé sur Diasporas < > Makers, ordre de virement SEPA émis.'
   },
   {
     id: 'log-5',
@@ -938,7 +938,7 @@ export const INITIAL_AUDIT_LOGS: AdminAuditLog[] = [
     action: 'Approbation de cooptation et activation de filiation',
     targetId: 'coopt-2',
     targetTitle: 'Sayri Quispe (Parrainé par Amina Traoré)',
-    justification: 'Filiation 2% activée sur la série Finagnon < > Qosqorico après contrôle d\'identité.'
+    justification: 'Filiation 2% activée sur la série Benin < > ... après contrôle d\'identité.'
   }
 ];
 

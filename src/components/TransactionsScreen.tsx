@@ -115,13 +115,13 @@ export const TransactionsScreen: React.FC<TransactionsScreenProps> = ({
     {
       id: 'share-1',
       seriesId: 'finagnon-qosqorico',
-      seriesTitle: 'Finagnon < > Qosqorico',
+      seriesTitle: 'Benin < > ...',
       sharesCount: 10,
       sharesOnSale: 2,
       acquiredPrice: 35,
       currentValue: 42,
       lastDividend: 4.80,
-      posterUrl: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80'
+      posterUrl: '/assets/posters/Benin < >.jpg'
     },
     {
       id: 'share-2',

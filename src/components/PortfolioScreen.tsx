@@ -54,7 +54,7 @@ export const PortfolioScreen: React.FC<PortfolioScreenProps> = ({
     {
       id: 'prod-1',
       seriesId: 'finagnon-qosqorico',
-      seriesTitle: 'Finagnon < > Qosqorico',
+      seriesTitle: 'Benin < > ...',
       sharesCount: 10,
       sharesOnSale: 2,
       startPrice: 35,
@@ -111,7 +111,7 @@ export const PortfolioScreen: React.FC<PortfolioScreenProps> = ({
     {
       id: 'prod-4',
       seriesId: 'dixeat-fiat-luxe',
-      seriesTitle: 'E Vivi < > Fiat Luxe',
+      seriesTitle: 'Fiat Luxe < > Street',
       sharesCount: 6,
       sharesOnSale: 2,
       startPrice: 45,
@@ -130,7 +130,7 @@ export const PortfolioScreen: React.FC<PortfolioScreenProps> = ({
     {
       id: 'prod-5',
       seriesId: 'investors-builders',
-      seriesTitle: 'Investors < > Builders',
+      seriesTitle: 'Diasporas < > Makers',
       sharesCount: 12,
       sharesOnSale: 4,
       startPrice: 50,
@@ -172,7 +172,7 @@ export const PortfolioScreen: React.FC<PortfolioScreenProps> = ({
     {
       id: 'tx-1',
       seriesId: 'finagnon-qosqorico',
-      seriesTitle: 'Finagnon < > Qosqorico',
+      seriesTitle: 'Benin < > ...',
       sharesSold: 2,
       boughtPriceUnit: 35,
       soldPriceUnit: 52,
@@ -206,7 +206,7 @@ export const PortfolioScreen: React.FC<PortfolioScreenProps> = ({
     {
       id: 'tx-3',
       seriesId: 'investors-builders',
-      seriesTitle: 'Investors < > Builders',
+      seriesTitle: 'Diasporas < > Makers',
       sharesSold: 3,
       boughtPriceUnit: 50,
       soldPriceUnit: 64,

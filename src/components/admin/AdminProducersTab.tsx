@@ -36,7 +36,7 @@ export const AdminProducersTab: React.FC<AdminProducersTabProps> = ({
   // Modale nouveau versement
   const [isPayoutModalOpen, setIsPayoutModalOpen] = useState(false);
   const [payoutAmount, setPayoutAmount] = useState<number>(1000);
-  const [payoutSeries, setPayoutSeries] = useState<string>('Investors < > Builders');
+  const [payoutSeries, setPayoutSeries] = useState<string>('Diasporas < > Makers');
   const [payoutJustification, setPayoutJustification] = useState('');
 
   const selectedProducer = producers.find(p => p.id === selectedProducerId) || producers[0];

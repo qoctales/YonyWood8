@@ -4,14 +4,15 @@ import {
   ChevronRight,
   LogIn,
   UserPlus,
-  Sparkles
+  Sparkles,
+  Play,
+  Pause,
+  Volume2,
+  VolumeX,
+  X
 } from 'lucide-react';
 import { ViewScreen } from '../types';
 import { AuthModal } from './AuthModal';
-import { Play } from 'lucide-react';
-import homeFilmmaker from '../assets/images/home_afro_filmmaker_1792193482817.jpg';
-import homeStoryteller from '../assets/images/home_afro_storyteller_1792193575638.jpg';
-import homeLibrary from '../assets/images/home_afro_library_1792193591474.jpg';
 
 interface LandingScreenProps {
   onNavigate: (screen: ViewScreen) => void;
@@ -23,6 +24,7 @@ interface OnboardingItem {
   title: string;
   tagline: string;
   illustrationUrl: string;
+  videoUrl: string;
 }
 
 const ONBOARDING_CARDS: OnboardingItem[] = [
@@ -31,21 +33,24 @@ const ONBOARDING_CARDS: OnboardingItem[] = [
     stepNumber: '01',
     title: 'Pourquoi YonyWood ?',
     tagline: 'Des histoires vivantes qui nous relient et révèlent nos mémoires.',
-    illustrationUrl: homeFilmmaker
+    illustrationUrl: '/assets/Onboardings/Voyage.png',
+    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4'
   },
   {
     id: 'card-2-comment-ca-marche',
     stepNumber: '02',
     title: 'Comment ça marche ?',
     tagline: 'Deux univers en miroir face à une même question universelle.',
-    illustrationUrl: homeStoryteller
+    illustrationUrl: '/assets/Onboardings/Dialogue.png',
+    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4'
   },
   {
     id: 'card-3-pourquoi-participer',
     stepNumber: '03',
     title: 'Pourquoi participer ?',
     tagline: 'Coproduisez, transmettez et faites grandir la plus grande bibliothèque de récits humains.',
-    illustrationUrl: homeLibrary
+    illustrationUrl: '/assets/Onboardings/Bibliotheque.png',
+    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4'
   }
 ];
 
@@ -53,6 +58,8 @@ export const LandingScreen: React.FC<LandingScreenProps> = ({ onNavigate }) => {
   const [currentIdx, setCurrentIdx] = useState(0);
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
+  const [isPlayingVideo, setIsPlayingVideo] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
@@ -70,12 +77,14 @@ export const LandingScreen: React.FC<LandingScreenProps> = ({ onNavigate }) => {
   const handlePrev = () => {
     setSwipeOffset(0);
     setIsSwiping(false);
+    setIsPlayingVideo(false);
     setCurrentIdx((prev) => (prev - 1 + ONBOARDING_CARDS.length) % ONBOARDING_CARDS.length);
   };
 
   const handleNext = () => {
     setSwipeOffset(0);
     setIsSwiping(false);
+    setIsPlayingVideo(false);
     setCurrentIdx((prev) => (prev + 1) % ONBOARDING_CARDS.length);
   };
 
@@ -240,7 +249,7 @@ export const LandingScreen: React.FC<LandingScreenProps> = ({ onNavigate }) => {
             <ChevronLeft className="w-5 h-5" />
           </button>
 
-          {/* CARTE FORMAT VERTICAL 9:16 AVEC L'ILLUSTRATION DESSINÉE D'UN PERSONNAGE NOIR */}
+          {/* CARTE FORMAT VERTICAL 9:16 AVEC L'IMAGE OFFICIELLE, L'ICÔNE VIDÉO ET LES TEXTES */}
           <div
             onTouchStart={onTouchStart}
             onTouchMove={onTouchMove}
@@ -254,51 +263,151 @@ export const LandingScreen: React.FC<LandingScreenProps> = ({ onNavigate }) => {
             style={{ transform: `translateX(${swipeOffset}px)` }}
           >
             <div 
-              onClick={(e) => {
-                if (hasDraggedRef.current) {
-                  hasDraggedRef.current = false;
-                  return;
-                }
-                if ((e.target as HTMLElement).closest('button, a, input')) {
-                  return;
-                }
-                handleNext();
-              }}
-              className="group relative w-full h-full rounded-2xl sm:rounded-3xl overflow-hidden bg-stone-950 text-white shadow-2xl border border-stone-200/80 flex flex-col justify-between cursor-pointer select-none"
+              className="group relative w-full h-full rounded-2xl sm:rounded-3xl overflow-hidden bg-stone-950 text-white shadow-2xl border border-stone-200/80 flex flex-col justify-between select-none"
             >
-              {/* Illustration de personnage noir soignée et élégante */}
-              <img
-                src={currentItem.illustrationUrl}
-                alt={currentItem.title}
-                className="absolute inset-0 w-full h-full object-cover group-hover:scale-102 transition-transform duration-700 pointer-events-none"
-              />
+              {/* Si la vidéo est en lecture */}
+              {isPlayingVideo ? (
+                <div className="absolute inset-0 z-20 bg-black flex flex-col justify-between">
+                  <video
+                    ref={videoRef}
+                    src={currentItem.videoUrl}
+                    autoPlay
+                    playsInline
+                    muted={isMuted}
+                    className="absolute inset-0 w-full h-full object-cover"
+                    onEnded={() => setIsPlayingVideo(false)}
+                  />
 
-              {/* Voile sombre cinématographique pour garantir la lisibilité du titre */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-black/30 pointer-events-none" />
+                  {/* Voile dégradé léger pour la lisibilité des contrôles */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/60 pointer-events-none" />
 
-              {/* Haut : Badge discret d'étape uniquement */}
-              <div className="relative z-20 p-3.5 sm:p-4.5 flex items-center justify-start pointer-events-none">
-                <span className="px-2.5 py-1 rounded-full bg-black/55 backdrop-blur-md border border-white/20 text-[10px] sm:text-xs font-bold text-white tracking-wider uppercase shadow-sm">
-                  {currentItem.stepNumber}
-                </span>
-              </div>
+                  {/* Contrôles du haut : Badge d'étape + Bouton son + Bouton fermer */}
+                  <div className="relative z-30 p-3.5 sm:p-4.5 flex items-center justify-between">
+                    <span className="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-[10px] sm:text-xs font-bold text-white tracking-wider uppercase shadow-sm">
+                      {currentItem.stepNumber} • Vidéo
+                    </span>
+                    <div className="flex items-center gap-1.5">
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setIsMuted(!isMuted);
+                        }}
+                        className="w-8 h-8 rounded-full bg-black/60 hover:bg-black/90 border border-white/25 flex items-center justify-center text-white cursor-pointer transition-all active:scale-95 shadow-md"
+                        title={isMuted ? "Activer le son" : "Couper le son"}
+                        aria-label={isMuted ? "Activer le son" : "Couper le son"}
+                      >
+                        {isMuted ? <VolumeX className="w-4 h-4 text-white" /> : <Volume2 className="w-4 h-4 text-white" />}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setIsPlayingVideo(false);
+                        }}
+                        className="w-8 h-8 rounded-full bg-black/60 hover:bg-[#A2482B] border border-white/25 flex items-center justify-center text-white cursor-pointer transition-all active:scale-95 shadow-md"
+                        title="Fermer la vidéo"
+                        aria-label="Fermer la vidéo"
+                      >
+                        <X className="w-4 h-4 text-white" />
+                      </button>
+                    </div>
+                  </div>
 
-              {/* Centre : Bouton Play vidéo cinématographique */}
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
-                <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-black/45 backdrop-blur-md border border-white/30 flex items-center justify-center text-white shadow-2xl group-hover:scale-108 group-hover:bg-[#A2482B]/85 group-hover:border-white transition-all duration-300">
-                  <Play className="w-6 h-6 fill-white text-white translate-x-0.5 opacity-95" />
+                  {/* Contrôle central : Pause / Play au clic */}
+                  <div className="absolute inset-0 flex items-center justify-center z-30 pointer-events-none">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (videoRef.current) {
+                          if (videoRef.current.paused) {
+                            videoRef.current.play();
+                          } else {
+                            videoRef.current.pause();
+                          }
+                        }
+                      }}
+                      className="pointer-events-auto opacity-0 hover:opacity-100 transition-opacity duration-200 w-14 h-14 rounded-full bg-black/50 backdrop-blur-md border border-white/30 flex items-center justify-center text-white cursor-pointer shadow-xl"
+                      title="Pause / Lecture"
+                    >
+                      <Pause className="w-6 h-6 fill-white text-white" />
+                    </button>
+                  </div>
+
+                  {/* Bas : Titre et accroche pendant la vidéo */}
+                  <div className="relative z-30 px-5 pb-6 sm:pb-7 pt-2 pointer-events-none">
+                    <h2 className="font-editorial text-lg sm:text-xl font-bold tracking-tight text-white drop-shadow-md leading-snug">
+                      {currentItem.title}
+                    </h2>
+                    <p className="text-xs sm:text-sm text-stone-200/90 mt-1 leading-relaxed drop-shadow-xs line-clamp-2">
+                      {currentItem.tagline}
+                    </p>
+                  </div>
                 </div>
-              </div>
+              ) : (
+                /* Mode Couverture : Image officielle, icône vidéo et textes prévus */
+                <>
+                  {/* Image officielle d'onboarding (Voyage, Dialogue, Bibliothèque) */}
+                  <img
+                    src={currentItem.illustrationUrl}
+                    alt={currentItem.title}
+                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-102 transition-transform duration-700 pointer-events-none"
+                    onError={(e) => {
+                      // Fallback au cas où
+                      const target = e.currentTarget as HTMLImageElement;
+                      if (!target.src.includes('onboardings')) {
+                        target.src = currentItem.illustrationUrl.toLowerCase();
+                      }
+                    }}
+                  />
 
-              {/* Bas : Titre et accroche claire */}
-              <div className="relative z-20 px-5 pb-6 sm:pb-7 pt-2 pointer-events-none">
-                <h2 className="font-editorial text-xl sm:text-2xl font-bold tracking-tight text-white drop-shadow-md leading-snug">
-                  {currentItem.title}
-                </h2>
-                <p className="text-xs sm:text-sm text-stone-200/90 mt-1.5 leading-relaxed drop-shadow-xs line-clamp-2">
-                  {currentItem.tagline}
-                </p>
-              </div>
+                  {/* Voile sombre cinématographique pour garantir la lisibilité optimale du titre */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/35 pointer-events-none" />
+
+                  {/* Haut : Badge discret d'étape */}
+                  <div className="relative z-20 p-3.5 sm:p-4.5 flex items-center justify-start pointer-events-none">
+                    <span className="px-2.5 py-1 rounded-full bg-black/55 backdrop-blur-md border border-white/20 text-[10px] sm:text-xs font-bold text-white tracking-wider uppercase shadow-sm">
+                      {currentItem.stepNumber}
+                    </span>
+                  </div>
+
+                  {/* Centre : Icône vidéo / Bouton Play cinématographique interactif */}
+                  <div className="absolute inset-0 flex items-center justify-center z-20">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setIsPlayingVideo(true);
+                      }}
+                      className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-black/45 backdrop-blur-md border border-white/30 flex items-center justify-center text-white shadow-2xl hover:scale-110 hover:bg-[#A2482B]/90 hover:border-white transition-all duration-300 cursor-pointer active:scale-95 group-hover:scale-105"
+                      title="Lire la vidéo"
+                      aria-label={`Lire la vidéo de ${currentItem.title}`}
+                    >
+                      <Play className="w-6 h-6 fill-white text-white translate-x-0.5 opacity-95" />
+                    </button>
+                  </div>
+
+                  {/* Bas : Textes prévus (Titre et accroche) */}
+                  <div 
+                    onClick={(e) => {
+                      if (hasDraggedRef.current) {
+                        hasDraggedRef.current = false;
+                        return;
+                      }
+                      handleNext();
+                    }}
+                    className="relative z-20 px-5 pb-6 sm:pb-7 pt-2 cursor-pointer select-none"
+                  >
+                    <h2 className="font-editorial text-xl sm:text-2xl font-bold tracking-tight text-white drop-shadow-md leading-snug">
+                      {currentItem.title}
+                    </h2>
+                    <p className="text-xs sm:text-sm text-stone-200/90 mt-1.5 leading-relaxed drop-shadow-xs line-clamp-2">
+                      {currentItem.tagline}
+                    </p>
+                  </div>
+                </>
+              )}
 
             </div>
           </div>
@@ -323,6 +432,7 @@ export const LandingScreen: React.FC<LandingScreenProps> = ({ onNavigate }) => {
               key={idx}
               onClick={() => {
                 setSwipeOffset(0);
+                setIsPlayingVideo(false);
                 setCurrentIdx(idx);
               }}
               className={`transition-all rounded-full cursor-pointer ${

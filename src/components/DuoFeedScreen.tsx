@@ -1167,14 +1167,9 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
             </div>
 
             <div className="mb-4">
-              <span className="inline-block px-3 py-1 rounded-full bg-[#A2482B]/10 text-[#A2482B] text-xs font-bold tracking-wide uppercase mb-1.5">
+              <span className="inline-block px-3.5 py-1 rounded-full bg-[#A2482B]/10 text-[#A2482B] text-xs font-bold tracking-wide uppercase">
                 Question commune
               </span>
-              <h3 className="font-editorial text-base sm:text-lg font-bold text-[#1C1917]">
-                {currentDuo.documentaryId === 'finagnon-qosqorico' || currentDuo.documentaryTitle?.toLowerCase().startsWith('benin')
-                  ? 'Bénin <> Pérou'
-                  : currentDuo.documentaryTitle}
-              </h3>
             </div>
 
             <p className="font-serif-editorial text-base sm:text-lg text-stone-800 leading-relaxed italic px-2">

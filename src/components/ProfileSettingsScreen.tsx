@@ -615,7 +615,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
     {
       id: 'tx-1',
       seriesId: 'finagnon-qosqorico',
-      seriesTitle: 'Finagnon < > Qosqorico',
+      seriesTitle: 'Benin < > ...',
       sharesSold: 4,
       boughtPriceUnit: 35,
       soldPriceUnit: 55,
@@ -773,7 +773,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
         id: st.id,
         title: st.title,
         seriesId: targetProtagonist.documentaryId || 'finagnon-qosqorico',
-        seriesTitle: 'Finagnon < > Qosqorico',
+        seriesTitle: 'Benin < > ...',
         status: 'Validée',
         submissionDate: '15 Fév 2026',
         viewsCount: 1200 + idx * 300,
@@ -787,7 +787,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
         id: 'ep-1',
         title: 'Le chant des piroguiers sous la brume de Ganvié',
         seriesId: 'finagnon-qosqorico',
-        seriesTitle: 'Finagnon < > Qosqorico',
+        seriesTitle: 'Benin < > ...',
         status: 'Validée',
         submissionDate: '12 Fév 2026',
         viewsCount: 1420,
@@ -829,7 +829,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
     {
       id: 'prod-1',
       seriesId: 'finagnon-qosqorico',
-      seriesTitle: 'Finagnon < > Qosqorico',
+      seriesTitle: 'Benin < > ...',
       sharesCount: 10,
       sharesOnSale: isOwner ? 2 : 2, // Pour visiteur : parts disponibles à l'achat
       startPrice: 35,
@@ -889,7 +889,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
     {
       id: 'prod-4',
       seriesId: 'dixeat-fiat-luxe',
-      seriesTitle: 'E Vivi < > Fiat Luxe',
+      seriesTitle: 'Fiat Luxe < > Street',
       sharesCount: 6,
       sharesOnSale: 2,
       startPrice: 45,
@@ -909,7 +909,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
     {
       id: 'prod-5',
       seriesId: 'investors-builders',
-      seriesTitle: 'Investors < > Builders',
+      seriesTitle: 'Diasporas < > Makers',
       sharesCount: 12,
       sharesOnSale: isOwner ? 4 : 4,
       startPrice: 50,
@@ -957,7 +957,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
         {
           id: `cr-${targetProtagonist.id}-1`,
           title: 'Étoffe rituelle tissée au fil de coton',
-          seriesTitle: 'Finagnon < > Qosqorico',
+          seriesTitle: 'Benin < > ...',
           categoryLabel: 'Artisanat d’art traditionnel',
           type: 'artisanat',
           price: '120 €',
@@ -971,7 +971,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
         {
           id: `cr-${targetProtagonist.id}-2`,
           title: 'Atelier d’écoute et d’initiation aux savoirs',
-          seriesTitle: 'Finagnon < > Qosqorico',
+          seriesTitle: 'Benin < > ...',
           categoryLabel: 'Atelier immersif',
           type: 'atelier',
           price: '45 € / pers.',
@@ -988,7 +988,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
       {
         id: 'cr-1',
         title: 'Étoffe rituelle tissée au fil de coton',
-        seriesTitle: 'Finagnon < > Qosqorico',
+        seriesTitle: 'Benin < > ...',
         categoryLabel: 'Artisanat d’art traditionnel',
         type: 'artisanat',
         price: '120 €',
@@ -1002,7 +1002,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
       {
         id: 'cr-2',
         title: 'Atelier d’écoute des chants de la lagune',
-        seriesTitle: 'Finagnon < > Qosqorico',
+        seriesTitle: 'Benin < > ...',
         categoryLabel: 'Transmission orale & Ateliers',
         type: 'atelier',
         price: '45 € / pers.',
@@ -1037,7 +1037,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
     {
       id: 'init-1',
       title: 'L’Atelier solidaire des voix',
-      seriesTitle: 'Finagnon < > Qosqorico',
+      seriesTitle: 'Benin < > ...',
       category: 'Préservation du Patrimoine Vivant',
       collectedAmount: 3450,
       targetAmount: 5000,
@@ -1050,7 +1050,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
     {
       id: 'init-2',
       title: 'Le Métier à tisser d’Allada',
-      seriesTitle: 'Finagnon < > Qosqorico',
+      seriesTitle: 'Benin < > ...',
       category: 'Équipement d’Atelier Collectif',
       collectedAmount: 1820,
       targetAmount: 2800,
@@ -1473,11 +1473,11 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
     const formatSeriesName = (name?: string) => {
       if (!name) return 'Série';
       const lower = name.toLowerCase();
-      if (lower.includes('investor')) return 'Investors Builders';
-      if (lower.includes('finagnon')) return 'Finagnon';
+      if (lower.includes('investor') || lower.includes('diaspora') || lower.includes('maker')) return 'Diasporas Makers';
+      if (lower.includes('finagnon') || lower.includes('benin') || lower.includes('bénin')) return 'Benin';
       if (lower.includes('jesus') || lower.includes('jésus') || lower.includes('legba') || lower.includes('èṣù')) return 'Èṣù < > Jésus';
       if (lower.includes('blacks')) return 'Blacks One';
-      if (lower.includes('dixeat') || lower.includes('vivi') || lower.includes('fiât') || lower.includes('fiat')) return 'E Vivi < > Fiat Luxe';
+      if (lower.includes('dixeat') || lower.includes('vivi') || lower.includes('fiât') || lower.includes('fiat') || lower.includes('street')) return 'Fiat Luxe < > Street';
       const clean = name.split(/[:–—<]/)[0].trim();
       return clean.length > 18 ? clean.split(' ')[0] : clean;
     };
