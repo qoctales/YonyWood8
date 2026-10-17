@@ -29,5 +29,18 @@ service cloud.firestore {
         request.auth.token.email == 'nonvideromeo@gmail.com'
       );
     }
+
+    // Signalements de contenus vidéo (modération)
+    match /reports/{reportId} {
+      allow read: if request.auth != null && (
+        request.auth.token.email == 'qoctales@gmail.com' ||
+        request.auth.token.email == 'nonvideromeo@gmail.com'
+      );
+      allow create: if true;
+      allow update, delete: if request.auth != null && (
+        request.auth.token.email == 'qoctales@gmail.com' ||
+        request.auth.token.email == 'nonvideromeo@gmail.com'
+      );
+    }
   }
 }

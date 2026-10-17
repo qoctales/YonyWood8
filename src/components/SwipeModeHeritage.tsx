@@ -9,13 +9,15 @@ import {
   Award, 
   BookOpen, 
   Check,
-  ArrowRight
+  ArrowRight,
+  MoreVertical
 } from 'lucide-react';
 import { Dimension, SousCategorie } from '../data/dimensionsData';
 import { AffiliationPerson, ViewScreen } from '../types';
 import { DimensionIcon } from './DimensionIcon';
 import { ProfileSoloIcon } from './YonywoodBrandIcons';
 import { ShareIcon } from './ShareIcon';
+import { VideoReportModal } from './VideoReportModal';
 import { celestialAudio } from '../utils/celestialAudio';
 import { get16StoriesForTopic } from '../data/explorerTopicsData';
 
@@ -101,6 +103,9 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
   }, [effectiveSubcategory?.slug]);
   const activeProtagonists = (swipeProtagonists && swipeProtagonists.length > 0) ? swipeProtagonists : fallbackProtagonists;
   const effectivePerson = currentSwipePerson || (activeProtagonists && activeProtagonists[swipePersonIndex % activeProtagonists.length]) || activeProtagonists[0];
+
+  // Modale de signalement sous les 3 points
+  const [reportingTarget, setReportingTarget] = useState<{ id: string; title: string } | null>(null);
 
   // Gestes tactiles pour swipe fluide
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
@@ -636,6 +641,22 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
                     <ShareIcon className="w-4 h-4 text-white" />
                   )}
                 </button>
+
+                {/* 5. Bouton Options & Signalement (3 points sous l'icône Partage) */}
+                <button
+                  id={`swipe-btn-more-${effectivePerson.id}`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setReportingTarget({
+                      id: effectivePerson.id,
+                      title: `${effectivePerson.name} — ${effectivePerson.story?.title || 'Récit d\'héritage'}`
+                    });
+                  }}
+                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
+                  title="Options et signalement"
+                >
+                  <MoreVertical className="w-4 h-4 text-white" />
+                </button>
               </div>
 
               {/* BAS : PRÉNOM UNIQUEMENT (SANS PAYS NI VILLES) */}
@@ -663,6 +684,17 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
             </button>
           </div>
         </div>
+      )}
+
+      {/* Modale de signalement de la vidéo */}
+      {reportingTarget && (
+        <VideoReportModal
+          isOpen={Boolean(reportingTarget)}
+          onClose={() => setReportingTarget(null)}
+          targetType="video"
+          targetId={reportingTarget.id}
+          targetTitle={reportingTarget.title}
+        />
       )}
     </div>
   );

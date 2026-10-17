@@ -15,7 +15,8 @@ import {
   Layers,
   LayoutGrid,
   ArrowRightLeft,
-  Flag
+  Flag,
+  MoreVertical
 } from 'lucide-react';
 import { motion, AnimatePresence, useMotionValue, useTransform } from 'motion/react';
 import { apiService } from '../services/api';
@@ -55,6 +56,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
   const [currentIndex, setCurrentIndex] = useState(startingIndex);
   const [isQuestionModalOpen, setIsQuestionModalOpen] = useState(false);
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+  const [customReportTarget, setCustomReportTarget] = useState<{ id: string; title: string; type: 'duo' | 'video' } | null>(null);
   const [viewMode, setViewMode] = useState<'duo' | 'deck'>('duo');
   const [deckActiveSide, setDeckActiveSide] = useState<'A' | 'B'>('A');
 

@@ -9,6 +9,7 @@ import {
   Send 
 } from 'lucide-react';
 import { ReportItem } from '../types';
+import { submitVideoReport } from '../services/firestoreService';
 
 interface ReportModalProps {
   isOpen: boolean;
@@ -83,15 +84,18 @@ export const ReportModal: React.FC<ReportModalProps> = ({
       status: 'PENDING'
     };
 
-    // Sauvegarde persistante dans localStorage pour le dashboard admin
-    try {
-      const existing = localStorage.getItem('yonywood_reports');
-      const list = existing ? JSON.parse(existing) : [];
-      list.unshift(newReport);
-      localStorage.setItem('yonywood_reports', JSON.stringify(list));
-    } catch {
-      // ignore
-    }
+    // Sauvegarde Firestore et synchronisation locale
+    submitVideoReport({
+      targetType: targetType as any,
+      targetId,
+      targetTitle,
+      reason: selectedReason,
+      reasonLabel: reasonObj?.label || 'Autre motif',
+      details: details.trim() || undefined,
+      reportedBy: 'Utilisateur connecté'
+    }).catch(err => {
+      console.warn('Erreur transmission Firestore du signalement:', err);
+    });
 
     onReportSubmitted?.(newReport);
     setIsSubmitted(true);

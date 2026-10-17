@@ -15,7 +15,7 @@ import {
 } from 'lucide-react';
 import { ViewScreen } from '../types';
 import { useAuth } from '../services/authContext';
-import { recordSharePurchase } from '../services/firestoreService';
+import { recordSharePurchase, getSeriesRemainingShares } from '../services/firestoreService';
 
 interface MarketplaceScreenProps {
   onNavigate: (screen: ViewScreen) => void;
@@ -243,6 +243,39 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
   const [successToast, setSuccessToast] = useState<string | null>(null);
   const { currentUser } = useAuth();
 
+  // Jauge en temps réel sur 256 parts par série
+  const [remainingSharesMap, setRemainingSharesMap] = useState<Record<string, number>>({
+    'jesus-legba': 218,
+    'finagnon-qosqorico': 194,
+    'blacks-one-beyond-eve': 230,
+    'dixeat-fiat-luxe': 202,
+    'investors-builders': 186,
+    'other-eyes-sixth-sense': 224,
+    'coaching-unlimited': 210,
+    'focus-phd': 198
+  });
+
+  // Chargement en temps réel des parts restantes depuis Firestore
+  useEffect(() => {
+    let isMounted = true;
+    const loadRemainingShares = async () => {
+      const updated: Record<string, number> = {};
+      for (const prod of PRODUCTIONS) {
+        try {
+          const rem = await getSeriesRemainingShares(prod.id, 32);
+          updated[prod.id] = rem;
+        } catch {
+          // garder la valeur de repli
+        }
+      }
+      if (isMounted && Object.keys(updated).length > 0) {
+        setRemainingSharesMap(prev => ({ ...prev, ...updated }));
+      }
+    };
+    loadRemainingShares();
+    return () => { isMounted = false; };
+  }, []);
+
   // Touch & Mouse horizontal gesture support (calqué exactement sur SubmitStoryScreen)
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
   const [touchEndX, setTouchEndX] = useState<number | null>(null);
@@ -362,9 +395,17 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
         totalAmount: total,
         paymentMethod: paymentMethod
       });
+      setRemainingSharesMap(prev => ({
+        ...prev,
+        [selectedProduction.id]: Math.max(0, (prev[selectedProduction.id] ?? 256) - purchaseQuantity)
+      }));
       setSuccessToast(`Souscription validée ! ${purchaseQuantity} part(s) acquises pour « ${selectedProduction.title} » (${total} €).`);
       setSelectedProduction(null);
     } catch {
+      setRemainingSharesMap(prev => ({
+        ...prev,
+        [selectedProduction.id]: Math.max(0, (prev[selectedProduction.id] ?? 256) - purchaseQuantity)
+      }));
       setSuccessToast(`Souscription enregistrée pour « ${selectedProduction.title} » (${total} €).`);
       setSelectedProduction(null);
     } finally {
@@ -526,29 +567,61 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
                 {/* CENTRE LIBÉRÉ : Affiche visible et sans encombrement */}
                 <div className="my-auto" />
 
-                {/* BAS : Prix de la part à gauche et bouton d'action Coproduire à droite */}
-                <div className="relative z-10 flex items-center justify-between gap-1.5 pt-0.5">
-                  {/* Prix de la part en dessous pour libérer le haut (sans icône) */}
-                  <div className="h-7.5 sm:h-8.5 px-2.5 sm:px-3 rounded-full bg-black/60 hover:bg-black/85 text-white/95 text-[10.5px] sm:text-[11px] font-medium backdrop-blur-md transition-all flex items-center gap-1.5 border border-white/20 shadow-sm">
-                    <span className="font-bold text-[#C89B3C]">{currentProd.sharePrice} €</span>
-                    <span className="text-[9.5px] text-white/70">/ part • 256 parts max</span>
-                  </div>
+                {/* BAS : JAUGE EN TEMPS RÉEL SUR 256 PARTS & BOUTON D'ACQUISITION */}
+                {(() => {
+                  const remaining = remainingSharesMap[currentProd.id] ?? 218;
+                  const taken = Math.max(0, 256 - remaining);
+                  const percent = Math.min(100, Math.round((taken / 256) * 100));
 
-                  {/* Bouton Acquérir : gris clair au repos, marron terre cuite au survol */}
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setSelectedProduction(currentProd);
-                      setPurchaseQuantity(1);
-                    }}
-                    id={`btn-coproduire-${currentProd.id}`}
-                    className="h-7.5 sm:h-8.5 px-3 sm:px-3.5 rounded-full bg-stone-100/95 hover:bg-[#A2482B] text-stone-800 hover:text-white text-[11px] sm:text-xs font-bold backdrop-blur-md transition-all flex items-center gap-1 shadow-md border border-stone-200/80 hover:border-[#A2482B] cursor-pointer shrink-0 active:scale-95 group/coprod"
-                    title="Acquérir des parts pour cette série"
-                  >
-                    <span>Acquérir</span>
-                    <ArrowRight className="w-3 h-3 text-stone-600 group-hover/coprod:text-white transition-colors" />
-                  </button>
-                </div>
+                  return (
+                    <div className="relative z-10 w-full flex flex-col gap-1.5 pt-0.5">
+                      {/* Jauge visuelle fluide sur 256 parts */}
+                      <div className="w-full bg-black/75 backdrop-blur-md rounded-2xl p-2.5 sm:p-3 border border-white/20 shadow-lg space-y-1.5">
+                        <div className="flex items-center justify-between text-[11px] sm:text-xs">
+                          <div className="flex items-center gap-1.5">
+                            <span className="font-bold text-[#FFE7A3] text-xs sm:text-sm">{currentProd.sharePrice} €</span>
+                            <span className="text-white/70 text-[10px] sm:text-[11px]">/ part</span>
+                          </div>
+                          <div className="font-semibold text-white/95 text-right">
+                            <span className="text-[#FFE7A3] font-mono font-bold">{remaining}</span>
+                            <span className="text-white/70 text-[10px] sm:text-[11px]"> / 256 parts restantes</span>
+                          </div>
+                        </div>
+
+                        {/* Barre de jauge */}
+                        <div className="w-full h-2 rounded-full bg-stone-900/90 overflow-hidden border border-white/10 relative">
+                          <div 
+                            className="h-full rounded-full bg-gradient-to-r from-[#A2482B] via-[#C89B3C] to-[#FFE7A3] transition-all duration-700 shadow-sm"
+                            style={{ width: `${percent}%` }}
+                          />
+                        </div>
+
+                        <div className="flex items-center justify-between text-[9.5px] sm:text-[10px] text-white/70 font-medium">
+                          <span>{taken} parts souscrites ({percent}%)</span>
+                          <span>{taken * 50} € / 12 800 €</span>
+                        </div>
+                      </div>
+
+                      {/* Bouton Acquérir */}
+                      <div className="flex items-center justify-end">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedProduction(currentProd);
+                            setPurchaseQuantity(1);
+                          }}
+                          id={`btn-coproduire-${currentProd.id}`}
+                          className="h-8 sm:h-8.5 px-3.5 sm:px-4 rounded-full bg-white hover:bg-[#A2482B] text-stone-900 hover:text-white text-[11px] sm:text-xs font-bold backdrop-blur-md transition-all flex items-center gap-1.5 shadow-md border border-stone-200/80 hover:border-[#A2482B] cursor-pointer shrink-0 active:scale-95 group/coprod"
+                          title="Acquérir des parts pour cette série"
+                        >
+                          <Coins className="w-3.5 h-3.5 text-[#C89B3C] group-hover/coprod:text-white transition-colors" />
+                          <span>Acquérir (50 €)</span>
+                          <ArrowRight className="w-3 h-3 text-stone-600 group-hover/coprod:text-white transition-colors ml-0.5" />
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })()}
 
               </div>
             )}
@@ -753,11 +826,28 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
                   </span>
                   <button
                     type="button"
-                    onClick={() => setPurchaseQuantity(prev => prev + 1)}
+                    onClick={() => setPurchaseQuantity(prev => Math.min((remainingSharesMap[selectedProduction.id] ?? 256), prev + 1))}
                     className="w-10 h-10 rounded-xl bg-white hover:bg-[#EFE9DD] text-[#1C1917] font-bold flex items-center justify-center cursor-pointer border border-[#E7E5E4] shadow-xs"
                   >
                     +
                   </button>
+                </div>
+                {/* Raccourcis de sélection */}
+                <div className="flex items-center justify-center gap-1.5 pt-1">
+                  {[1, 2, 5, 10].map(qty => (
+                    <button
+                      key={qty}
+                      type="button"
+                      onClick={() => setPurchaseQuantity(qty)}
+                      className={`px-2.5 py-1 rounded-lg text-[10px] font-semibold border transition-all cursor-pointer ${
+                        purchaseQuantity === qty 
+                          ? 'bg-[#A2482B] text-white border-[#A2482B]' 
+                          : 'bg-white hover:bg-[#FAF7EF] text-stone-700 border-stone-200'
+                      }`}
+                    >
+                      {qty} part{qty > 1 ? 's' : ''} ({qty * 50} €)
+                    </button>
+                  ))}
                 </div>
               </div>
 

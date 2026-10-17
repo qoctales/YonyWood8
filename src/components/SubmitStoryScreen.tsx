@@ -36,7 +36,8 @@ import { ALL_SERIES_TEAMS } from '../data/seriesTeamData';
 import { EXPERTISE_ICONS } from './MatrixExplorer';
 import { DimensionIcon } from './DimensionIcon';
 import { useAuth } from '../services/authContext';
-import { submitVideoToForest } from '../services/firestoreService';
+import { submitVideoToForest, fetchUserSubmittedVideos } from '../services/firestoreService';
+import { CreatorVideoHistory } from './CreatorVideoHistory';
 
 // Illustrations d'accroche 9:16 créées par IA pour les deux choix en face-à-face
 import uploadVideoGuideImg from '../assets/images/upload_video_guide_1791825848813.jpg';
@@ -85,6 +86,10 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
 }) => {
   // Step: 1 = Choisir la Porte, 2 = Choisir le Sujet, 3 = Format vidéo (Swipe entre les 2 options)
   const [step, setStep] = useState<1 | 2 | 3>(1);
+
+  // Vue du Studio : Dépôt guidé VS Historique des vidéos créateur (Mes publications)
+  const [activeStudioTab, setActiveStudioTab] = useState<'deposit' | 'my_videos'>('deposit');
+  const [creatorVideoCount, setCreatorVideoCount] = useState<number>(0);
 
   // Door selection (Étape 1)
   const initialDoorIndex = preselectedDocumentaryId 
@@ -139,6 +144,17 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
   const [submittedSuccess, setSubmittedSuccess] = useState(false);
   const [isSubmittingVideo, setIsSubmittingVideo] = useState(false);
   const { currentUser } = useAuth();
+
+  // Chargement du nombre de vidéos pour le badge Mes publications
+  useEffect(() => {
+    let isMounted = true;
+    fetchUserSubmittedVideos(currentUser?.id, currentUser?.email)
+      .then(list => {
+        if (isMounted) setCreatorVideoCount(list.length);
+      })
+      .catch(() => {});
+    return () => { isMounted = false; };
+  }, [currentUser, submittedSuccess, activeStudioTab]);
 
   // Crédits de la séquence (Casting, Réalisation, Post-production)
   const [creditsCasting, setCreditsCasting] = useState('Moi-même (Témoin principal)');
@@ -455,6 +471,18 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
 
         <div className="pt-4 flex flex-wrap justify-center gap-3">
           <button
+            onClick={() => {
+              setSubmittedSuccess(false);
+              setStep(1);
+              setChosenFlow(null);
+              setActiveStudioTab('my_videos');
+            }}
+            className="px-6 py-2.5 rounded-full bg-[#1C1917] hover:bg-stone-800 text-white text-xs font-semibold shadow-sm transition-colors cursor-pointer flex items-center gap-1.5"
+          >
+            <Film className="w-3.5 h-3.5 text-[#D9AF52]" />
+            <span>Voir dans mes publications</span>
+          </button>
+          <button
             onClick={() => onNavigate({ type: 'matrix_view' })}
             className="px-6 py-2.5 rounded-full bg-[#A2482B] hover:bg-[#8B3B20] text-white text-xs font-semibold shadow-sm transition-colors cursor-pointer"
           >
@@ -569,7 +597,7 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
           )}
         </div>
 
-        {/* Côté droit épuré : Raccourci retour si applicable */}
+        {/* Côté droit épuré : Raccourci retour si applicable et bouton Mes publications */}
         <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
           {preselectedDocumentaryId && (
             <button
@@ -580,13 +608,43 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
               Quitter
             </button>
           )}
+
+          {/* Bouton d'accès rapide Mes publications */}
+          <button
+            type="button"
+            onClick={() => setActiveStudioTab(prev => prev === 'my_videos' ? 'deposit' : 'my_videos')}
+            id="btn-creator-publications-toggle"
+            className={`h-7.5 sm:h-8.5 px-3 sm:px-3.5 rounded-full text-[11px] sm:text-xs font-semibold backdrop-blur-md transition-all flex items-center gap-1.5 shadow-xs border cursor-pointer shrink-0 active:scale-95 ${
+              activeStudioTab === 'my_videos'
+                ? 'bg-[#1C1917] text-white border-[#1C1917]'
+                : 'bg-white hover:bg-stone-50 text-stone-800 border-stone-200 hover:border-[#A2482B]'
+            }`}
+            title={activeStudioTab === 'my_videos' ? "Retour au studio de dépôt" : "Voir mes publications et statistiques"}
+          >
+            <Film className={`w-3.5 h-3.5 ${activeStudioTab === 'my_videos' ? 'text-[#D9AF52]' : 'text-[#A2482B]'}`} />
+            <span>Mes publications</span>
+            {creatorVideoCount > 0 && (
+              <span className={`px-1.5 py-0.2 rounded-full text-[10px] font-mono font-bold ${
+                activeStudioTab === 'my_videos' ? 'bg-white/20 text-white' : 'bg-[#A2482B]/10 text-[#A2482B]'
+              }`}>
+                {creatorVideoCount}
+              </span>
+            )}
+          </button>
         </div>
       </div>
 
       {/* ========================================================================= */}
-      {/* ÉTAPE 1 : CHOISIR PARMI LES 8 PORTES D'ENTRÉE (SWIPE VERTICAL PUR 9:16)     */}
+      {/* CORPS DU STUDIO : HISTORIQUE CRÉATEUR OU DÉPÔT GUIDÉ SELON LA DIRECTION   */}
       {/* ========================================================================= */}
-      {step === 1 && (
+      {activeStudioTab === 'my_videos' ? (
+        <CreatorVideoHistory onBackToDeposit={() => setActiveStudioTab('deposit')} />
+      ) : (
+        <>
+          {/* ========================================================================= */}
+          {/* ÉTAPE 1 : CHOISIR PARMI LES 8 PORTES D'ENTRÉE (SWIPE VERTICAL PUR 9:16)     */}
+          {/* ========================================================================= */}
+          {step === 1 && (
         <div className="flex-1 flex flex-col items-center justify-center py-1 sm:py-2 min-h-0 overflow-visible px-2 sm:px-6 md:px-10 animate-in fade-in duration-200">
           
           {/* Conteneur de l'écran 9:16 avec swipe et flèches */}
@@ -2321,6 +2379,8 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
               </div>
             </div>
           )}
+        </>
+      )}
         </>
       )}
 

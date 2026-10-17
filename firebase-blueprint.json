@@ -57,6 +57,24 @@
         "createdAt": { "type": "string" }
       },
       "required": ["id", "seriesId", "userId", "sharesCount", "totalAmount"]
+    },
+    "Report": {
+      "title": "Report",
+      "description": "Signalement d'une vidéo ou d'un contenu par la communauté",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "targetType": { "type": "string", "enum": ["video", "duo", "protagonist"] },
+        "targetId": { "type": "string" },
+        "targetTitle": { "type": "string" },
+        "reason": { "type": "string" },
+        "reasonLabel": { "type": "string" },
+        "details": { "type": "string" },
+        "reportedBy": { "type": "string" },
+        "status": { "type": "string", "enum": ["PENDING", "RESOLVED", "DISMISSED"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["targetId", "reason", "targetTitle"]
     }
   },
   "firestore": {
@@ -71,6 +89,10 @@
     "/share_purchases/{purchaseId}": {
       "schema": "SharePurchase",
       "description": "Registre des parts de coproduction achetées par les utilisateurs"
+    },
+    "/reports/{reportId}": {
+      "schema": "Report",
+      "description": "Collection des signalements pour la modération éditoriale"
     }
   }
 }
