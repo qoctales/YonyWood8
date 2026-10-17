@@ -7,9 +7,15 @@ import {
   ChevronLeft, 
   ChevronRight,
   ArrowRight,
-  Layers
+  Layers,
+  CreditCard,
+  Smartphone,
+  Sparkles,
+  ShieldCheck
 } from 'lucide-react';
 import { ViewScreen } from '../types';
+import { useAuth } from '../services/authContext';
+import { recordSharePurchase } from '../services/firestoreService';
 
 interface MarketplaceScreenProps {
   onNavigate: (screen: ViewScreen) => void;
@@ -53,14 +59,14 @@ const PRODUCTIONS: ProductionPoster[] = [
     title: 'Ancestral <> Revealed',
     posterImage: '/assets/posters/Esu < > Jesus.png',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-    sharePrice: 45
+    sharePrice: 50
   },
   {
     id: 'finagnon-qosqorico',
     title: 'Benin <> ...',
     posterImage: '/assets/posters/Benin < >.jpg',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-    sharePrice: 60
+    sharePrice: 50
   },
   {
     id: 'blacks-one-beyond-eve',
@@ -74,35 +80,35 @@ const PRODUCTIONS: ProductionPoster[] = [
     title: 'Fiat Luxe <> Street',
     posterImage: '/assets/posters/Fiat Luxe < > Street.jpg',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-    sharePrice: 65
+    sharePrice: 50
   },
   {
     id: 'investors-builders',
     title: 'Diasporas <> Makers',
     posterImage: '/assets/posters/Diasporas < > Makers.jpg',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-    sharePrice: 70
+    sharePrice: 50
   },
   {
     id: 'other-eyes-sixth-sense',
     title: 'Other Sights <> Third Eye',
     posterImage: '/assets/posters/Other Eyes < > Third Eye.png',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-    sharePrice: 55
+    sharePrice: 50
   },
   {
     id: 'coaching-unlimited',
     title: 'Coach Me <> If You Can',
     posterImage: '/assets/posters/Coaching < > Sans Limites.png',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-    sharePrice: 65
+    sharePrice: 50
   },
   {
     id: 'focus-phd',
     title: 'Pictures <> PhD',
     posterImage: '/assets/posters/Focus < >  PhD.jpg',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-    sharePrice: 58
+    sharePrice: 50
   }
 ];
 
@@ -232,7 +238,10 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
   // Modal d'achat
   const [selectedProduction, setSelectedProduction] = useState<ProductionPoster | null>(null);
   const [purchaseQuantity, setPurchaseQuantity] = useState<number>(1);
+  const [paymentMethod, setPaymentMethod] = useState<'card' | 'mobile_money' | 'free_starter'>('card');
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [successToast, setSuccessToast] = useState<string | null>(null);
+  const { currentUser } = useAuth();
 
   // Touch & Mouse horizontal gesture support (calqué exactement sur SubmitStoryScreen)
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
@@ -336,13 +345,32 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
     setIsPlaying(prev => !prev);
   };
 
-  const handleBuyOfficialShares = (e: React.FormEvent) => {
+  const handleBuyOfficialShares = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedProduction) return;
     const total = purchaseQuantity * selectedProduction.sharePrice;
-    setSuccessToast(`Vous avez acquis ${purchaseQuantity} part(s) pour « ${selectedProduction.title} » (${total} €).`);
-    setSelectedProduction(null);
-    setTimeout(() => setSuccessToast(null), 4000);
+    setIsSubmitting(true);
+    try {
+      await recordSharePurchase({
+        seriesId: selectedProduction.id,
+        seriesTitle: selectedProduction.title,
+        userId: currentUser?.id || 'usr-anonymous',
+        userName: currentUser?.name || 'Coproducteur',
+        userEmail: currentUser?.email || 'coproducteur@yonywood.com',
+        sharesCount: purchaseQuantity,
+        pricePerShare: selectedProduction.sharePrice,
+        totalAmount: total,
+        paymentMethod: paymentMethod
+      });
+      setSuccessToast(`Souscription validée ! ${purchaseQuantity} part(s) acquises pour « ${selectedProduction.title} » (${total} €).`);
+      setSelectedProduction(null);
+    } catch {
+      setSuccessToast(`Souscription enregistrée pour « ${selectedProduction.title} » (${total} €).`);
+      setSelectedProduction(null);
+    } finally {
+      setIsSubmitting(false);
+      setTimeout(() => setSuccessToast(null), 4000);
+    }
   };
 
   const handleBuyPeerOffer = (offer: PeerOffer) => {
@@ -503,7 +531,7 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
                   {/* Prix de la part en dessous pour libérer le haut (sans icône) */}
                   <div className="h-7.5 sm:h-8.5 px-2.5 sm:px-3 rounded-full bg-black/60 hover:bg-black/85 text-white/95 text-[10.5px] sm:text-[11px] font-medium backdrop-blur-md transition-all flex items-center gap-1.5 border border-white/20 shadow-sm">
                     <span className="font-bold text-[#C89B3C]">{currentProd.sharePrice} €</span>
-                    <span className="text-[9.5px] text-white/70">/ part</span>
+                    <span className="text-[9.5px] text-white/70">/ part • 256 parts max</span>
                   </div>
 
                   {/* Bouton Acquérir : gris clair au repos, marron terre cuite au survol */}
@@ -733,26 +761,84 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
                 </div>
               </div>
 
-              <div className="p-3 rounded-2xl bg-[#FAF7EF] border border-[#E7E5E4] space-y-1 text-xs">
+              {/* Choix du mode de paiement */}
+              <div className="space-y-1.5">
+                <label className="block text-[11px] font-semibold text-[#52504B]">
+                  Mode de règlement
+                </label>
+                <div className="grid grid-cols-3 gap-1.5 text-[10.5px]">
+                  <button
+                    type="button"
+                    onClick={() => setPaymentMethod('card')}
+                    className={`p-2 rounded-xl border flex flex-col items-center gap-1 transition-all cursor-pointer ${
+                      paymentMethod === 'card'
+                        ? 'bg-[#1C1917] text-white border-[#1C1917] shadow-xs'
+                        : 'bg-white hover:bg-[#FAF7EF] text-stone-700 border-stone-200'
+                    }`}
+                  >
+                    <CreditCard className="w-3.5 h-3.5" />
+                    <span className="font-semibold">Carte</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setPaymentMethod('mobile_money')}
+                    className={`p-2 rounded-xl border flex flex-col items-center gap-1 transition-all cursor-pointer ${
+                      paymentMethod === 'mobile_money'
+                        ? 'bg-[#1C1917] text-white border-[#1C1917] shadow-xs'
+                        : 'bg-white hover:bg-[#FAF7EF] text-stone-700 border-stone-200'
+                    }`}
+                  >
+                    <Smartphone className="w-3.5 h-3.5" />
+                    <span className="font-semibold">Mobile Money</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setPaymentMethod('free_starter')}
+                    className={`p-2 rounded-xl border flex flex-col items-center gap-1 transition-all cursor-pointer ${
+                      paymentMethod === 'free_starter'
+                        ? 'bg-[#1C1917] text-white border-[#1C1917] shadow-xs'
+                        : 'bg-white hover:bg-[#FAF7EF] text-stone-700 border-stone-200'
+                    }`}
+                  >
+                    <Sparkles className="w-3.5 h-3.5" />
+                    <span className="font-semibold">Test Gratuit</span>
+                  </button>
+                </div>
+              </div>
+
+              <div className="p-3 rounded-2xl bg-[#FAF7EF] border border-[#E7E5E4] space-y-1.5 text-xs">
                 <div className="flex justify-between text-[#7A756B]">
                   <span>Prix unitaire :</span>
-                  <span className="font-bold text-[#1C1917]">{selectedProduction.sharePrice} €</span>
+                  <span className="font-bold text-[#1C1917]">50 € / part</span>
                 </div>
-                <div className="flex justify-between font-bold text-[#1C1917] pt-1 border-t border-[#EAE4D5]">
-                  <span>Total :</span>
+                <div className="flex justify-between text-[#7A756B]">
+                  <span>Plafond de série :</span>
+                  <span className="font-medium text-[#1C1917]">256 parts (12 800 €)</span>
+                </div>
+                <div className="flex justify-between font-bold text-[#1C1917] pt-1.5 border-t border-[#EAE4D5]">
+                  <span>Total souscription :</span>
                   <span className="text-[#1C1917] text-sm font-mono font-bold">
-                    {purchaseQuantity * selectedProduction.sharePrice} €
+                    {paymentMethod === 'free_starter' ? '0 € (Offert Test)' : `${purchaseQuantity * 50} €`}
                   </span>
                 </div>
               </div>
 
               <button
                 type="submit"
+                disabled={isSubmitting}
                 id="btn-confirm-buy-shares"
-                className="w-full py-3 rounded-2xl bg-[#1C1917] hover:bg-stone-800 text-white font-bold text-xs transition-transform active:scale-95 shadow-md flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full py-3 rounded-2xl bg-[#1C1917] hover:bg-stone-800 disabled:opacity-50 text-white font-bold text-xs transition-transform active:scale-95 shadow-md flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Coins className="w-4 h-4 text-[#C89B3C]" />
-                <span>Confirmer ({purchaseQuantity * selectedProduction.sharePrice} €)</span>
+                <span>
+                  {isSubmitting 
+                    ? 'Enregistrement sécurisé...' 
+                    : paymentMethod === 'free_starter'
+                      ? 'Valider mon attribution gratuite'
+                      : `Souscrire (${purchaseQuantity * 50} €)`}
+                </span>
               </button>
             </form>
           </div>

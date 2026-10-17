@@ -1,0 +1,33 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Profils utilisateurs
+    match /users/{userId} {
+      allow read: if true;
+      allow create, update: if request.auth != null && request.auth.uid == userId;
+      allow delete: if false;
+    }
+    
+    // Vidéos soumises selon direction éditoriale
+    match /submitted_videos/{videoId} {
+      allow read: if true;
+      allow create: if request.auth != null;
+      allow update, delete: if request.auth != null && (
+        resource.data.userId == request.auth.uid ||
+        request.auth.token.email == 'qoctales@gmail.com' ||
+        request.auth.token.email == 'nonvideromeo@gmail.com'
+      );
+    }
+    
+    // Achats de parts de séries (50 € / 256 parts)
+    match /share_purchases/{purchaseId} {
+      allow read: if true;
+      allow create: if request.auth != null;
+      allow update, delete: if request.auth != null && (
+        request.auth.token.email == 'qoctales@gmail.com' ||
+        request.auth.token.email == 'nonvideromeo@gmail.com'
+      );
+    }
+  }
+}

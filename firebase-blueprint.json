@@ -1,0 +1,76 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Profil utilisateur de YonyWood (spectateur, créateur ou coproducteur)",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "email": { "type": "string" },
+        "name": { "type": "string" },
+        "role": { "type": "string", "enum": ["USER", "CREATOR", "ADMIN"] },
+        "territory": { "type": "string" },
+        "country": { "type": "string" },
+        "avatarUrl": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "email", "name"]
+    },
+    "SubmittedVideo": {
+      "title": "SubmittedVideo",
+      "description": "Vidéo 9/16 soumise par un créateur ou protagoniste selon une série et une question imposée",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "userName": { "type": "string" },
+        "userEmail": { "type": "string" },
+        "seriesId": { "type": "string" },
+        "seriesTitle": { "type": "string" },
+        "question": { "type": "string" },
+        "videoUrl": { "type": "string" },
+        "protagonistName": { "type": "string" },
+        "protagonistRole": { "type": "string" },
+        "territory": { "type": "string" },
+        "country": { "type": "string" },
+        "pitch": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "approved", "rejected"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "seriesId", "videoUrl", "status"]
+    },
+    "SharePurchase": {
+      "title": "SharePurchase",
+      "description": "Achat de parts de coproduction (50 € la part, max 256 parts par série)",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "seriesId": { "type": "string" },
+        "seriesTitle": { "type": "string" },
+        "userId": { "type": "string" },
+        "userName": { "type": "string" },
+        "userEmail": { "type": "string" },
+        "sharesCount": { "type": "number" },
+        "pricePerShare": { "type": "number" },
+        "totalAmount": { "type": "number" },
+        "paymentMethod": { "type": "string", "enum": ["card", "mobile_money", "free_starter"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "seriesId", "userId", "sharesCount", "totalAmount"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Collection des profils utilisateurs"
+    },
+    "/submitted_videos/{videoId}": {
+      "schema": "SubmittedVideo",
+      "description": "Collection des vidéos soumises selon les directions éditoriales"
+    },
+    "/share_purchases/{purchaseId}": {
+      "schema": "SharePurchase",
+      "description": "Registre des parts de coproduction achetées par les utilisateurs"
+    }
+  }
+}

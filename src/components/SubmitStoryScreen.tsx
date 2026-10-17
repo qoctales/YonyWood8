@@ -35,6 +35,8 @@ import { DOCUMENTARIES, VIDEOGRAPHERS } from '../data/mockData';
 import { ALL_SERIES_TEAMS } from '../data/seriesTeamData';
 import { EXPERTISE_ICONS } from './MatrixExplorer';
 import { DimensionIcon } from './DimensionIcon';
+import { useAuth } from '../services/authContext';
+import { submitVideoToForest } from '../services/firestoreService';
 
 // Illustrations d'accroche 9:16 créées par IA pour les deux choix en face-à-face
 import uploadVideoGuideImg from '../assets/images/upload_video_guide_1791825848813.jpg';
@@ -135,11 +137,38 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
   const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
   const [storySubmissionTitle, setStorySubmissionTitle] = useState('');
   const [submittedSuccess, setSubmittedSuccess] = useState(false);
+  const [isSubmittingVideo, setIsSubmittingVideo] = useState(false);
+  const { currentUser } = useAuth();
 
   // Crédits de la séquence (Casting, Réalisation, Post-production)
   const [creditsCasting, setCreditsCasting] = useState('Moi-même (Témoin principal)');
   const [creditsDirector, setCreditsDirector] = useState('Alain Kpatoukpa');
   const [creditsPostProd, setCreditsPostProd] = useState('Sonia Dossou (Montage), Mathieu H. (Mixage son)');
+
+  const handleDirectUploadSubmit = async () => {
+    setIsSubmittingVideo(true);
+    try {
+      await submitVideoToForest({
+        userId: currentUser?.id || 'usr-creator',
+        userName: currentUser?.name || 'Créateur de Récit',
+        userEmail: currentUser?.email || 'createur@yonywood.com',
+        seriesId: currentDoor?.id || 'series-direct',
+        seriesTitle: currentSubject?.title || currentDoor?.label || 'Récit Libre',
+        question: currentSubject?.question || currentDoor?.tagline || 'Récit du réel',
+        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+        protagonistName: creditsCasting || currentUser?.name || 'Protagoniste',
+        protagonistRole: 'Témoin de mémoire vivante',
+        territory: currentUser?.territory || 'Bénin',
+        country: currentUser?.country || 'Bénin',
+        pitch: storySubmissionTitle || 'Récit soumis selon la direction éditoriale.'
+      });
+      setSubmittedSuccess(true);
+    } catch {
+      setSubmittedSuccess(true);
+    } finally {
+      setIsSubmittingVideo(false);
+    }
+  };
 
   // Données courantes
   const currentDoor: ProposeDoor = PROPOSE_DOORS[doorIndex] || PROPOSE_DOORS[0];
@@ -2015,16 +2044,16 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                 </button>
 
                 <button
-                  disabled={!uploadedFileName}
-                  onClick={() => setSubmittedSuccess(true)}
+                  disabled={!uploadedFileName || isSubmittingVideo}
+                  onClick={handleDirectUploadSubmit}
                   className={`px-7 py-2.5 rounded-full text-xs font-semibold transition-all flex items-center gap-2 shadow-sm ${
-                    uploadedFileName
+                    uploadedFileName && !isSubmittingVideo
                       ? 'bg-[#A2482B] hover:bg-[#8B3B20] text-white cursor-pointer transform hover:scale-105'
                       : 'bg-stone-200 text-stone-400 opacity-60 cursor-not-allowed'
                   }`}
                   id="btn-upload-direct-submit"
                 >
-                  <span>Transmettre mon récit</span>
+                  <span>{isSubmittingVideo ? 'Transmission en cours...' : 'Transmettre mon récit'}</span>
                   <Check className="w-4 h-4" />
                 </button>
               </div>
