@@ -581,7 +581,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
     effigies: [
       {
         id: 'eff-codjo',
-        name: 'Codjo',
+        name: 'Pascal',
         role: 'Navigateur sonore & sculpteur de sons',
         photoUrl: '/assets/duos/codjo-blind.jpg',
         videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
@@ -604,7 +604,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         posterUrl: '/assets/duos/codjo-blind.jpg',
         audioDuration: '0:45',
         videoAvatarUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        audioVoiceName: 'Codjo & Mawuna',
+        audioVoiceName: 'Pascal & Mawuna',
         translations: [
           { lang: 'fr', label: 'Français', prompt: 'Racontez une expérience qui vous a fait comprendre la difficulté, mais aussi la puissance, de votre différence.' },
           { lang: 'en', label: 'English', prompt: 'Tell us about an experience that made you realize the difficulty, but also the power, of your difference.' }
@@ -1748,7 +1748,7 @@ export const PROTAGONISTS: Protagonist[] = [
     bio: 'Au cœur du grand marché de Dantokpa, Koffi cuisine depuis l’aube sur des réchauds à braises. Il sublime l’igname pilée, les sauces gombo aux écrevisses fumées et les bouillons mijotés 14 heures pour nourrir plus de trois cents personnes par jour.',
     photoUrl: '/assets/protagonists/chef-koffi.jpg',
     documentaryId: 'dixeat-fiat-luxe',
-    universeTag: 'E Vivi',
+    universeTag: 'Street',
     quote: '« La cuisine n’a pas besoin d’étoiles : elle a besoin de bras qui n’ont pas peur de la fumée et d’un cœur qui veut rassasier l’âme. »',
     tree: {
       transmissions: [
@@ -2105,16 +2105,17 @@ export const PROTAGONISTS: Protagonist[] = [
   {
     id: 'codjo-blind',
     slug: 'codjo-blind',
-    name: 'Codjo Tossou',
+    name: 'Pascal Tossou',
+    firstName: 'Pascal',
     age: 36,
     role: 'Navigateur sonore & sculpteur de sons',
     territory: 'Ganvié & Cotonou',
     country: 'Bénin',
     flag: '🇧🇯',
-    bio: 'Non-voyant depuis l’enfance, Codjo a développé une cartographie auditive et vibratoire stupéfiante de la cité lacustre de Ganvié. Au bruit de l’eau contre la pirogue ou au froissement des roseaux, il guide les embarcations et révèle une perception du monde invisible aux yeux physiques.',
+    bio: 'Non-voyant depuis l’enfance, Pascal a développé une cartographie auditive et vibratoire stupéfiante de la cité lacustre de Ganvié. Au bruit de l’eau contre la pirogue ou au froissement des roseaux, il guide les embarcations et révèle une perception du monde invisible aux yeux physiques.',
     photoUrl: '/assets/duos/codjo-blind.jpg',
     documentaryId: 'other-eyes-sixth-sense',
-    universeTag: 'Other Eyes',
+    universeTag: 'Other Sights',
     quote: '« Vos yeux s’arrêtent aux formes. Mes oreilles et ma peau pénètrent l’épaisseur vivante de l’air et la cadence secrète de la nuit. »',
     tree: {
       passeurs: [
@@ -2194,10 +2195,10 @@ export const PROTAGONISTS: Protagonist[] = [
         questionTitle: 'La Vision Intérieure',
         duration: '07:45',
         videoDurationSeconds: 465,
-        summary: 'Codjo raconte cette nuit de tornade où toutes les lampes s’étaient éteintes, et comment il a ramené les pêcheurs à bon port grâce à l’écho du clocher de Ganvié.',
+        summary: 'Pascal raconte cette nuit de tornade où toutes les lampes s’étaient éteintes, et comment il a ramené les pêcheurs à bon port grâce à l’écho du clocher de Ganvié.',
         videoCoverUrl: '/assets/duos/codjo-blind.jpg',
         credits: [
-          { role: 'story_owner', label: 'Propriétaire de l’histoire', name: 'Codjo Tossou' }
+          { role: 'story_owner', label: 'Propriétaire de l’histoire', name: 'Pascal Tossou' }
         ]
       }
     ]
@@ -2246,7 +2247,7 @@ export const PROTAGONISTS: Protagonist[] = [
       duos: [
         {
           id: 'duo-mawuna-codjo-ref',
-          partnerName: 'Codjo',
+          partnerName: 'Pascal',
           partnerRole: 'Navigateur sonore & sculpteur de sons',
           partnerPhoto: '/assets/duos/codjo-blind.jpg',
           duoId: 'duo-other-eyes-sixth-sense-01',
@@ -2596,16 +2597,16 @@ export const DUOS: Duo[] = [
     documentaryId: 'dixeat-fiat-luxe',
     documentaryTitle: 'Fiat Luxe <> Street',
     episodeNumber: 'ÉPISODE 01',
-    protagonistA: PROTAGONISTS.find(p => p.id === 'chef-koffi') || PROTAGONISTS[0],
-    protagonistB: PROTAGONISTS.find(p => p.id === 'helene-saint-amand') || PROTAGONISTS[1],
+    protagonistA: PROTAGONISTS.find(p => p.id === 'helene-saint-amand') || PROTAGONISTS[1],
+    protagonistB: PROTAGONISTS.find(p => p.id === 'chef-koffi') || PROTAGONISTS[0],
     questionNumber: '01',
     questionTitle: 'La Beauté Inattendue',
     centralQuestion: 'Racontez une expérience où vous avez vu la beauté, là où vous ne l’attendiez pas.',
-    quoteA: '« Quand l’homme s’est assis dans la fumée et a fermé les yeux à la première cuillerée d’igname, ses larmes m’ont dit que je n’étais pas un marchand, mais un frère. »',
-    quoteB: '« Ce n’est pas la coupe de cristal qui a touché cette femme, mais le fait que quelqu’un avait remarqué son angoisse et lui offrait un refuge invisible. »',
+    quoteA: '« Ce n’est pas la coupe de cristal qui a touché cette femme, mais le fait que quelqu’un avait remarqué son angoisse et lui offrait un refuge invisible. »',
+    quoteB: '« Quand l’homme s’est assis dans la fumée et a fermé les yeux à la première cuillerée d’igname, ses larmes m’ont dit que je n’étais pas un marchand, mais un frère. »',
     coverImage: '/assets/posters/E Vivi < > Fiat Luxe.png',
-    storyA: (PROTAGONISTS.find(p => p.id === 'chef-koffi') || PROTAGONISTS[0]).stories[0],
-    storyB: (PROTAGONISTS.find(p => p.id === 'helene-saint-amand') || PROTAGONISTS[1]).stories[0],
+    storyA: (PROTAGONISTS.find(p => p.id === 'helene-saint-amand') || PROTAGONISTS[1]).stories[0],
+    storyB: (PROTAGONISTS.find(p => p.id === 'chef-koffi') || PROTAGONISTS[0]).stories[0],
     editorialReflection: 'Entre la marmite populaire et le salon d’apparat, la grandeur de l’expérience ne réside jamais dans le prix facturé, mais dans l’intensité du soin offert à l’autre.'
   },
   {
@@ -3887,7 +3888,7 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
   },
   {
     seriesId: 'other-eyes-sixth-sense',
-    seriesTitle: 'Other Eyes < > Third Eye',
+    seriesTitle: 'Other Sights < > Third Eye',
     subtitle: 'Voir autrement. Ressentir l’invisible.',
     description: 'Quand l’écoute vibratoire et la clairvoyance transcendent les limites du visible : une lignée de passeurs qui décodent les mémoires et le souffle du monde.',
     centralQuestion: 'La Perception',
@@ -3896,13 +3897,13 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
     pioneers: [
       {
         id: 'codjo-blind',
-        name: 'Codjo Tossou',
+        name: 'Pascal Tossou',
         age: 36,
         role: 'Navigateur sonore & sculpteur de sons',
         territory: 'Ganvié & Cotonou',
         country: 'Bénin',
         flag: '🇧🇯',
-        universeTag: 'Other Eyes',
+        universeTag: 'Other Sights',
         photoUrl: '/assets/duos/codjo-blind.jpg',
         isPioneer: true,
         badge: 'Première effigie',
@@ -3921,12 +3922,12 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
             territory: 'Ganvié',
             country: 'Bénin',
             flag: '🇧🇯',
-            universeTag: 'Other Eyes',
+            universeTag: 'Other Sights',
             photoUrl: '/assets/duos/tobi-ganvie.jpg',
             badge: 'Invité(e)',
             invitedById: 'codjo-blind',
-            invitedByName: 'Codjo Tossou',
-            invitationStory: 'A appris à Codjo enfant à écouter le retour d’onde sur la proue de bois.',
+            invitedByName: 'Pascal Tossou',
+            invitationStory: 'A appris à Pascal enfant à écouter le retour d’onde sur la proue de bois.',
             duoPartnerName: 'Na Agbessi',
             duoId: 'duo-other-eyes-sixth-sense-01',
             episodeQuestion: '02 — La mémoire du son dans la nuit noire.',
@@ -3948,7 +3949,7 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
         isPioneer: true,
         badge: 'Première effigie',
         invitationStory: 'Sensible aux vibrations et aux mémoires de la terre sacrée de Ouidah, reliant le monde visible aux présences invisibles.',
-        duoPartnerName: 'Codjo Tossou',
+        duoPartnerName: 'Pascal Tossou',
         duoPartnerPhoto: '/assets/duos/codjo-blind.jpg',
         duoId: 'duo-other-eyes-sixth-sense-01',
         episodeQuestion: '01 — Que voit-on quand le monde ferme les yeux ?',

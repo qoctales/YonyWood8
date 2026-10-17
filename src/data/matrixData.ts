@@ -2092,14 +2092,14 @@ export const MATRIX_SERIES_DATA: MatrixSeriesConfig[] = [
     pioneers: [
       {
         id: 'oe-01',
-        name: 'Codjo Tossou',
-        firstName: 'Codjo',
+        name: 'Pascal Tossou',
+        firstName: 'Pascal',
         age: 36,
         role: 'Navigateur sonore & sculpteur de sons',
         territory: 'Ganvié',
         country: 'Bénin',
         flag: '🇧🇯',
-        universeTag: 'Other Eyes',
+        universeTag: 'Other Sights',
         photoUrl: '/assets/duos/codjo-blind.jpg',
         isPioneer: true,
         badge: 'Première effigie',

@@ -60,10 +60,10 @@ const seriesList: ExplorerCatalogItem[] = [
   {
     "id": "jesus-legba",
     "category": "series",
-    "title": "Èṣù < > Jésus",
+    "title": "Ancestral < > Revealed",
     "subtitle": "Deux traditions. Une même question de foi.",
     "question": "Qu’est-ce qui dans votre foi la plus intime vous relie à ce qui vous dépasse et vous rapproche des autres ?",
-    "photoUrl": "/assets/posters/jesus-esu.png",
+    "photoUrl": "/assets/posters/Esu < > Jesus.png",
     "badge": "16 pionniers cooptés",
     "accentColor": "#D97706",
     "iconName": "16-series/jesus-legba"
@@ -71,10 +71,10 @@ const seriesList: ExplorerCatalogItem[] = [
   {
     "id": "finagnon-qosqorico",
     "category": "series",
-    "title": "Finagnon < > Qosqorico",
-    "subtitle": "Bénin < > Pérou. Deux territoires. Une même réflexion sur ce qui nous relie à un lieu.",
+    "title": "Benin < > ...",
+    "subtitle": "Bénin face au monde. Deux territoires. Une même réflexion sur ce qui nous relie à un lieu.",
     "question": "Quel est ce lien invisible et indestructible qui vous unit charnellement à la terre de vos ancêtres ?",
-    "photoUrl": "/assets/posters/finagnon-qosqorico.png",
+    "photoUrl": "/assets/posters/Finagnon < > Qosqorico.png",
     "badge": "16 pionniers cooptés",
     "accentColor": "#10B981",
     "iconName": "16-series/finagnon-qosqorico"
@@ -85,7 +85,7 @@ const seriesList: ExplorerCatalogItem[] = [
     "title": "Blacks One < > Beyond Eve",
     "subtitle": "La mémoire originelle, la sororité et la diaspora.",
     "question": "Quelle blessure ou fierté héritée de vos mères portez-vous comme un flambeau dans votre existence ?",
-    "photoUrl": "/assets/posters/blacks-one-beyond-eve.png",
+    "photoUrl": "/assets/posters/Blacks One < > Beyond Eve.png",
     "badge": "16 pionniers cooptés",
     "accentColor": "#EC4899",
     "iconName": "16-series/blacks-one-beyond-eve"
@@ -93,10 +93,10 @@ const seriesList: ExplorerCatalogItem[] = [
   {
     "id": "dixeat-fiat-luxe",
     "category": "series",
-    "title": "E Vivi < > Fiat Luxe",
+    "title": "Fiat Luxe < > Street",
     "subtitle": "Quand la matière brute devient or, goût et lumière.",
     "question": "À quel instant précis avez-vous compris que transformer la matière brute était un acte de pure alchimie spirituelle ?",
-    "photoUrl": "/assets/posters/dixeat-fiat-luxe.png",
+    "photoUrl": "/assets/posters/E Vivi < > Fiat Luxe.png",
     "badge": "16 pionniers cooptés",
     "accentColor": "#F59E0B",
     "iconName": "16-series/dixeat-fiat-luxe"
@@ -104,10 +104,10 @@ const seriesList: ExplorerCatalogItem[] = [
   {
     "id": "investors-builders",
     "category": "series",
-    "title": "Investors < > Builders",
+    "title": "Diasporas < > Makers",
     "subtitle": "Le capital visionnaire face aux bâtisseurs de terrain.",
     "question": "Comment conciliez-vous la souveraineté économique, la rentabilité et l’impact écologique durable ?",
-    "photoUrl": "/assets/posters/investors-builders.png",
+    "photoUrl": "/assets/posters/Investors < > Builders.png",
     "badge": "16 pionniers cooptés",
     "accentColor": "#0284C7",
     "iconName": "16-series/investors-builders"
@@ -115,7 +115,7 @@ const seriesList: ExplorerCatalogItem[] = [
   {
     "id": "other-eyes-sixth-sense",
     "category": "series",
-    "title": "Other Eyes < > Third Eye",
+    "title": "Other Sights < > Third Eye",
     "subtitle": "La perception intuitive et les mémoires subtiles du vivant.",
     "question": "Comment développez-vous l’écoute intérieure et la sensibilité aux énergies invisibles ?",
     "photoUrl": "/assets/posters/Other Eyes < > Third Eye.png",
@@ -126,7 +126,7 @@ const seriesList: ExplorerCatalogItem[] = [
   {
     "id": "coaching-unlimited",
     "category": "series",
-    "title": "Coaching < > Sans Limites",
+    "title": "Coach Me < > If You Can",
     "subtitle": "L’exigence du mentor dans son bureau < > l’envol d’un athlète sur les haies.",
     "question": "Racontez-nous un moment où vous avez cru que l’obstacle devant vous était trop haut pour être franchi. Qu’avez-vous trouvé en vous ?",
     "photoUrl": "/assets/posters/Coaching < > Sans Limites.png",
@@ -137,7 +137,7 @@ const seriesList: ExplorerCatalogItem[] = [
   {
     "id": "focus-phd",
     "category": "series",
-    "title": "Focus < > PhD",
+    "title": "Pictures < > PhD",
     "subtitle": "Le regard sensible qui capte l’instant < > la rigueur de la recherche qui sonde l’universel.",
     "question": "Quel a été ce moment précis où votre travail a fait surgir une vérité qui a transformé votre regard ?",
     "photoUrl": "/assets/posters/Focus < >  PhD.jpg",
@@ -1629,7 +1629,7 @@ const PEOPLE_PHOTOS = [
 
 const FIRST_NAMES = [
   'Sika', 'Mahougnon', 'Sènan', 'Koffi', 'Tobi', 'Blandine', 'Dossou', 'Marie-Antoinette',
-  'Armel', 'Félicité', 'Romuald', 'Inès', 'Codjo', 'Mawuna', 'Ayaba', 'Dieudonné',
+  'Armel', 'Félicité', 'Romuald', 'Inès', 'Pascal', 'Mawuna', 'Ayaba', 'Dieudonné',
   'Sèdami', 'Fifamè', 'Enagnon', 'Bio', 'Arouna', 'Gildas', 'Chantal', 'Cosme',
   'Nathalie', 'Kafui', 'Akofa', 'Houénou', 'Fousseni', 'Mariama', 'Samba', 'Eunice'
 ];

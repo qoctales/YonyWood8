@@ -44,8 +44,8 @@ const STOCK_VIDEOS = [
 const SERIES_SUBJECTS: ProposeSubject[] = [
   {
     id: 'jesus-legba',
-    title: 'Èṣù < > Jésus',
-    subtitle: 'Deux traditions spirituelles. Une même question de foi face aux épreuves.',
+    title: 'Ancestral < > Revealed',
+    subtitle: 'Deux traditions spirituelles face aux épreuves de la foi et au mystère.',
     synopsis: 'Mise en miroir des deux spiritualités chrétienne et vodun face aux tourments du destin. Deux protagonistes sur deux continents explorent la transcendance, la mort, le pardon et la rédemption au-delà des dogmes.',
     question: 'Comment votre foi ou votre rapport au sacré vous aide-t-il à traverser le deuil ou l’épreuve ?',
     videoUrl: STOCK_VIDEOS[0],
@@ -59,8 +59,8 @@ const SERIES_SUBJECTS: ProposeSubject[] = [
   },
   {
     id: 'finagnon-qosqorico',
-    title: 'Finagnon < > Qosqorico',
-    subtitle: 'Bénin < > Pérou. Pêcheurs toffinou et paysans quechuas reliés à la terre.',
+    title: 'Benin < > ...',
+    subtitle: 'Bénin face au monde. Pêcheurs toffinou et paysans des terres sacrées.',
     synopsis: 'Des cités lacustres de Ganvié aux terrasses sacrées des Andes péruviennes. Le dialogue sensible entre deux gardiens de l’eau et de la Pachamama qui protègent la mémoire vitale de leurs communautés.',
     question: 'Quel est votre lien intime avec la terre ou l’eau qui nourrit votre communauté ?',
     videoUrl: STOCK_VIDEOS[1],
@@ -89,7 +89,7 @@ const SERIES_SUBJECTS: ProposeSubject[] = [
   },
   {
     id: 'dixeat-fiat-luxe',
-    title: 'E Vivi < > Fiat Luxe',
+    title: 'Fiat Luxe < > Street',
     subtitle: 'Artisans du goût et haute scénographie d’exception au service du détail.',
     synopsis: 'L’artisanat d’art et la haute gastronomie vus de l’intérieur. La rencontre de deux orfèvres du détail qui consacrent leur existence à la patience de la matière et à l’hospitalité sublime.',
     question: 'Quelle est la noblesse et le sens profond caché dans le geste de votre métier ?',
@@ -104,8 +104,8 @@ const SERIES_SUBJECTS: ProposeSubject[] = [
   },
   {
     id: 'investors-builders',
-    title: 'Investors < > Builders',
-    subtitle: 'Ceux qui financent le futur < > ceux qui bâtissent le réel.',
+    title: 'Diasporas < > Makers',
+    subtitle: 'Le capital visionnaire des diasporas face aux bâtisseurs de terrain.',
     synopsis: 'La confrontation constructive entre visionnaires du capital et bâtisseurs de terrain. Comment aligner la souveraineté économique, le courage d’entreprendre et l’impact écologique concret.',
     question: 'Comment concilier la vision économique d’avenir et l’impact réel sur le terrain ?',
     videoUrl: STOCK_VIDEOS[0],
@@ -119,7 +119,7 @@ const SERIES_SUBJECTS: ProposeSubject[] = [
   },
   {
     id: 'other-eyes-sixth-sense',
-    title: 'Other Eyes < > Third Eye',
+    title: 'Other Sights < > Third Eye',
     subtitle: 'L’écoute vibratoire et la clairvoyance transcendent les limites du visible.',
     synopsis: 'Le dialogue sensible entre non-voyants d’exception et médiums de Ouidah. Percevoir les énergies subtiles, les présences et les mémoires des lieux au-delà du visible.',
     question: 'Comment percevez-vous les dimensions subtiles qui échappent aux yeux ordinaires ?',
@@ -134,7 +134,7 @@ const SERIES_SUBJECTS: ProposeSubject[] = [
   },
   {
     id: 'coaching-unlimited',
-    title: 'Coaching < > Sans Limites',
+    title: 'Coach Me < > If You Can',
     subtitle: 'L’exigence du mentor dans son bureau < > l’envol d’un athlète sur les haies.',
     synopsis: 'Dans le silence stratégique d’un bureau où s’élabore la transformation intérieure et sur la piste rouge où une athlète franchit la haie : briser les limites de l’impossible.',
     question: 'Quelle limite que vous croyiez infranchissable avez-vous réussi à briser grâce à l’exigence intérieure ?',
@@ -149,7 +149,7 @@ const SERIES_SUBJECTS: ProposeSubject[] = [
   },
   {
     id: 'focus-phd',
-    title: 'Focus < >  PhD',
+    title: 'Pictures < > PhD',
     subtitle: 'Le regard sensible qui capte l’instant < > la rigueur de la recherche qui sonde l’universel.',
     synopsis: 'Entre l’œil aiguisé d’une photographe traquant la vérité humaine et la quête méthodique d’une chercheuse doctorante : deux manières complémentaires d’éclairer le monde.',
     question: 'Quel a été ce moment précis où votre travail a fait surgir une vérité qui a transformé votre regard ?',

@@ -57,7 +57,7 @@ const PRODUCTIONS: ProductionPoster[] = [
   },
   {
     id: 'finagnon-qosqorico',
-    title: 'Benin <> Pérou',
+    title: 'Benin <> ...',
     posterImage: '/assets/posters/Finagnon < > Qosqorico.png',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
     sharePrice: 60
@@ -123,7 +123,7 @@ const INITIAL_PEER_OFFERS: PeerOffer[] = [
     sellerId: 'nadia-artist',
     sellerName: 'Nadia',
     sellerPhoto: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80',
-    seriesTitle: 'Benin <> Pérou',
+    seriesTitle: 'Benin <> ...',
     posterImage: '/assets/posters/Finagnon < > Qosqorico.png',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
     sharesCount: 5,
@@ -165,7 +165,7 @@ const INITIAL_PEER_OFFERS: PeerOffer[] = [
   {
     id: 'peer-6',
     sellerId: 'codjo-voyant',
-    sellerName: 'Codjo',
+    sellerName: 'Pascal',
     sellerPhoto: '/assets/duos/codjo-blind.jpg',
     seriesTitle: 'Other Sights <> Third Eye',
     posterImage: '/assets/posters/Other Eyes < > Third Eye.png',

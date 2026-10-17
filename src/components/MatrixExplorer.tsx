@@ -1892,7 +1892,7 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
               </div>
             </div>
 
-            {/* BAS : Prénom + Âge en dessous (surélevé et sans coupure de lettre) */}
+            {/* BAS : Prénom uniquement (sans pays ni villes) */}
             <div className="relative z-20 p-5 sm:p-6 pb-8 sm:pb-9 flex items-end justify-between pointer-events-auto mt-auto">
               <div 
                 className="text-left font-sans cursor-pointer group/profile hover:opacity-95 transition-opacity"
@@ -1905,15 +1905,6 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
                 <h3 className="font-editorial text-2xl sm:text-3xl font-bold text-white tracking-tight leading-tight pb-0.5 drop-shadow-md group-hover/profile:text-[#FFE7A3] transition-colors">
                   {modalPerson.firstName || modalPerson.name.split(' ')[0]}
                 </h3>
-                <div className="flex items-center gap-1.5 mt-1">
-                  <span className="inline-flex items-center gap-1 text-[11px] sm:text-xs font-semibold text-white/95 bg-black/55 backdrop-blur-md px-2.5 py-0.5 rounded-full border border-white/20 w-fit shadow-xs">
-                    <span>{modalPerson.flag || '🇧🇯'}</span>
-                    <span>{modalPerson.country || 'Bénin'}</span>
-                    {modalPerson.territory && (
-                      <span className="text-white/75 font-normal">• {modalPerson.territory.split('(')[0].trim()}</span>
-                    )}
-                  </span>
-                </div>
               </div>
             </div>
 
