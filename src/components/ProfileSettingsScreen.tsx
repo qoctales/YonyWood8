@@ -779,7 +779,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
         viewsCount: 1200 + idx * 300,
         duration: st.duration || '07:30',
         videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        posterUrl: st.videoCoverUrl || '/assets/posters/finagnon-qosqorico.png'
+        posterUrl: st.videoCoverUrl || '/assets/posters/Benin < >.jpg'
       }));
     }
     return [
@@ -793,7 +793,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
         viewsCount: 1420,
         duration: '4:18',
         videoUrl: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',
-        posterUrl: '/assets/posters/Finagnon < > Qosqorico.png'
+        posterUrl: '/assets/posters/Benin < >.jpg'
       },
       {
         id: 'ep-2',
@@ -844,7 +844,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
       liquidityScore: 'Élevée',
       status: 'Diffusion internationale',
       videoUrl: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',
-      posterUrl: '/assets/posters/Finagnon < > Qosqorico.png'
+      posterUrl: '/assets/posters/Benin < >.jpg'
     },
     {
       id: 'prod-2',
@@ -904,7 +904,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
       liquidityScore: 'Moyenne',
       status: 'En tournage',
       videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-      posterUrl: '/assets/posters/E Vivi < > Fiat Luxe.png'
+      posterUrl: '/assets/posters/Fiat Luxe < > Street.jpg'
     },
     {
       id: 'prod-5',
@@ -924,7 +924,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
       liquidityScore: 'Élevée',
       status: 'En production',
       videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-      posterUrl: '/assets/posters/Investors < > Builders.png'
+      posterUrl: '/assets/posters/Diasporas < > Makers.jpg'
     },
     {
       id: 'prod-6',
@@ -1045,7 +1045,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
       daysRemaining: 18,
       description: 'Financement d’un studio d’enregistrement flottant à Ganvié pour sauvegarder les oraisons et contes aquatiques.',
       videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-      posterUrl: '/assets/posters/Finagnon < > Qosqorico.png'
+      posterUrl: '/assets/posters/Benin < >.jpg'
     },
     {
       id: 'init-2',
@@ -4656,7 +4656,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                       daysRemaining: addFormProjectDays,
                       description: 'Projet solidaire et participatif pour valoriser et transmettre nos savoir-faire.',
                       videoUrl: addFormVideoUrl || 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-                      posterUrl: '/assets/posters/Finagnon < > Qosqorico.png'
+                      posterUrl: '/assets/posters/Benin < >.jpg'
                     };
                     setInitiatives(prev => [newInit, ...prev]);
                     setCategoryIndices(prev => ({ ...prev, appel: 0 }));

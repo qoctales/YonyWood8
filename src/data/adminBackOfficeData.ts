@@ -422,8 +422,8 @@ export const INITIAL_SERIES_ENVELOPES: SeriesEconomicEnvelope[] = [
   },
   {
     seriesId: 'investors-builders',
-    seriesTitle: 'Investors < > Builders',
-    coverImage: '/assets/posters/investors-builders.webp',
+    seriesTitle: 'Diasporas < > Makers',
+    coverImage: '/assets/posters/Diasporas < > Makers.jpg',
     totalRaised: 24000,
     distributableEnvelope: 14400,
     distributedAmount: 5200,
@@ -444,8 +444,8 @@ export const INITIAL_SERIES_ENVELOPES: SeriesEconomicEnvelope[] = [
   },
   {
     seriesId: 'finagnon-qosqorico',
-    seriesTitle: 'Finagnon < > Qosqorico',
-    coverImage: '/assets/posters/finagnon-qosqorico.webp',
+    seriesTitle: 'Benin < > ...',
+    coverImage: '/assets/posters/Benin < >.jpg',
     totalRaised: 14200,
     distributableEnvelope: 8520,
     distributedAmount: 2650,
@@ -488,8 +488,8 @@ export const INITIAL_SERIES_ENVELOPES: SeriesEconomicEnvelope[] = [
   },
   {
     seriesId: 'dixeat-fiat-luxe',
-    seriesTitle: 'E Vivi < > Fiat Luxe',
-    coverImage: '/assets/posters/e-vivi-fiat-luxe.webp',
+    seriesTitle: 'Fiat Luxe < > Street',
+    coverImage: '/assets/posters/Fiat Luxe < > Street.jpg',
     totalRaised: 16800,
     distributableEnvelope: 10080,
     distributedAmount: 3100,

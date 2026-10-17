@@ -68,7 +68,7 @@ export const PortfolioScreen: React.FC<PortfolioScreenProps> = ({
       growthRatePercent: 24.5,
       liquidityScore: 'Élevée',
       status: 'En diffusion',
-      posterUrl: '/assets/posters/Finagnon < > Qosqorico.png'
+      posterUrl: '/assets/posters/Benin < >.jpg'
     },
     {
       id: 'prod-2',
@@ -125,7 +125,7 @@ export const PortfolioScreen: React.FC<PortfolioScreenProps> = ({
       growthRatePercent: 11.8,
       liquidityScore: 'Moyenne',
       status: 'En tournage',
-      posterUrl: '/assets/posters/E Vivi < > Fiat Luxe.png'
+      posterUrl: '/assets/posters/Fiat Luxe < > Street.jpg'
     },
     {
       id: 'prod-5',
@@ -144,7 +144,7 @@ export const PortfolioScreen: React.FC<PortfolioScreenProps> = ({
       growthRatePercent: 29.0,
       liquidityScore: 'Élevée',
       status: 'En production',
-      posterUrl: '/assets/posters/Investors < > Builders.png'
+      posterUrl: '/assets/posters/Diasporas < > Makers.jpg'
     },
     {
       id: 'prod-6',
@@ -184,7 +184,7 @@ export const PortfolioScreen: React.FC<PortfolioScreenProps> = ({
       buyerPhoto: '/assets/protagonists/sayri-quispe.jpg',
       buyerProtagonistId: 'sayri-quispe',
       buyerRole: 'Cultivateur & tisseur andin (Cusco)',
-      posterUrl: '/assets/posters/Finagnon < > Qosqorico.png'
+      posterUrl: '/assets/posters/Benin < >.jpg'
     },
     {
       id: 'tx-2',
@@ -198,7 +198,7 @@ export const PortfolioScreen: React.FC<PortfolioScreenProps> = ({
       netGain: 8,
       date: '02 mars 2026',
       buyerName: 'Dah Zounon Gbegnon',
-      buyerPhoto: '/assets/protagonists/dah-zounon.jpg',
+      buyerPhoto: '/assets/duos/mahougnon_esu_portrait_1791701582891.jpg',
       buyerProtagonistId: 'dah-zounon',
       buyerRole: 'Dignitaire du culte Èṣù (Porto-Novo)',
       posterUrl: '/assets/posters/Esu < > Jesus.png'
@@ -218,7 +218,7 @@ export const PortfolioScreen: React.FC<PortfolioScreenProps> = ({
       buyerPhoto: '/assets/protagonists/koffi-tisserand.jpg',
       buyerProtagonistId: 'koffi-tisserand',
       buyerRole: 'Tisserand traditionnel (Porto-Novo)',
-      posterUrl: '/assets/posters/Investors < > Builders.png'
+      posterUrl: '/assets/posters/Diasporas < > Makers.jpg'
     }
   ]);
 

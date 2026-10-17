@@ -74,7 +74,7 @@ const seriesList: ExplorerCatalogItem[] = [
     "title": "Benin < > ...",
     "subtitle": "Bénin face au monde. Deux territoires. Une même réflexion sur ce qui nous relie à un lieu.",
     "question": "Quel est ce lien invisible et indestructible qui vous unit charnellement à la terre de vos ancêtres ?",
-    "photoUrl": "/assets/posters/Finagnon < > Qosqorico.png",
+    "photoUrl": "/assets/posters/Benin < >.jpg",
     "badge": "16 pionniers cooptés",
     "accentColor": "#10B981",
     "iconName": "16-series/finagnon-qosqorico"
@@ -96,7 +96,7 @@ const seriesList: ExplorerCatalogItem[] = [
     "title": "Fiat Luxe < > Street",
     "subtitle": "Quand la matière brute devient or, goût et lumière.",
     "question": "À quel instant précis avez-vous compris que transformer la matière brute était un acte de pure alchimie spirituelle ?",
-    "photoUrl": "/assets/posters/E Vivi < > Fiat Luxe.png",
+    "photoUrl": "/assets/posters/Fiat Luxe < > Street.jpg",
     "badge": "16 pionniers cooptés",
     "accentColor": "#F59E0B",
     "iconName": "16-series/dixeat-fiat-luxe"
@@ -107,7 +107,7 @@ const seriesList: ExplorerCatalogItem[] = [
     "title": "Diasporas < > Makers",
     "subtitle": "Le capital visionnaire face aux bâtisseurs de terrain.",
     "question": "Comment conciliez-vous la souveraineté économique, la rentabilité et l’impact écologique durable ?",
-    "photoUrl": "/assets/posters/Investors < > Builders.png",
+    "photoUrl": "/assets/posters/Diasporas < > Makers.jpg",
     "badge": "16 pionniers cooptés",
     "accentColor": "#0284C7",
     "iconName": "16-series/investors-builders"
@@ -1610,17 +1610,17 @@ const STOCK_VIDEOS = [
 
 const PEOPLE_PHOTOS = [
   '/assets/protagonists/sika-dossou.jpg',
-  '/assets/protagonists/mahougnon-zounon.jpg',
+  '/assets/duos/mahougnon_esu_portrait_1791701582891.jpg',
   '/assets/protagonists/senan-agossa.jpg',
   '/assets/protagonists/tobi-houndegla.jpg',
   '/assets/protagonists/adjovi-blandine.jpg',
   '/assets/protagonists/armel-hounkpatin.jpg',
-  '/assets/duos/dah-zounon.jpg',
+  '/assets/duos/mahougnon_esu_portrait_1791701582891.jpg',
   '/assets/duos/tobi-ganvie.jpg',
   '/assets/duos/chef-koffi.jpg',
   '/assets/duos/mawuna-medium.jpg',
   '/assets/duos/codjo-blind.jpg',
-  '/assets/duos/pere-matthieu.jpg',
+  '/assets/duos/duo_pere_matthieu_1791655226601.jpg',
   '/src/assets/images/beninoise_femme_sika_1792164985263.jpg',
   '/src/assets/images/beninois_sage_dossou_1792165004493.jpg',
   '/src/assets/images/beninoise_jeune_senan_1792165025309.jpg',

@@ -201,7 +201,7 @@ export const SOUS_CATEGORIES: SousCategorie[] = [
     tagline: 'Pêcheurs toffinou et paysans des terres sacrées',
     description: 'Des cités lacustres de Ganvié aux terrasses sacrées des Andes péruviennes. Le dialogue de deux gardiens des mémoires vivantes.',
     badge: 'Série terroirs & eau',
-    photoUrl: '/assets/posters/Finagnon < > Qosqorico.png',
+    photoUrl: '/assets/posters/Benin < >.jpg',
     accentColor: '#10B981',
     glowColor: 'rgba(16, 185, 129, 0.6)',
     bgGradient: 'from-emerald-600 via-teal-700 to-stone-900'
@@ -233,7 +233,7 @@ export const SOUS_CATEGORIES: SousCategorie[] = [
     tagline: 'Artisans du goût et haute scénographie d’exception',
     description: 'L’artisanat d’art et la haute gastronomie vus de l’intérieur : la rencontre de deux orfèvres du détail et de l’hospitalité.',
     badge: 'Série goût & luxe',
-    photoUrl: '/assets/posters/E Vivi < > Fiat Luxe.png',
+    photoUrl: '/assets/posters/Fiat Luxe < > Street.jpg',
     accentColor: '#F59E0B',
     glowColor: 'rgba(245, 158, 11, 0.6)',
     bgGradient: 'from-amber-500 via-yellow-700 to-stone-900'
@@ -249,7 +249,7 @@ export const SOUS_CATEGORIES: SousCategorie[] = [
     tagline: 'Bâtisseurs et investisseurs pour l’autonomie économique',
     description: 'La confrontation constructive entre capital visionnaire et bâtisseurs de terrain pour un impact écologique et souverain.',
     badge: 'Série entrepreneuriat',
-    photoUrl: '/assets/posters/Investors < > Builders.png',
+    photoUrl: '/assets/posters/Diasporas < > Makers.jpg',
     accentColor: '#3B82F6',
     glowColor: 'rgba(59, 130, 246, 0.6)',
     bgGradient: 'from-blue-600 via-indigo-700 to-stone-900'

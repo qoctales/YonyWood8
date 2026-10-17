@@ -50,13 +50,13 @@ const DOCUMENTARIES = [
   {
     id: 'finagnon-qosqorico',
     slug: 'finagnon-qosqorico',
-    title: 'Finagnon <> Qosqorico',
+    title: 'Benin <> ...',
     subtitle: 'Bénin <> Pérou. Deux territoires. Une même réflexion sur ce qui nous relie à un lieu.',
     centralQuestion: 'Le territoire',
     shortSynopsis: "Des cités lacustres de Ganvié aux cimes sacrées de Cusco et Pisac, pêcheurs et paysans dialoguent sur l'enracinement, l'eau, la montagne et l'amour inconditionnel d'une terre.",
     description: "Des cités lacustres de Ganvié, bâties sur pilotis pour échapper aux razzias du Dahomey, jusqu'aux terrasses millénaires de Pisac et Cusco au Pérou.",
-    coverImage: '/assets/posters/finagnon-qosqorico.png',
-    posterUrl: '/assets/posters/finagnon-qosqorico.png',
+    coverImage: '/assets/posters/Benin < >.jpg',
+    posterUrl: '/assets/posters/Benin < >.jpg',
     teaserVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
     teaserDuration: '1:45',
     episodeCount: 5,
@@ -108,13 +108,13 @@ const DOCUMENTARIES = [
   {
     id: 'dixeat-fiat-luxe',
     slug: 'dixeat-fiat-luxe',
-    title: 'Dixeat <> Fiat Luxe',
+    title: 'Fiat Luxe <> Street',
     subtitle: "Ceux qui nourrissent les autres <> ceux qui créent des expériences d'exception.",
     centralQuestion: "L'expérience",
     shortSynopsis: "Des marmites populaires de Dantokpa aux tables d'exception à Paris et Milan, des artisans de bouche et scénographes révèlent l'art du don, du détail et du souvenir impérissable.",
     description: "Dans la fumée des marmites de Dantokpa à Cotonou, Dixeat incarne l'artisanat nourricier populaire.",
-    coverImage: '/assets/posters/dixeat-fiat-luxe.png',
-    posterUrl: '/assets/posters/dixeat-fiat-luxe.png',
+    coverImage: '/assets/posters/Fiat Luxe < > Street.jpg',
+    posterUrl: '/assets/posters/Fiat Luxe < > Street.jpg',
     teaserVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
     teaserDuration: '1:20',
     episodeCount: 5,
@@ -137,13 +137,13 @@ const DOCUMENTARIES = [
   {
     id: 'investors-builders',
     slug: 'investors-builders',
-    title: 'Investors <> Builders',
+    title: 'Diasporas <> Makers',
     subtitle: 'Ceux qui financent le futur <> ceux qui bâtissent le réel.',
     centralQuestion: "L'alliance",
     shortSynopsis: "Entre l'audace du capital patient et la rigueur du terrain, une rencontre sans filtre entre investisseurs d'impact et bâtisseurs d'infrastructures.",
     description: "D'un côté, ceux qui allouent des capitaux, évaluent les risques et parient sur des visions à long terme. De l'autre, ceux qui conçoivent, bâtissent et transforment la matière au quotidien.",
-    coverImage: '/investors-builders.png',
-    posterUrl: '/investors-builders.png',
+    coverImage: '/assets/posters/Diasporas < > Makers.jpg',
+    posterUrl: '/assets/posters/Diasporas < > Makers.jpg',
     teaserVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
     teaserDuration: '1:35',
     episodeCount: 5,
@@ -285,7 +285,7 @@ const PROTAGONISTS = [
     country: 'Bénin',
     flag: '🇧🇯',
     bio: "Héritier d'une lignée de prêtres vodoun d'Allada, Dah Zounon veille sur l'autel de Legba depuis quarante ans.",
-    photoUrl: '/assets/protagonists/dah-zounon.jpg',
+    photoUrl: '/assets/duos/mahougnon_esu_portrait_1791701582891.jpg',
     universeTag: 'Èṣù',
     quote: "« Legba ne ferme jamais une porte sans avoir déjà placé la clé entre les mains de celui qui écoute. »",
     treeData: {
@@ -293,7 +293,7 @@ const PROTAGONISTS = [
         { id: 't-1', title: "L'onction des carrefours", ancestorOrMentor: 'Son grand-père Hounnon Kpossou (1918–1996)', description: "L'apprentissage du silence auprès des pierres levées.", connectedProtagonistId: 'pere-matthieu' }
       ],
       duos: [
-        { id: 'duo-1', partnerName: 'Père Matthieu Agonhossou', partnerRole: 'Prêtre catholique & enseignant', partnerPhoto: '/assets/protagonists/pere-matthieu.jpg', duoId: 'duo-jesus-legba-01', question: "01 — La Rencontre : Le jour où la foi a cessé d'être un mot" }
+        { id: 'duo-1', partnerName: 'Père Matthieu Agonhossou', partnerRole: 'Prêtre catholique & enseignant', partnerPhoto: '/assets/duos/duo_pere_matthieu_1791655226601.jpg', duoId: 'duo-jesus-legba-01', question: "01 — La Rencontre : Le jour où la foi a cessé d'être un mot" }
       ],
       opportunities: [
         { id: 'o-1', title: "Immersion aux rites d'accueil de Legba", description: 'Sessions saisonnières de découverte des pratiques de seuil.', badge: 'Immersion initiatique' }
@@ -317,7 +317,7 @@ const PROTAGONISTS = [
         duration: '11:42',
         videoDurationSeconds: 702,
         summary: "À l'âge de dix-neuf ans, Dah Zounon fuyait le village après un naufrage familial.",
-        videoCoverUrl: '/assets/protagonists/dah-zounon.jpg',
+        videoCoverUrl: '/assets/duos/mahougnon_esu_portrait_1791701582891.jpg',
         credits: [
           { role: 'story_owner', label: "Propriétaire de l'histoire", name: 'Dah Zounon Gbegnon' },
           { role: 'director', label: 'Réalisateur', name: 'Ayaba Senou' }
@@ -336,7 +336,7 @@ const PROTAGONISTS = [
     country: 'Bénin',
     flag: '🇧🇯',
     bio: "Né au bord de la lagune de Cotonou, ordonné à Ouidah, le Père Matthieu conjugue l'étude de saint Augustin avec une écoute attentive des traditions de son terroir.",
-    photoUrl: '/assets/protagonists/pere-matthieu.jpg',
+    photoUrl: '/assets/duos/duo_pere_matthieu_1791655226601.jpg',
     universeTag: 'Jésus',
     quote: "« La foi n'est pas une citadelle contre l'autre, c'est une table basse dressée en plein vent où l'on attend celui qui a soif. »",
     treeData: {
@@ -344,7 +344,7 @@ const PROTAGONISTS = [
         { id: 't-3', title: "Le bréviaire au bord de l'eau", ancestorOrMentor: 'Monseigneur Isidore de Souza', description: 'Le courage civique au service de la paix nationale.', connectedProtagonistId: 'dah-zounon' }
       ],
       duos: [
-        { id: 'duo-1-bis', partnerName: 'Dah Zounon Gbegnon', partnerRole: 'Dignitaire Vodoun', partnerPhoto: '/assets/protagonists/dah-zounon.jpg', duoId: 'duo-jesus-legba-01', question: "01 — La Rencontre : L'éveil devant l'invisible" }
+        { id: 'duo-1-bis', partnerName: 'Dah Zounon Gbegnon', partnerRole: 'Dignitaire Vodoun', partnerPhoto: '/assets/duos/mahougnon_esu_portrait_1791701582891.jpg', duoId: 'duo-jesus-legba-01', question: "01 — La Rencontre : L'éveil devant l'invisible" }
       ],
       opportunities: [
         { id: 'o-3', title: 'Ateliers de lecture philosophique pour lycéens', description: 'Ouverture hebdomadaire de sa bibliothèque personnelle à 30 élèves.', badge: 'Éducation ouverte' }

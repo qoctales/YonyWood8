@@ -43,7 +43,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         id: 'eff-1',
         name: 'Mahougnon Zounon',
         role: 'Gardien du sanctuaire des mémoires ancestrales (Ouidah)',
-        photoUrl: '/assets/duos/dah-zounon.jpg',
+        photoUrl: '/assets/duos/mahougnon_esu_portrait_1791701582891.jpg',
         videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
         status: 'EFFIGIE_PRINCIPALE'
       },
@@ -51,7 +51,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         id: 'eff-2',
         name: 'Dieudonné Dossou',
         role: 'Prêtre et théologien du dialogue des mémoires',
-        photoUrl: '/assets/duos/pere-matthieu.jpg',
+        photoUrl: '/assets/duos/duo_pere_matthieu_1791655226601.jpg',
         videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
         status: 'EFFIGIE_SERIE'
       }
@@ -141,8 +141,8 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
     centralQuestion: 'Racontez un moment où vous avez compris ce qui rend votre pays unique.',
     shortSynopsis: 'Des cités lacustres de Ganvié aux cimes sacrées de Cusco et Pisac, pêcheurs et paysans dialoguent sur l’enracinement, l’eau, la montagne et l’amour inconditionnel d’une terre.',
     description: 'Des cités lacustres de Ganvié, bâties sur pilotis pour échapper aux razzias du Dahomey, jusqu\'aux terrasses millénaires de Pisac et Cusco au Pérou, perchées à 3 400 mètres d\'altitude. Benin <> ... réunit des pêcheurs toffinou et des paysans quechuas gardiens de la mémoire. Comment habite-t-on l\'eau ou la roche sacrée ? Que ressent-on lorsqu\'il faut quitter sa lagune ou sa cordillère, et que retrouve-t-on en revenant ? Une épopée intime sur la mémoire des terres nourricières et la résistance poétique des peuples autochtones face à l\'exil.',
-    coverImage: '/assets/posters/Finagnon < > Qosqorico.png',
-    posterUrl: '/assets/posters/Finagnon < > Qosqorico.png',
+    coverImage: '/assets/posters/Benin < >.jpg',
+    posterUrl: '/assets/posters/Benin < >.jpg',
     teaserVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
     teaserDuration: '1:45',
     universes: [
@@ -352,8 +352,8 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
     centralQuestion: 'Racontez une expérience où vous avez vu la beauté, là où vous ne l’attendiez pas.',
     shortSynopsis: 'Des marmites populaires de Dantokpa aux tables d’exception à Paris et Milan, des artisans de bouche et scénographes révèlent l’art du don, du détail et du souvenir impérissable.',
     description: 'Dans la fumée des marmites de Dantokpa à Cotonou, Street incarne l\'artisanat nourricier populaire : des femmes et cuisiniers qui se lèvent à 4h du matin pour offrir réconfort et dignité à des centaines de travailleurs avec une sauce gombo ou un igname pilé. En écho, Fiat Luxe explore la haute précision des arts de la table, de la scénographie olfactive et de l\'hospitalité d\'exception à Paris, Marrakech et Milan. Tout les sépare en apparence, sauf l\'essentiel : l\'obsession du détail, la générosité du don et la grâce de transformer un simple repas en un souvenir inoubliable.',
-    coverImage: '/assets/posters/E Vivi < > Fiat Luxe.png',
-    posterUrl: '/assets/posters/E Vivi < > Fiat Luxe.png',
+    coverImage: '/assets/posters/Fiat Luxe < > Street.jpg',
+    posterUrl: '/assets/posters/Fiat Luxe < > Street.jpg',
     teaserVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
     teaserDuration: '1:20',
     universes: [
@@ -445,8 +445,8 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
     centralQuestion: 'Racontez le moment où un lieu a changé votre façon de construire vos rêves.',
     shortSynopsis: 'Entre l’audace du capital patient et la rigueur du terrain, une rencontre sans filtre entre investisseurs d’impact et bâtisseurs d’infrastructures.',
     description: 'D’un côté, ceux qui allouent des capitaux, évaluent les risques et parient sur des visions à long terme à travers les diasporas. De l’autre, ceux qui conçoivent, bâtissent et transforment la matière au quotidien (Makers). Diasporas <> Makers explore l’alliance féconde et la confiance nécessaire entre investisseurs d’impact et bâtisseurs de terrain. Comment accorder le temps long du capital avec l’urgence de la matière ? Une réflexion profonde sur la création de valeur partagée et la souveraineté économique.',
-    coverImage: '/assets/posters/Investors < > Builders.png',
-    posterUrl: '/assets/posters/Investors < > Builders.png',
+    coverImage: '/assets/posters/Diasporas < > Makers.jpg',
+    posterUrl: '/assets/posters/Diasporas < > Makers.jpg',
     teaserVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
     teaserDuration: '1:35',
     universes: [
@@ -1224,7 +1224,7 @@ export const PROTAGONISTS: Protagonist[] = [
     country: 'Bénin',
     flag: '🇧🇯',
     bio: 'Héritier d\'une lignée de prêtres vodoun d’Allada, Mahougnon veille sur l’autel de Legba depuis quarante ans. Pour lui, la foi n’est pas une spéculation : c’est un pacte quotidien d’équilibre avec la nature, les carrefours de la vie et le respect de la parole donnée.',
-    photoUrl: '/assets/protagonists/dah-zounon.jpg',
+    photoUrl: '/assets/duos/mahougnon_esu_portrait_1791701582891.jpg',
     documentaryId: 'jesus-legba',
     universeTag: 'Èṣù',
     quote: '« Legba ne ferme jamais une porte sans avoir déjà placé la clé entre les mains de celui qui écoute. »',
@@ -1249,7 +1249,7 @@ export const PROTAGONISTS: Protagonist[] = [
           id: 'duo-1',
           partnerName: 'Dieudonné Agonhossou',
           partnerRole: 'Prêtre catholique & enseignant',
-          partnerPhoto: '/assets/protagonists/pere-matthieu.jpg',
+          partnerPhoto: '/assets/duos/duo_pere_matthieu_1791655226601.jpg',
           duoId: 'duo-jesus-legba-01',
           question: '01 — La Rencontre : Le jour où la foi a cessé d\'être un mot'
         }
@@ -1309,7 +1309,7 @@ export const PROTAGONISTS: Protagonist[] = [
         duration: '11:42',
         videoDurationSeconds: 702,
         summary: 'À l’âge de dix-neuf ans, Mahougnon fuyait le village après un naufrage familial. Assis au carrefour d’Allada, une simple poignée de terre chaude déposée par un vieillard a suspendu son désespoir.',
-        videoCoverUrl: '/assets/protagonists/dah-zounon.jpg',
+        videoCoverUrl: '/assets/duos/mahougnon_esu_portrait_1791701582891.jpg',
         credits: [
           { role: 'story_owner', label: 'Propriétaire de l’histoire', name: 'Mahougnon Zounon Gbegnon' },
           { role: 'director', label: 'Réalisateur', name: 'Ayaba Senou' },
@@ -1329,7 +1329,7 @@ export const PROTAGONISTS: Protagonist[] = [
     country: 'Bénin',
     flag: '🇧🇯',
     bio: 'Né au bord de la lagune de Cotonou, ordonné à Ouidah, Dieudonné conjugue l’étude de saint Augustin avec une écoute attentive des traditions de son terroir. Il enseigne la philosophie aux jeunes lycéens et partage son temps entre l’oratoire et la rue.',
-    photoUrl: '/assets/protagonists/pere-matthieu.jpg',
+    photoUrl: '/assets/duos/duo_pere_matthieu_1791655226601.jpg',
     documentaryId: 'jesus-legba',
     universeTag: 'Jésus',
     quote: '« La foi n’est pas une citadelle contre l’autre, c’est une table basse dressée en plein vent où l’on attend celui qui a soif. »',
@@ -1348,7 +1348,7 @@ export const PROTAGONISTS: Protagonist[] = [
           id: 'duo-1-bis',
           partnerName: 'Mahougnon Zounon Gbegnon',
           partnerRole: 'Dignitaire Vodoun',
-          partnerPhoto: '/assets/protagonists/dah-zounon.jpg',
+          partnerPhoto: '/assets/duos/mahougnon_esu_portrait_1791701582891.jpg',
           duoId: 'duo-jesus-legba-01',
           question: '01 — La Rencontre : L’éveil devant l’invisible'
         }
@@ -1395,7 +1395,7 @@ export const PROTAGONISTS: Protagonist[] = [
         duration: '13:05',
         videoDurationSeconds: 785,
         summary: 'Pendant ses années de doute à l’université, Dieudonné est entré par hasard dans la basilique déserte de Ouidah en plein midi. Ce n’est pas un miracle qui l’a retenu, mais une soudaine certitude d’être attendu.',
-        videoCoverUrl: '/assets/protagonists/pere-matthieu.jpg',
+        videoCoverUrl: '/assets/duos/duo_pere_matthieu_1791655226601.jpg',
         credits: [
           { role: 'story_owner', label: 'Propriétaire de l’histoire', name: 'Dieudonné Agonhossou' },
           { role: 'director', label: 'Réalisateur', name: 'Ayaba Senou' },
@@ -2224,7 +2224,7 @@ export const PROTAGONISTS: Protagonist[] = [
           name: 'Prêtresse Na Agbessi',
           role: 'Matriarche guérisseuse de Ouidah',
           country: 'Bénin',
-          photo: '/assets/duos/dah-zounon.jpg'
+          photo: '/assets/duos/mahougnon_esu_portrait_1791701582891.jpg'
         }
       ],
       heritiers: [
@@ -2568,7 +2568,7 @@ export const DUOS: Duo[] = [
     centralQuestion: 'Racontez un moment où vous avez compris ce qui rend votre pays unique.',
     quoteA: '« Le jour où la pirogue a glissé dans la brume sans que j’aie besoin de regarder le rivage. Ganvié n’est pas sur la terre, mais elle est dans mon sang. »',
     quoteB: '« Quand les pieds nus touchent la roche glacée de Pisac à l’aube et que la montagne souffle son premier vent. Là, tu sais que tu n’es pas un étranger. »',
-    coverImage: '/assets/posters/Finagnon < > Qosqorico.png',
+    coverImage: '/assets/posters/Benin < >.jpg',
     storyA: (PROTAGONISTS.find(p => p.id === 'tobi-houndegla') || PROTAGONISTS[0]).stories[0],
     storyB: (PROTAGONISTS.find(p => p.id === 'sayri-quispe') || PROTAGONISTS[1]).stories[0],
     editorialReflection: 'Des pilotis de Ganvié aux terrasses de Pisac, le chez-soi n’est pas une propriété cadastrale : c’est une fidélité organique au rythme d’un élément — l’eau vive ou la pierre d’altitude.'
@@ -2604,7 +2604,7 @@ export const DUOS: Duo[] = [
     centralQuestion: 'Racontez une expérience où vous avez vu la beauté, là où vous ne l’attendiez pas.',
     quoteA: '« Ce n’est pas la coupe de cristal qui a touché cette femme, mais le fait que quelqu’un avait remarqué son angoisse et lui offrait un refuge invisible. »',
     quoteB: '« Quand l’homme s’est assis dans la fumée et a fermé les yeux à la première cuillerée d’igname, ses larmes m’ont dit que je n’étais pas un marchand, mais un frère. »',
-    coverImage: '/assets/posters/E Vivi < > Fiat Luxe.png',
+    coverImage: '/assets/posters/Fiat Luxe < > Street.jpg',
     storyA: (PROTAGONISTS.find(p => p.id === 'helene-saint-amand') || PROTAGONISTS[1]).stories[0],
     storyB: (PROTAGONISTS.find(p => p.id === 'chef-koffi') || PROTAGONISTS[0]).stories[0],
     editorialReflection: 'Entre la marmite populaire et le salon d’apparat, la grandeur de l’expérience ne réside jamais dans le prix facturé, mais dans l’intensité du soin offert à l’autre.'
@@ -2622,7 +2622,7 @@ export const DUOS: Duo[] = [
     centralQuestion: 'Racontez le moment où un lieu a changé votre façon de construire vos rêves.',
     quoteA: '« Le jour où j’ai signé ce premier financement pour l’atelier sans garantie bancaire, j’ai compris que ma responsabilité n’était pas de me protéger, mais de faire confiance. »',
     quoteB: '« Quand la voûte en terre crue a résisté à la première tornade, j’ai su que nos mains portaient une force que nulle machine ne peut remplacer. »',
-    coverImage: '/assets/posters/Investors < > Builders.png',
+    coverImage: '/assets/posters/Diasporas < > Makers.jpg',
     storyA: (PROTAGONISTS.find(p => p.id === 'fatou-diallo') || PROTAGONISTS[0]).stories[0],
     storyB: (PROTAGONISTS.find(p => p.id === 'kwame-mensah') || PROTAGONISTS[1]).stories[0],
     editorialReflection: 'Entre l’encre des contrats et la poussière des chantiers, la véritable valeur ne naît pas dans le calcul du profit, mais dans l’engagement réciproque de bâtir ce qui perdure.'
@@ -3144,12 +3144,12 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
         country: 'Bénin',
         flag: '🇧🇯',
         universeTag: 'Èṣù',
-        photoUrl: '/assets/duos/dah-zounon.jpg',
+        photoUrl: '/assets/duos/mahougnon_esu_portrait_1791701582891.jpg',
         isPioneer: true,
         badge: 'Première effigie',
         invitationStory: 'Pionnier fondateur de la série. A accepté d\'ouvrir le secret des seuils sacrés pour que la jeunesse comprenne la vraie nature protectrice de Legba.',
         duoPartnerName: 'Dieudonné',
-        duoPartnerPhoto: '/assets/duos/pere-matthieu.jpg',
+        duoPartnerPhoto: '/assets/duos/duo_pere_matthieu_1791655226601.jpg',
         duoId: 'duo-jesus-legba-01',
         episodeQuestion: '01 — Racontez-nous un moment où vous avez réellement rencontré votre foi.',
         protagonistIdRef: 'dah-zounon',
@@ -3224,12 +3224,12 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
         country: 'Bénin',
         flag: '🇧🇯',
         universeTag: 'Jésus',
-        photoUrl: '/assets/duos/pere-matthieu.jpg',
+        photoUrl: '/assets/duos/duo_pere_matthieu_1791655226601.jpg',
         isPioneer: true,
         badge: 'Première effigie',
         invitationStory: 'Pionnier fondateur représentant le pôle chrétien. A voulu témoigner d\'une foi dépouillée de tout mépris envers les traditions des ancêtres.',
         duoPartnerName: 'Mahougnon',
-        duoPartnerPhoto: '/assets/duos/dah-zounon.jpg',
+        duoPartnerPhoto: '/assets/duos/mahougnon_esu_portrait_1791701582891.jpg',
         duoId: 'duo-jesus-legba-01',
         episodeQuestion: '01 — La rencontre intime avec la grâce.',
         protagonistIdRef: 'pere-matthieu',
@@ -3964,7 +3964,7 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
             country: 'Bénin',
             flag: '🇧🇯',
             universeTag: 'Third Eye',
-            photoUrl: '/assets/duos/dah-zounon.jpg',
+            photoUrl: '/assets/duos/mahougnon_esu_portrait_1791701582891.jpg',
             badge: 'Invité(e)',
             invitedById: 'mawuna-medium',
             invitedByName: 'Mawuna Houénou',

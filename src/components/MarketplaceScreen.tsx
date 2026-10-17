@@ -58,7 +58,7 @@ const PRODUCTIONS: ProductionPoster[] = [
   {
     id: 'finagnon-qosqorico',
     title: 'Benin <> ...',
-    posterImage: '/assets/posters/Finagnon < > Qosqorico.png',
+    posterImage: '/assets/posters/Benin < >.jpg',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
     sharePrice: 60
   },
@@ -72,14 +72,14 @@ const PRODUCTIONS: ProductionPoster[] = [
   {
     id: 'dixeat-fiat-luxe',
     title: 'Fiat Luxe <> Street',
-    posterImage: '/assets/posters/E Vivi < > Fiat Luxe.png',
+    posterImage: '/assets/posters/Fiat Luxe < > Street.jpg',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
     sharePrice: 65
   },
   {
     id: 'investors-builders',
     title: 'Diasporas <> Makers',
-    posterImage: '/assets/posters/Investors < > Builders.png',
+    posterImage: '/assets/posters/Diasporas < > Makers.jpg',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
     sharePrice: 70
   },
@@ -124,7 +124,7 @@ const INITIAL_PEER_OFFERS: PeerOffer[] = [
     sellerName: 'Nadia',
     sellerPhoto: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80',
     seriesTitle: 'Benin <> ...',
-    posterImage: '/assets/posters/Finagnon < > Qosqorico.png',
+    posterImage: '/assets/posters/Benin < >.jpg',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
     sharesCount: 5,
     unitPrice: 52
@@ -146,7 +146,7 @@ const INITIAL_PEER_OFFERS: PeerOffer[] = [
     sellerName: 'Amina',
     sellerPhoto: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
     seriesTitle: 'Fiat Luxe <> Street',
-    posterImage: '/assets/posters/E Vivi < > Fiat Luxe.png',
+    posterImage: '/assets/posters/Fiat Luxe < > Street.jpg',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
     sharesCount: 4,
     unitPrice: 62
@@ -157,7 +157,7 @@ const INITIAL_PEER_OFFERS: PeerOffer[] = [
     sellerName: 'Benoît',
     sellerPhoto: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80',
     seriesTitle: 'Diasporas <> Makers',
-    posterImage: '/assets/posters/Investors < > Builders.png',
+    posterImage: '/assets/posters/Diasporas < > Makers.jpg',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
     sharesCount: 3,
     unitPrice: 68
