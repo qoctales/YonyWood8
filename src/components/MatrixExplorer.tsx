@@ -251,6 +251,20 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
   const [isShareCopied, setIsShareCopied] = useState<boolean>(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
+  // Fermeture de la modale protagoniste par la touche Échap
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && modalPerson) {
+        setModalPerson(null);
+        setIsPlaying(false);
+        setIsResonanceModalOpen(false);
+        setIsPersonQuestionModalOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [modalPerson]);
+
   // Configuration de la catégorie active
   const activeCategoryConfig = useMemo<ExplorerCategoryConfig>(() => {
     return EXPLORER_CATEGORIES.find(c => c.id === activeCategory) || EXPLORER_CATEGORIES[0];
@@ -393,8 +407,8 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
     }
   };
 
-  const toggleMute = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const toggleMute = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
     if (!videoRef.current) return;
     videoRef.current.muted = !videoRef.current.muted;
     setIsMuted(videoRef.current.muted);
@@ -1768,27 +1782,7 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
             {/* Gradient pour lisibilité */}
             <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/90 pointer-events-none" />
 
-            {/* CENTRE : Icône vidéo Play / Pause au centre exact de l'image */}
-            <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
-              <button
-                type="button"
-                id="btn-center-play-pause-modal"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  toggleVideoPlayback();
-                }}
-                className="pointer-events-auto w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-black/45 hover:bg-black/70 backdrop-blur-xs border border-white/25 text-white flex items-center justify-center transition-all duration-200 shadow-2xl hover:scale-105 active:scale-95 cursor-pointer"
-                title={isPlaying ? 'Mettre en pause' : 'Lire la vidéo'}
-              >
-                {isPlaying ? (
-                  <Pause className="w-6 h-6 sm:w-7 sm:h-7 fill-white text-white" />
-                ) : (
-                  <Play className="w-6 h-6 sm:w-7 sm:h-7 fill-white text-white translate-x-0.5 opacity-95" />
-                )}
-              </button>
-            </div>
-
-            {/* HAUT : Titre du sujet + Commandes */}
+            {/* HAUT : Titre du sujet à gauche & Déclencheur vidéo en haut à droite */}
             <div className="relative z-20 p-4 flex items-center justify-between pointer-events-auto">
               <div 
                 className="px-3.5 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-xs text-white font-medium shadow-md tracking-wide max-w-[65%] sm:max-w-[75%] flex items-center gap-1.5"
@@ -1798,35 +1792,22 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
                 </span>
               </div>
 
-              <div className="flex items-center gap-2">
-                {/* Muet / Son */}
-                <button
-                  onClick={toggleMute}
-                  className="w-9 h-9 rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center cursor-pointer transition-all shadow-md hover:scale-105 active:scale-95"
-                  title={isMuted ? 'Activer le son' : 'Couper le son'}
-                >
-                  {isMuted ? (
-                    <VolumeX className="w-4 h-4 text-white" />
-                  ) : (
-                    <Volume2 className="w-4 h-4 text-white" />
-                  )}
-                </button>
-
-                {/* Fermer */}
-                <button 
-                  id="btn-close-modal"
-                  onClick={() => {
-                    setModalPerson(null);
-                    setIsPlaying(false);
-                    setIsResonanceModalOpen(false);
-                    setIsPersonQuestionModalOpen(false);
-                  }}
-                  className="w-9 h-9 rounded-xl bg-black/45 hover:bg-[#A2482B] text-white border border-white/20 hover:border-[#A2482B] backdrop-blur-md flex items-center justify-center transition-all cursor-pointer shadow-md hover:scale-105 active:scale-95"
-                  title="Fermer"
-                >
-                  <X className="w-4 h-4 text-white" />
-                </button>
-              </div>
+              {/* Déclencheur lecteur vidéo standardisé en haut à droite */}
+              <button 
+                id="btn-play-pause-modal"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleVideoPlayback();
+                }}
+                className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0"
+                title={isPlaying ? 'Mettre en pause' : 'Lire la vidéo'}
+              >
+                {isPlaying ? (
+                  <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
+                ) : (
+                  <Play className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white translate-x-0.5" />
+                )}
+              </button>
             </div>
 
             {/* ICÔNES D'ACTION SUR LE CÔTÉ DROIT DE LA VIDÉO (DESCENDUES AUX 2/3 POUR DÉGAGER LE VISAGE DU PROTAGONISTE) */}
@@ -1915,8 +1896,8 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
               </div>
             </div>
 
-            {/* BAS : Prénom uniquement (sans pays ni villes) */}
-            <div className="relative z-20 p-5 sm:p-6 pb-8 sm:pb-9 flex items-end justify-between pointer-events-auto mt-auto">
+            {/* BAS : Prénom élargi & Symbole Muet baissé en bas à droite */}
+            <div className="relative z-20 p-5 sm:p-6 pb-6 sm:pb-7 flex items-end justify-between pointer-events-auto mt-auto gap-2">
               <div 
                 className="text-left font-sans cursor-pointer group/profile hover:opacity-95 transition-opacity"
                 onClick={(e) => {
@@ -1925,10 +1906,26 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
                 }}
                 title="Découvrir son univers complet"
               >
-                <h3 className="font-editorial text-sm sm:text-base font-bold text-white tracking-tight leading-tight pb-0.5 drop-shadow-md group-hover/profile:text-[#FFE7A3] transition-colors">
+                <h3 className="font-editorial text-[15px] sm:text-base font-bold text-white tracking-wider leading-snug pb-0.5 drop-shadow-md group-hover/profile:text-[#FFE7A3] transition-colors">
                   {modalPerson.firstName || modalPerson.name.split(' ')[0]}
                 </h3>
               </div>
+
+              {/* Bouton Muet / Son baissé en bas à droite */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleMute();
+                }}
+                className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center cursor-pointer transition-all shadow-md hover:scale-105 active:scale-95 shrink-0"
+                title={isMuted ? 'Activer le son' : 'Couper le son'}
+              >
+                {isMuted ? (
+                  <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
+                ) : (
+                  <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
+                )}
+              </button>
             </div>
 
             {/* Volet coulissant d'évaluation de la résonance sur la vidéo */}

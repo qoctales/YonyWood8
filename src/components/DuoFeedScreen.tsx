@@ -473,7 +473,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/25 pointer-events-none" />
 
-                    {/* Top Header: Pole Tag on left & Mute toggle on right */}
+                    {/* Top Header: Pole Tag on left & Video Player + Mute toggle on right */}
                     <div className="relative z-10 p-2 sm:p-4 flex items-center justify-between gap-1">
                       <span className="w-fit max-w-[95px] sm:max-w-[150px] truncate px-2.5 sm:px-3.5 py-0.5 sm:py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-[10px] sm:text-xs font-bold text-white shadow-md shrink-0">
                         {seriesNameA}
@@ -496,13 +496,29 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                             )}
                           </button>
                         )}
+
+                        {/* Déclencheur lecteur vidéo en haut à droite */}
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            togglePlayA();
+                          }}
+                          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all shadow-md cursor-pointer hover:scale-105 active:scale-95"
+                          title={isPlayingA ? "Mettre en pause" : "Lire la vidéo"}
+                        >
+                          {isPlayingA ? (
+                            <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
+                          ) : (
+                            <Play className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white translate-x-0.5" />
+                          )}
+                        </button>
                       </div>
                     </div>
 
                     {/* Centre : Bouton Play / Pause central */}
                     <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
                       <div className={`w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-black/40 backdrop-blur-xs border border-white/25 flex items-center justify-center text-white shadow-xl transition-all duration-200 ${
-                        isPlayingA ? 'opacity-0 group-hover:opacity-100 hover:scale-105' : 'opacity-100 scale-100'
+                        isPlayingA ? 'opacity-0' : 'opacity-85 hover:scale-105'
                       }`}>
                         {isPlayingA ? (
                           <Pause className="w-4 h-4 sm:w-6 sm:h-6 fill-white text-white" />
@@ -585,9 +601,9 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       </button>
                     </div>
 
-                    {/* BAS : Prénom uniquement */}
+                    {/* BAS : Prénom uniquement - Typographie agrandie et espacée */}
                     <div 
-                      className="relative z-20 p-2.5 sm:p-4.5 pb-4 sm:pb-6 flex flex-col pointer-events-auto cursor-pointer group/title mt-auto"
+                      className="relative z-20 p-2.5 sm:p-4 pb-3.5 sm:pb-5 flex flex-col pointer-events-auto cursor-pointer group/title mt-auto"
                       onClick={(e) => {
                         e.stopPropagation();
                         onNavigate({
@@ -600,7 +616,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       }}
                       title={`Découvrir le profil de ${pA.name}`}
                     >
-                      <h3 className="font-editorial text-xs sm:text-sm font-bold text-white tracking-tight leading-tight pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors truncate">
+                      <h3 className="font-editorial text-[15px] sm:text-base font-bold text-white tracking-wider leading-snug pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors truncate">
                         {pA.name.split(' ')[0]}
                       </h3>
                     </div>
@@ -637,7 +653,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/25 pointer-events-none" />
 
-                    {/* Top Header: Pole Tag on left & Mute toggle on right */}
+                    {/* Top Header: Pole Tag on left & Video Player + Mute toggle on right */}
                     <div className="relative z-10 p-2 sm:p-4 flex items-center justify-between gap-1">
                       <span className="w-fit max-w-[95px] sm:max-w-[150px] truncate px-2.5 sm:px-3.5 py-0.5 sm:py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-[10px] sm:text-xs font-bold text-white shadow-md shrink-0">
                         {seriesNameB}
@@ -660,13 +676,29 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                             )}
                           </button>
                         )}
+
+                        {/* Déclencheur lecteur vidéo en haut à droite */}
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            togglePlayB();
+                          }}
+                          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all shadow-md cursor-pointer hover:scale-105 active:scale-95"
+                          title={isPlayingB ? "Mettre en pause" : "Lire la vidéo"}
+                        >
+                          {isPlayingB ? (
+                            <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
+                          ) : (
+                            <Play className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white translate-x-0.5" />
+                          )}
+                        </button>
                       </div>
                     </div>
 
                     {/* Centre : Bouton Play / Pause central */}
                     <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
                       <div className={`w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-black/40 backdrop-blur-xs border border-white/25 flex items-center justify-center text-white shadow-xl transition-all duration-200 ${
-                        isPlayingB ? 'opacity-0 group-hover:opacity-100 hover:scale-105' : 'opacity-100 scale-100'
+                        isPlayingB ? 'opacity-0' : 'opacity-85 hover:scale-105'
                       }`}>
                         {isPlayingB ? (
                           <Pause className="w-4 h-4 sm:w-6 sm:h-6 fill-white text-white" />
@@ -749,9 +781,9 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       </button>
                     </div>
 
-                    {/* BAS : Prénom uniquement */}
+                    {/* BAS : Prénom uniquement - Typographie agrandie et espacée */}
                     <div 
-                      className="relative z-20 p-2.5 sm:p-4.5 pb-4 sm:pb-6 flex flex-col pointer-events-auto cursor-pointer group/title mt-auto"
+                      className="relative z-20 p-2.5 sm:p-4 pb-3.5 sm:pb-5 flex flex-col pointer-events-auto cursor-pointer group/title mt-auto"
                       onClick={(e) => {
                         e.stopPropagation();
                         onNavigate({
@@ -764,7 +796,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       }}
                       title={`Découvrir le profil de ${pB.name}`}
                     >
-                      <h3 className="font-editorial text-xs sm:text-sm font-bold text-white tracking-tight leading-tight pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors truncate">
+                      <h3 className="font-editorial text-[15px] sm:text-base font-bold text-white tracking-wider leading-snug pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors truncate">
                         {pB.name.split(' ')[0]}
                       </h3>
                     </div>
@@ -950,7 +982,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       }}
                       title={`Découvrir le profil de ${pA.name}`}
                     >
-                      <h3 className="font-editorial text-sm sm:text-base font-bold text-white tracking-tight leading-tight pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors truncate">
+                      <h3 className="font-editorial text-[15px] sm:text-base font-bold text-white tracking-wider leading-snug pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors truncate">
                         {pA.name.split(' ')[0]}
                       </h3>
                     </div>
@@ -1127,7 +1159,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       }}
                       title={`Découvrir le profil de ${pB.name}`}
                     >
-                      <h3 className="font-editorial text-sm sm:text-base font-bold text-white tracking-tight leading-tight pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors truncate">
+                      <h3 className="font-editorial text-[15px] sm:text-base font-bold text-white tracking-wider leading-snug pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors truncate">
                         {pB.name.split(' ')[0]}
                       </h3>
                     </div>

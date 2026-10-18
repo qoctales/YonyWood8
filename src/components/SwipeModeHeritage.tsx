@@ -542,9 +542,9 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
               {/* Gradient pour contraste cinématographique */}
               <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/85 pointer-events-none" />
 
-              {/* HAUT : Badge Direction + Bouton Son */}
+              {/* HAUT : Badge Direction + Déclencheur vidéo en haut à droite */}
               <div className="relative z-20 flex items-center justify-between pointer-events-auto">
-                <div className="px-3.5 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-[11px] sm:text-xs font-semibold text-white shadow-sm tracking-wide flex items-center gap-1.5 max-w-[80%]">
+                <div className="px-3.5 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-[11px] sm:text-xs font-semibold text-white shadow-sm tracking-wide flex items-center gap-1.5 max-w-[70%]">
                   <DimensionIcon 
                     name={effectiveSubcategory?.icone || '01-sagesses/_dimension'} 
                     size={14} 
@@ -553,28 +553,19 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
                   <span className="truncate">{effectiveSubcategory?.label}</span>
                 </div>
 
+                {/* Déclencheur lecteur vidéo standardisé en haut à droite */}
                 <button
-                  onClick={toggleMute}
-                  className="p-1.5 rounded-full bg-black/60 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/15 hover:border-[#A2482B] transition-colors cursor-pointer shrink-0"
-                  title={isMuted ? 'Activer le son' : 'Couper le son'}
-                >
-                  {isMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
-                </button>
-              </div>
-
-              {/* CENTRE : BOUTON PLAY/PAUSE */}
-              <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
-                <button
-                  type="button"
-                  id="btn-swipe-play-pause"
-                  onClick={togglePlay3}
-                  className="pointer-events-auto w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-black/45 hover:bg-black/70 backdrop-blur-xs border border-white/25 text-white flex items-center justify-center transition-all duration-200 shadow-2xl hover:scale-105 active:scale-95 cursor-pointer"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    togglePlay3();
+                  }}
+                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/50 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
                   title={isPlayingStep3 ? 'Mettre en pause' : 'Lire la vidéo'}
                 >
                   {isPlayingStep3 ? (
-                    <Pause className="w-5 h-5 sm:w-6 sm:h-6 fill-white text-white" />
+                    <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
                   ) : (
-                    <Play className="w-5 h-5 sm:w-6 sm:h-6 fill-white text-white translate-x-0.5 opacity-95" />
+                    <Play className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white translate-x-0.5" />
                   )}
                 </button>
               </div>
@@ -659,17 +650,31 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
                 </button>
               </div>
 
-              {/* BAS : PRÉNOM UNIQUEMENT (SANS PAYS NI VILLES) */}
-              <div 
-                className="relative z-20 flex flex-col pointer-events-auto cursor-pointer group/title pb-4 sm:pb-6 pl-1"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onNavigate({ type: 'protagonist_profile', protagonistId: effectivePerson.id });
-                }}
-              >
-                <h3 className="font-editorial text-sm sm:text-base font-bold text-white tracking-tight leading-tight pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors">
-                  {effectivePerson.firstName || effectivePerson.name.split(' ')[0]}
-                </h3>
+              {/* BAS : PRÉNOM ÉLARGI & SYMBOLE MUTE EN BAS À DROITE */}
+              <div className="relative z-20 flex items-end justify-between pointer-events-auto pb-4 sm:pb-5 pl-1 pr-1 mt-auto gap-2">
+                <div 
+                  className="flex flex-col cursor-pointer group/title"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onNavigate({ type: 'protagonist_profile', protagonistId: effectivePerson.id });
+                  }}
+                >
+                  <h3 className="font-editorial text-[15px] sm:text-base font-bold text-white tracking-wider leading-snug pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors">
+                    {effectivePerson.firstName || effectivePerson.name.split(' ')[0]}
+                  </h3>
+                </div>
+
+                {/* Symbole Muet / Son baissé en bas à droite */}
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleMute();
+                  }}
+                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/50 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-colors cursor-pointer shrink-0 shadow-md hover:scale-105 active:scale-95"
+                  title={isMuted ? 'Activer le son' : 'Couper le son'}
+                >
+                  {isMuted ? <VolumeX className="w-3.5 h-3.5 text-white" /> : <Volume2 className="w-3.5 h-3.5 text-white" />}
+                </button>
               </div>
             </div>
 

@@ -24,6 +24,17 @@ export const ProtagonistTeaserModal: React.FC<ProtagonistTeaserModalProps> = ({
   const [resonancePct, setResonancePct] = useState<number | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
+  // Fermeture par la touche Échap
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
+
   useEffect(() => {
     if (protagonist) {
       const activeStoryId = storyId || protagonist.stories?.[0]?.id || `story-${protagonist.id}`;
@@ -103,27 +114,7 @@ export const ProtagonistTeaserModal: React.FC<ProtagonistTeaserModalProps> = ({
         {/* Voile d'ambiance cinématographique */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/50 pointer-events-none" />
 
-        {/* CENTRE : Icône vidéo Play / Pause au centre exact de l'image */}
-        <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
-          <button
-            type="button"
-            id="btn-center-play-pause-teaser"
-            onClick={(e) => {
-              e.stopPropagation();
-              togglePlay();
-            }}
-            className="pointer-events-auto w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-black/45 hover:bg-black/70 backdrop-blur-xs border border-white/25 text-white flex items-center justify-center transition-all duration-200 shadow-2xl hover:scale-105 active:scale-95 cursor-pointer"
-            title={isPlaying ? 'Pause' : 'Lecture'}
-          >
-            {isPlaying ? (
-              <Pause className="w-6 h-6 sm:w-7 sm:h-7 fill-white text-white" />
-            ) : (
-              <Play className="w-6 h-6 sm:w-7 sm:h-7 fill-white text-white translate-x-0.5 opacity-95" />
-            )}
-          </button>
-        </div>
-
-        {/* HAUT : Bouton Évaluer (Award en Terre Cuite) & Contrôles */}
+        {/* HAUT : Bouton Évaluer à gauche & Lecteur Vidéo en haut à droite */}
         <div className="relative z-10 flex items-center justify-between gap-2 w-full">
           <button
             onClick={(e) => {
@@ -140,28 +131,21 @@ export const ProtagonistTeaserModal: React.FC<ProtagonistTeaserModalProps> = ({
             <Award className="w-4 h-4 text-white" />
           </button>
 
-          <div className="flex items-center gap-1.5">
-            {/* Bouton Muet / Son */}
-            <button
-              onClick={toggleMute}
-              className="w-9 h-9 rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center cursor-pointer transition-all shadow-md hover:scale-105 active:scale-95"
-              title={isMuted ? 'Activer le son' : 'Couper le son'}
-            >
-              {isMuted ? <VolumeX className="w-4 h-4 text-white" /> : <Volume2 className="w-4 h-4 text-white" />}
-            </button>
-
-            {/* Bouton Fermer */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onClose();
-              }}
-              className="w-9 h-9 rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center cursor-pointer transition-all shadow-md hover:scale-105 active:scale-95 ml-1"
-              title="Fermer l'aperçu"
-            >
-              <X className="w-4 h-4 text-white" />
-            </button>
-          </div>
+          {/* Déclencheur vidéo standardisé en haut à droite */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              togglePlay(e);
+            }}
+            className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all shadow-md cursor-pointer hover:scale-105 active:scale-95"
+            title={isPlaying ? 'Pause' : 'Lecture vidéo'}
+          >
+            {isPlaying ? (
+              <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
+            ) : (
+              <Play className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white translate-x-0.5" />
+            )}
+          </button>
         </div>
 
         {/* Modale d'évaluation de la résonance (au clic sur l'icône) */}
@@ -177,24 +161,35 @@ export const ProtagonistTeaserModal: React.FC<ProtagonistTeaserModalProps> = ({
           }}
         />
 
-        {/* BAS : Identité & Bouton Entrer dans son univers */}
-        <div className="relative z-10 space-y-3.5 pt-4">
-          <div className="space-y-1.5">
-            <div className="flex items-center gap-2">
-              <h3 className="font-editorial text-xl sm:text-2xl font-bold text-white tracking-tight leading-tight pb-0.5">
-                {protagonist.name}
-              </h3>
-              {protagonist.flag && <span className="text-base">{protagonist.flag}</span>}
+        {/* BAS : Identité & Bouton Muet en bas à droite & Action Entrer dans son univers */}
+        <div className="relative z-10 space-y-3 pt-3">
+          <div className="flex items-end justify-between gap-2.5">
+            <div className="space-y-1 flex-1 min-w-0">
+              <div className="flex items-center gap-2">
+                <h3 className="font-editorial text-lg sm:text-xl font-bold text-white tracking-wider leading-tight pb-0.5 truncate">
+                  {protagonist.name}
+                </h3>
+                {protagonist.flag && <span className="text-base shrink-0">{protagonist.flag}</span>}
+              </div>
+
+              <p className="text-xs text-white/90 font-medium flex items-center gap-1.5 truncate">
+                <span>{protagonist.role}</span>
+                <span className="text-white/40">•</span>
+                <span className="text-white/80 flex items-center gap-1 truncate">
+                  <MapPin className="w-3 h-3 text-white/60 shrink-0" />
+                  {protagonist.territory}
+                </span>
+              </p>
             </div>
 
-            <p className="text-xs text-white/90 font-medium flex items-center gap-1.5">
-              <span>{protagonist.role}</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/80 flex items-center gap-1">
-                <MapPin className="w-3 h-3 text-white/60" />
-                {protagonist.territory}
-              </span>
-            </p>
+            {/* Bouton Muet / Son déplacé en bas à droite */}
+            <button
+              onClick={toggleMute}
+              className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center cursor-pointer transition-all shadow-md hover:scale-105 active:scale-95 shrink-0"
+              title={isMuted ? 'Activer le son' : 'Couper le son'}
+            >
+              {isMuted ? <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" /> : <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />}
+            </button>
           </div>
 
           {/* Action : Entrer dans son univers */}
@@ -205,7 +200,7 @@ export const ProtagonistTeaserModal: React.FC<ProtagonistTeaserModalProps> = ({
                 onEnterUniverse(protagonist.id);
               }}
               id={`enter-universe-btn-${protagonist.id}`}
-              className="w-full h-11 px-4 rounded-xl bg-[#A2482B] hover:bg-[#8A3B22] text-white font-bold text-xs uppercase tracking-wider shadow-md flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-[0.99]"
+              className="w-full h-10 sm:h-11 px-4 rounded-xl bg-[#A2482B] hover:bg-[#8A3B22] text-white font-bold text-xs uppercase tracking-wider shadow-md flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-[0.99]"
             >
               <span>Entrer dans son univers</span>
               <ArrowRight className="w-4 h-4 text-white" />
