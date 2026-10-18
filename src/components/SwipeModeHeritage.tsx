@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import { 
   ChevronLeft, 
   ChevronRight, 
-  Play, 
   Pause, 
   Volume2, 
   VolumeX, 
@@ -87,14 +86,40 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
   handleNextSwipePerson,
   handlePrevSwipePerson
 }) => {
-  // Vidéo active en continu pour toutes les cartes
-  const [isPlayingStep1, setIsPlayingStep1] = useState<boolean>(true);
-  const [isPlayingStep2, setIsPlayingStep2] = useState<boolean>(true);
-  const [isPlayingStep3, setIsPlayingStep3] = useState<boolean>(true);
+  // Vidéo en pause par défaut (pas d'autoplay non désiré) : déclenchement par la petite télé ou clic carte
+  const [isPlayingStep1, setIsPlayingStep1] = useState<boolean>(false);
+  const [isPlayingStep2, setIsPlayingStep2] = useState<boolean>(false);
+  const [isPlayingStep3, setIsPlayingStep3] = useState<boolean>(false);
   const [isMuted, setIsMuted] = useState<boolean>(true);
   const video1Ref = useRef<HTMLVideoElement | null>(null);
   const video2Ref = useRef<HTMLVideoElement | null>(null);
   const video3Ref = useRef<HTMLVideoElement | null>(null);
+
+  // Wrappers de navigation pour réinitialiser la lecture lors du changement de carte
+  const onNextDoor = () => {
+    setIsPlayingStep1(false);
+    handleNextSwipeDoor();
+  };
+  const onPrevDoor = () => {
+    setIsPlayingStep1(false);
+    handlePrevSwipeDoor();
+  };
+  const onNextSub = () => {
+    setIsPlayingStep2(false);
+    handleNextSwipeSub();
+  };
+  const onPrevSub = () => {
+    setIsPlayingStep2(false);
+    handlePrevSwipeSub();
+  };
+  const onNextPerson = () => {
+    setIsPlayingStep3(false);
+    handleNextSwipePerson();
+  };
+  const onPrevPerson = () => {
+    setIsPlayingStep3(false);
+    handlePrevSwipePerson();
+  };
 
   // Fallbacks fiables pour garantir que les données s'affichent toujours sans écran noir
   const effectiveSubcategory = currentSubcategory || (swipeSubcategories && swipeSubcategories[swipeSubIndex]) || (swipeSubcategories && swipeSubcategories[0]);
@@ -205,14 +230,14 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
     if (Math.abs(diffX) > 40 && Math.abs(diffX) > Math.abs(diffY)) {
       if (diffX > 0) {
         // Swipe gauche -> Suivant
-        if (swipeStep === 1) handleNextSwipeDoor();
-        else if (swipeStep === 2) handleNextSwipeSub();
-        else if (swipeStep === 3) handleNextSwipePerson();
+        if (swipeStep === 1) onNextDoor();
+        else if (swipeStep === 2) onNextSub();
+        else if (swipeStep === 3) onNextPerson();
       } else {
         // Swipe droite -> Précédent
-        if (swipeStep === 1) handlePrevSwipeDoor();
-        else if (swipeStep === 2) handlePrevSwipeSub();
-        else if (swipeStep === 3) handlePrevSwipePerson();
+        if (swipeStep === 1) onPrevDoor();
+        else if (swipeStep === 2) onPrevSub();
+        else if (swipeStep === 3) onPrevPerson();
       }
     }
     setTouchStartX(null);
@@ -235,7 +260,7 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
             {/* Flèche Porte Précédente */}
             <button
               id="swipe-prev-door-btn"
-              onClick={handlePrevSwipeDoor}
+              onClick={onPrevDoor}
               className="hidden sm:flex absolute left-4 lg:left-12 z-30 w-11 h-11 rounded-full bg-white/95 hover:bg-[#A2482B] text-stone-800 hover:text-white border border-stone-200 shadow-xl items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
               title="Porte précédente"
             >
@@ -248,8 +273,7 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
               style={{ transform: `translateX(${swipeOffset}px)` }}
-              onClick={togglePlay1}
-              className="group aspect-[9/16] w-auto h-[min(490px,calc(100dvh-210px))] sm:h-[min(540px,calc(100dvh-190px))] lg:h-[min(570px,calc(100dvh-180px))] max-w-[calc(100vw-28px)] mx-auto rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl flex flex-col justify-between p-3.5 sm:p-4.5 relative select-none cursor-pointer shrink-0 transition-transform duration-100"
+              className="group aspect-[9/16] w-auto h-[min(490px,calc(100dvh-210px))] sm:h-[min(540px,calc(100dvh-190px))] lg:h-[min(570px,calc(100dvh-180px))] max-w-[calc(100vw-28px)] mx-auto rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl flex flex-col justify-between p-3.5 sm:p-4.5 relative select-none shrink-0 transition-transform duration-100"
             >
               {/* Fond visuel permanent de la Porte */}
               <img
@@ -312,32 +336,14 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
                 </div>
               </div>
 
-              {/* CENTRE : BOUTON PLAY/PAUSE */}
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
-                <button
-                  type="button"
-                  onClick={togglePlay1}
-                  className={`pointer-events-auto w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer shadow-2xl backdrop-blur-md ${
-                    isPlayingStep1
-                      ? 'border border-white/40 ring-2 ring-white/20 bg-black/60'
-                      : 'border border-white/25 hover:border-white bg-black/45 hover:bg-black/65 hover:scale-105 active:scale-95'
-                  }`}
-                  title={isPlayingStep1 ? 'Pause' : 'Lire la vidéo'}
-                >
-                  {isPlayingStep1 ? (
-                    <Pause className="w-5 h-5 text-white fill-white" />
-                  ) : (
-                    <Play className="w-5 h-5 text-white fill-white translate-x-0.5" />
-                  )}
-                </button>
-              </div>
-
               {/* BAS : BOUTON PETIT & ÉPURÉ « Choisir cette porte » */}
               <div className="relative z-20 flex items-center justify-end pt-0.5">
                 <button
                   id={`btn-choose-door-${currentSwipeDoor.id}`}
                   onClick={(e) => {
                     e.stopPropagation();
+                    setIsPlayingStep1(false);
+                    setIsPlayingStep2(false);
                     setSwipeStep(2);
                     celestialAudio.playOrbSelect();
                   }}
@@ -352,7 +358,7 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
             {/* Flèche Porte Suivante */}
             <button
               id="swipe-next-door-btn"
-              onClick={handleNextSwipeDoor}
+              onClick={onNextDoor}
               className="hidden sm:flex absolute right-4 lg:right-12 z-30 w-11 h-11 rounded-full bg-white/95 hover:bg-[#A2482B] text-stone-800 hover:text-white border border-stone-200 shadow-xl items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
               title="Porte suivante"
             >
@@ -371,7 +377,7 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
             {/* Flèche Direction Précédente */}
             <button
               id="swipe-prev-sub-btn"
-              onClick={handlePrevSwipeSub}
+              onClick={onPrevSub}
               className="hidden sm:flex absolute left-4 lg:left-12 z-30 w-11 h-11 rounded-full bg-white/95 hover:bg-[#A2482B] text-stone-800 hover:text-white border border-stone-200 shadow-xl items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
               title="Direction précédente"
             >
@@ -384,8 +390,7 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
               style={{ transform: `translateX(${swipeOffset}px)` }}
-              onClick={togglePlay2}
-              className="group aspect-[9/16] w-auto h-[min(490px,calc(100dvh-210px))] sm:h-[min(540px,calc(100dvh-190px))] lg:h-[min(570px,calc(100dvh-180px))] max-w-[calc(100vw-28px)] mx-auto rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl flex flex-col justify-between p-3.5 sm:p-4.5 relative select-none cursor-pointer shrink-0 transition-transform duration-100"
+              className="group aspect-[9/16] w-auto h-[min(490px,calc(100dvh-210px))] sm:h-[min(540px,calc(100dvh-190px))] lg:h-[min(570px,calc(100dvh-180px))] max-w-[calc(100vw-28px)] mx-auto rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl flex flex-col justify-between p-3.5 sm:p-4.5 relative select-none shrink-0 transition-transform duration-100"
             >
               {/* Image d'art céleste composée de la Direction */}
               <img
@@ -452,26 +457,6 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
                 </div>
               </div>
 
-              {/* CENTRE : BOUTON PLAY/PAUSE */}
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
-                <button
-                  type="button"
-                  onClick={togglePlay2}
-                  className={`pointer-events-auto w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer shadow-2xl backdrop-blur-md ${
-                    isPlayingStep2
-                      ? 'border border-white/40 ring-2 ring-white/20 bg-black/60'
-                      : 'border border-white/25 hover:border-white bg-black/45 hover:bg-black/65 hover:scale-105 active:scale-95'
-                  }`}
-                  title={isPlayingStep2 ? 'Pause' : 'Lire la vidéo'}
-                >
-                  {isPlayingStep2 ? (
-                    <Pause className="w-5 h-5 text-white fill-white" />
-                  ) : (
-                    <Play className="w-5 h-5 text-white fill-white translate-x-0.5" />
-                  )}
-                </button>
-              </div>
-
               {/* BAS : BOUTONS Question + « Choisir cette direction » */}
               <div className="relative z-20 flex items-center justify-between gap-1.5 pt-0.5">
                 {/* Bouton Question */}
@@ -497,7 +482,8 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
                     e.stopPropagation();
                     setSwipeSelectedSubcategory(effectiveSubcategory);
                     setSwipePersonIndex(0);
-                    setIsPlayingStep3(true);
+                    setIsPlayingStep2(false);
+                    setIsPlayingStep3(false);
                     setSwipeStep(3);
                     celestialAudio.playOrbSelect();
                   }}
@@ -512,7 +498,7 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
             {/* Flèche Direction Suivante */}
             <button
               id="swipe-next-sub-btn"
-              onClick={handleNextSwipeSub}
+              onClick={onNextSub}
               className="hidden sm:flex absolute right-4 lg:right-12 z-30 w-11 h-11 rounded-full bg-white/95 hover:bg-[#A2482B] text-stone-800 hover:text-white border border-stone-200 shadow-xl items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
               title="Direction suivante"
             >
@@ -531,7 +517,7 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
             {/* Flèche Personne Précédente */}
             <button
               id="swipe-prev-person-btn"
-              onClick={handlePrevSwipePerson}
+              onClick={onPrevPerson}
               className="hidden sm:flex absolute left-4 lg:left-12 z-30 w-11 h-11 rounded-full bg-white/95 hover:bg-[#A2482B] text-stone-800 hover:text-white border border-stone-200 shadow-xl items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
               title="Protagoniste précédent"
             >
@@ -544,8 +530,7 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
               style={{ transform: `translateX(${swipeOffset}px)` }}
-              onClick={togglePlay3}
-              className="group aspect-[9/16] w-auto h-[min(490px,calc(100dvh-210px))] sm:h-[min(540px,calc(100dvh-190px))] lg:h-[min(570px,calc(100dvh-180px))] max-w-[calc(100vw-28px)] mx-auto rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl flex flex-col justify-between p-3.5 sm:p-4.5 relative select-none cursor-pointer shrink-0 transition-transform duration-100"
+              className="group aspect-[9/16] w-auto h-[min(490px,calc(100dvh-210px))] sm:h-[min(540px,calc(100dvh-190px))] lg:h-[min(570px,calc(100dvh-180px))] max-w-[calc(100vw-28px)] mx-auto rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl flex flex-col justify-between p-3.5 sm:p-4.5 relative select-none shrink-0 transition-transform duration-100"
             >
               {/* Vidéo ou photo du protagoniste */}
               <img
@@ -585,21 +570,33 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
                   <span className="truncate">{effectiveSubcategory?.label}</span>
                 </div>
 
-                {/* Déclencheur lecteur vidéo standardisé en haut à droite (format carré arrondi) */}
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    togglePlay3();
-                  }}
-                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
-                  title={isPlayingStep3 ? 'Mettre en pause' : 'Lire la vidéo'}
-                >
-                  {isPlayingStep3 ? (
-                    <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
-                  ) : (
-                    <TvPlayerIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white transition-transform" strokeWidth={1.6} />
+                <div className="flex items-center gap-1.5">
+                  {isPlayingStep3 && (
+                    <button
+                      onClick={toggleMute}
+                      className="p-1.5 rounded-full bg-black/60 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/15 hover:border-[#A2482B] transition-colors cursor-pointer"
+                      title={isMuted ? 'Activer le son' : 'Couper le son'}
+                    >
+                      {isMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
+                    </button>
                   )}
-                </button>
+
+                  {/* Déclencheur lecteur vidéo standardisé en haut à droite (format carré arrondi) */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      togglePlay3();
+                    }}
+                    className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
+                    title={isPlayingStep3 ? 'Mettre en pause' : 'Lire la vidéo'}
+                  >
+                    {isPlayingStep3 ? (
+                      <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
+                    ) : (
+                      <TvPlayerIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white transition-transform" strokeWidth={1.6} />
+                    )}
+                  </button>
+                </div>
               </div>
 
               {/* CÔTÉ DROIT : ICÔNES D'ACTION VERTICALES (Résonance, Question, Profil, Partage) */}
@@ -713,7 +710,7 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
             {/* Flèche Personne Suivante */}
             <button
               id="swipe-next-person-btn"
-              onClick={handleNextSwipePerson}
+              onClick={onNextPerson}
               className="hidden sm:flex absolute right-4 lg:right-12 z-30 w-11 h-11 rounded-full bg-white/95 hover:bg-[#A2482B] text-stone-800 hover:text-white border border-stone-200 shadow-xl items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
               title="Protagoniste suivant"
             >

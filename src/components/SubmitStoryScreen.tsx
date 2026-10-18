@@ -5,7 +5,6 @@ import {
   Check, 
   UploadCloud, 
   Camera, 
-  Play, 
   Pause, 
   Volume2, 
   VolumeX, 
@@ -674,17 +673,7 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
               style={{ transform: `translateX(${swipeOffset}px)` }}
             >
               <div 
-                onClick={(e) => {
-                  if (hasDraggedRef.current) {
-                    hasDraggedRef.current = false;
-                    return;
-                  }
-                  if ((e.target as HTMLElement).closest('button, a, input, textarea, .details-overlay')) {
-                    return;
-                  }
-                  setIsDoorVideoPlaying(prev => !prev);
-                }}
-                className="group relative w-full h-full rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-[#FFFFFF] shadow-2xl border border-stone-200/80 flex flex-col justify-between p-2.5 sm:p-4.5 cursor-pointer select-none"
+                className="group relative w-full h-full rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-[#FFFFFF] shadow-2xl border border-stone-200/80 flex flex-col justify-between p-2.5 sm:p-4.5 select-none"
                 id={`current-door-card-${currentDoor.id}`}
               >
                 {/* 1. Média de fond : Vidéo OU Poster officiel */}
@@ -712,49 +701,44 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                 {/* Voile cinématographique harmonisé (modèle Coproduction : plus lumineux et clair) */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/25 pointer-events-none" />
 
-                {/* HAUT : Cartouche sobre avec le nom de la porte (sans icône, sans couleur) */}
-                <div className="relative z-10 flex items-center justify-between">
+                {/* HAUT : Cartouche sobre avec le nom de la porte (sans icône, sans couleur) + Déclencheur Petite Télé en haut à droite */}
+                <div className="relative z-10 flex items-center justify-between pointer-events-auto">
                   <div className="px-3.5 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-[11px] sm:text-xs font-semibold text-white shadow-sm tracking-wide">
                     <span>{currentDoor.label}</span>
                   </div>
 
-                  {/* Contrôle son discret en haut à droite uniquement quand la vidéo tourne */}
-                  {isDoorVideoPlaying && (
+                  <div className="flex items-center gap-1.5">
+                    {/* Contrôle son discret en haut à droite uniquement quand la vidéo tourne */}
+                    {isDoorVideoPlaying && (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setIsDoorMuted(!isDoorMuted);
+                        }}
+                        className="p-1.5 rounded-full bg-black/60 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/15 hover:border-[#A2482B] transition-colors cursor-pointer"
+                        title={isDoorMuted ? 'Activer le son' : 'Couper le son'}
+                      >
+                        {isDoorMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
+                      </button>
+                    )}
+
+                    {/* Déclencheur lecteur vidéo « Petite Télé » standardisé en haut à droite */}
                     <button
+                      type="button"
                       onClick={(e) => {
                         e.stopPropagation();
-                        setIsDoorMuted(!isDoorMuted);
+                        setIsDoorVideoPlaying(!isDoorVideoPlaying);
                       }}
-                      className="p-1.5 rounded-full bg-black/60 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/15 hover:border-[#A2482B] transition-colors cursor-pointer"
-                      title={isDoorMuted ? 'Activer le son' : 'Couper le son'}
+                      className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
+                      title={isDoorVideoPlaying ? 'Mettre en pause' : `Visionner la présentation ${currentDoor.label}`}
                     >
-                      {isDoorMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
+                      {isDoorVideoPlaying ? (
+                        <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
+                      ) : (
+                        <TvPlayerIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white transition-transform" strokeWidth={1.6} />
+                      )}
                     </button>
-                  )}
-                </div>
-
-                {/* CENTRE : BOUTON PLAY/PAUSE CENTRALISÉ SUR TOUTES LES VIDÉOS */}
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setIsDoorVideoPlaying(!isDoorVideoPlaying);
-                    }}
-                    className={`pointer-events-auto group/btn relative w-11 h-11 sm:w-13 sm:h-13 rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer shadow-2xl backdrop-blur-md ${
-                      isDoorVideoPlaying
-                        ? 'border border-white/40 ring-2 ring-white/20 bg-black/60 shadow-[0_0_20px_rgba(255,255,255,0.3)]'
-                        : 'border border-white/25 hover:border-white hover:ring-2 hover:ring-white/30 bg-black/45 hover:bg-black/65'
-                    }`}
-                    title={isDoorVideoPlaying ? 'Pause' : `Visionner la présentation ${currentDoor.label}`}
-                    id={`play-door-btn-${currentDoor.id}`}
-                  >
-                    {isDoorVideoPlaying ? (
-                      <Pause className="w-5 h-5 text-white fill-white transition-transform group-hover/btn:scale-110" />
-                    ) : (
-                      <Play className="w-5 h-5 text-white fill-white translate-x-0.5 transition-transform group-hover/btn:scale-115" />
-                    )}
-                  </button>
+                  </div>
                 </div>
 
                 {/* BAS : BOUTONS ADAPTÉS SANS DÉBORDEMENT (STYLE HARMONISÉ AVEC OPACITÉ BASSE ET TEXTE BLANC) */}
@@ -943,8 +927,8 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
               {/* Voile cinématographique */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-black/35 pointer-events-none" />
 
-              {/* HAUT : Titre épuré de la série ou du sujet (modèle fond noir translucide, texte blanc pur) */}
-              <div className="relative z-10 flex items-center justify-between gap-1.5">
+              {/* HAUT : Titre épuré de la série ou du sujet (modèle fond noir translucide, texte blanc pur) + Déclencheur Petite Télé en haut à droite */}
+              <div className="relative z-10 flex items-center justify-between gap-1.5 pointer-events-auto">
                 {activeSeriesOverlay !== 'sponsors' ? (
                   <div className="flex items-center gap-1.5">
                     <div className="px-3.5 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-[11px] sm:text-xs font-semibold text-white shadow-md tracking-wide">
@@ -955,42 +939,37 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                   <div />
                 )}
 
-                {isSubjectVideoPlaying && (
+                <div className="flex items-center gap-1.5">
+                  {isSubjectVideoPlaying && (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setIsSubjectMuted(!isSubjectMuted);
+                      }}
+                      className="p-1.5 rounded-full bg-black/60 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/15 hover:border-[#A2482B] transition-colors cursor-pointer shrink-0"
+                      title={isSubjectMuted ? 'Activer le son' : 'Couper le son'}
+                    >
+                      {isSubjectMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
+                    </button>
+                  )}
+
+                  {/* Déclencheur lecteur vidéo « Petite Télé » standardisé en haut à droite */}
                   <button
+                    type="button"
                     onClick={(e) => {
                       e.stopPropagation();
-                      setIsSubjectMuted(!isSubjectMuted);
+                      setIsSubjectVideoPlaying(!isSubjectVideoPlaying);
                     }}
-                    className="p-1.5 rounded-full bg-black/60 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/15 hover:border-[#A2482B] transition-colors cursor-pointer shrink-0"
-                    title={isSubjectMuted ? 'Activer le son' : 'Couper le son'}
+                    className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
+                    title={isSubjectVideoPlaying ? 'Mettre en pause' : 'Visionner la vidéo'}
                   >
-                    {isSubjectMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
+                    {isSubjectVideoPlaying ? (
+                      <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
+                    ) : (
+                      <TvPlayerIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white transition-transform" strokeWidth={1.6} />
+                    )}
                   </button>
-                )}
-              </div>
-
-              {/* CENTRE : BOUTON PLAY/PAUSE CENTRALISÉ */}
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsSubjectVideoPlaying(!isSubjectVideoPlaying);
-                  }}
-                  className={`pointer-events-auto group/btn relative w-11 h-11 sm:w-13 sm:h-13 rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer shadow-2xl backdrop-blur-md ${
-                    isSubjectVideoPlaying
-                      ? 'border border-white/40 ring-2 ring-white/20 bg-black/60 shadow-[0_0_20px_rgba(255,255,255,0.3)]'
-                      : 'border border-white/25 hover:border-white hover:ring-2 hover:ring-white/30 bg-black/45 hover:bg-black/65'
-                  }`}
-                  title={isSubjectVideoPlaying ? 'Pause' : `Visionner la vidéo`}
-                  id={`play-subject-btn-${currentSubject.id}`}
-                >
-                  {isSubjectVideoPlaying ? (
-                    <Pause className="w-5 h-5 text-white fill-white transition-transform group-hover/btn:scale-110" />
-                  ) : (
-                    <Play className="w-5 h-5 text-white fill-white translate-x-0.5 transition-transform group-hover/btn:scale-115" />
-                  )}
-                </button>
+                </div>
               </div>
 
               {/* ================================================================= */}
@@ -1503,29 +1482,6 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                       </div>
                     </div>
 
-                    {/* CENTRE : BOUTON PLAY/PAUSE */}
-                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setIsChoiceBVideoPlaying(false);
-                          setIsChoiceAVideoPlaying(!isChoiceAVideoPlaying);
-                        }}
-                        className={`pointer-events-auto group/btn relative w-11 h-11 sm:w-14 sm:h-14 rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer shadow-2xl backdrop-blur-md ${
-                          isChoiceAVideoPlaying
-                            ? 'border border-white/40 ring-2 ring-white/20 bg-black/60 shadow-[0_0_20px_rgba(255,255,255,0.3)]'
-                            : 'border border-white/25 hover:border-white hover:ring-2 hover:ring-white/30 bg-black/45 hover:bg-black/65'
-                        }`}
-                        title={isChoiceAVideoPlaying ? 'Pause' : 'Lire la vidéo'}
-                      >
-                        {isChoiceAVideoPlaying ? (
-                          <Pause className="w-5 sm:w-6 h-5 sm:h-6 text-white fill-white transition-transform group-hover/btn:scale-110" />
-                        ) : (
-                          <Play className="w-5 sm:w-6 h-5 sm:h-6 text-white fill-white translate-x-0.5 transition-transform group-hover/btn:scale-115" />
-                        )}
-                      </button>
-                    </div>
 
                     {/* BAS : BOUTON DÉTAILS ET BOUTON CHOIX */}
                     <div className="relative z-10 flex items-center justify-between gap-1 sm:gap-2 pt-1">
@@ -1692,29 +1648,6 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                       </div>
                     </div>
 
-                    {/* CENTRE : BOUTON PLAY/PAUSE */}
-                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setIsChoiceAVideoPlaying(false);
-                          setIsChoiceBVideoPlaying(!isChoiceBVideoPlaying);
-                        }}
-                        className={`pointer-events-auto group/btn relative w-11 h-11 sm:w-14 sm:h-14 rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer shadow-2xl backdrop-blur-md ${
-                          isChoiceBVideoPlaying
-                            ? 'border border-white/40 ring-2 ring-white/20 bg-black/60 shadow-[0_0_20px_rgba(255,255,255,0.3)]'
-                            : 'border border-white/25 hover:border-white hover:ring-2 hover:ring-white/30 bg-black/45 hover:bg-black/65'
-                        }`}
-                        title={isChoiceBVideoPlaying ? 'Pause' : 'Lire la vidéo'}
-                      >
-                        {isChoiceBVideoPlaying ? (
-                          <Pause className="w-5 sm:w-6 h-5 sm:h-6 text-white fill-white transition-transform group-hover/btn:scale-110" />
-                        ) : (
-                          <Play className="w-5 sm:w-6 h-5 sm:h-6 text-white fill-white translate-x-0.5 transition-transform group-hover/btn:scale-115" />
-                        )}
-                      </button>
-                    </div>
 
                     {/* BAS : BOUTON DÉTAILS ET BOUTON CHOIX */}
                     <div className="relative z-10 flex items-center justify-between gap-1 sm:gap-2 pt-1">
@@ -1885,24 +1818,6 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                         {/* Voile d'ambiance cinématographique */}
                         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/90 pointer-events-none" />
 
-                        {/* CENTRE : BOUTON PLAY/PAUSE AU CENTRE EXACT */}
-                        <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setIsVideographerVideoPlaying(!isVideographerVideoPlaying);
-                            }}
-                            className="pointer-events-auto w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-black/45 hover:bg-black/70 backdrop-blur-xs border border-white/25 text-white flex items-center justify-center transition-all duration-200 shadow-2xl hover:scale-105 active:scale-95 cursor-pointer"
-                            title={isVideographerVideoPlaying ? 'Pause' : 'Lire la vidéo'}
-                          >
-                            {isVideographerVideoPlaying ? (
-                              <Pause className="w-6 h-6 sm:w-7 sm:h-7 fill-white text-white" />
-                            ) : (
-                              <Play className="w-6 h-6 sm:w-7 sm:h-7 fill-white text-white translate-x-0.5 opacity-95" />
-                            )}
-                          </button>
-                        </div>
 
                         {/* HAUT : Titre épuré "Video Maker" & Déclencheur lecture */}
                         <div className="relative z-20 flex items-center justify-between pointer-events-auto">

@@ -14,7 +14,6 @@ import {
   Flame,
   Users,
   X, 
-  Play, 
   Pause,
   Volume2,
   VolumeX,
@@ -167,7 +166,7 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
   const [swipeSubIndex, setSwipeSubIndex] = useState<number>(0);
   const [swipeSelectedSubcategory, setSwipeSelectedSubcategory] = useState<SousCategorie | null>(null);
   const [swipePersonIndex, setSwipePersonIndex] = useState<number>(0);
-  const [isSwipeVideoPlaying, setIsSwipeVideoPlaying] = useState<boolean>(true);
+  const [isSwipeVideoPlaying, setIsSwipeVideoPlaying] = useState<boolean>(false);
   const [isSwipeVideoMuted, setIsSwipeVideoMuted] = useState<boolean>(true);
   const swipeVideoRef = useRef<HTMLVideoElement | null>(null);
   const [swipeTouchStartX, setSwipeTouchStartX] = useState<number | null>(null);
@@ -244,7 +243,7 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
 
   // 4. Modale vidéo 9:16 pour la personne sélectionnée
   const [modalPerson, setModalPerson] = useState<AffiliationPerson | null>(null);
-  const [isPlaying, setIsPlaying] = useState<boolean>(true);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isMuted, setIsMuted] = useState<boolean>(true);
   const [isResonanceModalOpen, setIsResonanceModalOpen] = useState<boolean>(false);
   const [personResonancePct, setPersonResonancePct] = useState<number | null>(null);
@@ -595,9 +594,9 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
     const isAlreadySelected = selectedPath.length > 0 && selectedPath[selectedPath.length - 1] === person.id;
 
     if (isAlreadySelected) {
-      // Reclic sur la personne active : ouvre directement la carte vidéo 9:16
+      // Reclic sur la personne active : ouvre directement la carte vidéo 9:16 (en pause, clic télé pour lire)
       setModalPerson(person);
-      setIsPlaying(true);
+      setIsPlaying(false);
       return;
     }
 
@@ -1525,7 +1524,7 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
                         onDoubleClick={(e) => {
                           e.stopPropagation();
                           setModalPerson(node.person);
-                          setIsPlaying(true);
+                          setIsPlaying(false);
                         }}
                         onMouseEnter={() => celestialAudio.playOrbHover(540)}
                       >
@@ -1754,11 +1753,7 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
         >
           <div 
             id="person-detail-modal"
-            className="group relative aspect-[9/16] w-[min(340px,calc((100dvh-200px)*9/16))] h-[min(604px,calc(100dvh-200px))] max-w-[calc(100vw-28px)] mx-auto rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl flex flex-col justify-between animate-in zoom-in-95 duration-200 select-none cursor-pointer shrink-0"
-            onClick={(e) => {
-              if ((e.target as HTMLElement).closest('button, a, input, textarea, select')) return;
-              toggleVideoPlayback();
-            }}
+            className="group relative aspect-[9/16] w-[min(340px,calc((100dvh-200px)*9/16))] h-[min(604px,calc(100dvh-200px))] max-w-[calc(100vw-28px)] mx-auto rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl flex flex-col justify-between animate-in zoom-in-95 duration-200 select-none shrink-0"
           >
             {/* Poster de fond & Vidéo fluide */}
             <img 
@@ -1767,17 +1762,19 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
               referrerPolicy="no-referrer"
               className="absolute inset-0 w-full h-full object-cover pointer-events-none"
             />
-            <video 
-              ref={videoRef}
-              key={`modal-video-${modalPerson.id}`}
-              src={modalPerson.teaserVideoUrl || 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4'} 
-              poster={modalPerson.photoUrl}
-              playsInline
-              autoPlay
-              loop
-              muted={isMuted}
-              className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-            />
+            {isPlaying && (
+              <video 
+                ref={videoRef}
+                key={`modal-video-${modalPerson.id}`}
+                src={modalPerson.teaserVideoUrl || 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4'} 
+                poster={modalPerson.photoUrl}
+                playsInline
+                autoPlay
+                loop
+                muted={isMuted}
+                className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+              />
+            )}
 
             {/* Gradient pour lisibilité */}
             <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/90 pointer-events-none" />
@@ -1792,23 +1789,39 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
                 </span>
               </div>
 
-              {/* Déclencheur lecteur vidéo standardisé en haut à droite */}
-              <button 
-                id="btn-play-pause-modal"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  toggleVideoPlayback();
-                }}
-                className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0"
-                title={isPlaying ? 'Mettre en pause' : 'Lire la vidéo'}
-              >
-                {isPlaying ? (
-                  <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
-                ) : (
-                  <TvPlayerIcon className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-white transition-transform" strokeWidth={1.6} />
+              <div className="flex items-center gap-1.5">
+                {isPlaying && (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleMute();
+                    }}
+                    className="p-1.5 rounded-full bg-black/60 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/15 hover:border-[#A2482B] transition-colors cursor-pointer"
+                    title={isMuted ? 'Activer le son' : 'Couper le son'}
+                  >
+                    {isMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
+                  </button>
                 )}
-              </button>
+
+                {/* Déclencheur lecteur vidéo standardisé en haut à droite */}
+                <button 
+                  id="btn-play-pause-modal"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleVideoPlayback();
+                  }}
+                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0"
+                  title={isPlaying ? 'Mettre en pause' : 'Lire la vidéo'}
+                >
+                  {isPlaying ? (
+                    <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
+                  ) : (
+                    <TvPlayerIcon className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-white transition-transform" strokeWidth={1.6} />
+                  )}
+                </button>
+              </div>
             </div>
+
 
             {/* ICÔNES D'ACTION SUR LE CÔTÉ DROIT DE LA VIDÉO (DESCENDUES AUX 2/3 POUR DÉGAGER LE VISAGE DU PROTAGONISTE) */}
             <div 

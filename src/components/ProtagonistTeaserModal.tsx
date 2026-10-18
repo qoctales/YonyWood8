@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Play, Pause, Volume2, VolumeX, X, ArrowRight, Sparkles, MapPin, Award } from 'lucide-react';
+import { Pause, Volume2, VolumeX, X, ArrowRight, Sparkles, MapPin, Award } from 'lucide-react';
 import { Protagonist } from '../types';
 import { ResonanceModal } from './ResonanceModal';
 import { ProfileSoloIcon, TvPlayerIcon } from './YonywoodBrandIcons';
@@ -19,7 +19,7 @@ export const ProtagonistTeaserModal: React.FC<ProtagonistTeaserModalProps> = ({
   onClose,
   onEnterUniverse,
 }) => {
-  const [isPlaying, setIsPlaying] = useState<boolean>(true);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isMuted, setIsMuted] = useState<boolean>(true);
   const [isResonanceModalOpen, setIsResonanceModalOpen] = useState<boolean>(false);
   const [resonancePct, setResonancePct] = useState<number | null>(null);
@@ -58,17 +58,11 @@ export const ProtagonistTeaserModal: React.FC<ProtagonistTeaserModalProps> = ({
 
   const togglePlay = (e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
-    if (!videoRef.current) return;
-    if (isPlaying) {
-      videoRef.current.pause();
-      setIsPlaying(false);
-    } else {
-      videoRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
-    }
+    setIsPlaying(prev => !prev);
   };
 
-  const toggleMute = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const toggleMute = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
     if (!videoRef.current) return;
     videoRef.current.muted = !videoRef.current.muted;
     setIsMuted(videoRef.current.muted);
@@ -88,11 +82,7 @@ export const ProtagonistTeaserModal: React.FC<ProtagonistTeaserModalProps> = ({
     >
       {/* Container vertical 9:16 adapté à l'écran mobile */}
       <div 
-        className="relative aspect-[9/16] w-[min(340px,calc((100dvh-200px)*9/16))] h-[min(604px,calc(100dvh-200px))] max-w-[calc(100vw-28px)] mx-auto rounded-2xl sm:rounded-3xl shadow-2xl border border-stone-200/80 bg-black flex flex-col justify-between p-4 sm:p-5 text-white animate-in zoom-in-95 duration-200 group/modal select-none cursor-pointer shrink-0"
-        onClick={(e) => {
-          if ((e.target as HTMLElement).closest('button, a, input, textarea, select')) return;
-          togglePlay();
-        }}
+        className="relative aspect-[9/16] w-[min(340px,calc((100dvh-200px)*9/16))] h-[min(604px,calc(100dvh-200px))] max-w-[calc(100vw-28px)] mx-auto rounded-2xl sm:rounded-3xl shadow-2xl border border-stone-200/80 bg-black flex flex-col justify-between p-4 sm:p-5 text-white animate-in zoom-in-95 duration-200 group/modal select-none shrink-0"
       >
         {/* Fond vidéo ou poster */}
         <img
@@ -100,17 +90,17 @@ export const ProtagonistTeaserModal: React.FC<ProtagonistTeaserModalProps> = ({
           alt={protagonist.name}
           className="absolute inset-0 w-full h-full object-cover pointer-events-none"
         />
-        <video
-          ref={videoRef}
-          src={teaserVideo}
-          autoPlay
-          loop
-          muted={isMuted}
-          playsInline
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${
-            isPlaying ? 'opacity-100' : 'opacity-40'
-          }`}
-        />
+        {isPlaying && (
+          <video
+            ref={videoRef}
+            src={teaserVideo}
+            autoPlay
+            loop
+            muted={isMuted}
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+          />
+        )}
 
         {/* Voile d'ambiance cinématographique */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/50 pointer-events-none" />
@@ -132,22 +122,35 @@ export const ProtagonistTeaserModal: React.FC<ProtagonistTeaserModalProps> = ({
             <Award className="w-4 h-4 text-white" />
           </button>
 
-          {/* Déclencheur vidéo standardisé en haut à droite (format carré arrondi) */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              togglePlay(e);
-            }}
-            className="w-9 h-9 rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
-            title={isPlaying ? 'Pause' : 'Lecture vidéo'}
-          >
-            {isPlaying ? (
-              <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
-            ) : (
-              <TvPlayerIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white transition-transform" strokeWidth={1.6} />
+          <div className="flex items-center gap-1.5">
+            {isPlaying && (
+              <button
+                onClick={toggleMute}
+                className="p-1.5 rounded-full bg-black/60 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/15 hover:border-[#A2482B] transition-colors cursor-pointer"
+                title={isMuted ? 'Activer le son' : 'Couper le son'}
+              >
+                {isMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
+              </button>
             )}
-          </button>
+
+            {/* Déclencheur vidéo standardisé en haut à droite (format carré arrondi) */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                togglePlay(e);
+              }}
+              className="w-9 h-9 rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
+              title={isPlaying ? 'Pause' : 'Lecture vidéo'}
+            >
+              {isPlaying ? (
+                <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
+              ) : (
+                <TvPlayerIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white transition-transform" strokeWidth={1.6} />
+              )}
+            </button>
+          </div>
         </div>
+
 
         {/* Modale d'évaluation de la résonance (au clic sur l'icône) */}
         <ResonanceModal

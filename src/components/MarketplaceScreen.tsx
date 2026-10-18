@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { 
   Coins, 
-  Play, 
   Pause, 
   CheckCircle2, 
   ChevronLeft, 
@@ -16,6 +15,7 @@ import {
 import { ViewScreen } from '../types';
 import { useAuth } from '../services/authContext';
 import { recordSharePurchase, getSeriesRemainingShares } from '../services/firestoreService';
+import { TvPlayerIcon } from './YonywoodBrandIcons';
 
 interface MarketplaceScreenProps {
   onNavigate: (screen: ViewScreen) => void;
@@ -513,13 +513,7 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
             {/* =================================================================== */}
             {activeTab === 'coproduire' && currentProd && (
               <div 
-                onClick={(e) => {
-                  if ((e.target as HTMLElement).closest('button, a, input, textarea')) {
-                    return;
-                  }
-                  toggleVideoPlayback();
-                }}
-                className="group relative w-full h-full rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-[#FFFFFF] shadow-2xl border border-stone-200/80 flex flex-col justify-between p-2.5 sm:p-4.5 cursor-pointer select-none"
+                className="group relative w-full h-full rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-[#FFFFFF] shadow-2xl border border-stone-200/80 flex flex-col justify-between p-2.5 sm:p-4.5 select-none"
                 id={`card-coproduire-${currentProd.id}`}
               >
                 {/* 1. Média de fond : Affiche officielle par défaut OU Vidéo si lecture activée */}
@@ -545,25 +539,30 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
                 {/* Voile cinématographique clair pour préserver l'éclat de l'affiche */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20 pointer-events-none" />
 
-                {/* HAUT : Badge du titre de la série à gauche */}
-                <div className="relative z-10 flex items-center justify-between gap-2">
-                  <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-[10.5px] sm:text-[11px] font-semibold tracking-widest text-white shadow-sm max-w-full leading-relaxed">
+                {/* HAUT : Badge du titre de la série à gauche + Déclencheur Petite Télé en haut à droite */}
+                <div className="relative z-10 flex items-center justify-between gap-2 pointer-events-auto">
+                  <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-[10.5px] sm:text-[11px] font-semibold tracking-widest text-white shadow-sm max-w-[75%] truncate leading-relaxed">
                     {currentProd.title}
                   </span>
+
+                  {/* Déclencheur lecteur vidéo « Petite Télé » standardisé en haut à droite */}
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleVideoPlayback();
+                    }}
+                    className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
+                    title={isPlaying ? 'Mettre en pause' : `Visionner le teaser de ${currentProd.title}`}
+                  >
+                    {isPlaying ? (
+                      <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
+                    ) : (
+                      <TvPlayerIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white transition-transform" strokeWidth={1.6} />
+                    )}
+                  </button>
                 </div>
 
-                {/* CENTRE : Icône vidéo de lecture / pause centrée */}
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
-                  <div className={`w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-black/40 backdrop-blur-xs border border-white/20 flex items-center justify-center text-white shadow-xl transition-all duration-200 ${
-                    isPlaying ? 'opacity-0 group-hover:opacity-100 hover:scale-110' : 'opacity-100 scale-100'
-                  }`}>
-                    {isPlaying ? (
-                      <Pause className="w-5 h-5 fill-white text-white" />
-                    ) : (
-                      <Play className="w-5 h-5 fill-white text-white translate-x-0.5 opacity-90" />
-                    )}
-                  </div>
-                </div>
 
                 {/* CENTRE LIBÉRÉ : Affiche visible et sans encombrement */}
                 <div className="my-auto" />
@@ -632,13 +631,7 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
             {/* =================================================================== */}
             {activeTab === 'marche' && currentOffer && (
               <div 
-                onClick={(e) => {
-                  if ((e.target as HTMLElement).closest('button, a, input, textarea')) {
-                    return;
-                  }
-                  toggleVideoPlayback();
-                }}
-                className="group relative w-full h-full rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-[#FFFFFF] shadow-2xl border border-stone-200/80 flex flex-col justify-between p-2.5 sm:p-4.5 cursor-pointer select-none"
+                className="group relative w-full h-full rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-[#FFFFFF] shadow-2xl border border-stone-200/80 flex flex-col justify-between p-2.5 sm:p-4.5 select-none"
                 id={`card-marche-${currentOffer.id}`}
               >
                 {/* 1. Média de fond : Affiche officielle par défaut OU Vidéo si lecture activée */}
@@ -664,25 +657,30 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
                 {/* Voile cinématographique clair pour préserver l'éclat de l'affiche */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20 pointer-events-none" />
 
-                {/* HAUT : Badge du titre de la série à gauche */}
-                <div className="relative z-10 flex items-center justify-between gap-2">
-                  <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-[10.5px] sm:text-[11px] font-semibold tracking-widest text-white shadow-sm max-w-full leading-relaxed">
+                {/* HAUT : Badge du titre de la série à gauche + Déclencheur Petite Télé en haut à droite */}
+                <div className="relative z-10 flex items-center justify-between gap-2 pointer-events-auto">
+                  <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-[10.5px] sm:text-[11px] font-semibold tracking-widest text-white shadow-sm max-w-[75%] truncate leading-relaxed">
                     {currentOffer.seriesTitle}
                   </span>
+
+                  {/* Déclencheur lecteur vidéo « Petite Télé » standardisé en haut à droite */}
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleVideoPlayback();
+                    }}
+                    className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
+                    title={isPlaying ? 'Mettre en pause' : `Visionner le teaser de ${currentOffer.seriesTitle}`}
+                  >
+                    {isPlaying ? (
+                      <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
+                    ) : (
+                      <TvPlayerIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white transition-transform" strokeWidth={1.6} />
+                    )}
+                  </button>
                 </div>
 
-                {/* CENTRE : Icône vidéo de lecture / pause centrée */}
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
-                  <div className={`w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-black/40 backdrop-blur-xs border border-white/20 flex items-center justify-center text-white shadow-xl transition-all duration-200 ${
-                    isPlaying ? 'opacity-0 group-hover:opacity-100 hover:scale-110' : 'opacity-100 scale-100'
-                  }`}>
-                    {isPlaying ? (
-                      <Pause className="w-5 h-5 fill-white text-white" />
-                    ) : (
-                      <Play className="w-5 h-5 fill-white text-white translate-x-0.5 opacity-90" />
-                    )}
-                  </div>
-                </div>
 
                 {/* CENTRE LIBÉRÉ : Affiche visible et sans encombrement */}
                 <div className="my-auto" />
