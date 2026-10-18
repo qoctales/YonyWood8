@@ -280,10 +280,11 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
       {/* ========================================================================= */}
       <div className="w-full max-w-3xl mx-auto px-3 sm:px-6 py-2 sm:py-4 shrink-0">
         <header className="relative flex items-center justify-between border-b border-[#E7E5E4] pb-2 sm:pb-2.5 shrink-0 gap-2">
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="flex flex-col items-start shrink-0">
             <h1 className="font-editorial text-lg sm:text-2xl font-bold text-[#1C1917] tracking-tight">
               Duocumentaires
             </h1>
+            <div className="w-10 h-0.5 bg-[#A2482B] mt-1 rounded-full" />
           </div>
 
           {/* Centre absolu : Le nom de la série centré avec le symbole < > au centre mort, parfaitement aligné verticalement avec le titre et le bouton */}

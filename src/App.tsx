@@ -25,21 +25,32 @@ import { AdminDashboard } from './components/AdminDashboard';
 import { NavigationScreen } from './components/NavigationScreen';
 import { LandingScreen } from './components/LandingScreen';
 import { BottomMenu } from './components/BottomMenu';
+import { Navbar } from './components/Navbar';
+import { AuthModal } from './components/AuthModal';
+import { CompanyHeritageScreen } from './components/CompanyHeritageScreen';
 import { io } from 'socket.io-client';
 
 export default function App() {
-  // Arrive sur la page d'accueil d'onboarding YonyWood (ou directement aux Duos si déjà connecté)
+  // Immersion directe sans blocage : accès immédiat aux Duos
   const [currentScreen, setCurrentScreen] = useState<ViewScreen>(() => {
     try {
       const savedUser = localStorage.getItem('yonywood_current_user');
-      if (savedUser) {
-        return { type: 'duo_feed' };
+      const savedScreen = localStorage.getItem('yonywood_last_screen');
+      if (savedScreen) {
+        const parsed = JSON.parse(savedScreen);
+        if (parsed && parsed.type && parsed.type !== 'landing') {
+          return parsed;
+        }
       }
     } catch {
       // fallback
     }
-    return { type: 'landing' };
+    return { type: 'duo_feed' };
   });
+
+  // Gestion de la modale d'authentification
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
 
   // User preferences & series filter state with localStorage persistence
   const [selectedSeriesFilter, setSelectedSeriesFilter] = useState<string[]>(() => {
@@ -69,9 +80,16 @@ export default function App() {
     }
   };
 
-  // Scroll to top on navigation change
+  // Scroll to top and persist screen on navigation change
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    try {
+      if (currentScreen.type !== 'video_player') {
+        localStorage.setItem('yonywood_last_screen', JSON.stringify(currentScreen));
+      }
+    } catch {
+      // ignore
+    }
   }, [currentScreen]);
 
   // Initialize Socket.IO
@@ -99,10 +117,25 @@ export default function App() {
       isDarkScreen ? 'bg-[#0E0D0B] text-white' : 'bg-white text-[#1C1917]'
     }`}>
       
-      {/* Main Content Area - Direct immersion */}
-      <main className="flex-1">
+      {/* Header universel YonyWood avec Logo, Slogan et boutons Connexion/Inscription */}
+      {!isVideoPlayer && (
+        <Navbar 
+          currentScreen={currentScreen} 
+          onNavigate={setCurrentScreen} 
+          onOpenAuth={(mode) => {
+            setAuthMode(mode);
+            setAuthModalOpen(true);
+          }}
+        />
+      )}
+
+      {/* Main Content Area - Immersion directe avec marge pour le menu du bas */}
+      <main className={`flex-1 ${!isVideoPlayer ? 'pb-28 sm:pb-32' : ''}`}>
         {currentScreen.type === 'landing' && (
-          <LandingScreen onNavigate={setCurrentScreen} />
+          <DuoFeedScreen 
+            onNavigate={setCurrentScreen} 
+            allowedSeriesIds={selectedSeriesFilter}
+          />
         )}
 
         {(currentScreen.type === 'home' || currentScreen.type === 'matrix_view') && (
@@ -116,6 +149,10 @@ export default function App() {
             initialDuoIndex={currentScreen.currentDuoIndex}
             allowedSeriesIds={selectedSeriesFilter}
           />
+        )}
+
+        {currentScreen.type === 'enterprise' && (
+          <CompanyHeritageScreen onNavigate={setCurrentScreen} />
         )}
 
         {currentScreen.type === 'marketplace' && (
@@ -292,13 +329,21 @@ export default function App() {
         )}
       </main>
 
-      {/* Menu de navigation 5 onglets : Studio, Héritages, Duocumentaires, Marché, Profil */}
+      {/* Menu de navigation principal : Studio, Héritages, Duocumentaires, Productions, Entreprises, Profil */}
       {!isVideoPlayer && (
         <BottomMenu 
           currentScreen={currentScreen} 
           onNavigate={setCurrentScreen} 
         />
       )}
+
+      {/* Modale d'authentification épurée (Connexion / Inscription) */}
+      <AuthModal 
+        isOpen={authModalOpen}
+        onClose={() => setAuthModalOpen(false)}
+        initialMode={authMode}
+        onSuccess={() => setAuthModalOpen(false)}
+      />
 
     </div>
   );

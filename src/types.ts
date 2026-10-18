@@ -608,6 +608,7 @@ export type ViewScreen =
   | { type: 'home' }
   | { type: 'matrix_view' }
   | { type: 'duo_feed'; selectedDocId?: string; currentDuoIndex?: number }
+  | { type: 'enterprise' }
   | { 
       type: 'marketplace'; 
       initialPeerOfferId?: string; 

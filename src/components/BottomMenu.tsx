@@ -1,6 +1,7 @@
 import React from 'react';
 import { 
-  Clapperboard
+  Clapperboard,
+  Film
 } from 'lucide-react';
 import { ViewScreen } from '../types';
 import { 
@@ -21,6 +22,7 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
   const isAgoraActive = currentScreen.type === 'home' || currentScreen.type === 'matrix_view' || currentScreen.type === 'documentaries' || currentScreen.type === 'documentary_detail';
   const isDuocumentairesActive = currentScreen.type === 'duo_feed' || currentScreen.type === 'duo_detail';
   const isMarcheActive = currentScreen.type === 'marketplace';
+  const isEnterpriseActive = currentScreen.type === 'enterprise';
   const isProfilActive = 
     currentScreen.type === 'profile' || 
     currentScreen.type === 'settings' || 
@@ -31,8 +33,8 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
     currentScreen.type === 'messaging' ||
     currentScreen.type === 'editorial_backoffice';
 
-  // Ne pas afficher le menu pendant le lecteur vidéo plein écran ou la page d'accueil d'onboarding
-  if (currentScreen.type === 'video_player' || currentScreen.type === 'landing') {
+  // Ne pas afficher le menu pendant le lecteur vidéo plein écran
+  if (currentScreen.type === 'video_player') {
     return null;
   }
 
@@ -76,6 +78,16 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
       screenId: 'menu-item-productions',
       iconClassName: 'w-[19.5px] h-[19.5px] sm:w-[20px] sm:h-[20px]',
       strokeWidth: 1.5
+    },
+    {
+      id: 'entreprise',
+      label: 'Entreprises',
+      icon: Film,
+      isActive: isEnterpriseActive,
+      onClick: () => onNavigate({ type: 'enterprise' }),
+      screenId: 'menu-item-entreprise',
+      iconClassName: 'w-[19.5px] h-[19.5px] sm:w-[20px] sm:h-[20px]',
+      strokeWidth: 1.6
     },
     {
       id: 'profil',

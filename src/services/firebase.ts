@@ -6,7 +6,9 @@ import firebaseConfig from '../../firebase-applet-config.json';
 // Initialisation unique de l'application Firebase
 export const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 export const auth = getAuth(app);
-export const db = getFirestore(app);
+export const db = (firebaseConfig as any).firestoreDatabaseId
+  ? getFirestore(app, (firebaseConfig as any).firestoreDatabaseId)
+  : getFirestore(app);
 
 // Validation de la connexion conformément aux directives de sécurité
 async function testConnection() {

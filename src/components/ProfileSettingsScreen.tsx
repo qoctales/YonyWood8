@@ -503,16 +503,16 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [showLineageFrise, setShowLineageFrise] = useState(initialShowLineage);
 
-  // Identité du profil affiché
+  // Identité du profil affiché (Pascal Cossi par défaut)
   const [userName, setUserName] = useState<string>(() => {
     if (targetProtagonist) return targetProtagonist.name;
     if (currentUser) return currentUser.name.split(' ')[0];
-    return 'Amina';
+    return 'Pascal';
   });
   const [userFullName, setUserFullName] = useState<string>(() => {
     if (targetProtagonist) return targetProtagonist.name;
     if (currentUser) return currentUser.name;
-    return 'Amina Traoré';
+    return 'Pascal Cossi';
   });
   const [userRole, setUserRole] = useState<string>(() => {
     if (targetProtagonist) return targetProtagonist.role;
@@ -521,22 +521,22 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
         ? 'Fondateur YonyWood' 
         : 'Coproducteur & Spectateur engagé';
     }
-    return 'Passeuse de mémoires sonores & artisane';
+    return 'Président de « Voir Autrement » & Prêtre du Fâ';
   });
   const [userTerritory, setUserTerritory] = useState<string>(() => {
     if (targetProtagonist) return `${targetProtagonist.territory}, ${targetProtagonist.country}`;
     if (currentUser && currentUser.territory) return `${currentUser.territory}, ${currentUser.country || 'International'}`;
-    return 'Ganvié & Cotonou, Bénin';
+    return 'Ganvié, Bénin';
   });
   const [userBio, setUserBio] = useState<string>(() => {
     if (targetProtagonist) return targetProtagonist.bio;
     if (currentUser && currentUser.bio) return currentUser.bio;
-    return 'Passeuse de mémoires sonores et artisane du tissage traditionnel. Entre la lagune de Ganvié et la terre rouge d’Allada, je recueille les chants du fleuve et les gestes millénaires.';
+    return 'Président de l’association « Voir Autrement » et Prêtre initié du Fâ à Ganvié. Mes oreilles et mon cœur captent le souffle de l’air et la résonance des ondes. La sagesse du Fâ nous apprend à voir la trame invisible du destin.';
   });
   const [userPhoto, setUserPhoto] = useState<string>(() => {
     if (targetProtagonist) return targetProtagonist.photoUrl;
     if (currentUser && currentUser.avatarUrl) return currentUser.avatarUrl;
-    return 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80';
+    return '/assets/duos/codjo-blind.jpg';
   });
 
   // Mise à jour de l'identité si currentUser change en mode propriétaire
@@ -1629,38 +1629,48 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
           </div>
         </div>
       ) : (
-        <div className="border-b border-[#E7E5E4] pb-2 sm:pb-2.5 shrink-0">
+        <div className="border-b border-[#E7E5E4] pb-2 sm:pb-2.5 shrink-0 space-y-2">
+          {/* En-tête standardisé avec le petit trait signature */}
+          <div className="flex flex-col items-start px-0.5">
+            <h2 className="font-editorial text-2xl sm:text-3xl font-bold text-stone-900 tracking-wide">
+              Profil
+            </h2>
+            <div className="w-10 h-0.5 bg-[#A2482B] mt-1.5 rounded-full" />
+          </div>
+
           {/* LIGNE PRINCIPALE : IDENTITÉ & ACTIONS RAPIDES SANS COLLISION */}
           <div className="flex items-center justify-between gap-1.5 sm:gap-3">
             <div className="flex items-center gap-2 sm:gap-3.5 min-w-0">
-              {/* Bouton retour avec le chevron officiel unifié */}
-              <button
-                onClick={() => {
-                  if (returnToProtagonistId) {
-                    onNavigate({
-                      type: 'protagonist_profile',
-                      protagonistId: returnToProtagonistId,
-                      returnToDuoId,
-                      returnToDuoIndex,
-                      returnToDocId,
-                      initialShowLineage: true
-                    });
-                  } else if (returnToDuoId) {
-                    onNavigate({
-                      type: 'duo_feed',
-                      currentDuoIndex: returnToDuoIndex ?? 0,
-                      selectedDocId: returnToDocId
-                    });
-                  } else {
-                    onNavigate({ type: 'home' });
-                  }
-                }}
-                className="w-8 h-8 rounded-full bg-white hover:bg-stone-100 border border-stone-200 text-[#1C1917] flex items-center justify-center transition-all cursor-pointer shadow-xs active:scale-95 shrink-0"
-                title="Retour"
-                id="btn-profile-back"
-              >
-                <ChevronLeft className="w-4 h-4 stroke-[2.2]" />
-              </button>
+              {/* Bouton retour conditionnel (uniquement si navigation contextuelle ou profil visité tiers) */}
+              {(returnToProtagonistId || returnToDuoId || returnToMarketplace || !isOwner) && (
+                <button
+                  onClick={() => {
+                    if (returnToProtagonistId) {
+                      onNavigate({
+                        type: 'protagonist_profile',
+                        protagonistId: returnToProtagonistId,
+                        returnToDuoId,
+                        returnToDuoIndex,
+                        returnToDocId,
+                        initialShowLineage: true
+                      });
+                    } else if (returnToDuoId) {
+                      onNavigate({
+                        type: 'duo_feed',
+                        currentDuoIndex: returnToDuoIndex ?? 0,
+                        selectedDocId: returnToDocId
+                      });
+                    } else {
+                      onNavigate({ type: 'home' });
+                    }
+                  }}
+                  className="w-8 h-8 rounded-full bg-white hover:bg-stone-100 border border-stone-200 text-[#1C1917] flex items-center justify-center transition-all cursor-pointer shadow-xs active:scale-95 shrink-0"
+                  title="Retour"
+                  id="btn-profile-back"
+                >
+                  <ChevronLeft className="w-4 h-4 stroke-[2.2]" />
+                </button>
+              )}
 
             <div className="relative shrink-0">
               <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-full p-0.5 border-2 border-[#C89B3C] shadow-sm overflow-hidden bg-white">
@@ -1743,23 +1753,6 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
 
             {isOwner ? (
               <>
-                {/* Bouton Unifié : Transactions (Achats, Projets, Mes parts) */}
-                <button
-                  onClick={() => onNavigate({ 
-                    type: 'transactions',
-                    initialTab: 'achats',
-                    returnToDuoId, 
-                    returnToDuoIndex, 
-                    returnToDocId 
-                  })}
-                  id="btn-profile-transactions-header"
-                  className="group h-8 sm:h-8.5 px-3 sm:px-3.5 rounded-full bg-white hover:bg-[#A2482B] border border-stone-200 hover:border-[#A2482B] text-xs font-semibold text-[#1C1917] hover:text-white flex items-center justify-center sm:gap-1.5 transition-all shadow-xs cursor-pointer relative active:scale-95"
-                  title="Consulter les transactions : Achats, Projets soutenus et Mes parts"
-                >
-                  <ReceiptText className="w-3.5 h-3.5 text-stone-700 group-hover:text-white transition-colors" />
-                  <span>Transactions</span>
-                </button>
-
                 {/* Bouton Messagerie : fond terre cuite et contenu blanc au survol */}
                 <button
                   onClick={() => onNavigate({ type: 'messaging' })}
@@ -1929,7 +1922,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                 if ((e.target as HTMLElement).closest('button, a, input, textarea, select')) return;
                 toggleVideoPlayback();
               }}
-              className="aspect-[9/16] w-[min(340px,calc((100dvh-200px)*9/16))] h-[min(604px,calc(100dvh-200px))] max-w-[calc(100vw-28px)] mx-auto transition-transform duration-150 ease-out select-none cursor-pointer relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-stone-200/80 bg-stone-950 outline-none focus:outline-none ring-0 shrink-0"
+              className="aspect-[9/16] w-auto h-[min(510px,calc(100vh-230px))] max-w-[calc(100vw-28px)] mx-auto transition-transform duration-150 ease-out select-none cursor-pointer relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-stone-200/80 bg-stone-950 outline-none focus:outline-none ring-0 shrink-0"
               style={{ transform: `translate(${swipeOffsetX}px, ${swipeOffsetY}px)` }}
             >
             {/* ================================================================= */}

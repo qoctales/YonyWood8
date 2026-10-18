@@ -438,6 +438,7 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
           <h1 className="font-editorial text-lg sm:text-2xl font-bold text-[#1C1917] tracking-tight">
             Productions
           </h1>
+          <div className="w-10 h-0.5 bg-[#A2482B] mt-1 rounded-full" />
         </div>
 
         {/* Côté droit : Boutons d'onglets Coproduire / Marché */}

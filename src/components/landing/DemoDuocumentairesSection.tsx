@@ -99,41 +99,43 @@ export const DemoDuocumentairesSection: React.FC = () => {
       className="w-full max-w-4xl mx-auto py-4 flex flex-col items-center select-none"
     >
       
-      {/* En-tête Duocumentaires : titre à gauche (même endroit que Studio) et nom de la série sur la même ligne à droite SANS icône actualiser */}
-      <div className="w-full flex items-center justify-between mb-4 sm:mb-6 px-3 sm:px-6">
-        <h3 className="font-editorial text-3xl font-bold text-stone-900">
+      {/* En-tête Duocumentaires : titre à gauche et nom de la série centré */}
+      <div className="w-full flex flex-col sm:relative sm:flex-row sm:items-center sm:justify-center mb-4 sm:mb-6 px-3 sm:px-6 gap-2 sm:gap-0 min-h-[40px]">
+        <h3 className="font-editorial text-2xl sm:text-3xl font-bold text-stone-900 sm:absolute sm:left-3 md:sm:left-6">
           Duocumentaires
         </h3>
 
-        {/* Pilule avec UNIQUEMENT le nom de la série, sans bouton actualiser */}
-        <button
-          onClick={handleNextDuo}
-          className="px-4 py-1.5 rounded-full bg-[#A2482B] text-white text-xs font-bold shadow-xs hover:bg-[#8A3B22] transition-colors cursor-pointer"
-          title="Cliquer pour afficher la série suivante"
-        >
-          {currentDuo.documentaryTitle}
-        </button>
+        {/* Pilule avec le nom de la série CENTRÉ */}
+        <div className="flex justify-center">
+          <button
+            onClick={handleNextDuo}
+            className="px-4 py-1.5 rounded-full bg-[#A2482B] text-white text-xs font-bold shadow-xs hover:bg-[#8A3B22] transition-colors cursor-pointer tracking-wide"
+            title="Cliquer pour afficher la série suivante"
+          >
+            {currentDuo.documentaryTitle}
+          </button>
+        </div>
       </div>
 
-      {/* ZONE CENTRALE : Les deux cartes 9:16 en miroir avec flèches latérales */}
+      {/* ZONE CENTRALE : Les deux cartes 9:16 rapprochées en miroir avec flèches latérales */}
       <div className="relative w-full flex items-center justify-center">
         
         {/* Flèche gauche */}
         <button
           onClick={handlePrevDuo}
-          className="absolute -left-2 sm:-left-10 lg:-left-14 z-30 w-10 h-10 rounded-full bg-white text-stone-800 border border-stone-200 shadow-md flex items-center justify-center hover:bg-stone-100 transition-all cursor-pointer hover:scale-105 active:scale-95"
+          className="absolute -left-1 sm:-left-3 md:-left-6 lg:-left-10 z-30 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/95 backdrop-blur-xs text-stone-800 border border-stone-200 shadow-md flex items-center justify-center hover:bg-stone-100 transition-all cursor-pointer hover:scale-105 active:scale-95"
           title="Duo précédent"
         >
           <ChevronLeft className="w-5 h-5" />
         </button>
 
-        {/* Grille 2 cartes */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8 justify-center items-center w-full max-w-3xl">
+        {/* Diptyque : deux cartes rapprochées avec espacement réduit */}
+        <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3.5 justify-center items-center">
           
           {/* ========================================================================= */}
-          {/* CARTE GAUCHE : Protagoniste A (Prénom uniquement en bas)                   */}
+          {/* CARTE GAUCHE : Protagoniste A (Prénom à gauche & Icône vidéo à droite)    */}
           {/* ========================================================================= */}
-          <div className="h-[min(490px,calc(100vh-220px))] aspect-[9/16] w-auto mx-auto rounded-3xl overflow-hidden bg-stone-950 text-white shadow-xl border border-stone-200 relative flex flex-col justify-between p-3.5 sm:p-4 shrink-0">
+          <div className="h-[min(490px,calc(100vh-220px))] aspect-[9/16] w-auto rounded-3xl overflow-hidden bg-stone-950 text-white shadow-xl border border-stone-200 relative flex flex-col justify-between p-3.5 sm:p-4 shrink-0">
             
             {playingSide === 'A' ? (
               <div className="absolute inset-0 z-20 bg-black flex flex-col justify-between p-4">
@@ -165,7 +167,7 @@ export const DemoDuocumentairesSection: React.FC = () => {
                   </div>
                 </div>
                 <div className="relative z-30">
-                  <h4 className="font-editorial text-2xl font-bold text-white drop-shadow-md">
+                  <h4 className="font-editorial text-base sm:text-lg font-bold text-white drop-shadow-md">
                     {firstNameA}
                   </h4>
                 </div>
@@ -186,19 +188,8 @@ export const DemoDuocumentairesSection: React.FC = () => {
                   </span>
                 </div>
 
-                {/* Bouton Play au centre */}
-                <div className="relative z-10 flex items-center justify-center my-auto">
-                  <button
-                    onClick={() => setPlayingSide('A')}
-                    className="w-14 h-14 rounded-full bg-black/40 backdrop-blur-md border border-white/30 flex items-center justify-center text-white hover:scale-110 transition-transform cursor-pointer shadow-lg"
-                    title="Lire le témoignage"
-                  >
-                    <Play className="w-6 h-6 fill-white text-white translate-x-0.5" />
-                  </button>
-                </div>
-
                 {/* LES 4 VRAIES ICÔNES D'ACTION (Award, BookOpen, ProfileSoloIcon, ShareIcon) */}
-                <div className="absolute right-3.5 top-1/2 -translate-y-1/2 z-10 flex flex-col gap-2.5">
+                <div className="absolute right-3 sm:right-3.5 top-1/2 -translate-y-1/2 z-10 flex flex-col gap-2.5">
                   
                   {/* 1. Évaluation Résonance (Award) */}
                   <button
@@ -270,11 +261,23 @@ export const DemoDuocumentairesSection: React.FC = () => {
 
                 </div>
 
-                {/* PRÉNOM UNIQUEMENT EN BAS (Typographie éditoriale avec ombre portée, aucun rôle ni texte superflu) */}
-                <div className="relative z-10">
-                  <h4 className="font-editorial text-2xl sm:text-3xl font-bold text-white drop-shadow-md tracking-wide">
+                {/* BAS DE LA CARTE : Prénom à gauche (taille réduite) & Icône vidéo à droite en face du prénom */}
+                <div className="relative z-10 flex items-center justify-between gap-2 pt-2 mt-auto">
+                  <h4 className="font-editorial text-base sm:text-lg font-bold text-white drop-shadow-md tracking-wide">
                     {firstNameA}
                   </h4>
+
+                  {/* Icône vidéo en bas à droite en face du prénom — fond terre cuite au survol */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setPlayingSide('A');
+                    }}
+                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-black/50 hover:bg-[#A2482B] border border-white/25 hover:border-[#A2482B] flex items-center justify-center text-white transition-all duration-200 cursor-pointer shadow-lg hover:scale-110 active:scale-95 shrink-0 group"
+                    title={`Regarder le témoignage de ${firstNameA}`}
+                  >
+                    <Play className="w-4 h-4 sm:w-4.5 sm:h-4.5 fill-white text-white translate-x-0.5 transition-transform group-hover:scale-110" />
+                  </button>
                 </div>
 
                 {/* MODALE QUESTION (Confinée à l'intérieur de la carte vidéo) */}
@@ -425,9 +428,9 @@ export const DemoDuocumentairesSection: React.FC = () => {
           </div>
 
           {/* ========================================================================= */}
-          {/* CARTE DROITE : Protagoniste B (Prénom uniquement en bas)                   */}
+          {/* CARTE DROITE : Protagoniste B (Prénom à gauche & Icône vidéo à droite)   */}
           {/* ========================================================================= */}
-          <div className="h-[min(490px,calc(100vh-220px))] aspect-[9/16] w-auto mx-auto rounded-3xl overflow-hidden bg-stone-950 text-white shadow-xl border border-stone-200 relative flex flex-col justify-between p-3.5 sm:p-4 shrink-0">
+          <div className="h-[min(490px,calc(100vh-220px))] aspect-[9/16] w-auto rounded-3xl overflow-hidden bg-stone-950 text-white shadow-xl border border-stone-200 relative flex flex-col justify-between p-3.5 sm:p-4 shrink-0">
             
             {playingSide === 'B' ? (
               <div className="absolute inset-0 z-20 bg-black flex flex-col justify-between p-4">
@@ -459,7 +462,7 @@ export const DemoDuocumentairesSection: React.FC = () => {
                   </div>
                 </div>
                 <div className="relative z-30">
-                  <h4 className="font-editorial text-2xl font-bold text-white drop-shadow-md">
+                  <h4 className="font-editorial text-base sm:text-lg font-bold text-white drop-shadow-md">
                     {firstNameB}
                   </h4>
                 </div>
@@ -480,19 +483,8 @@ export const DemoDuocumentairesSection: React.FC = () => {
                   </span>
                 </div>
 
-                {/* Bouton Play au centre */}
-                <div className="relative z-10 flex items-center justify-center my-auto">
-                  <button
-                    onClick={() => setPlayingSide('B')}
-                    className="w-14 h-14 rounded-full bg-black/40 backdrop-blur-md border border-white/30 flex items-center justify-center text-white hover:scale-110 transition-transform cursor-pointer shadow-lg"
-                    title="Lire le témoignage"
-                  >
-                    <Play className="w-6 h-6 fill-white text-white translate-x-0.5" />
-                  </button>
-                </div>
-
                 {/* LES 4 VRAIES ICÔNES D'ACTION (Award, BookOpen, ProfileSoloIcon, ShareIcon) */}
-                <div className="absolute right-3.5 top-1/2 -translate-y-1/2 z-10 flex flex-col gap-2.5">
+                <div className="absolute right-3 sm:right-3.5 top-1/2 -translate-y-1/2 z-10 flex flex-col gap-2.5">
                   
                   {/* 1. Évaluation Résonance (Award) */}
                   <button
@@ -564,11 +556,23 @@ export const DemoDuocumentairesSection: React.FC = () => {
 
                 </div>
 
-                {/* PRÉNOM UNIQUEMENT EN BAS (Typographie éditoriale avec ombre portée, aucun rôle ni texte superflu) */}
-                <div className="relative z-10">
-                  <h4 className="font-editorial text-2xl sm:text-3xl font-bold text-white drop-shadow-md tracking-wide">
+                {/* BAS DE LA CARTE : Prénom à gauche (taille réduite) & Icône vidéo à droite en face du prénom */}
+                <div className="relative z-10 flex items-center justify-between gap-2 pt-2 mt-auto">
+                  <h4 className="font-editorial text-base sm:text-lg font-bold text-white drop-shadow-md tracking-wide">
                     {firstNameB}
                   </h4>
+
+                  {/* Icône vidéo en bas à droite en face du prénom — fond terre cuite au survol */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setPlayingSide('B');
+                    }}
+                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-black/50 hover:bg-[#A2482B] border border-white/25 hover:border-[#A2482B] flex items-center justify-center text-white transition-all duration-200 cursor-pointer shadow-lg hover:scale-110 active:scale-95 shrink-0 group"
+                    title={`Regarder le témoignage de ${firstNameB}`}
+                  >
+                    <Play className="w-4 h-4 sm:w-4.5 sm:h-4.5 fill-white text-white translate-x-0.5 transition-transform group-hover:scale-110" />
+                  </button>
                 </div>
 
                 {/* MODALE QUESTION (Confinée à l'intérieur de la carte vidéo) */}
@@ -723,7 +727,7 @@ export const DemoDuocumentairesSection: React.FC = () => {
         {/* Flèche droite */}
         <button
           onClick={handleNextDuo}
-          className="absolute -right-2 sm:-right-10 lg:-right-14 z-30 w-10 h-10 rounded-full bg-white text-stone-800 border border-stone-200 shadow-md flex items-center justify-center hover:bg-stone-100 transition-all cursor-pointer hover:scale-105 active:scale-95"
+          className="absolute -right-1 sm:-right-3 md:-right-6 lg:-right-10 z-30 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/95 backdrop-blur-xs text-stone-800 border border-stone-200 shadow-md flex items-center justify-center hover:bg-stone-100 transition-all cursor-pointer hover:scale-105 active:scale-95"
           title="Duo suivant"
         >
           <ChevronRight className="w-5 h-5" />
