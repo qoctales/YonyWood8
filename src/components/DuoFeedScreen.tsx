@@ -486,7 +486,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                               e.stopPropagation();
                               setIsMutedA(prev => !prev);
                             }}
-                            className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all shadow-md cursor-pointer hover:scale-105 active:scale-95"
+                            className="w-7 h-7 sm:w-8.5 sm:h-8.5 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
                             title={isMutedA ? "Activer le son" : "Couper le son"}
                           >
                             {isMutedA ? (
@@ -497,34 +497,21 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                           </button>
                         )}
 
-                        {/* Déclencheur lecteur vidéo en haut à droite */}
+                        {/* Déclencheur lecteur vidéo en haut à droite (format carré arrondi) */}
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
                             togglePlayA();
                           }}
-                          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all shadow-md cursor-pointer hover:scale-105 active:scale-95"
+                          className="w-7 h-7 sm:w-8.5 sm:h-8.5 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
                           title={isPlayingA ? "Mettre en pause" : "Lire la vidéo"}
                         >
                           {isPlayingA ? (
                             <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
                           ) : (
-                            <Play className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white translate-x-0.5" />
+                            <ProfileSoloIcon className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-white rotate-180 transition-transform" strokeWidth={1.6} />
                           )}
                         </button>
-                      </div>
-                    </div>
-
-                    {/* Centre : Bouton Play / Pause central */}
-                    <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
-                      <div className={`w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-black/40 backdrop-blur-xs border border-white/25 flex items-center justify-center text-white shadow-xl transition-all duration-200 ${
-                        isPlayingA ? 'opacity-0' : 'opacity-85 hover:scale-105'
-                      }`}>
-                        {isPlayingA ? (
-                          <Pause className="w-4 h-4 sm:w-6 sm:h-6 fill-white text-white" />
-                        ) : (
-                          <Play className="w-4 h-4 sm:w-6 sm:h-6 fill-white text-white translate-x-0.5 opacity-95" />
-                        )}
                       </div>
                     </div>
 
@@ -579,7 +566,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                         className="w-7 h-7 sm:w-8.5 sm:h-8.5 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
                         title={`Découvrir le profil de ${pA.name}`}
                       >
-                        <ProfileSoloIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
+                        <ProfileSoloIcon className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-white" />
                       </button>
 
                       {/* 4. Bouton Partager */}
@@ -666,7 +653,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                               e.stopPropagation();
                               setIsMutedB(prev => !prev);
                             }}
-                            className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all shadow-md cursor-pointer hover:scale-105 active:scale-95"
+                            className="w-7 h-7 sm:w-8.5 sm:h-8.5 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
                             title={isMutedB ? "Activer le son" : "Couper le son"}
                           >
                             {isMutedB ? (
@@ -677,34 +664,21 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                           </button>
                         )}
 
-                        {/* Déclencheur lecteur vidéo en haut à droite */}
+                        {/* Déclencheur lecteur vidéo en haut à droite (format carré arrondi) */}
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
                             togglePlayB();
                           }}
-                          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all shadow-md cursor-pointer hover:scale-105 active:scale-95"
+                          className="w-7 h-7 sm:w-8.5 sm:h-8.5 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
                           title={isPlayingB ? "Mettre en pause" : "Lire la vidéo"}
                         >
                           {isPlayingB ? (
                             <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
                           ) : (
-                            <Play className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white translate-x-0.5" />
+                            <ProfileSoloIcon className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-white rotate-180 transition-transform" strokeWidth={1.6} />
                           )}
                         </button>
-                      </div>
-                    </div>
-
-                    {/* Centre : Bouton Play / Pause central */}
-                    <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
-                      <div className={`w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-black/40 backdrop-blur-xs border border-white/25 flex items-center justify-center text-white shadow-xl transition-all duration-200 ${
-                        isPlayingB ? 'opacity-0' : 'opacity-85 hover:scale-105'
-                      }`}>
-                        {isPlayingB ? (
-                          <Pause className="w-4 h-4 sm:w-6 sm:h-6 fill-white text-white" />
-                        ) : (
-                          <Play className="w-4 h-4 sm:w-6 sm:h-6 fill-white text-white translate-x-0.5 opacity-95" />
-                        )}
                       </div>
                     </div>
 
@@ -759,7 +733,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                         className="w-7 h-7 sm:w-8.5 sm:h-8.5 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
                         title={`Découvrir le profil de ${pB.name}`}
                       >
-                        <ProfileSoloIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
+                        <ProfileSoloIcon className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-white" />
                       </button>
 
                       {/* 4. Bouton Partager */}
@@ -854,16 +828,32 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                                 e.stopPropagation();
                                 setIsMutedA(prev => !prev);
                               }}
-                              className="w-8 h-8 rounded-full bg-black/55 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all shadow-md cursor-pointer hover:scale-105 active:scale-95"
+                              className="w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
                               title={isMutedA ? "Activer le son" : "Couper le son"}
                             >
                               {isMutedA ? (
-                                <VolumeX className="w-4 h-4 text-white" />
+                                <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
                               ) : (
-                                <Volume2 className="w-4 h-4 text-white" />
+                                <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
                               )}
                             </button>
                           )}
+
+                          {/* Déclencheur lecteur vidéo en haut à droite (format carré arrondi) */}
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              togglePlayA();
+                            }}
+                            className="w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
+                            title={isPlayingA ? "Mettre en pause" : "Lire la vidéo"}
+                          >
+                            {isPlayingA ? (
+                              <Pause className="w-4 h-4 sm:w-4.5 sm:h-4.5 fill-white text-white" />
+                            ) : (
+                              <ProfileSoloIcon className="w-5 h-5 sm:w-6 sm:h-6 text-white rotate-180 transition-transform" strokeWidth={1.6} />
+                            )}
+                          </button>
 
                           {/* Bouton de bascule vers la vidéo proposée en vis-à-vis (B) */}
                           <button
@@ -878,19 +868,6 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                             <ArrowRightLeft className="w-3.5 h-3.5" />
                             <span>Voir {pB.name.split(' ')[0]}</span>
                           </button>
-                        </div>
-                      </div>
-
-                      {/* Centre : Bouton Play/Pause */}
-                      <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
-                        <div className={`w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-black/45 backdrop-blur-xs border border-white/25 flex items-center justify-center text-white shadow-2xl transition-all duration-200 ${
-                          isPlayingA ? 'opacity-0 group-hover:opacity-100 hover:scale-105' : 'opacity-100 scale-100'
-                        }`}>
-                          {isPlayingA ? (
-                            <Pause className="w-6 h-6 fill-white text-white" />
-                          ) : (
-                            <Play className="w-6 h-6 fill-white text-white translate-x-0.5 opacity-95" />
-                          )}
                         </div>
                       </div>
 
@@ -945,7 +922,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                         className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
                         title={`Découvrir le profil de ${pA.name}`}
                       >
-                        <ProfileSoloIcon className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                        <ProfileSoloIcon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                       </button>
 
                       {/* 4. Bouton Partager */}
@@ -1031,16 +1008,32 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                                 e.stopPropagation();
                                 setIsMutedB(prev => !prev);
                               }}
-                              className="w-8 h-8 rounded-full bg-black/55 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all shadow-md cursor-pointer hover:scale-105 active:scale-95"
+                              className="w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
                               title={isMutedB ? "Activer le son" : "Couper le son"}
                             >
                               {isMutedB ? (
-                                <VolumeX className="w-4 h-4 text-white" />
+                                <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
                               ) : (
-                                <Volume2 className="w-4 h-4 text-white" />
+                                <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
                               )}
                             </button>
                           )}
+
+                          {/* Déclencheur lecteur vidéo en haut à droite (format carré arrondi) */}
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              togglePlayB();
+                            }}
+                            className="w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
+                            title={isPlayingB ? "Mettre en pause" : "Lire la vidéo"}
+                          >
+                            {isPlayingB ? (
+                              <Pause className="w-4 h-4 sm:w-4.5 sm:h-4.5 fill-white text-white" />
+                            ) : (
+                              <ProfileSoloIcon className="w-5 h-5 sm:w-6 sm:h-6 text-white rotate-180 transition-transform" strokeWidth={1.6} />
+                            )}
+                          </button>
 
                           {/* Bouton de bascule vers la première vidéo proposée (A) */}
                           <button
@@ -1055,19 +1048,6 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                             <ArrowRightLeft className="w-3.5 h-3.5" />
                             <span>Voir {pA.name.split(' ')[0]}</span>
                           </button>
-                        </div>
-                      </div>
-
-                      {/* Centre : Bouton Play/Pause */}
-                      <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
-                        <div className={`w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-black/45 backdrop-blur-xs border border-white/25 flex items-center justify-center text-white shadow-2xl transition-all duration-200 ${
-                          isPlayingB ? 'opacity-0 group-hover:opacity-100 hover:scale-105' : 'opacity-100 scale-100'
-                        }`}>
-                          {isPlayingB ? (
-                            <Pause className="w-6 h-6 fill-white text-white" />
-                          ) : (
-                            <Play className="w-6 h-6 fill-white text-white translate-x-0.5 opacity-95" />
-                          )}
                         </div>
                       </div>
 
@@ -1122,7 +1102,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                         className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
                         title={`Découvrir le profil de ${pB.name}`}
                       >
-                        <ProfileSoloIcon className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                        <ProfileSoloIcon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                       </button>
 
                       {/* 4. Bouton Partager */}

@@ -57,6 +57,7 @@ import {
 import { useAuth } from '../services/authContext';
 import { AuthModal } from './AuthModal';
 import { ShareIcon } from './ShareIcon';
+import { ProfileSoloIcon } from './YonywoodBrandIcons';
 import { OrdersAndContributionsModal } from './OrdersAndContributionsModal';
 import { transactionService } from '../utils/transactionService';
 import { ProfileLineageFrise } from './ProfileLineageFrise';
@@ -218,13 +219,15 @@ const MEDIA_VIDEO_PRESETS = [
   { name: 'Court Documentaire', url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4' },
 ];
 
-// Sous-composant : En-tête haut de vidéo avec capsule opaque à gauche & Partager à droite (Style Image 2)
+// Sous-composant : En-tête haut de vidéo avec capsule opaque à gauche & Déclencheur vidéo + Partager à droite
 interface VideoTopHeaderProps {
   seriesOrTitle: string;
   badge?: string;
   onShare: () => void;
   isMuted?: boolean;
   onToggleMute?: () => void;
+  isPlaying?: boolean;
+  onTogglePlay?: () => void;
 }
 
 const VideoTopHeader: React.FC<VideoTopHeaderProps> = ({ 
@@ -233,6 +236,8 @@ const VideoTopHeader: React.FC<VideoTopHeaderProps> = ({
   onShare, 
   isMuted = true, 
   onToggleMute,
+  isPlaying = false,
+  onTogglePlay,
 }) => (
   <div className="relative z-20 flex items-center justify-between gap-2 w-full">
     {/* HAUT GAUCHE : Titre court et précis dans une capsule semi-opaque dont le fond s'adapte sans jamais tronquer */}
@@ -264,6 +269,26 @@ const VideoTopHeader: React.FC<VideoTopHeaderProps> = ({
             <VolumeX className="w-4 h-4 text-white" />
           ) : (
             <Volume2 className="w-4 h-4 text-white" />
+          )}
+        </button>
+      )}
+
+      {/* Déclencheur vidéo signature YonyWood en carré arrondi (télé vintage) */}
+      {onTogglePlay && (
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            onTogglePlay();
+          }}
+          id="btn-video-top-play-brand"
+          className="w-9 h-9 rounded-xl bg-black/50 hover:bg-[#A2482B] active:scale-95 backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center shadow-md transition-all cursor-pointer"
+          title={isPlaying ? "Mettre en pause" : "Regarder la vidéo"}
+        >
+          {isPlaying ? (
+            <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
+          ) : (
+            <ProfileSoloIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white rotate-180 transition-transform" strokeWidth={1.6} />
           )}
         </button>
       )}
@@ -1988,25 +2013,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
               })}
             </div>
 
-            {/* CENTRE : Icône vidéo Play / Pause au centre exact de l'image */}
-            <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
-              <button
-                type="button"
-                id="btn-center-play-pause-profile"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  toggleVideoPlayback(e);
-                }}
-                className="pointer-events-auto w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-black/45 hover:bg-black/70 backdrop-blur-xs border border-white/25 text-white flex items-center justify-center transition-all duration-200 shadow-2xl hover:scale-105 active:scale-95 cursor-pointer"
-                title={isPlaying ? 'Mettre en pause' : 'Lire la vidéo'}
-              >
-                {isPlaying ? (
-                  <Pause className="w-6 h-6 sm:w-7 sm:h-7 fill-white text-white" />
-                ) : (
-                  <Play className="w-6 h-6 sm:w-7 sm:h-7 fill-white text-white translate-x-0.5 opacity-95" />
-                )}
-              </button>
-            </div>
+
 
             {/* ================================================================= */}
             {/* CATÉGORIE 1 : RÉCIT (Récits personnels & Épisodes réunis)         */}
@@ -2052,6 +2059,8 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                   onShare={handleShareProfile}
                   isMuted={isMuted}
                   onToggleMute={toggleMute}
+                  isPlaying={isPlaying}
+                  onTogglePlay={toggleVideoPlayback}
                 />
 
                 <div className="my-auto" />
@@ -2169,6 +2178,8 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                   onShare={handleShareProfile}
                   isMuted={isMuted}
                   onToggleMute={toggleMute}
+                  isPlaying={isPlaying}
+                  onTogglePlay={toggleVideoPlayback}
                 />
 
                 <div className="my-auto" />
@@ -2293,6 +2304,8 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                   onShare={handleShareProfile}
                   isMuted={isMuted}
                   onToggleMute={toggleMute}
+                  isPlaying={isPlaying}
+                  onTogglePlay={toggleVideoPlayback}
                 />
 
                 <div className="my-auto" />
@@ -2416,6 +2429,8 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                   onShare={handleShareProfile}
                   isMuted={isMuted}
                   onToggleMute={toggleMute}
+                  isPlaying={isPlaying}
+                  onTogglePlay={toggleVideoPlayback}
                 />
 
                 <div className="my-auto" />

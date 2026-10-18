@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { ShareIcon } from './ShareIcon';
 import { ResonanceModal } from './ResonanceModal';
+import { ProfileSoloIcon } from './YonywoodBrandIcons';
 import { ViewScreen } from '../types';
 
 export interface CompanyStakeholder {
@@ -485,19 +486,19 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = () =>
                 </span>
               </div>
 
-              {/* Déclencheur vidéo standardisé, permanent et inamovible en haut à droite */}
+              {/* Déclencheur vidéo standardisé, permanent et inamovible en haut à droite (format carré arrondi) */}
               <button
                 onClick={(e) => {
                   e.stopPropagation();
                   setIsPlaying(prev => !prev);
                 }}
-                className="absolute top-3.5 right-3.5 sm:top-4 sm:right-4 z-30 w-8.5 h-8.5 sm:w-9.5 sm:h-9.5 rounded-full bg-black/60 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center text-white transition-all shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0 pointer-events-auto"
+                className="absolute top-3.5 right-3.5 sm:top-4 sm:right-4 z-30 w-8.5 h-8.5 sm:w-9.5 sm:h-9.5 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center text-white transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0 pointer-events-auto"
                 title={isPlaying ? "Mettre en pause" : `Regarder la vidéo de ${currentCompany.companyName}`}
               >
                 {isPlaying ? (
                   <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
                 ) : (
-                  <Play className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white translate-x-0.5" />
+                  <ProfileSoloIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white rotate-180 transition-transform" strokeWidth={1.6} />
                 )}
               </button>
 
@@ -623,19 +624,19 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = () =>
                 </span>
               </div>
 
-              {/* Déclencheur lecteur vidéo TOUJOURS présent en haut à droite */}
+              {/* Déclencheur lecteur vidéo en haut à droite (format carré arrondi) */}
               <button
                 onClick={(e) => {
                   e.stopPropagation();
                   setIsStakeholderPlaying(prev => !prev);
                 }}
-                className="absolute top-3.5 right-3.5 sm:top-4 sm:right-4 z-30 w-8.5 h-8.5 sm:w-9.5 sm:h-9.5 rounded-full bg-black/60 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center text-white transition-all shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0 pointer-events-auto"
+                className="absolute top-3.5 right-3.5 sm:top-4 sm:right-4 z-30 w-8.5 h-8.5 sm:w-9.5 sm:h-9.5 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center text-white transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0 pointer-events-auto"
                 title={isStakeholderPlaying ? "Mettre en pause" : `Regarder la vidéo de ${currentStakeholder.name}`}
               >
                 {isStakeholderPlaying ? (
                   <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
                 ) : (
-                  <Play className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white translate-x-0.5" />
+                  <ProfileSoloIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white rotate-180 transition-transform" strokeWidth={1.6} />
                 )}
               </button>
 

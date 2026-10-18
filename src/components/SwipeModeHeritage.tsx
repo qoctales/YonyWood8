@@ -553,19 +553,19 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
                   <span className="truncate">{effectiveSubcategory?.label}</span>
                 </div>
 
-                {/* Déclencheur lecteur vidéo standardisé en haut à droite */}
+                {/* Déclencheur lecteur vidéo standardisé en haut à droite (format carré arrondi) */}
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
                     togglePlay3();
                   }}
-                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/50 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
+                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
                   title={isPlayingStep3 ? 'Mettre en pause' : 'Lire la vidéo'}
                 >
                   {isPlayingStep3 ? (
                     <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
                   ) : (
-                    <Play className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white translate-x-0.5" />
+                    <ProfileSoloIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white rotate-180 transition-transform" strokeWidth={1.6} />
                   )}
                 </button>
               </div>
@@ -612,7 +612,7 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
                   className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
                   title="Découvrir son profil complet"
                 >
-                  <ProfileSoloIcon className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                  <ProfileSoloIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white" />
                 </button>
 
                 {/* 4. Bouton Partager */}

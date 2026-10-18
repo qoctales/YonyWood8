@@ -24,7 +24,7 @@ import {
   ShoppingBag
 } from 'lucide-react';
 import { ShareIcon } from './ShareIcon';
-import { SingleAlveoleIcon } from './YonywoodBrandIcons';
+import { SingleAlveoleIcon, ProfileSoloIcon } from './YonywoodBrandIcons';
 import { ViewScreen } from '../types';
 import { DUOS, DOCUMENTARIES, PROTAGONISTS } from '../data/mockData';
 
@@ -596,24 +596,31 @@ export const UniverseDimensionPage: React.FC<UniverseDimensionPageProps> = ({
                     <span className="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-xs text-white text-[10px] font-bold tracking-wide uppercase border border-white/20">
                       {item.seriesTitle}
                     </span>
-                    <span className="px-2.5 py-1 rounded-full bg-[#C89B3C] text-[#FFFFFF] text-[10px] font-bold shadow-xs">
-                      {item.status}
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className="px-2.5 py-1 rounded-full bg-[#C89B3C] text-[#FFFFFF] text-[10px] font-bold shadow-xs">
+                        {item.status}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (videoRef.current) {
+                            if (isPlaying) videoRef.current.pause();
+                            else videoRef.current.play();
+                            setIsPlaying(!isPlaying);
+                          }
+                        }}
+                        className="w-8.5 h-8.5 rounded-xl bg-black/50 hover:bg-[#A2482B] active:scale-95 backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center shadow-md transition-all cursor-pointer"
+                        title={isPlaying ? "Mettre en pause" : "Regarder la vidéo"}
+                      >
+                        {isPlaying ? (
+                          <Pause className="w-3.5 h-3.5 fill-white text-white" />
+                        ) : (
+                          <ProfileSoloIcon className="w-5 h-5 text-white rotate-180 transition-transform" strokeWidth={1.6} />
+                        )}
+                      </button>
+                    </div>
                   </div>
-
-                  {/* Play/Pause center overlay */}
-                  <button
-                    onClick={() => {
-                      if (videoRef.current) {
-                        if (isPlaying) videoRef.current.pause();
-                        else videoRef.current.play();
-                        setIsPlaying(!isPlaying);
-                      }
-                    }}
-                    className="absolute inset-0 m-auto w-14 h-14 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-xs border border-white/30 text-white flex items-center justify-center transition-all hover:scale-105 z-10 cursor-pointer"
-                  >
-                    {isPlaying ? <Pause className="w-6 h-6 fill-white text-white" /> : <Play className="w-6 h-6 ml-1 text-white fill-white" />}
-                  </button>
 
                   {/* Bottom Content Gradient */}
                   <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black via-black/85 to-transparent p-5 text-white z-10 space-y-3">
@@ -1297,27 +1304,31 @@ export const UniverseDimensionPage: React.FC<UniverseDimensionPageProps> = ({
                     className="w-full h-full object-cover"
                   />
 
-                  {/* Top Badge */}
+                  {/* Top Badge & Déclencheur Vidéo */}
                   <div className="absolute top-4 inset-x-4 flex justify-between items-center z-10">
                     <span className="px-2.5 py-1 rounded-full bg-black/70 backdrop-blur-xs text-white text-[10px] font-bold tracking-wide uppercase border border-white/20">
                       Vidéo de Présentation Principale
                     </span>
-                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 ring-2 ring-white animate-pulse" />
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (videoRef.current) {
+                          if (isPlaying) videoRef.current.pause();
+                          else videoRef.current.play();
+                          setIsPlaying(!isPlaying);
+                        }
+                      }}
+                      className="w-8.5 h-8.5 rounded-xl bg-black/50 hover:bg-[#A2482B] active:scale-95 backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center shadow-md transition-all cursor-pointer"
+                      title={isPlaying ? "Mettre en pause" : "Regarder la vidéo"}
+                    >
+                      {isPlaying ? (
+                        <Pause className="w-3.5 h-3.5 fill-white text-white" />
+                      ) : (
+                        <ProfileSoloIcon className="w-5 h-5 text-white rotate-180 transition-transform" strokeWidth={1.6} />
+                      )}
+                    </button>
                   </div>
-
-                  {/* Play Button Overlay */}
-                  <button
-                    onClick={() => {
-                      if (videoRef.current) {
-                        if (isPlaying) videoRef.current.pause();
-                        else videoRef.current.play();
-                        setIsPlaying(!isPlaying);
-                      }
-                    }}
-                    className="absolute inset-0 m-auto w-14 h-14 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-xs border border-white/30 text-white flex items-center justify-center transition-all hover:scale-105 z-10 cursor-pointer"
-                  >
-                    {isPlaying ? <Pause className="w-6 h-6 fill-white text-white" /> : <Play className="w-6 h-6 ml-1 text-white fill-white" />}
-                  </button>
 
                   {/* Bottom Content */}
                   <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black via-black/85 to-transparent p-5 text-white z-10 space-y-2 text-center">

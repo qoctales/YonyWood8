@@ -267,16 +267,20 @@ export const DemoDuocumentairesSection: React.FC = () => {
                     {firstNameA}
                   </h4>
 
-                  {/* Icône vidéo en bas à droite en face du prénom — fond terre cuite au survol */}
+                  {/* Déclencheur vidéo signature YonyWood en carré arrondi */}
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      setPlayingSide('A');
+                      setPlayingSide(playingSide === 'A' ? null : 'A');
                     }}
-                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-black/50 hover:bg-[#A2482B] border border-white/25 hover:border-[#A2482B] flex items-center justify-center text-white transition-all duration-200 cursor-pointer shadow-lg hover:scale-110 active:scale-95 shrink-0 group"
-                    title={`Regarder le témoignage de ${firstNameA}`}
+                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-black/50 hover:bg-[#A2482B] border border-white/25 hover:border-[#A2482B] flex items-center justify-center text-white transition-all duration-200 cursor-pointer shadow-lg hover:scale-105 active:scale-95 shrink-0 group"
+                    title={playingSide === 'A' ? "Mettre en pause" : `Regarder le témoignage de ${firstNameA}`}
                   >
-                    <Play className="w-4 h-4 sm:w-4.5 sm:h-4.5 fill-white text-white translate-x-0.5 transition-transform group-hover:scale-110" />
+                    {playingSide === 'A' ? (
+                      <span className="w-3.5 h-3.5 flex items-center justify-center font-bold">||</span>
+                    ) : (
+                      <ProfileSoloIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white rotate-180 transition-transform" strokeWidth={1.6} />
+                    )}
                   </button>
                 </div>
 
@@ -562,16 +566,20 @@ export const DemoDuocumentairesSection: React.FC = () => {
                     {firstNameB}
                   </h4>
 
-                  {/* Icône vidéo en bas à droite en face du prénom — fond terre cuite au survol */}
+                  {/* Déclencheur vidéo signature YonyWood en carré arrondi */}
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      setPlayingSide('B');
+                      setPlayingSide(playingSide === 'B' ? null : 'B');
                     }}
-                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-black/50 hover:bg-[#A2482B] border border-white/25 hover:border-[#A2482B] flex items-center justify-center text-white transition-all duration-200 cursor-pointer shadow-lg hover:scale-110 active:scale-95 shrink-0 group"
-                    title={`Regarder le témoignage de ${firstNameB}`}
+                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-black/50 hover:bg-[#A2482B] border border-white/25 hover:border-[#A2482B] flex items-center justify-center text-white transition-all duration-200 cursor-pointer shadow-lg hover:scale-105 active:scale-95 shrink-0 group"
+                    title={playingSide === 'B' ? "Mettre en pause" : `Regarder le témoignage de ${firstNameB}`}
                   >
-                    <Play className="w-4 h-4 sm:w-4.5 sm:h-4.5 fill-white text-white translate-x-0.5 transition-transform group-hover:scale-110" />
+                    {playingSide === 'B' ? (
+                      <span className="w-3.5 h-3.5 flex items-center justify-center font-bold">||</span>
+                    ) : (
+                      <ProfileSoloIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white rotate-180 transition-transform" strokeWidth={1.6} />
+                    )}
                   </button>
                 </div>
 
