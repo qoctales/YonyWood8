@@ -1925,7 +1925,7 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
                 }}
                 title="Découvrir son univers complet"
               >
-                <h3 className="font-editorial text-2xl sm:text-3xl font-bold text-white tracking-tight leading-tight pb-0.5 drop-shadow-md group-hover/profile:text-[#FFE7A3] transition-colors">
+                <h3 className="font-editorial text-sm sm:text-base font-bold text-white tracking-tight leading-tight pb-0.5 drop-shadow-md group-hover/profile:text-[#FFE7A3] transition-colors">
                   {modalPerson.firstName || modalPerson.name.split(' ')[0]}
                 </h3>
               </div>

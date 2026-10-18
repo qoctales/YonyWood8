@@ -36,9 +36,9 @@ const OFFICIAL_SERIES: SeriesItem[] = [
   },
   {
     id: 'dixeat-fiat-luxe',
-    title: 'Fiat Luxe <> Street',
+    title: 'Fiat Luxe <> Sweet Street',
     posterUrl: '/assets/posters/Fiat Luxe < > Street.jpg',
-    universes: ['Fiat Luxe', 'Street'],
+    universes: ['Fiat Luxe', 'Sweet Street'],
     territories: 'Cotonou, Paris & Milan',
     tagline: 'La haute scénographie du détail face à la générosité brute.',
     description: 'Des marmites populaires de Dantokpa aux tables d’exception, artisans de bouche et scénographes révèlent l’art du don, du détail et du souvenir impérissable.',
@@ -46,9 +46,9 @@ const OFFICIAL_SERIES: SeriesItem[] = [
   },
   {
     id: 'jesus-legba',
-    title: 'Ancestral <> Revealed',
+    title: 'Vodun Rays ‹ › Amîn · Amen',
     posterUrl: '/assets/posters/Esu < > Jesus.jpg',
-    universes: ['Ancestral', 'Revealed'],
+    universes: ['Vodun Rays', 'Amîn · Amen'],
     territories: 'Bénin (Ouidah, Allada)',
     tagline: 'Deux traditions spirituelles face au mystère et au destin.',
     description: 'Dévots de la tradition ancestrale et fidèles de la foi révélée dialoguent d’égal à égal face aux grands mystères humains : l’épreuve, le pardon et la transcendance.',

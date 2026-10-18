@@ -44,7 +44,7 @@ const STOCK_VIDEOS = [
 const SERIES_SUBJECTS: ProposeSubject[] = [
   {
     id: 'jesus-legba',
-    title: 'Ancestral < > Revealed',
+    title: 'Vodun Rays ‹ › Amîn · Amen',
     subtitle: 'Deux traditions spirituelles face aux épreuves de la foi et au mystère.',
     synopsis: 'Mise en miroir des deux spiritualités chrétienne et vodun face aux tourments du destin. Deux protagonistes sur deux continents explorent la transcendance, la mort, le pardon et la rédemption au-delà des dogmes.',
     question: 'Comment votre foi ou votre rapport au sacré vous aide-t-il à traverser le deuil ou l’épreuve ?',
@@ -89,7 +89,7 @@ const SERIES_SUBJECTS: ProposeSubject[] = [
   },
   {
     id: 'dixeat-fiat-luxe',
-    title: 'Fiat Luxe < > Street',
+    title: 'Fiat Luxe < > Sweet Street',
     subtitle: 'Artisans du goût et haute scénographie d’exception au service du détail.',
     synopsis: 'L’artisanat d’art et la haute gastronomie vus de l’intérieur. La rencontre de deux orfèvres du détail qui consacrent leur existence à la patience de la matière et à l’hospitalité sublime.',
     question: 'Quelle est la noblesse et le sens profond caché dans le geste de votre métier ?',

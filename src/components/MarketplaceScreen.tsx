@@ -56,7 +56,7 @@ interface PeerOffer {
 const PRODUCTIONS: ProductionPoster[] = [
   {
     id: 'jesus-legba',
-    title: 'Ancestral <> Revealed',
+    title: 'Vodun Rays ‹ › Amîn · Amen',
     posterImage: '/assets/posters/Esu < > Jesus.png',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
     sharePrice: 50
@@ -77,7 +77,7 @@ const PRODUCTIONS: ProductionPoster[] = [
   },
   {
     id: 'dixeat-fiat-luxe',
-    title: 'Fiat Luxe <> Street',
+    title: 'Fiat Luxe <> Sweet Street',
     posterImage: '/assets/posters/Fiat Luxe < > Street.jpg',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
     sharePrice: 50
@@ -118,7 +118,7 @@ const INITIAL_PEER_OFFERS: PeerOffer[] = [
     sellerId: 'koffi-tisserand',
     sellerName: 'Koffi',
     sellerPhoto: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
-    seriesTitle: 'Ancestral <> Revealed',
+    seriesTitle: 'Vodun Rays ‹ › Amîn · Amen',
     posterImage: '/assets/posters/Esu < > Jesus.png',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
     sharesCount: 3,
@@ -151,7 +151,7 @@ const INITIAL_PEER_OFFERS: PeerOffer[] = [
     sellerId: 'amina-cook',
     sellerName: 'Amina',
     sellerPhoto: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
-    seriesTitle: 'Fiat Luxe <> Street',
+    seriesTitle: 'Fiat Luxe <> Sweet Street',
     posterImage: '/assets/posters/Fiat Luxe < > Street.jpg',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
     sharesCount: 4,

@@ -142,7 +142,7 @@ export const DuoScreen: React.FC<DuoScreenProps> = ({ duoId, onNavigate }) => {
                   </div>
 
                   <div className="text-center sm:text-left space-y-0.5 font-sans">
-                    <h3 className="font-editorial text-xl sm:text-2xl font-bold text-[#1C1917] tracking-tight leading-tight pb-0.5">
+                    <h3 className="font-editorial text-sm sm:text-base font-bold text-[#1C1917] tracking-tight leading-tight pb-0.5">
                       {duo.protagonistA.name.split(' ')[0]}
                     </h3>
                     <button
@@ -248,7 +248,7 @@ export const DuoScreen: React.FC<DuoScreenProps> = ({ duoId, onNavigate }) => {
                   </div>
 
                   <div className="text-center sm:text-left space-y-0.5 font-sans">
-                    <h3 className="font-editorial text-xl sm:text-2xl font-bold text-[#1C1917] tracking-tight leading-tight pb-0.5">
+                    <h3 className="font-editorial text-sm sm:text-base font-bold text-[#1C1917] tracking-tight leading-tight pb-0.5">
                       {duo.protagonistB.name.split(' ')[0]}
                     </h3>
                     <button

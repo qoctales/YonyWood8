@@ -90,7 +90,7 @@ const SHOWCASE_DUOS: DuoShowcase[] = [
   },
   {
     id: 'duo-fiat-luxe-street',
-    seriesTitle: 'Fiat Luxe <> Street',
+    seriesTitle: 'Fiat Luxe <> Sweet Street',
     question: '« Une expérience où vous avez vu la beauté là où vous ne l’attendiez pas. »',
     universeA: {
       name: 'Chef Koffi',

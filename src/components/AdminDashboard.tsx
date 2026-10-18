@@ -155,7 +155,7 @@ const DEFAULT_EARNINGS: CoproductionEarning[] = [
     coproducerName: 'Sophie Morel',
     coproducerEmail: 'sophie.morel@culture-invest.fr',
     seriesId: 'dixeat-fiat-luxe',
-    seriesTitle: 'Fiat Luxe < > Street',
+    seriesTitle: 'Fiat Luxe < > Sweet Street',
     initialInvestment: 1500,
     sharesOwned: 150,
     totalViews: 62400,

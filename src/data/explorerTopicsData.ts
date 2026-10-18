@@ -60,7 +60,7 @@ const seriesList: ExplorerCatalogItem[] = [
   {
     "id": "jesus-legba",
     "category": "series",
-    "title": "Ancestral < > Revealed",
+    "title": "Vodun Rays ‹ › Amîn · Amen",
     "subtitle": "Deux traditions. Une même question de foi.",
     "question": "Qu’est-ce qui dans votre foi la plus intime vous relie à ce qui vous dépasse et vous rapproche des autres ?",
     "photoUrl": "/assets/posters/Esu < > Jesus.png",
@@ -93,7 +93,7 @@ const seriesList: ExplorerCatalogItem[] = [
   {
     "id": "dixeat-fiat-luxe",
     "category": "series",
-    "title": "Fiat Luxe < > Street",
+    "title": "Fiat Luxe < > Sweet Street",
     "subtitle": "Quand la matière brute devient or, goût et lumière.",
     "question": "À quel instant précis avez-vous compris que transformer la matière brute était un acte de pure alchimie spirituelle ?",
     "photoUrl": "/assets/posters/Fiat Luxe < > Street.jpg",

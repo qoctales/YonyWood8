@@ -241,16 +241,25 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
   const rawSeriesTitle = activeDoc?.title || currentDuo.documentaryTitle || '';
   const isBeninSeries = currentDuo.documentaryId === 'finagnon-qosqorico' || rawSeriesTitle.toLowerCase().includes('benin');
 
-  const seriesParts = isBeninSeries
-    ? ['Bénin', 'Pérou']
-    : rawSeriesTitle.includes('< >')
-    ? rawSeriesTitle.split('< >')
-    : rawSeriesTitle.includes('<>')
-    ? rawSeriesTitle.split('<>')
-    : [pA.universeTag || 'Pôle A', pB.universeTag || 'Pôle B'];
+  // Extraction robuste des deux pendants de la série
+  const getSeriesHalves = (): [string, string] => {
+    if (isBeninSeries) return ['Bénin', 'Pérou'];
+    if (activeDoc?.universes && activeDoc.universes.length >= 2) {
+      return [activeDoc.universes[0].name, activeDoc.universes[1].name];
+    }
+    const splitRegex = /< >|<>|‹ ›|‹›|&lt;&gt;|&lt; &gt;/;
+    if (splitRegex.test(rawSeriesTitle)) {
+      const parts = rawSeriesTitle.split(splitRegex);
+      if (parts.length >= 2 && parts[0].trim() && parts[1].trim()) {
+        return [parts[0].trim(), parts[1].trim()];
+      }
+    }
+    return [pA.universeTag || 'Pôle A', pB.universeTag || 'Pôle B'];
+  };
 
-  const seriesNameA = isBeninSeries ? 'Bénin' : formatTitleCase(seriesParts[0]?.trim() || pA.universeTag || 'Pôle A');
-  const seriesNameB = isBeninSeries ? 'Pérou' : formatTitleCase(seriesParts[1]?.trim() || pB.universeTag || 'Pôle B');
+  const [rawPartA, rawPartB] = getSeriesHalves();
+  const seriesNameA = formatTitleCase(rawPartA);
+  const seriesNameB = formatTitleCase(rawPartB);
 
   const themeA = seriesNameA;
   const themeB = seriesNameB;
@@ -289,40 +298,25 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
 
           {/* Centre absolu : Le nom de la série centré avec le symbole < > au centre mort, parfaitement aligné verticalement avec le titre et le bouton */}
           <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-none max-w-[44vw] sm:max-w-[48vw]">
-            {(() => {
-              const parts = isBeninSeries
-                ? ['Bénin', 'Pérou']
-                : rawSeriesTitle.includes('< >') 
-                ? rawSeriesTitle.split('< >') 
-                : rawSeriesTitle.includes('<>') 
-                ? rawSeriesTitle.split('<>') 
-                : null;
-              return parts ? (
-                <div 
-                  key={`duo-series-header-${currentDuo.id}-${isBeninSeries ? 'benin-perou' : rawSeriesTitle}`}
-                  className="inline-flex items-center gap-1 sm:gap-2 h-7 sm:h-8 px-2.5 sm:px-3.5 rounded-full bg-[#A2482B] border border-[#8A3B22] shadow-xs text-[10.5px] sm:text-xs text-white pointer-events-auto select-none"
-                  title={`${formatTitleCase(parts[0])} < > ${formatTitleCase(parts[1])}`}
-                >
-                  <span className="font-sans font-bold text-white tracking-tight truncate max-w-[65px] sm:max-w-[130px] text-right">
-                    {formatTitleCase(parts[0])}
-                  </span>
-                  <span 
-                    className="font-mono text-[9px] sm:text-[11px] font-black text-white/95 px-0.5 select-none shrink-0 tracking-wider flex items-center gap-0.5"
-                    title="Face à face"
-                  >
-                    <span>&lt;</span>
-                    <span>&gt;</span>
-                  </span>
-                  <span className="font-sans font-bold text-white tracking-tight truncate max-w-[65px] sm:max-w-[130px] text-left">
-                    {formatTitleCase(parts[1])}
-                  </span>
-                </div>
-              ) : (
-                <div className="inline-flex items-center h-7 sm:h-8 px-3 rounded-full bg-[#A2482B] border border-[#8A3B22] shadow-xs text-[10.5px] sm:text-xs text-white font-bold pointer-events-auto select-none truncate">
-                  {formatTitleCase(rawSeriesTitle)}
-                </div>
-              );
-            })()}
+            <div 
+              key={`duo-series-header-${currentDuo.id}-${seriesNameA}-${seriesNameB}`}
+              className="inline-flex items-center gap-1 sm:gap-2 h-7 sm:h-8 px-2.5 sm:px-3.5 rounded-full bg-[#A2482B] border border-[#8A3B22] shadow-xs text-[10.5px] sm:text-xs text-white pointer-events-auto select-none"
+              title={`${seriesNameA} < > ${seriesNameB}`}
+            >
+              <span className="font-sans font-bold text-white tracking-tight truncate max-w-[65px] sm:max-w-[130px] text-right">
+                {seriesNameA}
+              </span>
+              <span 
+                className="font-mono text-[9px] sm:text-[11px] font-black text-white/95 px-0.5 select-none shrink-0 tracking-wider flex items-center gap-0.5"
+                title="Face à face"
+              >
+                <span>&lt;</span>
+                <span>&gt;</span>
+              </span>
+              <span className="font-sans font-bold text-white tracking-tight truncate max-w-[65px] sm:max-w-[130px] text-left">
+                {seriesNameB}
+              </span>
+            </div>
           </div>
 
           {/* Côté droit épuré : Onglet deck et drapeau du signalement UNIQUEMENT */}
@@ -606,7 +600,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       }}
                       title={`Découvrir le profil de ${pA.name}`}
                     >
-                      <h3 className="font-editorial text-base sm:text-2xl font-bold text-white tracking-tight leading-tight pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors truncate">
+                      <h3 className="font-editorial text-xs sm:text-sm font-bold text-white tracking-tight leading-tight pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors truncate">
                         {pA.name.split(' ')[0]}
                       </h3>
                     </div>
@@ -770,7 +764,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       }}
                       title={`Découvrir le profil de ${pB.name}`}
                     >
-                      <h3 className="font-editorial text-base sm:text-2xl font-bold text-white tracking-tight leading-tight pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors truncate">
+                      <h3 className="font-editorial text-xs sm:text-sm font-bold text-white tracking-tight leading-tight pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors truncate">
                         {pB.name.split(' ')[0]}
                       </h3>
                     </div>
@@ -956,7 +950,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       }}
                       title={`Découvrir le profil de ${pA.name}`}
                     >
-                      <h3 className="font-editorial text-2xl sm:text-3xl font-bold text-white tracking-tight leading-tight pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors truncate">
+                      <h3 className="font-editorial text-sm sm:text-base font-bold text-white tracking-tight leading-tight pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors truncate">
                         {pA.name.split(' ')[0]}
                       </h3>
                     </div>
@@ -1133,7 +1127,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       }}
                       title={`Découvrir le profil de ${pB.name}`}
                     >
-                      <h3 className="font-editorial text-2xl sm:text-3xl font-bold text-white tracking-tight leading-tight pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors truncate">
+                      <h3 className="font-editorial text-sm sm:text-base font-bold text-white tracking-tight leading-tight pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors truncate">
                         {pB.name.split(' ')[0]}
                       </h3>
                     </div>

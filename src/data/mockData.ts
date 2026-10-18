@@ -15,7 +15,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
   {
     id: 'jesus-legba',
     slug: 'jesus-legba',
-    title: 'Ancestral <> Revealed',
+    title: 'Vodun Rays ‹ › Amîn · Amen',
     subtitle: 'Deux traditions spirituelles. Une même question de transcendance face au mystère.',
     centralQuestion: 'Qu’est-ce qui, un jour, vous a fait sentir que quelque chose de plus grand que vous était présent ?',
     shortSynopsis: 'Quand la tradition ancestrale et la foi révélée dialoguent d’égal à égal face aux grands mystères humains : l’épreuve, le pardon et la transcendance.',
@@ -26,13 +26,13 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
     teaserDuration: '1:15',
     universes: [
       {
-        name: 'Ancestral',
+        name: 'Vodun Rays',
         tagline: 'Le gardien des mémoires et des seuils sacrés',
         description: 'Spiritualité ancestrale où les rites ouvrent les voies, protègent les demeures et relient le monde visible aux forces cosmiques.',
         territory: 'Bénin (Allada, Abomey, Ouidah)'
       },
       {
-        name: 'Revealed',
+        name: 'Amîn · Amen',
         tagline: 'L’espérance spirituelle et le don de soi',
         description: 'Parcours de foi révélée, d’oraison silencieuse, d’accueil du prochain et d’engagement au cœur des communautés contemporaines.',
         territory: 'Bénin (Littoral) & Diaspora'
@@ -347,11 +347,11 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
   {
     id: 'dixeat-fiat-luxe',
     slug: 'dixeat-fiat-luxe',
-    title: 'Fiat Luxe <> Street',
+    title: 'Fiat Luxe <> Sweet Street',
     subtitle: 'Racontez une expérience où vous avez vu la beauté, là où vous ne l’attendiez pas.',
     centralQuestion: 'Racontez une expérience où vous avez vu la beauté, là où vous ne l’attendiez pas.',
     shortSynopsis: 'Des marmites populaires de Dantokpa aux tables d’exception à Paris et Milan, des artisans de bouche et scénographes révèlent l’art du don, du détail et du souvenir impérissable.',
-    description: 'Dans la fumée des marmites de Dantokpa à Cotonou, Street incarne l\'artisanat nourricier populaire : des femmes et cuisiniers qui se lèvent à 4h du matin pour offrir réconfort et dignité à des centaines de travailleurs avec une sauce gombo ou un igname pilé. En écho, Fiat Luxe explore la haute précision des arts de la table, de la scénographie olfactive et de l\'hospitalité d\'exception à Paris, Marrakech et Milan. Tout les sépare en apparence, sauf l\'essentiel : l\'obsession du détail, la générosité du don et la grâce de transformer un simple repas en un souvenir inoubliable.',
+    description: 'Dans la fumée des marmites de Dantokpa à Cotonou, Sweet Street incarne l\'artisanat nourricier populaire : des femmes et cuisiniers qui se lèvent à 4h du matin pour offrir réconfort et dignité à des centaines de travailleurs avec une sauce gombo ou un igname pilé. En écho, Fiat Luxe explore la haute précision des arts de la table, de la scénographie olfactive et de l\'hospitalité d\'exception à Paris, Marrakech et Milan. Tout les sépare en apparence, sauf l\'essentiel : l\'obsession du détail, la générosité du don et la grâce de transformer un simple repas en un souvenir inoubliable.',
     coverImage: '/assets/posters/Fiat Luxe < > Street.jpg',
     posterUrl: '/assets/posters/Fiat Luxe < > Street.jpg',
     teaserVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
@@ -364,7 +364,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         territory: 'Paris, Marrakech, Milan'
       },
       {
-        name: 'Street',
+        name: 'Sweet Street',
         tagline: 'L’artisanat nourricier populaire et la générosité brute',
         description: 'La chaleur des marmites de rue, l’igname pilée au lever du jour, le partage sans fard où chaque repas est un pacte de solidarité.',
         territory: 'Cotonou, Dantokpa & marchés ouest-africains'
@@ -1748,7 +1748,7 @@ export const PROTAGONISTS: Protagonist[] = [
     bio: 'Au cœur du grand marché de Dantokpa, Koffi cuisine depuis l’aube sur des réchauds à braises. Il sublime l’igname pilée, les sauces gombo aux écrevisses fumées et les bouillons mijotés 14 heures pour nourrir plus de trois cents personnes par jour.',
     photoUrl: '/assets/protagonists/chef-koffi.jpg',
     documentaryId: 'dixeat-fiat-luxe',
-    universeTag: 'Street',
+    universeTag: 'Sweet Street',
     quote: '« La cuisine n’a pas besoin d’étoiles : elle a besoin de bras qui n’ont pas peur de la fumée et d’un cœur qui veut rassasier l’âme. »',
     tree: {
       transmissions: [
@@ -2554,7 +2554,7 @@ export const DUOS: Duo[] = [
     id: 'duo-jesus-legba-01',
     slug: 'duo-jesus-legba-01',
     documentaryId: 'jesus-legba',
-    documentaryTitle: 'Ancestral <> Revealed',
+    documentaryTitle: 'Vodun Rays ‹ › Amîn · Amen',
     episodeNumber: 'ÉPISODE 01',
     protagonistA: PROTAGONISTS.find(p => p.id === 'dah-zounon') || PROTAGONISTS[2],
     protagonistB: PROTAGONISTS.find(p => p.id === 'pere-matthieu') || PROTAGONISTS[3],
@@ -2608,7 +2608,7 @@ export const DUOS: Duo[] = [
     id: 'duo-dixeat-fiat-luxe-01',
     slug: 'duo-dixeat-fiat-luxe-01',
     documentaryId: 'dixeat-fiat-luxe',
-    documentaryTitle: 'Fiat Luxe <> Street',
+    documentaryTitle: 'Fiat Luxe <> Sweet Street',
     episodeNumber: 'ÉPISODE 01',
     protagonistA: PROTAGONISTS.find(p => p.id === 'helene-saint-amand') || PROTAGONISTS[1],
     protagonistB: PROTAGONISTS.find(p => p.id === 'chef-koffi') || PROTAGONISTS[0],
@@ -3141,7 +3141,7 @@ export const BACKOFFICE_APPLICATIONS: BackOfficeApplication[] = [
 export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
   {
     seriesId: 'jesus-legba',
-    seriesTitle: 'Ancestral <> Revealed',
+    seriesTitle: 'Vodun Rays ‹ › Amîn · Amen',
     subtitle: 'Deux traditions. Une même question de foi.',
     description: 'Comment la rencontre de deux géants de la spiritualité béninoise a ouvert une chaîne vivante d\'initiations, tissant des liens inattendus entre couvents vodoun et monastères chrétiens.',
     centralQuestion: 'La foi',
@@ -3675,7 +3675,7 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
   },
   {
     seriesId: 'dixeat-fiat-luxe',
-    seriesTitle: 'Fiat Luxe < > Street',
+    seriesTitle: 'Fiat Luxe < > Sweet Street',
     subtitle: 'Ceux qui nourrissent les autres < > ceux qui créent des expériences d\'exception.',
     description: 'Le pont inattendu entre les géantes du feu de bois à Cotonou et les orfèvres des réceptions étoilées à Paris et Marrakech : comment chacun s\'est passé le flambeau de la délicatesse.',
     centralQuestion: 'L\'expérience',
@@ -3690,11 +3690,11 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
         territory: 'Cotonou',
         country: 'Bénin',
         flag: '🇧🇯',
-        universeTag: 'Street',
+        universeTag: 'Sweet Street',
         photoUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80',
         isPioneer: true,
         badge: 'Première effigie',
-        invitationStory: 'Première effigie de Street. Ils préparent 400 repas chaque jour dès l\'aurore à Dantokpa avec une dignité royale et le respect absolu de chaque convive.',
+        invitationStory: 'Première effigie de Sweet Street. Ils préparent 400 repas chaque jour dès l\'aurore à Dantokpa avec une dignité royale et le respect absolu de chaque convive.',
         duoPartnerName: 'Hélène Saint-Amand',
         duoPartnerPhoto: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=80',
         duoId: 'duo-dixeat-fiat-luxe-01',
@@ -3709,7 +3709,7 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
             territory: 'Bohicon',
             country: 'Bénin',
             flag: '🇧🇯',
-            universeTag: 'Street',
+            universeTag: 'Sweet Street',
             photoUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80',
             badge: 'Invité(e)',
             invitedById: 'chef-koffi',
@@ -3728,7 +3728,7 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
                 territory: 'Dassa-Zoumè',
                 country: 'Bénin',
                 flag: '🇧🇯',
-                universeTag: 'Street',
+                universeTag: 'Sweet Street',
                 photoUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80',
                 badge: 'Invité(e)',
                 invitedById: 'roland-huile',

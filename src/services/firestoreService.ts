@@ -158,7 +158,7 @@ export async function fetchUserSubmittedVideos(userId?: string, userEmail?: stri
       userName: 'Sika Dossou',
       userEmail: userEmail || 'createur@yonywood.com',
       seriesId: 'ancestral-revealed',
-      seriesTitle: 'Ancestral <> Révélé',
+      seriesTitle: 'Vodun Rays ‹ › Amîn · Amen',
       question: 'Ce qui vous a fait ressentir quelque chose de plus grand que vous',
       videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
       thumbnail: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80',

@@ -512,7 +512,7 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
               {/* =========================================================== */}
               <div className="relative z-10 flex items-end justify-between gap-2 pt-2 mt-auto">
                 <div className="space-y-0.5">
-                  <h4 className="font-editorial text-lg sm:text-xl font-bold text-white drop-shadow-md tracking-wide">
+                  <h4 className="font-editorial text-xs sm:text-sm font-bold text-white drop-shadow-md tracking-wide">
                     {currentCompany.companyName}
                   </h4>
                   <p className="text-[11px] sm:text-xs text-stone-200 font-medium drop-shadow-sm flex items-center gap-1">

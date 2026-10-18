@@ -91,12 +91,9 @@ export const Navbar: React.FC<NavbarProps> = ({ currentScreen, onNavigate, onOpe
           title="YonyWood — Accueil"
         >
           <img 
-            src="/logo%20YonyWood.png?v=5" 
+            src="/yonywoodlogo.jpg" 
             alt="YonyWood" 
             className="h-7 sm:h-8.5 w-auto object-contain mix-blend-multiply select-none group-hover:opacity-90 transition-opacity"
-            onError={(e) => {
-              (e.currentTarget as HTMLImageElement).src = '/logo-yonywood-clean.png?v=5';
-            }}
           />
         </div>
 

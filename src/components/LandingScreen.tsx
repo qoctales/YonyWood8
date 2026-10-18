@@ -71,13 +71,10 @@ export const LandingScreen: React.FC<LandingScreenProps> = ({ onNavigate }) => {
           {/* Gauche : Logo officiel YonyWood */}
           <div className="flex items-center gap-3">
             <img 
-              src="/logo%20YonyWood.png?v=5" 
+              src="/yonywoodlogo.jpg" 
               alt="YonyWood" 
               className="h-8 sm:h-10 w-auto object-contain mix-blend-multiply cursor-pointer hover:opacity-90 transition-opacity"
               onClick={() => setActiveDemoTab('studio')}
-              onError={(e) => {
-                (e.currentTarget as HTMLImageElement).src = '/logo-yonywood-clean.png?v=5';
-              }}
             />
           </div>
 

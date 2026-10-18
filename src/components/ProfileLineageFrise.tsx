@@ -357,7 +357,7 @@ export const ProfileLineageFrise: React.FC<ProfileLineageFriseProps> = ({
             {/* BAS : Prénom (surélevé et sans coupure de lettre) & Boutons à droite */}
             <div className="relative z-20 p-5 sm:p-6 pb-8 sm:pb-9 flex items-end justify-between pointer-events-auto mt-auto">
               <div className="text-left font-sans">
-                <h3 className="font-editorial text-2xl sm:text-3xl font-bold text-white tracking-tight leading-tight pb-0.5 drop-shadow-md">
+                <h3 className="font-editorial text-sm sm:text-base font-bold text-white tracking-tight leading-tight pb-0.5 drop-shadow-md">
                   {videoModalMember.firstName || videoModalMember.name.split(' ')[0]}
                 </h3>
               </div>

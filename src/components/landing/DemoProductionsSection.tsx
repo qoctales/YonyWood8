@@ -25,7 +25,7 @@ interface ProductionItem {
 const ALL_8_PRODUCTIONS: ProductionItem[] = [
   {
     id: 'jesus-legba',
-    title: 'Ancestral <> Revealed',
+    title: 'Vodun Rays ‹ › Amîn · Amen',
     posterImage: '/assets/posters/Esu < > Jesus.jpg',
     sharePrice: 50,
     totalShares: 256,
@@ -58,7 +58,7 @@ const ALL_8_PRODUCTIONS: ProductionItem[] = [
   },
   {
     id: 'dixeat-fiat-luxe',
-    title: 'Fiat Luxe <> Street',
+    title: 'Fiat Luxe <> Sweet Street',
     posterImage: '/assets/posters/Fiat Luxe < > Street.jpg',
     sharePrice: 50,
     totalShares: 200,
@@ -257,7 +257,7 @@ export const DemoProductionsSection: React.FC = () => {
 
           {[
             { id: 'off-1', seller: 'Pascal Cossi', shares: 10, series: 'Other Sights <> Third Eye', price: 50, photo: '/assets/duos/codjo-blind.jpg' },
-            { id: 'off-2', seller: 'Koffi', shares: 5, series: 'Fiat Luxe <> Street', price: 52, photo: '/assets/duos/chef-koffi.jpg' },
+            { id: 'off-2', seller: 'Koffi', shares: 5, series: 'Fiat Luxe <> Sweet Street', price: 52, photo: '/assets/duos/chef-koffi.jpg' },
             { id: 'off-3', seller: 'Fatou Diallo', shares: 8, series: 'Diasporas <> Makers', price: 50, photo: '/assets/duos/fatou-diallo.jpg' },
           ].map((offer) => (
             <div 
