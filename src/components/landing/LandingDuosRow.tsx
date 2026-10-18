@@ -133,7 +133,7 @@ export const LandingDuosRow: React.FC<LandingDuosRowProps> = () => {
           Deux visages. Deux univers. Une même question universelle.
         </h2>
         <p className="mt-3 text-base sm:text-lg text-stone-600 font-normal leading-relaxed">
-          Dans YonyWood, un épisode ne met jamais un témoin isolé en scène : deux personnes que tout semble éloigner 
+          Dans YonyWood, un épisode ne met jamais un témoin isolé en scène : deux personnes que tout semble éloigner
           se répondent en miroir, révélant la richesse et l’universalité de l’expérience vécue.
         </p>
       </div>
@@ -157,7 +157,7 @@ export const LandingDuosRow: React.FC<LandingDuosRowProps> = () => {
 
       {/* Cadre de présentation du Duo en miroir */}
       <div className="bg-stone-50 rounded-3xl border border-stone-200 p-6 sm:p-10 shadow-xs">
-        
+
         {/* Titre de la série et Question centrale */}
         <div className="text-center max-w-2xl mx-auto mb-10">
           <span className="text-xs font-bold uppercase tracking-wider text-[#A2482B]">
@@ -170,7 +170,7 @@ export const LandingDuosRow: React.FC<LandingDuosRowProps> = () => {
 
         {/* Miroir 2 colonnes : Protagoniste A vs Protagoniste B */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 relative">
-          
+
           {/* Séparateur central stylisé &lt; &gt; */}
           <div className="hidden md:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white border border-stone-300 shadow-md items-center justify-center text-stone-700 font-bold text-sm z-10">
             &lt; &gt;

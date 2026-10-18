@@ -57,7 +57,7 @@ import {
 import { useAuth } from '../services/authContext';
 import { AuthModal } from './AuthModal';
 import { ShareIcon } from './ShareIcon';
-import { ProfileSoloIcon } from './YonywoodBrandIcons';
+import { ProfileSoloIcon, TvPlayerIcon } from './YonywoodBrandIcons';
 import { OrdersAndContributionsModal } from './OrdersAndContributionsModal';
 import { transactionService } from '../utils/transactionService';
 import { ProfileLineageFrise } from './ProfileLineageFrise';
@@ -288,7 +288,7 @@ const VideoTopHeader: React.FC<VideoTopHeaderProps> = ({
           {isPlaying ? (
             <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
           ) : (
-            <ProfileSoloIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white rotate-180 transition-transform" strokeWidth={1.6} />
+            <TvPlayerIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white transition-transform" strokeWidth={1.6} />
           )}
         </button>
       )}

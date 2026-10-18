@@ -118,7 +118,7 @@ export const LandingSeriesRow: React.FC<LandingSeriesRowProps> = () => {
           Huit séries, seize univers, une condition humaine partagée.
         </h2>
         <p className="mt-3 text-base sm:text-lg text-stone-600 font-normal leading-relaxed">
-          Chaque série réunit deux univers en miroir pour explorer une interrogation existentielle majeure. 
+          Chaque série réunit deux univers en miroir pour explorer une interrogation existentielle majeure.
           Découvrez les affiches officielles et l’intention cinématographique de chaque œuvre.
         </p>
       </div>
@@ -144,7 +144,7 @@ export const LandingSeriesRow: React.FC<LandingSeriesRowProps> = () => {
                   (e.currentTarget as HTMLImageElement).src = '/assets/posters/Benin%20%3C%20%3E.jpg';
                 }}
               />
-              
+
               {/* Badge numéro discret */}
               <div className="absolute top-2.5 left-2.5 px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md text-white text-[10px] font-bold tracking-wider">
                 0{idx + 1}
@@ -195,11 +195,11 @@ export const LandingSeriesRow: React.FC<LandingSeriesRowProps> = () => {
 
       {/* Modale d'aperçu sobre et informative */}
       {selectedSeries && (
-        <div 
+        <div
           onClick={() => setSelectedSeries(null)}
           className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 sm:p-6"
         >
-          <div 
+          <div
             onClick={(e) => e.stopPropagation()}
             className="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl border border-stone-200 relative animate-in fade-in zoom-in-95 duration-200"
           >

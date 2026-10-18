@@ -1,18 +1,19 @@
 import React, { useState, useRef } from 'react';
-import { 
-  Award, 
-  BookOpen, 
-  ChevronLeft, 
-  ChevronRight, 
-  Play, 
-  Volume2, 
-  VolumeX, 
-  X, 
+import {
+  Award,
+  BookOpen,
+  ChevronLeft,
+  ChevronRight,
+  Play,
+  Pause,
+  Volume2,
+  VolumeX,
+  X,
   Check
 } from 'lucide-react';
 import { DUOS } from '../../data/mockData';
 import { ShareIcon } from '../ShareIcon';
-import { ProfileSoloIcon } from '../YonywoodBrandIcons';
+import { ProfileSoloIcon, TvPlayerIcon } from '../YonywoodBrandIcons';
 
 export const DemoDuocumentairesSection: React.FC = () => {
   const [currentDuoIndex, setCurrentDuoIndex] = useState(0);
@@ -92,13 +93,13 @@ export const DemoDuocumentairesSection: React.FC = () => {
   const firstNameB = pB.firstName || pB.name.split(' ')[0];
 
   return (
-    <div 
+    <div
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
       className="w-full max-w-4xl mx-auto py-4 flex flex-col items-center select-none"
     >
-      
+
       {/* En-tête Duocumentaires : titre à gauche et nom de la série centré */}
       <div className="w-full flex flex-col sm:relative sm:flex-row sm:items-center sm:justify-center mb-4 sm:mb-6 px-3 sm:px-6 gap-2 sm:gap-0 min-h-[40px]">
         <h3 className="font-editorial text-2xl sm:text-3xl font-bold text-stone-900 sm:absolute sm:left-3 md:sm:left-6">
@@ -119,7 +120,7 @@ export const DemoDuocumentairesSection: React.FC = () => {
 
       {/* ZONE CENTRALE : Les deux cartes 9:16 rapprochées en miroir avec flèches latérales */}
       <div className="relative w-full flex items-center justify-center">
-        
+
         {/* Flèche gauche */}
         <button
           onClick={handlePrevDuo}
@@ -131,12 +132,12 @@ export const DemoDuocumentairesSection: React.FC = () => {
 
         {/* Diptyque : deux cartes rapprochées avec espacement réduit */}
         <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3.5 justify-center items-center">
-          
+
           {/* ========================================================================= */}
           {/* CARTE GAUCHE : Protagoniste A (Prénom à gauche & Icône vidéo à droite)    */}
           {/* ========================================================================= */}
           <div className="h-[min(490px,calc(100vh-220px))] aspect-[9/16] w-auto rounded-3xl overflow-hidden bg-stone-950 text-white shadow-xl border border-stone-200 relative flex flex-col justify-between p-3.5 sm:p-4 shrink-0">
-            
+
             {playingSide === 'A' ? (
               <div className="absolute inset-0 z-20 bg-black flex flex-col justify-between p-4">
                 <video
@@ -190,7 +191,7 @@ export const DemoDuocumentairesSection: React.FC = () => {
 
                 {/* LES 4 VRAIES ICÔNES D'ACTION (Award, BookOpen, ProfileSoloIcon, ShareIcon) */}
                 <div className="absolute right-3 sm:right-3.5 top-1/2 -translate-y-1/2 z-10 flex flex-col gap-2.5">
-                  
+
                   {/* 1. Évaluation Résonance (Award) */}
                   <button
                     onClick={() => {
@@ -277,9 +278,9 @@ export const DemoDuocumentairesSection: React.FC = () => {
                     title={playingSide === 'A' ? "Mettre en pause" : `Regarder le témoignage de ${firstNameA}`}
                   >
                     {playingSide === 'A' ? (
-                      <span className="w-3.5 h-3.5 flex items-center justify-center font-bold">||</span>
+                      <Pause className="w-4 h-4 fill-white text-white" />
                     ) : (
-                      <ProfileSoloIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white rotate-180 transition-transform" strokeWidth={1.6} />
+                      <TvPlayerIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white transition-transform" strokeWidth={1.6} />
                     )}
                   </button>
                 </div>
@@ -291,7 +292,7 @@ export const DemoDuocumentairesSection: React.FC = () => {
                       <span className="text-[10px] font-bold uppercase tracking-wider text-[#FFE7A3]">
                         Question de l'épisode
                       </span>
-                      <button 
+                      <button
                         onClick={() => setShowQuestionCard(null)}
                         className="text-stone-400 hover:text-white cursor-pointer"
                       >
@@ -314,7 +315,7 @@ export const DemoDuocumentairesSection: React.FC = () => {
                           Profil de {firstNameA}
                         </span>
                       </div>
-                      <button 
+                      <button
                         onClick={() => setShowProfileCard(null)}
                         className="text-stone-400 hover:text-white cursor-pointer"
                       >
@@ -344,7 +345,7 @@ export const DemoDuocumentairesSection: React.FC = () => {
                           Évaluer la résonance
                         </span>
                       </div>
-                      <button 
+                      <button
                         onClick={() => setResonanceTarget(null)}
                         className="text-stone-400 hover:text-white cursor-pointer"
                       >
@@ -358,7 +359,7 @@ export const DemoDuocumentairesSection: React.FC = () => {
                           <span>Authenticité</span>
                           <span className="font-bold text-[#FFE7A3]">{resonanceScores.A.authenticity}%</span>
                         </div>
-                        <input 
+                        <input
                           type="range"
                           min="0"
                           max="100"
@@ -376,7 +377,7 @@ export const DemoDuocumentairesSection: React.FC = () => {
                           <span>Pertinence</span>
                           <span className="font-bold text-[#FFE7A3]">{resonanceScores.A.relevance}%</span>
                         </div>
-                        <input 
+                        <input
                           type="range"
                           min="0"
                           max="100"
@@ -394,7 +395,7 @@ export const DemoDuocumentairesSection: React.FC = () => {
                           <span>Impact</span>
                           <span className="font-bold text-[#FFE7A3]">{resonanceScores.A.impact}%</span>
                         </div>
-                        <input 
+                        <input
                           type="range"
                           min="0"
                           max="100"
@@ -435,7 +436,7 @@ export const DemoDuocumentairesSection: React.FC = () => {
           {/* CARTE DROITE : Protagoniste B (Prénom à gauche & Icône vidéo à droite)   */}
           {/* ========================================================================= */}
           <div className="h-[min(490px,calc(100vh-220px))] aspect-[9/16] w-auto rounded-3xl overflow-hidden bg-stone-950 text-white shadow-xl border border-stone-200 relative flex flex-col justify-between p-3.5 sm:p-4 shrink-0">
-            
+
             {playingSide === 'B' ? (
               <div className="absolute inset-0 z-20 bg-black flex flex-col justify-between p-4">
                 <video
@@ -489,7 +490,7 @@ export const DemoDuocumentairesSection: React.FC = () => {
 
                 {/* LES 4 VRAIES ICÔNES D'ACTION (Award, BookOpen, ProfileSoloIcon, ShareIcon) */}
                 <div className="absolute right-3 sm:right-3.5 top-1/2 -translate-y-1/2 z-10 flex flex-col gap-2.5">
-                  
+
                   {/* 1. Évaluation Résonance (Award) */}
                   <button
                     onClick={() => {
@@ -576,9 +577,9 @@ export const DemoDuocumentairesSection: React.FC = () => {
                     title={playingSide === 'B' ? "Mettre en pause" : `Regarder le témoignage de ${firstNameB}`}
                   >
                     {playingSide === 'B' ? (
-                      <span className="w-3.5 h-3.5 flex items-center justify-center font-bold">||</span>
+                      <Pause className="w-4 h-4 fill-white text-white" />
                     ) : (
-                      <ProfileSoloIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white rotate-180 transition-transform" strokeWidth={1.6} />
+                      <TvPlayerIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white transition-transform" strokeWidth={1.6} />
                     )}
                   </button>
                 </div>
@@ -590,7 +591,7 @@ export const DemoDuocumentairesSection: React.FC = () => {
                       <span className="text-[10px] font-bold uppercase tracking-wider text-[#FFE7A3]">
                         Question de l'épisode
                       </span>
-                      <button 
+                      <button
                         onClick={() => setShowQuestionCard(null)}
                         className="text-stone-400 hover:text-white cursor-pointer"
                       >
@@ -613,7 +614,7 @@ export const DemoDuocumentairesSection: React.FC = () => {
                           Profil de {firstNameB}
                         </span>
                       </div>
-                      <button 
+                      <button
                         onClick={() => setShowProfileCard(null)}
                         className="text-stone-400 hover:text-white cursor-pointer"
                       >
@@ -643,7 +644,7 @@ export const DemoDuocumentairesSection: React.FC = () => {
                           Évaluer la résonance
                         </span>
                       </div>
-                      <button 
+                      <button
                         onClick={() => setResonanceTarget(null)}
                         className="text-stone-400 hover:text-white cursor-pointer"
                       >
@@ -657,7 +658,7 @@ export const DemoDuocumentairesSection: React.FC = () => {
                           <span>Authenticité</span>
                           <span className="font-bold text-[#FFE7A3]">{resonanceScores.B.authenticity}%</span>
                         </div>
-                        <input 
+                        <input
                           type="range"
                           min="0"
                           max="100"
@@ -675,7 +676,7 @@ export const DemoDuocumentairesSection: React.FC = () => {
                           <span>Pertinence</span>
                           <span className="font-bold text-[#FFE7A3]">{resonanceScores.B.relevance}%</span>
                         </div>
-                        <input 
+                        <input
                           type="range"
                           min="0"
                           max="100"
@@ -693,7 +694,7 @@ export const DemoDuocumentairesSection: React.FC = () => {
                           <span>Impact</span>
                           <span className="font-bold text-[#FFE7A3]">{resonanceScores.B.impact}%</span>
                         </div>
-                        <input 
+                        <input
                           type="range"
                           min="0"
                           max="100"

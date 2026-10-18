@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
-import { 
-  ChevronLeft, 
-  ChevronRight, 
-  Play, 
-  UploadCloud, 
-  Camera, 
-  Info, 
-  X, 
+import {
+  ChevronLeft,
+  ChevronRight,
+  Play,
+  Pause,
+  UploadCloud,
+  Camera,
+  Info,
+  X,
   ArrowLeft,
   Layers,
   Film,
   Sparkles
 } from 'lucide-react';
+import { TvPlayerIcon } from '../YonywoodBrandIcons';
 import { PROPOSE_DOORS } from '../../data/proposeDoorsData';
 import { DOCUMENTARIES } from '../../data/mockData';
 
@@ -59,7 +61,7 @@ export const DemoStudioSection: React.FC = () => {
 
   return (
     <div className="w-full max-w-4xl mx-auto py-4 flex flex-col items-center">
-      
+
       {/* En-tête sobre Studio avec retour si étape > 1 */}
       <div className="w-full flex items-center justify-between mb-4 sm:mb-6 px-3 sm:px-6">
         <div className="flex items-center gap-3">
@@ -86,7 +88,7 @@ export const DemoStudioSection: React.FC = () => {
       {/* ========================================================================= */}
       {step === 1 && (
         <div className="relative w-full max-w-md mx-auto flex items-center justify-center my-2">
-          
+
           <button
             onClick={handlePrevDoor}
             className="absolute -left-3 sm:-left-12 z-20 w-10 h-10 rounded-full bg-white text-stone-800 border border-stone-200 shadow-md flex items-center justify-center hover:bg-stone-100 transition-all cursor-pointer"
@@ -96,7 +98,7 @@ export const DemoStudioSection: React.FC = () => {
           </button>
 
           <div className="h-[min(490px,calc(100vh-220px))] aspect-[9/16] w-auto mx-auto rounded-3xl overflow-hidden bg-stone-950 text-white shadow-xl border border-stone-200 relative flex flex-col justify-between p-3.5 sm:p-4 select-none shrink-0">
-            
+
             <img
               src={currentDoor.posterUrl || '/assets/doors/door-sagesses.jpg'}
               alt={currentDoor.label}
@@ -104,16 +106,32 @@ export const DemoStudioSection: React.FC = () => {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/40 pointer-events-none" />
 
-            {/* Haut : Badge Porte */}
-            <div className="relative z-10">
+            {/* Haut : Badge Porte & Déclencheur lecture */}
+            <div className="relative z-10 flex items-center justify-between pointer-events-auto">
               <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-xs font-bold text-white tracking-wide">
                 {currentDoor.label}
               </span>
+
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsVideoPlaying(!isVideoPlaying);
+                }}
+                className="w-8.5 h-8.5 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
+                title={isVideoPlaying ? "Mettre en pause" : "Lire la vidéo"}
+              >
+                {isVideoPlaying ? (
+                  <Pause className="w-3.5 h-3.5 fill-white text-white" />
+                ) : (
+                  <TvPlayerIcon className="w-5 h-5 text-white transition-transform" strokeWidth={1.6} />
+                )}
+              </button>
             </div>
 
             {/* Centre : Bouton de lecture */}
             <div className="relative z-10 flex items-center justify-center my-auto">
-              <button 
+              <button
                 onClick={() => setIsVideoPlaying(!isVideoPlaying)}
                 className="w-14 h-14 rounded-full bg-black/40 backdrop-blur-md border border-white/30 flex items-center justify-center text-white hover:scale-110 transition-transform cursor-pointer shadow-lg"
               >
@@ -150,7 +168,7 @@ export const DemoStudioSection: React.FC = () => {
                   <span className="text-[10px] font-bold uppercase tracking-wider text-[#FFE7A3]">
                     Avantages : {currentDoor.label}
                   </span>
-                  <button 
+                  <button
                     onClick={() => setShowAdvantagesModal(false)}
                     className="text-stone-400 hover:text-white cursor-pointer"
                   >
@@ -185,7 +203,7 @@ export const DemoStudioSection: React.FC = () => {
       {/* ========================================================================= */}
       {step === 2 && (
         <div className="relative w-full max-w-md mx-auto flex items-center justify-center my-2">
-          
+
           <button
             onClick={handlePrevSeries}
             className="absolute -left-3 sm:-left-12 z-20 w-10 h-10 rounded-full bg-white text-stone-800 border border-stone-200 shadow-md flex items-center justify-center hover:bg-stone-100 transition-all cursor-pointer"
@@ -195,7 +213,7 @@ export const DemoStudioSection: React.FC = () => {
           </button>
 
           <div className="h-[min(490px,calc(100vh-220px))] aspect-[9/16] w-auto mx-auto rounded-3xl overflow-hidden bg-stone-950 text-white shadow-xl border border-stone-200 relative flex flex-col justify-between p-3.5 sm:p-4 select-none shrink-0">
-            
+
             <img
               src={currentSeries.coverImage || currentSeries.posterUrl || '/assets/posters/Benin < >.jpg'}
               alt={currentSeries.title}
@@ -203,16 +221,32 @@ export const DemoStudioSection: React.FC = () => {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/40 pointer-events-none" />
 
-            {/* Haut : Badge Titre de la série */}
-            <div className="relative z-10">
+            {/* Haut : Badge Titre de la série & Déclencheur lecture */}
+            <div className="relative z-10 flex items-center justify-between pointer-events-auto">
               <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-xs font-bold text-white tracking-wide">
                 {currentSeries.title}
               </span>
+
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsVideoPlaying(!isVideoPlaying);
+                }}
+                className="w-8.5 h-8.5 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
+                title={isVideoPlaying ? "Mettre en pause" : "Lire la vidéo"}
+              >
+                {isVideoPlaying ? (
+                  <Pause className="w-3.5 h-3.5 fill-white text-white" />
+                ) : (
+                  <TvPlayerIcon className="w-5 h-5 text-white transition-transform" strokeWidth={1.6} />
+                )}
+              </button>
             </div>
 
             {/* Centre : Bouton de lecture */}
             <div className="relative z-10 flex items-center justify-center my-auto">
-              <button 
+              <button
                 onClick={() => setIsVideoPlaying(!isVideoPlaying)}
                 className="w-14 h-14 rounded-full bg-black/40 backdrop-blur-md border border-white/30 flex items-center justify-center text-white hover:scale-110 transition-transform cursor-pointer shadow-lg"
               >
@@ -264,7 +298,7 @@ export const DemoStudioSection: React.FC = () => {
       {/* ========================================================================= */}
       {step === 3 && (
         <div className="w-full max-w-3xl mx-auto my-2">
-          
+
           <div className="text-center mb-6">
             <span className="text-xs font-bold uppercase tracking-wider text-[#A2482B]">
               Série sélectionnée : {currentSeries.title}
@@ -275,7 +309,7 @@ export const DemoStudioSection: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            
+
             {/* Option A : J'ai ma vidéo */}
             <div className="bg-stone-50 rounded-3xl p-6 border border-stone-200 flex flex-col justify-between">
               <div>
@@ -345,11 +379,11 @@ export const DemoStudioSection: React.FC = () => {
 
       {/* Modale d'explication "Détails" */}
       {detailModalMode && (
-        <div 
+        <div
           onClick={() => setDetailModalMode(null)}
           className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4"
         >
-          <div 
+          <div
             onClick={(e) => e.stopPropagation()}
             className="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-stone-200"
           >
@@ -357,7 +391,7 @@ export const DemoStudioSection: React.FC = () => {
               <span className="text-xs font-bold uppercase tracking-wider text-[#A2482B]">
                 Comprendre le Studio YonyWood
               </span>
-              <button 
+              <button
                 onClick={() => setDetailModalMode(null)}
                 className="p-1 rounded-full text-stone-400 hover:text-stone-700 cursor-pointer"
               >

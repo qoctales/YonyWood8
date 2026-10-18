@@ -20,7 +20,7 @@ import {
 import { ViewScreen } from '../types';
 import { DOCUMENTARIES } from '../data/mockData';
 import { useAuth } from '../services/authContext';
-import { ProfileSoloIcon } from './YonywoodBrandIcons';
+import { ProfileSoloIcon, TvPlayerIcon } from './YonywoodBrandIcons';
 
 interface SettingsScreenProps {
   onNavigate: (screen: ViewScreen) => void;
@@ -383,7 +383,7 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = ({
                     {isPlaying ? (
                       <Pause className="w-3.5 h-3.5 fill-white text-white" />
                     ) : (
-                      <ProfileSoloIcon className="w-5 h-5 text-white rotate-180 transition-transform" strokeWidth={1.6} />
+                      <TvPlayerIcon className="w-5 h-5 text-white transition-transform" strokeWidth={1.6} />
                     )}
                   </button>
                 </div>

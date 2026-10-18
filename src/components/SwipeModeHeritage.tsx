@@ -15,7 +15,7 @@ import {
 import { Dimension, SousCategorie } from '../data/dimensionsData';
 import { AffiliationPerson, ViewScreen } from '../types';
 import { DimensionIcon } from './DimensionIcon';
-import { ProfileSoloIcon } from './YonywoodBrandIcons';
+import { ProfileSoloIcon, TvPlayerIcon } from './YonywoodBrandIcons';
 import { ShareIcon } from './ShareIcon';
 import { VideoReportModal } from './VideoReportModal';
 import { celestialAudio } from '../utils/celestialAudio';
@@ -279,21 +279,37 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
               {/* Voile cinématographique clair (modèle Studio / Coproduction) */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/35 pointer-events-none" />
 
-              {/* HAUT : Titre seul de la porte dans une pilule sobre (exactement comme la page Studio) */}
-              <div className="relative z-20 flex items-center justify-between">
+              {/* HAUT : Titre seul de la porte dans une pilule sobre + Déclencheur vidéo en haut à droite */}
+              <div className="relative z-20 flex items-center justify-between pointer-events-auto">
                 <div className="px-3.5 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-[11px] sm:text-xs font-semibold text-white shadow-sm tracking-wide">
                   <span>{currentSwipeDoor.label}</span>
                 </div>
 
-                {isPlayingStep1 && (
+                <div className="flex items-center gap-1.5">
+                  {isPlayingStep1 && (
+                    <button
+                      onClick={toggleMute}
+                      className="p-1.5 rounded-full bg-black/60 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/15 hover:border-[#A2482B] transition-colors cursor-pointer"
+                      title={isMuted ? 'Activer le son' : 'Couper le son'}
+                    >
+                      {isMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
+                    </button>
+                  )}
                   <button
-                    onClick={toggleMute}
-                    className="p-1.5 rounded-full bg-black/60 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/15 hover:border-[#A2482B] transition-colors cursor-pointer"
-                    title={isMuted ? 'Activer le son' : 'Couper le son'}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      togglePlay1();
+                    }}
+                    className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
+                    title={isPlayingStep1 ? 'Mettre en pause' : 'Lire la vidéo'}
                   >
-                    {isMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
+                    {isPlayingStep1 ? (
+                      <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
+                    ) : (
+                      <TvPlayerIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white transition-transform" strokeWidth={1.6} />
+                    )}
                   </button>
-                )}
+                </div>
               </div>
 
               {/* CENTRE : BOUTON PLAY/PAUSE */}
@@ -409,15 +425,31 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
                   <span className="truncate">{effectiveSubcategory.label}</span>
                 </div>
 
-                {isPlayingStep2 && (
+                <div className="flex items-center gap-1.5">
+                  {isPlayingStep2 && (
+                    <button
+                      onClick={toggleMute}
+                      className="p-1.5 rounded-full bg-black/60 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/15 hover:border-[#A2482B] transition-colors cursor-pointer shrink-0"
+                      title={isMuted ? 'Activer le son' : 'Couper le son'}
+                    >
+                      {isMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
+                    </button>
+                  )}
                   <button
-                    onClick={toggleMute}
-                    className="p-1.5 rounded-full bg-black/60 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/15 hover:border-[#A2482B] transition-colors cursor-pointer shrink-0"
-                    title={isMuted ? 'Activer le son' : 'Couper le son'}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      togglePlay2();
+                    }}
+                    className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
+                    title={isPlayingStep2 ? 'Mettre en pause' : 'Lire la vidéo'}
                   >
-                    {isMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
+                    {isPlayingStep2 ? (
+                      <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
+                    ) : (
+                      <TvPlayerIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white transition-transform" strokeWidth={1.6} />
+                    )}
                   </button>
-                )}
+                </div>
               </div>
 
               {/* CENTRE : BOUTON PLAY/PAUSE */}
@@ -565,7 +597,7 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
                   {isPlayingStep3 ? (
                     <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
                   ) : (
-                    <ProfileSoloIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white rotate-180 transition-transform" strokeWidth={1.6} />
+                    <TvPlayerIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white transition-transform" strokeWidth={1.6} />
                   )}
                 </button>
               </div>

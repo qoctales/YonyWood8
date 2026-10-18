@@ -100,21 +100,21 @@ export const LandingWheelPreview: React.FC = () => {
           Une roue vivante pour explorer les mémoires humaines.
         </h2>
         <p className="mt-3 text-base sm:text-lg text-stone-600 font-normal leading-relaxed">
-          Plutôt qu’un moteur de recherche froid, YonyWood est cartographié par sept portes interconnectées. 
+          Plutôt qu’un moteur de recherche froid, YonyWood est cartographié par sept portes interconnectées.
           En sélectionnant une porte, vous découvrez comment récits, métiers et territoires se répondent.
         </p>
       </div>
 
       {/* Disposition principale : Roue interactive à gauche, Fiche détaillée à droite */}
       <div className="bg-white rounded-3xl border border-stone-200 p-6 sm:p-10 shadow-xs flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
-        
+
         {/* Roue visuelle minimaliste SVG */}
         <div className="relative w-72 h-72 sm:w-88 sm:h-88 shrink-0 flex items-center justify-center">
-          
+
           {/* Cercle d'orbite extérieur */}
           <div className="absolute inset-0 rounded-full border border-stone-200 border-dashed animate-spin-slow" style={{ animationDuration: '60s' }} />
           <div className="absolute inset-4 rounded-full border border-stone-100" />
-          
+
           {/* Cadran central */}
           <div className="relative z-10 w-28 h-28 sm:w-32 sm:h-32 rounded-full bg-stone-900 text-white flex flex-col items-center justify-center text-center p-3 shadow-xl border-4 border-white">
             <Compass className="w-6 h-6 text-[#FFE7A3] mb-1" />

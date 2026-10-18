@@ -23,7 +23,7 @@ import { apiService } from '../services/api';
 import { ViewScreen, Duo, Protagonist } from '../types';
 import { ProtagonistTeaserModal } from './ProtagonistTeaserModal';
 import { ReportModal } from './ReportModal';
-import { ProfileSoloIcon } from './YonywoodBrandIcons';
+import { ProfileSoloIcon, TvPlayerIcon } from './YonywoodBrandIcons';
 import { ShareIcon } from './ShareIcon';
 import { ResonanceModal } from './ResonanceModal';
 
@@ -509,7 +509,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                           {isPlayingA ? (
                             <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
                           ) : (
-                            <ProfileSoloIcon className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-white rotate-180 transition-transform" strokeWidth={1.6} />
+                            <TvPlayerIcon className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-white transition-transform" strokeWidth={1.6} />
                           )}
                         </button>
                       </div>
@@ -676,7 +676,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                           {isPlayingB ? (
                             <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
                           ) : (
-                            <ProfileSoloIcon className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-white rotate-180 transition-transform" strokeWidth={1.6} />
+                            <TvPlayerIcon className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-white transition-transform" strokeWidth={1.6} />
                           )}
                         </button>
                       </div>
@@ -851,7 +851,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                             {isPlayingA ? (
                               <Pause className="w-4 h-4 sm:w-4.5 sm:h-4.5 fill-white text-white" />
                             ) : (
-                              <ProfileSoloIcon className="w-5 h-5 sm:w-6 sm:h-6 text-white rotate-180 transition-transform" strokeWidth={1.6} />
+                              <TvPlayerIcon className="w-5 h-5 sm:w-6 sm:h-6 text-white transition-transform" strokeWidth={1.6} />
                             )}
                           </button>
 
@@ -1031,7 +1031,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                             {isPlayingB ? (
                               <Pause className="w-4 h-4 sm:w-4.5 sm:h-4.5 fill-white text-white" />
                             ) : (
-                              <ProfileSoloIcon className="w-5 h-5 sm:w-6 sm:h-6 text-white rotate-180 transition-transform" strokeWidth={1.6} />
+                              <TvPlayerIcon className="w-5 h-5 sm:w-6 sm:h-6 text-white transition-transform" strokeWidth={1.6} />
                             )}
                           </button>
 

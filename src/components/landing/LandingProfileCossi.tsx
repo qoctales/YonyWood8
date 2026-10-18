@@ -20,7 +20,7 @@ export const LandingProfileCossi: React.FC = () => {
           Un profil vivant, solidaire et transmissible.
         </h2>
         <p className="mt-3 text-base sm:text-lg text-stone-600 font-normal leading-relaxed">
-          Sur YonyWood, le profil d'un créateur n’est pas un simple CV. C’est un espace d'impact où il propose ses savoirs, 
+          Sur YonyWood, le profil d'un créateur n’est pas un simple CV. C’est un espace d'impact où il propose ses savoirs,
           finance des projets concrets et parraine de nouveaux artisans pour faire grandir la lignée de son héritage.
         </p>
       </div>
@@ -53,7 +53,7 @@ export const LandingProfileCossi: React.FC = () => {
       {/* CONTENU 1 : VUE DU PROFIL DE PASCAL COSSI */}
       {activeTab === 'profil' && (
         <div className="bg-stone-50 rounded-3xl border border-stone-200 p-6 sm:p-10 shadow-xs">
-          
+
           {/* Carte d'identité de Pascal */}
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-8 border-b border-stone-200">
             <div className="flex items-center gap-5">
@@ -92,7 +92,7 @@ export const LandingProfileCossi: React.FC = () => {
 
           {/* Les 3 piliers concrets du profil de Pascal */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8">
-            
+
             {/* 1. L'Association Voir Autrement */}
             <div className="bg-white rounded-2xl p-5 border border-stone-200/80 shadow-xs flex flex-col justify-between">
               <div>
@@ -166,7 +166,7 @@ export const LandingProfileCossi: React.FC = () => {
       {/* CONTENU 2 : LA LIGNÉE VIVANTE (PARRAINAGE CÉCILE & NORBERT) */}
       {activeTab === 'lineage' && (
         <div className="bg-stone-50 rounded-3xl border border-stone-200 p-6 sm:p-10 shadow-xs">
-          
+
           <div className="max-w-2xl mb-8">
             <span className="text-xs font-bold uppercase tracking-wider text-[#A2482B]">
               Transmission Générationnelle
@@ -175,14 +175,14 @@ export const LandingProfileCossi: React.FC = () => {
               Comment Pascal transmet et fait entrer de nouveaux talents
             </h3>
             <p className="text-xs sm:text-sm text-stone-600 mt-2 leading-relaxed">
-              Sur YonyWood, une effigie ne reste pas isolée : elle possède le droit d'accueillir et de parrainer ses pairs. 
+              Sur YonyWood, une effigie ne reste pas isolée : elle possède le droit d'accueillir et de parrainer ses pairs.
               Pascal intègre Cécile, qui à son tour introduit Norbert.
             </p>
           </div>
 
           {/* Arbre de lignée 3 niveaux */}
           <div className="space-y-6">
-            
+
             {/* Niveau 1 : Pascal Cossi */}
             <div className="bg-white rounded-2xl p-5 border border-stone-200 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="flex items-center gap-4">

@@ -465,6 +465,41 @@ export const ProfileSoloIcon: React.FC<IconProps> = ({
 };
 
 /**
+ * TvPlayerIcon:
+ * Symbole officiel « Petite Télé / Lecteur Vidéo » en haut à droite des cartes vidéo.
+ * Boîtier rétro compact avec ses deux antennes élégantes pointées vers le haut
+ * et ses deux points de mire expressifs.
+ */
+export const TvPlayerIcon: React.FC<IconProps> = ({ 
+  className = 'w-5 h-5',
+  strokeWidth = 1.6 
+}) => {
+  return (
+    <svg 
+      viewBox="0 0 24 24" 
+      fill="none" 
+      stroke="currentColor" 
+      strokeWidth={strokeWidth} 
+      strokeLinecap="round" 
+      strokeLinejoin="round" 
+      className={className}
+      aria-hidden="true"
+    >
+      {/* Boîtier écran télévision compact */}
+      <rect x="6.25" y="8" width="11.5" height="10.5" rx="2.4" />
+
+      {/* Regard / points de mire de l'écran */}
+      <circle cx="10.3" cy="13.25" r="0.9" fill="currentColor" stroke="none" />
+      <circle cx="13.7" cy="13.25" r="0.9" fill="currentColor" stroke="none" />
+
+      {/* Deux antennes rétro orientées vers le haut et l'extérieur */}
+      <path d="M 9.2 8 L 7.4 4.2" />
+      <path d="M 14.8 8 L 16.6 4.2" />
+    </svg>
+  );
+};
+
+/**
  * YonywoodDefinitiveLogo:
  * Logo officiel et définitif de YonyWood dessiné à la main avec les deux 'o' formant
  * le double écran TV vintage et les tiges élancées de Y, W et d.

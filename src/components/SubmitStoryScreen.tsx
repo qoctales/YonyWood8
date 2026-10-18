@@ -38,6 +38,7 @@ import { DimensionIcon } from './DimensionIcon';
 import { useAuth } from '../services/authContext';
 import { submitVideoToForest, fetchUserSubmittedVideos } from '../services/firestoreService';
 import { CreatorVideoHistory } from './CreatorVideoHistory';
+import { TvPlayerIcon } from './YonywoodBrandIcons';
 
 // Illustrations d'accroche 9:16 créées par IA pour les deux choix en face-à-face
 import uploadVideoGuideImg from '../assets/images/upload_video_guide_1791825848813.jpg';
@@ -1464,25 +1465,42 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-black/35 pointer-events-none" />
 
-                    {/* HAUT : Badge & Contrôle Son */}
-                    <div className="relative z-10 flex items-center justify-between">
+                    {/* HAUT : Badge & Déclencheur lecture */}
+                    <div className="relative z-10 flex items-center justify-between pointer-events-auto">
                       <div className="flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-[10px] sm:text-xs font-bold text-white shadow-sm">
                         <UploadCloud className="w-3 sm:w-3.5 h-3 sm:h-3.5 text-[#C89B3C]" />
                         <span className="truncate">J'ai ma vidéo</span>
                       </div>
 
-                      {isChoiceAVideoPlaying && (
+                      <div className="flex items-center gap-1.5">
+                        {isChoiceAVideoPlaying && (
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setIsChoiceAMuted(!isChoiceAMuted);
+                            }}
+                            className="p-1.5 sm:p-2 rounded-full bg-black/60 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/15 transition-colors cursor-pointer"
+                            title={isChoiceAMuted ? 'Activer le son' : 'Couper le son'}
+                          >
+                            {isChoiceAMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
+                          </button>
+                        )}
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
-                            setIsChoiceAMuted(!isChoiceAMuted);
+                            setIsChoiceBVideoPlaying(false);
+                            setIsChoiceAVideoPlaying(!isChoiceAVideoPlaying);
                           }}
-                          className="p-1.5 sm:p-2 rounded-full bg-black/60 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/15 transition-colors cursor-pointer"
-                          title={isChoiceAMuted ? 'Activer le son' : 'Couper le son'}
+                          className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
+                          title={isChoiceAVideoPlaying ? 'Mettre en pause' : 'Lire la vidéo'}
                         >
-                          {isChoiceAMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
+                          {isChoiceAVideoPlaying ? (
+                            <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
+                          ) : (
+                            <TvPlayerIcon className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-white transition-transform" strokeWidth={1.6} />
+                          )}
                         </button>
-                      )}
+                      </div>
                     </div>
 
                     {/* CENTRE : BOUTON PLAY/PAUSE */}
@@ -1636,25 +1654,42 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-black/35 pointer-events-none" />
 
-                    {/* HAUT : Badge & Contrôle Son */}
-                    <div className="relative z-10 flex items-center justify-between">
+                    {/* HAUT : Badge & Déclencheur lecture */}
+                    <div className="relative z-10 flex items-center justify-between pointer-events-auto">
                       <div className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-[10px] sm:text-xs font-bold text-white shadow-sm">
                         <Camera className="w-3 sm:w-3.5 h-3 sm:h-3.5 text-[#C89B3C]" />
                         <span className="truncate">Recruter un vidéaste</span>
                       </div>
 
-                      {isChoiceBVideoPlaying && (
+                      <div className="flex items-center gap-1.5">
+                        {isChoiceBVideoPlaying && (
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setIsChoiceBMuted(!isChoiceBMuted);
+                            }}
+                            className="p-1.5 sm:p-2 rounded-full bg-black/60 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/15 transition-colors cursor-pointer"
+                            title={isChoiceBMuted ? 'Activer le son' : 'Couper le son'}
+                          >
+                            {isChoiceBMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
+                          </button>
+                        )}
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
-                            setIsChoiceBMuted(!isChoiceBMuted);
+                            setIsChoiceAVideoPlaying(false);
+                            setIsChoiceBVideoPlaying(!isChoiceBVideoPlaying);
                           }}
-                          className="p-1.5 sm:p-2 rounded-full bg-black/60 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/15 transition-colors cursor-pointer"
-                          title={isChoiceBMuted ? 'Activer le son' : 'Couper le son'}
+                          className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
+                          title={isChoiceBVideoPlaying ? 'Mettre en pause' : 'Lire la vidéo'}
                         >
-                          {isChoiceBMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
+                          {isChoiceBVideoPlaying ? (
+                            <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
+                          ) : (
+                            <TvPlayerIcon className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-white transition-transform" strokeWidth={1.6} />
+                          )}
                         </button>
-                      )}
+                      </div>
                     </div>
 
                     {/* CENTRE : BOUTON PLAY/PAUSE */}
@@ -1869,22 +1904,40 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                           </button>
                         </div>
 
-                        {/* HAUT : Titre épuré "Video Maker" & Commande Son */}
+                        {/* HAUT : Titre épuré "Video Maker" & Déclencheur lecture */}
                         <div className="relative z-20 flex items-center justify-between pointer-events-auto">
                           <span className="font-editorial text-sm sm:text-base font-bold text-white tracking-wide drop-shadow-md">
                             Video Maker
                           </span>
 
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setIsVideographerMuted(!isVideographerMuted);
-                            }}
-                            className="w-9 h-9 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center cursor-pointer transition-all shadow-md hover:scale-105 active:scale-95"
-                            title={isVideographerMuted ? 'Activer le son' : 'Couper le son'}
-                          >
-                            {isVideographerMuted ? <VolumeX className="w-4 h-4 text-white" /> : <Volume2 className="w-4 h-4 text-white" />}
-                          </button>
+                          <div className="flex items-center gap-1.5">
+                            {isVideographerVideoPlaying && (
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setIsVideographerMuted(!isVideographerMuted);
+                                }}
+                                className="w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center cursor-pointer transition-all shadow-md hover:scale-105 active:scale-95"
+                                title={isVideographerMuted ? 'Activer le son' : 'Couper le son'}
+                              >
+                                {isVideographerMuted ? <VolumeX className="w-4 h-4 text-white" /> : <Volume2 className="w-4 h-4 text-white" />}
+                              </button>
+                            )}
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setIsVideographerVideoPlaying(!isVideographerVideoPlaying);
+                              }}
+                              className="w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
+                              title={isVideographerVideoPlaying ? 'Mettre en pause' : 'Lire la vidéo'}
+                            >
+                              {isVideographerVideoPlaying ? (
+                                <Pause className="w-4 h-4 fill-white text-white" />
+                              ) : (
+                                <TvPlayerIcon className="w-5 h-5 text-white transition-transform" strokeWidth={1.6} />
+                              )}
+                            </button>
+                          </div>
                         </div>
 
                         {/* BAS : Prénom en bas (exactement comme les vidéos d'Héritage) & Colonne des 3 boutons */}

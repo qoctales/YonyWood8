@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 import { ShareIcon } from './ShareIcon';
 import { ResonanceModal } from './ResonanceModal';
-import { ProfileSoloIcon } from './YonywoodBrandIcons';
+import { ProfileSoloIcon, TvPlayerIcon } from './YonywoodBrandIcons';
 import { ViewScreen } from '../types';
 
 export interface CompanyStakeholder {
@@ -294,7 +294,7 @@ interface CompanyHeritageScreenProps {
   onNavigate?: (screen: ViewScreen) => void;
 }
 
-export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = () => {
+export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ onNavigate }) => {
   // Navigation Niveau 1 (Entreprises globales)
   const [currentIdx, setCurrentIdx] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -498,7 +498,7 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = () =>
                 {isPlaying ? (
                   <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
                 ) : (
-                  <ProfileSoloIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white rotate-180 transition-transform" strokeWidth={1.6} />
+                  <TvPlayerIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white transition-transform" strokeWidth={1.6} />
                 )}
               </button>
 
@@ -636,13 +636,13 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = () =>
                 {isStakeholderPlaying ? (
                   <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
                 ) : (
-                  <ProfileSoloIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white rotate-180 transition-transform" strokeWidth={1.6} />
+                  <TvPlayerIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white transition-transform" strokeWidth={1.6} />
                 )}
               </button>
 
               {/* =========================================================== */}
               {/* FLANC DROIT : MÊME CONFIGURATION QUE PROTAGONISTES HÉRITAGE */}
-              {/* 1. Résonance, 2. Question, 3. Partager                     */}
+              {/* 1. Résonance, 2. Question, 3. Profil, 4. Partager           */}
               {/* =========================================================== */}
               <div 
                 onClick={(e) => e.stopPropagation()}
@@ -672,7 +672,17 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = () =>
                   <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                 </button>
 
-                {/* 3. Bouton Partager */}
+                {/* 3. Découvrir son profil complet */}
+                <button
+                  id={`stakeholder-btn-profile-${currentStakeholder.id}`}
+                  onClick={() => onNavigate && onNavigate({ type: 'profile' })}
+                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
+                  title={`Découvrir le profil de ${currentStakeholder.name}`}
+                >
+                  <ProfileSoloIcon className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-white" />
+                </button>
+
+                {/* 4. Bouton Partager */}
                 <button
                   onClick={handleShare}
                   className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl border flex items-center justify-center transition-all cursor-pointer shadow-md hover:scale-105 active:scale-95 ${

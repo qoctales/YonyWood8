@@ -1,14 +1,16 @@
 import React, { useState, useRef } from 'react';
-import { 
-  ChevronLeft, 
-  ChevronRight, 
-  Play, 
-  Volume2, 
-  VolumeX, 
+import {
+  ChevronLeft,
+  ChevronRight,
+  Play,
+  Pause,
+  Volume2,
+  VolumeX,
   X,
   Sparkles,
   Film
 } from 'lucide-react';
+import { TvPlayerIcon } from '../YonywoodBrandIcons';
 
 interface CompanyCard {
   id: string;
@@ -106,13 +108,13 @@ export const DemoEntrepriseSection: React.FC = () => {
   };
 
   return (
-    <div 
+    <div
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
       className="w-full max-w-4xl mx-auto py-4 flex flex-col items-center select-none"
     >
-      
+
       {/* En-tête Entreprises : titre exactement au même endroit que Studio */}
       <div className="w-full flex items-center justify-between mb-4 sm:mb-6 px-3 sm:px-6">
         <h3 className="font-editorial text-3xl font-bold text-stone-900">
@@ -122,7 +124,7 @@ export const DemoEntrepriseSection: React.FC = () => {
 
       {/* CARTE 9:16 INTERACTIVE AVEC FLÈCHES LATÉRALES */}
       <div className="relative w-full max-w-md mx-auto flex items-center justify-center my-2">
-        
+
         {/* Flèche gauche */}
         <button
           onClick={handlePrev}
@@ -134,7 +136,7 @@ export const DemoEntrepriseSection: React.FC = () => {
 
         {/* Carte 9:16 : hauteur bornée pour rester au-dessus de la nav bar */}
         <div className="h-[min(490px,calc(100vh-220px))] aspect-[9/16] w-auto mx-auto rounded-3xl overflow-hidden bg-stone-950 text-white shadow-xl border border-stone-200 relative flex flex-col justify-between p-3.5 sm:p-4 shrink-0">
-          
+
           {isPlaying && currentCard.videoUrl ? (
             <div className="absolute inset-0 z-20 bg-black flex flex-col justify-between p-4">
               <video
@@ -180,11 +182,28 @@ export const DemoEntrepriseSection: React.FC = () => {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/40 pointer-events-none" />
 
-              {/* Haut : Uniquement le nom de l'entreprise "Africafun" */}
-              <div className="relative z-10 flex justify-between items-center">
+              {/* Haut : Nom de l'entreprise "Africafun" & Déclencheur lecture */}
+              <div className="relative z-10 flex justify-between items-center pointer-events-auto">
                 <span className="px-3.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-xs font-bold text-white tracking-wider">
                   {currentCard.companyName}
                 </span>
+
+                {currentCard.type === 'member' && (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsPlaying(!isPlaying);
+                    }}
+                    className="w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
+                    title={isPlaying ? "Mettre en pause" : `Regarder la vidéo de ${currentCard.firstName}`}
+                  >
+                    {isPlaying ? (
+                      <Pause className="w-3.5 h-3.5 fill-white text-white" />
+                    ) : (
+                      <TvPlayerIcon className="w-5 h-5 text-white transition-transform" strokeWidth={1.6} />
+                    )}
+                  </button>
+                )}
               </div>
 
               {/* Centre : Play pour les vidéos des collaborateurs, ou icône élégante pour la carte intro */}

@@ -27,6 +27,7 @@ import {
   updateSubmittedVideoTitle, 
   deleteSubmittedVideo 
 } from '../services/firestoreService';
+import { TvPlayerIcon } from './YonywoodBrandIcons';
 
 interface CreatorVideoHistoryProps {
   onBackToDeposit: () => void;
@@ -321,9 +322,9 @@ export const CreatorVideoHistory: React.FC<CreatorVideoHistoryProps> = ({ onBack
                       title={isPlaying ? "Mettre en pause" : "Regarder l'extrait"}
                     >
                       {isPlaying ? (
-                        <Pause className="w-5 h-5 fill-white" />
+                        <Pause className="w-5 h-5 fill-white text-white" />
                       ) : (
-                        <Play className="w-5 h-5 fill-white ml-0.5 opacity-90" />
+                        <TvPlayerIcon className="w-5 h-5 text-white" strokeWidth={1.6} />
                       )}
                     </button>
                   </div>

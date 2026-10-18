@@ -23,6 +23,7 @@ import {
 import { DOCUMENTARIES, getCustomDocumentaries } from '../data/mockData';
 import { ViewScreen, Documentary, SeriesProducerUser } from '../types';
 import { CooptationModal } from './CooptationModal';
+import { TvPlayerIcon } from './YonywoodBrandIcons';
 
 interface DocumentaryDetailScreenProps {
   documentaryId: string;
@@ -623,22 +624,20 @@ export const DocumentaryDetailScreen: React.FC<DocumentaryDetailScreenProps> = (
                     </div>
                   )}
 
-                  {/* Bouton pour lancer la mini-vidéo 9/16 de la question */}
+                  {/* Bouton pour lancer la mini-vidéo 9/16 de la question en haut à droite */}
                   {q.videoUrl && (
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <button
-                        type="button"
-                        onClick={() => setPlayingVideoIndex(isPlaying ? null : idx)}
-                        className="w-12 h-12 rounded-full bg-[#A2482B]/90 hover:bg-[#A2482B] text-white flex items-center justify-center shadow-lg transition-transform hover:scale-110 active:scale-95 cursor-pointer border border-white/30"
-                        title={isPlaying ? "Arrêter la vidéo" : "Lancer la mini-vidéo de la question"}
-                      >
-                        {isPlaying ? (
-                          <Pause className="w-5 h-5 fill-white" />
-                        ) : (
-                          <Play className="w-5 h-5 fill-white ml-0.5" />
-                        )}
-                      </button>
-                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setPlayingVideoIndex(isPlaying ? null : idx)}
+                      className="absolute top-3 right-3 z-30 w-8.5 h-8.5 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] text-white flex items-center justify-center shadow-lg transition-transform hover:scale-105 active:scale-95 cursor-pointer border border-white/20 backdrop-blur-md"
+                      title={isPlaying ? "Mettre en pause" : "Lancer la mini-vidéo de la question"}
+                    >
+                      {isPlaying ? (
+                        <Pause className="w-3.5 h-3.5 fill-white text-white" />
+                      ) : (
+                        <TvPlayerIcon className="w-4.5 h-4.5 text-white" strokeWidth={1.6} />
+                      )}
+                    </button>
                   )}
 
                   {/* Bouton de contrôle du son */}

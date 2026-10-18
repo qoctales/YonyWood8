@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { 
-  ChevronLeft, 
-  ChevronRight, 
-  Play, 
-  Coins, 
-  TrendingUp, 
-  RefreshCw, 
-  X, 
+import {
+  ChevronLeft,
+  ChevronRight,
+  Play,
+  Coins,
+  TrendingUp,
+  RefreshCw,
+  X,
   CheckCircle2
 } from 'lucide-react';
+import { TvPlayerIcon } from '../YonywoodBrandIcons';
 
 interface ProductionItem {
   id: string;
@@ -131,7 +132,7 @@ export const DemoProductionsSection: React.FC = () => {
 
   return (
     <div className="w-full max-w-4xl mx-auto py-4 flex flex-col items-center select-none">
-      
+
       {/* En-tête Productions avec onglets [À l'affiche, Marché] (identique Capture 4) */}
       <div className="w-full flex items-center justify-between mb-6 px-3 sm:px-6">
         <h3 className="font-editorial text-3xl font-bold text-stone-900">
@@ -165,7 +166,7 @@ export const DemoProductionsSection: React.FC = () => {
       {/* VUE 1 : À L'AFFICHE (Coproduction officielle) */}
       {tab === 'a_l_affiche' && (
         <div className="relative w-full max-w-md mx-auto flex items-center justify-center my-2">
-          
+
           <button
             onClick={handlePrev}
             className="absolute -left-3 sm:-left-12 z-20 w-10 h-10 rounded-full bg-white text-stone-800 border border-stone-200 shadow-md flex items-center justify-center hover:bg-stone-100 transition-all cursor-pointer"
@@ -176,7 +177,7 @@ export const DemoProductionsSection: React.FC = () => {
 
           {/* Carte 9:16 avec jauge de coproduction bornée au-dessus de la nav bar */}
           <div className="h-[min(490px,calc(100vh-220px))] aspect-[9/16] w-auto mx-auto rounded-3xl overflow-hidden bg-stone-950 text-white shadow-xl border border-stone-200 relative flex flex-col justify-between p-3.5 sm:p-4 shrink-0">
-            
+
             <img
               src={currentProd.posterImage}
               alt={currentProd.title}
@@ -184,11 +185,19 @@ export const DemoProductionsSection: React.FC = () => {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-black/40 pointer-events-none" />
 
-            {/* Haut : Badge Titre */}
-            <div className="relative z-10">
+            {/* Haut : Badge Titre & Déclencheur lecture */}
+            <div className="relative z-10 flex items-center justify-between pointer-events-auto">
               <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-xs font-bold text-white tracking-wide">
                 {currentProd.title}
               </span>
+
+              <button
+                type="button"
+                className="w-8.5 h-8.5 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
+                title={`Regarder le teaser de ${currentProd.title}`}
+              >
+                <TvPlayerIcon className="w-5 h-5 text-white transition-transform" strokeWidth={1.6} />
+              </button>
             </div>
 
             {/* Centre : Play */}
@@ -200,7 +209,7 @@ export const DemoProductionsSection: React.FC = () => {
 
             {/* Bas : Bloc de coproduction semi-transparent (identique Capture 4) */}
             <div className="relative z-10 bg-black/65 backdrop-blur-md rounded-2xl p-3.5 border border-white/15 space-y-2.5">
-              
+
               <div className="flex justify-between items-baseline text-xs">
                 <div>
                   <span className="font-bold text-sm text-white">{currentProd.sharePrice} €</span>
@@ -213,8 +222,8 @@ export const DemoProductionsSection: React.FC = () => {
 
               {/* Jauge dorée */}
               <div className="w-full h-2 rounded-full bg-white/20 overflow-hidden">
-                <div 
-                  className="h-full bg-gradient-to-r from-[#D4AF37] to-[#FFE7A3] rounded-full transition-all duration-500" 
+                <div
+                  className="h-full bg-gradient-to-r from-[#D4AF37] to-[#FFE7A3] rounded-full transition-all duration-500"
                   style={{ width: `${percentSubscribed}%` }}
                 />
               </div>
@@ -260,13 +269,13 @@ export const DemoProductionsSection: React.FC = () => {
             { id: 'off-2', seller: 'Koffi', shares: 5, series: 'Fiat Luxe <> Sweet Street', price: 52, photo: '/assets/duos/chef-koffi.jpg' },
             { id: 'off-3', seller: 'Fatou Diallo', shares: 8, series: 'Diasporas <> Makers', price: 50, photo: '/assets/duos/fatou-diallo.jpg' },
           ].map((offer) => (
-            <div 
+            <div
               key={offer.id}
               className="bg-white rounded-2xl p-4 border border-stone-200 shadow-xs flex items-center justify-between gap-3 hover:border-stone-400 transition-all"
             >
               <div className="flex items-center gap-3">
-                <img 
-                  src={offer.photo} 
+                <img
+                  src={offer.photo}
                   alt={offer.seller}
                   className="w-12 h-12 rounded-xl object-cover border border-stone-200"
                 />
@@ -293,11 +302,11 @@ export const DemoProductionsSection: React.FC = () => {
 
       {/* Modale d'explication démo pour l'acquisition de parts */}
       {showDemoModal && (
-        <div 
+        <div
           onClick={() => setShowDemoModal(false)}
           className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in duration-200"
         >
-          <div 
+          <div
             onClick={(e) => e.stopPropagation()}
             className="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-stone-200"
           >
@@ -305,7 +314,7 @@ export const DemoProductionsSection: React.FC = () => {
               <span className="text-xs font-bold uppercase tracking-wider text-[#A2482B]">
                 Coproduction Démo
               </span>
-              <button 
+              <button
                 onClick={() => setShowDemoModal(false)}
                 className="p-1 rounded-full text-stone-400 hover:text-stone-700 cursor-pointer"
               >
@@ -316,7 +325,7 @@ export const DemoProductionsSection: React.FC = () => {
             <h4 className="font-editorial text-xl font-bold text-stone-900 mb-2">
               Comment fonctionne l'achat de parts ?
             </h4>
-            
+
             <p className="text-xs text-stone-600 leading-relaxed mb-4">
               Dans la version connectée, ce bouton permet d'acheter immédiatement une ou plusieurs parts de coproduction (50 € / part) par carte ou portefeuille virtuel.
             </p>

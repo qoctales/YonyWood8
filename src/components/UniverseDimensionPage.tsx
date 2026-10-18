@@ -24,7 +24,7 @@ import {
   ShoppingBag
 } from 'lucide-react';
 import { ShareIcon } from './ShareIcon';
-import { SingleAlveoleIcon, ProfileSoloIcon } from './YonywoodBrandIcons';
+import { SingleAlveoleIcon, ProfileSoloIcon, TvPlayerIcon } from './YonywoodBrandIcons';
 import { ViewScreen } from '../types';
 import { DUOS, DOCUMENTARIES, PROTAGONISTS } from '../data/mockData';
 
@@ -616,7 +616,7 @@ export const UniverseDimensionPage: React.FC<UniverseDimensionPageProps> = ({
                         {isPlaying ? (
                           <Pause className="w-3.5 h-3.5 fill-white text-white" />
                         ) : (
-                          <ProfileSoloIcon className="w-5 h-5 text-white rotate-180 transition-transform" strokeWidth={1.6} />
+                          <TvPlayerIcon className="w-5 h-5 text-white transition-transform" strokeWidth={1.6} />
                         )}
                       </button>
                     </div>
@@ -1325,7 +1325,7 @@ export const UniverseDimensionPage: React.FC<UniverseDimensionPageProps> = ({
                       {isPlaying ? (
                         <Pause className="w-3.5 h-3.5 fill-white text-white" />
                       ) : (
-                        <ProfileSoloIcon className="w-5 h-5 text-white rotate-180 transition-transform" strokeWidth={1.6} />
+                        <TvPlayerIcon className="w-5 h-5 text-white transition-transform" strokeWidth={1.6} />
                       )}
                     </button>
                   </div>

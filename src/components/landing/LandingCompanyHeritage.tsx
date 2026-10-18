@@ -16,14 +16,14 @@ export const LandingCompanyHeritage: React.FC = () => {
           L'espace Entreprise au cœur de l'Héritage.
         </h2>
         <p className="mt-3 text-base sm:text-lg text-stone-600 font-normal leading-relaxed">
-          Dans la section Héritage, chaque entreprise dispose d’un espace dédié où sa mémoire, ses engagements et sa culture 
+          Dans la section Héritage, chaque entreprise dispose d’un espace dédié où sa mémoire, ses engagements et sa culture
           sont racontés directement par ceux qui la font vivre : ses collaborateurs, ses cadres, ses artisans et ses clients.
         </p>
       </div>
 
       {/* 3 facettes factuelles et minimalistes de l'espace Entreprise */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        
+
         {/* Facette 1 : La parole aux équipes et usagers */}
         <div className="bg-white rounded-2xl p-6 sm:p-7 border border-stone-200 shadow-xs flex flex-col justify-between hover:border-stone-400 transition-colors">
           <div>
@@ -86,7 +86,7 @@ export const LandingCompanyHeritage: React.FC = () => {
       {/* Note d'évidence architecturale, sans CTA ni sollicitation */}
       <div className="mt-10 p-5 bg-stone-50 rounded-2xl border border-stone-200 text-center max-w-2xl mx-auto">
         <p className="text-xs sm:text-sm text-stone-600 leading-relaxed font-normal">
-          L'Espace Entreprise est une composante native de la plateforme YonyWood, 
+          L'Espace Entreprise est une composante native de la plateforme YonyWood,
           conçue pour refléter la réalité humaine des organisations sans artifice publicitaire.
         </p>
       </div>

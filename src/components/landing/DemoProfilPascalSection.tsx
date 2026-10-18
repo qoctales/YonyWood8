@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
-import { 
-  ChevronLeft, 
-  ChevronRight, 
+import {
+  ChevronLeft,
+  ChevronRight,
   Lock
 } from 'lucide-react';
 
@@ -86,13 +86,13 @@ export const DemoProfilPascalSection: React.FC = () => {
   };
 
   return (
-    <div 
+    <div
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
       className="w-full max-w-4xl mx-auto py-4 flex flex-col items-center select-none"
     >
-      
+
       {/* En-tête Profil : titre exactement au même endroit que Studio */}
       <div className="w-full flex items-center justify-between mb-4 sm:mb-6 px-3 sm:px-6">
         <h3 className="font-editorial text-3xl font-bold text-stone-900">
@@ -102,7 +102,7 @@ export const DemoProfilPascalSection: React.FC = () => {
 
       {/* CARTE 9:16 AVEC FLÈCHES LATÉRALES : TÊTE DE PASCAL EN HAUT, CARRÉ BLANC VARIABLE EN BAS */}
       <div className="relative w-full max-w-md mx-auto flex items-center justify-center my-2">
-        
+
         {/* Flèche gauche */}
         <button
           onClick={handlePrev}
@@ -114,7 +114,7 @@ export const DemoProfilPascalSection: React.FC = () => {
 
         {/* Carte 9:16 : moitié photo de Pascal, moitié contenu blanc - hauteur bornée au-dessus de la nav bar */}
         <div className="h-[min(490px,calc(100vh-220px))] aspect-[9/16] w-auto mx-auto rounded-3xl overflow-hidden bg-white shadow-xl border border-stone-200 relative flex flex-col justify-between shrink-0">
-          
+
           {/* MOITIÉ SUPÉRIEURE : TOUJOURS LA PHOTO DE PASCAL AVEC SON NOM EN HAUT (SANS INDICATEUR 4/4) */}
           <div className="relative h-1/2 w-full bg-stone-900 overflow-hidden shrink-0">
             <img

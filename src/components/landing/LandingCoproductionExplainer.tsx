@@ -19,15 +19,15 @@ export const LandingCoproductionExplainer: React.FC = () => {
           Devenez coproducteur : financez, percevez et revendez vos parts.
         </h2>
         <p className="mt-3 text-base sm:text-lg text-stone-600 font-normal leading-relaxed">
-          Sur YonyWood, la création cinématographique n’est pas réservée à des circuits fermés. 
-          Chaque spectateur peut devenir coproducteur d’une des huit séries, participer aux bénéfices générés 
+          Sur YonyWood, la création cinématographique n’est pas réservée à des circuits fermés.
+          Chaque spectateur peut devenir coproducteur d’une des huit séries, participer aux bénéfices générés
           par la diffusion et la publicité, puis revendre ses parts selon son souhait.
         </p>
       </div>
 
       {/* 3 piliers pédagogiques simples et concis */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-        
+
         {/* Pilier 1 : Achat de parts */}
         <div className="bg-white rounded-2xl p-6 sm:p-7 border border-stone-200 shadow-xs flex flex-col justify-between hover:border-stone-400 transition-colors">
           <div>
@@ -90,7 +90,7 @@ export const LandingCoproductionExplainer: React.FC = () => {
       {/* Aperçu concret d'une fiche de coproduction (simulation réaliste sur fond blanc) */}
       <div className="bg-stone-50 rounded-3xl border border-stone-200 p-6 sm:p-8 max-w-4xl mx-auto shadow-xs">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
-          
+
           {/* Affiche et titre de la série */}
           <div className="flex items-center gap-4 w-full sm:w-auto">
             <img
@@ -124,7 +124,7 @@ export const LandingCoproductionExplainer: React.FC = () => {
                 <span>Financement participatif</span>
                 <strong className="text-stone-900">72 %</strong>
               </div>
-              
+
               {/* Barre de progression */}
               <div className="w-full h-2 rounded-full bg-stone-100 overflow-hidden mb-2">
                 <div className="h-full bg-[#A2482B] rounded-full" style={{ width: '72%' }} />
