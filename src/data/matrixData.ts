@@ -2092,18 +2092,18 @@ export const MATRIX_SERIES_DATA: MatrixSeriesConfig[] = [
     pioneers: [
       {
         id: 'oe-01',
-        name: 'Pascal Tossou',
+        name: 'Pascal Cossi',
         firstName: 'Pascal',
         age: 36,
-        role: 'Navigateur sonore & sculpteur de sons',
-        territory: 'Ganvié',
+        role: 'Président de « Voir Autrement » & Prêtre du Fâ',
+        territory: 'Ganvié & Cotonou',
         country: 'Bénin',
         flag: '🇧🇯',
         universeTag: 'Other Sights',
         photoUrl: '/assets/duos/codjo-blind.jpg',
         isPioneer: true,
         badge: 'Première effigie',
-        invitationStory: 'Navigateur lacustre non-voyant guidant les pirogues par la seule mémoire des échos de l’eau.',
+        invitationStory: 'Président de l’association Voir Autrement et prêtre du Fâ, initiateur d’une lignée solidaire.',
         teaserVideoUrl: TEASER_VIDEOS[1],
         teaserPitch: '« Vos yeux s’arrêtent aux formes. Mes oreilles pénètrent l’épaisseur vivante de l’air. »',
         generation: 1

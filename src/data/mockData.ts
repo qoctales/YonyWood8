@@ -2105,18 +2105,18 @@ export const PROTAGONISTS: Protagonist[] = [
   {
     id: 'codjo-blind',
     slug: 'codjo-blind',
-    name: 'Pascal Tossou',
+    name: 'Pascal Cossi',
     firstName: 'Pascal',
     age: 36,
-    role: 'Navigateur sonore & sculpteur de sons',
+    role: 'Président de « Voir Autrement » & Prêtre du Fâ',
     territory: 'Ganvié & Cotonou',
     country: 'Bénin',
     flag: '🇧🇯',
-    bio: 'Non-voyant depuis l’enfance, Pascal a développé une cartographie auditive et vibratoire stupéfiante de la cité lacustre de Ganvié. Au bruit de l’eau contre la pirogue ou au froissement des roseaux, il guide les embarcations et révèle une perception du monde invisible aux yeux physiques.',
+    bio: 'Non-voyant depuis l’enfance, Pascal Cossi préside l’association « Voir Autrement », dédiée à l’émancipation, la formation et l’inclusion des personnes en situation de handicap à travers des ateliers d’artisanat. Prêtre du Fâ et maître d’écoute vibratoire, il éclaire les chemins de vie et révèle une perception du monde invisible aux yeux physiques.',
     photoUrl: '/assets/duos/codjo-blind.jpg',
     documentaryId: 'other-eyes-sixth-sense',
     universeTag: 'Other Sights',
-    quote: '« Vos yeux s’arrêtent aux formes. Mes oreilles et ma peau pénètrent l’épaisseur vivante de l’air et la cadence secrète de la nuit. »',
+    quote: '« Vos yeux s’arrêtent aux formes. Mes oreilles, mon cœur et la sagesse du Fâ pénètrent l’épaisseur vivante de l’air et la cadence secrète du destin. »',
     tree: {
       passeurs: [
         {
@@ -2129,9 +2129,16 @@ export const PROTAGONISTS: Protagonist[] = [
       ],
       heritiers: [
         {
-          id: 'h-sene',
-          name: 'Sèna',
-          role: 'Apprenti acousticien de la lagune',
+          id: 'h-cecile',
+          name: 'Cécile',
+          role: 'Artisane maroquinière & créatrice de sacs en perles',
+          country: 'Bénin',
+          photo: '/assets/protagonists/adjovi-blandine.jpg'
+        },
+        {
+          id: 'h-norbert',
+          name: 'Norbert',
+          role: 'Maître menuisier & sculpteur de tabourets traditionnels',
           country: 'Bénin',
           photo: '/assets/duos/kwame-mensah.jpg'
         }
@@ -2139,9 +2146,9 @@ export const PROTAGONISTS: Protagonist[] = [
       transmissions: [
         {
           id: 't-codjo-1',
-          title: 'L’écholocalisation aquatique',
-          ancestorOrMentor: 'Vieux Ahouan, pêcheur de Ganvié',
-          description: 'Savoir lire la profondeur de l’eau au seul claquement de la rame contre la proue.'
+          title: 'L’écholocalisation aquatique & Sagesse du Fâ',
+          ancestorOrMentor: 'Vieux Ahouan & Maîtres Babalawo',
+          description: 'Savoir lire la profondeur de l’eau au seul claquement de la rame et déchiffrer les signes bienveillants du destin.'
         }
       ],
       duos: [
@@ -2157,6 +2164,12 @@ export const PROTAGONISTS: Protagonist[] = [
       creations: [
         {
           id: 'c-codjo-1',
+          title: 'Consultations traditionnelles de Fâ',
+          type: 'Sagesse & Guidance',
+          description: 'Séances de consultation du Fâ pour éclairer les décisions de vie, l’harmonie familiale et les transitions.'
+        },
+        {
+          id: 'c-codjo-2',
           title: 'Archives sonores de la lagune Nokoué',
           type: 'Création acoustique',
           description: 'Enregistrements immersifs des vents, des rames et des chants nocturnes de Ganvié.'
@@ -2165,25 +2178,25 @@ export const PROTAGONISTS: Protagonist[] = [
       projects: [
         {
           id: 'p-codjo-1',
-          title: 'Parcours sensoriel les yeux bandés',
-          stage: 'En cours (75%)',
-          description: 'Expérience d’immersion lacustre pour éveiller l’écoute intime des sens.'
+          title: 'Espace d’Accueil & Ateliers « Voir Autrement »',
+          stage: 'Financement participatif en cours (65%)',
+          description: 'Construction d’un centre d’accueil, d’apprentissage et de vente d’artisanat adapté aux personnes en situation de handicap.'
         }
       ],
       opportunities: [
         {
           id: 'o-codjo-1',
-          title: 'Résidence de création sonore Ganvié-Ouidah',
-          description: 'Collaboration avec des artistes et musiciens acoustiques.',
+          title: 'Exposition & Vente d’Artisanat Solidaire',
+          description: 'Partenariat avec des espaces culturels pour exposer les sacs de Cécile et les tabourets de Norbert.',
           badge: 'Ouvert'
         }
       ],
       needs: [
         {
           id: 'n-codjo-1',
-          title: 'Hydrophones haute fidélité',
+          title: 'Matériaux de tissage & outillage bois adapté',
           urgency: 'Prioritaire',
-          description: 'Microphones subaquatiques pour enregistrer les échos profonds de la lagune.'
+          description: 'Soutien en perles, fils renforcés et outils de menuiserie sécurisés pour les artisans de Voir Autrement.'
         }
       ]
     },
@@ -2198,7 +2211,7 @@ export const PROTAGONISTS: Protagonist[] = [
         summary: 'Pascal raconte cette nuit de tornade où toutes les lampes s’étaient éteintes, et comment il a ramené les pêcheurs à bon port grâce à l’écho du clocher de Ganvié.',
         videoCoverUrl: '/assets/duos/codjo-blind.jpg',
         credits: [
-          { role: 'story_owner', label: 'Propriétaire de l’histoire', name: 'Pascal Tossou' }
+          { role: 'story_owner', label: 'Propriétaire de l’histoire', name: 'Pascal Cossi' }
         ]
       }
     ]
@@ -3897,9 +3910,9 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
     pioneers: [
       {
         id: 'codjo-blind',
-        name: 'Pascal Tossou',
+        name: 'Pascal Cossi',
         age: 36,
-        role: 'Navigateur sonore & sculpteur de sons',
+        role: 'Président de « Voir Autrement » & Prêtre du Fâ',
         territory: 'Ganvié & Cotonou',
         country: 'Bénin',
         flag: '🇧🇯',
@@ -3907,7 +3920,7 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
         photoUrl: '/assets/duos/codjo-blind.jpg',
         isPioneer: true,
         badge: 'Première effigie',
-        invitationStory: 'Navigateur lacustre non-voyant, guidant les pirogues dans l’obscurité par la seule résonance des ondes et des roseaux.',
+        invitationStory: 'Président de l’association Voir Autrement et prêtre du Fâ, initiateur d’une lignée solidaire d’artisans.',
         duoPartnerName: 'Mawuna Houénou',
         duoPartnerPhoto: '/assets/duos/mawuna-medium.jpg',
         duoId: 'duo-other-eyes-sixth-sense-01',
@@ -3915,24 +3928,45 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
         protagonistIdRef: 'codjo-blind',
         invitedPeople: [
           {
-            id: 'vieux-ahouan',
-            name: 'Vieux Ahouan',
-            age: 64,
-            role: 'Pêcheur nocturne & passeur d’échos',
-            territory: 'Ganvié',
+            id: 'cecile-artisan',
+            name: 'Cécile',
+            age: 29,
+            role: 'Artisane maroquinière (sacs en perles)',
+            territory: 'Cotonou',
             country: 'Bénin',
             flag: '🇧🇯',
             universeTag: 'Other Sights',
-            photoUrl: '/assets/duos/tobi-ganvie.jpg',
-            badge: 'Invité(e)',
+            photoUrl: '/assets/protagonists/adjovi-blandine.jpg',
+            badge: 'Filleule de Pascal',
             invitedById: 'codjo-blind',
-            invitedByName: 'Pascal Tossou',
-            invitationStory: 'A appris à Pascal enfant à écouter le retour d’onde sur la proue de bois.',
-            duoPartnerName: 'Na Agbessi',
+            invitedByName: 'Pascal Cossi',
+            invitationStory: 'Parrainée par Pascal au sein de l’association Voir Autrement pour développer son atelier de sacs perlés.',
+            duoPartnerName: 'Mawuna Houénou',
             duoId: 'duo-other-eyes-sixth-sense-01',
-            episodeQuestion: '02 — La mémoire du son dans la nuit noire.',
+            episodeQuestion: '02 — La texture des songes et le tissage sans lumière.',
             protagonistIdRef: 'codjo-blind',
-            invitedPeople: []
+            invitedPeople: [
+              {
+                id: 'norbert-menuisier',
+                name: 'Norbert',
+                age: 41,
+                role: 'Maître artisan (tabourets traditionnels en bois)',
+                territory: 'Allada & Cotonou',
+                country: 'Bénin',
+                flag: '🇧🇯',
+                universeTag: 'Other Sights',
+                photoUrl: '/assets/duos/kwame-mensah.jpg',
+                badge: 'Filleul de Cécile',
+                invitedById: 'cecile-artisan',
+                invitedByName: 'Cécile',
+                invitationStory: 'Accueilli dans la lignée par Cécile pour transmettre la taille de sièges et tabourets en bois brut.',
+                duoPartnerName: 'Vieux Ahouan',
+                duoId: 'duo-other-eyes-sixth-sense-01',
+                episodeQuestion: '03 — L’assise des aïeux et la mémoire du bois.',
+                protagonistIdRef: 'codjo-blind',
+                invitedPeople: []
+              }
+            ]
           }
         ]
       },
@@ -3949,7 +3983,7 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
         isPioneer: true,
         badge: 'Première effigie',
         invitationStory: 'Sensible aux vibrations et aux mémoires de la terre sacrée de Ouidah, reliant le monde visible aux présences invisibles.',
-        duoPartnerName: 'Pascal Tossou',
+        duoPartnerName: 'Pascal Cossi',
         duoPartnerPhoto: '/assets/duos/codjo-blind.jpg',
         duoId: 'duo-other-eyes-sixth-sense-01',
         episodeQuestion: '01 — Que voit-on quand le monde ferme les yeux ?',

@@ -78,6 +78,9 @@ import { getLineageTree, LINEAGE_COLORS } from '../utils/lineageService';
 interface MatrixExplorerProps {
   onNavigate: (screen: ViewScreen | any) => void;
   onSelectDocumentary?: (docId: string) => void;
+  isLandingDemo?: boolean;
+  initialZoom?: number;
+  hideModeToggle?: boolean;
 }
 
 // Fonction récursive de calcul des personnes cooptées dans la descendance (mode Séries)
@@ -137,7 +140,10 @@ export const EXPERTISE_ICONS: Record<string, React.FC<{ className?: string }>> =
 
 export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({ 
   onNavigate,
-  onSelectDocumentary 
+  onSelectDocumentary,
+  isLandingDemo = false,
+  initialZoom,
+  hideModeToggle = false
 }) => {
   // 1. NIVEAU DE NAVIGATION DANS LA ROUE :
   // 'dimensions' (les 8 Portes d'entrée au centre - PAR DÉFAUT LORSQU'ON ARRIVE SUR AGORA)
@@ -176,6 +182,14 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
   // Calibrage automatique du zoom initial pour adapter parfaitement le cercle des 16 visages à l'écran mobile
   const [rotationAngle, setRotationAngle] = useState<number>(0);
   const [zoomLevel, setZoomLevel] = useState<number>(() => {
+    if (isLandingDemo) {
+      if (typeof window !== 'undefined') {
+        const w = window.innerWidth;
+        if (w < 640) return 0.58;
+        if (w < 1024) return 0.68;
+      }
+      return initialZoom ?? 0.78;
+    }
     if (typeof window !== 'undefined') {
       const w = window.innerWidth;
       const h = window.innerHeight;
@@ -196,6 +210,12 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
     const handleResize = () => {
       const w = window.innerWidth;
       const h = window.innerHeight;
+      if (isLandingDemo) {
+        if (w < 640) setZoomLevel(0.58);
+        else if (w < 1024) setZoomLevel(0.68);
+        else setZoomLevel(initialZoom ?? 0.78);
+        return;
+      }
       if (w < 640) {
         setZoomLevel(prev => {
           // Si l'utilisateur n'a pas déjà manuellement dézoomé/zoomé loin
@@ -210,7 +230,7 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
     };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  }, [isLandingDemo, initialZoom]);
 
   // Références d'interaction pour la rotation fluide par glisser-déposer
   const containerRef = useRef<HTMLDivElement>(null);
@@ -905,27 +925,29 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
             )}
 
             {/* Bascule Vue Cercle / Vue Swipe (Identique au bouton Deck/Duo des duos) */}
-            <button
-              id="btn-toggle-heritage-mode"
-              onClick={() => {
-                setHeritageMode(prev => prev === 'circle' ? 'swipe' : 'circle');
-                celestialAudio.playOrbSelect();
-              }}
-              className="flex items-center gap-1 h-7.5 sm:h-8.5 px-2.5 sm:px-3 rounded-full bg-white hover:bg-[#A2482B] border border-stone-200 hover:border-[#A2482B] text-[#1C1917] hover:text-white text-[11px] sm:text-xs font-semibold shadow-xs transition-all cursor-pointer active:scale-95 group/modetoggle shrink-0"
-              title={heritageMode === 'circle' ? 'Passer en vue Swipe (Cartes)' : 'Passer en vue Cercle (Exploration céleste)'}
-            >
-              {heritageMode === 'circle' ? (
-                <>
-                  <Layers className="w-3.5 h-3.5 text-[#A2482B] group-hover/modetoggle:text-white transition-colors" />
-                  <span className="hidden sm:inline">Swipe</span>
-                </>
-              ) : (
-                <>
-                  <Compass className="w-3.5 h-3.5 text-[#A2482B] group-hover/modetoggle:text-white transition-colors" />
-                  <span className="hidden sm:inline">Cercle</span>
-                </>
-              )}
-            </button>
+            {!hideModeToggle && !isLandingDemo && (
+              <button
+                id="btn-toggle-heritage-mode"
+                onClick={() => {
+                  setHeritageMode(prev => prev === 'circle' ? 'swipe' : 'circle');
+                  celestialAudio.playOrbSelect();
+                }}
+                className="flex items-center gap-1 h-7.5 sm:h-8.5 px-2.5 sm:px-3 rounded-full bg-white hover:bg-[#A2482B] border border-stone-200 hover:border-[#A2482B] text-[#1C1917] hover:text-white text-[11px] sm:text-xs font-semibold shadow-xs transition-all cursor-pointer active:scale-95 group/modetoggle shrink-0"
+                title={heritageMode === 'circle' ? 'Passer en vue Swipe (Cartes)' : 'Passer en vue Cercle (Exploration céleste)'}
+              >
+                {heritageMode === 'circle' ? (
+                  <>
+                    <Layers className="w-3.5 h-3.5 text-[#A2482B] group-hover/modetoggle:text-white transition-colors" />
+                    <span className="hidden sm:inline">Swipe</span>
+                  </>
+                ) : (
+                  <>
+                    <Compass className="w-3.5 h-3.5 text-[#A2482B] group-hover/modetoggle:text-white transition-colors" />
+                    <span className="hidden sm:inline">Cercle</span>
+                  </>
+                )}
+              </button>
+            )}
           </header>
         </div>
       </div>
@@ -986,7 +1008,7 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
 
       {/* 3. SCÈNE CENTRALE : ROUE PLANÉTAIRE & CONSTELLATIONS (Parfaitement centrée dans l'espace utile entre l'en-tête et le menu inférieur) */}
       <div 
-        className="absolute top-[46%] sm:top-[48%] left-1/2 w-0 h-0 pointer-events-none transition-transform duration-500 ease-out"
+        className={`absolute ${isLandingDemo ? 'top-[48%] sm:top-[49%]' : 'top-[46%] sm:top-[48%]'} left-1/2 w-0 h-0 pointer-events-none transition-transform duration-500 ease-out`}
         style={{
           transform: `translate(${pan.x}px, ${pan.y}px) scale(${effectiveZoom})`
         }}
