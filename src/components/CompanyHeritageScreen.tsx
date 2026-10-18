@@ -314,41 +314,43 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
-      className="w-full max-w-4xl mx-auto py-3 sm:py-5 px-3 sm:px-6 flex flex-col items-center select-none"
+      className="w-full max-w-3xl mx-auto px-3 sm:px-6 py-2.5 sm:py-3.5 pb-18 sm:pb-20 pt-safe pb-safe h-[calc(100dvh-56px)] max-h-[calc(100dvh-56px)] overflow-hidden flex flex-col justify-between text-[#1C1917] select-none"
     >
       
       {/* =========================================================== */}
       {/* EN-TÊTE : Titre standardisé avec le petit trait signature   */}
       {/* =========================================================== */}
-      <div className="w-full mb-3 sm:mb-4 px-1 sm:px-2 flex flex-col items-start">
-        <h2 className="font-editorial text-2xl sm:text-3xl font-bold text-stone-900 tracking-wide">
-          Entreprises
-        </h2>
-        <div className="w-10 h-0.5 bg-[#A2482B] mt-1.5 rounded-full" />
+      <div className="flex items-center justify-between h-8 sm:h-9 shrink-0 gap-2 mb-2 sm:mb-2.5">
+        <div className="relative flex items-center h-full shrink-0">
+          <h1 className="font-editorial text-base sm:text-[18px] font-bold text-[#1C1917] tracking-tight leading-none">
+            Entreprises
+          </h1>
+          <div className="absolute left-0 -bottom-2 w-8 h-0.5 bg-[#A2482B] rounded-full" />
+        </div>
       </div>
 
       {/* =========================================================== */}
       {/* ZONE CENTRALE : CARTE VIDÉO 9:16 (Même gabarit protagoniste) */}
       {/* =========================================================== */}
-      <div className="relative w-full flex items-center justify-center min-h-[460px] sm:min-h-[500px]">
+      <div className="relative w-full flex-1 flex items-center justify-center min-h-0 my-auto">
         
-        {/* Flèche gauche */}
+        {/* Flèche gauche (positionnée avec sécurité pour ne jamais être coupée) */}
         <button
           onClick={handlePrev}
-          className="absolute -left-1 sm:-left-3 md:-left-8 z-30 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white text-stone-800 border border-stone-200 shadow-md flex items-center justify-center hover:bg-stone-100 transition-all cursor-pointer hover:scale-105 active:scale-95"
+          className="absolute left-1 sm:left-3 md:left-6 z-30 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white text-stone-800 hover:bg-[#A2482B] hover:text-white border border-stone-200 shadow-md flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
           title="Entreprise précédente"
         >
           <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
 
-        {/* CARTE VIDÉO 9:16 UNIQUE */}
+        {/* CARTE VIDÉO 9:16 UNIQUE - Responsive unifié (mobile 490px, tablette 540px, web 570px) */}
         <div 
           onClick={() => {
             if (!isPlaying && !activeInternalPopup) {
               setIsPlaying(true);
             }
           }}
-          className="h-[min(510px,calc(100vh-230px))] aspect-[9/16] w-auto mx-auto rounded-3xl overflow-hidden bg-stone-950 text-white shadow-2xl border border-stone-200/40 relative flex flex-col justify-between p-4 sm:p-5 cursor-pointer group"
+          className="h-[min(490px,calc(100dvh-210px))] sm:h-[min(540px,calc(100dvh-190px))] lg:h-[min(570px,calc(100dvh-180px))] aspect-[9/16] w-auto mx-auto rounded-3xl overflow-hidden bg-stone-950 text-white shadow-2xl border border-stone-200/40 relative flex flex-col justify-between p-4 sm:p-5 cursor-pointer group"
         >
           
           {/* LECTEUR VIDÉO INTERNE SI ACTIF */}
@@ -628,10 +630,10 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
 
         </div>
 
-        {/* Flèche droite */}
+        {/* Flèche droite (positionnée avec sécurité pour ne jamais être coupée) */}
         <button
           onClick={handleNext}
-          className="absolute -right-1 sm:-right-3 md:-right-8 z-30 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white text-stone-800 border border-stone-200 shadow-md flex items-center justify-center hover:bg-stone-100 transition-all cursor-pointer hover:scale-105 active:scale-95"
+          className="absolute right-1 sm:right-3 md:right-6 z-30 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white text-stone-800 hover:bg-[#A2482B] hover:text-white border border-stone-200 shadow-md flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
           title="Entreprise suivante"
         >
           <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />

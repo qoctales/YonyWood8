@@ -500,17 +500,18 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
   }
 
   return (
-    <div className={`max-w-3xl mx-auto px-3 sm:px-6 py-2 sm:py-4 pb-20 sm:pb-24 pt-safe pb-safe overflow-x-hidden ${step === 3 && chosenFlow === 'UPLOAD_DIRECT' ? 'min-h-[100dvh] flex flex-col' : 'h-[100dvh] max-h-[100dvh] overflow-hidden flex flex-col justify-between'} text-[#1C1917]`}>
+    <div className={`max-w-3xl mx-auto px-3 sm:px-6 py-2.5 sm:py-3.5 pb-18 sm:pb-20 pt-safe pb-safe overflow-x-hidden ${step === 3 && chosenFlow === 'UPLOAD_DIRECT' ? 'min-h-[calc(100dvh-56px)] flex flex-col' : 'h-[calc(100dvh-56px)] max-h-[calc(100dvh-56px)] overflow-hidden flex flex-col justify-between'} text-[#1C1917]`}>
       
       {/* En-tête dynamique du Studio : Choix progressifs validés (Porte, Sujet, Format) avec bouton Modifier */}
-      <div className="flex items-center justify-between border-b border-[#E7E5E4] pb-2 sm:pb-2.5 shrink-0 gap-2">
-        <div className="flex items-center gap-1.5 sm:gap-2.5 min-w-0 flex-1">
+      <div className="flex items-center justify-between h-8 sm:h-9 shrink-0 gap-2 mb-2 sm:mb-2.5">
+        <div className="flex items-center gap-1.5 sm:gap-2.5 min-w-0 flex-1 h-full">
           {step === 1 ? (
             /* Étape 1 : En-tête épuré et sobre - Juste Studio strictement calibré sur Coproduction */
-            <div className="flex items-center gap-2">
-              <h1 className="font-editorial text-lg sm:text-2xl font-bold text-[#1C1917] tracking-tight">
+            <div className="relative flex items-center h-full shrink-0">
+              <h1 className="font-editorial text-base sm:text-[18px] font-bold text-[#1C1917] tracking-tight leading-none">
                 Studio
               </h1>
+              <div className="absolute left-0 -bottom-2 w-8 h-0.5 bg-[#A2482B] rounded-full" />
             </div>
           ) : step === 2 ? (
             /* Étape 2 : La porte choisie apparaît ici dans le header avec son bouton Modifier */
@@ -668,7 +669,7 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
               onMouseDown={onMouseDown}
               onMouseMove={onMouseMove}
               onMouseUp={onMouseUp}
-              className="aspect-[9/16] w-[min(340px,calc((100dvh-200px)*9/16))] h-[min(604px,calc(100dvh-200px))] max-w-[calc(100vw-28px)] mx-auto transition-transform duration-150 ease-out select-none cursor-grab active:cursor-grabbing flex justify-center shrink-0"
+              className="aspect-[9/16] w-auto h-[min(490px,calc(100dvh-210px))] sm:h-[min(540px,calc(100dvh-190px))] lg:h-[min(570px,calc(100dvh-180px))] max-w-[calc(100vw-28px)] mx-auto transition-transform duration-150 ease-out select-none cursor-grab active:cursor-grabbing flex justify-center shrink-0"
               style={{ transform: `translateX(${swipeOffset}px)` }}
             >
               <div 
@@ -895,7 +896,7 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
               onMouseDown={onSubMouseDown}
               onMouseMove={onSubMouseMove}
               onMouseUp={onSubMouseUp}
-              className="aspect-[9/16] w-[min(340px,calc((100dvh-200px)*9/16))] h-[min(604px,calc(100dvh-200px))] max-w-[calc(100vw-28px)] mx-auto rounded-2xl sm:rounded-3xl overflow-hidden bg-[#121110] text-white shadow-2xl flex flex-col justify-between p-2.5 sm:p-4.5 transition-transform duration-150 ease-out select-none cursor-pointer shrink-0 relative"
+              className="aspect-[9/16] w-auto h-[min(490px,calc(100dvh-210px))] sm:h-[min(540px,calc(100dvh-190px))] lg:h-[min(570px,calc(100dvh-180px))] max-w-[calc(100vw-28px)] mx-auto rounded-2xl sm:rounded-3xl overflow-hidden bg-[#121110] text-white shadow-2xl flex flex-col justify-between p-2.5 sm:p-4.5 transition-transform duration-150 ease-out select-none cursor-pointer shrink-0 relative"
               id={`current-subject-card-${currentSubject.id}`}
             >
               {/* Bordure discrète et neutre */}
@@ -1439,7 +1440,7 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                       setIsChoiceBVideoPlaying(false);
                       setIsChoiceAVideoPlaying(prev => !prev);
                     }}
-                    className="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl flex flex-col justify-between aspect-[9/16] w-[calc((100vw-28px)/2)] max-w-[195px] sm:max-w-none sm:w-[min(340px,calc((100dvh-200px)*9/16))] sm:h-[min(604px,calc(100dvh-200px))] shrink-0 transition-all duration-300 cursor-pointer select-none p-2.5 sm:p-4.5"
+                    className="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl flex flex-col justify-between aspect-[9/16] w-[min(calc((100vw-28px)/2),calc((100dvh-210px)*9/16))] max-w-[175px] max-h-[min(490px,calc(100dvh-210px))] sm:max-w-none sm:max-h-none sm:w-[min(280px,calc((100dvh-190px)*9/16))] sm:h-[min(540px,calc(100dvh-190px))] lg:w-[min(310px,calc((100dvh-180px)*9/16))] lg:h-[min(570px,calc(100dvh-180px))] shrink-0 transition-all duration-300 cursor-pointer select-none p-2.5 sm:p-4.5"
                     id="card-choice-upload-direct"
                   >
                     {/* Média : Vidéo animée ou illustration IA 9:16 */}
@@ -1611,7 +1612,7 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                       setIsChoiceAVideoPlaying(false);
                       setIsChoiceBVideoPlaying(prev => !prev);
                     }}
-                    className="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl flex flex-col justify-between aspect-[9/16] w-[calc((100vw-28px)/2)] max-w-[195px] sm:max-w-none sm:w-[min(340px,calc((100dvh-200px)*9/16))] sm:h-[min(604px,calc(100dvh-200px))] shrink-0 transition-all duration-300 cursor-pointer select-none p-2.5 sm:p-4.5"
+                    className="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl flex flex-col justify-between aspect-[9/16] w-[min(calc((100vw-28px)/2),calc((100dvh-210px)*9/16))] max-w-[175px] max-h-[min(490px,calc(100dvh-210px))] sm:max-w-none sm:max-h-none sm:w-[min(280px,calc((100dvh-190px)*9/16))] sm:h-[min(540px,calc(100dvh-190px))] lg:w-[min(310px,calc((100dvh-180px)*9/16))] lg:h-[min(570px,calc(100dvh-180px))] shrink-0 transition-all duration-300 cursor-pointer select-none p-2.5 sm:p-4.5"
                     id="card-choice-recruit-videographer"
                   >
                     {/* Média : Vidéo animée ou illustration IA 9:16 */}
@@ -1823,7 +1824,7 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                             setIsVideographerVideoPlaying(prev => !prev);
                           }
                         }}
-                        className="aspect-[9/16] w-[min(340px,calc((100dvh-200px)*9/16))] h-[min(604px,calc(100dvh-200px))] max-w-[calc(100vw-28px)] mx-auto rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl flex flex-col justify-between p-4 sm:p-5 transition-transform duration-150 ease-out select-none cursor-pointer shrink-0 relative"
+                        className="aspect-[9/16] w-auto h-[min(490px,calc(100dvh-210px))] sm:h-[min(540px,calc(100dvh-190px))] lg:h-[min(570px,calc(100dvh-180px))] max-w-[calc(100vw-28px)] mx-auto rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl flex flex-col justify-between p-4 sm:p-5 transition-transform duration-150 ease-out select-none cursor-pointer shrink-0 relative"
                         id={`videographer-card-${v.id}`}
                       >
                         {/* Vidéo ou Affiche de présentation */}

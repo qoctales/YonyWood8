@@ -273,22 +273,22 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
     || 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4';
 
   return (
-    <div className="w-full h-[100dvh] max-h-[100dvh] pb-20 sm:pb-24 pt-safe pb-safe overflow-hidden flex flex-col justify-between text-[#1C1917] select-none">
+    <div className="w-full h-[calc(100dvh-56px)] max-h-[calc(100dvh-56px)] pb-18 sm:pb-20 pt-safe pb-safe overflow-hidden flex flex-col justify-between text-[#1C1917] select-none">
       
       {/* ========================================================================= */}
       {/* 1. EN-TÊTE HARMONISÉ EXACTEMENT AU MÊME ENDROIT QUE STUDIO, HÉRITAGES, PRODUCTIONS */}
       {/* ========================================================================= */}
-      <div className="w-full max-w-3xl mx-auto px-3 sm:px-6 py-2 sm:py-4 shrink-0">
-        <header className="relative flex items-center justify-between border-b border-[#E7E5E4] pb-2 sm:pb-2.5 shrink-0 gap-2">
-          <div className="flex flex-col items-start shrink-0">
-            <h1 className="font-editorial text-lg sm:text-2xl font-bold text-[#1C1917] tracking-tight">
+      <div className="w-full max-w-3xl mx-auto px-3 sm:px-6 py-2.5 sm:py-3.5 shrink-0">
+        <header className="relative flex items-center justify-between h-8 sm:h-9 shrink-0 gap-2">
+          <div className="relative flex items-center h-full shrink-0">
+            <h1 className="font-editorial text-base sm:text-[18px] font-bold text-[#1C1917] tracking-tight leading-none">
               Duocumentaires
             </h1>
-            <div className="w-10 h-0.5 bg-[#A2482B] mt-1 rounded-full" />
+            <div className="absolute left-0 -bottom-2 w-8 h-0.5 bg-[#A2482B] rounded-full" />
           </div>
 
           {/* Centre absolu : Le nom de la série centré avec le symbole < > au centre mort, parfaitement aligné verticalement avec le titre et le bouton */}
-          <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-[calc(50%+4px)] sm:-translate-y-[calc(50%+5px)] flex items-center justify-center pointer-events-none max-w-[44vw] sm:max-w-[48vw]">
+          <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-none max-w-[44vw] sm:max-w-[48vw]">
             {(() => {
               const parts = isBeninSeries
                 ? ['Bénin', 'Pérou']
@@ -455,7 +455,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       if (isDraggingRef.current) return;
                       togglePlayA();
                     }}
-                    className="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl border border-stone-200/80 flex flex-col justify-between aspect-[9/16] w-[calc((100vw-28px)/2)] max-w-[195px] sm:max-w-none sm:w-[min(340px,calc((100dvh-200px)*9/16))] sm:h-[min(604px,calc(100dvh-200px))] shrink-0 transition-all duration-300 cursor-pointer select-none"
+                    className="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl border border-stone-200/80 flex flex-col justify-between aspect-[9/16] w-[min(calc((100vw-28px)/2),calc((100dvh-210px)*9/16))] max-w-[175px] max-h-[min(490px,calc(100dvh-210px))] sm:max-w-none sm:max-h-none sm:w-[min(280px,calc((100dvh-190px)*9/16))] sm:h-[min(540px,calc(100dvh-190px))] lg:w-[min(310px,calc((100dvh-180px)*9/16))] lg:h-[min(570px,calc(100dvh-180px))] shrink-0 transition-all duration-300 cursor-pointer select-none"
                   >
                     {/* Background Media: Video when isPlayingA, otherwise Poster Photo */}
                     {isPlayingA ? (
@@ -619,7 +619,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       if (isDraggingRef.current) return;
                       togglePlayB();
                     }}
-                    className="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl border border-stone-200/80 flex flex-col justify-between aspect-[9/16] w-[calc((100vw-28px)/2)] max-w-[195px] sm:max-w-none sm:w-[min(340px,calc((100dvh-200px)*9/16))] sm:h-[min(604px,calc(100dvh-200px))] shrink-0 transition-all duration-300 cursor-pointer select-none"
+                    className="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl border border-stone-200/80 flex flex-col justify-between aspect-[9/16] w-[min(calc((100vw-28px)/2),calc((100dvh-210px)*9/16))] max-w-[175px] max-h-[min(490px,calc(100dvh-210px))] sm:max-w-none sm:max-h-none sm:w-[min(280px,calc((100dvh-190px)*9/16))] sm:h-[min(540px,calc(100dvh-190px))] lg:w-[min(310px,calc((100dvh-180px)*9/16))] lg:h-[min(570px,calc(100dvh-180px))] shrink-0 transition-all duration-300 cursor-pointer select-none"
                   >
                     {/* Background Media: Video when isPlayingB, otherwise Poster Photo */}
                     {isPlayingB ? (
@@ -792,7 +792,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                         if (isDraggingRef.current) return;
                         togglePlayA();
                       }}
-                      className="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl border border-stone-200/80 flex flex-col justify-between aspect-[9/16] w-[min(340px,calc((100dvh-200px)*9/16))] h-[min(604px,calc(100dvh-200px))] max-w-[calc(100vw-32px)] shrink-0 transition-all duration-300 cursor-pointer select-none"
+                      className="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl border border-stone-200/80 flex flex-col justify-between aspect-[9/16] w-auto h-[min(490px,calc(100dvh-210px))] sm:h-[min(540px,calc(100dvh-190px))] lg:h-[min(570px,calc(100dvh-180px))] max-w-[calc(100vw-32px)] shrink-0 transition-all duration-300 cursor-pointer select-none"
                     >
                       {isPlayingA ? (
                         <video
@@ -969,7 +969,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                         if (isDraggingRef.current) return;
                         togglePlayB();
                       }}
-                      className="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl border border-stone-200/80 flex flex-col justify-between aspect-[9/16] w-[min(340px,calc((100dvh-200px)*9/16))] h-[min(604px,calc(100dvh-200px))] max-w-[calc(100vw-32px)] shrink-0 transition-all duration-300 cursor-pointer select-none"
+                      className="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl border border-stone-200/80 flex flex-col justify-between aspect-[9/16] w-auto h-[min(490px,calc(100dvh-210px))] sm:h-[min(540px,calc(100dvh-190px))] lg:h-[min(570px,calc(100dvh-180px))] max-w-[calc(100vw-32px)] shrink-0 transition-all duration-300 cursor-pointer select-none"
                     >
                       {isPlayingB ? (
                         <video

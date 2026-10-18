@@ -111,6 +111,14 @@ export default function App() {
 
   const isVideoPlayer = currentScreen.type === 'video_player';
   const isDarkScreen = currentScreen.type === 'video_player';
+  const isFixedViewportScreen = 
+    currentScreen.type === 'duo_feed' || 
+    currentScreen.type === 'landing' || 
+    currentScreen.type === 'home' || 
+    currentScreen.type === 'matrix_view' || 
+    currentScreen.type === 'enterprise' ||
+    currentScreen.type === 'marketplace' ||
+    currentScreen.type === 'submit_story';
 
   return (
     <div className={`min-h-screen flex flex-col font-sans antialiased selection:bg-[#C89B3C]/20 selection:text-[#1C1917] relative ${
@@ -130,7 +138,7 @@ export default function App() {
       )}
 
       {/* Main Content Area - Immersion directe avec marge pour le menu du bas */}
-      <main className={`flex-1 ${!isVideoPlayer ? 'pb-28 sm:pb-32' : ''}`}>
+      <main className={`flex-1 ${!isVideoPlayer && !isFixedViewportScreen ? 'pb-24 sm:pb-28' : ''}`}>
         {currentScreen.type === 'landing' && (
           <DuoFeedScreen 
             onNavigate={setCurrentScreen} 

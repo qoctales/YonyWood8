@@ -428,21 +428,21 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto px-3 sm:px-6 py-2 sm:py-4 pb-20 sm:pb-24 pt-safe pb-safe h-[100dvh] max-h-[100dvh] overflow-hidden flex flex-col justify-between text-[#1C1917]">
+    <div className="w-full max-w-3xl mx-auto px-3 sm:px-6 py-2.5 sm:py-3.5 pb-18 sm:pb-20 pt-safe pb-safe h-[calc(100dvh-56px)] max-h-[calc(100dvh-56px)] overflow-hidden flex flex-col justify-between text-[#1C1917]">
       
       {/* ========================================================================= */}
       {/* HEADER DISCRET & SÉLECTEUR AU MÊME ENDROIT QUE 1 2 3 DE PROPOSER         */}
       {/* ========================================================================= */}
-      <div className="flex items-center justify-between border-b border-[#E7E5E4] pb-2 sm:pb-2.5 shrink-0 gap-2">
-        <div>
-          <h1 className="font-editorial text-lg sm:text-2xl font-bold text-[#1C1917] tracking-tight">
+      <div className="flex items-center justify-between h-8 sm:h-9 shrink-0 gap-2 mb-2 sm:mb-2.5">
+        <div className="relative flex items-center h-full shrink-0">
+          <h1 className="font-editorial text-base sm:text-[18px] font-bold text-[#1C1917] tracking-tight leading-none">
             Productions
           </h1>
-          <div className="w-10 h-0.5 bg-[#A2482B] mt-1 rounded-full" />
+          <div className="absolute left-0 -bottom-2 w-8 h-0.5 bg-[#A2482B] rounded-full" />
         </div>
 
         {/* Côté droit : Boutons d'onglets Coproduire / Marché */}
-        <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
+        <div className="flex items-center gap-1 sm:gap-1.5 shrink-0 h-full">
           <button
             onClick={() => setActiveTab('coproduire')}
               id="tab-coproduire"
@@ -482,7 +482,7 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
       {/* PANNEAU UNIQUE AVEC SWIPE (EXACTEMENT COMME SUR PROPOSER UNE HISTOIRE)    */}
       {/* SANS AUCUN BOUTON NI POINT DE NAVIGATION EN DESSOUS                      */}
       {/* ========================================================================= */}
-      <div className="flex-1 flex items-center justify-center py-1 sm:py-2 min-h-0 overflow-visible px-2 sm:px-6 md:px-10 animate-in fade-in duration-200">
+      <div className="flex-1 flex items-center justify-center py-1 sm:py-2 min-h-0 my-auto overflow-visible px-2 sm:px-6 md:px-10 animate-in fade-in duration-200">
         
         {/* Conteneur de l'écran unique avec swipe et navigation fléchée latérale */}
         <div className="relative w-full h-full flex items-center justify-center">
@@ -505,7 +505,7 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
             onMouseDown={onMouseDown}
             onMouseMove={onMouseMove}
             onMouseUp={onMouseUp}
-            className="aspect-[9/16] w-[min(340px,calc((100dvh-200px)*9/16))] h-[min(604px,calc(100dvh-200px))] max-w-[calc(100vw-28px)] mx-auto transition-transform duration-150 ease-out select-none cursor-grab active:cursor-grabbing flex justify-center shrink-0"
+            className="aspect-[9/16] w-auto h-[min(490px,calc(100dvh-210px))] sm:h-[min(540px,calc(100dvh-190px))] lg:h-[min(570px,calc(100dvh-180px))] max-w-[calc(100vw-28px)] mx-auto transition-transform duration-150 ease-out select-none cursor-grab active:cursor-grabbing flex justify-center shrink-0"
             style={{ transform: `translateX(${swipeOffset}px)` }}
           >
             {/* =================================================================== */}

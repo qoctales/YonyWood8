@@ -785,17 +785,18 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
 
       {/* 1. BARRE SUPÉRIEURE : EN-TÊTE HARMONISÉ EXACTEMENT AU MÊME ENDROIT QUE STUDIO ET PRODUCTIONS */}
       <div className="absolute top-0 left-0 right-0 z-40 w-full pointer-events-none">
-        <div className="w-full max-w-3xl mx-auto px-3 sm:px-6 py-2 sm:py-4">
-          <header className="flex items-center justify-between border-b border-[#E7E5E4] pb-2 sm:pb-2.5 shrink-0 gap-2 pointer-events-auto">
+        <div className="w-full max-w-3xl mx-auto px-3 sm:px-6 py-2.5 sm:py-3.5">
+          <header className="relative flex items-center justify-between h-8 sm:h-9 shrink-0 gap-2 pointer-events-auto">
             {/* Titre Héritages */}
-            <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-              <h1 className="font-editorial text-lg sm:text-2xl font-bold text-[#1C1917] tracking-tight">
+            <div className="relative flex items-center h-full shrink-0">
+              <h1 className="font-editorial text-base sm:text-[18px] font-bold text-[#1C1917] tracking-tight leading-none">
                 Héritages
               </h1>
+              <div className="absolute left-0 -bottom-2 w-8 h-0.5 bg-[#A2482B] rounded-full" />
             </div>
 
             {heritageMode === 'swipe' ? (
-              <div className="flex items-center gap-1.5 shrink-0 min-w-0">
+              <div className="flex items-center gap-1.5 shrink-0 min-w-0 h-full">
                 {swipeStep === 1 && (
                   <div className="flex items-center gap-1.5 h-7.5 sm:h-8.5 px-3 rounded-full bg-[#A2482B] text-white shadow-xs border border-[#8A3B22] text-[11px] sm:text-xs font-semibold shrink-0">
                     <Layers className="w-3.5 h-3.5" />

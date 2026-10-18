@@ -1,0 +1,6 @@
+{
+  "summary": "Plan définitif d'arrangement visuel : calibrage sobre et luxueux des titres de page à 18px (plus discrets que le logo), sécurisation de la tagline du header sans conflit avec les boutons (masquage sur tablette/mobile et largeur bornée sur desktop), et unification stricte du gabarit de carte vidéo (490px max, ratio 9:16) avec symétrie verticale absolue (équidistance exacte entre le tiret supérieur et la barre de navigation) sur l'ensemble des pages (Studio, Héritages, Duocumentaires, Productions, Entreprises).",
+  "updatedAt": "2026-10-18T11:51:37.422027655Z",
+  "requestFeedback": true,
+  "userFacing": true
+}

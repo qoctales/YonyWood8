@@ -36,7 +36,7 @@ const getHeaderTagline = (screen: ViewScreen): TaglineInfo => {
     case 'enterprise':
       return {
         title: "Un espace de visibilité et de promotion",
-        subtitle: "Montrer l'entreprise de l'intérieur grâce à un storytelling collaboratif"
+        subtitle: "Un storytelling dynamique de l'entreprise"
       };
     case 'submit_story':
     case 'request_videographer':
@@ -81,12 +81,12 @@ export const Navbar: React.FC<NavbarProps> = ({ currentScreen, onNavigate, onOpe
 
   return (
     <header className="sticky top-0 z-40 w-full backdrop-blur-md bg-white/95 border-b border-stone-200 shadow-2xs">
-      <div className="max-w-6xl mx-auto px-3 sm:px-6 h-14 sm:h-15 flex items-center justify-between gap-2">
+      <div className="max-w-6xl mx-auto px-3 sm:px-6 h-14 sm:h-15 flex items-center justify-between gap-2 relative">
         
         {/* Gauche : Logo officiel YonyWood */}
         <div 
           onClick={() => onNavigate({ type: 'duo_feed' })}
-          className="flex items-center cursor-pointer group select-none py-1 shrink-0"
+          className="flex items-center cursor-pointer group select-none py-1 shrink-0 z-10"
           id="nav-logo"
           title="YonyWood — Accueil"
         >
@@ -100,18 +100,18 @@ export const Navbar: React.FC<NavbarProps> = ({ currentScreen, onNavigate, onOpe
           />
         </div>
 
-        {/* Centre : Titre et tagline éditoriaux dynamiques selon la page */}
-        <div className="hidden sm:flex flex-col items-center justify-center text-center select-none pointer-events-none px-2 flex-1 max-w-lg mx-auto">
-          <span className="font-editorial text-xs sm:text-[13px] font-bold text-stone-900 tracking-wide line-clamp-1">
+        {/* Centre : Titre et tagline éditoriaux dynamiques sécurisés sur desktop uniquement pour éviter tout conflit avec les boutons */}
+        <div className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center text-center select-none pointer-events-none px-2 max-w-[280px] xl:max-w-[360px] z-0">
+          <span className="font-editorial text-xs font-bold text-stone-900 tracking-wide truncate max-w-full">
             {tagline.title}
           </span>
-          <span className="text-[10px] sm:text-[11px] text-stone-500 font-medium line-clamp-1">
+          <span className="text-[10px] text-stone-500 font-medium truncate max-w-full">
             {tagline.subtitle}
           </span>
         </div>
 
         {/* Droite : Boutons Connexion / Inscription ou Profil Utilisateur */}
-        <div className="flex items-center gap-2 sm:gap-2.5">
+        <div className="flex items-center gap-2 sm:gap-2.5 z-10">
           {user ? (
             <div className="flex items-center gap-2">
               <button

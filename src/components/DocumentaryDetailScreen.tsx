@@ -68,7 +68,7 @@ export const DocumentaryDetailScreen: React.FC<DocumentaryDetailScreenProps> = (
       
       {/* 1. TOP BAR: Navigation & Sélecteur de séries */}
       <div className="space-y-4">
-        <div className="flex items-center justify-between border-b border-[#E7E5E4] pb-3">
+        <div className="flex items-center justify-between pb-3">
           <button
             onClick={() => onNavigate({ type: 'documentaries' })}
             className="text-xs font-semibold text-[#8B6845] hover:text-[#1C1917] flex items-center gap-1.5 transition-colors cursor-pointer"
