@@ -29,7 +29,7 @@ export interface MatrixProfile {
   invitedPeopleIds?: string[];
   doorId: string; // Dimension/Porte (series, sagesses, territoires, expertises, etc.)
   doorLabel?: string; // Libellé de la Porte (ex: 'Sagesses', 'Séries', 'Territoires')
-  directionLabel?: string; // Libellé officiel de la direction (ex: 'Résilience', 'Amour', 'Solidarité', 'Vodun Rays')
+  directionLabel?: string; // Libellé officiel de la direction (ex: 'Résilience', 'Amour', 'Solidarité', 'Vodunrays')
   allowedToAppear: boolean;
   placeholder?: boolean;
 }

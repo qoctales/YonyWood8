@@ -1,7 +1,7 @@
 export interface CompanyStakeholder {
   id: string;
   name: string;
-  roleCategory: 'Fondateur' | 'Collaborateur' | 'Fournisseur' | 'Client' | 'Partenaire' | 'Bénévole' | 'Bienfaiteur' | 'Membre' | 'Président' | 'Trésorière' | 'Secrétaire';
+  roleCategory: 'Fondateur' | 'Collaborateur' | 'Fournisseur' | 'Client' | 'Partenaire' | 'Bénévole' | 'Bienfaiteur';
   roleDetail?: string;
   photoUrl: string;
   videoUrl: string;
@@ -13,2882 +13,531 @@ export interface CompanyEntity {
   category: string;
   companyName: string;
   photoUrl: string;
-  logoUrl?: string;
   videoUrl: string;
-  manifestoVideoUrl?: string;
-  manifestoTitle?: string;
-  manifestoQuestion?: string;
-  manifestoDescription?: string;
   tagline: string;
+  description?: string;
+  manifestoVideoUrl?: string;
+  manifestoQuestion?: string;
+  foundedYear?: string;
+  location?: string;
   stakeholders: CompanyStakeholder[];
 }
 
+// 16 Organisations et Associations Exemplaires pour la rubrique Portraits
 export const COMPANIES_DATA: CompanyEntity[] = [
-  // 1. AFRIKAFUN (Audiovisuel & Récits - 32 intervenants)
   {
     id: 'afrika-fun',
-    category: 'Audiovisuel & Médias',
+    category: 'Audiovisuel & Numérique',
     companyName: 'AFRIKAFUN',
     photoUrl: '/assets/Onboardings/Voyage.png',
-    logoUrl: '/assets/Onboardings/Voyage.png',
     videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
     manifestoVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-    manifestoTitle: 'Manifeste AFRIKAFUN : Transmettre nos mémoires',
-    manifestoQuestion: 'Comment faire rayonner la mémoire et les voix vivantes de notre terre ?',
-    manifestoDescription: 'Studio audiovisuel indépendant pionnier du documentaire humain et de la valorisation des transmissions patrimoniales africaines.',
+    manifestoQuestion: 'Comment l’image cinématographique réveille-t-elle la souveraineté narrative de nos peuples ?',
     tagline: 'Créer, raconter, inspirer',
+    description: 'Studio pionnier d’animation, de documentaires et de récits immersifs enracinés dans les mythologies africaines contemporaines.',
+    foundedYear: '2019',
+    location: 'Cotonou, Bénin',
     stakeholders: [
       // Volet 1 (1–16)
-      {
-        id: 'afrika-1',
-        name: 'Pascal Houndé',
-        roleCategory: 'Fondateur',
-        roleDetail: 'Producteur & Réalisateur',
-        photoUrl: '/assets/duos/coach-office.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Comment faire rayonner la mémoire et les voix vivantes de notre terre ?'
-      },
-      {
-        id: 'afrika-2',
-        name: 'Amina Traoré',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Cheffe monteuse',
-        photoUrl: '/assets/protagonists/adjovi-blandine.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Comment le montage cinématographique protège-t-il la vérité d’un récit ?'
-      },
-      {
-        id: 'afrika-3',
-        name: 'Koffi Mensah',
-        roleCategory: 'Fournisseur',
-        roleDetail: 'Directeur photo & drone',
-        photoUrl: '/assets/protagonists/chef-koffi.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Quelle exigence technique garantit la souveraineté de nos images ?'
-      },
-      {
-        id: 'afrika-4',
-        name: 'Marc Houndégla',
-        roleCategory: 'Client',
-        roleDetail: 'Diffuseur partenaire',
-        photoUrl: '/assets/duos/kwame-mensah.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Pourquoi l’authenticité d’un documentaire touche-t-elle plus qu’une simple publicité ?'
-      },
-      {
-        id: 'afrika-5',
-        name: 'Ousmane Sow',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Coproduction panafricaine',
-        photoUrl: '/assets/duos/athlete-hurdle.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Comment mutualiser nos moyens créatifs pour conquérir les écrans internationaux ?'
-      },
-      {
-        id: 'afrika-6',
-        name: 'Mariama Ba',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Ingénieure du son',
-        photoUrl: '/assets/protagonists/amara-tisserande.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Pourquoi le son direct capte-t-il l’âme invisible d’une cérémonie ?'
-      },
-      {
-        id: 'afrika-7',
-        name: 'Sénan Agossa',
-        roleCategory: 'Membre',
-        roleDetail: 'Documentariste terrain',
-        photoUrl: '/assets/protagonists/senan-agossa.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-        question: 'Comment se faire oublier pour laisser surgir la parole nue des anciens ?'
-      },
-      {
-        id: 'afrika-8',
-        name: 'Tobi Houndégla',
-        roleCategory: 'Fournisseur',
-        roleDetail: 'Coloriste étalonneur',
-        photoUrl: '/assets/protagonists/tobi-houndegla.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Comment restituer la lumière dorée des après-midis lagunaires sans artifice ?'
-      },
-      {
-        id: 'afrika-9',
-        name: 'Fatou Diallo',
-        roleCategory: 'Client',
-        roleDetail: 'Directrice de festival',
-        photoUrl: '/assets/duos/fatou-diallo.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'En quoi les récits authentiques reconstruisent-ils la confiance de notre jeunesse ?'
-      },
-      {
-        id: 'afrika-10',
-        name: 'Codjo Gbédji',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Régisseur général',
-        photoUrl: '/assets/protagonists/codjo-blind.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Comment surmonter l’imprévu météorologique sur un tournage fluvial ?'
-      },
-      {
-        id: 'afrika-11',
-        name: 'Éléonore Vance',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Formatrice aux écritures',
-        photoUrl: '/assets/duos/eleonore-vance.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Comment transmettre la rigueur dramaturgique aux jeunes cinéastes ?'
-      },
-      {
-        id: 'afrika-12',
-        name: 'Malik Diop',
-        roleCategory: 'Bienfaiteur',
-        roleDetail: 'Mécène des arts',
-        photoUrl: '/assets/duos/malik-diop.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Pourquoi investir dans la conservation audiovisuelle de nos patrimoines ?'
-      },
-      {
-        id: 'afrika-13',
-        name: 'Dah Zounon',
-        roleCategory: 'Membre',
-        roleDetail: 'Conseiller aux traditions',
-        photoUrl: '/assets/duos/dah-zounon.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-        question: 'Quelle parole doit rester secrète et laquelle peut être offerte au monde ?'
-      },
-      {
-        id: 'afrika-14',
-        name: 'Clara Dossou',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Community manager',
-        photoUrl: '/assets/duos/photographer-focus.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Comment fédérer une communauté internationale autour de récits intimes ?'
-      },
-      {
-        id: 'afrika-15',
-        name: 'Armel Hounkpatin',
-        roleCategory: 'Client',
-        roleDetail: 'Conservateur de musée',
-        photoUrl: '/assets/protagonists/armel-hounkpatin.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Pourquoi une capsule vidéo donne-t-elle plus de vie aux objets qu’un cartel ?'
-      },
-      {
-        id: 'afrika-16',
-        name: 'Hélène Saint-Amand',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Avocate des droits d’auteur',
-        photoUrl: '/assets/protagonists/helene-saint-amand.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Comment protéger les voix traditionnelles contre la spoliation intellectuelle ?'
-      },
+      { id: 'afrika-1', name: 'Pascal Houndé', roleCategory: 'Fondateur', roleDetail: 'Réalisateur en chef', photoUrl: '/assets/duos/coach-office.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Comment faire rayonner la mémoire et les voix vivantes de notre terre ?' },
+      { id: 'afrika-2', name: 'Amina Traoré', roleCategory: 'Collaborateur', roleDetail: 'Chef monteuse', photoUrl: '/assets/protagonists/adjovi-blandine.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Comment le montage cinématographique protège-t-il la vérité d’un récit ?' },
+      { id: 'afrika-3', name: 'Koffi Mensah', roleCategory: 'Fournisseur', roleDetail: 'Directeur photo', photoUrl: '/assets/protagonists/chef-koffi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Quelle exigence technique garantit la souveraineté de nos images ?' },
+      { id: 'afrika-4', name: 'Marc Houndégla', roleCategory: 'Client', roleDetail: 'Diffuseur Afrique centrale', photoUrl: '/assets/duos/kwame-mensah.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Pourquoi l’authenticité d’un documentaire touche-t-elle plus qu’une simple publicité ?' },
+      { id: 'afrika-5', name: 'Ousmane Sow', roleCategory: 'Partenaire', roleDetail: 'Scénariste & Archiviste', photoUrl: '/assets/duos/athlete-hurdle.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Comment mutualiser nos moyens créatifs pour conquérir les écrans internationaux ?' },
+      { id: 'afrika-6', name: 'Félicité Zannou', roleCategory: 'Collaborateur', roleDetail: 'Ingénieure du son', photoUrl: '/assets/protagonists/gisele-adissin.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'En quoi les silences et les polyphonies traditionnelles forgent-ils l’émotion pure ?' },
+      { id: 'afrika-7', name: 'Benoît Sossou', roleCategory: 'Collaborateur', roleDetail: 'Directeur artistique 3D', photoUrl: '/assets/protagonists/hospice-avlessi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Comment hybrider les motifs ancestraux du Vodun et les technologies numériques ?' },
+      { id: 'afrika-8', name: 'Diane Dossou', roleCategory: 'Partenaire', roleDetail: 'Coordinatrice festivals', photoUrl: '/assets/protagonists/reine-kpodjito.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Quel pont construire entre nos productions locales et les grands festivals mondiaux ?' },
+      { id: 'afrika-9', name: 'Sébastien Kiki', roleCategory: 'Collaborateur', roleDetail: 'Pilote drone cinéma', photoUrl: '/assets/protagonists/mahougnon-kakpo.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Quel regard vertical sur nos cités lacustres offre la vue aérienne cinématographique ?' },
+      { id: 'afrika-10', name: 'Chantal Houessou', roleCategory: 'Collaborateur', roleDetail: 'Directrice de production', photoUrl: '/assets/protagonists/solange-tevoedjre.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Comment structurer une filière audiovisuelle autonome et juste pour les techniciens ?' },
+      { id: 'afrika-11', name: 'Jean-Luc Agbo', roleCategory: 'Client', roleDetail: 'Directeur fondation culturelle', photoUrl: '/assets/protagonists/sage-koffi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Pourquoi financer la mémoire vivante plutôt que des contenus éphémères ?' },
+      { id: 'afrika-12', name: 'Rosine Agossou', roleCategory: 'Collaborateur', roleDetail: 'Costumière textile royal', photoUrl: '/assets/protagonists/tatiana-gnanhou.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Comment le tissage traditionnel raconte-t-il l’histoire invisible des lignées ?' },
+      { id: 'afrika-13', name: 'Gilles Alapini', roleCategory: 'Partenaire', roleDetail: 'Historien consultant', photoUrl: '/assets/protagonists/paul-insee.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Comment vérifier l’exactitude des mythes fondateurs sans en éteindre la poésie ?' },
+      { id: 'afrika-14', name: 'Yvette Ahounou', roleCategory: 'Bénévole', roleDetail: 'Médiatrice des projections scolaires', photoUrl: '/assets/protagonists/zenab-oumar.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Quel impact ont les héros africains sur l’estime de soi des écoliers ?' },
+      { id: 'afrika-15', name: 'Thierry Medegan', roleCategory: 'Fournisseur', roleDetail: 'Facteur d’instruments & acoustique', photoUrl: '/assets/protagonists/victor-dossou.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Pourquoi les tambours sacrés exigent-ils une captation sonore singulière ?' },
+      { id: 'afrika-16', name: 'Awa Cissé', roleCategory: 'Bienfaiteur', roleDetail: 'Mécène transmission jeunesse', photoUrl: '/assets/protagonists/fatou-diop.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Pourquoi léguer des archives visuelles vivantes est le plus beau des héritages ?' },
+
       // Volet 2 (17–32)
-      {
-        id: 'afrika-17',
-        name: 'Sayri Quispe',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Opérateur drone & cartographie',
-        photoUrl: '/assets/duos/sayri-quispe.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Quelle perspective aérienne révèle la géographie sacrée de nos villages ?'
-      },
-      {
-        id: 'afrika-18',
-        name: 'Blandine Adjovi',
-        roleCategory: 'Membre',
-        roleDetail: 'Traductrice en langues locales',
-        photoUrl: '/assets/protagonists/adjovi-blandine.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Comment traduire la poésie du fon sans perdre la métaphore ancestrale ?'
-      },
-      {
-        id: 'afrika-19',
-        name: 'Babacar Ndiaye',
-        roleCategory: 'Fournisseur',
-        roleDetail: 'Loueur matériel cinéma',
-        photoUrl: '/assets/duos/kwame-mensah.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-        question: 'Quelle logistique permet de tourner sous 40 degrés en pleine brousse ?'
-      },
-      {
-        id: 'afrika-20',
-        name: 'Sika Dossou',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Chargée de post-production',
-        photoUrl: '/assets/protagonists/sika-dossou.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Comment garantir l’archivage numérique pérenne sur plusieurs décennies ?'
-      },
-      {
-        id: 'afrika-21',
-        name: 'Dieudonné Mensah',
-        roleCategory: 'Client',
-        roleDetail: 'Directeur d’institut culturel',
-        photoUrl: '/assets/duos/athlete-hurdle.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Pourquoi le cinéma documentaire est-il le plus grand diplomate culturel ?'
-      },
-      {
-        id: 'afrika-22',
-        name: 'Nadine Tossou',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Diffuseur web nomade',
-        photoUrl: '/assets/duos/eleonore-vance.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Comment toucher les publics éloignés des salles de projection ?'
-      },
-      {
-        id: 'afrika-23',
-        name: 'Koffi Tisserand',
-        roleCategory: 'Bienfaiteur',
-        roleDetail: 'Mécène et artisan textile',
-        photoUrl: '/assets/protagonists/koffi-tisserand.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'En quoi filmer un geste ancestral honore-t-il la lignée d’un métier ?'
-      },
-      {
-        id: 'afrika-24',
-        name: 'Amara Diabaté',
-        roleCategory: 'Membre',
-        roleDetail: 'Musicienne compositrice',
-        photoUrl: '/assets/protagonists/amara-tisserande.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Comment la kora dialogue-t-elle avec le rythme intérieur d’un film ?'
-      },
-      {
-        id: 'afrika-25',
-        name: 'Père Matthieu',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Médiateur patrimonial',
-        photoUrl: '/assets/protagonists/pere-matthieu.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-        question: 'Comment concilier foi, histoire locale et transmission interreligieuse ?'
-      },
-      {
-        id: 'afrika-26',
-        name: 'Mawuna Agbessi',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Scripte & archiviste',
-        photoUrl: '/assets/protagonists/mawuna-medium.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Pourquoi chaque seconde de rush non retenue a-t-elle une valeur historique ?'
-      },
-      {
-        id: 'afrika-27',
-        name: 'Dah Mahougnon',
-        roleCategory: 'Bienfaiteur',
-        roleDetail: 'Doyen bienfaiteur',
-        photoUrl: '/assets/protagonists/mahougnon_esu_portrait_1791701582891.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Quelle promesse faisons-nous aux enfants lorsqu’on enregistre leurs grands-parents ?'
-      },
-      {
-        id: 'afrika-28',
-        name: 'Chantal Agbo',
-        roleCategory: 'Fournisseur',
-        roleDetail: 'Catering biologique de tournage',
-        photoUrl: '/assets/duos/fatou-diallo.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Pourquoi la convivialité de table cimente-t-elle la cohésion d’une équipe ?'
-      },
-      {
-        id: 'afrika-29',
-        name: 'Samuel Koudjo',
-        roleCategory: 'Client',
-        roleDetail: 'Président d’ONG environnementale',
-        photoUrl: '/assets/protagonists/chef-koffi.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Comment un film de 4 minutes mobilise-t-il plus d’adhésions qu’un rapport de 100 pages ?'
-      },
-      {
-        id: 'afrika-30',
-        name: 'Tariq Al-Mansoor',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Plateforme de streaming solidaire',
-        photoUrl: '/assets/duos/sayri-quispe.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Comment redistribuer 80% des revenus de diffusion directement aux créateurs ?'
-      },
-      {
-        id: 'afrika-31',
-        name: 'Jeanne Hounkpatin',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Assistante de réalisation',
-        photoUrl: '/assets/duos/eleonore-vance.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-        question: 'Quelle est la première règle d’or pour rassurer un intervenant intimidé ?'
-      },
-      {
-        id: 'afrika-32',
-        name: 'Pascal Cossy',
-        roleCategory: 'Fondateur',
-        roleDetail: 'Cofondateur émérite',
-        photoUrl: '/assets/duos/coach-office.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Quelle flamme nous guide quand toutes les portes de financement se ferment ?'
-      }
+      { id: 'afrika-17', name: 'Serge Gbaguidi', roleCategory: 'Collaborateur', roleDetail: 'Étalonneur numérique', photoUrl: '/assets/duos/athlete-hurdle.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Comment magnifier les peaux noires et les lumières chaudes du tropique ?' },
+      { id: 'afrika-18', name: 'Monique Lawson', roleCategory: 'Client', roleDetail: 'Conservatrice de musée', photoUrl: '/assets/protagonists/adjovi-blandine.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'En quoi les capsules interactives dynamisent-elles les expositions muséales ?' },
+      { id: 'afrika-19', name: 'David Hounkpati', roleCategory: 'Collaborateur', roleDetail: 'Composteur sonore & mixeur', photoUrl: '/assets/protagonists/chef-koffi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Comment composer la bande-son d’un conte qui traverse les siècles ?' },
+      { id: 'afrika-20', name: 'Nadège Kouassi', roleCategory: 'Partenaire', roleDetail: 'Distributrice cinémas mobiles', photoUrl: '/assets/duos/coach-office.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Comment apporter le cinéma aux villages les plus reculés sans électricité ?' },
+      { id: 'afrika-21', name: 'Romuald Degila', roleCategory: 'Collaborateur', roleDetail: 'Graphiste & Titreur', photoUrl: '/assets/protagonists/mahougnon-kakpo.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Comment dessiner des typographies qui résonnent avec les écritures géomantiques ?' },
+      { id: 'afrika-22', name: 'Clarisse Vigan', roleCategory: 'Bénévole', roleDetail: 'Archiviste pellicules', photoUrl: '/assets/protagonists/solange-tevoedjre.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Pourquoi sauver les bobines des années 1960 est une urgence mémorielle ?' },
+      { id: 'afrika-23', name: 'Éric Tossou', roleCategory: 'Fournisseur', roleDetail: 'Régisseur général mobile', photoUrl: '/assets/protagonists/hospice-avlessi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Comment installer un plateau de tournage respectueux des sanctuaires naturels ?' },
+      { id: 'afrika-24', name: 'Prudence Senou', roleCategory: 'Collaborateur', roleDetail: 'Rédactrice éditoriale', photoUrl: '/assets/protagonists/reine-kpodjito.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Comment traduire la parole des anciens sans en édulcorer la force philosophique ?' },
+      { id: 'afrika-25', name: 'Arsène Djivo', roleCategory: 'Client', roleDetail: 'Ministère du Tourisme & Arts', photoUrl: '/assets/protagonists/sage-koffi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Comment le film de marque transcende-t-il la simple communication territoriale ?' },
+      { id: 'afrika-26', name: 'Solange Kpamegan', roleCategory: 'Collaborateur', roleDetail: 'Photographe de plateau', photoUrl: '/assets/protagonists/tatiana-gnanhou.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Comment figer l’émotion d’un instant de tournage pour en faire un tableau ?' },
+      { id: 'afrika-27', name: 'Nestor Agbodjan', roleCategory: 'Partenaire', roleDetail: 'École d’art de Porto-Novo', photoUrl: '/assets/protagonists/paul-insee.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Comment former la prochaine génération de réalisateurs africains de classe mondiale ?' },
+      { id: 'afrika-28', name: 'Esther Dossou', roleCategory: 'Collaborateur', roleDetail: 'Traductrice multilingue (Fon/Yoruba/Français)', photoUrl: '/assets/protagonists/zenab-oumar.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Comment préserver les nuances métaphoriques d’une langue ancestrale au sous-titrage ?' },
+      { id: 'afrika-29', name: 'Armand Houndonougbo', roleCategory: 'Collaborateur', roleDetail: 'Développeur applications interactives', photoUrl: '/assets/protagonists/victor-dossou.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Comment transformer un documentaire passif en une expérience contemplative active ?' },
+      { id: 'afrika-30', name: 'Fatou Kaba', roleCategory: 'Bienfaiteur', roleDetail: 'Fonds cinéma panafricain', photoUrl: '/assets/protagonists/fatou-diop.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Quelle est la puissance du cinéma pour guérir les blessures post-coloniales ?' },
+      { id: 'afrika-31', name: 'Jérôme Danvidé', roleCategory: 'Client', roleDetail: 'Directeur festival de Ouidah', photoUrl: '/assets/duos/kwame-mensah.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Comment un festival peut-il faire vibrer toute une communauté pendant dix jours ?' },
+      { id: 'afrika-32', name: 'Sika Mensah', roleCategory: 'Collaborateur', roleDetail: 'Responsable des relations talents', photoUrl: '/assets/protagonists/gisele-adissin.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Comment accueillir les conteurs et sages pour qu’ils se sentent en pleine confiance ?' }
     ]
   },
-
-  // 2. Association « Voir Autrement » (Inclusion, Handicap Visuel & Dignité - 32 intervenants)
   {
     id: 'voir-autrement',
-    category: 'Solidarité & Handicap',
-    companyName: 'Voir Autrement',
-    photoUrl: '/assets/duos/codjo-blind.jpg',
-    logoUrl: '/assets/duos/codjo-blind.jpg',
+    category: 'Inclusion & Solidarité',
+    companyName: 'Association Voir Autrement',
+    photoUrl: '/assets/directions/sagesses-anciens.jpg',
     videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
     manifestoVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-    manifestoTitle: 'Manifeste « Voir Autrement » : La vision du cœur',
-    manifestoQuestion: 'Comment percevoir la beauté du monde quand les yeux physiques se sont éteints ?',
-    manifestoDescription: 'Association engagée pour l’inclusion des personnes non-voyantes et malvoyantes à travers l’accès au numérique, la culture orale et l’autonomie socio-économique.',
-    tagline: 'Inclusion, dignité et regards intérieurs',
+    manifestoQuestion: 'Quand les yeux s’éteignent, quelle clarté intérieure s’allume pour guider la communauté ?',
+    tagline: 'L’inclusion, la dignité et le regard du cœur',
+    description: 'Organisation béninoise pionnière pour l’émancipation, la formation professionnelle et l’épanouissement des personnes malvoyantes et non-voyantes.',
+    foundedYear: '2016',
+    location: 'Abomey-Calavi & Cotonou',
     stakeholders: [
-      // Volet 1 (1–16)
-      {
-        id: 'voir-1',
-        name: 'Pascal Cossi',
-        roleCategory: 'Président',
-        roleDetail: 'Président fondateur & Prêtre du Fâ',
-        photoUrl: '/assets/duos/coach-office.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Qu’est-ce qui, un jour, vous a fait sentir que voir avec l’âme dépasse la lumière physique ?'
-      },
-      {
-        id: 'voir-2',
-        name: 'Clarisse Houénou',
-        roleCategory: 'Secrétaire',
-        roleDetail: 'Secrétaire générale',
-        photoUrl: '/assets/protagonists/adjovi-blandine.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Comment structurer l’entraide pour qu’aucun adhérent isolé ne reste sans soutien ?'
-      },
-      {
-        id: 'voir-3',
-        name: 'Geneviève Agossa',
-        roleCategory: 'Trésorière',
-        roleDetail: 'Trésorière bénévole',
-        photoUrl: '/assets/duos/fatou-diallo.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Quelle rigueur comptable garantit que chaque don parvient directement aux cannes blanches ?'
-      },
-      {
-        id: 'voir-4',
-        name: 'Codjo Gbédji',
-        roleCategory: 'Membre',
-        roleDetail: 'Bénéficiaire & Formateur braille',
-        photoUrl: '/assets/protagonists/codjo-blind.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Comment la lecture tactile m’a ouvert les portes de l’université et de la liberté ?'
-      },
-      {
-        id: 'voir-5',
-        name: 'Dr. Alexis Sossou',
-        roleCategory: 'Bienfaiteur',
-        roleDetail: 'Ophtalmologiste solidaire',
-        photoUrl: '/assets/duos/athlete-hurdle.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Pourquoi le dépistage précoce en zone rurale sauve-t-il la vue de milliers d’enfants ?'
-      },
-      {
-        id: 'voir-6',
-        name: 'Mireille Kpassassi',
-        roleCategory: 'Bénévole',
-        roleDetail: 'Accompagnatrice mobilité',
-        photoUrl: '/assets/duos/eleonore-vance.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-        question: 'Comment guider sans infantiliser, pour que la personne marche la tête haute ?'
-      },
-      {
-        id: 'voir-7',
-        name: 'Romain Tossou',
-        roleCategory: 'Membre',
-        roleDetail: 'Musicien percussionniste',
-        photoUrl: '/assets/protagonists/chef-koffi.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'En quoi l’ouïe développe-t-elle une précision rythmique que les yeux ignorent ?'
-      },
-      {
-        id: 'voir-8',
-        name: 'Adélaïde Mensah',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Directrice école spécialisée',
-        photoUrl: '/assets/protagonists/amara-tisserande.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Comment scolariser ensemble enfants voyants et non-voyants pour vaincre la peur ?'
-      },
-      {
-        id: 'voir-9',
-        name: 'Inès Houndété',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Formatrice outils vocaux',
-        photoUrl: '/assets/duos/photographer-focus.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Comment les smartphones à synthèse vocale révolutionnent-ils l’autonomie au quotidien ?'
-      },
-      {
-        id: 'voir-10',
-        name: 'Gaston Houndégla',
-        roleCategory: 'Bienfaiteur',
-        roleDetail: 'Donateur régulier',
-        photoUrl: '/assets/duos/kwame-mensah.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Quelle responsabilité sociale pour les entrepreneurs béninois envers leurs frères vulnérables ?'
-      },
-      {
-        id: 'voir-11',
-        name: 'Béatrice Agbo',
-        roleCategory: 'Membre',
-        roleDetail: 'Artisane vannerie',
-        photoUrl: '/assets/protagonists/senan-agossa.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Comment le tressage au toucher transforme-t-il la fibre végétale en œuvre d’art ?'
-      },
-      {
-        id: 'voir-12',
-        name: 'Fidèle Zounon',
-        roleCategory: 'Bénévole',
-        roleDetail: 'Chauffeur accompagnateur',
-        photoUrl: '/assets/duos/dah-zounon.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-        question: 'Pourquoi consacrer mes dimanches à transporter les membres aux réunions fraternelles ?'
-      },
-      {
-        id: 'voir-13',
-        name: 'Viviane Dossou',
-        roleCategory: 'Fournisseur',
-        roleDetail: 'Importatrice cannes & montures',
-        photoUrl: '/assets/protagonists/sika-dossou.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Comment réduire le coût du matériel orthoptique importé pour les familles modestes ?'
-      },
-      {
-        id: 'voir-14',
-        name: 'Salomon Hounkpatin',
-        roleCategory: 'Client',
-        roleDetail: 'Bénéficiaire microcrédit',
-        photoUrl: '/assets/protagonists/armel-hounkpatin.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Comment avoir créé ma boutique d’épices m’a rendu ma fierté de père de famille ?'
-      },
-      {
-        id: 'voir-15',
-        name: 'Thérèse Saint-Amand',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Représentante ministère de la santé',
-        photoUrl: '/assets/protagonists/helene-saint-amand.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Quelle politique publique pour rendre chaque bâtiment officiel accessible aux malvoyants ?'
-      },
-      {
-        id: 'voir-16',
-        name: 'Stanislas Mensah',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Coordinateur des ateliers de sensibilisation',
-        photoUrl: '/assets/duos/malik-diop.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Comment faire vivre une heure dans l’obscurité totale à des collégiens pour changer leur regard ?'
-      },
-      // Volet 2 (17–32)
-      {
-        id: 'voir-17',
-        name: 'Père Matthieu',
-        roleCategory: 'Bienfaiteur',
-        roleDetail: 'Conseiller spirituel bénévole',
-        photoUrl: '/assets/protagonists/pere-matthieu.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'En quoi l’accueil de la fragilité est-il le plus grand révélateur de notre humanité ?'
-      },
-      {
-        id: 'voir-18',
-        name: 'Solange Koudjo',
-        roleCategory: 'Membre',
-        roleDetail: 'Animatrice de radio locale',
-        photoUrl: '/assets/protagonists/adjovi-blandine.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-        question: 'Pourquoi la voix est-elle le véhicule le plus pur de la fraternité humaine ?'
-      },
-      {
-        id: 'voir-19',
-        name: 'Blandine Adjovi',
-        roleCategory: 'Bénévole',
-        roleDetail: 'Lectrice de livres audio',
-        photoUrl: '/assets/duos/eleonore-vance.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Quelle émotion naît lorsqu’on prête sa voix pour donner accès aux grands romans ?'
-      },
-      {
-        id: 'voir-20',
-        name: 'Koffi Tisserand',
-        roleCategory: 'Membre',
-        roleDetail: 'Masseur kinésithérapeute non-voyant',
-        photoUrl: '/assets/protagonists/koffi-tisserand.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Comment mes mains détectent-elles les nœuds de tension mieux que n’importe quel scanner ?'
-      },
-      {
-        id: 'voir-21',
-        name: 'Mawuna Agbessi',
-        roleCategory: 'Secrétaire',
-        roleDetail: 'Secrétaire adjointe',
-        photoUrl: '/assets/protagonists/mawuna-medium.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Comment tenir un registre d’adhésions parfaitement à jour avec un lecteur d’écran ?'
-      },
-      {
-        id: 'voir-22',
-        name: 'Dah Mahougnon',
-        roleCategory: 'Bienfaiteur',
-        roleDetail: 'Doyen bienfaiteur de la lagune',
-        photoUrl: '/assets/protagonists/mahougnon_esu_portrait_1791701582891.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Pourquoi dans nos contes ancestraux les aveugles sont-ils les vrais devins ?'
-      },
-      {
-        id: 'voir-23',
-        name: 'Amara Diabaté',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Professeure de chant choral',
-        photoUrl: '/assets/protagonists/amara-tisserande.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Comment la chorale de l’association unifie-t-elle les cœurs au-delà des épreuves ?'
-      },
-      {
-        id: 'voir-24',
-        name: 'Sayri Quispe',
-        roleCategory: 'Bénévole',
-        roleDetail: 'Ingénieur bénévole en domotique sonore',
-        photoUrl: '/assets/duos/sayri-quispe.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-        question: 'Comment adapter une maison avec des balises sonores à coût quasi nul ?'
-      },
-      {
-        id: 'voir-25',
-        name: 'Chantal Agbo',
-        roleCategory: 'Trésorière',
-        roleDetail: 'Auditrice bénévole',
-        photoUrl: '/assets/duos/fatou-diallo.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Pourquoi la transparence totale des comptes attire-t-elle la confiance des fondations ?'
-      },
-      {
-        id: 'voir-26',
-        name: 'Tobi Houndégla',
-        roleCategory: 'Membre',
-        roleDetail: 'Étudiant en droit',
-        photoUrl: '/assets/protagonists/tobi-houndegla.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Comment plaider demain au barreau sans voir le visage des juges mais en sentant leur voix ?'
-      },
-      {
-        id: 'voir-27',
-        name: 'Babacar Ndiaye',
-        roleCategory: 'Bienfaiteur',
-        roleDetail: 'Donateur d’équipements solaires',
-        photoUrl: '/assets/duos/kwame-mensah.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Pourquoi garantir la lumière et le ventilateur solaire dans le centre d’accueil ?'
-      },
-      {
-        id: 'voir-28',
-        name: 'Marc Houndégla',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Juriste référent handicap',
-        photoUrl: '/assets/duos/athlete-hurdle.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Comment faire appliquer concrètement la loi d’embauche des personnes handicapées ?'
-      },
-      {
-        id: 'voir-29',
-        name: 'Nadine Tossou',
-        roleCategory: 'Bénévole',
-        roleDetail: 'Psychologue clinicienne bénévole',
-        photoUrl: '/assets/duos/eleonore-vance.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Comment accompagner une personne qui perd la vue brutalement à l’âge adulte ?'
-      },
-      {
-        id: 'voir-30',
-        name: 'Samuel Koudjo',
-        roleCategory: 'Membre',
-        roleDetail: 'Champion handisport de cécifoot',
-        photoUrl: '/assets/protagonists/chef-koffi.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-        question: 'Quelle adrénaline ressent-on lorsqu’on tire dans un ballon à clochette en pleine course ?'
-      },
-      {
-        id: 'voir-31',
-        name: 'Tariq Al-Mansoor',
-        roleCategory: 'Bienfaiteur',
-        roleDetail: 'Fondateur mécène tech inclusive',
-        photoUrl: '/assets/duos/sayri-quispe.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Comment l’IA et la reconnaissance d’images redonnent-elles une description en direct du monde ?'
-      },
-      {
-        id: 'voir-32',
-        name: 'Pascal Cossi',
-        roleCategory: 'Président',
-        roleDetail: 'Mot d’espérance finale',
-        photoUrl: '/assets/duos/coach-office.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Pourquoi l’obscurité physique peut-elle révéler la plus grande clarté intérieure ?'
-      }
+      { id: 'va-1', name: 'Pascal Cossi', roleCategory: 'Fondateur', roleDetail: 'Président & Enseignant en braille', photoUrl: '/assets/protagonists/mahougnon-kakpo.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4', question: 'Comment faire de la cécité non pas une fatalité, mais une force d’intuition et de leadership ?' },
+      { id: 'va-2', name: 'Clémence Houéto', roleCategory: 'Collaborateur', roleDetail: 'Vice-présidente & Juriste', photoUrl: '/assets/protagonists/adjovi-blandine.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Quelles lois devons-nous forger pour garantir l’accès à l’emploi des personnes handicapées ?' },
+      { id: 'va-3', name: 'Dr. Émile Dossou', roleCategory: 'Partenaire', roleDetail: 'Ophtalmologue bénévole', photoUrl: '/assets/protagonists/hospice-avlessi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Comment le dépistage précoce chez les enfants peut-il sauver des milliers d’avenirs ?' },
+      { id: 'va-4', name: 'Solange Zinsou', roleCategory: 'Bénévole', roleDetail: 'Formatrice en informatique vocale', photoUrl: '/assets/protagonists/solange-tevoedjre.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Comment le numérique rend-il la liberté totale à une personne non-voyante ?' },
+      { id: 'va-5', name: 'Aristide Kpanou', roleCategory: 'Client', roleDetail: 'Musicien & Compositeur bénéficiaire', photoUrl: '/assets/protagonists/chef-koffi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'En quoi l’ouïe développée permet-elle de capter des harmonies invisibles aux autres ?' },
+      { id: 'va-6', name: 'Geneviève Agbo', roleCategory: 'Collaborateur', roleDetail: 'Trésorière générale', photoUrl: '/assets/protagonists/reine-kpodjito.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Quelle transparence financière exige la gestion de fonds d’entraide solidaire ?' },
+      { id: 'va-7', name: 'Martial Houndété', roleCategory: 'Fournisseur', roleDetail: 'Concepteur de cannes blanches ergonomiques', photoUrl: '/assets/protagonists/victor-dossou.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Comment fabriquer localement des cannes fiables et adaptées à nos chaussées ?' },
+      { id: 'va-8', name: 'Béatrice Tokpo', roleCategory: 'Bénévole', roleDetail: 'Accompagnatrice lecture et études', photoUrl: '/assets/protagonists/tatiana-gnanhou.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Que reçoit-on en retour lorsqu’on prête sa voix à un étudiant qui prépare son diplôme ?' },
+      { id: 'va-9', name: 'Fulgence Gnanvi', roleCategory: 'Bienfaiteur', roleDetail: 'Entrepreneur solidaire mécène', photoUrl: '/assets/protagonists/sage-koffi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Pourquoi une grande entreprise doit-elle investir dans l’accessibilité universelle ?' },
+      { id: 'va-10', name: 'Pelagie Houndonou', roleCategory: 'Collaborateur', roleDetail: 'Animatrice des ateliers de tissage sensoriel', photoUrl: '/assets/protagonists/zenab-oumar.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Comment le toucher révèle-t-il la qualité divine d’une étoffe ?' },
+      { id: 'va-11', name: 'Gérard Sodji', roleCategory: 'Partenaire', roleDetail: 'Directeur école inclusive de Calavi', photoUrl: '/assets/protagonists/paul-insee.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Comment faire cohabiter enfants voyants et non-voyants dans une même classe ?' },
+      { id: 'va-12', name: 'Christelle Houngbédji', roleCategory: 'Client', roleDetail: 'Entrepreneure en savonnerie artisanale', photoUrl: '/assets/protagonists/gisele-adissin.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Comment ai-je bâti mon atelier sans jamais voir mes mains fabriquer le savon ?' },
+      { id: 'va-13', name: 'Lucien Alladatin', roleCategory: 'Collaborateur', roleDetail: 'Chargé de plaidoyer transport urbain', photoUrl: '/assets/duos/athlete-hurdle.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Comment repenser nos carrefours et nos bus pour que chacun s’y déplace en paix ?' },
+      { id: 'va-14', name: 'Prisca Adandé', roleCategory: 'Bénévole', roleDetail: 'Psychologue écoute famille', photoUrl: '/assets/protagonists/fatou-diop.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Comment apaiser le deuil des parents lorsqu’un enfant perd la vue ?' },
+      { id: 'va-15', name: 'Théophile Boco', roleCategory: 'Client', roleDetail: 'Athlète para-olympique sprint guidé', photoUrl: '/assets/duos/kwame-mensah.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Quelle confiance absolue unit un coureur aveugle et son guide sur la piste ?' },
+      { id: 'va-16', name: 'Agnès Vianou', roleCategory: 'Bienfaiteur', roleDetail: 'Donatrice bourses universitaires', photoUrl: '/assets/duos/coach-office.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Pourquoi financer les études d’un brillant étudiant non-voyant transforme toute une lignée ?' }
     ]
   },
-
-  // 3. Association « Doli Doli » (Culture, Enfance & Traditions Orales - 32 intervenants)
   {
     id: 'doli-doli',
     category: 'Culture & Enfance',
     companyName: 'Association Doli Doli',
-    photoUrl: '/assets/directions/tradition-orale.jpg',
-    logoUrl: '/assets/directions/tradition-orale.jpg',
+    photoUrl: '/assets/directions/arts-parole.jpg',
     videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
     manifestoVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-    manifestoTitle: 'Manifeste Doli Doli : Éveiller l’enfance par le conte',
-    manifestoQuestion: 'Comment semer les valeurs de nos aïeux dans le cœur des enfants d’aujourd’hui ?',
-    manifestoDescription: 'Mouvement associatif d’éveil culturel, d’initiation aux contes ancestraux et d’éducation populaire pour les enfants et familles.',
-    tagline: 'Contes, rires d’enfants et racines vivantes',
+    manifestoQuestion: 'Comment les contes et proverbes de nos grands-mères arment-ils les enfants face au tumulte du monde ?',
+    tagline: 'L’éveil de l’enfance par les traditions orales',
+    description: 'Mouvement éducatif et artistique qui transmet la sève des contes, devinettes et chants traditionnels aux nouvelles générations.',
+    foundedYear: '2018',
+    location: 'Porto-Novo, Bénin',
     stakeholders: [
-      {
-        id: 'doli-1',
-        name: 'Aïcha Dossou',
-        roleCategory: 'Président',
-        roleDetail: 'Conteuse & Présidente',
-        photoUrl: '/assets/protagonists/adjovi-blandine.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Pourquoi un conte transmis le soir sous l’arbre à palabres forge-t-il le caractère pour la vie ?'
-      },
-      {
-        id: 'doli-2',
-        name: 'Gérard Hountondji',
-        roleCategory: 'Secrétaire',
-        roleDetail: 'Animateur pédagogique',
-        photoUrl: '/assets/duos/kwame-mensah.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Comment amener les écoles urbaines à réintégrer les légendes locales dans leurs programmes ?'
-      },
-      {
-        id: 'doli-3',
-        name: 'Victoire Mensah',
-        roleCategory: 'Trésorière',
-        roleDetail: 'Gestionnaire des tournées de contes',
-        photoUrl: '/assets/duos/fatou-diallo.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Comment financer des spectacles de marionnettes gratuits dans les villages lacustres ?'
-      },
-      {
-        id: 'doli-4',
-        name: 'Koffi Mensah',
-        roleCategory: 'Membre',
-        roleDetail: 'Joueur de sanza et percussionniste',
-        photoUrl: '/assets/protagonists/chef-koffi.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Comment la musique capte-t-elle l’attention d’une assemblée de 200 enfants émerveillés ?'
-      },
-      {
-        id: 'doli-5',
-        name: 'Solange Koudjo',
-        roleCategory: 'Bénévole',
-        roleDetail: 'Illustratrice de contes',
-        photoUrl: '/assets/protagonists/amara-tisserande.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Comment dessiner les animaux totémiques avec les couleurs de nos terres ocres ?'
-      },
-      {
-        id: 'doli-6',
-        name: 'Dah Zounon',
-        roleCategory: 'Bienfaiteur',
-        roleDetail: 'Mémoire vivante des récits oubliés',
-        photoUrl: '/assets/duos/dah-zounon.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-        question: 'Quelle fable sur la tortue et la ruse éclaire le mieux les dilemmes du pouvoir ?'
-      },
-      {
-        id: 'doli-7',
-        name: 'Pascal Houndé',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Cinéaste pour l’enfance',
-        photoUrl: '/assets/duos/coach-office.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Comment adapter les contes de Doli Doli en courts métrages animés ?'
-      },
-      {
-        id: 'doli-8',
-        name: 'Sika Dossou',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Médiatrice des bibliothèques de rue',
-        photoUrl: '/assets/protagonists/sika-dossou.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Pourquoi poser une natte et une malle de livres dans un marché déclenche une ruée d’enfants ?'
-      },
-      {
-        id: 'doli-9',
-        name: 'Armel Hounkpatin',
-        roleCategory: 'Client',
-        roleDetail: 'Directeur de centre aéré',
-        photoUrl: '/assets/protagonists/armel-hounkpatin.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Quel impact observez-vous sur l’empathie des enfants après une semaine de contes ?'
-      },
-      {
-        id: 'doli-10',
-        name: 'Éléonore Vance',
-        roleCategory: 'Bienfaiteur',
-        roleDetail: 'Donatrice de nattes et malles de livres',
-        photoUrl: '/assets/duos/eleonore-vance.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Pourquoi le droit à l’émerveillement est-il aussi vital que le droit à la nutrition ?'
-      },
-      {
-        id: 'doli-11',
-        name: 'Codjo Gbédji',
-        roleCategory: 'Membre',
-        roleDetail: 'Conteur en langues régionales',
-        photoUrl: '/assets/protagonists/codjo-blind.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Comment faire vibrer la sonorité d’une onomatopée ancestrale auprès des tout-petits ?'
-      },
-      {
-        id: 'doli-12',
-        name: 'Hélène Saint-Amand',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Défenseure des droits de l’enfant',
-        photoUrl: '/assets/protagonists/helene-saint-amand.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-        question: 'Comment le conte apprend-il aux enfants à dire non à la violence et à l’injustice ?'
-      },
-      {
-        id: 'doli-13',
-        name: 'Tobi Houndégla',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Photographe des tournées',
-        photoUrl: '/assets/protagonists/tobi-houndegla.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Comment immortaliser l’éclat de rire spontané d’un enfant sans déranger la magie ?'
-      },
-      {
-        id: 'doli-14',
-        name: 'Malik Diop',
-        roleCategory: 'Membre',
-        roleDetail: 'Comédien mime',
-        photoUrl: '/assets/duos/malik-diop.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Pourquoi le corps du comédien doit-il devenir tour à tour lion, crocodile ou vent ?'
-      },
-      {
-        id: 'doli-15',
-        name: 'Clara Dossou',
-        roleCategory: 'Bénévole',
-        roleDetail: 'Animatrice d’ateliers d’écriture',
-        photoUrl: '/assets/duos/photographer-focus.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Comment encourager un enfant timide à inventer la fin d’une histoire ?'
-      },
-      {
-        id: 'doli-16',
-        name: 'Père Matthieu',
-        roleCategory: 'Bienfaiteur',
-        roleDetail: 'Mécène d’espaces d’accueil paroissiaux',
-        photoUrl: '/assets/protagonists/pere-matthieu.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Pourquoi ouvrir les cours d’églises aux contes profanes réconcilie foi et tradition ?'
-      }
+      { id: 'doli-1', name: 'Maman Sika', roleCategory: 'Fondateur', roleDetail: 'Conteuse & Gardienne de mémoire', photoUrl: '/assets/protagonists/reine-kpodjito.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Pourquoi un enfant qui a grandi au son des contes ne perdra jamais ses racines ?' },
+      { id: 'doli-2', name: 'Florent Akpo', roleCategory: 'Collaborateur', roleDetail: 'Percussionniste pédagogue', photoUrl: '/assets/protagonists/chef-koffi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Comment le rythme du tam-tam apprend-il la discipline et la joie collective ?' },
+      { id: 'doli-3', name: 'Nathalie Gbaguidi', roleCategory: 'Collaborateur', roleDetail: 'Illustratrice livres jeunesses', photoUrl: '/assets/protagonists/solange-tevoedjre.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Comment donner des couleurs vives aux esprits bienveillants de nos forêts ?' },
+      { id: 'doli-4', name: 'Kouassi Mensah', roleCategory: 'Partenaire', roleDetail: 'Directeur de bibliothèque communale', photoUrl: '/assets/protagonists/mahougnon-kakpo.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Comment transformer une salle d’étude poussiéreuse en sanctuaire vivant de la parole ?' },
+      { id: 'doli-5', name: 'Marie-Reine Dossou', roleCategory: 'Client', roleDetail: 'Mère de famille & lectrice', photoUrl: '/assets/protagonists/adjovi-blandine.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Pourquoi mes enfants préfèrent-ils les contes de Doli Doli aux écrans de smartphones ?' },
+      { id: 'doli-6', name: 'Simon Hountondji', roleCategory: 'Bénévole', roleDetail: 'Animateur des cercles de lecture sous l’arbre', photoUrl: '/assets/protagonists/hospice-avlessi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Quelle magie opère lorsqu’un cercle d’enfants écoute un ancien sous un baobab ?' },
+      { id: 'doli-7', name: 'Évelyne Codo', roleCategory: 'Fournisseur', roleDetail: 'Éditrice de livrets cartonnés en langues nationales', photoUrl: '/assets/protagonists/tatiana-gnanhou.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Pourquoi imprimer en langue Fon et Yoruba dès le cours préparatoire ?' },
+      { id: 'doli-8', name: 'Hervé Boko', roleCategory: 'Collaborateur', roleDetail: 'Marionnettiste traditionnel', photoUrl: '/assets/protagonists/victor-dossou.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Comment donner vie à un morceau de calebasse pour faire rire et réfléchir un village ?' },
+      { id: 'doli-9', name: 'Sylvie Danho', roleCategory: 'Partenaire', roleDetail: 'Inspectrice pédagogique', photoUrl: '/assets/protagonists/gisele-adissin.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Comment insérer les récits oraux dans le programme national officiel ?' },
+      { id: 'doli-10', name: 'Innocent Kpadonou', roleCategory: 'Bénévole', roleDetail: 'Chauffeur du caravane-livre', photoUrl: '/assets/protagonists/sage-koffi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Quelle est la récompense de rouler sur la piste pour apporter des livres aux enfants des campements ?' },
+      { id: 'doli-11', name: 'Colette Agbanglo', roleCategory: 'Bienfaiteur', roleDetail: 'Mécène pour les gouters poétiques', photoUrl: '/assets/protagonists/zenab-oumar.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Pourquoi nourrir l’esprit d’un enfant va toujours de pair avec un bol de papaye et de lait ?' },
+      { id: 'doli-12', name: 'David Zossou', roleCategory: 'Client', roleDetail: 'Élève conteur (13 ans)', photoUrl: '/assets/duos/athlete-hurdle.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Ce que j’ai ressenti le jour où j’ai raconté mon premier conte devant tout le collège ?' },
+      { id: 'doli-13', name: 'Béatrice Agbessi', roleCategory: 'Collaborateur', roleDetail: 'Choriste et gardienne des berceuses', photoUrl: '/assets/protagonists/fatou-diop.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Pourquoi les berceuses africaines apaisent-elles les enfants plus sûrement que tout calmant ?' },
+      { id: 'doli-14', name: 'Roger Tokpon', roleCategory: 'Fournisseur', roleDetail: 'Tailleurs de masques en bois léger', photoUrl: '/assets/duos/coach-office.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Comment respecter l’esprit de l’arbre lorsqu’on sculpte le masque de l’hyène ou du lièvre ?' },
+      { id: 'doli-15', name: 'Yolande Houndé', roleCategory: 'Partenaire', roleDetail: 'Radio communautaire de la vallée', photoUrl: '/assets/duos/kwame-mensah.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Comment l’émission hebdomadaire de contes rassemble des familles entières autour du poste ?' },
+      { id: 'doli-16', name: 'Zacharie Medehou', roleCategory: 'Collaborateur', roleDetail: 'Coordonnateur festival Doli Doli', photoUrl: '/assets/protagonists/paul-insee.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Quelle fierté de voir 500 enfants chanter ensemble l’hymne des ancêtres bienveillants ?' }
     ]
   },
-
-  // 4. MTN Bénin (Télécommunications, Inclusion financière & Fondation - 16 intervenants)
   {
     id: 'mtn-benin',
-    category: 'Télécoms & Numérique',
+    category: 'Télécoms & Fondation',
     companyName: 'MTN Bénin',
     photoUrl: '/assets/directions/marques-tech.jpg',
-    logoUrl: '/assets/directions/marques-tech.jpg',
-    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-    manifestoVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-    manifestoTitle: 'Manifeste MTN Bénin : Relier chaque vie',
-    manifestoQuestion: 'Comment la connectivité mobile brise-t-elle l’isolement géographique de nos terroirs ?',
-    manifestoDescription: 'Opérateur leader des télécommunications et pionnier du paiement mobile avec Mobile Money, soutenant l’éducation et les créateurs locaux via sa Fondation.',
-    tagline: 'Partout où vous allez, la vie connectée',
+    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+    manifestoVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+    manifestoQuestion: 'Comment connecter les cœurs et libérer l’entrepreneuriat au-delà des simples mégabytes ?',
+    tagline: 'Partout où vous allez, grandir ensemble',
+    description: 'Opérateur numérique leader engageant sa fondation dans l’autonomisation des femmes rurales et la digitalisation solidaire des écoles.',
+    foundedYear: '1999',
+    location: 'Cotonou, Bénin',
     stakeholders: [
-      {
-        id: 'mtn-1',
-        name: 'Uche Ofodile',
-        roleCategory: 'Fondateur',
-        roleDetail: 'Directrice Générale',
-        photoUrl: '/assets/duos/eleonore-vance.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Comment faire du numérique le plus grand accélérateur d’inclusion pour les femmes rurales ?'
-      },
-      {
-        id: 'mtn-2',
-        name: 'Serge Houndégla',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Directeur Réseau & Infrastructures',
-        photoUrl: '/assets/duos/coach-office.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Quel défi technique pour déployer la fibre optique à travers les zones inondables du lac Nokoué ?'
-      },
-      {
-        id: 'mtn-3',
-        name: 'Fatou Diallo',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Responsable Fondation MTN',
-        photoUrl: '/assets/duos/fatou-diallo.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Comment équiper 100 salles de classe numériques dans les collèges les plus reculés ?'
-      },
-      {
-        id: 'mtn-4',
-        name: 'Kwame Mensah',
-        roleCategory: 'Client',
-        roleDetail: 'Agent Mobile Money',
-        photoUrl: '/assets/duos/kwame-mensah.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Comment le kiosque de paiement est devenu le cœur battant du commerce de notre quartier ?'
-      },
-      {
-        id: 'mtn-5',
-        name: 'Blandine Adjovi',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Cheffe de projet Fintech',
-        photoUrl: '/assets/protagonists/adjovi-blandine.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Comment concevoir une application de micro-épargne accessible aux non-lettrés ?'
-      },
-      {
-        id: 'mtn-6',
-        name: 'Codjo Gbédji',
-        roleCategory: 'Fournisseur',
-        roleDetail: 'Installateur pylônes solaires',
-        photoUrl: '/assets/protagonists/codjo-blind.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-        question: 'Comment alimenter les antennes relais en énergie 100% solaire sans coupure ?'
-      },
-      {
-        id: 'mtn-7',
-        name: 'Marc Houndégla',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Directeur d’incubateur de startups',
-        photoUrl: '/assets/duos/athlete-hurdle.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Comment l’accès aux API télécoms permet aux jeunes développeurs béninois de créer des licornes ?'
-      },
-      {
-        id: 'mtn-8',
-        name: 'Sika Dossou',
-        roleCategory: 'Client',
-        roleDetail: 'Commerçante de tissus au marché Dantokpa',
-        photoUrl: '/assets/protagonists/sika-dossou.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Pourquoi recevoir mes paiements par QR code a mis fin aux vols et aux faux billets ?'
-      },
-      {
-        id: 'mtn-9',
-        name: 'Armel Hounkpatin',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Support technique client',
-        photoUrl: '/assets/protagonists/armel-hounkpatin.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Quelle écoute bienveillante résout l’inquiétude d’un client face à une transaction suspendue ?'
-      },
-      {
-        id: 'mtn-10',
-        name: 'Hélène Saint-Amand',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Régulatrice des télécoms',
-        photoUrl: '/assets/protagonists/helene-saint-amand.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Comment équilibrer concurrence loyale et protection absolue des données personnelles ?'
-      },
-      {
-        id: 'mtn-11',
-        name: 'Koffi Mensah',
-        roleCategory: 'Fournisseur',
-        roleDetail: 'Distributeur de routeurs ruraux',
-        photoUrl: '/assets/protagonists/chef-koffi.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Comment connecter les coopératives agricoles pour leur donner le cours du maïs en temps réel ?'
-      },
-      {
-        id: 'mtn-12',
-        name: 'Malik Diop',
-        roleCategory: 'Bienfaiteur',
-        roleDetail: 'Parrain des bourses d’excellence étudiantes',
-        photoUrl: '/assets/duos/malik-diop.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-        question: 'Pourquoi financer les études d’ingénierie des jeunes filles scientifiques ?'
-      },
-      {
-        id: 'mtn-13',
-        name: 'Clara Dossou',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Responsable communication de marque',
-        photoUrl: '/assets/duos/photographer-focus.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Comment parler la langue vivante de la rue tout en incarnant un standard mondial ?'
-      },
-      {
-        id: 'mtn-14',
-        name: 'Tobi Houndégla',
-        roleCategory: 'Membre',
-        roleDetail: 'Créateur de contenu partenaire',
-        photoUrl: '/assets/protagonists/tobi-houndegla.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Comment la 4G a permis aux vidéastes locaux d’être diffusés sans complexe dans le monde entier ?'
-      },
-      {
-        id: 'mtn-15',
-        name: 'Sayri Quispe',
-        roleCategory: 'Fournisseur',
-        roleDetail: 'Auditeur cybersécurité',
-        photoUrl: '/assets/duos/sayri-quispe.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Comment veiller 24h/24 contre les attaques frauduleuses pour sécuriser l’épargne populaire ?'
-      },
-      {
-        id: 'mtn-16',
-        name: 'Pascal Cossi',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Président association d’usagers',
-        photoUrl: '/assets/duos/coach-office.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Quelle alliance citoyenne garantit la continuité de service lors des intempéries ?'
-      }
+      { id: 'mtn-1', name: 'Uche Osuji', roleCategory: 'Fondateur', roleDetail: 'Directeur Général', photoUrl: '/assets/duos/kwame-mensah.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Pourquoi l’inclusion financière numérique est le plus grand moteur d’émancipation des femmes rurales ?' },
+      { id: 'mtn-2', name: 'Gisèle Ahouandjinou', roleCategory: 'Collaborateur', roleDetail: 'Directrice de la Fondation MTN', photoUrl: '/assets/protagonists/adjovi-blandine.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Comment transformer chaque profit commercial en écoles numériques solaires ?' },
+      { id: 'mtn-3', name: 'Karim Salami', roleCategory: 'Collaborateur', roleDetail: 'Ingénieur déploiement fibre lacustre', photoUrl: '/assets/protagonists/chef-koffi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Quel défi titanesque représente le passage de la fibre au-dessus de Ganvié ?' },
+      { id: 'mtn-4', name: 'Brigitte Dovo', roleCategory: 'Client', roleDetail: 'Commerçante de Dantokpa utilisatrice MoMo', photoUrl: '/assets/protagonists/reine-kpodjito.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Comment le Mobile Money a protégé mon commerce des incendies et des vols ?' },
+      { id: 'mtn-5', name: 'Armel Hounkponou', roleCategory: 'Partenaire', roleDetail: 'Fondateur incubateur Yeleen Tech', photoUrl: '/assets/protagonists/mahougnon-kakpo.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Comment MTN finance et accélère les startups béninoises à impact écologique ?' },
+      { id: 'mtn-6', name: 'Estelle Tossou', roleCategory: 'Collaborateur', roleDetail: 'Responsable service client bienveillance', photoUrl: '/assets/protagonists/solange-tevoedjre.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Pourquoi répondre dans la langue locale du client change totalement sa dignité ?' },
+      { id: 'mtn-7', name: 'Boris Gbaguidi', roleCategory: 'Fournisseur', roleDetail: 'Mainteneur d’antennes relais solaires', photoUrl: '/assets/protagonists/hospice-avlessi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Comment alimenter les relais de l’Atacora 100% au soleil sans générateurs diesel ?' },
+      { id: 'mtn-8', name: 'Séraphine Lawson', roleCategory: 'Bénévole', roleDetail: 'Formatrice au code pour jeunes filles', photoUrl: '/assets/protagonists/tatiana-gnanhou.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Pourquoi enseigner Python aux collégiennes brise le plafond de verre technologique ?' },
+      { id: 'mtn-9', name: 'Rodrigue Senou', roleCategory: 'Partenaire', roleDetail: 'Doyen faculté d’informatique Abomey', photoUrl: '/assets/protagonists/sage-koffi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Comment le partenariat public-privé garde nos meilleurs ingénieurs sur le continent ?' },
+      { id: 'mtn-10', name: 'Valérie Adjanohoun', roleCategory: 'Client', roleDetail: 'Agriculteur recevant la météo SMS', photoUrl: '/assets/protagonists/gisele-adissin.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Comment une alerte texto évite la ruine de mes récoltes de maïs ?' },
+      { id: 'mtn-11', name: 'Patrice Degila', roleCategory: 'Collaborateur', roleDetail: 'Cybersécurité & protection des données', photoUrl: '/assets/duos/athlete-hurdle.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Quelle éthique sacrée entoure la vie privée numérique des citoyens ?' },
+      { id: 'mtn-12', name: 'Célestine Bokpe', roleCategory: 'Bienfaiteur', roleDetail: 'Membre comité d’octroi des bourses d’excellence', photoUrl: '/assets/protagonists/zenab-oumar.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Comment repérer le génie chez un enfant qui étudiait sous un lampadaire de rue ?' },
+      { id: 'mtn-13', name: 'Alain Kiki', roleCategory: 'Collaborateur', roleDetail: 'Architecte réseau 5G souverain', photoUrl: '/assets/protagonists/victor-dossou.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Pourquoi maîtriser nos propres câbles sous-marins est une question d’indépendance nationale ?' },
+      { id: 'mtn-14', name: 'Sandrine Agbo', roleCategory: 'Client', roleDetail: 'Étudiante bénéficiaire salle multimédia', photoUrl: '/assets/protagonists/fatou-diop.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Ce que la connexion haut-débit m’a permis de créer sans quitter ma ville natale ?' },
+      { id: 'mtn-15', name: 'Gaston Houndonougbo', roleCategory: 'Fournisseur', roleDetail: 'Recycleur agréé de déchets électroniques', photoUrl: '/assets/duos/coach-office.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Comment recycler 95% des batteries et téléphones usagés au Bénin ?' },
+      { id: 'mtn-16', name: 'Nadège Houndé', roleCategory: 'Collaborateur', roleDetail: 'Responsable RSE & Égalité Femmes-Hommes', photoUrl: '/assets/protagonists/adjovi-blandine.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Pourquoi la parité dans les comités de direction produit les entreprises les plus rentables et humaines ?' }
     ]
   },
-
-  // 5. Canal+ Bénin (Cinéma, Création & Diffusion - 16 intervenants)
   {
-    id: 'canal-plus',
+    id: 'canal-benin',
     category: 'Cinéma & Diffusion',
     companyName: 'Canal+ Bénin',
-    photoUrl: '/assets/directions/marques-services.jpg',
-    logoUrl: '/assets/directions/marques-services.jpg',
-    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-    manifestoVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-    manifestoTitle: 'Manifeste Canal+ Bénin : Écrans des talents d’ici',
-    manifestoQuestion: 'Comment faire des créateurs africains les premiers narrateurs de leurs destins ?',
-    manifestoDescription: 'Acteur majeur de la production audiovisuelle et du rayonnement du cinéma béninois, coproduisant des séries emblématiques et formant les cinéastes de demain.',
-    tagline: 'Révéler la grandeur de nos histoires',
+    photoUrl: '/assets/directions/arts-sceniques.jpg',
+    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+    manifestoVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+    manifestoQuestion: 'Comment faire entrer les séries et visages de nos quartiers dans le salon de millions de téléspectateurs ?',
+    tagline: 'Révéler les étoiles d’Afrique',
+    description: 'Pôle de coproduction et de diffusion audiovisuelle soutenant activement la nouvelle vague des séries télévisées et comédies d’Afrique de l’Ouest.',
+    foundedYear: '2005',
+    location: 'Cotonou & Parakou',
     stakeholders: [
-      {
-        id: 'cplus-1',
-        name: 'Yacine Alao',
-        roleCategory: 'Fondateur',
-        roleDetail: 'Directrice Générale Canal+ Bénin',
-        photoUrl: '/assets/protagonists/adjovi-blandine.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Pourquoi l’investissement dans la fiction locale est-il le moteur de l’identité africaine ?'
-      },
-      {
-        id: 'cplus-2',
-        name: 'Pascal Houndé',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Showrunner de série originale',
-        photoUrl: '/assets/duos/coach-office.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Comment écrire une série chorale ancrée à Cotonou qui passionne Abidjan et Dakar ?'
-      },
-      {
-        id: 'cplus-3',
-        name: 'Blandine Adjovi',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Comédienne principale',
-        photoUrl: '/assets/duos/eleonore-vance.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Quel honneur d’incarner une femme de pouvoir africaine sans tomber dans les stéréotypes ?'
-      },
-      {
-        id: 'cplus-4',
-        name: 'Koffi Mensah',
-        roleCategory: 'Fournisseur',
-        roleDetail: 'Directeur de studio de doublage',
-        photoUrl: '/assets/protagonists/chef-koffi.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Comment adapter les grands films mondiaux en langue fon avec fidélité et gouaille ?'
-      },
-      {
-        id: 'cplus-5',
-        name: 'Marc Houndégla',
-        roleCategory: 'Client',
-        roleDetail: 'Abonné fidèle depuis 15 ans',
-        photoUrl: '/assets/duos/kwame-mensah.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'En quoi les soirées cinéma en famille rassemblent-elles trois générations sous le même toit ?'
-      },
-      {
-        id: 'cplus-6',
-        name: 'Sénan Agossa',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Chargée des acquisitions de documentaires',
-        photoUrl: '/assets/protagonists/senan-agossa.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-        question: 'Quelle pépite narrative recherche-t-on lorsqu’on visionne 500 dossiers de jeunes auteurs ?'
-      },
-      {
-        id: 'cplus-7',
-        name: 'Codjo Gbédji',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Responsable de salle de cinéma',
-        photoUrl: '/assets/protagonists/codjo-blind.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Pourquoi la magie du grand écran noir partagé en salle ne sera jamais remplacée par la télé ?'
-      },
-      {
-        id: 'cplus-8',
-        name: 'Fatou Diallo',
-        roleCategory: 'Membre',
-        roleDetail: 'Lauréate du concours jeunes talents',
-        photoUrl: '/assets/duos/fatou-diallo.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Comment ce prix m’a permis de réaliser mon premier court-métrage à 22 ans ?'
-      },
-      {
-        id: 'cplus-9',
-        name: 'Armel Hounkpatin',
-        roleCategory: 'Fournisseur',
-        roleDetail: 'Constructeur de décors de cinéma',
-        photoUrl: '/assets/protagonists/armel-hounkpatin.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Comment reconstituer un palais royal d’Abomey du XIXe siècle avec des matériaux locaux ?'
-      },
-      {
-        id: 'cplus-10',
-        name: 'Hélène Saint-Amand',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Conseillère juridique audiovisuelle',
-        photoUrl: '/assets/protagonists/helene-saint-amand.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Comment structurer des contrats de coproduction équitables pour nos réalisateurs ?'
-      },
-      {
-        id: 'cplus-11',
-        name: 'Malik Diop',
-        roleCategory: 'Bienfaiteur',
-        roleDetail: 'Président du jury des festivals de films',
-        photoUrl: '/assets/duos/malik-diop.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Pourquoi le cinéma béninois est-il à l’aube de son âge d’or continental ?'
-      },
-      {
-        id: 'cplus-12',
-        name: 'Tobi Houndégla',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Technicien de transmission satellite',
-        photoUrl: '/assets/protagonists/tobi-houndegla.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-        question: 'Comment maintenir le signal HD impeccable pendant les tornades de la saison des pluies ?'
-      },
-      {
-        id: 'cplus-13',
-        name: 'Clara Dossou',
-        roleCategory: 'Client',
-        roleDetail: 'Propriétaire de maquis diffuseur des matchs',
-        photoUrl: '/assets/duos/photographer-focus.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Comment les retransmissions sportives transforment-elles mon restaurant en fête populaire ?'
-      },
-      {
-        id: 'cplus-14',
-        name: 'Dah Zounon',
-        roleCategory: 'Membre',
-        roleDetail: 'Conseiller historique aux scénarios',
-        photoUrl: '/assets/duos/dah-zounon.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Comment veiller à ce qu’une fiction respecte la dignité des ancêtres représentés ?'
-      },
-      {
-        id: 'cplus-15',
-        name: 'Sayri Quispe',
-        roleCategory: 'Fournisseur',
-        roleDetail: 'Ingénieur effets spéciaux numériques',
-        photoUrl: '/assets/duos/sayri-quispe.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Comment créer des créatures de contes en 3D qui émeuvent sans trahir l’imaginaire d’ici ?'
-      },
-      {
-        id: 'cplus-16',
-        name: 'Pascal Cossi',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Réalisateur invité de la collection Héritages',
-        photoUrl: '/assets/duos/coach-office.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Quelle joie de voir un récit intime de pêcheur diffusé dans 25 pays d’Afrique ?'
-      }
+      { id: 'canal-1', name: 'Yacine Alao', roleCategory: 'Fondateur', roleDetail: 'Directrice Générale', photoUrl: '/assets/protagonists/solange-tevoedjre.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Pourquoi produire des fictions 100% locales est le meilleur bouclier culturel face à l’uniformisation mondiale ?' },
+      { id: 'canal-2', name: 'Thierry Kougblenou', roleCategory: 'Collaborateur', roleDetail: 'Directeur des programmes', photoUrl: '/assets/protagonists/chef-koffi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Comment doser humour, drame social et fierté historique dans une grille de soirée ?' },
+      { id: 'canal-3', name: 'Béatrice Houndété', roleCategory: 'Partenaire', roleDetail: 'Actrice principale série culte', photoUrl: '/assets/protagonists/adjovi-blandine.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Ce que change dans la rue le fait d’incarner une héroïne béninoise respectée ?' },
+      { id: 'canal-4', name: 'Romuald Tossou', roleCategory: 'Collaborateur', roleDetail: 'Chef de car régie direct sport', photoUrl: '/assets/protagonists/hospice-avlessi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Quelle adrénaline exige la diffusion en 4K des finales de lutte traditionnelle ?' },
+      { id: 'canal-5', name: 'Monique Agbo', roleCategory: 'Client', roleDetail: 'Abonnée et gérante de maquis à Parakou', photoUrl: '/assets/protagonists/reine-kpodjito.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Pourquoi tout le quartier se rassemble devant mon écran lors de la sortie des épisodes ?' },
+      { id: 'canal-6', name: 'Éric Gbaguidi', roleCategory: 'Fournisseur', roleDetail: 'Constructeur de décors studio', photoUrl: '/assets/protagonists/victor-dossou.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Comment reproduire fidèlement l’architecture d’un palais royal d’Abomey sur un plateau télé ?' },
+      { id: 'canal-7', name: 'Josiane Kpanou', roleCategory: 'Collaborateur', roleDetail: 'Responsable doublage et accessibilité audio', photoUrl: '/assets/protagonists/tatiana-gnanhou.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Comment adapter les grands films mondiaux en langue Fon sans trahir le texte ?' },
+      { id: 'canal-8', name: 'Stanislas Senou', roleCategory: 'Partenaire', roleDetail: 'Délégué général festival Clap Ivoire / Bénin', photoUrl: '/assets/protagonists/sage-koffi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Comment repérer le jeune cinéaste autodidacte qui deviendra le réalisateur de demain ?' },
+      { id: 'canal-9', name: 'Carine Alladatin', roleCategory: 'Collaborateur', roleDetail: 'Directrice des relations abonnés', photoUrl: '/assets/protagonists/zenab-oumar.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Quelle attention personnalisée fidélise les familles d’Abomey à Natitingou ?' },
+      { id: 'canal-10', name: 'Faustin Danho', roleCategory: 'Client', roleDetail: 'Directeur d’hôtel international', photoUrl: '/assets/protagonists/mahougnon-kakpo.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Pourquoi proposer les chaînes africaines en priorité à nos clients étrangers ?' },
+      { id: 'canal-11', name: 'Léa Dossou', roleCategory: 'Collaborateur', roleDetail: 'Rédactrice en chef magazine cinéma', photoUrl: '/assets/protagonists/gisele-adissin.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Comment documenter la révolution créative de notre industrie audiovisuelle ?' },
+      { id: 'canal-12', name: 'Mathias Bokpe', roleCategory: 'Fournisseur', roleDetail: 'Installateur paraboles certifié en zone rurale', photoUrl: '/assets/duos/athlete-hurdle.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Comment grimper sur les toits de tôle et pointer le satellite par tous les temps ?' },
+      { id: 'canal-13', name: 'Sylvie Tokpo', roleCategory: 'Bénévole', roleDetail: 'Coordinatrice projection solidaire orphelinats', photoUrl: '/assets/protagonists/fatou-diop.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Quel émerveillement dans les yeux des enfants quand le dessin animé s’allume ?' },
+      { id: 'canal-14', name: 'David Codo', roleCategory: 'Collaborateur', roleDetail: 'Responsable partenariats créateurs indépendants', photoUrl: '/assets/duos/coach-office.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Comment accompagner un jeune producteur pour qu’il livre son premier master aux normes ?' },
+      { id: 'canal-15', name: 'Régine Houndonou', roleCategory: 'Bienfaiteur', roleDetail: 'Fonds d’aide aux femmes réalisatrices', photoUrl: '/assets/protagonists/adjovi-blandine.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Pourquoi financer les récits de femmes est indispensable pour l’équilibre de la société ?' },
+      { id: 'canal-16', name: 'Julien Agbanglo', roleCategory: 'Partenaire', roleDetail: 'Président association des comédiens du Bénin', photoUrl: '/assets/duos/kwame-mensah.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Comment garantir des contrats dignes et une retraite décente à nos acteurs ?' }
     ]
   },
-
-  // 6. Suno Solaire (Énergie & Lacustre - 16 intervenants)
+  {
+    id: 'ganvie-indigo',
+    category: 'Artisanat & Patrimoine',
+    companyName: 'Coopérative Ganvié Indigo',
+    photoUrl: '/assets/directions/arts-textiles.jpg',
+    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+    manifestoVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+    manifestoQuestion: 'Comment le bleu indigo des feuilles sauvages réenchante-t-il la vie sur l’eau ?',
+    tagline: 'Teintures et tissages d’eau douce',
+    description: 'Coopérative artisanale de femmes tisseuses et teinturières sur pilotis perpétuant la recette millénaire de l’indigo végétal biologique.',
+    foundedYear: '2014',
+    location: 'Ganvié, Lac Nokoué',
+    stakeholders: [
+      { id: 'ganvie-1', name: 'Mémé Kpèdétin', roleCategory: 'Fondateur', roleDetail: 'Maîtresse teinturière en chef', photoUrl: '/assets/protagonists/reine-kpodjito.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Quel secret séculaire dort dans nos cuves de fermentation d’indigo ?' },
+      { id: 'ganvie-2', name: 'Victoire Dossou', roleCategory: 'Collaborateur', roleDetail: 'Tisseuse sur métier traditionnel', photoUrl: '/assets/protagonists/adjovi-blandine.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Comment le bruit de la navette sur les pilotis rythme la journée du village lacustre ?' },
+      { id: 'ganvie-3', name: 'Anicet Houessou', roleCategory: 'Fournisseur', roleDetail: 'Récoltant de feuilles d’indigotier sauvage', photoUrl: '/assets/protagonists/chef-koffi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Pourquoi cueillir les feuilles à l’aube avant que le soleil ne boive leur rosée ?' },
+      { id: 'ganvie-4', name: 'Hélène Sossou', roleCategory: 'Client', roleDetail: 'Designer haute-couture éthique à Paris', photoUrl: '/assets/protagonists/solange-tevoedjre.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Pourquoi l’indigo de Ganvié a-t-il conquis les défilés internationaux les plus exigeants ?' },
+      { id: 'ganvie-5', name: 'Théodore Gnonlonfoun', roleCategory: 'Partenaire', roleDetail: 'Piroguier convoyeur des rouleaux', photoUrl: '/assets/protagonists/hospice-avlessi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Comment protéger les rouleaux d’étoffe des embruns lors de la traversée vers le marché ?' },
+      { id: 'ganvie-6', name: 'Bernadette Kiki', roleCategory: 'Collaborateur', roleDetail: 'Responsable du séchage au vent du lac', photoUrl: '/assets/protagonists/tatiana-gnanhou.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Comment le sel de l’air lacustre fixe-t-il la couleur bleue pour un siècle ?' },
+      { id: 'ganvie-7', name: 'Dieudonné Agbo', roleCategory: 'Fournisseur', roleDetail: 'Charpentier des métiers à tisser en bois rouge', photoUrl: '/assets/protagonists/victor-dossou.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Comment fabriquer un métier à tisser qui résiste à l’humidité perpétuelle de l’eau ?' },
+      { id: 'ganvie-8', name: 'Honorine Zannou', roleCategory: 'Collaborateur', roleDetail: 'Comptable de la coopérative solidaire', photoUrl: '/assets/protagonists/gisele-adissin.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Comment la redistribution équitable a-t-elle permis à 80 femmes de scolariser leurs enfants ?' },
+      { id: 'ganvie-9', name: 'Clémentine Boko', roleCategory: 'Bénévole', roleDetail: 'Guide des visiteurs écotouristes', photoUrl: '/assets/protagonists/zenab-oumar.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Comment expliquer l’alchimie de l’indigo sans trahir les rites secrets des aînées ?' },
+      { id: 'ganvie-10', name: 'Maxime Houndété', roleCategory: 'Partenaire', roleDetail: 'Directeur Parc National Lacustre', photoUrl: '/assets/protagonists/sage-koffi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Pourquoi les teintures 100% végétales protègent la faune aquatique du lac ?' },
+      { id: 'ganvie-11', name: 'Adélaïde Vigan', roleCategory: 'Client', roleDetail: 'Architecte d’intérieur à Cotonou', photoUrl: '/assets/protagonists/fatou-diop.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Comment habiller une villa contemporaine avec des tentures bleues de Ganvié ?' },
+      { id: 'ganvie-12', name: 'Norbert Senou', roleCategory: 'Collaborateur', roleDetail: 'Responsable boutique artisanale d’embarcadère', photoUrl: '/assets/duos/athlete-hurdle.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Comment certifier l’authenticité face aux contrefaçons chimiques industrielles ?' },
+      { id: 'ganvie-13', name: 'Paulette Tossou', roleCategory: 'Collaborateur', roleDetail: 'Apprentie tisseuse (3e génération)', photoUrl: '/assets/protagonists/adjovi-blandine.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Pourquoi ai-je choisi de rester sur l’eau pour tisser plutôt que de partir en ville ?' },
+      { id: 'ganvie-14', name: 'Séverin Agbanglo', roleCategory: 'Fournisseur', roleDetail: 'Cotonculteur biologique du Nord', photoUrl: '/assets/protagonists/mahougnon-kakpo.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Pourquoi le fil de coton pur sans pesticide absorbe-t-il mieux la teinture végétale ?' },
+      { id: 'ganvie-15', name: 'Élise Codo', roleCategory: 'Bienfaiteur', roleDetail: 'Fondation internationale des métiers d’art', photoUrl: '/assets/duos/coach-office.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Comment protéger le patrimoine immatériel de Ganvié auprès de l’UNESCO ?' },
+      { id: 'ganvie-16', name: 'Gilles Alladatin', roleCategory: 'Partenaire', roleDetail: 'Maire de la commune lacustre', photoUrl: '/assets/duos/kwame-mensah.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Comment Ganvié Indigo est devenue la vitrine économique et culturelle de toute notre cité ?' }
+    ]
+  },
+  {
+    id: 'eco-ferme-ouidah',
+    category: 'Agro-Écologie & Terroir',
+    companyName: 'Éco-Ferme de Ouidah',
+    photoUrl: '/assets/directions/sagesses-nature.jpg',
+    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+    manifestoVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+    manifestoQuestion: 'Comment nourrir le peuple sainement tout en réparant la terre sacrée de nos ancêtres ?',
+    tagline: 'L’agro-écologie paysanne et les semences de vie',
+    description: 'Ferme école régénérative, conservatoire vivant de semences anciennes et centre de formation pour jeunes agriculteurs indépendants.',
+    foundedYear: '2015',
+    location: 'Ouidah, Bénin',
+    stakeholders: [
+      { id: 'ef-1', name: 'Barnabé Houessou', roleCategory: 'Fondateur', roleDetail: 'Agronome paysan & Formateur', photoUrl: '/assets/protagonists/chef-koffi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Pourquoi la semence locale reproductible est l’acte politique et vital suprême d’un peuple ?' },
+      { id: 'ef-2', name: 'Odette Gnonlonfoun', roleCategory: 'Collaborateur', roleDetail: 'Gardienne de la banque de graines', photoUrl: '/assets/protagonists/reine-kpodjito.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Comment préserver 140 variétés de maïs, sorgho et niébé sans chambre froide ?' },
+      { id: 'ef-3', name: 'Félix Zannou', roleCategory: 'Collaborateur', roleDetail: 'Maître apiculteur en forêt sacrée', photoUrl: '/assets/protagonists/hospice-avlessi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Ce que le chant des abeilles nous enseigne sur la santé de nos écosystèmes ?' },
+      { id: 'ef-4', name: 'Mariette Dossou', roleCategory: 'Collaborateur', roleDetail: 'Responsable compostage microbien', photoUrl: '/assets/protagonists/adjovi-blandine.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Comment redonner vie à un sol épuisé en moins de six mois grâce aux bactéries indigènes ?' },
+      { id: 'ef-5', name: 'Dr. Sylvain Akpo', roleCategory: 'Partenaire', roleDetail: 'Chercheur en microbiologie des sols', photoUrl: '/assets/protagonists/mahougnon-kakpo.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Comment la science moderne confirme l’intuition des techniques agricoles traditionnelles ?' },
+      { id: 'ef-6', name: 'Antoinette Kiki', roleCategory: 'Client', roleDetail: 'Restauratrice biologique à Cotonou', photoUrl: '/assets/protagonists/solange-tevoedjre.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Pourquoi mes clients reconnaissent immédiatement la saveur des légumes de l’Éco-Ferme ?' },
+      { id: 'ef-7', name: 'Rodrigue Senou', roleCategory: 'Fournisseur', roleDetail: 'Artisan forgeron d’outils à traction douce', photoUrl: '/assets/protagonists/victor-dossou.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Comment forger des outils légers qui respectent la terre sans la tasser ?' },
+      { id: 'ef-8', name: 'Jeanne Boko', roleCategory: 'Collaborateur', roleDetail: 'Formatrice en transformation de fruits locaux', photoUrl: '/assets/protagonists/tatiana-gnanhou.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Comment sécher mangues et ananas solaires sans aucun conservateur chimique ?' },
+      { id: 'ef-9', name: 'Constantin Houndété', roleCategory: 'Bénévole', roleDetail: 'Coordinateur des chantiers participatifs', photoUrl: '/assets/protagonists/sage-koffi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Quelle joie de voir 50 jeunes urbains venir repiquer le manioc un dimanche matin ?' },
+      { id: 'ef-10', name: 'Denise Agbo', roleCategory: 'Client', roleDetail: 'Directrice cantine scolaire communale', photoUrl: '/assets/protagonists/gisele-adissin.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Comment un repas bio quotidien a réduit les absences pour maladie chez les écoliers ?' },
+      { id: 'ef-11', name: 'Célestin Tossou', roleCategory: 'Collaborateur', roleDetail: 'Éleveur pastoraliste volailles locales', photoUrl: '/assets/duos/athlete-hurdle.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Pourquoi les poules bicyclettes élevées en liberté sous les palmiers ne tombent jamais malades ?' },
+      { id: 'ef-12', name: 'Aline Danho', roleCategory: 'Partenaire', roleDetail: 'Réseau international paysans sans frontières', photoUrl: '/assets/protagonists/zenab-oumar.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Comment Ouidah est devenue la capitale de la résistance semencière en Afrique ?' },
+      { id: 'ef-13', name: 'Basile Alladatin', roleCategory: 'Bienfaiteur', roleDetail: 'Mécène pour l’installation des jeunes agriculteurs', photoUrl: '/assets/duos/kwame-mensah.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Pourquoi donner un hectare et des semences à un jeune diplômé change le destin d’un village ?' },
+      { id: 'ef-14', name: 'Rosalie Vigan', roleCategory: 'Collaborateur', roleDetail: 'Animatrice des visites botaniques sensorielles', photoUrl: '/assets/protagonists/fatou-diop.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Comment faire sentir la feuille de verveine sauvage pour réveiller la paix de l’âme ?' },
+      { id: 'ef-15', name: 'Edmond Agbanglo', roleCategory: 'Client', roleDetail: 'Commerçant marché bio de Cotonou', photoUrl: '/assets/duos/coach-office.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Pourquoi les consommateurs urbains recherchent désormais le goût authentique du terroir ?' },
+      { id: 'ef-16', name: 'Séraphin Codo', roleCategory: 'Collaborateur', roleDetail: 'Pépiniériste des arbres fruitiers oubliés', photoUrl: '/assets/protagonists/paul-insee.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Pourquoi replanter les pommiers cythère et les corossoliers géants d’autrefois ?' }
+    ]
+  },
+  {
+    id: 'theatre-vivant-cotonou',
+    category: 'Arts de la Scène',
+    companyName: 'Théâtre Vivant de Cotonou',
+    photoUrl: '/assets/directions/arts-musique.jpg',
+    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+    manifestoVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+    manifestoQuestion: 'Quand le rideau se lève, quelle vérité nue osons-nous crier au visage de la société ?',
+    tagline: 'La parole brûlante, le geste souverain',
+    description: 'Compagnie théâtrale chorale engagée, mêlant masques traditionnels, dramaturgies contemporaines et agora publique citoyenne.',
+    foundedYear: '2012',
+    location: 'Cotonou, Bénin',
+    stakeholders: [
+      { id: 'tvc-1', name: 'Dine Alougbine', roleCategory: 'Fondateur', roleDetail: 'Dramaturge & Metteur en scène', photoUrl: '/assets/protagonists/mahougnon-kakpo.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Pourquoi le théâtre africain doit-il être un lieu de débat démocratique direct et sans filtre ?' },
+      { id: 'tvc-2', name: 'Carole Lokossou', roleCategory: 'Collaborateur', roleDetail: 'Comédienne tragédienne', photoUrl: '/assets/protagonists/solange-tevoedjre.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Comment porter sur scène la douleur et la fierté des reines d’Abomey sans faiblir ?' },
+      { id: 'tvc-3', name: 'Gérard Agossou', roleCategory: 'Collaborateur', roleDetail: 'Scénographe lumière et masques', photoUrl: '/assets/protagonists/chef-koffi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Comment éclairer un masque sacré pour qu’il semble respirer devant mille spectateurs ?' },
+      { id: 'tvc-4', name: 'Fidèle Gbaguidi', roleCategory: 'Collaborateur', roleDetail: 'Chorégraphe contemporain et danses rituelles', photoUrl: '/assets/duos/athlete-hurdle.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Comment le corps en mouvement raconte ce que les mots ne peuvent plus supporter ?' },
+      { id: 'tvc-5', name: 'Pauline Dossou', roleCategory: 'Client', roleDetail: 'Spectatrice fidèle depuis 10 ans', photoUrl: '/assets/protagonists/adjovi-blandine.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Pourquoi une pièce de Dine Alougbine vous poursuit-elle des semaines après la représentation ?' },
+      { id: 'tvc-6', name: 'Wilfrid Zannou', roleCategory: 'Collaborateur', roleDetail: 'Maître des tambours rituels', photoUrl: '/assets/protagonists/hospice-avlessi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Comment faire monter la transe dans la salle sans jamais perdre le fil dramatique ?' },
+      { id: 'tvc-7', name: 'Sonia Tokpo', roleCategory: 'Bénévole', roleDetail: 'Accueil et médiation des publics populaires', photoUrl: '/assets/protagonists/tatiana-gnanhou.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Pourquoi ouvrir grand les portes aux vendeurs du marché et aux conducteurs de zémidjan ?' },
+      { id: 'tvc-8', name: 'Maximilien Kiki', roleCategory: 'Partenaire', roleDetail: 'Directeur de l’Institut Français du Bénin', photoUrl: '/assets/protagonists/victor-dossou.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Comment co-produire des pièces qui tournent d’Avignon à Cotonou dans une totale égalité ?' },
+      { id: 'tvc-9', name: 'Esther Houndété', roleCategory: 'Collaborateur', roleDetail: 'Administratrice générale des tournées', photoUrl: '/assets/protagonists/reine-kpodjito.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Quelle logistique pour déplacer 25 artistes et 3 tonnes de décors à travers six pays ?' },
+      { id: 'tvc-10', name: 'Bertin Senou', roleCategory: 'Fournisseur', roleDetail: 'Constructeur de tribunes en bambou démontable', photoUrl: '/assets/protagonists/sage-koffi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Comment dresser un théâtre éphémère de 800 places sur une place de village en 48 heures ?' },
+      { id: 'tvc-11', name: 'Christelle Boko', roleCategory: 'Collaborateur', roleDetail: 'Comédienne jeune public', photoUrl: '/assets/protagonists/gisele-adissin.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Comment parler de tolérance et de paix aux enfants à travers la farce et le rire ?' },
+      { id: 'tvc-12', name: 'Prosper Agbanglo', roleCategory: 'Client', roleDetail: 'Proviseur de lycée à Abomey-Calavi', photoUrl: '/assets/duos/coach-office.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Ce que le passage de la troupe a changé dans le comportement des élèves difficiles ?' },
+      { id: 'tvc-13', name: 'Virginie Danho', roleCategory: 'Bienfaiteur', roleDetail: 'Mécène pour la création contemporaine', photoUrl: '/assets/protagonists/zenab-oumar.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Pourquoi soutenir un texte subversif et libre est le devoir des citoyens éclairés ?' },
+      { id: 'tvc-14', name: 'Lazare Codo', roleCategory: 'Collaborateur', roleDetail: 'Régisseur général son et vidéo-projection', photoUrl: '/assets/duos/kwame-mensah.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Comment intégrer des projections d’archives visuelles dans une performance vivante ?' },
+      { id: 'tvc-15', name: 'Chantal Tossou', roleCategory: 'Partenaire', roleDetail: 'Directrice festival des Nuits Théâtrales', photoUrl: '/assets/protagonists/fatou-diop.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Comment faire vibrer Cotonou jusqu’au lever du soleil au son des poètes dramatiques ?' },
+      { id: 'tvc-16', name: 'Norbert Alladatin', roleCategory: 'Collaborateur', roleDetail: 'Conteur prologue & maître du temps scénique', photoUrl: '/assets/protagonists/paul-insee.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Comment faire le silence absolu dans une salle comble en un claquement de doigts ?' }
+    ]
+  },
   {
     id: 'suno-solaire',
-    category: 'Énergie & Climat',
+    category: 'Énergie Renouvelable',
     companyName: 'Suno Solaire',
     photoUrl: '/assets/directions/marques-tech.jpg',
-    logoUrl: '/assets/directions/marques-tech.jpg',
     videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
     manifestoVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-    manifestoTitle: 'Manifeste Suno Solaire : L’énergie du fleuve',
-    manifestoQuestion: 'Comment le soleil peut-il apporter l’indépendance énergétique aux berges ?',
-    manifestoDescription: 'Entreprise sociale pionnière de l’électrification solaire pour les villages lacustres et les écoles insulaires du Bénin.',
-    tagline: 'L’électricité solaire pour chaque berge',
+    manifestoQuestion: 'Comment le soleil peut-il apporter l’indépendance énergétique et la dignité à chaque berge ?',
+    tagline: 'L’électricité propre pour chaque village',
+    description: 'Entreprise citoyenne fabriquant des micro-centrales solaires communautaires avec gestion intelligente et maintenance locale.',
+    foundedYear: '2017',
+    location: 'Natitingou & Cotonou',
     stakeholders: [
-      {
-        id: 'suno-1',
-        name: 'Babacar Ndiaye',
-        roleCategory: 'Fondateur',
-        roleDetail: 'Ingénieur énergie solaire',
-        photoUrl: '/assets/duos/kwame-mensah.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Comment le soleil peut-il apporter l’indépendance énergétique aux berges ?'
-      },
-      {
-        id: 'suno-2',
-        name: 'Senan Agossa',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Cheffe de projet écoles lacustres',
-        photoUrl: '/assets/protagonists/senan-agossa.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Comment garantir l’accès continu à l’électricité pour les écoles lacustres ?'
-      },
-      {
-        id: 'suno-3',
-        name: 'Tobi Houndégla',
-        roleCategory: 'Fournisseur',
-        roleDetail: 'Recycleur de batteries au lithium',
-        photoUrl: '/assets/protagonists/tobi-houndegla.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Quel avenir pour le recyclage local de nos batteries solaires ?'
-      },
-      {
-        id: 'suno-4',
-        name: 'Fatou Diallo',
-        roleCategory: 'Client',
-        roleDetail: 'Maraîchère coopérative',
-        photoUrl: '/assets/duos/fatou-diallo.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'En quoi les glacières solaires ont-elles sauvé la récolte de nos maraîchers ?'
-      },
-      {
-        id: 'suno-5',
-        name: 'Chantal Agbo',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Coordinatrice partenariats verts',
-        photoUrl: '/assets/protagonists/adjovi-blandine.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Quelle alliance public-privé garantit la durabilité de nos parcs solaires ?'
-      },
-      {
-        id: 'suno-6',
-        name: 'Armel Hounkpatin',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Installateur sur pirogue atelier',
-        photoUrl: '/assets/protagonists/armel-hounkpatin.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Comment arrimer des panneaux photovoltaïques sur des toits de chaume lacustres ?'
-      },
-      {
-        id: 'suno-7',
-        name: 'Koffi Mensah',
-        roleCategory: 'Client',
-        roleDetail: 'Pêcheur à la nasse',
-        photoUrl: '/assets/protagonists/chef-koffi.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Comment la lumière solaire sur les quais a diminué les accidents de nuit ?'
-      },
-      {
-        id: 'suno-8',
-        name: 'Hélène Saint-Amand',
-        roleCategory: 'Bienfaiteur',
-        roleDetail: 'Fondatrice fondation climat',
-        photoUrl: '/assets/protagonists/helene-saint-amand.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-        question: 'Pourquoi l’accès à l’énergie propre est la condition première de l’éducation ?'
-      },
-      {
-        id: 'suno-9',
-        name: 'Codjo Gbédji',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Maire adjoint de commune lacustre',
-        photoUrl: '/assets/protagonists/codjo-blind.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Comment co-gérer les micro-réseaux avec les conseils de sages du village ?'
-      },
-      {
-        id: 'suno-10',
-        name: 'Éléonore Vance',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Ingénieure logicielle de télémesure',
-        photoUrl: '/assets/duos/eleonore-vance.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Comment anticiper les pannes d’onduleurs à distance par capteurs IoT ?'
-      },
-      {
-        id: 'suno-11',
-        name: 'Malik Diop',
-        roleCategory: 'Fournisseur',
-        roleDetail: 'Fabricant de câbles marinisés',
-        photoUrl: '/assets/duos/malik-diop.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Comment protéger le cuivre de la corrosion saline continue ?'
-      },
-      {
-        id: 'suno-12',
-        name: 'Dah Zounon',
-        roleCategory: 'Membre',
-        roleDetail: 'Gardien des sanctuaires de l’eau',
-        photoUrl: '/assets/duos/dah-zounon.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Comment bénir l’énergie du soleil pour qu’elle respecte les esprits de l’eau ?'
-      },
-      {
-        id: 'suno-13',
-        name: 'Clara Dossou',
-        roleCategory: 'Client',
-        roleDetail: 'Institutrice école de Ganvié',
-        photoUrl: '/assets/duos/photographer-focus.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-        question: 'Quel bonheur de voir mes élèves étudier le soir sous une ampoule LED fiable !'
-      },
-      {
-        id: 'suno-14',
-        name: 'Sayri Quispe',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Chercheur en micro-réseaux isolés',
-        photoUrl: '/assets/duos/sayri-quispe.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Pourquoi le modèle lacustre béninois inspire les îles du Pacifique et d’Amazonie ?'
-      },
-      {
-        id: 'suno-15',
-        name: 'Marc Houndégla',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Responsable maintenance préventive',
-        photoUrl: '/assets/duos/athlete-hurdle.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Comment former les jeunes du village pour qu’ils soient les réparateurs de demain ?'
-      },
-      {
-        id: 'suno-16',
-        name: 'Pascal Houndé',
-        roleCategory: 'Bienfaiteur',
-        roleDetail: 'Cinéaste témoin de la lumière',
-        photoUrl: '/assets/duos/coach-office.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Comment la tombée de la nuit éclairée a changé la conversation sous les vérandas ?'
-      }
+      { id: 'suno-1', name: 'Babacar Ndiaye', roleCategory: 'Fondateur', roleDetail: 'Ingénieur en énergie solaire', photoUrl: '/assets/duos/kwame-mensah.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4', question: 'Comment le soleil peut-il apporter l’indépendance énergétique aux berges ?' },
+      { id: 'suno-2', name: 'Senan Agossa', roleCategory: 'Collaborateur', roleDetail: 'Chef de projet électrification rurale', photoUrl: '/assets/protagonists/adjovi-blandine.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Quelle révolution apporte la première ampoule allumée dans une école rurale ?' },
+      { id: 'suno-3', name: 'Djimon Hountondji', roleCategory: 'Client', roleDetail: 'Chef de village de Tanéka', photoUrl: '/assets/protagonists/chef-koffi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Comment la lumière a permis à nos femmes d’accoucher en sécurité la nuit ?' },
+      { id: 'suno-4', name: 'Mireille Kpanou', roleCategory: 'Collaborateur', roleDetail: 'Responsable maintenance prédictive', photoUrl: '/assets/protagonists/solange-tevoedjre.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Comment former les jeunes du village pour qu’aucun panneau ne reste en panne ?' },
+      { id: 'suno-5', name: 'Éloi Zinsou', roleCategory: 'Partenaire', roleDetail: 'Banque ouest-africaine de développement vert', photoUrl: '/assets/protagonists/hospice-avlessi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Pourquoi financer les micro-réseaux est dix fois plus rentable que les méga-centrales ?' },
+      { id: 'suno-6', name: 'Blandine Tossou', roleCategory: 'Client', roleDetail: 'Gérante de chambre froide solaire pour poissons', photoUrl: '/assets/protagonists/reine-kpodjito.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Comment le froid solaire a divisé par dix les pertes de pêche au bord du lac ?' },
+      { id: 'suno-7', name: 'Arnaud Houndété', roleCategory: 'Fournisseur', roleDetail: 'Recycleur de métaux et onduleurs', photoUrl: '/assets/protagonists/victor-dossou.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Comment reconditionner les cellules solaires pour leur offrir une seconde vie de 15 ans ?' },
+      { id: 'suno-8', name: 'Yasmine Codo', roleCategory: 'Collaborateur', roleDetail: 'Directrice de l’inclusion des femmes énergéticiennes', photoUrl: '/assets/protagonists/tatiana-gnanhou.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Pourquoi former les femmes techniciennes garantit la pérennité du réseau ?' },
+      { id: 'suno-9', name: 'Sébastien Danho', roleCategory: 'Bénévole', roleDetail: 'Sensibilisateur aux économies d’énergie', photoUrl: '/assets/protagonists/sage-koffi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Comment apprendre à consommer avec parcimonie une électricité partagée ?' },
+      { id: 'suno-10', name: 'Pauline Agbanglo', roleCategory: 'Client', roleDetail: 'Directrice de centre de santé isolé', photoUrl: '/assets/protagonists/gisele-adissin.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Ce que signifie conserver les vaccins à +4°C au cœur du désert sahélien ?' },
+      { id: 'suno-11', name: 'Fidèle Tokpo', roleCategory: 'Collaborateur', roleDetail: 'Développeur compteurs connectés Pay-As-You-Go', photoUrl: '/assets/duos/athlete-hurdle.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Comment permettre à un paysan de payer 100 FCFA par jour selon sa trésorerie ?' },
+      { id: 'suno-12', name: 'Geneviève Senou', roleCategory: 'Partenaire', roleDetail: 'Agence béninoise d’électrification rurale', photoUrl: '/assets/protagonists/zenab-oumar.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Comment concilier cahier des charges d’État et agilité d’une startup locale ?' },
+      { id: 'suno-13', name: 'Théophile Alladatin', roleCategory: 'Fournisseur', roleDetail: 'Fabricant de structures métalliques anti-corrosion', photoUrl: '/assets/protagonists/mahougnon-kakpo.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Comment ancrer les panneaux pour qu’ils résistent aux tornades tropicales ?' },
+      { id: 'suno-14', name: 'Nathalie Vigan', roleCategory: 'Bienfaiteur', roleDetail: 'Fondation climat pour les collines de l’Atacora', photoUrl: '/assets/protagonists/fatou-diop.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Pourquoi remplacer les lampes à pétrole sauve les poumons de milliers de mères ?' },
+      { id: 'suno-15', name: 'Hervé Boko', roleCategory: 'Collaborateur', roleDetail: 'Pilote logistique des convois de brousse', photoUrl: '/assets/duos/coach-office.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Quelle épopée de franchir les cours d’eau en pirogue avec 80 panneaux solaires ?' },
+      { id: 'suno-16', name: 'Inès Agbo', roleCategory: 'Client', roleDetail: 'Jeune diplômée ayant ouvert son télécentre solaire', photoUrl: '/assets/protagonists/adjovi-blandine.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Comment l’électricité a transformé mon village en carrefour commercial et scolaire ?' }
     ]
   },
-
-  // 7. Trans-Lagoon (Transport & Mobilité durable - 16 intervenants)
   {
-    id: 'trans-lagoon',
-    category: 'Transport & Mobilité',
-    companyName: 'Trans-Lagoon',
-    photoUrl: '/assets/directions/marques-services.jpg',
-    logoUrl: '/assets/directions/marques-services.jpg',
-    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-    manifestoVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-    manifestoTitle: 'Manifeste Trans-Lagoon : Naviguer en paix',
-    manifestoQuestion: 'Comment concilier vitesse de navigation et respect des écosystèmes marins ?',
-    manifestoDescription: 'Flotte de navettes lacustres à propulsion électrique et hybride reliant Cotonou, Porto-Novo et Ganvié sans bruit ni pollution d’hydrocarbures.',
-    tagline: 'Liaisons lacustres écologiques et rapides',
-    stakeholders: [
-      {
-        id: 'trans-1',
-        name: 'Armel Hounkpatin',
-        roleCategory: 'Fondateur',
-        roleDetail: 'Capitaine de marine marchande',
-        photoUrl: '/assets/protagonists/armel-hounkpatin.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Comment concilier vitesse de navigation et respect des écosystèmes marins ?'
-      },
-      {
-        id: 'trans-2',
-        name: 'Sika Dossou',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Cheffe de bord navette rapide',
-        photoUrl: '/assets/protagonists/sika-dossou.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Quelle discipline quotidienne permet de sécuriser nos traversées nocturnes ?'
-      },
-      {
-        id: 'trans-3',
-        name: 'Codjo Gbédji',
-        roleCategory: 'Fournisseur',
-        roleDetail: 'Constructeur de coques en bois composite',
-        photoUrl: '/assets/protagonists/codjo-blind.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Pourquoi le moteur électrique est-il la révolution attendue sur nos lagunes ?'
-      },
-      {
-        id: 'trans-4',
-        name: 'Malik Diop',
-        roleCategory: 'Client',
-        roleDetail: 'Usager quotidien Porto-Novo / Cotonou',
-        photoUrl: '/assets/duos/malik-diop.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Comment le transport propre transforme-t-il la cadence du commerce local ?'
-      },
-      {
-        id: 'trans-5',
-        name: 'Nadine Tossou',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Coordonnatrice sécurité portuaire',
-        photoUrl: '/assets/duos/eleonore-vance.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'En quoi les corridors fluviaux réinventent-ils l’intégration sous-régionale ?'
-      },
-      {
-        id: 'trans-6',
-        name: 'Fatou Diallo',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Mécanicienne navale',
-        photoUrl: '/assets/duos/fatou-diallo.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Comment entretenir les batteries immergées face à la salinité de l’eau ?'
-      },
-      {
-        id: 'trans-7',
-        name: 'Koffi Mensah',
-        roleCategory: 'Fournisseur',
-        roleDetail: 'Fournisseur de gilets de sauvetage certifiés',
-        photoUrl: '/assets/protagonists/chef-koffi.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-        question: 'Pourquoi la culture du gilet de sauvetage automatique a sauvé des vies ?'
-      },
-      {
-        id: 'trans-8',
-        name: 'Blandine Adjovi',
-        roleCategory: 'Client',
-        roleDetail: 'Guide touristique lagunaire',
-        photoUrl: '/assets/protagonists/adjovi-blandine.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Quel plaisir de faire découvrir Ganvié aux voyageurs dans un silence absolu !'
-      },
-      {
-        id: 'trans-9',
-        name: 'Pascal Cossi',
-        roleCategory: 'Bienfaiteur',
-        roleDetail: 'Parrain de l’accessibilité des pontons',
-        photoUrl: '/assets/duos/coach-office.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Comment aménager chaque embarcadère pour que les non-voyants montent en sécurité ?'
-      },
-      {
-        id: 'trans-10',
-        name: 'Marc Houndégla',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Assureur maritime solidaire',
-        photoUrl: '/assets/duos/athlete-hurdle.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Comment mutualiser les risques climatiques pour garantir un tarif abordable ?'
-      },
-      {
-        id: 'trans-11',
-        name: 'Tobi Houndégla',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Pilote de bateau ambulance',
-        photoUrl: '/assets/protagonists/tobi-houndegla.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Quelle émotion lorsqu’on transporte une femme sur le point d’accoucher à l’hôpital ?'
-      },
-      {
-        id: 'trans-12',
-        name: 'Dah Zounon',
-        roleCategory: 'Membre',
-        roleDetail: 'Doyen des piroguiers de Ganvié',
-        photoUrl: '/assets/duos/dah-zounon.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-        question: 'Comment transmettre le secret des chenaux invisibles aux jeunes capitaines ?'
-      },
-      {
-        id: 'trans-13',
-        name: 'Clara Dossou',
-        roleCategory: 'Client',
-        roleDetail: 'Étudiante navetteuse',
-        photoUrl: '/assets/duos/photographer-focus.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Comment 25 minutes sur l’eau sans embouteillages ont sauvé mon année universitaire ?'
-      },
-      {
-        id: 'trans-14',
-        name: 'Sayri Quispe',
-        roleCategory: 'Fournisseur',
-        roleDetail: 'Développeur billetterie sans contact',
-        photoUrl: '/assets/duos/sayri-quispe.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Comment valider 500 passagers en 3 minutes grâce à des badges RFID robustes ?'
-      },
-      {
-        id: 'trans-15',
-        name: 'Hélène Saint-Amand',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Présidente association de protection du lac',
-        photoUrl: '/assets/protagonists/helene-saint-amand.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Comment le retour des moteurs silencieux a permis aux hérons de nidifier à nouveau ?'
-      },
-      {
-        id: 'trans-16',
-        name: 'Kwame Mensah',
-        roleCategory: 'Bienfaiteur',
-        roleDetail: 'Mécène des navettes scolaires gratuites',
-        photoUrl: '/assets/duos/kwame-mensah.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Pourquoi aucun enfant du lac ne doit manquer l’école faute de transport ?'
-      }
-    ]
-  },
-
-  // 8. FinSecure Africa (Finance Solidaire & Micro-assurance - 16 intervenants)
-  {
-    id: 'finsecure-africa',
-    category: 'Finance Solidaire',
-    companyName: 'FinSecure Africa',
-    photoUrl: '/assets/directions/marques-finance.jpg',
-    logoUrl: '/assets/directions/marques-finance.jpg',
-    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-    manifestoVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-    manifestoTitle: 'Manifeste FinSecure : La confiance mutualisée',
-    manifestoQuestion: 'Comment financer nos créateurs sans les déposséder de leur vision ?',
-    manifestoDescription: 'Institution de micro-assurance et de financement participatif dédiée aux coopératives d’artisans, créateurs et agriculteurs familiaux.',
-    tagline: 'Micro-assurance et financement des créateurs',
-    stakeholders: [
-      {
-        id: 'fin-1',
-        name: 'Hélène Saint-Amand',
-        roleCategory: 'Fondateur',
-        roleDetail: 'Directrice fondatrice',
-        photoUrl: '/assets/protagonists/helene-saint-amand.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-        question: 'Comment financer nos créateurs sans les déposséder de leur vision ?'
-      },
-      {
-        id: 'fin-2',
-        name: 'Dieudonné Mensah',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Analyste crédit éthique',
-        photoUrl: '/assets/duos/athlete-hurdle.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Quel modèle d’évaluation honore le talent réel des artisans ?'
-      },
-      {
-        id: 'fin-3',
-        name: 'Kwame Mensah',
-        roleCategory: 'Fournisseur',
-        roleDetail: 'Architecte systèmes sécurisés',
-        photoUrl: '/assets/duos/kwame-mensah.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Comment bâtir une infrastructure financière inviolable et inclusive ?'
-      },
-      {
-        id: 'fin-4',
-        name: 'Adjovi Blandine',
-        roleCategory: 'Client',
-        roleDetail: 'Cheffe d’atelier textile',
-        photoUrl: '/assets/protagonists/adjovi-blandine.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Qu’a changé pour mon atelier le déblocage d’un micro-crédit solidaire ?'
-      },
-      {
-        id: 'fin-5',
-        name: 'Samuel Koudjo',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Médiateur bancaire coopératif',
-        photoUrl: '/assets/protagonists/chef-koffi.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Comment connecter les coopératives rurales aux banques régionales ?'
-      },
-      {
-        id: 'fin-6',
-        name: 'Fatou Diallo',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Gestionnaire de risques tontines',
-        photoUrl: '/assets/duos/fatou-diallo.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Comment digitaliser la tontine sans briser la confiance du cercle humain ?'
-      },
-      {
-        id: 'fin-7',
-        name: 'Codjo Gbédji',
-        roleCategory: 'Client',
-        roleDetail: 'Pêcheur assuré contre les tempêtes',
-        photoUrl: '/assets/protagonists/codjo-blind.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Comment l’assurance paramétrique m’a indemnisé en 48 heures après la tornade ?'
-      },
-      {
-        id: 'fin-8',
-        name: 'Éléonore Vance',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Experte en finance d’impact',
-        photoUrl: '/assets/duos/eleonore-vance.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Pourquoi l’impact social doit être mesuré avec la même rigueur que le rendement ?'
-      },
-      {
-        id: 'fin-9',
-        name: 'Armel Hounkpatin',
-        roleCategory: 'Fournisseur',
-        roleDetail: 'Évaluateur d’équipements gagés',
-        photoUrl: '/assets/protagonists/armel-hounkpatin.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Comment estimer la valeur juste d’une pirogue ou d’un métier à tisser ?'
-      },
-      {
-        id: 'fin-10',
-        name: 'Malik Diop',
-        roleCategory: 'Bienfaiteur',
-        roleDetail: 'Garant du fonds d’amorçage jeunes',
-        photoUrl: '/assets/duos/malik-diop.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Pourquoi faire confiance à la parole d’honneur d’un jeune sans garantie matérielle ?'
-      },
-      {
-        id: 'fin-11',
-        name: 'Sika Dossou',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Conseillère en éducation financière',
-        photoUrl: '/assets/protagonists/sika-dossou.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-        question: 'Comment enseigner la tenue d’un livre de caisse avec des symboles visuels simples ?'
-      },
-      {
-        id: 'fin-12',
-        name: 'Tobi Houndégla',
-        roleCategory: 'Client',
-        roleDetail: 'Maraîcher biologique financé',
-        photoUrl: '/assets/protagonists/tobi-houndegla.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Comment mon forage solaire a triplé mes rendements sans m’endetter à l’usure ?'
-      },
-      {
-        id: 'fin-13',
-        name: 'Pascal Cossi',
-        roleCategory: 'Bienfaiteur',
-        roleDetail: 'Administrateur éthique',
-        photoUrl: '/assets/duos/coach-office.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Pourquoi l’argent doit-il toujours rester le serviteur de la dignité humaine ?'
-      },
-      {
-        id: 'fin-14',
-        name: 'Clara Dossou',
-        roleCategory: 'Membre',
-        roleDetail: 'Sociétaire de la coopérative de crédit',
-        photoUrl: '/assets/duos/photographer-focus.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Quel pouvoir de voter sur les orientations du taux d’intérêt lors de l’assemblée générale !'
-      },
-      {
-        id: 'fin-15',
-        name: 'Sayri Quispe',
-        roleCategory: 'Fournisseur',
-        roleDetail: 'Développeur blockchain solidaire',
-        photoUrl: '/assets/duos/sayri-quispe.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Comment tracer chaque franc prêté pour garantir l’absence totale de corruption ?'
-      },
-      {
-        id: 'fin-16',
-        name: 'Dah Zounon',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Garant moral coutumier',
-        photoUrl: '/assets/duos/dah-zounon.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Pourquoi le serment sous l’arbre sacré est plus respecté que n’importe quel papier timbré ?'
-      }
-    ]
-  },
-
-  // 9. AfriCode Tech (Technologie & Code souverain - 16 intervenants)
-  {
-    id: 'africode-tech',
-    category: 'Technologie & Code',
-    companyName: 'AfriCode Tech',
-    photoUrl: '/assets/directions/expertises-numerique.jpg',
-    logoUrl: '/assets/directions/expertises-numerique.jpg',
-    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-    manifestoVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-    manifestoTitle: 'Manifeste AfriCode : Le code source de nos destins',
-    manifestoQuestion: 'Pourquoi l’Afrique doit-elle posséder son propre code source ?',
-    manifestoDescription: 'Collectif d’ingénieurs logiciels développant des infrastructures informatiques souveraines, résilientes et adaptées aux réalités énergétiques et réseau d’Afrique.',
-    tagline: 'Plateformes logicielles souveraines et résilientes',
-    stakeholders: [
-      {
-        id: 'tech-1',
-        name: 'Éléonore Vance',
-        roleCategory: 'Fondateur',
-        roleDetail: 'Directrice technique & architecte',
-        photoUrl: '/assets/duos/eleonore-vance.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Pourquoi l’Afrique doit-elle posséder son propre code source ?'
-      },
-      {
-        id: 'tech-2',
-        name: 'Clara Dossou',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Lead designer UI/UX',
-        photoUrl: '/assets/duos/photographer-focus.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Comment le design d’interface peut-il refléter notre sensibilité esthétique ?'
-      },
-      {
-        id: 'tech-3',
-        name: 'Sayri Quispe',
-        roleCategory: 'Fournisseur',
-        roleDetail: 'Constructeur de mini-serveurs hors réseau',
-        photoUrl: '/assets/duos/sayri-quispe.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Quel rôle pour les serveurs basse consommation face aux coupures réseau ?'
-      },
-      {
-        id: 'tech-4',
-        name: 'Mahougnon Zounon',
-        roleCategory: 'Client',
-        roleDetail: 'Directeur de centre de recherche',
-        photoUrl: '/assets/duos/dah-zounon.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Comment la technologie réconcilie-t-elle traditions et futur ?'
-      },
-      {
-        id: 'tech-5',
-        name: 'Tariq Al-Mansoor',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Fondateur communauté open source',
-        photoUrl: '/assets/duos/sayri-quispe.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Comment l’interopérabilité open source décuple-t-elle l’innovation africaine ?'
-      },
-      {
-        id: 'tech-6',
-        name: 'Fatou Diallo',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Ingénieure en intelligence artificielle locale',
-        photoUrl: '/assets/duos/fatou-diallo.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-        question: 'Comment entraîner des modèles de langage sur nos 50 langues nationales ?'
-      },
-      {
-        id: 'tech-7',
-        name: 'Kwame Mensah',
-        roleCategory: 'Client',
-        roleDetail: 'Fondateur d’école de code',
-        photoUrl: '/assets/duos/kwame-mensah.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Pourquoi former 10 000 jeunes au Python change la géopolitique du continent ?'
-      },
-      {
-        id: 'tech-8',
-        name: 'Blandine Adjovi',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Responsable assurance qualité logicielle',
-        photoUrl: '/assets/protagonists/adjovi-blandine.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Pourquoi zéro bug critique est la condition absolue pour les logiciels de santé ?'
-      },
-      {
-        id: 'tech-9',
-        name: 'Armel Hounkpatin',
-        roleCategory: 'Fournisseur',
-        roleDetail: 'Hébergeur vert à Cotonou',
-        photoUrl: '/assets/protagonists/armel-hounkpatin.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Comment garder nos données stockées physiquement sur notre sol national ?'
-      },
-      {
-        id: 'tech-10',
-        name: 'Hélène Saint-Amand',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Avocate spécialiste RGPD africain',
-        photoUrl: '/assets/protagonists/helene-saint-amand.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Comment empêcher les géants étrangers d’aspirer gratuitement nos données génétiques et culturelles ?'
-      },
-      {
-        id: 'tech-11',
-        name: 'Koffi Mensah',
-        roleCategory: 'Membre',
-        roleDetail: 'Développeur mobile offline-first',
-        photoUrl: '/assets/protagonists/chef-koffi.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Comment faire tourner une app complexe avec 0 ko de connexion pendant 3 semaines ?'
-      },
-      {
-        id: 'tech-12',
-        name: 'Malik Diop',
-        roleCategory: 'Bienfaiteur',
-        roleDetail: 'Business angel tech',
-        photoUrl: '/assets/duos/malik-diop.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-        question: 'Pourquoi je préfère investir dans nos codeurs locaux que dans les valeurs boursières occidentales ?'
-      },
-      {
-        id: 'tech-13',
-        name: 'Sika Dossou',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Administratrice de bases de données',
-        photoUrl: '/assets/protagonists/sika-dossou.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Comment concevoir des schémas résilients capables de synchronisation pair-à-pair ?'
-      },
-      {
-        id: 'tech-14',
-        name: 'Tobi Houndégla',
-        roleCategory: 'Client',
-        roleDetail: 'Entrepreneur agricole connecté',
-        photoUrl: '/assets/protagonists/tobi-houndegla.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Comment l’application météo développée par AfriCode a sauvé mes 50 hectares d’ananas ?'
-      },
-      {
-        id: 'tech-15',
-        name: 'Codjo Gbédji',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Accessibilité numérique pour aveugles',
-        photoUrl: '/assets/protagonists/codjo-blind.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Comment auditer chaque ligne de CSS pour que les lecteurs d’écran ne trébuchent jamais ?'
-      },
-      {
-        id: 'tech-16',
-        name: 'Pascal Houndé',
-        roleCategory: 'Bienfaiteur',
-        roleDetail: 'Documentariste des révolutions numériques',
-        photoUrl: '/assets/duos/coach-office.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Comment filmer la beauté invisible des lignes de code qui changent un continent ?'
-      }
-    ]
-  },
-
-  // 10. Coopérative Ganvié Indigo (Artisanat d'art & Tisseuses - 16 intervenants)
-  {
-    id: 'coop-ganvie',
-    category: 'Artisanat & Textile',
-    companyName: 'Coopérative Ganvié Indigo',
-    photoUrl: '/assets/protagonists/amara-tisserande.jpg',
-    logoUrl: '/assets/protagonists/amara-tisserande.jpg',
-    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-    manifestoVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-    manifestoTitle: 'Manifeste Ganvié Indigo : Le fil de nos mères',
-    manifestoQuestion: 'Comment le geste séculaire de la teinture protège-t-il la poésie de notre identité ?',
-    manifestoDescription: 'Coopérative de 120 tisseuses et artisanes de la lagune, perpétuant le tissage traditionnel au métier à tisser manuel et la teinture à l’indigo naturel.',
-    tagline: 'L’art du tissage et de la teinture lagunaire',
-    stakeholders: [
-      {
-        id: 'indigo-1',
-        name: 'Amara Diabaté',
-        roleCategory: 'Président',
-        roleDetail: 'Maîtresse tisseuse & Présidente',
-        photoUrl: '/assets/protagonists/amara-tisserande.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Comment chaque motif tissé raconte l’histoire de notre lignée de femmes lagunaires ?'
-      },
-      {
-        id: 'indigo-2',
-        name: 'Koffi Tisserand',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Maître teinturier à l’indigo',
-        photoUrl: '/assets/protagonists/koffi-tisserand.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Quel secret végétal donne à notre bleu indigo cette profondeur qui ne déteint jamais ?'
-      },
-      {
-        id: 'indigo-3',
-        name: 'Fatou Diallo',
-        roleCategory: 'Secrétaire',
-        roleDetail: 'Responsable exportation solidaire',
-        photoUrl: '/assets/duos/fatou-diallo.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Comment vendre nos pièces d’exception à Paris et Tokyo au juste prix pour nos tisseuses ?'
-      },
-      {
-        id: 'indigo-4',
-        name: 'Blandine Adjovi',
-        roleCategory: 'Trésorière',
-        roleDetail: 'Trésorière du fonds mutuel',
-        photoUrl: '/assets/protagonists/adjovi-blandine.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Comment assurer une retraite décente et des soins médicaux complets à chaque artisane ?'
-      },
-      {
-        id: 'indigo-5',
-        name: 'Dah Zounon',
-        roleCategory: 'Bienfaiteur',
-        roleDetail: 'Gardien des symboles Fâ tissés',
-        photoUrl: '/assets/duos/dah-zounon.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-        question: 'Quelle est la signification cachée des losanges et spirales brodés sur les pagnes d’apparat ?'
-      },
-      {
-        id: 'indigo-6',
-        name: 'Clara Dossou',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Styliste contemporaine associée',
-        photoUrl: '/assets/duos/photographer-focus.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Comment marier le pagne traditionnel lourd aux coupes épurées de la mode contemporaine ?'
-      },
-      {
-        id: 'indigo-7',
-        name: 'Armel Hounkpatin',
-        roleCategory: 'Fournisseur',
-        roleDetail: 'Piroguier transporteur de feuilles d’indigo',
-        photoUrl: '/assets/protagonists/armel-hounkpatin.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Comment récolter les feuilles fraîches à l’aube pour préserver la pigmentation vivante ?'
-      },
-      {
-        id: 'indigo-8',
-        name: 'Hélène Saint-Amand',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Présidente label commerce équitable',
-        photoUrl: '/assets/protagonists/helene-saint-amand.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Pourquoi labelliser l’artisanat d’art protège les créatrices contre la contrefaçon industrielle ?'
-      },
-      {
-        id: 'indigo-9',
-        name: 'Pascal Cossi',
-        roleCategory: 'Bienfaiteur',
-        roleDetail: 'Mécène d’ateliers d’apprentissage',
-        photoUrl: '/assets/duos/coach-office.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Comment donner envie aux jeunes filles déscolarisées d’apprendre la noblesse du métier ?'
-      },
-      {
-        id: 'indigo-10',
-        name: 'Sika Dossou',
-        roleCategory: 'Membre',
-        roleDetail: 'Apprentie tisseuse de 19 ans',
-        photoUrl: '/assets/protagonists/sika-dossou.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Quelle fierté de manier la navette de bois et d’entendre son claquement rythmé dans l’atelier !'
-      },
-      {
-        id: 'indigo-11',
-        name: 'Marc Houndégla',
-        roleCategory: 'Client',
-        roleDetail: 'Collectionneur d’art textile',
-        photoUrl: '/assets/duos/athlete-hurdle.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Pourquoi une pièce de Ganvié Indigo a plus de valeur spirituelle qu’une toile de maître ?'
-      },
-      {
-        id: 'indigo-12',
-        name: 'Éléonore Vance',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Curatrice d’exposition internationale',
-        photoUrl: '/assets/duos/eleonore-vance.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Comment porter les tissages du Bénin au pavillon d’honneur de la biennale de Venise ?'
-      },
-      {
-        id: 'indigo-13',
-        name: 'Tobi Houndégla',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Photographe officiel des collections',
-        photoUrl: '/assets/protagonists/tobi-houndegla.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-        question: 'Comment capturer la texture serrée du coton sauvage sous les reflets de l’eau lagunaire ?'
-      },
-      {
-        id: 'indigo-14',
-        name: 'Codjo Gbédji',
-        roleCategory: 'Fournisseur',
-        roleDetail: 'Menuisier fabricant de métiers à tisser',
-        photoUrl: '/assets/protagonists/codjo-blind.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Quel bois imputrescible choisir pour que le métier résiste 40 ans à l’humidité du lac ?'
-      },
-      {
-        id: 'indigo-15',
-        name: 'Malik Diop',
-        roleCategory: 'Bienfaiteur',
-        roleDetail: 'Mécène pour la construction de l’atelier sur pilotis',
-        photoUrl: '/assets/duos/malik-diop.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Pourquoi bâtir un atelier lumineux sur pilotis pour préserver la santé des tisseuses ?'
-      },
-      {
-        id: 'indigo-16',
-        name: 'Sayri Quispe',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Ingénieur en teintures végétales écologiques',
-        photoUrl: '/assets/duos/sayri-quispe.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Comment recycler les bains de teinture pour que pas une goutte toxique ne finisse dans la lagune ?'
-      }
-    ]
-  },
-
-  // 11. Éco-Ferme de Ouidah (Agro-écologie & Semences paysannes - 16 intervenants)
-  {
-    id: 'ecoferme-ouidah',
-    category: 'Agro-écologie & Terroir',
-    companyName: 'Éco-Ferme de Ouidah',
-    photoUrl: '/assets/directions/terroir-vivant.jpg',
-    logoUrl: '/assets/directions/terroir-vivant.jpg',
+    id: 'kaicedrat-medical',
+    category: 'Santé Communautaire',
+    companyName: 'Kaicedrat Médical',
+    photoUrl: '/assets/directions/sagesses-anciens.jpg',
     videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
     manifestoVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-    manifestoTitle: 'Manifeste Éco-Ferme : Nourrir la terre pour nourrir l’homme',
-    manifestoQuestion: 'Comment régénérer la terre de nos ancêtres sans engrais chimiques ?',
-    manifestoDescription: 'Centre pilote d’agroforesterie, de conservation des semences locales et de formation des jeunes maraîchers aux pratiques permacoles durables.',
-    tagline: 'Semences paysannes et souveraineté alimentaire',
+    manifestoQuestion: 'Comment allier pharmacopée végétale ancestrale et médecine moderne pour soigner au plus juste ?',
+    tagline: 'L’arbre qui guérit, la science qui veille',
+    description: 'Laboratoire de phytothérapie moderne validant cliniquement les principes actifs des plantes médicinales africaines.',
+    foundedYear: '2013',
+    location: 'Ouidah & Cotonou',
     stakeholders: [
-      {
-        id: 'ferme-1',
-        name: 'Tobi Houndégla',
-        roleCategory: 'Fondateur',
-        roleDetail: 'Agronome permaculteur',
-        photoUrl: '/assets/protagonists/tobi-houndegla.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Comment régénérer la terre de nos ancêtres sans engrais chimiques ?'
-      },
-      {
-        id: 'ferme-2',
-        name: 'Fatou Diallo',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Responsable de la banque de semences',
-        photoUrl: '/assets/duos/fatou-diallo.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Pourquoi protéger nos variétés de maïs blanc ancien contre les hybrides stériles ?'
-      },
-      {
-        id: 'ferme-3',
-        name: 'Pascal Houndé',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Formateur en compostage bokashi',
-        photoUrl: '/assets/duos/coach-office.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Comment transformer les déchets de marché en or noir pour les cultures ?'
-      },
-      {
-        id: 'ferme-4',
-        name: 'Koffi Mensah',
-        roleCategory: 'Client',
-        roleDetail: 'Restaurateur du terroir',
-        photoUrl: '/assets/protagonists/chef-koffi.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Quel goût incomparable apporte un piment poussé sans aucun pesticide !'
-      },
-      {
-        id: 'ferme-5',
-        name: 'Blandine Adjovi',
-        roleCategory: 'Membre',
-        roleDetail: 'Pépiniériste d’arbres fruitiers',
-        photoUrl: '/assets/protagonists/adjovi-blandine.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-        question: 'Comment greffer les manguiers sauvages pour assurer des récoltes échelonnées ?'
-      },
-      {
-        id: 'ferme-6',
-        name: 'Codjo Gbédji',
-        roleCategory: 'Fournisseur',
-        roleDetail: 'Fabricant de ruches traditionnelles',
-        photoUrl: '/assets/protagonists/codjo-blind.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Pourquoi les abeilles sont les véritables ouvrières de la pollinisation maraîchère ?'
-      },
-      {
-        id: 'ferme-7',
-        name: 'Dah Zounon',
-        roleCategory: 'Bienfaiteur',
-        roleDetail: 'Doyen des semailles sacrées',
-        photoUrl: '/assets/duos/dah-zounon.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Quelle prière accompagne la mise en terre de la première graine d’igname ?'
-      },
-      {
-        id: 'ferme-8',
-        name: 'Armel Hounkpatin',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Responsable de l’irrigation goutte-à-goutte solaire',
-        photoUrl: '/assets/protagonists/armel-hounkpatin.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Comment économiser 80% d’eau tout en multipliant la vigueur des plants ?'
-      },
-      {
-        id: 'ferme-9',
-        name: 'Éléonore Vance',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Coordinatrice réseau permaculture ouest-africain',
-        photoUrl: '/assets/duos/eleonore-vance.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Comment essaimer 50 éco-fermes familiales à travers le Bénin d’ici 2030 ?'
-      },
-      {
-        id: 'ferme-10',
-        name: 'Sika Dossou',
-        roleCategory: 'Client',
-        roleDetail: 'Mère de famille adhérente panier bio',
-        photoUrl: '/assets/protagonists/sika-dossou.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Comment nourrir mes quatre enfants sainement sans dépasser mon budget modeste ?'
-      },
-      {
-        id: 'ferme-11',
-        name: 'Marc Houndégla',
-        roleCategory: 'Fournisseur',
-        roleDetail: 'Éleveur fournisseur de fumier composté',
-        photoUrl: '/assets/duos/athlete-hurdle.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Comment boucler la boucle entre polyculture et élevage pastoral respectueux ?'
-      },
-      {
-        id: 'ferme-12',
-        name: 'Hélène Saint-Amand',
-        roleCategory: 'Bienfaiteur',
-        roleDetail: 'Juriste protectrice des terres agricoles communales',
-        photoUrl: '/assets/protagonists/helene-saint-amand.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-        question: 'Comment sanctuariser les terres paysannes face à la spéculation immobilière sauvage ?'
-      },
-      {
-        id: 'ferme-13',
-        name: 'Clara Dossou',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Animatrice de la ferme pédagogique enfants',
-        photoUrl: '/assets/duos/photographer-focus.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Pourquoi faire toucher la terre vivante à un enfant de la ville change son avenir ?'
-      },
-      {
-        id: 'ferme-14',
-        name: 'Malik Diop',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Président association des marchés bio',
-        photoUrl: '/assets/duos/malik-diop.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Comment créer des circuits courts directs du champ à l’assiette à Cotonou ?'
-      },
-      {
-        id: 'ferme-15',
-        name: 'Sayri Quispe',
-        roleCategory: 'Fournisseur',
-        roleDetail: 'Installateur capteurs d’humidité du sol',
-        photoUrl: '/assets/duos/sayri-quispe.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Comment mesurer la vitalité mycorhizienne des racines par des sondes artisanales ?'
-      },
-      {
-        id: 'ferme-16',
-        name: 'Pascal Cossi',
-        roleCategory: 'Bienfaiteur',
-        roleDetail: 'Mécène de la forêt sanctuaire attenante',
-        photoUrl: '/assets/duos/coach-office.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Pourquoi préserver un bosquet sacré sauvage au milieu de chaque exploitation agricole ?'
-      }
+      { id: 'km-1', name: 'Dr. Euphrasie Mensah', roleCategory: 'Fondateur', roleDetail: 'Pharmacologue & Chercheuse', photoUrl: '/assets/protagonists/solange-tevoedjre.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Comment extraire la quintessence des écorces de Kaicedrat sans piller nos forêts ?' },
+      { id: 'km-2', name: 'Gervais Houndé', roleCategory: 'Collaborateur', roleDetail: 'Botaniste explorateur', photoUrl: '/assets/protagonists/hospice-avlessi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Comment cartographier les espèces médicinales menacées avec les tradipraticiens ?' },
+      { id: 'km-3', name: 'Béatrice Agbo', roleCategory: 'Collaborateur', roleDetail: 'Responsable contrôle qualité chromatographie', photoUrl: '/assets/protagonists/adjovi-blandine.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Quelle rigueur scientifique permet d’obtenir les autorisations de mise sur le marché ?' },
+      { id: 'km-4', name: 'Dr. Marcel Tossou', roleCategory: 'Partenaire', roleDetail: 'Médecin chef hôpital de zone', photoUrl: '/assets/protagonists/chef-koffi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Pourquoi nos patients guérissent plus vite avec des sirops à base de plantes locales ?' },
+      { id: 'km-5', name: 'Honorine Kpanou', roleCategory: 'Client', roleDetail: 'Patiente soignée du paludisme récurrent', photoUrl: '/assets/protagonists/reine-kpodjito.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Ce que change un traitement doux qui respecte le foie et le corps ?' },
+      { id: 'km-6', name: 'Célestin Zannou', roleCategory: 'Fournisseur', roleDetail: 'Cultivateur d’Artemisia biologique', photoUrl: '/assets/protagonists/victor-dossou.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Comment récolter les feuilles d’Artemisia à maturité optimale de principe actif ?' },
+      { id: 'km-7', name: 'Séraphine Danho', roleCategory: 'Collaborateur', roleDetail: 'Responsable conditionnement éco-conçu', photoUrl: '/assets/protagonists/tatiana-gnanhou.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Pourquoi remplacer le plastique pétrochimique par des flacons en verre recyclé local ?' },
+      { id: 'km-8', name: 'Auguste Boko', roleCategory: 'Bénévole', roleDetail: 'Animateur de prévention santé dans les marchés', photoUrl: '/assets/protagonists/sage-koffi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Comment convaincre de boire l’eau bouillie et d’utiliser les tisanes préventives ?' },
+      { id: 'km-9', name: 'Valérie Codo', roleCategory: 'Collaborateur', roleDetail: 'Déléguée médicale éthique', photoUrl: '/assets/protagonists/gisele-adissin.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Comment dialoguer avec les pharmaciens formés en occident pour réhabiliter nos plantes ?' },
+      { id: 'km-10', name: 'Théodore Houndété', roleCategory: 'Partenaire', roleDetail: 'Ordre National des Pharmaciens', photoUrl: '/assets/duos/athlete-hurdle.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Comment bâtir une pharmacopée nationale souveraine et accessible à tous ?' },
+      { id: 'km-11', name: 'Monique Alladatin', roleCategory: 'Client', roleDetail: 'Mère de famille et adepte des infusions pectorales', photoUrl: '/assets/protagonists/zenab-oumar.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Pourquoi nos grands-mères avaient-elles toujours raison sur les vertus du Kinkeliba ?' },
+      { id: 'km-12', name: 'Alain Senou', roleCategory: 'Fournisseur', roleDetail: 'Apiculteur certifié pour le miel médicinal', photoUrl: '/assets/duos/kwame-mensah.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Comment le miel pur de savane cicatrise les plaies les plus récalcitrantes ?' },
+      { id: 'km-13', name: 'Prudence Tokpo', roleCategory: 'Collaborateur', roleDetail: 'Responsable des essais cliniques comparatifs', photoUrl: '/assets/protagonists/fatou-diop.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Quelle fierté quand la revue internationale publie nos résultats de guérison ?' },
+      { id: 'km-14', name: 'Gilles Vigan', roleCategory: 'Bienfaiteur', roleDetail: 'Fondateur fondation pour la médecine d’Afrique', photoUrl: '/assets/duos/coach-office.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Pourquoi subventionner les médicaments locaux pour qu’ils coûtent trois fois moins cher ?' },
+      { id: 'km-15', name: 'Nadège Agbanglo', roleCategory: 'Collaborateur', roleDetail: 'Formatrice aux gestes de premiers secours traditionnels', photoUrl: '/assets/protagonists/adjovi-blandine.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Que faire en cas de morsure de serpent en attendant le médecin ?' },
+      { id: 'km-16', name: 'Romuald Danho', roleCategory: 'Client', roleDetail: 'Directeur de clinique mutualiste', photoUrl: '/assets/protagonists/paul-insee.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Comment la phytothérapie réduit le coût des ordonnances pour les ouvriers ?' }
     ]
   },
-
-  // 12. Théâtre Vivant de Cotonou (Arts de la scène & Récits oraux - 16 intervenants)
   {
-    id: 'theatre-cotonou',
-    category: 'Théâtre & Scène',
-    companyName: 'Théâtre Vivant de Cotonou',
-    photoUrl: '/assets/directions/arts-vivants.jpg',
-    logoUrl: '/assets/directions/arts-vivants.jpg',
+    id: 'biosaveur-benin',
+    category: 'Agroalimentaire & Terroir',
+    companyName: 'BioSaveur Bénin',
+    photoUrl: '/assets/directions/territoires-memoire.jpg',
     videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
     manifestoVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-    manifestoTitle: 'Manifeste Théâtre Vivant : La scène comme miroir du peuple',
-    manifestoQuestion: 'Comment le verbe et le geste sur scène éveillent-ils la conscience politique et poétique ?',
-    manifestoDescription: 'Troupe théâtrale engagée dans la création chorale, le théâtre d’intervention sociale et la valorisation du répertoire dramatique africain contemporain.',
-    tagline: 'L’émotion partagée au cœur de la cité',
+    manifestoQuestion: 'Comment transformer nos trésors agricoles locaux pour en faire les délices de toutes les tables ?',
+    tagline: 'Le pur délice des récoltes béninoises',
+    description: 'Entreprise agroalimentaire éthique transformant mangues, ananas Pain de Sucre et noix de cajou en nectars et snacks gourmands certifiés équitables.',
+    foundedYear: '2016',
+    location: 'Allada & Cotonou',
     stakeholders: [
-      {
-        id: 'th-1',
-        name: 'Malik Diop',
-        roleCategory: 'Fondateur',
-        roleDetail: 'Metteur en scène & Comédien',
-        photoUrl: '/assets/duos/malik-diop.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Comment le verbe et le geste sur scène éveillent-ils la conscience politique et poétique ?'
-      },
-      {
-        id: 'th-2',
-        name: 'Blandine Adjovi',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Comédienne tragédienne',
-        photoUrl: '/assets/protagonists/adjovi-blandine.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Quel courage exige d’incarner la douleur collective d’une nation sur les planches ?'
-      },
-      {
-        id: 'th-3',
-        name: 'Pascal Houndé',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Scénographe et dramaturge',
-        photoUrl: '/assets/duos/coach-office.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Comment concevoir un espace scénique en terre crue et bambous qui respire avec les acteurs ?'
-      },
-      {
-        id: 'th-4',
-        name: 'Koffi Mensah',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Maître percussionniste de scène',
-        photoUrl: '/assets/protagonists/chef-koffi.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Comment le tambour dialogue avec la respiration de l’acteur sans couvrir sa voix ?'
-      },
-      {
-        id: 'th-5',
-        name: 'Fatou Diallo',
-        roleCategory: 'Secrétaire',
-        roleDetail: 'Administratrice de tournée',
-        photoUrl: '/assets/duos/fatou-diallo.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-        question: 'Comment organiser un convoi de 25 comédiens et décors sur 3000 kilomètres de pistes ?'
-      },
-      {
-        id: 'th-6',
-        name: 'Codjo Gbédji',
-        roleCategory: 'Fournisseur',
-        roleDetail: 'Créateur de masques rituels de scène',
-        photoUrl: '/assets/protagonists/codjo-blind.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Pourquoi sculpter un masque exige d’abord de demander la permission à l’arbre coupé ?'
-      },
-      {
-        id: 'th-7',
-        name: 'Éléonore Vance',
-        roleCategory: 'Bienfaiteur',
-        roleDetail: 'Présidente fondation théâtre pour tous',
-        photoUrl: '/assets/duos/eleonore-vance.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Pourquoi chaque représentation doit être accessible à tarif libre pour les habitants du quartier ?'
-      },
-      {
-        id: 'th-8',
-        name: 'Armel Hounkpatin',
-        roleCategory: 'Fournisseur',
-        roleDetail: 'Régisseur lumière et son plein air',
-        photoUrl: '/assets/protagonists/armel-hounkpatin.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Comment éclairer une scène sous les étoiles avec des projecteurs basse consommation ?'
-      },
-      {
-        id: 'th-9',
-        name: 'Sika Dossou',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Costumière textile traditionnel',
-        photoUrl: '/assets/protagonists/sika-dossou.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Comment chaque pli de tissu révèle la psychologie et le rang du personnage ?'
-      },
-      {
-        id: 'th-10',
-        name: 'Dah Zounon',
-        roleCategory: 'Membre',
-        roleDetail: 'Aède et mémoire des panégyriques',
-        photoUrl: '/assets/duos/dah-zounon.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Quelle force surgit quand un comédien clame la devise orikí de sa famille ?'
-      },
-      {
-        id: 'th-11',
-        name: 'Marc Houndégla',
-        roleCategory: 'Client',
-        roleDetail: 'Spectateur assidu et débatteur',
-        photoUrl: '/assets/duos/athlete-hurdle.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Pourquoi le débat public de 45 minutes après la pièce est-il aussi vital que le spectacle ?'
-      },
-      {
-        id: 'th-12',
-        name: 'Clara Dossou',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Comédienne jeune espoir',
-        photoUrl: '/assets/duos/photographer-focus.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-        question: 'Comment surmonter le trac pour donner sa voix à la jeunesse révoltée ?'
-      },
-      {
-        id: 'th-13',
-        name: 'Hélène Saint-Amand',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Médiatrice culturelle scolaire',
-        photoUrl: '/assets/protagonists/helene-saint-amand.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Comment initier 1500 lycéens au théâtre pour développer leur éloquence républicaine ?'
-      },
-      {
-        id: 'th-14',
-        name: 'Tobi Houndégla',
-        roleCategory: 'Fournisseur',
-        roleDetail: 'Vidéaste capteur de pièces d’archives',
-        photoUrl: '/assets/protagonists/tobi-houndegla.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Comment filmer une pièce sans aplatir l’énergie brute transmise au public en direct ?'
-      },
-      {
-        id: 'th-15',
-        name: 'Sayri Quispe',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Ingénieur acoustique de cour',
-        photoUrl: '/assets/duos/sayri-quispe.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Comment concevoir des réflecteurs en bois pour porter le murmure jusqu’au dernier rang ?'
-      },
-      {
-        id: 'th-16',
-        name: 'Pascal Cossi',
-        roleCategory: 'Bienfaiteur',
-        roleDetail: 'Président d’honneur',
-        photoUrl: '/assets/duos/coach-office.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Pourquoi une société sans théâtre vivant perd la faculté d’imaginer sa réconciliation ?'
-      }
+      { id: 'bs-1', name: 'Florentine Agbo', roleCategory: 'Fondateur', roleDetail: 'Ingénieure agroalimentaire', photoUrl: '/assets/protagonists/adjovi-blandine.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Pourquoi exporter du brut quand la vraie richesse réside dans la transformation chez nous ?' },
+      { id: 'bs-2', name: 'Romain Tossou', roleCategory: 'Collaborateur', roleDetail: 'Maître presseur de jus à froid', photoUrl: '/assets/protagonists/chef-koffi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Comment préserver les vitamines de l’ananas sans pasteurisation agressive ?' },
+      { id: 'bs-3', name: 'Chantal Houndété', roleCategory: 'Collaborateur', roleDetail: 'Responsable achats équitables bord champ', photoUrl: '/assets/protagonists/solange-tevoedjre.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Comment garantir un prix rémunérateur garanti aux planteurs sur cinq ans ?' },
+      { id: 'bs-4', name: 'Anatole Zinsou', roleCategory: 'Client', roleDetail: 'Gérant de supermarché local éthique', photoUrl: '/assets/protagonists/hospice-avlessi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Pourquoi nos clients boudent les jus importés dès qu’ils goûtent le nectar Allada ?' },
+      { id: 'bs-5', name: 'Solange Codo', roleCategory: 'Fournisseur', roleDetail: 'Planteuse d’ananas biologique sur plateau', photoUrl: '/assets/protagonists/reine-kpodjito.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Comment le compostage a quadruplé la teneur en sucre de mes ananas ?' },
+      { id: 'bs-6', name: 'Évariste Danho', roleCategory: 'Collaborateur', roleDetail: 'Chef de laboratoire microbiologique', photoUrl: '/assets/protagonists/victor-dossou.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Quelle exigence sanitaire pour rivaliser avec les meilleurs labels européens ?' },
+      { id: 'bs-7', name: 'Béatrice Senou', roleCategory: 'Partenaire', roleDetail: 'Chambre de commerce et d’industrie', photoUrl: '/assets/protagonists/tatiana-gnanhou.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Comment faire des produits béninois le fer de lance de nos exportations régionales ?' },
+      { id: 'bs-8', name: 'Christian Boko', roleCategory: 'Fournisseur', roleDetail: 'Producteur de mangues greffées de Parakou', photoUrl: '/assets/protagonists/sage-koffi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Pourquoi éviter la pourriture sous l’arbre en vendant la récolte entière à l’usine ?' },
+      { id: 'bs-9', name: 'Monique Vigan', roleCategory: 'Bénévole', roleDetail: 'Animatrice dégustation dans les gares routières', photoUrl: '/assets/protagonists/gisele-adissin.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'La surprise des voyageurs en découvrant que ce jus d’exception vient de leur pays ?' },
+      { id: 'bs-10', name: 'David Alladatin', roleCategory: 'Client', roleDetail: 'Chef cuisinier étoilé en escale', photoUrl: '/assets/duos/athlete-hurdle.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Comment la mangue séchée de BioSaveur sublime un dessert gastronomique ?' },
+      { id: 'bs-11', name: 'Nadège Tokpo', roleCategory: 'Collaborateur', roleDetail: 'Directrice logistique chaîne du froid', photoUrl: '/assets/protagonists/zenab-oumar.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Comment livrer 10 000 bouteilles fraîches chaque matin à l’aube ?' },
+      { id: 'bs-12', name: 'Stanislas Kiki', roleCategory: 'Partenaire', roleDetail: 'Label Commerce Équitable Afrique', photoUrl: '/assets/duos/kwame-mensah.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Pourquoi la prime de commerce équitable a permis de bâtir la maternité d’Allada ?' },
+      { id: 'bs-13', name: 'Hélène Agbanglo', roleCategory: 'Collaborateur', roleDetail: 'Responsable du tri des noix de cajou', photoUrl: '/assets/protagonists/fatou-diop.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Quelle dextérité pour décortiquer les noix sans briser l’amande précieuse ?' },
+      { id: 'bs-14', name: 'Joël Houndonou', roleCategory: 'Client', roleDetail: 'Étudiant consommateur quotidien', photoUrl: '/assets/duos/coach-office.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Pourquoi je préfère payer 400 FCFA pour ce jus plutôt qu’un soda importé ?' },
+      { id: 'bs-15', name: 'Clarisse Danvidé', roleCategory: 'Bienfaiteur', roleDetail: 'Fondatrice club des femmes cheffes d’entreprise', photoUrl: '/assets/protagonists/mahougnon-kakpo.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Comment Florentine est devenue l’exemple vivant pour des centaines de jeunes filles ?' },
+      { id: 'bs-16', name: 'Barnabé Agossa', roleCategory: 'Collaborateur', roleDetail: 'Technicien maintenance autoclave vapeur', photoUrl: '/assets/protagonists/paul-insee.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Comment valoriser les coques de cajou pour alimenter la chaudière en énergie propre ?' }
     ]
   },
-
-  // 13. Mains Solidaires (Santé communautaire & Entraide - 16 intervenants)
   {
-    id: 'mains-solidaires',
-    category: 'Santé & Entraide',
-    companyName: 'Mains Solidaires Bénin',
-    photoUrl: '/assets/directions/marques-services.jpg',
-    logoUrl: '/assets/directions/marques-services.jpg',
-    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-    manifestoVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-    manifestoTitle: 'Manifeste Mains Solidaires : Soigner ensemble',
-    manifestoQuestion: 'Comment garantir l’accès aux soins d’urgence pour chaque famille des zones enclavées ?',
-    manifestoDescription: 'Réseau associatif de santé communautaire, dispensaires itinérants et mutuelles villageoises de santé pour les zones rurales et périurbaines.',
-    tagline: 'La santé et la dignité pour chaque foyer',
-    stakeholders: [
-      {
-        id: 'ms-1',
-        name: 'Dr. Alexis Sossou',
-        roleCategory: 'Président',
-        roleDetail: 'Médecin généraliste humanitaire',
-        photoUrl: '/assets/duos/athlete-hurdle.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-        question: 'Comment garantir l’accès aux soins d’urgence pour chaque famille des zones enclavées ?'
-      },
-      {
-        id: 'ms-2',
-        name: 'Geneviève Agossa',
-        roleCategory: 'Secrétaire',
-        roleDetail: 'Sage-femme coordinatrice',
-        photoUrl: '/assets/duos/fatou-diallo.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Pourquoi la surveillance prénatale de proximité a fait chuter la mortalité maternelle de 70% ?'
-      },
-      {
-        id: 'ms-3',
-        name: 'Pascal Cossi',
-        roleCategory: 'Bienfaiteur',
-        roleDetail: 'Parrain des dispensaires lacustres',
-        photoUrl: '/assets/duos/coach-office.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Comment mobiliser les dons pour approvisionner les trousses d’urgence en sérums antivenimeux ?'
-      },
-      {
-        id: 'ms-4',
-        name: 'Armel Hounkpatin',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Pilote de la pirogue dispensaire',
-        photoUrl: '/assets/protagonists/armel-hounkpatin.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Quelle émotion lorsqu’on accoste dans un village isolé où le médecin n’était pas venu depuis un an ?'
-      },
-      {
-        id: 'ms-5',
-        name: 'Blandine Adjovi',
-        roleCategory: 'Membre',
-        roleDetail: 'Relais communautaire de santé',
-        photoUrl: '/assets/protagonists/adjovi-blandine.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Comment dépister le paludisme chez les nourrissons dès les premiers frissons ?'
-      },
-      {
-        id: 'ms-6',
-        name: 'Codjo Gbédji',
-        roleCategory: 'Client',
-        roleDetail: 'Patient guéri et ambassadeur',
-        photoUrl: '/assets/protagonists/codjo-blind.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Comment la mutuelle villageoise a pris en charge mon opération sans ruiner ma famille ?'
-      },
-      {
-        id: 'ms-7',
-        name: 'Hélène Saint-Amand',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Représentante fonds mondial santé',
-        photoUrl: '/assets/protagonists/helene-saint-amand.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-        question: 'Pourquoi soutenir les ONG locales de santé est 10 fois plus efficace que les structures lourdes ?'
-      },
-      {
-        id: 'ms-8',
-        name: 'Koffi Mensah',
-        roleCategory: 'Fournisseur',
-        roleDetail: 'Pharmacien grossiste éthique',
-        photoUrl: '/assets/protagonists/chef-koffi.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Comment garantir l’authenticité des médicaments essentiels contre le trafic de faux produits ?'
-      },
-      {
-        id: 'ms-9',
-        name: 'Sika Dossou',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Infirmière en chef itinérante',
-        photoUrl: '/assets/protagonists/sika-dossou.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Quelle douceur et autorité morale pour convaincre les familles de faire vacciner leurs bébés ?'
-      },
-      {
-        id: 'ms-10',
-        name: 'Dah Zounon',
-        roleCategory: 'Bienfaiteur',
-        roleDetail: 'Herboriste et sage guérisseur',
-        photoUrl: '/assets/duos/dah-zounon.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Comment allier les vertus thérapeutiques des plantes de nos forêts aux protocoles médicaux modernes ?'
-      },
-      {
-        id: 'ms-11',
-        name: 'Malik Diop',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Organisateur de marathons solidaires',
-        photoUrl: '/assets/duos/malik-diop.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Comment courir 20 km pour financer 100 couveuses artisanales solaires ?'
-      },
-      {
-        id: 'ms-12',
-        name: 'Éléonore Vance',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Développeuse du carnet de santé numérique',
-        photoUrl: '/assets/duos/eleonore-vance.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Comment assurer le suivi vaccinal sans connexion internet grâce aux QR codes sur cartes plastifiées ?'
-      },
-      {
-        id: 'ms-13',
-        name: 'Tobi Houndégla',
-        roleCategory: 'Fournisseur',
-        roleDetail: 'Technicien de glacières solaires de vaccins',
-        photoUrl: '/assets/protagonists/tobi-houndegla.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-        question: 'Comment maintenir la chaîne du froid entre 2°C et 8°C par 42°C à l’ombre ?'
-      },
-      {
-        id: 'ms-14',
-        name: 'Clara Dossou',
-        roleCategory: 'Bénévole',
-        roleDetail: 'Animatrice nutrition infantile',
-        photoUrl: '/assets/duos/photographer-focus.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Comment confectionner des bouillies enrichies au moringa et au soja pour éradiquer l’anémie ?'
-      },
-      {
-        id: 'ms-15',
-        name: 'Sayri Quispe',
-        roleCategory: 'Fournisseur',
-        roleDetail: 'Opérateur télémédecine par satellite',
-        photoUrl: '/assets/duos/sayri-quispe.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Comment permettre à un cardiologue de Cotonou d’analyser un ECG fait dans un village à 500 km ?'
-      },
-      {
-        id: 'ms-16',
-        name: 'Pascal Houndé',
-        roleCategory: 'Bienfaiteur',
-        roleDetail: 'Cinéaste pour la prévention sanitaire',
-        photoUrl: '/assets/duos/coach-office.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Pourquoi une saynète filmée avec humour éradique plus vite le choléra que les discours moralisateurs ?'
-      }
-    ]
-  },
-
-  // 14. Saveurs du Terroir (Gastronomie & Transformation vivrière - 16 intervenants)
-  {
-    id: 'bio-benin-saveurs',
-    category: 'Gastronomie & Terroir',
-    companyName: 'Saveurs du Terroir Bénin',
-    photoUrl: '/assets/directions/terroir-vivant.jpg',
-    logoUrl: '/assets/directions/terroir-vivant.jpg',
-    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-    manifestoVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-    manifestoTitle: 'Manifeste Saveurs du Terroir : Le goût de notre mémoire',
-    manifestoQuestion: 'Comment valoriser nos épices et recettes traditionnelles sur les tables du monde ?',
-    manifestoDescription: 'PME agroalimentaire transformant les fruits, épices et céréales locales en produits gastronomiques d’excellence, sans conservateurs chimiques.',
-    tagline: 'L’excellence culinaire et vivrière d’Afrique',
-    stakeholders: [
-      {
-        id: 'saveur-1',
-        name: 'Koffi Mensah',
-        roleCategory: 'Fondateur',
-        roleDetail: 'Maître cuisinier & Conservateur des saveurs',
-        photoUrl: '/assets/protagonists/chef-koffi.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Comment valoriser nos épices et recettes traditionnelles sur les tables du monde ?'
-      },
-      {
-        id: 'saveur-2',
-        name: 'Fatou Diallo',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Responsable séchage solaire des fruits',
-        photoUrl: '/assets/duos/fatou-diallo.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Comment sécher la mangue et l’ananas tout en préservant leurs vitamines et leur moelleux ?'
-      },
-      {
-        id: 'saveur-3',
-        name: 'Adjovi Blandine',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Maîtresse de fermentation moutarde néré',
-        photoUrl: '/assets/protagonists/adjovi-blandine.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Pourquoi l’afitin traditionnel est-il l’umami le plus puissant de la gastronomie africaine ?'
-      },
-      {
-        id: 'saveur-4',
-        name: 'Armel Hounkpatin',
-        roleCategory: 'Client',
-        roleDetail: 'Hôtelier engagé produits locaux',
-        photoUrl: '/assets/protagonists/armel-hounkpatin.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Pourquoi nos clients étrangers raffolent de notre confiture de papaye au gingembre sauvage ?'
-      },
-      {
-        id: 'saveur-5',
-        name: 'Tobi Houndégla',
-        roleCategory: 'Fournisseur',
-        roleDetail: 'Producteur de curcuma et poivre noir',
-        photoUrl: '/assets/protagonists/tobi-houndegla.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-        question: 'Quelle fierté de voir nos grains de poivre sélectionnés par les grands chefs étoilés !'
-      },
-      {
-        id: 'saveur-6',
-        name: 'Hélène Saint-Amand',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Experte en certification biologique',
-        photoUrl: '/assets/protagonists/helene-saint-amand.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Comment garantir l’origine équitable de chaque bocal vendu ?'
-      },
-      {
-        id: 'saveur-7',
-        name: 'Codjo Gbédji',
-        roleCategory: 'Fournisseur',
-        roleDetail: 'Potier fabricant de jarres de fermentation',
-        photoUrl: '/assets/protagonists/codjo-blind.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Pourquoi l’argile cuite naturelle régule la température de fermentation mieux que l’inox ?'
-      },
-      {
-        id: 'saveur-8',
-        name: 'Dah Zounon',
-        roleCategory: 'Bienfaiteur',
-        roleDetail: 'Gardien des recettes de cour royale',
-        photoUrl: '/assets/duos/dah-zounon.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Quelle potion de jouvence composait le bouillon des reines mères de Danxomè ?'
-      },
-      {
-        id: 'saveur-9',
-        name: 'Éléonore Vance',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Directrice réseau épiceries fines africaines',
-        photoUrl: '/assets/duos/eleonore-vance.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Comment installer durablement nos produits béninois dans les rayons premium internationaux ?'
-      },
-      {
-        id: 'saveur-10',
-        name: 'Sika Dossou',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Cheffe de conditionnement sous vide',
-        photoUrl: '/assets/protagonists/sika-dossou.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Quelle rigueur d’hygiène garantit 2 ans de conservation sans aucune chimie ajoutée ?'
-      },
-      {
-        id: 'saveur-11',
-        name: 'Marc Houndégla',
-        roleCategory: 'Client',
-        roleDetail: 'Père de famille amateur de jus de baobab',
-        photoUrl: '/assets/duos/athlete-hurdle.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-        question: 'Pourquoi remplacer les sodas importés par le jus de baobab a redonné de l’énergie à mes enfants ?'
-      },
-      {
-        id: 'saveur-12',
-        name: 'Pascal Cossi',
-        roleCategory: 'Bienfaiteur',
-        roleDetail: 'Mécène pour l’emploi des femmes transformatrices',
-        photoUrl: '/assets/duos/coach-office.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Comment la transformation agroalimentaire locale crée 5 fois plus d’emplois que l’exportation brute ?'
-      },
-      {
-        id: 'saveur-13',
-        name: 'Clara Dossou',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Créatrice de packaging écoresponsable',
-        photoUrl: '/assets/duos/photographer-focus.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Comment fabriquer des étiquettes en papier recyclé de tiges de maïs et encres végétales ?'
-      },
-      {
-        id: 'saveur-14',
-        name: 'Malik Diop',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Chroniqueur gastronomique radio',
-        photoUrl: '/assets/duos/malik-diop.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Pourquoi vanter la richesse de notre terroir culinaire est le plus beau patriotisme ?'
-      },
-      {
-        id: 'saveur-15',
-        name: 'Sayri Quispe',
-        roleCategory: 'Fournisseur',
-        roleDetail: 'Installateur séchoirs solaires automatisés',
-        photoUrl: '/assets/duos/sayri-quispe.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Comment réguler l’hygrométrie par extraction d’air solaire thermique ?'
-      },
-      {
-        id: 'saveur-16',
-        name: 'Pascal Houndé',
-        roleCategory: 'Bienfaiteur',
-        roleDetail: 'Réalisateur de documentaires culinaires',
-        photoUrl: '/assets/duos/coach-office.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Comment filmer la fumée d’une marmite pour donner envie de s’asseoir ensemble ?'
-      }
-    ]
-  },
-
-  // 15. Archi-Terre Afrique (Architecture biosourcée & Briques de terre - 16 intervenants)
-  {
-    id: 'archi-terre',
-    category: 'Architecture & Écologie',
-    companyName: 'Archi-Terre Afrique',
-    photoUrl: '/assets/directions/arts-visuels.jpg',
-    logoUrl: '/assets/directions/arts-visuels.jpg',
-    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-    manifestoVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-    manifestoTitle: 'Manifeste Archi-Terre : Construire avec la terre vivante',
-    manifestoQuestion: 'Comment réinventer l’habitat africain avec la fraîcheur naturelle de la terre crue ?',
-    manifestoDescription: 'Cabinet d’architecture et coopérative de maçons pionniers de la construction en briques de terre compressée (BTC), bambou et toitures végétalisées.',
-    tagline: 'Construire l’Afrique avec sa propre terre',
-    stakeholders: [
-      {
-        id: 'archi-1',
-        name: 'Pascal Houndé',
-        roleCategory: 'Fondateur',
-        roleDetail: 'Architecte en terre crue',
-        photoUrl: '/assets/duos/coach-office.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Comment réinventer l’habitat africain avec la fraîcheur naturelle de la terre crue ?'
-      },
-      {
-        id: 'archi-2',
-        name: 'Blandine Adjovi',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Ingénieure en résistance des matériaux',
-        photoUrl: '/assets/protagonists/adjovi-blandine.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Pourquoi une brique de terre compressée résiste 100 ans tout en restant 5 fois moins chaude que le parpaing ?'
-      },
-      {
-        id: 'archi-3',
-        name: 'Koffi Mensah',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Maître maçon voûte nubienne',
-        photoUrl: '/assets/protagonists/chef-koffi.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Comment bâtir une toiture voûtée sans bois ni tôle qui brûle sous le soleil ?'
-      },
-      {
-        id: 'archi-4',
-        name: 'Fatou Diallo',
-        roleCategory: 'Client',
-        roleDetail: 'Propriétaire de maison bioclimatique',
-        photoUrl: '/assets/duos/fatou-diallo.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Quel soulagement de ne plus allumer de climatiseur même par 40 degrés dehors !'
-      },
-      {
-        id: 'archi-5',
-        name: 'Codjo Gbédji',
-        roleCategory: 'Fournisseur',
-        roleDetail: 'Exploitant de carrière d’argile durable',
-        photoUrl: '/assets/protagonists/codjo-blind.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-        question: 'Comment prélever l’argile sans défigurer le paysage et en revégétalisant le site ?'
-      },
-      {
-        id: 'archi-6',
-        name: 'Éléonore Vance',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Urbaniste villes durables',
-        photoUrl: '/assets/duos/eleonore-vance.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Comment sortir du mythe du béton armé pour des cités africaines fraîches et humaines ?'
-      },
-      {
-        id: 'archi-7',
-        name: 'Armel Hounkpatin',
-        roleCategory: 'Fournisseur',
-        roleDetail: 'Artisan charpentier bambou',
-        photoUrl: '/assets/protagonists/armel-hounkpatin.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Pourquoi le bambou géant traité au sel naturel est l’acier végétal du futur ?'
-      },
-      {
-        id: 'archi-8',
-        name: 'Dah Zounon',
-        roleCategory: 'Bienfaiteur',
-        roleDetail: 'Conseiller d’orientation des fondations selon le Fâ',
-        photoUrl: '/assets/duos/dah-zounon.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Comment orienter une maison face aux vents dominants pour capter la brise bienfaisante ?'
-      },
-      {
-        id: 'archi-9',
-        name: 'Sika Dossou',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Dessinatrice 3D plans d’architecture',
-        photoUrl: '/assets/protagonists/sika-dossou.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Comment modéliser les flux d’air naturels pour optimiser la ventilation passive ?'
-      },
-      {
-        id: 'archi-10',
-        name: 'Hélène Saint-Amand',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Spécialiste normes de construction écologiques',
-        photoUrl: '/assets/protagonists/helene-saint-amand.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Comment faire homologuer la brique de terre crue dans les marchés publics nationaux ?'
-      },
-      {
-        id: 'archi-11',
-        name: 'Marc Houndégla',
-        roleCategory: 'Client',
-        roleDetail: 'Directeur d’école construite en terre',
-        photoUrl: '/assets/duos/athlete-hurdle.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-        question: 'Comment les élèves apprennent mieux dans des salles tempérées et silencieuses ?'
-      },
-      {
-        id: 'archi-12',
-        name: 'Tobi Houndégla',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Chef d’équipe presseurs de briques',
-        photoUrl: '/assets/protagonists/tobi-houndegla.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Quel plaisir de presser 1000 briques parfaites par jour avec une presse manuelle robuste !'
-      },
-      {
-        id: 'archi-13',
-        name: 'Malik Diop',
-        roleCategory: 'Bienfaiteur',
-        roleDetail: 'Investisseur éco-quartier pilote',
-        photoUrl: '/assets/duos/malik-diop.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Pourquoi parier sur l’habitat en terre est l’investissement le plus rentable et durable ?'
-      },
-      {
-        id: 'archi-14',
-        name: 'Clara Dossou',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Spécialiste enduits à la chaux et ocres',
-        photoUrl: '/assets/duos/photographer-focus.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Comment donner des teintes chaudes et chatoyantes aux façades sans peinture synthétique ?'
-      },
-      {
-        id: 'archi-15',
-        name: 'Sayri Quispe',
-        roleCategory: 'Fournisseur',
-        roleDetail: 'Fabricant de presses hydrauliques mobiles',
-        photoUrl: '/assets/duos/sayri-quispe.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Comment amener l’usine de briques directement sur le chantier pour zéro transport de matière ?'
-      },
-      {
-        id: 'archi-16',
-        name: 'Pascal Cossi',
-        roleCategory: 'Bienfaiteur',
-        roleDetail: 'Parrain de l’académie des métiers de la terre',
-        photoUrl: '/assets/duos/coach-office.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Pourquoi former 200 jeunes maçons à la terre crue redonne fierté et travail à toute une région ?'
-      }
-    ]
-  },
-
-  // 16. Radio Échos des Lagunes (Médias libres & Voix citoyennes - 16 intervenants)
-  {
-    id: 'radio-vibrations',
-    category: 'Médias & Voix Citoyennes',
-    companyName: 'Radio Échos des Lagunes',
-    photoUrl: '/assets/directions/marques-finance.jpg',
-    logoUrl: '/assets/directions/marques-finance.jpg',
+    id: 'akwaba-tech',
+    category: 'Incubateur & Numérique',
+    companyName: 'Akwaba Tech',
+    photoUrl: '/assets/directions/arts-parole.jpg',
     videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
     manifestoVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-    manifestoTitle: 'Manifeste Échos des Lagunes : L’antenne du peuple',
-    manifestoQuestion: 'Comment donner un micro sans filtre à ceux que les grands médias n’écoutent jamais ?',
-    manifestoDescription: 'Station de radio associative et communautaire émettant en 6 langues nationales sur toute la zone littorale et lacustre du Bénin.',
-    tagline: 'Les ondes libres de la mémoire et du débat',
+    manifestoQuestion: 'Comment le code informatique et l’intelligence artificielle peuvent-ils résoudre les défis d’Afrique ?',
+    tagline: 'L’Afrique code son avenir',
+    description: 'Accélérateur de talents et campus tech formant les développeurs et ingénieurs de la nouvelle économie créative et solidaire.',
+    foundedYear: '2020',
+    location: 'Cotonou, Bénin',
     stakeholders: [
-      {
-        id: 'radio-1',
-        name: 'Solange Koudjo',
-        roleCategory: 'Président',
-        roleDetail: 'Directrice d’antenne & Journaliste',
-        photoUrl: '/assets/protagonists/adjovi-blandine.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Comment donner un micro sans filtre à ceux que les grands médias n’écoutent jamais ?'
-      },
-      {
-        id: 'radio-2',
-        name: 'Pascal Cossi',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Chroniqueur philosophique & sagesse Fâ',
-        photoUrl: '/assets/duos/coach-office.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Comment apaiser les tensions villageoises par une parole de réconciliation diffusée à l’aube ?'
-      },
-      {
-        id: 'radio-3',
-        name: 'Koffi Mensah',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Animateur émission pêche & marées',
-        photoUrl: '/assets/protagonists/chef-koffi.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Pourquoi l’annonce des prévisions météo en langue fon est attendue par 10 000 piroguiers chaque matin ?'
-      },
-      {
-        id: 'radio-4',
-        name: 'Fatou Diallo',
-        roleCategory: 'Secrétaire',
-        roleDetail: 'Responsable des tribunes citoyennes',
-        photoUrl: '/assets/duos/fatou-diallo.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Comment organiser un standard téléphonique ouvert où chaque auditeur a 2 minutes de parole libre ?'
-      },
-      {
-        id: 'radio-5',
-        name: 'Codjo Gbédji',
-        roleCategory: 'Client',
-        roleDetail: 'Auditeur fidèle avec son poste à piles',
-        photoUrl: '/assets/protagonists/codjo-blind.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'En quoi la radio est mon unique compagne et ma fenêtre sur le monde sur ma barque ?'
-      },
-      {
-        id: 'radio-6',
-        name: 'Armel Hounkpatin',
-        roleCategory: 'Fournisseur',
-        roleDetail: 'Technicien émetteur FM solaire',
-        photoUrl: '/assets/protagonists/armel-hounkpatin.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-        question: 'Comment faire porter les ondes à 150 km de portée avec seulement 500 watts solaires ?'
-      },
-      {
-        id: 'radio-7',
-        name: 'Dah Zounon',
-        roleCategory: 'Bienfaiteur',
-        roleDetail: 'Conteur des contes du crépuscule',
-        photoUrl: '/assets/duos/dah-zounon.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Pourquoi quand le son de la flûte démarre à 19h, le silence se fait dans tout le village ?'
-      },
-      {
-        id: 'radio-8',
-        name: 'Hélène Saint-Amand',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Avocate des droits des journalistes communautaires',
-        photoUrl: '/assets/protagonists/helene-saint-amand.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Comment préserver l’indépendance éditoriale face aux pressions politiques locales ?'
-      },
-      {
-        id: 'radio-9',
-        name: 'Éléonore Vance',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Responsable du streaming web et podcasts',
-        photoUrl: '/assets/duos/eleonore-vance.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Comment connecter la diaspora béninoise de Montréal et Paris au direct de la lagune ?'
-      },
-      {
-        id: 'radio-10',
-        name: 'Sika Dossou',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Animatrice de l’heure des femmes',
-        photoUrl: '/assets/protagonists/sika-dossou.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Comment aborder les sujets tabous de santé intime et d’héritage sans choquer mais en libérant les femmes ?'
-      },
-      {
-        id: 'radio-11',
-        name: 'Marc Houndégla',
-        roleCategory: 'Partenaire',
-        roleDetail: 'Directeur d’institut de sondage populaire',
-        photoUrl: '/assets/duos/athlete-hurdle.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Pourquoi les débats de cette radio reflètent le pouls réel du peuple mieux que tous les sondages ?'
-      },
-      {
-        id: 'radio-12',
-        name: 'Tobi Houndégla',
-        roleCategory: 'Fournisseur',
-        roleDetail: 'Preneur de son des bruits de la nature',
-        photoUrl: '/assets/protagonists/tobi-houndegla.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-        question: 'Comment enregistrer le clapotis de l’eau et le chant des martins-pêcheurs pour nos jingles ?'
-      },
-      {
-        id: 'radio-13',
-        name: 'Malik Diop',
-        roleCategory: 'Bienfaiteur',
-        roleDetail: 'Mécène pour l’achat de 500 récepteurs solaires pour les écoles',
-        photoUrl: '/assets/duos/malik-diop.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Pourquoi offrir une radio à chaque classe primaire pour suivre les émissions éducatives ?'
-      },
-      {
-        id: 'radio-14',
-        name: 'Clara Dossou',
-        roleCategory: 'Collaborateur',
-        roleDetail: 'Jeune reporter de quartier',
-        photoUrl: '/assets/duos/photographer-focus.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Quelle émotion lorsqu’un reportage sur une école inondée déclenche des travaux d’urgence en 48 heures !'
-      },
-      {
-        id: 'radio-15',
-        name: 'Sayri Quispe',
-        roleCategory: 'Fournisseur',
-        roleDetail: 'Ingénieur console de mixage basse tension',
-        photoUrl: '/assets/duos/sayri-quispe.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Comment faire fonctionner un studio radio complet sur une seule batterie 12 volts ?'
-      },
-      {
-        id: 'radio-16',
-        name: 'Pascal Houndé',
-        roleCategory: 'Bienfaiteur',
-        roleDetail: 'Cofondateur d’honneur',
-        photoUrl: '/assets/duos/coach-office.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Pourquoi tant qu’une voix libre parle sur les ondes, aucun peuple ne peut être réduit au silence ?'
-      }
+      { id: 'at-1', name: 'Kévin Sossou', roleCategory: 'Fondateur', roleDetail: 'Architecte logiciel & Mentor', photoUrl: '/assets/protagonists/hospice-avlessi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Pourquoi les solutions numériques africaines doivent être pensées d’abord pour le mode hors-ligne ?' },
+      { id: 'at-2', name: 'Farida Bio', roleCategory: 'Collaborateur', roleDetail: 'Responsable du laboratoire IA et langues locales', photoUrl: '/assets/protagonists/adjovi-blandine.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Comment entraîner des modèles de reconnaissance vocale en langues Fon, Yoruba et Bariba ?' },
+      { id: 'at-3', name: 'Arnaud Kiki', roleCategory: 'Collaborateur', roleDetail: 'Directeur pédagogique bootcamp intensif', photoUrl: '/assets/protagonists/chef-koffi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Comment former un développeur opérationnel en six mois sans prérequis universitaire ?' },
+      { id: 'at-4', name: 'Inès Houndété', roleCategory: 'Client', roleDetail: 'Fondatrice startup e-santé incubée', photoUrl: '/assets/protagonists/solange-tevoedjre.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Comment Akwaba Tech m’a aidée à lever mon premier tour de table sans quitter Cotonou ?' },
+      { id: 'at-5', name: 'Moussa Traoré', roleCategory: 'Partenaire', roleDetail: 'Fonds d’investissement Panafricain Venture', photoUrl: '/assets/duos/athlete-hurdle.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Pourquoi le Bénin est en train de devenir le hub technologique le plus agile de la sous-région ?' },
+      { id: 'at-6', name: 'Béatrice Dossou', roleCategory: 'Bénévole', roleDetail: 'Coach prise de parole et pitch', photoUrl: '/assets/protagonists/tatiana-gnanhou.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Comment convaincre un investisseur international en moins de trois minutes ?' },
+      { id: 'at-7', name: 'Lucien Danho', roleCategory: 'Collaborateur', roleDetail: 'Lead Developer plateformes open-source', photoUrl: '/assets/protagonists/victor-dossou.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Pourquoi la souveraineté technologique repose sur le logiciel libre et ouvert ?' },
+      { id: 'at-8', name: 'Yvette Tokpo', roleCategory: 'Client', roleDetail: 'Diplômée en data-science employée à distance', photoUrl: '/assets/protagonists/reine-kpodjito.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Comment je travaille pour une entreprise mondiale depuis mon salon à Cotonou ?' },
+      { id: 'at-9', name: 'Théodore Agbo', roleCategory: 'Fournisseur', roleDetail: 'Hébergeur serveurs souverains en datacenter local', photoUrl: '/assets/protagonists/sage-koffi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Pourquoi garder les données de nos citoyens sur des disques situés physiquement au Bénin ?' },
+      { id: 'at-10', name: 'Christelle Senou', roleCategory: 'Collaborateur', roleDetail: 'Community Manager et événements Tech Night', photoUrl: '/assets/protagonists/gisele-adissin.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Comment créer une émulation fraternelle où les aînés coachent les débutants gratuitement ?' },
+      { id: 'at-11', name: 'Basile Boko', roleCategory: 'Client', roleDetail: 'Fondateur appli logistique transport zémidjan', photoUrl: '/assets/duos/kwame-mensah.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Comment digitaliser le transport informel sans léser les conducteurs ?' },
+      { id: 'at-12', name: 'Agnès Codo', roleCategory: 'Partenaire', roleDetail: 'Ministère du Numérique et des Télécoms', photoUrl: '/assets/protagonists/zenab-oumar.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Comment faire collaborer régulateurs publics et innovateurs de terrain ?' },
+      { id: 'at-13', name: 'Romuald Vigan', roleCategory: 'Fournisseur', roleDetail: 'Installateur fibre optique symétrique campus', photoUrl: '/assets/protagonists/mahougnon-kakpo.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Pourquoi un gigabit par seconde sans coupure est le premier carburant des codeurs ?' },
+      { id: 'at-14', name: 'Solange Alladatin', roleCategory: 'Bienfaiteur', roleDetail: 'Mécène pour le matériel des étudiantes boursières', photoUrl: '/assets/protagonists/fatou-diop.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Pourquoi offrir un ordinateur puissant à une jeune fille brillante change son destin ?' },
+      { id: 'at-15', name: 'Éric Danvidé', roleCategory: 'Collaborateur', roleDetail: 'Responsable sécurité des réseaux et audits', photoUrl: '/assets/duos/coach-office.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Comment protéger nos startups contre les cyberattaques internationales ?' },
+      { id: 'at-16', name: 'Denise Agbanglo', roleCategory: 'Client', roleDetail: 'Artiste peintre utilisant la blockchain éthique', photoUrl: '/assets/protagonists/paul-insee.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Comment certifier la paternité de mes toiles sans passer par les galeries occidentales ?' }
+    ]
+  },
+  {
+    id: 'racine-memoire',
+    category: 'Histoire & Archives',
+    companyName: 'Racine & Mémoire',
+    photoUrl: '/assets/directions/territoires-memoire.jpg',
+    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+    manifestoVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+    manifestoQuestion: 'Comment empêcher que nos bibliothèques humaines ne s’éteignent dans l’oubli ?',
+    tagline: 'Chaque ancien est une bibliothèque sacrée',
+    description: 'Institut de recherche citoyen et d’archivage vidéo-oral numérisant la parole des derniers dépositaires de lignées.',
+    foundedYear: '2015',
+    location: 'Abomey & Ouidah',
+    stakeholders: [
+      { id: 'rm-1', name: 'Professeur Hospice Avlessi', roleCategory: 'Fondateur', roleDetail: 'Historien & Anthropologue', photoUrl: '/assets/protagonists/hospice-avlessi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Pourquoi la parole des anciens contient-elle des solutions aux crises écologiques d’aujourd’hui ?' },
+      { id: 'rm-2', name: 'Dah Kpodjito', roleCategory: 'Collaborateur', roleDetail: 'Dignitaire de cour et généalogiste', photoUrl: '/assets/protagonists/reine-kpodjito.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Comment réciter sans faute les noms des ancêtres remontant jusqu’au XVIe siècle ?' },
+      { id: 'rm-3', name: 'Amina Kiki', roleCategory: 'Collaborateur', roleDetail: 'Archiviste numérique audio haute résolution', photoUrl: '/assets/protagonists/adjovi-blandine.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Comment restaurer des bandes magnétiques des années 1970 dégradées par l’humidité ?' },
+      { id: 'rm-4', name: 'Gérard Houndonou', roleCategory: 'Client', roleDetail: 'Descendant de diaspora afro-américain', photoUrl: '/assets/duos/kwame-mensah.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Ce que j’ai ressenti en retrouvant le village exact d’où mes aïeux sont partis ?' },
+      { id: 'rm-5', name: 'Yvette Sossou', roleCategory: 'Partenaire', roleDetail: 'Archives Nationales du Bénin', photoUrl: '/assets/protagonists/solange-tevoedjre.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Comment croiser les écrits coloniaux et les chants oraux pour rétablir la vérité historique ?' },
+      { id: 'rm-6', name: 'Béatrice Danho', roleCategory: 'Fournisseur', roleDetail: 'Restauratrice de parchemins et reliures en cuir végétal', photoUrl: '/assets/protagonists/tatiana-gnanhou.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Comment protéger les carnets de récits anciens des insectes sans chimie destructive ?' },
+      { id: 'rm-7', name: 'Mathurin Boko', roleCategory: 'Collaborateur', roleDetail: 'Linguiste traducteur des devises royales', photoUrl: '/assets/protagonists/victor-dossou.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Quelle charge poétique et philosophique renferme chaque nom de souverain ?' },
+      { id: 'rm-8', name: 'Célestine Agbo', roleCategory: 'Bénévole', roleDetail: 'Médiatrice des cercles intergénérationnels', photoUrl: '/assets/protagonists/gisele-adissin.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Comment faire dialoguer un adolescent ultra-connecté et son arrière-grand-père ?' },
+      { id: 'rm-9', name: 'Nestor Codo', roleCategory: 'Collaborateur', roleDetail: 'Réalisateur des documentaires de mémoire', photoUrl: '/assets/protagonists/chef-koffi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Comment capter le tremblement de voix d’un ancien au moment où il livre son dernier secret ?' },
+      { id: 'rm-10', name: 'Solange Vigan', roleCategory: 'Client', roleDetail: 'Institutrice enseignant l’histoire locale', photoUrl: '/assets/protagonists/zenab-oumar.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Pourquoi mes élèves se passionnent-ils pour l’histoire de leur propre quartier ?' },
+      { id: 'rm-11', name: 'Théophile Tokpo', roleCategory: 'Partenaire', roleDetail: 'Maire de la ville historique d’Abomey', photoUrl: '/assets/protagonists/sage-koffi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Comment faire des palais royaux un sanctuaire vivant plutôt qu’un musée figé ?' },
+      { id: 'rm-12', name: 'Prisca Alladatin', roleCategory: 'Bienfaiteur', roleDetail: 'Mécène pour la numérisation des récits de femmes', photoUrl: '/assets/protagonists/fatou-diop.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Pourquoi l’histoire des amazones et des mères nourricières avait été trop longtemps ignorée ?' },
+      { id: 'rm-13', name: 'Alain Houndété', roleCategory: 'Fournisseur', roleDetail: 'Technicien de sauvegarde sur serveurs cryptés', photoUrl: '/assets/duos/athlete-hurdle.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Comment s’assurer que les enregistrements resteront audibles dans 300 ans ?' },
+      { id: 'rm-14', name: 'Geneviève Senou', roleCategory: 'Collaborateur', roleDetail: 'Anthropologue spécialiste des rites agraires', photoUrl: '/assets/protagonists/adjovi-blandine.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Pourquoi bénir les semences au printemps assurait l’équilibre de la terre ?' },
+      { id: 'rm-15', name: 'Florent Danvidé', roleCategory: 'Client', roleDetail: 'Auteur de romans historiques', photoUrl: '/assets/duos/coach-office.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Comment ces archives ont nourri mon livre qui a remporté le prix des cinq continents ?' },
+      { id: 'rm-16', name: 'Nadège Agbanglo', roleCategory: 'Collaborateur', roleDetail: 'Responsable diffusion podcasts éducatifs', photoUrl: '/assets/protagonists/paul-insee.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Comment des millions d’auditeurs écoutent nos histoires sur leur téléphone le soir ?' }
+    ]
+  },
+  {
+    id: 'terres-avenir',
+    category: 'Jeunesse & Écologie',
+    companyName: 'Terres d’Avenir',
+    photoUrl: '/assets/directions/sagesses-nature.jpg',
+    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+    manifestoVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+    manifestoQuestion: 'Comment léguer à nos enfants un pays plus vert, plus fertile et plus respirable que celui que nous avons reçu ?',
+    tagline: 'Planter aujourd’hui la forêt de demain',
+    description: 'Mouvement de reboisement communautaire et d’éco-citoyenneté animant des pépinières citoyennes le long des côtes et lagunes.',
+    foundedYear: '2017',
+    location: 'Grand-Popo & Cotonou',
+    stakeholders: [
+      { id: 'ta-1', name: 'Aimé Houndégla', roleCategory: 'Fondateur', roleDetail: 'Écologue côtier', photoUrl: '/assets/duos/kwame-mensah.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Comment la restauration de la mangrove protège les villages côtiers de la montée des eaux ?' },
+      { id: 'ta-2', name: 'Clémence Boko', roleCategory: 'Collaborateur', roleDetail: 'Responsable pépinière de palétuviers', photoUrl: '/assets/protagonists/solange-tevoedjre.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Comment faire germer 50 000 graines de palétuvier dans l’eau saumâtre ?' },
+      { id: 'ta-3', name: 'David Dossou', roleCategory: 'Collaborateur', roleDetail: 'Animateur éco-classes itinérantes', photoUrl: '/assets/protagonists/hospice-avlessi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Comment enseigner l’amour des arbres aux enfants des quartiers populaires ?' },
+      { id: 'ta-4', name: 'Marielle Zannou', roleCategory: 'Client', roleDetail: 'Hôtelière éco-responsable de Grand-Popo', photoUrl: '/assets/protagonists/adjovi-blandine.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Pourquoi planter des filaos a stoppé l’érosion marine devant mon établissement ?' },
+      { id: 'ta-5', name: 'Koffi Tokpo', roleCategory: 'Partenaire', roleDetail: 'Fédération des pêcheurs artisanaux', photoUrl: '/assets/protagonists/chef-koffi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Pourquoi le retour de la mangrove a fait revenir les crevettes et alevins ?' },
+      { id: 'ta-6', name: 'Solange Danho', roleCategory: 'Collaborateur', roleDetail: 'Chargée de cartographie satellite des forêts', photoUrl: '/assets/protagonists/tatiana-gnanhou.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Comment vérifier depuis l’espace que chaque arbre planté continue de grandir ?' },
+      { id: 'ta-7', name: 'Barthélémy Agbo', roleCategory: 'Fournisseur', roleDetail: 'Artisan potier des godets biodégradables', photoUrl: '/assets/protagonists/victor-dossou.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Pourquoi bannir les sachets en plastique noir au profit de pots en argile cuite ?' },
+      { id: 'ta-8', name: 'Odile Codo', roleCategory: 'Bénévole', roleDetail: 'Capitaine des samedis de reboisement', photoUrl: '/assets/protagonists/reine-kpodjito.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Quelle fête de voir 300 bénévoles les pieds dans la vase planter des arbres en chantant ?' },
+      { id: 'ta-9', name: 'Jérôme Vigan', roleCategory: 'Client', roleDetail: 'Maire de commune côtière menacée', photoUrl: '/assets/protagonists/sage-koffi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Comment les solutions basées sur la nature coûtent dix fois moins cher que les digues en béton ?' },
+      { id: 'ta-10', name: 'Fatou Alladatin', roleCategory: 'Collaborateur', roleDetail: 'Coordonnatrice de la brigade anti-plastique', photoUrl: '/assets/protagonists/zenab-oumar.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Comment transformer les déchets de plage en pavés écologiques pour les écoles ?' },
+      { id: 'ta-11', name: 'Théodore Senou', roleCategory: 'Partenaire', roleDetail: 'Parc Régional de la Réserve de Biosphère', photoUrl: '/assets/duos/athlete-hurdle.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Comment préserver les tortues luths qui viennent pondre sur nos plages restaurées ?' },
+      { id: 'ta-12', name: 'Estelle Agbanglo', roleCategory: 'Bienfaiteur', roleDetail: 'Fonds vert pour les générations futures', photoUrl: '/assets/protagonists/fatou-diop.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Pourquoi investir dans la mangrove est le placement le plus sûr pour notre planète ?' },
+      { id: 'ta-13', name: 'Prosper Danvidé', roleCategory: 'Collaborateur', roleDetail: 'Garde forestier communautaire assermenté', photoUrl: '/assets/duos/coach-office.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Comment dissuader les coupeurs de bois clandestins par la médiation et le dialogue ?' },
+      { id: 'ta-14', name: 'Béatrice Houndété', roleCategory: 'Client', roleDetail: 'Agricultrice voisine bénéficiaire du brise-vent', photoUrl: '/assets/protagonists/gisele-adissin.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Comment la nouvelle haie d’arbres a protégé mon champ de piment des embruns salés ?' },
+      { id: 'ta-15', name: 'Alain Kpanou', roleCategory: 'Collaborateur', roleDetail: 'Responsable écotourisme d’immersion en pirogue', photoUrl: '/assets/protagonists/mahougnon-kakpo.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Quelle émotion pour un citadin de glisser en silence sous la canopée des mangroves ?' },
+      { id: 'ta-16', name: 'Yvette Boko', roleCategory: 'Collaborateur', roleDetail: 'Secrétaire générale du conseil citoyen vert', photoUrl: '/assets/protagonists/paul-insee.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Comment donner la parole aux jeunes dans les décisions d’aménagement territorial ?' }
+    ]
+  },
+  {
+    id: 'artisans-bois-sacre',
+    category: 'Artisanat & Sculpture',
+    companyName: 'Artisans du Bois Sacré',
+    photoUrl: '/assets/directions/arts-textiles.jpg',
+    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+    manifestoVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+    manifestoQuestion: 'Comment écouter l’arbre mort avant d’y planter le ciseau pour y faire naître le visage des dieux ?',
+    tagline: 'L’âme du bois noble et le geste des rois',
+    description: 'Guilde de maîtres sculpteurs et restaurateurs de sièges royaux, portes historiées et tambours cérémoniels d’Abomey.',
+    foundedYear: '2008',
+    location: 'Abomey, Bénin',
+    stakeholders: [
+      { id: 'abs-1', name: 'Maître Dah Hountondji', roleCategory: 'Fondateur', roleDetail: 'Maître sculpteur en chef', photoUrl: '/assets/protagonists/chef-koffi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Pourquoi un sculpteur ne commence jamais son œuvre sans demander pardon à l’esprit du bois ?' },
+      { id: 'abs-2', name: 'Sébastien Kpanou', roleCategory: 'Collaborateur', roleDetail: 'Spécialiste des bas-reliefs royaux', photoUrl: '/assets/protagonists/hospice-avlessi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Comment graver dans l’ébène l’épopée des batailles du roi Béhanzin ?' },
+      { id: 'abs-3', name: 'Prudence Zannou', roleCategory: 'Collaborateur', roleDetail: 'Polisseur aux cires végétales d’abeille', photoUrl: '/assets/protagonists/adjovi-blandine.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Comment obtenir le lustre noir profond sans aucune laque chimique moderne ?' },
+      { id: 'abs-4', name: 'Dimitri Houndété', roleCategory: 'Client', roleDetail: 'Architecte contemporain à Lagos', photoUrl: '/assets/duos/athlete-hurdle.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Pourquoi commander des portes en bois sculpté d’Abomey pour un gratte-ciel de verre ?' },
+      { id: 'abs-5', name: 'Béatrice Dossou', roleCategory: 'Partenaire', roleDetail: 'Musée d’Histoire d’Abomey', photoUrl: '/assets/protagonists/solange-tevoedjre.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Comment restaurer un trône tricentenaire avec les mêmes gestes que les aïeux ?' },
+      { id: 'abs-6', name: 'Fulgence Danho', roleCategory: 'Fournisseur', roleDetail: 'Forestier gardien des tecks et irokos centenaires', photoUrl: '/assets/protagonists/victor-dossou.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Pourquoi n’abattre un iroko que lorsqu’il tombe naturellement de vieillesse ?' },
+      { id: 'abs-7', name: 'Colette Tokpo', roleCategory: 'Collaborateur', roleDetail: 'Première femme apprentie sculptrice de la guilde', photoUrl: '/assets/protagonists/tatiana-gnanhou.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Ce que j’ai dû surmonter pour prouver que le ciseau obéit au cœur et non au genre ?' },
+      { id: 'abs-8', name: 'Honoré Boko', roleCategory: 'Bénévole', roleDetail: 'Guide des ateliers vivants pour enfants', photoUrl: '/assets/protagonists/sage-koffi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'L’émerveillement des petits quand un copeau de bois parfumé s’envole sous le rabot ?' },
+      { id: 'abs-9', name: 'Diane Codo', roleCategory: 'Client', roleDetail: 'Directrice de galerie d’art à Dakar', photoUrl: '/assets/protagonists/reine-kpodjito.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Pourquoi ces sculptures dégagent-elles une présence magnétique inégalable ?' },
+      { id: 'abs-10', name: 'Arsène Vigan', roleCategory: 'Collaborateur', roleDetail: 'Facteur de tambours sacrés parlants', photoUrl: '/assets/duos/kwame-mensah.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Comment creuser le tronc pour que la résonance du tam-tam porte à 10 kilomètres ?' },
+      { id: 'abs-11', name: 'Solange Alladatin', roleCategory: 'Collaborateur', roleDetail: 'Conservatrice de l’herbier des bois sacrés', photoUrl: '/assets/protagonists/gisele-adissin.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Comment reconnaître l’essence et l’âge d’un morceau de bois simplement à son odeur ?' },
+      { id: 'abs-12', name: 'Théophile Senou', roleCategory: 'Partenaire', roleDetail: 'École du Patrimoine Africain (EPA)', photoUrl: '/assets/protagonists/zenab-oumar.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Comment codifier ce savoir-faire oral pour qu’il soit enseigné dans toute l’Afrique ?' },
+      { id: 'abs-13', name: 'Nathalie Agbanglo', roleCategory: 'Bienfaiteur', roleDetail: 'Mécène pour la transmission des outils d’art', photoUrl: '/assets/protagonists/fatou-diop.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Pourquoi offrir une boîte de gouges suisses de précision à chaque nouvel artisan certifié ?' },
+      { id: 'abs-14', name: 'Julien Danvidé', roleCategory: 'Fournisseur', roleDetail: 'Forgeron des gouges et herminettes sur mesure', photoUrl: '/assets/duos/coach-office.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Comment tremper l’acier pour qu’il morde le bois de fer sans jamais s’ébrécher ?' },
+      { id: 'abs-15', name: 'Aline Houndonou', roleCategory: 'Collaborateur', roleDetail: 'Responsable de l’exportation d’œuvres certifiées', photoUrl: '/assets/protagonists/mahougnon-kakpo.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Comment déjouer le pillage et certifier l’origine légale et sacrée de chaque pièce ?' },
+      { id: 'abs-16', name: 'Éric Tossou', roleCategory: 'Client', roleDetail: 'Collectionneur d’art choral', photoUrl: '/assets/protagonists/paul-insee.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Pourquoi vivre au milieu de ces sculptures apporte une paix profonde au foyer ?' }
+    ]
+  },
+  {
+    id: 'voix-des-lagunes',
+    category: 'Écotourisme Solidaire',
+    companyName: 'Voix des Lagunes',
+    photoUrl: '/assets/Onboardings/Voyage.png',
+    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+    manifestoVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+    manifestoQuestion: 'Comment voyager sur nos eaux sans jamais souiller l’âme de ceux qui y vivent depuis mille ans ?',
+    tagline: 'L’immersion lacustre respectueuse et poétique',
+    description: 'Réseau solidaire de piroguiers, conteurs et hébergeurs sur pilotis pour un tourisme régénératif et contemplatif.',
+    foundedYear: '2019',
+    location: 'Lac Nokoué & Ganvié',
+    stakeholders: [
+      { id: 'vdl-1', name: 'Koffi Houénou', roleCategory: 'Fondateur', roleDetail: 'Piroguier mémoire & Éducateur', photoUrl: '/assets/protagonists/mahougnon-kakpo.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Comment faire comprendre aux visiteurs que la lagune n’est pas un décor de carte postale, mais un sanctuaire habité ?' },
+      { id: 'vdl-2', name: 'Clarisse Dossou', roleCategory: 'Collaborateur', roleDetail: 'Cuisinière des auberges sur pilotis', photoUrl: '/assets/protagonists/solange-tevoedjre.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Quel délice de faire goûter le crabe bleu fumé pêché une heure plus tôt au crépuscule ?' },
+      { id: 'vdl-3', name: 'Dieudonné Zannou', roleCategory: 'Collaborateur', roleDetail: 'Maître des pirogues électriques solaires', photoUrl: '/assets/protagonists/chef-koffi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Pourquoi naviguer sans bruit de moteur thermique réveille le chant des hérons et martins-pêcheurs ?' },
+      { id: 'vdl-4', name: 'Awa Traoré', roleCategory: 'Client', roleDetail: 'Écrivaine voyageuse', photoUrl: '/assets/protagonists/adjovi-blandine.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Comment une nuit sur l’eau noire sous les étoiles a débloqué mon prochain roman ?' },
+      { id: 'vdl-5', name: 'Barnabé Agbo', roleCategory: 'Partenaire', roleDetail: 'Conseil des sages du marché flottant', photoUrl: '/assets/protagonists/hospice-avlessi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Comment le tourisme solidaire reverse 40% de ses gains au nettoyage des canaux ?' },
+      { id: 'vdl-6', name: 'Monique Boko', roleCategory: 'Fournisseur', roleDetail: 'Tisseuse de gilets de sauvetage en fibres de kapok', photoUrl: '/assets/protagonists/tatiana-gnanhou.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Comment créer des équipements de sécurité sûrs et écologiques sans mousse plastique ?' },
+      { id: 'vdl-7', name: 'Séraphin Danho', roleCategory: 'Collaborateur', roleDetail: 'Guide naturaliste des oiseaux migrateurs', photoUrl: '/assets/protagonists/victor-dossou.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Comment identifier les 80 espèces d’oiseaux qui hivernent sur le lac Nokoué ?' },
+      { id: 'vdl-8', name: 'Solange Tokpo', roleCategory: 'Bénévole', roleDetail: 'Ramasseuse des filets fantômes sous l’eau', photoUrl: '/assets/protagonists/reine-kpodjito.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Pourquoi plonger pour libérer les poissons piégés est mon devoir envers la déesse de l’eau ?' },
+      { id: 'vdl-9', name: 'Théodore Codo', roleCategory: 'Client', roleDetail: 'Famille en vacances d’immersion citoyenne', photoUrl: '/assets/protagonists/sage-koffi.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Ce que mes enfants ont appris en partageant la journée des petits pêcheurs de Ganvié ?' },
+      { id: 'vdl-10', name: 'Nathalie Vigan', roleCategory: 'Collaborateur', roleDetail: 'Gestionnaire des réservations responsables', photoUrl: '/assets/protagonists/gisele-adissin.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Pourquoi limiter le nombre de visiteurs quotidiens pour préserver la paix des familles ?' },
+      { id: 'vdl-11', name: 'Hervé Alladatin', roleCategory: 'Partenaire', roleDetail: 'Association des guides de mémoire du Bénin', photoUrl: '/assets/duos/athlete-hurdle.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Comment raconter l’histoire de la cité lacustre sans folklore dégradant ?' },
+      { id: 'vdl-12', name: 'Béatrice Senou', roleCategory: 'Bienfaiteur', roleDetail: 'Fondation pour la protection des eaux intérieures', photoUrl: '/assets/protagonists/zenab-oumar.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Pourquoi financer les moteurs solaires pour éradiquer la pollution d’hydrocarbures ?' },
+      { id: 'vdl-13', name: 'Alain Danvidé', roleCategory: 'Fournisseur', roleDetail: 'Charpentier piroguier en bois d’iroko', photoUrl: '/assets/duos/kwame-mensah.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', question: 'Comment tailler une pirogue pour qu’elle fende l’onde sans aucune résistance ?' },
+      { id: 'vdl-14', name: 'Geneviève Agbanglo', roleCategory: 'Collaborateur', roleDetail: 'Médiatrice culturelle des veillées de contes sur l’eau', photoUrl: '/assets/protagonists/fatou-diop.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', question: 'Quelle magie lorsque la voix du conteur résonne dans la nuit noire au ras de l’eau ?' },
+      { id: 'vdl-15', name: 'Romuald Houndété', roleCategory: 'Client', roleDetail: 'Photographe pour le National Geographic', photoUrl: '/assets/duos/coach-office.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4', question: 'Comment photographier la beauté du marché flottant avec respect et sans intrusion ?' },
+      { id: 'vdl-16', name: 'Chantal Kpanou', roleCategory: 'Collaborateur', roleDetail: 'Animatrice des ateliers de cuisine avec les mamans', photoUrl: '/assets/protagonists/paul-insee.jpg', videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4', question: 'Comment partager un repas assis en tailleur sur les nattes crée une fraternité instantanée ?' }
     ]
   }
 ];

@@ -8,6 +8,7 @@ import {
   VolumeX, 
   X,
   Compass,
+  Layers,
   Check,
   Award,
   BookOpen
@@ -16,285 +17,25 @@ import { ShareIcon } from './ShareIcon';
 import { ResonanceModal } from './ResonanceModal';
 import { ProfileSoloIcon, TvPlayerIcon } from './YonywoodBrandIcons';
 import { ViewScreen } from '../types';
+import { 
+  CompanyStakeholder, 
+  CompanyEntity, 
+  COMPANIES_DATA 
+} from '../data/companyPortraitsData';
+import { PortraitsCircleView } from './PortraitsCircleView';
 
-export interface CompanyStakeholder {
-  id: string;
-  name: string;
-  roleCategory: 'Fondateur' | 'Collaborateur' | 'Fournisseur' | 'Client' | 'Partenaire';
-  roleDetail?: string;
-  photoUrl: string;
-  videoUrl: string;
-  question?: string;
-}
+export type { CompanyStakeholder, CompanyEntity };
+export { COMPANIES_DATA };
 
-export interface CompanyEntity {
-  id: string;
-  category: string;
-  companyName: string;
-  photoUrl: string;
-  videoUrl: string;
-  tagline: string;
-  stakeholders: CompanyStakeholder[];
-}
-
-export const COMPANIES_DATA: CompanyEntity[] = [
-  {
-    id: 'afrika-fun',
-    category: 'Audiovisuel',
-    companyName: 'AFRIKAFUN',
-    photoUrl: '/assets/Onboardings/Voyage.png',
-    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-    tagline: 'Créer, raconter, inspirer',
-    stakeholders: [
-      {
-        id: 'afrika-1',
-        name: 'Pascal Houndé',
-        roleCategory: 'Fondateur',
-        photoUrl: '/assets/duos/coach-office.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Comment faire rayonner la mémoire et les voix vivantes de notre terre ?'
-      },
-      {
-        id: 'afrika-2',
-        name: 'Amina Traoré',
-        roleCategory: 'Collaborateur',
-        photoUrl: '/assets/protagonists/adjovi-blandine.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Comment le montage cinématographique protège-t-il la vérité d’un récit ?'
-      },
-      {
-        id: 'afrika-3',
-        name: 'Koffi Mensah',
-        roleCategory: 'Fournisseur',
-        photoUrl: '/assets/protagonists/chef-koffi.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Quelle exigence technique garantit la souveraineté de nos images ?'
-      },
-      {
-        id: 'afrika-4',
-        name: 'Marc Houndégla',
-        roleCategory: 'Client',
-        photoUrl: '/assets/duos/kwame-mensah.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Pourquoi l’authenticité d’un documentaire touche-t-elle plus qu’une simple publicité ?'
-      },
-      {
-        id: 'afrika-5',
-        name: 'Ousmane Sow',
-        roleCategory: 'Partenaire',
-        photoUrl: '/assets/duos/athlete-hurdle.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Comment mutualiser nos moyens créatifs pour conquérir les écrans internationaux ?'
-      }
-    ]
-  },
-  {
-    id: 'suno-solaire',
-    category: 'Énergie',
-    companyName: 'Suno Solaire',
-    photoUrl: '/assets/directions/marques-tech.jpg',
-    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-    tagline: 'L’électricité solaire pour chaque berge',
-    stakeholders: [
-      {
-        id: 'suno-1',
-        name: 'Babacar Ndiaye',
-        roleCategory: 'Fondateur',
-        photoUrl: '/assets/duos/kwame-mensah.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Comment le soleil peut-il apporter l’indépendance énergétique aux berges ?'
-      },
-      {
-        id: 'suno-2',
-        name: 'Senan Agossa',
-        roleCategory: 'Collaborateur',
-        photoUrl: '/assets/protagonists/senan-agossa.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Comment garantir l’accès continu à l’électricité pour les écoles lacustres ?'
-      },
-      {
-        id: 'suno-3',
-        name: 'Tobi Houndégla',
-        roleCategory: 'Fournisseur',
-        photoUrl: '/assets/protagonists/tobi-houndegla.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Quel avenir pour le recyclage local de nos batteries solaires ?'
-      },
-      {
-        id: 'suno-4',
-        name: 'Fatou Diallo',
-        roleCategory: 'Client',
-        photoUrl: '/assets/duos/fatou-diallo.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'En quoi les glacières solaires ont-elles sauvé la récolte de nos maraîchers ?'
-      },
-      {
-        id: 'suno-5',
-        name: 'Chantal Agbo',
-        roleCategory: 'Partenaire',
-        photoUrl: '/assets/protagonists/adjovi-blandine.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Quelle alliance public-privé garantit la durabilité de nos parcs solaires ?'
-      }
-    ]
-  },
-  {
-    id: 'trans-lagoon',
-    category: 'Transport',
-    companyName: 'Trans-Lagoon',
-    photoUrl: '/assets/directions/marques-services.jpg',
-    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-    tagline: 'Liaisons lacustres écologiques et rapides',
-    stakeholders: [
-      {
-        id: 'trans-1',
-        name: 'Armel Hounkpatin',
-        roleCategory: 'Fondateur',
-        photoUrl: '/assets/protagonists/armel-hounkpatin.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Comment concilier vitesse de navigation et respect des écosystèmes marins ?'
-      },
-      {
-        id: 'trans-2',
-        name: 'Sika Dossou',
-        roleCategory: 'Collaborateur',
-        photoUrl: '/assets/protagonists/sika-dossou.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Quelle discipline quotidienne permet de sécuriser nos traversées nocturnes ?'
-      },
-      {
-        id: 'trans-3',
-        name: 'Codjo Gbédji',
-        roleCategory: 'Fournisseur',
-        photoUrl: '/assets/protagonists/codjo-blind.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Pourquoi le moteur électrique est-il la révolution attendue sur nos lagunes ?'
-      },
-      {
-        id: 'trans-4',
-        name: 'Malik Diop',
-        roleCategory: 'Client',
-        photoUrl: '/assets/duos/malik-diop.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Comment le transport propre transforme-t-il la cadence du commerce local ?'
-      },
-      {
-        id: 'trans-5',
-        name: 'Nadine Tossou',
-        roleCategory: 'Partenaire',
-        photoUrl: '/assets/duos/eleonore-vance.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'En quoi les corridors fluviaux réinventent-ils l’intégration sous-régionale ?'
-      }
-    ]
-  },
-  {
-    id: 'finsecure-africa',
-    category: 'Finance',
-    companyName: 'FinSecure Africa',
-    photoUrl: '/assets/directions/marques-finance.jpg',
-    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-    tagline: 'Micro-assurance et financement des créateurs',
-    stakeholders: [
-      {
-        id: 'fin-1',
-        name: 'Hélène Saint-Amand',
-        roleCategory: 'Fondateur',
-        photoUrl: '/assets/protagonists/helene-saint-amand.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-        question: 'Comment financer nos créateurs sans les déposséder de leur vision ?'
-      },
-      {
-        id: 'fin-2',
-        name: 'Dieudonné Mensah',
-        roleCategory: 'Collaborateur',
-        photoUrl: '/assets/duos/athlete-hurdle.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Quel modèle d’évaluation honore le talent réel des artisans ?'
-      },
-      {
-        id: 'fin-3',
-        name: 'Kwame Mensah',
-        roleCategory: 'Fournisseur',
-        photoUrl: '/assets/duos/kwame-mensah.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Comment bâtir une infrastructure financière inviolable et inclusive ?'
-      },
-      {
-        id: 'fin-4',
-        name: 'Adjovi Blandine',
-        roleCategory: 'Client',
-        photoUrl: '/assets/protagonists/adjovi-blandine.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Qu’a changé pour mon atelier le déblocage d’un micro-crédit solidaire ?'
-      },
-      {
-        id: 'fin-5',
-        name: 'Samuel Koudjo',
-        roleCategory: 'Partenaire',
-        photoUrl: '/assets/protagonists/chef-koffi.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Comment connecter les coopératives rurales aux banques régionales ?'
-      }
-    ]
-  },
-  {
-    id: 'africode-tech',
-    category: 'Technologie',
-    companyName: 'AfriCode Tech',
-    photoUrl: '/assets/directions/expertises-numerique.jpg',
-    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-    tagline: 'Plateformes logicielles souveraines et résilientes',
-    stakeholders: [
-      {
-        id: 'tech-1',
-        name: 'Éléonore Vance',
-        roleCategory: 'Fondateur',
-        photoUrl: '/assets/duos/eleonore-vance.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        question: 'Pourquoi l’Afrique doit-elle posséder son propre code source ?'
-      },
-      {
-        id: 'tech-2',
-        name: 'Clara Dossou',
-        roleCategory: 'Collaborateur',
-        photoUrl: '/assets/duos/photographer-focus.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        question: 'Comment le design d’interface peut-il refléter notre sensibilité esthétique ?'
-      },
-      {
-        id: 'tech-3',
-        name: 'Sayri Quispe',
-        roleCategory: 'Fournisseur',
-        photoUrl: '/assets/duos/sayri-quispe.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        question: 'Quel rôle pour les serveurs basse consommation face aux coupures réseau ?'
-      },
-      {
-        id: 'tech-4',
-        name: 'Mahougnon Zounon',
-        roleCategory: 'Client',
-        photoUrl: '/assets/duos/dah-zounon.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        question: 'Comment la technologie réconcilie-t-elle traditions et futur ?'
-      },
-      {
-        id: 'tech-5',
-        name: 'Tariq Al-Mansoor',
-        roleCategory: 'Partenaire',
-        photoUrl: '/assets/duos/sayri-quispe.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackSeeTheWorld.mp4',
-        question: 'Comment l’interopérabilité open source décuple-t-elle l’innovation africaine ?'
-      }
-    ]
-  }
-];
 
 interface CompanyHeritageScreenProps {
   onNavigate?: (screen: ViewScreen) => void;
 }
 
 export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ onNavigate }) => {
+  // Mode de navigation : 'circle' (par défaut) ou 'swipe'
+  const [viewMode, setViewMode] = useState<'circle' | 'swipe'>('circle');
+
   // Navigation Niveau 1 (Entreprises globales)
   const [currentIdx, setCurrentIdx] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -427,13 +168,59 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
             </h1>
             <div className="absolute left-0 -bottom-2 w-8 h-0.5 bg-[#A2482B] rounded-full" />
           </div>
+
+          {/* SÉLECTEUR DE MODE [ CERCLE | SWIPE ] */}
+          <div className="flex items-center bg-stone-100 p-0.5 rounded-full border border-stone-200 shadow-2xs">
+            <button
+              onClick={() => {
+                setViewMode('circle');
+                setIsPlaying(false);
+                setIsStakeholderPlaying(false);
+              }}
+              className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] sm:text-xs font-bold transition-all cursor-pointer ${
+                viewMode === 'circle'
+                  ? 'bg-[#A2482B] text-white shadow-xs'
+                  : 'text-stone-600 hover:text-stone-900'
+              }`}
+              title="Mode Cercle officiel des 16 organisations"
+            >
+              <Compass className="w-3.5 h-3.5" />
+              <span>Cercle</span>
+            </button>
+            <button
+              onClick={() => {
+                setViewMode('swipe');
+                setIsPlaying(false);
+                setIsStakeholderPlaying(false);
+              }}
+              className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] sm:text-xs font-bold transition-all cursor-pointer ${
+                viewMode === 'swipe'
+                  ? 'bg-[#A2482B] text-white shadow-xs'
+                  : 'text-stone-600 hover:text-stone-900'
+              }`}
+              title="Mode Cartes défilantes"
+            >
+              <Layers className="w-3.5 h-3.5" />
+              <span>Swipe</span>
+            </button>
+          </div>
         </div>
       )}
 
       {/* =========================================================== */}
-      {/* ZONE CENTRALE : CARTE VIDÉO 9:16 CALIBRÉE SUR LE STUDIO     */}
+      {/* VUE PRINCIPALE : MODE CERCLE OU CARTE VIDÉO 9:16           */}
       {/* =========================================================== */}
-      <div className="relative w-full flex-1 flex items-center justify-center min-h-0 my-auto">
+      {viewMode === 'circle' ? (
+        <div className="relative w-full flex-1 flex flex-col items-center justify-between min-h-0 my-auto">
+          <PortraitsCircleView 
+            companies={COMPANIES_DATA} 
+            selectedCompanyId={selectedCompanyForSpace?.id}
+            onSelectCompany={(org) => setSelectedCompanyForSpace(org)}
+            onNavigate={onNavigate}
+          />
+        </div>
+      ) : (
+        <div className="relative w-full flex-1 flex items-center justify-center min-h-0 my-auto">
         
         {/* ========================================================= */}
         {/* CAS 1 : VUE GLOBALE DES ENTREPRISES (NIVEAU 1)            */}
@@ -741,6 +528,7 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
         )}
 
       </div>
+      )}
 
       {/* Modale d'évaluation de la résonance pour les voix de l'entreprise */}
       {resonanceTargetStakeholder && (

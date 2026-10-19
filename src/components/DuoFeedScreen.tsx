@@ -257,17 +257,30 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
     return [pA.universeTag || 'Pôle A', pB.universeTag || 'Pôle B'];
   };
 
+  // Normalisation spécifique pour Vodunrays et Amen selon les directives officielles
+  const normalizeUniverseName = (raw?: string) => {
+    if (!raw) return '';
+    const trimmed = raw.trim();
+    if (trimmed.toLowerCase().includes('amen') || trimmed.toLowerCase().includes('amîn') || trimmed.toLowerCase().includes('jésus')) {
+      return 'Amen';
+    }
+    if (trimmed.toLowerCase().includes('vodun') || trimmed.toLowerCase().includes('èṣù')) {
+      return 'Vodunrays';
+    }
+    return formatTitleCase(trimmed);
+  };
+
   const [rawPartA, rawPartB] = getSeriesHalves();
-  const seriesNameA = formatTitleCase(rawPartA);
-  const seriesNameB = formatTitleCase(rawPartB);
+  const seriesNameA = normalizeUniverseName(rawPartA);
+  const seriesNameB = normalizeUniverseName(rawPartB);
 
   // Titre officiel de la série dans la pastille d'en-tête (ex: Bénin < > ...)
   const headerPartA = isBeninSeries ? 'Bénin' : seriesNameA;
   const headerPartB = isBeninSeries ? '...' : seriesNameB;
 
-  // Badges de pays / univers sur les cartes vidéo individuelles (ex: Bénin vs Pérou)
-  const cardTagA = isBeninSeries ? (pA.country || 'Bénin') : seriesNameA;
-  const cardTagB = isBeninSeries ? (pB.country || 'Pérou') : seriesNameB;
+  // Badges de pays / univers sur les cartes vidéo individuelles (ex: Bénin vs Pérou, Vodunrays vs Amen)
+  const cardTagA = isBeninSeries ? (pA.country || 'Bénin') : normalizeUniverseName(pA.universeTag || rawPartA);
+  const cardTagB = isBeninSeries ? (pB.country || 'Pérou') : normalizeUniverseName(pB.universeTag || rawPartB);
 
   const themeA = cardTagA;
   const themeB = cardTagB;

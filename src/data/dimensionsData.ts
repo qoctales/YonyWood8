@@ -179,7 +179,7 @@ export const SOUS_CATEGORIES: SousCategorie[] = [
     dimensionId: 'series',
     slug: 'jesus-legba',
     ordre: 1,
-    label: 'Vodun Rays ‹ › Amîn · Amen',
+    label: 'Vodunrays ‹ › Amen',
     icone: '16-series/jesus-legba',
     question: 'Comment votre foi ou votre rapport au sacré vous aide-t-il à traverser le deuil ou l’épreuve ?',
     tagline: 'Deux traditions spirituelles face aux épreuves de la foi et au mystère',

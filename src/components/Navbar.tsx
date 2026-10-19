@@ -12,64 +12,42 @@ interface NavbarProps {
   onOpenAuth?: (mode: 'login' | 'register') => void;
 }
 
-interface TaglineInfo {
-  title: string;
-  subtitle: string;
-}
-
-const getHeaderTagline = (screen: ViewScreen): TaglineInfo => {
+const getHeaderTagline = (screen: ViewScreen): string => {
   switch (screen.type) {
-    case 'participate':
-      return {
-        title: "On est ensemble",
-        subtitle: "Choisissez votre mode de contribution et d'action"
-      };
-    case 'duo_feed':
-    case 'duo_detail':
-    case 'landing':
-      return {
-        title: "Des histoires qui nous relient",
-        subtitle: "Deux univers, une même question existentielle"
-      };
-    case 'marketplace':
-      return {
-        title: "Des coproductions qui nous rassemblent",
-        subtitle: "Une façon de soutenir la valorisation des histoires"
-      };
-    case 'enterprise':
-      return {
-        title: "Un espace de visibilité et de promotion",
-        subtitle: "Montrer l'entreprise de l'intérieur grâce à un storytelling collaboratif"
-      };
     case 'submit_story':
     case 'request_videographer':
-      return {
-        title: "L'atelier de création partagée",
-        subtitle: "Racontez votre récit ou faites appel à nos cinéastes"
-      };
+      return "Espace des thématiques proposées";
+
     case 'home':
     case 'matrix_view':
     case 'documentaries':
     case 'documentary_detail':
-      return {
-        title: "La mémoire vivante de nos terroirs",
-        subtitle: "Explorez les lignées, les savoir-faire et les transmissions"
-      };
+      return "Matrice des transmissions collaboratives";
+
+    case 'duo_feed':
+    case 'duo_detail':
+    case 'landing':
+      return "Deux univers, une même question";
+
+    case 'enterprise':
+      return "Plusieurs regards, une histoire commune";
+
+    case 'marketplace':
+      return "Cofinancement des histoires qui comptent";
+
     case 'profile':
     case 'settings':
     case 'portfolio':
     case 'my_forest':
     case 'protagonist_profile':
     case 'lineage':
-      return {
-        title: "Votre espace personnel et engagé",
-        subtitle: "Vos récits, vos parts et votre empreinte culturelle"
-      };
+      return "Gestion des préférences et récits partagés";
+
+    case 'participate':
+      return "Espace de co-construction";
+
     default:
-      return {
-        title: "Des histoires qui nous relient",
-        subtitle: "Deux univers, une même question existentielle"
-      };
+      return "Deux univers, une même question";
   }
 };
 
@@ -100,16 +78,11 @@ export const Navbar: React.FC<NavbarProps> = ({ currentScreen, onNavigate, onOpe
           />
         </div>
 
-        {/* Centre : Titre et tagline éditoriaux dynamiques strictement centrés sur grand écran (masqués sur mobile pour une navigation fluide et aérée) */}
+        {/* Centre : Tagline courte officielle en gras */}
         <div className="hidden md:flex absolute inset-0 items-center justify-center text-center select-none pointer-events-none z-10 px-28 lg:px-36">
-          <div className="flex flex-col items-center justify-center max-w-lg">
-            <span className="font-editorial text-xs sm:text-[13px] font-bold text-stone-900 tracking-tight leading-snug truncate max-w-full">
-              {tagline.title}
-            </span>
-            <span className="text-[10px] sm:text-[11px] text-stone-500 font-medium leading-snug truncate max-w-full">
-              {tagline.subtitle}
-            </span>
-          </div>
+          <span className="font-editorial text-xs sm:text-[13px] md:text-[14px] font-bold text-stone-900 tracking-tight leading-snug truncate max-w-xl">
+            {tagline}
+          </span>
         </div>
 
         {/* Droite : Bouton d'action phare Co-construire Yonywood */}

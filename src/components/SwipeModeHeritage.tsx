@@ -170,35 +170,17 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
 
   const togglePlay1 = (e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
-    if (!video1Ref.current) return;
-    if (isPlayingStep1) {
-      video1Ref.current.pause();
-      setIsPlayingStep1(false);
-    } else {
-      video1Ref.current.play().then(() => setIsPlayingStep1(true)).catch(() => {});
-    }
+    setIsPlayingStep1(prev => !prev);
   };
 
   const togglePlay2 = (e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
-    if (!video2Ref.current) return;
-    if (isPlayingStep2) {
-      video2Ref.current.pause();
-      setIsPlayingStep2(false);
-    } else {
-      video2Ref.current.play().then(() => setIsPlayingStep2(true)).catch(() => {});
-    }
+    setIsPlayingStep2(prev => !prev);
   };
 
   const togglePlay3 = (e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
-    if (!video3Ref.current) return;
-    if (isPlayingStep3) {
-      video3Ref.current.pause();
-      setIsPlayingStep3(false);
-    } else {
-      video3Ref.current.play().then(() => setIsPlayingStep3(true)).catch(() => {});
-    }
+    setIsPlayingStep3(prev => !prev);
   };
 
   // Gestion des événements tactiles
