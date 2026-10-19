@@ -1,0 +1,402 @@
+import React, { useState, useRef, useEffect } from 'react';
+import { 
+  ChevronLeft, 
+  ChevronRight, 
+  Pause, 
+  Volume2, 
+  VolumeX, 
+  BookOpen, 
+  Bookmark, 
+  Check, 
+  X,
+  MessageSquare 
+} from 'lucide-react';
+import { MatrixProfile } from '../../utils/matrixGridService';
+import { TvPlayerIcon } from '../YonywoodBrandIcons';
+import { ShareIcon } from '../ShareIcon';
+import { ResonanceModal } from '../ResonanceModal';
+import { ViewScreen } from '../../types';
+
+interface DirectSwipePersonViewProps {
+  profiles: MatrixProfile[];
+  initialIndex?: number;
+  onNavigate?: (screen: ViewScreen) => void;
+}
+
+export const DirectSwipePersonView: React.FC<DirectSwipePersonViewProps> = ({
+  profiles,
+  initialIndex = 0,
+  onNavigate
+}) => {
+  const [currentIndex, setCurrentIndex] = useState<number>(initialIndex);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [isMuted, setIsMuted] = useState<boolean>(false);
+  const [isBookmarked, setIsBookmarked] = useState<boolean>(false);
+  const [isCopied, setIsCopied] = useState<boolean>(false);
+  const [isResonanceModalOpen, setIsResonanceModalOpen] = useState<boolean>(false);
+  const [resonancePct, setResonancePct] = useState<number | null>(null);
+  const [isQuestionOpen, setIsQuestionOpen] = useState<boolean>(false);
+  const [swipeOffset, setSwipeOffset] = useState<number>(0);
+
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const touchStartXRef = useRef<number | null>(null);
+  const touchEndXRef = useRef<number | null>(null);
+
+  const safeProfiles = profiles.length > 0 ? profiles : [];
+  const currentPerson = safeProfiles[currentIndex] || null;
+
+  // Réinitialiser la lecture et les popups lors du changement de personne
+  useEffect(() => {
+    setIsPlaying(false);
+    setIsBookmarked(false);
+    setIsCopied(false);
+    setIsQuestionOpen(false);
+    setIsResonanceModalOpen(false);
+    setSwipeOffset(0);
+
+    if (currentPerson) {
+      try {
+        const stored = localStorage.getItem(`yonywood_resonance_story-${currentPerson.id}`);
+        if (stored) {
+          const val = parseInt(stored, 10);
+          setResonancePct(isNaN(val) ? null : val);
+        } else {
+          setResonancePct(null);
+        }
+      } catch {
+        setResonancePct(null);
+      }
+    }
+  }, [currentIndex, currentPerson]);
+
+  // Synchronisation du son
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = isMuted;
+    }
+  }, [isMuted]);
+
+  // Navigation tactile (Swipe horizontal)
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartXRef.current = e.touches[0].clientX;
+    touchEndXRef.current = null;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndXRef.current = e.touches[0].clientX;
+    if (touchStartXRef.current !== null) {
+      const diff = e.touches[0].clientX - touchStartXRef.current;
+      setSwipeOffset(diff * 0.4);
+    }
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStartXRef.current !== null && touchEndXRef.current !== null) {
+      const diff = touchStartXRef.current - touchEndXRef.current;
+      if (diff > 45) {
+        goToNext();
+      } else if (diff < -45) {
+        goToPrev();
+      }
+    }
+    touchStartXRef.current = null;
+    touchEndXRef.current = null;
+    setSwipeOffset(0);
+  };
+
+  // Clavier (Flèches Gauche/Droite)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (isResonanceModalOpen || isQuestionOpen) return;
+      if (e.key === 'ArrowRight') {
+        goToNext();
+      } else if (e.key === 'ArrowLeft') {
+        goToPrev();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [currentIndex, isResonanceModalOpen, isQuestionOpen]);
+
+  const goToNext = () => {
+    if (safeProfiles.length === 0) return;
+    setCurrentIndex(prev => (prev + 1) % safeProfiles.length);
+  };
+
+  const goToPrev = () => {
+    if (safeProfiles.length === 0) return;
+    setCurrentIndex(prev => (prev - 1 + safeProfiles.length) % safeProfiles.length);
+  };
+
+  const togglePlay = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    setIsPlaying(prev => {
+      if (!prev && videoRef.current) {
+        videoRef.current.play().catch(() => {});
+      } else if (prev && videoRef.current) {
+        videoRef.current.pause();
+      }
+      return !prev;
+    });
+  };
+
+  const toggleMute = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    if (!videoRef.current) return;
+    videoRef.current.muted = !videoRef.current.muted;
+    setIsMuted(videoRef.current.muted);
+  };
+
+  const handleShare = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(window.location.href);
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 2000);
+    }
+  };
+
+  if (!currentPerson) {
+    return (
+      <div className="w-full h-full flex items-center justify-center text-stone-500">
+        Aucun récit disponible.
+      </div>
+    );
+  }
+
+  const videoUrl = currentPerson.teaserVideoUrl || 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4';
+  const tagLabel = currentPerson.directionLabel || 'Résilience';
+  const displayName = currentPerson.firstName || currentPerson.name.split(' ')[0] || currentPerson.name;
+
+  return (
+    <div className="relative w-full h-full flex flex-col items-center justify-start pt-2 sm:pt-3 pb-20 sm:pb-24 select-none px-2 overflow-hidden">
+      
+      {/* ZONE CENTRALE : FLÈCHES LATÉRALES + CARTE VIDÉO FORMAT DUO */}
+      <div className="relative w-full flex-1 flex items-center justify-center min-h-0">
+        
+        {/* Flèche Personne Précédente (Desktop) */}
+        <button
+          onClick={goToPrev}
+          className="hidden sm:flex absolute left-4 lg:left-12 z-30 w-11 h-11 rounded-full bg-white/95 hover:bg-[#A2482B] text-stone-800 hover:text-white border border-stone-200 shadow-xl items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
+          title="Histoire précédente"
+        >
+          <ChevronLeft className="w-5 h-5" />
+        </button>
+
+        {/* CARTE VIDÉO VERTICALE AU GABARIT STANDARD (CONFORME À LA CAPTURE FOURNIE) */}
+        <div
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          onClick={(e) => {
+            if ((e.target as HTMLElement).closest('button, a')) return;
+            togglePlay();
+          }}
+          style={{ transform: `translateX(${swipeOffset}px)` }}
+          className="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl border border-stone-200/40 flex flex-col justify-between 
+            aspect-[9/16] 
+            w-[min(calc(100vw-32px),calc((100dvh-230px)*9/16))] 
+            max-w-[340px] 
+            h-[min(540px,calc(100dvh-230px))] 
+            mx-auto shrink-0 transition-transform duration-100 cursor-pointer select-none"
+        >
+          {/* Media de fond : Vidéo ou Photo */}
+          {isPlaying ? (
+            <video
+              ref={videoRef}
+              src={videoUrl}
+              autoPlay
+              loop
+              playsInline
+              muted={isMuted}
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+          ) : (
+            <img
+              src={currentPerson.photoUrl}
+              alt={currentPerson.name}
+              className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+            />
+          )}
+
+          {/* Voile cinématographique */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/35 pointer-events-none" />
+
+          {/* Bouton de lecture central discret au repos */}
+          {!isPlaying && (
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-15">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-black/45 backdrop-blur-md border border-white/25 flex items-center justify-center text-white shadow-2xl group-hover:scale-110 group-hover:bg-[#A2482B]/80 transition-all duration-300">
+                <TvPlayerIcon className="w-7 h-7 sm:w-8 sm:h-8 text-white drop-shadow-md" strokeWidth={1.7} />
+              </div>
+            </div>
+          )}
+
+          {/* HAUT : Badge Direction à gauche & Déclencheur TvPlayerIcon à droite */}
+          <div className="relative z-10 p-3 sm:p-4 flex items-center justify-between gap-2">
+            <span className="w-fit max-w-[170px] truncate px-3.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-xs font-semibold text-white shadow-md">
+              {tagLabel}
+            </span>
+
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                togglePlay(e);
+              }}
+              className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0"
+              title={isPlaying ? "Mettre en pause" : "Lire la vidéo"}
+            >
+              {isPlaying ? (
+                <Pause className="w-3.5 h-3.5 fill-white text-white" />
+              ) : (
+                <TvPlayerIcon className="w-4.5 h-4.5 text-white" strokeWidth={1.6} />
+              )}
+            </button>
+          </div>
+
+          {/* CÔTÉ DROIT : ICÔNES D'ACTION VERTICALES (AUX 2/3 POUR DÉGAGER LE VISAGE) */}
+          <div 
+            className="absolute right-2 sm:right-3.5 top-[60%] -translate-y-1/2 z-30 flex flex-col items-center gap-2 sm:gap-2.5 pointer-events-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* 1. Bouton Favori / Bookmark */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsBookmarked(prev => !prev);
+              }}
+              className={`w-8 h-8 sm:w-9 sm:h-9 rounded-xl backdrop-blur-md border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
+                isBookmarked
+                  ? 'bg-[#A2482B] border-[#A2482B] text-white shadow-[0_0_12px_rgba(162,72,43,0.5)]'
+                  : 'bg-black/45 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white'
+              }`}
+              title={isBookmarked ? "Enregistré dans vos favoris" : "Ajouter aux favoris"}
+            >
+              <Bookmark className={`w-4 h-4 ${isBookmarked ? 'fill-white text-white' : 'text-white'}`} />
+            </button>
+
+            {/* 2. Bouton Livre / Question existentielle */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsQuestionOpen(prev => !prev);
+              }}
+              className={`w-8 h-8 sm:w-9 sm:h-9 rounded-xl backdrop-blur-md border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
+                isQuestionOpen
+                  ? 'bg-[#A2482B] border-[#A2482B] text-white'
+                  : 'bg-black/45 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white'
+              }`}
+              title="Question & Témoignage"
+            >
+              <BookOpen className="w-4 h-4 text-white" />
+            </button>
+
+            {/* 3. Bouton Évaluation Résonance */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsResonanceModalOpen(true);
+              }}
+              className={`w-8 h-8 sm:w-9 sm:h-9 rounded-xl backdrop-blur-md border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
+                resonancePct !== null
+                  ? 'bg-[#A2482B] border-[#A2482B] text-white shadow-[0_0_12px_rgba(162,72,43,0.5)]'
+                  : 'bg-black/45 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white'
+              }`}
+              title={resonancePct !== null ? `Résonance : ${resonancePct}%` : "Évaluer la résonance"}
+            >
+              <MessageSquare className="w-4 h-4 text-white" />
+            </button>
+
+            {/* 4. Bouton Partager */}
+            <button
+              onClick={handleShare}
+              className={`w-8 h-8 sm:w-9 sm:h-9 rounded-xl backdrop-blur-md border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
+                isCopied
+                  ? 'bg-emerald-700 border-emerald-500 text-white'
+                  : 'bg-black/45 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white'
+              }`}
+              title={isCopied ? "Lien copié !" : "Partager"}
+            >
+              {isCopied ? <Check className="w-4 h-4 text-white" /> : <ShareIcon className="w-4 h-4 text-white" />}
+            </button>
+          </div>
+
+          {/* POPOVER QUESTION AU CLIC SUR LE LIVRE */}
+          {isQuestionOpen && (
+            <div 
+              onClick={(e) => e.stopPropagation()}
+              className="absolute inset-x-3 top-16 z-40 bg-stone-900/95 backdrop-blur-md p-3.5 rounded-2xl border border-[#A2482B]/60 shadow-xl text-white animate-in fade-in zoom-in-95 duration-150"
+            >
+              <div className="flex items-center justify-between pb-1.5 border-b border-white/10 mb-2">
+                <span className="text-[10px] font-semibold text-[#FFE7A3] uppercase tracking-wider">
+                  {tagLabel} · Question existentielle
+                </span>
+                <button
+                  onClick={() => setIsQuestionOpen(false)}
+                  className="text-stone-400 hover:text-white cursor-pointer"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              </div>
+              <p className="text-xs sm:text-sm font-serif italic text-stone-100 leading-relaxed">
+                « {currentPerson.question || currentPerson.centralQuestion || currentPerson.invitationStory || "Quelle mémoire choisissons-nous de transmettre aux générations qui viennent ?"} »
+              </p>
+            </div>
+          )}
+
+          {/* BAS : Prénom à gauche & Bouton Muet / Son à droite */}
+          <div className="relative z-10 p-3 sm:p-4 flex items-end justify-between gap-2">
+            <div className="space-y-0.5">
+              <h3 className="font-editorial text-lg sm:text-xl font-bold text-white tracking-wide leading-none drop-shadow-md">
+                {displayName}
+              </h3>
+              {currentPerson.duoPartnerName && (
+                <p className="text-[10.5px] text-stone-300 font-medium drop-shadow-xs">
+                  Duo avec <span className="text-[#FFE7A3]">{currentPerson.duoPartnerName}</span>
+                </p>
+              )}
+            </div>
+
+            {/* Bouton Muet / Son en bas à droite */}
+            <button
+              onClick={toggleMute}
+              className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center cursor-pointer transition-all shadow-md hover:scale-105 active:scale-95 shrink-0"
+              title={isMuted ? "Activer le son" : "Couper le son"}
+            >
+              {isMuted ? (
+                <VolumeX className="w-4 h-4 text-white" />
+              ) : (
+                <Volume2 className="w-4 h-4 text-white" />
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* Flèche Personne Suivante (Desktop) */}
+        <button
+          onClick={goToNext}
+          className="hidden sm:flex absolute right-4 lg:right-12 z-30 w-11 h-11 rounded-full bg-white/95 hover:bg-[#A2482B] text-stone-800 hover:text-white border border-stone-200 shadow-xl items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
+          title="Histoire suivante"
+        >
+          <ChevronRight className="w-5 h-5" />
+        </button>
+
+      </div>
+
+      {/* COMPTEUR MINIMALISTE EN BAS */}
+      <div className="mt-2 text-stone-400 text-xs font-mono select-none">
+        {currentIndex + 1} / {safeProfiles.length}
+      </div>
+
+      {/* Modal d'évaluation de la résonance */}
+      <ResonanceModal
+        isOpen={isResonanceModalOpen}
+        onClose={() => setIsResonanceModalOpen(false)}
+        storyId={`story-${currentPerson.id}`}
+        topicId={currentPerson.doorId || 'exploration-matrice'}
+        personName={currentPerson.name}
+        initialPercentage={resonancePct}
+        onRatingSubmitted={(pct) => setResonancePct(pct)}
+      />
+    </div>
+  );
+};

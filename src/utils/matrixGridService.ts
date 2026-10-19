@@ -1,6 +1,7 @@
 import { PROTAGONISTS, DUOS } from '../data/mockData';
 import { MATRIX_SERIES_DATA } from '../data/matrixData';
 import { AffiliationPerson, Protagonist } from '../types';
+import { DIMENSIONS, getSubcategoriesForDimension, SousCategorie, SOUS_CATEGORIES } from '../data/dimensionsData';
 
 export interface MatrixProfile {
   id: string;
@@ -22,24 +23,46 @@ export interface MatrixProfile {
   counterpointName?: string;
   counterpointPhoto?: string;
   duoId?: string;
+  duoPartnerName?: string;
   invitedById?: string;
   invitedByName?: string;
   invitedPeopleIds?: string[];
   doorId: string; // Dimension/Porte (series, sagesses, territoires, expertises, etc.)
+  doorLabel?: string; // Libellé de la Porte (ex: 'Sagesses', 'Séries', 'Territoires')
+  directionLabel?: string; // Libellé officiel de la direction (ex: 'Résilience', 'Amour', 'Solidarité', 'Vodun Rays')
   allowedToAppear: boolean;
   placeholder?: boolean;
 }
 
-export type NeighborSourceType = 'counterpoint' | 'lineage' | 'theme' | 'discovery';
+export type NeighborSourceType = 'counterpoint' | 'parent' | 'descendant' | 'lineage' | 'resonance' | 'theme' | 'discovery';
 
-export interface SunNeighbor {
+export interface PersonSatellite {
+  kind: 'person';
   person: MatrixProfile;
   sourceType: NeighborSourceType;
-  sourceLabel: string; // Mini-légende de 2 mots
+  sourceLabel: string; // Mini-légende de 2 mots (ex: 'Contrepoint Duo', 'Filiation', 'Lignée', 'Résonance', 'Découverte')
   strokeColor: string;
   strokeDash: string;
   strokeWidth: number;
 }
+
+export interface ThemeSatellite {
+  kind: 'theme';
+  doorId: string;
+  label: string;
+  shortLabel: string;
+  iconName: string;
+  accentColor: string;
+  glowColor: string;
+  tagline: string;
+  subcategories: SousCategorie[];
+  isPrimaryForSun?: boolean;
+}
+
+export type SunSatellite = PersonSatellite | ThemeSatellite;
+
+// Alias de rétrocompatibilité
+export type SunNeighbor = PersonSatellite;
 
 // 1. Extraction et fusion de tous les profils réels disponibles
 export function getAllRealProfiles(): MatrixProfile[] {
@@ -155,9 +178,21 @@ export function getAllRealProfiles(): MatrixProfile[] {
     }
   });
 
-  // Assurer la liaison mutuelle des contrepoints
+  // Assurer la liaison mutuelle des contrepoints et assigner les directions officielles YonyWood
   const allList = Array.from(profileMap.values());
-  allList.forEach(prof => {
+  const DOOR_LABELS: Record<string, string> = {
+    series: 'Séries',
+    sagesses: 'Sagesses',
+    territoires: 'Territoires',
+    expertises: 'Expertises',
+    'produits-services': 'Produits et services',
+    projets: 'Projets',
+    marques: 'Marques',
+    personnalites: 'Personnalités'
+  };
+
+  allList.forEach((prof, idx) => {
+    // 1. Détermination du contrepoint
     if (prof.counterpointId && !prof.counterpointPhoto) {
       const partner = profileMap.get(prof.counterpointId);
       if (partner) {
@@ -177,6 +212,38 @@ export function getAllRealProfiles(): MatrixProfile[] {
           candidate.counterpointName = prof.name;
           candidate.counterpointPhoto = prof.photoUrl;
         }
+      }
+    }
+    if (prof.counterpointName) {
+      prof.duoPartnerName = prof.counterpointName;
+    }
+
+    // 2. Assignation de la Direction officielle (issue de la Porte)
+    // Cas spécifique : Cheikh Fall -> Résilience (conformité absolue à la capture utilisateur)
+    if (prof.name.toLowerCase().includes('cheikh')) {
+      prof.doorId = 'sagesses';
+      prof.doorLabel = 'Sagesses';
+      prof.directionLabel = 'Résilience';
+    } else {
+      const dId = prof.doorId || 'sagesses';
+      prof.doorLabel = DOOR_LABELS[dId] || 'Héritages';
+      const doorSubs = SOUS_CATEGORIES.filter(s => s.dimensionId === dId);
+      if (doorSubs.length > 0) {
+        const text = `${prof.name} ${prof.universeTag || ''} ${prof.role || ''}`.toLowerCase();
+        const matched = doorSubs.find(s => text.includes(s.slug.toLowerCase()) || text.includes(s.label.toLowerCase()));
+        if (matched) {
+          prof.directionLabel = matched.label;
+        } else {
+          let hash = 0;
+          for (let i = 0; i < prof.id.length; i++) {
+            hash = (hash << 5) - hash + prof.id.charCodeAt(i);
+            hash |= 0;
+          }
+          const chosen = doorSubs[Math.abs(hash + idx) % doorSubs.length];
+          prof.directionLabel = chosen.label;
+        }
+      } else {
+        prof.directionLabel = 'Résilience';
       }
     }
   });
@@ -291,139 +358,195 @@ export function generateMatrixGrid(profiles: MatrixProfile[], seed: number = 0):
   return grid as MatrixProfile[];
 }
 
-// 3. Calcul des 16 voisins du Soleil (Niveau 2)
-export function get16SunNeighbors(
-  sun: MatrixProfile, 
-  allProfiles: MatrixProfile[], 
+// 3. Calcul des 8 satellites Personnes du Soleil selon la charte d'exploration
+export function get8PersonSatellites(
+  sun: MatrixProfile,
+  allProfiles: MatrixProfile[],
   recentVisitedIds: string[] = []
-): SunNeighbor[] {
-  const result: SunNeighbor[] = [];
+): PersonSatellite[] {
+  const result: PersonSatellite[] = [];
   const usedIds = new Set<string>([sun.id]);
   const recentSet = new Set<string>(recentVisitedIds);
 
-  // Mini-légendes et styles visuels distincts
-  const SOURCE_CONFIGS = {
-    counterpoint: {
-      sourceLabel: 'Contrepoint Duo',
-      strokeColor: '#C89B3C', // Or chaud
-      strokeDash: 'none',
-      strokeWidth: 2.5
-    },
-    lineage: {
-      sourceLabel: 'Lignée cooptée',
-      strokeColor: '#A2482B', // Terracotta signature
-      strokeDash: 'none',
-      strokeWidth: 2.0
-    },
-    theme: {
-      sourceLabel: 'Même thématique',
-      strokeColor: '#D97706', // Ambre chaleureux
-      strokeDash: '3 3',
-      strokeWidth: 1.5
-    },
-    discovery: {
-      sourceLabel: 'Découverte surprise',
-      strokeColor: '#78716C', // Pierre discret
-      strokeDash: '2 2',
-      strokeWidth: 1.2
-    }
-  };
-
-  // 1. SOURCE 1 : Le Contrepoint (TOUJOURS PRÉSENT EN PRIORITÉ ABSOLUE)
+  // 1. LE CONTREPOINT (son duo) : toujours présent, trait terracotta épais
   if (sun.counterpointId) {
     const cp = allProfiles.find(p => p.id === sun.counterpointId);
     if (cp && !usedIds.has(cp.id)) {
       usedIds.add(cp.id);
       result.push({
+        kind: 'person',
         person: cp,
         sourceType: 'counterpoint',
-        ...SOURCE_CONFIGS.counterpoint
+        sourceLabel: 'Contrepoint Duo',
+        strokeColor: '#A2482B', // Terracotta signature épais
+        strokeDash: 'none',
+        strokeWidth: 3.5
       });
     }
   }
 
-  // 2. SOURCE 2 : Les personnes de sa Lignée (ceux qu'il a fait entrer ou qui l'ont fait entrer)
-  const lineageCandidates: MatrixProfile[] = [];
-  
-  // Personnes cooptées directes
+  // Si pas de duo déclaré, repli vers un pair marquant de la même porte
+  if (result.length === 0) {
+    const fallbackDuo = allProfiles.find(p => p.doorId === sun.doorId && !usedIds.has(p.id));
+    if (fallbackDuo) {
+      usedIds.add(fallbackDuo.id);
+      result.push({
+        kind: 'person',
+        person: fallbackDuo,
+        sourceType: 'counterpoint',
+        sourceLabel: 'Contrepoint lié',
+        strokeColor: '#A2482B',
+        strokeDash: 'none',
+        strokeWidth: 3.5
+      });
+    }
+  }
+
+  // 2. CELLE QUI L'A FAIT ENTRER (filiation ascendante) : teinte dorée
+  if (sun.invitedById) {
+    const parent = allProfiles.find(item => item.id === sun.invitedById);
+    if (parent && !usedIds.has(parent.id)) {
+      usedIds.add(parent.id);
+      result.push({
+        kind: 'person',
+        person: parent,
+        sourceType: 'parent',
+        sourceLabel: 'Filiation',
+        strokeColor: '#C89B3C', // Or chaud
+        strokeDash: 'none',
+        strokeWidth: 2.2
+      });
+    }
+  }
+
+  // 3. JUSQU'À 3 PERSONNES QU'ELLE A FAIT ENTRER (lignée descendante)
   if (sun.invitedPeopleIds && sun.invitedPeopleIds.length > 0) {
-    sun.invitedPeopleIds.forEach(id => {
-      const p = allProfiles.find(item => item.id === id);
-      if (p && !usedIds.has(p.id)) lineageCandidates.push(p);
+    for (const childId of sun.invitedPeopleIds) {
+      if (result.filter(r => r.sourceType === 'descendant').length >= 3) break;
+      const child = allProfiles.find(item => item.id === childId);
+      if (child && !usedIds.has(child.id)) {
+        usedIds.add(child.id);
+        result.push({
+          kind: 'person',
+          person: child,
+          sourceType: 'descendant',
+          sourceLabel: 'Lignée',
+          strokeColor: '#D97706', // Ambre chaleureux
+          strokeDash: 'none',
+          strokeWidth: 2.0
+        });
+      }
+    }
+  }
+
+  // 4. 2 PERSONNES EN RÉSONANCE (même question, même archétype ou porte)
+  const resonanceCandidates = allProfiles.filter(p => {
+    if (usedIds.has(p.id)) return false;
+    const sameQuestion = (sun.centralQuestion && p.centralQuestion && sun.centralQuestion === p.centralQuestion);
+    const sameUniverse = sun.universeTag === p.universeTag;
+    const sameDoor = sun.doorId === p.doorId;
+    return sameQuestion || sameUniverse || sameDoor;
+  }).sort(() => Math.random() - 0.5);
+
+  for (const rc of resonanceCandidates) {
+    if (result.filter(r => r.sourceType === 'resonance').length >= 2) break;
+    usedIds.add(rc.id);
+    result.push({
+      kind: 'person',
+      person: rc,
+      sourceType: 'resonance',
+      sourceLabel: 'Résonance',
+      strokeColor: '#A855F7', // Violet intuitif & profond
+      strokeDash: '3 3',
+      strokeWidth: 1.8
     });
   }
 
-  // Personne qui l'a fait entrer (ascendance)
-  if (sun.invitedById) {
-    const parent = allProfiles.find(item => item.id === sun.invitedById);
-    if (parent && !usedIds.has(parent.id)) lineageCandidates.push(parent);
+  // 5. 1 PERSONNE TIRÉE AU HASARD (pour la surprise, en évitant les récents)
+  const discoveryCandidates = allProfiles
+    .filter(p => !usedIds.has(p.id) && !recentSet.has(p.id))
+    .sort(() => Math.random() - 0.5);
+
+  if (discoveryCandidates.length > 0) {
+    const surprise = discoveryCandidates[0];
+    usedIds.add(surprise.id);
+    result.push({
+      kind: 'person',
+      person: surprise,
+      sourceType: 'discovery',
+      sourceLabel: 'Découverte',
+      strokeColor: '#78716C', // Pierre discret
+      strokeDash: '2 2',
+      strokeWidth: 1.4
+    });
   }
 
-  // Ajouter jusqu'à 5 membres de la lignée en priorité
-  lineageCandidates.forEach(p => {
-    if (result.length < 6 && !usedIds.has(p.id)) {
-      usedIds.add(p.id);
-      result.push({
-        person: p,
-        sourceType: 'lineage',
-        ...SOURCE_CONFIGS.lineage
-      });
-    }
-  });
-
-  // 3. SOURCE 3 : Personnes de la même thématique / porte (anti-boucle appliquée)
-  const sameThemeProfiles = allProfiles.filter(p => 
-    p.doorId === sun.doorId && 
-    !usedIds.has(p.id) &&
-    !recentSet.has(p.id)
-  );
-
-  // Mélanger pour varier les découvertes
-  sameThemeProfiles.sort(() => Math.random() - 0.5);
-
-  sameThemeProfiles.forEach(p => {
-    if (result.length < 12 && !usedIds.has(p.id)) {
-      usedIds.add(p.id);
-      result.push({
-        person: p,
-        sourceType: 'theme',
-        ...SOURCE_CONFIGS.theme
-      });
-    }
-  });
-
-  // 4. SOURCE 4 : Découverte surprise (tirées au hasard, en évitant les récents)
-  const discoveryCandidates = allProfiles.filter(p => 
-    !usedIds.has(p.id) && 
-    !recentSet.has(p.id)
-  ).sort(() => Math.random() - 0.5);
-
-  discoveryCandidates.forEach(p => {
-    if (result.length < 16 && !usedIds.has(p.id)) {
-      usedIds.add(p.id);
-      result.push({
-        person: p,
-        sourceType: 'discovery',
-        ...SOURCE_CONFIGS.discovery
-      });
-    }
-  });
-
-  // 5. Remplissage de sécurité si le quota de 16 n'est pas encore atteint
-  if (result.length < 16) {
-    const fallbackProfiles = allProfiles.filter(p => !usedIds.has(p.id));
-    for (const fb of fallbackProfiles) {
-      if (result.length >= 16) break;
+  // 6. Compléter à 8 personnes si nécessaire
+  if (result.length < 8) {
+    const fallbackPool = allProfiles.filter(p => !usedIds.has(p.id)).sort(() => Math.random() - 0.5);
+    for (const fb of fallbackPool) {
+      if (result.length >= 8) break;
       usedIds.add(fb.id);
       result.push({
+        kind: 'person',
         person: fb,
         sourceType: 'discovery',
-        ...SOURCE_CONFIGS.discovery
+        sourceLabel: 'Exploration',
+        strokeColor: '#78716C',
+        strokeDash: '2 2',
+        strokeWidth: 1.4
       });
     }
   }
 
-  return result.slice(0, 16);
+  return result.slice(0, 8);
+}
+
+// 4. Calcul des 8 satellites Thématiques (les 8 Portes officielles et leurs 8 directions)
+export function get8ThemeSatellites(sun: MatrixProfile): ThemeSatellite[] {
+  return DIMENSIONS.map(dim => {
+    const isPrimary = dim.id === sun.doorId;
+    const subcats = getSubcategoriesForDimension(dim.id);
+    return {
+      kind: 'theme',
+      doorId: dim.id,
+      label: dim.label,
+      shortLabel: dim.shortLabel,
+      iconName: dim.icone,
+      accentColor: dim.accentColor,
+      glowColor: dim.glowColor,
+      tagline: dim.tagline,
+      subcategories: subcats,
+      isPrimaryForSun: isPrimary
+    };
+  });
+}
+
+// 5. Calcul des 16 satellites complets (8 personnes + 8 thématiques)
+export function get16SunSatellites(
+  sun: MatrixProfile,
+  allProfiles: MatrixProfile[],
+  recentVisitedIds: string[] = []
+): SunSatellite[] {
+  const people = get8PersonSatellites(sun, allProfiles, recentVisitedIds);
+  const themes = get8ThemeSatellites(sun);
+
+  // Alternance équilibrée 1 personne / 1 thématique pour créer une couronne harmonieuse
+  const satellites: SunSatellite[] = [];
+  for (let i = 0; i < 8; i++) {
+    satellites.push(people[i]);
+    satellites.push(themes[i]);
+  }
+  return satellites;
+}
+
+// Alias de rétrocompatibilité : retourne les voisins personnes
+export function get16SunNeighbors(
+  sun: MatrixProfile, 
+  allProfiles: MatrixProfile[], 
+  recentVisitedIds: string[] = []
+): PersonSatellite[] {
+  return get8PersonSatellites(sun, allProfiles, recentVisitedIds);
 }
 
 export interface InterNeighborLink {

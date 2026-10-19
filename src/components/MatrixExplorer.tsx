@@ -76,6 +76,8 @@ import { SwipeModeHeritage } from './SwipeModeHeritage';
 import { LivingMatrixWall } from './matrix/LivingMatrixWall';
 import { SunCrownView } from './matrix/SunCrownView';
 import { DuoFaceToFaceModal } from './matrix/DuoFaceToFaceModal';
+import { MatrixStoryVideoModal } from './matrix/MatrixStoryVideoModal';
+import { DirectSwipePersonView } from './matrix/DirectSwipePersonView';
 import { 
   getAllRealProfiles, 
   generateMatrixGrid, 
@@ -182,6 +184,7 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
   const [duoModalPair, setDuoModalPair] = useState<{ sun: MatrixProfile; counterpoint: MatrixProfile } | null>(null);
 
   // 4. Modale vidéo 9:16 pour la personne sélectionnée
+  const [selectedMatrixVideoPerson, setSelectedMatrixVideoPerson] = useState<MatrixProfile | null>(null);
   const [modalPerson, setModalPerson] = useState<AffiliationPerson | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isMuted, setIsMuted] = useState<boolean>(true);
@@ -225,6 +228,10 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
   // Gestion du retour arrière (navigateur, téléphone) et touche Échap
   useEffect(() => {
     const handlePopState = () => {
+      if (selectedMatrixVideoPerson) {
+        setSelectedMatrixVideoPerson(null);
+        return;
+      }
       if (modalPerson || duoModalPair) {
         setModalPerson(null);
         setDuoModalPair(null);
@@ -250,7 +257,9 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        if (modalPerson || duoModalPair) {
+        if (selectedMatrixVideoPerson) {
+          setSelectedMatrixVideoPerson(null);
+        } else if (modalPerson || duoModalPair) {
           setModalPerson(null);
           setDuoModalPair(null);
         } else if (heritageMode === 'sun') {
@@ -265,18 +274,11 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
       window.removeEventListener('popstate', handlePopState);
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [heritageMode, modalPerson, duoModalPair, sunBreadcrumbs]);
+  }, [heritageMode, modalPerson, duoModalPair, sunBreadcrumbs, selectedMatrixVideoPerson]);
 
   const handleSelectPersonFromMatrix = (person: MatrixProfile) => {
-    setSelectedSun(person);
-    setSunBreadcrumbs([person]);
+    setSelectedMatrixVideoPerson(person);
     setLastVisitedProfileId(person.id);
-    setHeritageMode('sun');
-    try {
-      window.history.pushState({ screen: 'matrix_view', soleilId: person.id }, '', `?soleil=${person.id}`);
-    } catch {
-      // ignore
-    }
   };
 
   const handleSelectNeighborAsSun = (neighbor: MatrixProfile) => {
@@ -941,7 +943,7 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
     <div 
       ref={containerRef}
       id="matrix-explorer-container"
-      className={`relative w-full h-full min-h-[100dvh] bg-white text-[#1C1917] overflow-hidden select-none ${heritageMode === 'circle' ? 'touch-none' : 'touch-pan-y'} pt-safe pb-safe`}
+      className={`relative w-full h-[calc(100dvh-56px)] sm:h-[calc(100dvh-64px)] bg-white text-[#1C1917] overflow-hidden select-none flex flex-col pt-safe pb-20 sm:pb-24`}
       onPointerDown={heritageMode === 'circle' ? handlePointerDown : undefined}
       onPointerMove={heritageMode === 'circle' ? handlePointerMove : undefined}
       onPointerUp={heritageMode === 'circle' ? handlePointerUp : undefined}
@@ -949,17 +951,17 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
     >
       {/* Texture subtile de fond céleste & géométrie sacrée discrète */}
       <div 
-        className="absolute inset-0 pointer-events-none opacity-[0.03]"
+        className="absolute inset-0 pointer-events-none opacity-[0.02]"
         style={{
           backgroundImage: `radial-gradient(circle at 1px 1px, #A2482B 1px, transparent 0)`,
           backgroundSize: '40px 40px'
         }}
       />
 
-      {/* 1. BARRE SUPÉRIEURE : EN-TÊTE HARMONISÉ EXACTEMENT AU MÊME ENDROIT QUE STUDIO ET PRODUCTIONS */}
-      <div className="absolute top-0 left-0 right-0 z-40 w-full pointer-events-none">
-        <div className="w-full max-w-3xl mx-auto px-3 sm:px-6 py-2.5 sm:py-3.5">
-          <header className="relative flex items-center justify-between h-8 sm:h-9 shrink-0 gap-2 pointer-events-auto">
+      {/* 1. BARRE SUPÉRIEURE : EN-TÊTE FIXE ET HARMONISÉ STRICTEMENT SANS TÉLESCOPAGE */}
+      <div className="relative w-full shrink-0 z-40 border-b border-stone-100/80 bg-white/95">
+        <div className="w-full max-w-3xl mx-auto px-3 sm:px-6 py-2">
+          <header className="relative flex items-center justify-between h-8 shrink-0 gap-2">
             {/* Titre Héritages */}
             <div className="relative flex items-center h-full shrink-0">
               <h1 className="font-editorial text-base sm:text-[18px] font-bold text-[#1C1917] tracking-tight leading-none">
@@ -968,65 +970,19 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
               <div className="absolute left-0 -bottom-2 w-8 h-0.5 bg-[#A2482B] rounded-full" />
             </div>
 
-            {heritageMode === 'swipe' ? (
-              <div className="flex items-center gap-1.5 shrink-0 min-w-0 h-full">
-                {swipeStep === 1 && (
-                  <div className="flex items-center gap-1.5 h-7.5 sm:h-8.5 px-3 rounded-full bg-[#A2482B] text-white shadow-xs border border-[#8A3B22] text-[11px] sm:text-xs font-semibold shrink-0">
-                    <Layers className="w-3.5 h-3.5" />
-                    <span>8 Portes</span>
-                  </div>
-                )}
-                {swipeStep === 2 && (
-                  <>
-                    <button
-                      id="btn-swipe-back-to-doors"
-                      onClick={() => {
-                        setSwipeStep(1);
-                        celestialAudio.playOrbSelect();
-                      }}
-                      className="h-7.5 sm:h-8.5 px-2.5 sm:px-3 rounded-full bg-white hover:bg-stone-50 text-stone-900 text-[11px] sm:text-xs font-semibold flex items-center gap-1.5 border border-[#A2482B] shadow-xs cursor-pointer transition-all active:scale-95 shrink-0"
-                      title="Revenir aux 8 Portes"
-                    >
-                      <ChevronLeft className="w-3.5 h-3.5 text-[#A2482B]" />
-                      <span>Portes</span>
-                    </button>
-                    <div className="h-7.5 sm:h-8.5 px-2.5 rounded-full bg-stone-100 border border-stone-300 text-stone-800 text-[11px] sm:text-xs font-semibold flex items-center gap-1.5 shrink-0">
-                      <DimensionIcon 
-                        name={currentSwipeDoor.icone} 
-                        size={14} 
-                        className="text-[#A2482B]" 
-                      />
-                      <span className="truncate max-w-[120px]">{currentSwipeDoor.shortLabel}</span>
-                    </div>
-                  </>
-                )}
-                {swipeStep === 3 && (
-                  <>
-                    <button
-                      id="btn-swipe-back-to-directions"
-                      onClick={() => {
-                        setSwipeStep(2);
-                        celestialAudio.playOrbSelect();
-                      }}
-                      className="h-7.5 sm:h-8.5 px-2.5 sm:px-3 rounded-full bg-white hover:bg-stone-50 text-stone-900 text-[11px] sm:text-xs font-semibold flex items-center gap-1.5 border border-[#A2482B] shadow-xs cursor-pointer transition-all active:scale-95 shrink-0"
-                      title="Revenir aux Directions"
-                    >
-                      <ChevronLeft className="w-3.5 h-3.5 text-[#A2482B]" />
-                      <span>Directions</span>
-                    </button>
-                    <div className="h-7.5 sm:h-8.5 pl-2 sm:pl-2.5 pr-2.5 rounded-full bg-[#A2482B] text-white shadow-xs border border-[#8A3B22] flex items-center gap-1.5 text-[11px] sm:text-xs font-semibold shrink-0 max-w-[150px] sm:max-w-[210px]">
-                      <DimensionIcon 
-                        name={swipeSelectedSubcategory?.icone || currentSwipeDoor.icone} 
-                        size={13} 
-                        className="text-white shrink-0 drop-shadow-xs" 
-                      />
-                      <span className="truncate">{swipeSelectedSubcategory?.label}</span>
-                    </div>
-                  </>
-                )}
+            {heritageMode === 'matrix' || heritageMode === 'swipe' ? null : heritageMode === 'sun' && selectedSun ? (
+              <div className="flex items-center gap-1.5 shrink-0 min-w-0">
+                <button
+                  onClick={handleBackToMatrix}
+                  className="h-7 sm:h-7.5 px-2.5 rounded-full bg-white hover:bg-stone-50 text-stone-700 hover:text-[#A2482B] text-xs font-semibold flex items-center gap-1 border border-stone-200 shadow-2xs cursor-pointer transition-all active:scale-95 shrink-0"
+                  title="Revenir à la Matrice"
+                >
+                  <ChevronLeft className="w-3.5 h-3.5 text-[#A2482B]" />
+                  <span>Matrice</span>
+                </button>
               </div>
             ) : explorerLevel === 'dimensions' ? (
-              /* Niveau 0 : Les 8 Portes d'entrée */
+              /* Niveau 0 : Les 8 Portes d'entrée (mode Cercle) */
               <div className="flex items-center gap-1.5 h-7.5 sm:h-8.5 px-3 rounded-full bg-[#A2482B] text-white shadow-xs border border-[#8A3B22] text-[11px] sm:text-xs font-semibold shrink-0">
                 <Layers className="w-3.5 h-3.5" />
                 <span>8 Portes</span>
@@ -1034,7 +990,6 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
             ) : (
               /* Niveau direct : 8 sous-catégories avec choix au centre + 16 voix */
               <div className="flex items-center gap-1.5 shrink-0 min-w-0">
-                {/* Bouton retour aux Portes */}
                 <button
                   id="breadcrumb-dimensions-btn"
                   onClick={handleBackToDimensions}
@@ -1045,7 +1000,6 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
                   <span>Portes</span>
                 </button>
 
-                {/* Porte active */}
                 <div className="h-7.5 sm:h-8.5 px-2.5 rounded-full bg-stone-100 border border-stone-300 text-stone-800 text-[11px] sm:text-xs font-semibold flex items-center gap-1.5 shrink-0">
                   <DimensionIcon 
                     name={activeCategory === 'series' ? '16-series/_dimension' : `${activeCategory}/_dimension`} 
@@ -1055,7 +1009,6 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
                   <span className="truncate max-w-[85px] sm:max-w-[130px]">{activeCategoryConfig.shortLabel}</span>
                 </div>
 
-                {/* Sujet actif sélectionné (au centre) & Bouton Actualiser */}
                 <div className="h-7.5 sm:h-8.5 pl-2 sm:pl-2.5 pr-1 rounded-full bg-[#A2482B] text-white shadow-xs border border-[#8A3B22] flex items-center gap-1.5 text-[11px] sm:text-xs font-semibold shrink-0 max-w-[190px] sm:max-w-[300px]">
                   {activeCategory === 'series' && activeTopicItem?.photoUrl ? (
                     <img 
@@ -1085,7 +1038,6 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
                     <span className="truncate">{activeTopicItem?.title}</span>
                   </button>
 
-                  {/* Symbole discret pour actualiser les 16 voix */}
                   <button
                     id="btn-symbol-16-autres-voix"
                     onClick={handleActualiser}
@@ -1098,29 +1050,42 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
               </div>
             )}
 
-            {/* Bascule Vue Cercle / Vue Swipe (Identique au bouton Deck/Duo des duos) */}
+            {/* Sélecteur de mode sur Héritages : Matrice / Swipe */}
             {!hideModeToggle && !isLandingDemo && (
-              <button
-                id="btn-toggle-heritage-mode"
-                onClick={() => {
-                  setHeritageMode(prev => prev === 'circle' ? 'swipe' : 'circle');
-                  celestialAudio.playOrbSelect();
-                }}
-                className="flex items-center gap-1 h-7.5 sm:h-8.5 px-2.5 sm:px-3 rounded-full bg-white hover:bg-[#A2482B] border border-stone-200 hover:border-[#A2482B] text-[#1C1917] hover:text-white text-[11px] sm:text-xs font-semibold shadow-xs transition-all cursor-pointer active:scale-95 group/modetoggle shrink-0"
-                title={heritageMode === 'circle' ? 'Passer en vue Swipe (Cartes)' : 'Passer en vue Cercle (Exploration céleste)'}
-              >
-                {heritageMode === 'circle' ? (
-                  <>
-                    <Layers className="w-3.5 h-3.5 text-[#A2482B] group-hover/modetoggle:text-white transition-colors" />
-                    <span className="hidden sm:inline">Swipe</span>
-                  </>
-                ) : (
-                  <>
-                    <Compass className="w-3.5 h-3.5 text-[#A2482B] group-hover/modetoggle:text-white transition-colors" />
-                    <span className="hidden sm:inline">Cercle</span>
-                  </>
-                )}
-              </button>
+              <div className="flex items-center bg-stone-100 p-0.5 rounded-full border border-stone-200/90 shrink-0">
+                <button
+                  id="btn-toggle-mode-matrix"
+                  onClick={() => {
+                    setHeritageMode('matrix');
+                    celestialAudio.playOrbSelect();
+                  }}
+                  className={`flex items-center gap-1 h-6 sm:h-6.5 px-2.5 rounded-full text-[10px] sm:text-[10.5px] font-semibold transition-all cursor-pointer ${
+                    heritageMode === 'matrix'
+                      ? 'bg-[#A2482B] text-white shadow-2xs'
+                      : 'text-stone-600 hover:text-stone-900'
+                  }`}
+                  title="Matrice 16×16"
+                >
+                  <Grid className="w-2.5 h-2.5" />
+                  <span>Matrice</span>
+                </button>
+                <button
+                  id="btn-toggle-mode-swipe"
+                  onClick={() => {
+                    setHeritageMode('swipe');
+                    celestialAudio.playOrbSelect();
+                  }}
+                  className={`flex items-center gap-1 h-6 sm:h-6.5 px-2.5 rounded-full text-[10px] sm:text-[10.5px] font-semibold transition-all cursor-pointer ${
+                    heritageMode === 'swipe'
+                      ? 'bg-[#A2482B] text-white shadow-2xs'
+                      : 'text-stone-600 hover:text-stone-900'
+                  }`}
+                  title="Cartes Swipe"
+                >
+                  <Layers className="w-2.5 h-2.5" />
+                  <span>Swipe</span>
+                </button>
+              </div>
             )}
           </header>
         </div>
@@ -1149,8 +1114,42 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
           </p>
         </div>
       )}
-
-      {heritageMode === 'circle' ? (
+      {heritageMode === 'matrix' ? (
+        <div className="flex-1 w-full h-full relative overflow-hidden flex items-center justify-center">
+          <LivingMatrixWall
+            grid={matrixGrid}
+            allProfiles={allMatrixProfiles}
+            highlightedPersonId={lastVisitedProfileId}
+            onSelectPerson={handleSelectPersonFromMatrix}
+          />
+        </div>
+      ) : heritageMode === 'sun' && selectedSun ? (
+        <SunCrownView
+          sun={selectedSun}
+          allProfiles={allMatrixProfiles}
+          matrixGrid={matrixGrid}
+          onSelectNeighbor={handleSelectNeighborAsSun}
+          onOpenStoryModal={handleOpenSunStoryModal}
+          onOpenDuoModal={(s, cp) => setDuoModalPair({ sun: s, counterpoint: cp })}
+          onBackToMatrix={handleBackToMatrix}
+          onBackToPreviousSun={() => {
+            if (sunBreadcrumbs.length > 1) {
+              const next = [...sunBreadcrumbs];
+              next.pop();
+              const prev = next[next.length - 1];
+              setSunBreadcrumbs(next);
+              setSelectedSun(prev);
+            } else {
+              handleBackToMatrix();
+            }
+          }}
+          historyBreadcrumbs={sunBreadcrumbs}
+          onSelectBreadcrumb={(person) => {
+            setSelectedSun(person);
+            setLastVisitedProfileId(person.id);
+          }}
+        />
+      ) : heritageMode === 'circle' ? (
         <>
           {/* 2. SLIDER DE ZOOM VERTICAL LATÉRAL (DESKTOP) & CONTRÔLE DISCRET (MOBILE) */}
           <div className="hidden sm:block absolute right-4 top-1/2 -translate-y-1/2 z-30 pointer-events-auto">
@@ -1901,7 +1900,20 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
     />
   )}
 
-      {/* 4. MODALE CARTE VIDÉO 9:16 DÉTAILLÉE DU PROTAGONISTE */}
+      {/* 4. MODALE FACE-À-FACE DUO (CONTREPOINT) */}
+      {duoModalPair && (
+        <DuoFaceToFaceModal
+          sun={duoModalPair.sun}
+          counterpoint={duoModalPair.counterpoint}
+          onClose={() => setDuoModalPair(null)}
+          onSelectPerson={(p) => {
+            setDuoModalPair(null);
+            handleSelectNeighborAsSun(p);
+          }}
+        />
+      )}
+
+      {/* 5. MODALE CARTE VIDÉO 9:16 DÉTAILLÉE DU PROTAGONISTE */}
       {modalPerson && (
         <div 
           id="person-detail-modal-backdrop"
@@ -2181,6 +2193,15 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
           });
         }}
       />
+
+      {/* Carte Vidéo Histoire directe de la Matrice (Exacte à la capture utilisateur) */}
+      {selectedMatrixVideoPerson && (
+        <MatrixStoryVideoModal
+          person={selectedMatrixVideoPerson}
+          onClose={() => setSelectedMatrixVideoPerson(null)}
+          onNavigate={onNavigate}
+        />
+      )}
     </div>
   );
 };
