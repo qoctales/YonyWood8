@@ -240,9 +240,12 @@ export const MessagingScreen: React.FC<MessagingScreenProps> = ({ onNavigate }) 
           >
             <ChevronLeft className="w-4 h-4 stroke-[2.2]" />
           </button>
-          <h1 className="font-editorial text-2xl sm:text-3xl font-bold text-[#1C1917] leading-none">
-            Messagerie
-          </h1>
+          <div className="relative flex items-center h-full">
+            <h1 className="font-editorial text-2xl sm:text-3xl font-bold text-[#1C1917] leading-none">
+              Messagerie
+            </h1>
+            <div className="absolute left-0 -bottom-2 w-8 h-0.5 bg-[#A2482B] rounded-full" />
+          </div>
         </div>
       </div>
 

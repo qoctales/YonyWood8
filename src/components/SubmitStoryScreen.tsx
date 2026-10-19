@@ -500,10 +500,10 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
   }
 
   return (
-    <div className={`max-w-3xl mx-auto px-3 sm:px-6 py-2.5 sm:py-3.5 pb-18 sm:pb-20 pt-safe pb-safe overflow-x-hidden ${step === 3 && chosenFlow === 'UPLOAD_DIRECT' ? 'min-h-[calc(100dvh-56px)] flex flex-col' : 'h-[calc(100dvh-56px)] max-h-[calc(100dvh-56px)] overflow-hidden flex flex-col justify-between'} text-[#1C1917]`}>
+    <div className={`max-w-3xl mx-auto px-3 sm:px-6 py-2 pb-24 sm:pb-28 pt-safe pb-safe overflow-x-hidden ${step === 3 && chosenFlow === 'UPLOAD_DIRECT' ? 'min-h-[calc(100dvh-56px)] flex flex-col' : 'h-[calc(100dvh-56px)] max-h-[calc(100dvh-56px)] overflow-hidden flex flex-col justify-between'} text-[#1C1917]`}>
       
       {/* En-tête dynamique du Studio : Choix progressifs validés (Porte, Sujet, Format) avec bouton Modifier */}
-      <div className="flex items-center justify-between h-8 sm:h-9 shrink-0 gap-2 mb-2 sm:mb-2.5">
+      <div className="flex items-center justify-between h-8 sm:h-9 shrink-0 gap-2 mb-1.5 sm:mb-2">
         <div className="flex items-center gap-1.5 sm:gap-2.5 min-w-0 flex-1 h-full">
           {step === 1 ? (
             /* Étape 1 : En-tête épuré et sobre - Juste Studio strictement calibré sur Coproduction */
@@ -669,7 +669,7 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
               onMouseDown={onMouseDown}
               onMouseMove={onMouseMove}
               onMouseUp={onMouseUp}
-              className="aspect-[9/16] w-auto h-[min(490px,calc(100dvh-210px))] sm:h-[min(540px,calc(100dvh-190px))] lg:h-[min(570px,calc(100dvh-180px))] max-w-[calc(100vw-28px)] mx-auto transition-transform duration-150 ease-out select-none cursor-grab active:cursor-grabbing flex justify-center shrink-0"
+              className="aspect-[9/16] w-auto h-[min(480px,calc(100dvh-230px))] sm:h-[min(520px,calc(100dvh-210px))] lg:h-[min(550px,calc(100dvh-200px))] max-w-[calc(100vw-28px)] mx-auto transition-transform duration-150 ease-out select-none cursor-grab active:cursor-grabbing flex justify-center shrink-0"
               style={{ transform: `translateX(${swipeOffset}px)` }}
             >
               <div 

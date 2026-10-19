@@ -61,7 +61,7 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
     },
     {
       id: 'duocumentaires',
-      label: 'Duocumentaires',
+      label: 'Duos',
       icon: DuocumentairesTvIcon,
       isActive: isDuocumentairesActive,
       onClick: () => onNavigate({ type: 'duo_feed' }),
@@ -106,7 +106,7 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
       <nav 
         id="yonywood-main-menu"
         aria-label="Navigation principale"
-        className="pointer-events-auto max-w-md sm:max-w-lg mx-auto bg-white/95 backdrop-blur-xl border border-stone-200/90 rounded-full shadow-2xl shadow-stone-900/10 px-2 sm:px-4 py-1.5 flex items-center justify-between gap-1 sm:gap-2"
+        className="pointer-events-auto max-w-md sm:max-w-lg mx-auto bg-white/95 backdrop-blur-xl border border-stone-200/90 rounded-full shadow-2xl shadow-stone-900/10 px-1.5 sm:px-4 py-1 sm:py-1.5 flex items-center justify-between gap-0.5 sm:gap-2"
       >
         {menuItems.map((item) => {
           const Icon = item.icon;
@@ -117,7 +117,7 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
               onClick={item.onClick}
               id={item.screenId}
               title={item.label}
-              className={`relative flex-1 flex flex-col items-center justify-center px-1 sm:px-2 py-1 rounded-full transition-colors duration-200 group cursor-pointer ${
+              className={`relative flex-1 flex flex-col items-center justify-center px-0.5 sm:px-2 py-0.5 sm:py-1 rounded-full transition-colors duration-200 group cursor-pointer ${
                 item.isActive
                   ? 'text-stone-900'
                   : 'text-stone-500 hover:text-stone-800'
@@ -125,7 +125,7 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
             >
               {/* Capsule changeante uniquement sur l'icône en Terre Cuite signature (#A2482B) */}
               <div 
-                className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-all duration-200 ${
+                className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-all duration-200 ${
                   item.isActive 
                     ? 'bg-[#A2482B] text-white shadow-sm' 
                     : 'bg-transparent text-stone-600 group-hover:bg-stone-100/80'

@@ -50,8 +50,18 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigate }) => {
   });
 
   return (
-    <div className="min-h-screen text-[#1C1917] pb-36 pt-6 px-3 sm:px-6 lg:px-8 max-w-6xl mx-auto space-y-8">
+    <div className="min-h-screen text-[#1C1917] pb-36 pt-3 px-3 sm:px-6 lg:px-8 max-w-6xl mx-auto space-y-6">
       
+      {/* En-tête standardisé Héritages avec trait terracotta */}
+      <div className="flex items-center justify-between h-8 sm:h-9 shrink-0 gap-2">
+        <div className="relative flex items-center h-full shrink-0">
+          <h1 className="font-editorial text-base sm:text-[18px] font-bold text-[#1C1917] tracking-tight leading-none">
+            Héritages
+          </h1>
+          <div className="absolute left-0 -bottom-2 w-8 h-0.5 bg-[#A2482B] rounded-full" />
+        </div>
+      </div>
+
       {/* 1. HERO HEADER: EXPLORER YONYWOOD */}
       <header className="bg-[#FFFFFF] rounded-3xl border border-[#E7E5E4] p-6 sm:p-8 shadow-xs space-y-6">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">

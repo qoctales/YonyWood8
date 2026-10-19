@@ -103,7 +103,7 @@ export const DemoDuocumentairesSection: React.FC = () => {
       {/* En-tête Duocumentaires : titre à gauche et nom de la série centré */}
       <div className="w-full flex flex-col sm:relative sm:flex-row sm:items-center sm:justify-center mb-4 sm:mb-6 px-3 sm:px-6 gap-2 sm:gap-0 min-h-[40px]">
         <h3 className="font-editorial text-2xl sm:text-3xl font-bold text-stone-900 sm:absolute sm:left-3 md:sm:left-6">
-          Duocumentaires
+          Duos
         </h3>
 
         {/* Pilule avec le nom de la série CENTRÉ */}

@@ -361,9 +361,12 @@ export const PortfolioScreen: React.FC<PortfolioScreenProps> = ({
             <ChevronLeft className="w-4 h-4 stroke-[2.2]" />
           </button>
 
-          <h1 className="font-editorial text-xl sm:text-2xl font-bold text-[#1C1917] leading-none">
-            {currentTab === 'shares' ? 'Mes parts' : 'Historique'}
-          </h1>
+          <div className="relative flex items-center h-full">
+            <h1 className="font-editorial text-xl sm:text-2xl font-bold text-[#1C1917] leading-none">
+              {currentTab === 'shares' ? 'Mes parts' : 'Historique'}
+            </h1>
+            <div className="absolute left-0 -bottom-2 w-8 h-0.5 bg-[#A2482B] rounded-full" />
+          </div>
         </div>
 
         {/* Côté droit : Navigation entre Parts et Historique */}

@@ -502,7 +502,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
   const [userFullName, setUserFullName] = useState<string>(() => {
     if (targetProtagonist) return targetProtagonist.name;
     if (currentUser) return currentUser.name;
-    return 'Pascal Cossi';
+    return 'Pascal Cossy';
   });
   const [userRole, setUserRole] = useState<string>(() => {
     if (targetProtagonist) return targetProtagonist.role;
@@ -1607,47 +1607,18 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
 
 
   return (
-    <div className="max-w-3xl mx-auto px-3 sm:px-6 py-2 sm:py-4 pb-20 sm:pb-24 pt-safe pb-safe h-[100dvh] max-h-[100dvh] overflow-hidden flex flex-col justify-between text-[#1C1917]">
+    <div className="max-w-3xl mx-auto px-3 sm:px-6 py-2 pb-24 sm:pb-28 pt-safe pb-safe h-[calc(100dvh-56px)] max-h-[calc(100dvh-56px)] overflow-hidden flex flex-col justify-between text-[#1C1917]">
       
       {/* ========================================================================= */}
-      {/* 1. EN-TÊTE D'IDENTITÉ OU EN-TÊTE LIGNÉE ALIGNÉ SUR MESSAGERIE & MES PARTS */}
+      {/* 1. EN-TÊTE HARMONISÉ EXACTEMENT AU MÊME FORMAT QUE TOUTES LES AUTRES PAGES */}
       {/* ========================================================================= */}
       {showLineageFrise ? (
-        <div className="pb-2 pt-1 mb-2 flex items-center justify-between shrink-0">
-          <div className="flex items-center gap-2.5">
-            <button
-              onClick={() => {
-                if (returnToProtagonistId) {
-                  onNavigate({
-                    type: 'protagonist_profile',
-                    protagonistId: returnToProtagonistId,
-                    returnToDuoId,
-                    returnToDuoIndex,
-                    returnToDocId,
-                    initialShowLineage: true
-                  });
-                } else if (returnToDuoId) {
-                  onNavigate({
-                    type: 'duo_feed',
-                    currentDuoIndex: returnToDuoIndex ?? 0,
-                    selectedDocId: returnToDocId
-                  });
-                } else {
-                  setShowLineageFrise(false);
-                }
-              }}
-              className="w-8 h-8 rounded-xl bg-white hover:bg-stone-100 border border-stone-200 text-[#1C1917] flex items-center justify-center transition-all cursor-pointer shadow-xs active:scale-95 shrink-0"
-              title="Retour au profil"
-              id="btn-back-from-lineage"
-            >
-              <ChevronLeft className="w-4 h-4 stroke-[2.2]" />
-            </button>
-            <div className="flex flex-col items-start">
-              <h2 className="font-editorial text-lg sm:text-xl font-bold text-stone-900 tracking-wide leading-tight">
-                Lignée de {profileDisplayName}
-              </h2>
-              <div className="w-8 h-0.5 bg-[#A2482B] mt-0.5 rounded-full" />
-            </div>
+        <div className="pb-1.5 pt-1 mb-1.5 flex items-center justify-between shrink-0 h-8 sm:h-9">
+          <div className="relative flex items-center h-full shrink-0">
+            <h1 className="font-editorial text-base sm:text-[18px] font-bold text-[#1C1917] tracking-tight leading-none">
+              Lignée de {profileDisplayName}
+            </h1>
+            <div className="absolute left-0 -bottom-2 w-8 h-0.5 bg-[#A2482B] rounded-full" />
           </div>
 
           <button
@@ -1658,61 +1629,16 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
           </button>
         </div>
       ) : (
-        <div className="pb-1 sm:pb-2 pt-1 shrink-0 flex items-center justify-between gap-2">
-          {/* GAUCHE : Bouton retour conditionnel + Vignette carrée arrondie + Prénom avec trait signature */}
-          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-            {/* Bouton retour conditionnel */}
-            {(returnToProtagonistId || returnToDuoId || returnToMarketplace || !isOwner) && (
-              <button
-                onClick={() => {
-                  if (returnToProtagonistId) {
-                    onNavigate({
-                      type: 'protagonist_profile',
-                      protagonistId: returnToProtagonistId,
-                      returnToDuoId,
-                      returnToDuoIndex,
-                      returnToDocId,
-                      initialShowLineage: true
-                    });
-                  } else if (returnToDuoId) {
-                    onNavigate({
-                      type: 'duo_feed',
-                      currentDuoIndex: returnToDuoIndex ?? 0,
-                      selectedDocId: returnToDocId
-                    });
-                  } else {
-                    onNavigate({ type: 'home' });
-                  }
-                }}
-                className="w-8 h-8 rounded-xl bg-white hover:bg-stone-100 border border-stone-200 text-[#1C1917] flex items-center justify-center transition-all cursor-pointer shadow-xs active:scale-95 shrink-0"
-                title="Retour"
-                id="btn-profile-back"
-              >
-                <ChevronLeft className="w-4 h-4 stroke-[2.2]" />
-              </button>
-            )}
-
-            {/* Vignette carrée arrondie faisant écho aux logos et cartes */}
-            <div className="relative shrink-0">
-              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl p-0.5 border border-[#C89B3C]/80 shadow-xs overflow-hidden bg-white">
-                <img
-                  src={userPhoto}
-                  alt={profileDisplayName}
-                  className="w-full h-full object-cover rounded-[9px] sm:rounded-[13px]"
-                />
-              </div>
-            </div>
-
-            {/* Prénom de la personne (au lieu du mot "Profil" trop gros) avec tiret rouge signature */}
-            <div className="flex flex-col items-start min-w-0">
-              <h2 className="font-editorial text-lg sm:text-xl font-bold text-stone-900 tracking-wide truncate leading-tight">
-                {profileDisplayName}
-              </h2>
-              <div className="w-8 h-0.5 bg-[#A2482B] mt-0.5 rounded-full" />
-            </div>
+        <div className="flex items-center justify-between h-8 sm:h-9 shrink-0 gap-2 mb-1.5 sm:mb-2">
+          {/* GAUCHE : Titre standardisé "Profil" avec petit trait terracotta identique à Studio, Entreprises, Productions, Duos */}
+          <div className="relative flex items-center h-full shrink-0">
+            <h1 className="font-editorial text-base sm:text-[18px] font-bold text-[#1C1917] tracking-tight leading-none">
+              Profil
+            </h1>
+            <div className="absolute left-0 -bottom-2 w-8 h-0.5 bg-[#A2482B] rounded-full" />
           </div>
 
-          {/* DROITE : Boutons d'action adaptés (Visiteur : Messagerie + Partage | Propriétaire : Paramètres) */}
+          {/* DROITE : Boutons d'action adaptés (Paramètres & Partager) */}
           <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             {/* Bouton Retour au Marché (si navigation contextuelle depuis le marché) */}
             {returnToMarketplace && (
@@ -1878,7 +1804,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                 if ((e.target as HTMLElement).closest('button, a, input, textarea, select')) return;
                 toggleVideoPlayback();
               }}
-              className="h-[min(490px,calc(100dvh-210px))] sm:h-[min(540px,calc(100dvh-190px))] lg:h-[min(570px,calc(100dvh-180px))] aspect-[9/16] w-auto mx-auto rounded-3xl overflow-hidden bg-stone-950 text-white shadow-2xl border border-stone-200/40 relative flex flex-col justify-between p-4 sm:p-5 cursor-pointer group select-none shrink-0"
+              className="h-[min(480px,calc(100dvh-230px))] sm:h-[min(520px,calc(100dvh-210px))] lg:h-[min(550px,calc(100dvh-200px))] aspect-[9/16] w-auto mx-auto rounded-3xl overflow-hidden bg-stone-950 text-white shadow-2xl border border-stone-200/40 relative flex flex-col justify-between p-3.5 sm:p-4.5 cursor-pointer group select-none shrink-0"
               style={{ transform: `translate(${swipeOffsetX}px, ${swipeOffsetY}px)` }}
             >
             {/* ================================================================= */}

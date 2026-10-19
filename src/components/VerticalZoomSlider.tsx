@@ -59,7 +59,7 @@ export const VerticalZoomSlider: React.FC<VerticalZoomSliderProps> = ({
 
   return (
     <div 
-      className="fixed right-3 sm:right-6 top-1/2 -translate-y-1/2 z-30 flex flex-col items-center bg-white/95 backdrop-blur-md p-1.5 sm:p-2 rounded-full border border-stone-200 shadow-lg touch-none select-none transition-all duration-200 hover:border-[#A2482B]"
+      className="hidden sm:flex fixed right-3 sm:right-6 top-1/2 -translate-y-1/2 z-30 flex-col items-center bg-white/95 backdrop-blur-md p-1.5 sm:p-2 rounded-full border border-stone-200 shadow-lg touch-none select-none transition-all duration-200 hover:border-[#A2482B]"
       id="vertical-zoom-slider"
     >
       {/* Bouton Zoom In */}

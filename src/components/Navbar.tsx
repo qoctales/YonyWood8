@@ -39,7 +39,7 @@ const getHeaderTagline = (screen: ViewScreen): TaglineInfo => {
     case 'enterprise':
       return {
         title: "Un espace de visibilité et de promotion",
-        subtitle: "Un storytelling dynamique de l'entreprise"
+        subtitle: "Montrer l'entreprise de l'intérieur grâce à un storytelling collaboratif"
       };
     case 'submit_story':
     case 'request_videographer':
@@ -84,43 +84,45 @@ export const Navbar: React.FC<NavbarProps> = ({ currentScreen, onNavigate, onOpe
 
   return (
     <header className="sticky top-0 z-40 w-full backdrop-blur-md bg-white/95 border-b border-stone-200 shadow-2xs">
-      <div className="max-w-6xl mx-auto px-3 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-2 relative">
+      <div className="w-full px-3 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-2 relative">
         
         {/* Gauche : Logo officiel YonyWood */}
         <div 
           onClick={() => onNavigate({ type: 'duo_feed' })}
-          className="flex items-center cursor-pointer group select-none py-1 shrink-0 z-10"
+          className="flex items-center cursor-pointer group select-none py-1 shrink-0 z-20"
           id="nav-logo"
           title="YonyWood — Accueil"
         >
           <img 
             src="/yonywood-logo-gras.svg" 
             alt="YonyWood" 
-            className="h-10 sm:h-12 w-auto object-contain select-none group-hover:opacity-90 transition-all"
+            className="h-8 sm:h-10 md:h-12 w-auto object-contain select-none group-hover:opacity-90 transition-all"
           />
         </div>
 
-        {/* Centre : Titre et tagline éditoriaux dynamiques sécurisés sur desktop uniquement pour éviter tout conflit avec les boutons */}
-        <div className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center text-center select-none pointer-events-none px-2 max-w-[280px] xl:max-w-[360px] z-0">
-          <span className="font-editorial text-xs font-bold text-stone-900 tracking-wide truncate max-w-full">
-            {tagline.title}
-          </span>
-          <span className="text-[10px] text-stone-500 font-medium truncate max-w-full">
-            {tagline.subtitle}
-          </span>
+        {/* Centre : Titre et tagline éditoriaux dynamiques strictement centrés sur grand écran (masqués sur mobile pour une navigation fluide et aérée) */}
+        <div className="hidden md:flex absolute inset-0 items-center justify-center text-center select-none pointer-events-none z-10 px-28 lg:px-36">
+          <div className="flex flex-col items-center justify-center max-w-lg">
+            <span className="font-editorial text-xs sm:text-[13px] font-bold text-stone-900 tracking-tight leading-snug truncate max-w-full">
+              {tagline.title}
+            </span>
+            <span className="text-[10px] sm:text-[11px] text-stone-500 font-medium leading-snug truncate max-w-full">
+              {tagline.subtitle}
+            </span>
+          </div>
         </div>
 
         {/* Droite : Bouton d'action phare Co-construire Yonywood */}
-        <div className="flex items-center gap-2 sm:gap-2.5 z-10">
+        <div className="flex items-center gap-1.5 sm:gap-2.5 z-20 shrink-0">
           
           {/* Bouton Co-construire Yonywood */}
           <button
             onClick={() => onNavigate({ type: 'participate' })}
             id="nav-participate-btn"
-            className={`px-3.5 sm:px-4.5 py-1.5 sm:py-2 rounded-full font-bold text-xs sm:text-sm shadow-xs transition-all cursor-pointer flex items-center justify-center active:scale-95 ${
+            className={`px-2.5 sm:px-4.5 py-1.5 sm:py-2 rounded-full font-bold text-[11px] sm:text-xs md:text-sm shadow-xs transition-all cursor-pointer flex items-center justify-center whitespace-nowrap active:scale-95 ${
               currentScreen.type === 'participate'
                 ? 'bg-[#8A3B22] text-white ring-2 ring-[#A2482B]/40 shadow-sm'
-                : 'bg-[#A2482B] hover:bg-[#8A3B22] text-white hover:scale-105 hover:shadow-sm'
+                : 'bg-[#A2482B] hover:bg-[#8A3B22] text-white hover:scale-102 hover:shadow-sm'
             }`}
             title="Co-construire Yonywood : Devenir égérie, coproduction, entreprises"
           >
@@ -128,18 +130,18 @@ export const Navbar: React.FC<NavbarProps> = ({ currentScreen, onNavigate, onOpe
           </button>
 
           {user && (
-            <div className="flex items-center gap-1.5 sm:gap-2">
+            <div className="flex items-center gap-1 sm:gap-2">
               <button
                 onClick={() => onNavigate({ type: 'profile' })}
-                className="px-2.5 sm:px-3 py-1.5 rounded-full border border-stone-200 hover:border-stone-300 bg-stone-50 hover:bg-stone-100 text-stone-800 text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
+                className="px-2 sm:px-3 py-1.5 rounded-full border border-stone-200 hover:border-stone-300 bg-stone-50 hover:bg-stone-100 text-stone-800 text-[11px] sm:text-xs font-semibold flex items-center gap-1 transition-colors cursor-pointer"
                 title="Accéder à mon profil"
               >
                 <User className="w-3.5 h-3.5 text-[#A2482B]" />
-                <span className="max-w-[80px] sm:max-w-[100px] truncate">{user.firstName || user.name}</span>
+                <span className="max-w-[60px] sm:max-w-[100px] truncate">{user.firstName || user.name}</span>
               </button>
               <button
                 onClick={logout}
-                className="p-1.5 rounded-full text-stone-400 hover:text-stone-700 hover:bg-stone-100 transition-colors cursor-pointer"
+                className="p-1 sm:p-1.5 rounded-full text-stone-400 hover:text-stone-700 hover:bg-stone-100 transition-colors cursor-pointer"
                 title="Se déconnecter"
               >
                 <LogOut className="w-3.5 h-3.5" />

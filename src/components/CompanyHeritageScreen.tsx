@@ -393,14 +393,14 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
-      className="w-full max-w-3xl mx-auto px-3 sm:px-6 py-2.5 sm:py-3.5 pb-18 sm:pb-20 pt-safe pb-safe h-[calc(100dvh-56px)] max-h-[calc(100dvh-56px)] overflow-hidden flex flex-col justify-between text-[#1C1917] select-none"
+      className="w-full max-w-3xl mx-auto px-3 sm:px-6 py-2 pb-24 sm:pb-28 pt-safe pb-safe h-[calc(100dvh-56px)] max-h-[calc(100dvh-56px)] overflow-hidden flex flex-col justify-between text-[#1C1917] select-none"
     >
       
       {/* =========================================================== */}
       {/* EN-TÊTE : Titre standardisé ou Barre retour Espace Société   */}
       {/* =========================================================== */}
       {selectedCompanyForSpace ? (
-        <div className="flex items-center justify-between h-8 sm:h-9 shrink-0 gap-2 mb-2 sm:mb-2.5">
+        <div className="flex items-center justify-between h-8 sm:h-9 shrink-0 gap-2 mb-1.5 sm:mb-2">
           <button
             onClick={() => {
               setSelectedCompanyForSpace(null);
@@ -420,7 +420,7 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
           </div>
         </div>
       ) : (
-        <div className="flex items-center justify-between h-8 sm:h-9 shrink-0 gap-2 mb-2 sm:mb-2.5">
+        <div className="flex items-center justify-between h-8 sm:h-9 shrink-0 gap-2 mb-1.5 sm:mb-2">
           <div className="relative flex items-center h-full shrink-0">
             <h1 className="font-editorial text-base sm:text-[18px] font-bold text-[#1C1917] tracking-tight leading-none">
               Entreprises
@@ -431,7 +431,7 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
       )}
 
       {/* =========================================================== */}
-      {/* ZONE CENTRALE : CARTE VIDÉO 9:16                            */}
+      {/* ZONE CENTRALE : CARTE VIDÉO 9:16 CALIBRÉE SUR LE STUDIO     */}
       {/* =========================================================== */}
       <div className="relative w-full flex-1 flex items-center justify-center min-h-0 my-auto">
         
@@ -449,12 +449,12 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
               <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
 
-            {/* CARTE VIDÉO ENTREPRISE 9:16 */}
+            {/* CARTE VIDÉO ENTREPRISE 9:16 (Même gabarit que Studio) */}
             <div 
               onClick={() => {
                 setIsPlaying(!isPlaying);
               }}
-              className="h-[min(490px,calc(100dvh-210px))] sm:h-[min(540px,calc(100dvh-190px))] lg:h-[min(570px,calc(100dvh-180px))] aspect-[9/16] w-auto mx-auto rounded-3xl overflow-hidden bg-stone-950 text-white shadow-2xl border border-stone-200/40 relative flex flex-col justify-between p-4 sm:p-5 cursor-pointer group select-none"
+              className="h-[min(480px,calc(100dvh-230px))] sm:h-[min(520px,calc(100dvh-210px))] lg:h-[min(550px,calc(100dvh-200px))] aspect-[9/16] w-auto mx-auto rounded-3xl overflow-hidden bg-stone-950 text-white shadow-2xl border border-stone-200/40 relative flex flex-col justify-between p-3.5 sm:p-4.5 cursor-pointer group select-none shrink-0"
             >
               {/* Media de fond : Vidéo ou Image */}
               {isPlaying ? (
@@ -477,39 +477,22 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/45 pointer-events-none" />
 
               {/* =========================================================== */}
-              {/* HAUT DE CARTE : DOMAINE EN TITRE & LECTEUR EN HAUT À DROITE */}
-              {/* Le déclencheur vidéo est TOUJOURS présent en haut à droite  */}
+              {/* HAUT DE CARTE : DOMAINE / CATÉGORIE EN HAUT EN TITRE        */}
               {/* =========================================================== */}
-              <div className="absolute top-3.5 left-3.5 sm:top-4 sm:left-4 z-20 max-w-[calc(100%-60px)] pointer-events-auto">
-                <span className="px-3.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-[11px] sm:text-xs font-bold text-white tracking-wider uppercase drop-shadow-sm truncate block">
+              <div className="relative z-20 pointer-events-auto">
+                <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-[10.5px] sm:text-xs font-bold text-white tracking-wider uppercase drop-shadow-sm truncate inline-block">
                   {currentCompany.category}
                 </span>
               </div>
 
-              {/* Déclencheur vidéo standardisé, permanent et inamovible en haut à droite (format carré arrondi) */}
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setIsPlaying(prev => !prev);
-                }}
-                className="absolute top-3.5 right-3.5 sm:top-4 sm:right-4 z-30 w-8.5 h-8.5 sm:w-9.5 sm:h-9.5 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center text-white transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0 pointer-events-auto"
-                title={isPlaying ? "Mettre en pause" : `Regarder la vidéo de ${currentCompany.companyName}`}
-              >
-                {isPlaying ? (
-                  <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
-                ) : (
-                  <TvPlayerIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white transition-transform" strokeWidth={1.6} />
-                )}
-              </button>
-
               {/* =========================================================== */}
-              {/* FLANC DROIT : SEULEMENT 2 BOUTONS (Explorer & Partager)     */}
+              {/* FLANC DROIT : EXPLORER L'UNIVERS & PARTAGER                 */}
               {/* =========================================================== */}
               <div 
                 onClick={(e) => e.stopPropagation()}
                 className="absolute right-3 sm:right-3.5 top-1/2 -translate-y-1/2 z-20 flex flex-col gap-3 pointer-events-auto"
               >
-                {/* 1. Explorer l'espace de la société */}
+                {/* 1. Découvrir l'univers de l'entreprise */}
                 <button
                   onClick={() => {
                     setSelectedCompanyForSpace(currentCompany);
@@ -517,7 +500,7 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
                     setIsStakeholderPlaying(false);
                   }}
                   className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-black/45 hover:bg-[#A2482B] border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all cursor-pointer shadow-md hover:scale-105 active:scale-95"
-                  title={`Explorer l'espace et les témoignages de ${currentCompany.companyName}`}
+                  title={`Découvrir l'univers et les témoignages de ${currentCompany.companyName}`}
                 >
                   <Compass className="w-4 h-4 text-white" />
                 </button>
@@ -541,24 +524,49 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
               </div>
 
               {/* =========================================================== */}
-              {/* BAS DE LA CARTE : JUSTE LE NOM DE L'ENTREPRISE              */}
-              {/* et icône muet en bas à droite                               */}
+              {/* BAS DE LA CARTE : NOM DE L'ENTREPRISE À GAUCHE             */}
+              {/* ET LECTEUR VIDÉO EN BAS À DROITE EN FACE DU NOM             */}
               {/* =========================================================== */}
               <div className="relative z-10 pt-2 mt-auto flex items-end justify-between gap-2 pointer-events-auto">
-                <h4 className="font-editorial text-[15px] sm:text-base font-bold text-white drop-shadow-md tracking-wider">
-                  {currentCompany.companyName}
-                </h4>
+                <div className="space-y-0.5 min-w-0 pr-2">
+                  <h4 className="font-editorial text-base sm:text-lg font-bold text-white drop-shadow-md tracking-wider leading-tight">
+                    {currentCompany.companyName}
+                  </h4>
+                  <span className="text-[10px] sm:text-[11px] text-white/80 font-medium block truncate">
+                    {currentCompany.tagline}
+                  </span>
+                </div>
 
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsMuted(prev => !prev);
-                  }}
-                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center cursor-pointer transition-all shadow-md hover:scale-105 active:scale-95 shrink-0"
-                  title={isMuted ? "Activer le son" : "Couper le son"}
-                >
-                  {isMuted ? <VolumeX className="w-3.5 h-3.5 text-white" /> : <Volume2 className="w-3.5 h-3.5 text-white" />}
-                </button>
+                <div className="flex items-center gap-1.5 shrink-0">
+                  {isPlaying && (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setIsMuted(prev => !prev);
+                      }}
+                      className="w-8 h-8 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 text-white flex items-center justify-center cursor-pointer transition-all shadow-md hover:scale-105 active:scale-95"
+                      title={isMuted ? "Activer le son" : "Couper le son"}
+                    >
+                      {isMuted ? <VolumeX className="w-3.5 h-3.5 text-white" /> : <Volume2 className="w-3.5 h-3.5 text-white" />}
+                    </button>
+                  )}
+
+                  {/* Lecteur vidéo en bas à droite en face du nom */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsPlaying(prev => !prev);
+                    }}
+                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/25 hover:border-[#A2482B] flex items-center justify-center text-white transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0"
+                    title={isPlaying ? "Mettre en pause" : `Regarder la vidéo de ${currentCompany.companyName}`}
+                  >
+                    {isPlaying ? (
+                      <Pause className="w-4 h-4 fill-white text-white" />
+                    ) : (
+                      <TvPlayerIcon className="w-5 h-5 text-white transition-transform" strokeWidth={1.6} />
+                    )}
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -587,12 +595,12 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
               <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
 
-            {/* CARTE VIDÉO DU TÉMOIN 9:16 */}
+            {/* CARTE VIDÉO DU TÉMOIN 9:16 (Même gabarit que Studio) */}
             <div 
               onClick={() => {
                 setIsStakeholderPlaying(!isStakeholderPlaying);
               }}
-              className="h-[min(490px,calc(100dvh-210px))] sm:h-[min(540px,calc(100dvh-190px))] lg:h-[min(570px,calc(100dvh-180px))] aspect-[9/16] w-auto mx-auto rounded-3xl overflow-hidden bg-stone-950 text-white shadow-2xl border border-stone-200/40 relative flex flex-col justify-between p-4 sm:p-5 cursor-pointer group select-none"
+              className="h-[min(480px,calc(100dvh-230px))] sm:h-[min(520px,calc(100dvh-210px))] lg:h-[min(550px,calc(100dvh-200px))] aspect-[9/16] w-auto mx-auto rounded-3xl overflow-hidden bg-stone-950 text-white shadow-2xl border border-stone-200/40 relative flex flex-col justify-between p-3.5 sm:p-4.5 cursor-pointer group select-none shrink-0"
             >
               {/* Média de fond : Vidéo ou Photo */}
               {isStakeholderPlaying ? (
@@ -615,38 +623,20 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/65 pointer-events-none" />
 
               {/* =========================================================== */}
-              {/* HAUT DE CARTE : LE TITRE EST LE NOM DE L'ENTREPRISE         */}
-              {/* L'ICÔNE VIDÉO EST TOUJOURS PRÉSENTE EN HAUT À DROITE        */}
+              {/* HAUT DE CARTE : NOM DE L'ENTREPRISE EN BADGE SUPÉRIEUR      */}
               {/* =========================================================== */}
-              <div className="absolute top-3.5 left-3.5 sm:top-4 sm:left-4 z-20 max-w-[calc(100%-60px)] pointer-events-auto">
-                <span className="px-3.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-[11px] sm:text-xs font-bold text-white tracking-wider uppercase drop-shadow-sm truncate block">
+              <div className="relative z-20 pointer-events-auto">
+                <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-[10.5px] sm:text-xs font-bold text-white tracking-wider uppercase drop-shadow-sm truncate inline-block">
                   {selectedCompanyForSpace.companyName}
                 </span>
               </div>
 
-              {/* Déclencheur lecteur vidéo en haut à droite (format carré arrondi) */}
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setIsStakeholderPlaying(prev => !prev);
-                }}
-                className="absolute top-3.5 right-3.5 sm:top-4 sm:right-4 z-30 w-8.5 h-8.5 sm:w-9.5 sm:h-9.5 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center text-white transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0 pointer-events-auto"
-                title={isStakeholderPlaying ? "Mettre en pause" : `Regarder la vidéo de ${currentStakeholder.name}`}
-              >
-                {isStakeholderPlaying ? (
-                  <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
-                ) : (
-                  <TvPlayerIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white transition-transform" strokeWidth={1.6} />
-                )}
-              </button>
-
               {/* =========================================================== */}
-              {/* FLANC DROIT : MÊME CONFIGURATION QUE PROTAGONISTES HÉRITAGE */}
-              {/* 1. Résonance, 2. Question, 3. Profil, 4. Partager           */}
+              {/* FLANC DROIT : ÉVALUATION, QUESTION, PROFIL & PARTAGE        */}
               {/* =========================================================== */}
               <div 
                 onClick={(e) => e.stopPropagation()}
-                className="absolute right-3 sm:right-3.5 top-[60%] -translate-y-1/2 z-20 flex flex-col items-center gap-2.5 sm:gap-3 pointer-events-auto"
+                className="absolute right-3 sm:right-3.5 top-[58%] -translate-y-1/2 z-20 flex flex-col items-center gap-2.5 sm:gap-3 pointer-events-auto"
               >
                 {/* 1. Évaluation résonance */}
                 <button
@@ -702,28 +692,48 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
 
               {/* =========================================================== */}
               {/* BAS : PRÉNOM DE LA PERSONNE & STATUT SIMPLE (Fondateur...)  */}
-              {/* SYMBOLE MUTE EN BAS À DROITE                                */}
+              {/* ET LECTEUR VIDÉO EN BAS À DROITE EN FACE DU NOM             */}
               {/* =========================================================== */}
               <div className="relative z-10 pt-2 mt-auto flex items-end justify-between gap-2 pointer-events-auto">
-                <div className="space-y-0.5">
-                  <h3 className="font-editorial text-[15px] sm:text-base font-bold text-white tracking-wider leading-snug drop-shadow-md">
+                <div className="space-y-0.5 min-w-0 pr-2">
+                  <h3 className="font-editorial text-base sm:text-lg font-bold text-white tracking-wider leading-tight drop-shadow-md">
                     {currentStakeholder.name.split(' ')[0]}
                   </h3>
+                  <span className="text-[10px] sm:text-[11px] text-white/85 font-medium block truncate">
+                    {currentStakeholder.roleCategory} · {currentStakeholder.name}
+                  </span>
                 </div>
 
-                {/* Symbole Muet / Son baissé en bas à droite (visible uniquement en lecture) */}
-                {isStakeholderPlaying && (
+                <div className="flex items-center gap-1.5 shrink-0">
+                  {isStakeholderPlaying && (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setIsStakeholderMuted(prev => !prev);
+                      }}
+                      className="w-8 h-8 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 text-white flex items-center justify-center cursor-pointer transition-all shadow-md hover:scale-105 active:scale-95"
+                      title={isStakeholderMuted ? 'Activer le son' : 'Couper le son'}
+                    >
+                      {isStakeholderMuted ? <VolumeX className="w-3.5 h-3.5 text-white" /> : <Volume2 className="w-3.5 h-3.5 text-white" />}
+                    </button>
+                  )}
+
+                  {/* Lecteur vidéo en bas à droite en face du nom */}
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      setIsStakeholderMuted(prev => !prev);
+                      setIsStakeholderPlaying(prev => !prev);
                     }}
-                    className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center cursor-pointer transition-all shadow-md hover:scale-105 active:scale-95 shrink-0"
-                    title={isStakeholderMuted ? 'Activer le son' : 'Couper le son'}
+                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/25 hover:border-[#A2482B] flex items-center justify-center text-white transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0"
+                    title={isStakeholderPlaying ? "Mettre en pause" : `Regarder la vidéo de ${currentStakeholder.name}`}
                   >
-                    {isStakeholderMuted ? <VolumeX className="w-3.5 h-3.5 text-white" /> : <Volume2 className="w-3.5 h-3.5 text-white" />}
+                    {isStakeholderPlaying ? (
+                      <Pause className="w-4 h-4 fill-white text-white" />
+                    ) : (
+                      <TvPlayerIcon className="w-5 h-5 text-white transition-transform" strokeWidth={1.6} />
+                    )}
                   </button>
-                )}
+                </div>
               </div>
             </div>
 
@@ -738,41 +748,6 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
           </>
         )}
 
-      </div>
-
-      {/* =========================================================== */}
-      {/* BAS DE PAGE : INDICATEUR DE POSITION (PAGINATION)           */}
-      {/* =========================================================== */}
-      <div className="flex items-center justify-center gap-1.5 h-6 shrink-0 mt-1">
-        {selectedCompanyForSpace ? (
-          activeStakeholders.map((s, idx) => (
-            <button
-              key={s.id}
-              onClick={() => {
-                setIsStakeholderPlaying(false);
-                setStakeholderIdx(idx);
-              }}
-              className={`h-1.5 rounded-full transition-all cursor-pointer ${
-                idx === stakeholderIdx ? 'w-6 bg-[#A2482B]' : 'w-1.5 bg-stone-300 hover:bg-stone-400'
-              }`}
-              title={`${s.name} (${s.roleCategory})`}
-            />
-          ))
-        ) : (
-          COMPANIES_DATA.map((c, idx) => (
-            <button
-              key={c.id}
-              onClick={() => {
-                setIsPlaying(false);
-                setCurrentIdx(idx);
-              }}
-              className={`h-1.5 rounded-full transition-all cursor-pointer ${
-                idx === currentIdx ? 'w-6 bg-[#A2482B]' : 'w-1.5 bg-stone-300 hover:bg-stone-400'
-              }`}
-              title={`${c.companyName} (${c.category})`}
-            />
-          ))
-        )}
       </div>
 
       {/* Modale d'évaluation de la résonance pour les voix de l'entreprise */}

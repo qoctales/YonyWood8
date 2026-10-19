@@ -215,7 +215,7 @@ export const ParticipateScreen: React.FC<ParticipateScreenProps> = ({
           <h1 className="font-editorial text-base sm:text-lg font-bold text-[#1C1917] tracking-tight leading-none">
             {currentCard.title}
           </h1>
-          {/* Petit tiret rouge officiel */}
+          {/* Petit trait terracotta officiel */}
           <div className="absolute left-0 -bottom-1.5 w-8 h-0.5 bg-[#A2482B] rounded-full" />
         </div>
       </div>

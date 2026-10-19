@@ -71,6 +71,15 @@ import {
   SousCategorie 
 } from '../data/dimensionsData';
 import { SwipeModeHeritage } from './SwipeModeHeritage';
+import { LivingMatrixWall } from './matrix/LivingMatrixWall';
+import { SunCrownView } from './matrix/SunCrownView';
+import { DuoFaceToFaceModal } from './matrix/DuoFaceToFaceModal';
+import { 
+  getAllRealProfiles, 
+  generateMatrixGrid, 
+  get16SunNeighbors, 
+  MatrixProfile 
+} from '../utils/matrixGridService';
 
 import { getLineageTree, LINEAGE_COLORS } from '../utils/lineageService';
 
@@ -159,8 +168,143 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
   const [isPersonQuestionModalOpen, setIsPersonQuestionModalOpen] = useState<boolean>(false);
   const [showQuestionInVideo, setShowQuestionInVideo] = useState<boolean>(false);
 
-  // 1b. DOUBLE MODE HÉRITAGES : 'circle' (Astrolabe circulaire) | 'swipe' (Parcours tactile par cartes vidéo)
-  const [heritageMode, setHeritageMode] = useState<'circle' | 'swipe'>('circle');
+  // 1b. NOUVELLE ARCHITECTURE HÉRITAGES EN 2 NIVEAUX :
+  // 'matrix' (Niveau 1 : Le grand mur 16x16 vivant) | 'sun' (Niveau 2 : Le Soleil et ses 16 voisins) | 'swipe' (Mode cartes vidéo conservé)
+  const [heritageMode, setHeritageMode] = useState<'matrix' | 'sun' | 'swipe'>('matrix');
+  const [selectedSun, setSelectedSun] = useState<MatrixProfile | null>(null);
+  const [sunBreadcrumbs, setSunBreadcrumbs] = useState<MatrixProfile[]>([]);
+  const [matrixShuffleSeed, setMatrixShuffleSeed] = useState<number>(0);
+  const [matrixActiveDoor, setMatrixActiveDoor] = useState<string | null>(null);
+  const [matrixPanOffset, setMatrixPanOffset] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [duoModalPair, setDuoModalPair] = useState<{ sun: MatrixProfile; counterpoint: MatrixProfile } | null>(null);
+
+  // Tous les profils réels consolidés
+  const allMatrixProfiles = useMemo(() => getAllRealProfiles(), []);
+  
+  // Grille 16x16 = 256 profils dédupliqués intelligemment
+  const matrixGrid = useMemo(() => {
+    return generateMatrixGrid(allMatrixProfiles, matrixShuffleSeed);
+  }, [allMatrixProfiles, matrixShuffleSeed]);
+
+  // Voisins du soleil actif
+  const currentSunNeighbors = useMemo(() => {
+    if (!selectedSun) return [];
+    return get16SunNeighbors(selectedSun, allMatrixProfiles, sunBreadcrumbs.map(b => b.id));
+  }, [selectedSun, allMatrixProfiles, sunBreadcrumbs]);
+
+  // Synchronisation initiale de l'URL (?soleil=ID)
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const soleilId = params.get('soleil');
+      if (soleilId) {
+        const found = allMatrixProfiles.find(p => p.id === soleilId);
+        if (found) {
+          setSelectedSun(found);
+          setSunBreadcrumbs([found]);
+          setHeritageMode('sun');
+        }
+      }
+    } catch {
+      // ignore
+    }
+  }, [allMatrixProfiles]);
+
+  // Gestion du retour arrière (navigateur, téléphone) et touche Échap
+  useEffect(() => {
+    const handlePopState = () => {
+      if (modalPerson || duoModalPair) {
+        setModalPerson(null);
+        setDuoModalPair(null);
+        return;
+      }
+      if (heritageMode === 'sun') {
+        if (sunBreadcrumbs.length > 1) {
+          const next = [...sunBreadcrumbs];
+          next.pop();
+          const prevSun = next[next.length - 1];
+          setSunBreadcrumbs(next);
+          setSelectedSun(prevSun);
+        } else {
+          setHeritageMode('matrix');
+          try {
+            window.history.replaceState({ screen: 'matrix_view' }, '', window.location.pathname);
+          } catch {
+            // ignore
+          }
+        }
+      }
+    };
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        if (modalPerson || duoModalPair) {
+          setModalPerson(null);
+          setDuoModalPair(null);
+        } else if (heritageMode === 'sun') {
+          handlePopState();
+        }
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [heritageMode, modalPerson, duoModalPair, sunBreadcrumbs]);
+
+  const handleSelectPersonFromMatrix = (person: MatrixProfile) => {
+    setSelectedSun(person);
+    setSunBreadcrumbs([person]);
+    setHeritageMode('sun');
+    try {
+      window.history.pushState({ screen: 'matrix_view', soleilId: person.id }, '', `?soleil=${person.id}`);
+    } catch {
+      // ignore
+    }
+  };
+
+  const handleSelectNeighborAsSun = (neighbor: MatrixProfile) => {
+    setSelectedSun(neighbor);
+    setSunBreadcrumbs(prev => {
+      const filtered = prev.filter(p => p.id !== neighbor.id);
+      return [...filtered, neighbor];
+    });
+    try {
+      window.history.pushState({ screen: 'matrix_view', soleilId: neighbor.id }, '', `?soleil=${neighbor.id}`);
+    } catch {
+      // ignore
+    }
+  };
+
+  const handleBackToMatrix = () => {
+    setHeritageMode('matrix');
+    try {
+      window.history.replaceState({ screen: 'matrix_view' }, '', window.location.pathname);
+    } catch {
+      // ignore
+    }
+  };
+
+  const handleBackToPreviousSun = () => {
+    if (sunBreadcrumbs.length > 1) {
+      const next = [...sunBreadcrumbs];
+      next.pop();
+      const prevSun = next[next.length - 1];
+      setSunBreadcrumbs(next);
+      setSelectedSun(prevSun);
+      try {
+        window.history.replaceState({ screen: 'matrix_view', soleilId: prevSun.id }, '', `?soleil=${prevSun.id}`);
+      } catch {
+        // ignore
+      }
+    } else {
+      handleBackToMatrix();
+    }
+  };
+
   const [swipeStep, setSwipeStep] = useState<1 | 2 | 3>(1); // 1 = 8 Portes, 2 = Directions, 3 = Protagonistes
   const [swipeDoorIndex, setSwipeDoorIndex] = useState<number>(0);
   const [swipeSubIndex, setSwipeSubIndex] = useState<number>(0);

@@ -38,7 +38,7 @@ export const MyForestScreen: React.FC<MyForestScreenProps> = ({ onNavigate }) =>
             Espace Membre • Ma Forêt Personnelle
           </div>
           <h1 className="font-editorial text-3xl sm:text-4xl font-normal text-[#1C1917]">
-            Bienvenue dans votre clairière, Roméo.
+            Bienvenue dans votre clairière, Pascal.
           </h1>
           <p className="text-sm text-[#68655D] max-w-xl leading-relaxed">
             Retrouvez ici vos histoires partagées, vos duos en cours de résonance, vos transmissions reçues et données, ainsi que vos sauvegardes d'exploration.
