@@ -172,31 +172,19 @@ export const LivingMatrixWall: React.FC<LivingMatrixWallProps> = ({
     onSelectPerson(profile);
   };
 
-  // Curseur de zoom vertical latéral
-  const sliderTrackRef = useRef<HTMLDivElement>(null);
-  const handleSliderPointerDown = (e: React.PointerEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (!sliderTrackRef.current) return;
-    const rect = sliderTrackRef.current.getBoundingClientRect();
-    const ratio = 1 - Math.max(0, Math.min(1, (e.clientY - rect.top) / rect.height));
-    updateZoom(1 + ratio * 2);
-  };
-
-  const normalizedZoom = (zoomLevel - 1) / 2;
   const currentTotalX = panOffset.x + (zoomLevel <= 1.1 ? driftOffset.x : 0);
   const currentTotalY = panOffset.y + (zoomLevel <= 1.1 ? driftOffset.y : 0);
 
   return (
     <div 
-      className="w-full h-full flex flex-col items-center justify-start pt-2 sm:pt-3 pb-20 sm:pb-24 relative select-none p-1 sm:p-2"
+      className="w-full flex flex-col items-center justify-center relative select-none my-auto"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => {
         setIsHovered(false);
         setHoveredProfile(null);
       }}
     >
-      {/* LA MATRICE : REHAUSSÉE PRÈS DU TITRE, DÉGAGÉE DE LA BARRE DU BAS SANS MORDRE */}
+      {/* LA MATRICE : PARFAITEMENT ÉQUILIBRÉE ET CENTRÉE VERTICALEMENT À ÉQUIDISTANCE STRICTE */}
       <div 
         ref={containerRef}
         onWheel={handleWheel}
@@ -208,9 +196,13 @@ export const LivingMatrixWall: React.FC<LivingMatrixWallProps> = ({
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
         className="relative overflow-hidden bg-transparent border-none shadow-none 
-          w-[min(calc(100vw-32px),min(430px,calc(100dvh-230px)))] sm:w-[min(calc(100vw-48px),min(500px,calc(100dvh-220px)))]
-          h-[min(calc(100vw-32px),min(430px,calc(100dvh-230px)))] sm:h-[min(calc(100vw-48px),min(500px,calc(100dvh-220px)))]
-          aspect-square flex items-center justify-center cursor-grab active:cursor-grabbing"
+          w-[min(calc(100vw-28px),calc(100dvh-230px))]
+          h-[min(calc(100vw-28px),calc(100dvh-230px))]
+          sm:w-[min(520px,calc(100dvh-210px))]
+          sm:h-[min(520px,calc(100dvh-210px))]
+          lg:w-[min(550px,calc(100dvh-200px))]
+          lg:h-[min(550px,calc(100dvh-200px))]
+          aspect-square flex items-center justify-center cursor-grab active:cursor-grabbing my-auto"
         style={{ touchAction: 'none' }}
       >
         
@@ -226,6 +218,7 @@ export const LivingMatrixWall: React.FC<LivingMatrixWallProps> = ({
             const isHighlighted = highlightedPersonId === profile.id;
             const isCounterpoint = activeCounterpointId === profile.id;
             const isPulsing = pulsingIndex === idx;
+            const displayName = profile.firstName || profile.name.split(' ')[0];
 
             return (
               <div
@@ -236,8 +229,8 @@ export const LivingMatrixWall: React.FC<LivingMatrixWallProps> = ({
                   if (containerRef.current) {
                     const rect = containerRef.current.getBoundingClientRect();
                     setTooltipPos({
-                      x: Math.min(Math.max(e.clientX - rect.left, 70), rect.width - 70),
-                      y: Math.max(e.clientY - rect.top - 45, 10)
+                      x: Math.min(Math.max(e.clientX - rect.left, 50), rect.width - 50),
+                      y: Math.max(e.clientY - rect.top - 38, 10)
                     });
                   }
                 }}
@@ -251,12 +244,12 @@ export const LivingMatrixWall: React.FC<LivingMatrixWallProps> = ({
                         : 'hover:scale-120 hover:z-20 hover:shadow-lg hover:ring-2 hover:ring-[#A2482B]'
                 }`}
                 style={{ backgroundColor: '#ECE7DF' }}
-                title={profile.name}
+                title={displayName}
               >
                 {/* Photo en carré : sépia/monochrome doux au repos, couleurs franches au survol */}
                 <img
                   src={profile.photoUrl}
-                  alt={profile.name}
+                  alt={displayName}
                   loading="lazy"
                   className={`w-full h-full object-cover pointer-events-none transition-all duration-200 ${
                     isCounterpoint || isHighlighted || isPulsing
@@ -277,62 +270,21 @@ export const LivingMatrixWall: React.FC<LivingMatrixWallProps> = ({
           })}
         </div>
 
-        {/* INFOBULLE MINIMALISTE AU SURVOL */}
+        {/* INFOBULLE ÉPURÉE AU SURVOL : STRICTEMENT LE PRÉNOM SEUL SANS ENCOMBREMENT */}
         {hoveredProfile && tooltipPos && (
           <div 
-            className="absolute pointer-events-none z-40 bg-stone-900/90 text-white backdrop-blur-md px-2.5 py-1 rounded-md shadow-lg border border-white/10 text-center animate-in fade-in duration-100 transform -translate-x-1/2"
+            className="absolute pointer-events-none z-40 bg-black/85 text-white backdrop-blur-md px-2.5 py-0.5 rounded-full shadow-lg border border-white/20 text-center animate-in fade-in duration-100 transform -translate-x-1/2"
             style={{
               left: `${tooltipPos.x}px`,
               top: `${tooltipPos.y}px`
             }}
           >
-            <p className="text-[11px] font-semibold leading-tight text-white">{hoveredProfile.name}</p>
-            {hoveredProfile.directionLabel && (
-              <p className="text-[9.5px] text-amber-300/90 leading-tight font-medium">
-                {hoveredProfile.directionLabel} {hoveredProfile.doorLabel ? `· ${hoveredProfile.doorLabel}` : ''}
-              </p>
-            )}
+            <p className="text-[11px] font-medium leading-tight text-white tracking-wide">
+              {hoveredProfile.firstName || hoveredProfile.name.split(' ')[0]}
+            </p>
           </div>
         )}
 
-      </div>
-
-      {/* CURSEUR DE ZOOM VERTICAL SUR LE CÔTÉ DROIT */}
-      <div 
-        className="absolute right-1 sm:right-3 top-1/2 -translate-y-1/2 z-30 flex flex-col items-center bg-white/90 backdrop-blur-md p-1 sm:p-1.5 rounded-full border border-stone-200 shadow-md select-none touch-none"
-        title="Zoom de la matrice"
-      >
-        <button
-          onClick={() => updateZoom(zoomLevel + 0.3)}
-          className="w-6 h-6 rounded-full flex items-center justify-center text-stone-600 hover:text-[#A2482B] hover:bg-stone-100 transition-colors cursor-pointer"
-          title="Zoomer"
-        >
-          <ZoomIn className="w-3.5 h-3.5" />
-        </button>
-
-        {/* Rail vertical */}
-        <div
-          ref={sliderTrackRef}
-          onPointerDown={handleSliderPointerDown}
-          className="w-1.5 h-16 sm:h-20 bg-stone-200 rounded-full my-1 relative cursor-pointer"
-        >
-          <div 
-            className="absolute bottom-0 left-0 right-0 bg-[#A2482B] rounded-full"
-            style={{ height: `${normalizedZoom * 100}%` }}
-          />
-          <div 
-            className="absolute left-1/2 -translate-x-1/2 w-3.5 h-3.5 rounded-full bg-white border-2 border-[#A2482B] shadow-xs pointer-events-none"
-            style={{ bottom: `calc(${normalizedZoom * 100}% - 7px)` }}
-          />
-        </div>
-
-        <button
-          onClick={() => updateZoom(zoomLevel - 0.3)}
-          className="w-6 h-6 rounded-full flex items-center justify-center text-stone-600 hover:text-[#A2482B] hover:bg-stone-100 transition-colors cursor-pointer"
-          title="Dézoomer"
-        >
-          <ZoomOut className="w-3.5 h-3.5" />
-        </button>
       </div>
 
     </div>

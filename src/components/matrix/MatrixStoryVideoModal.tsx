@@ -94,6 +94,7 @@ export const MatrixStoryVideoModal: React.FC<MatrixStoryVideoModalProps> = ({
   const videoUrl = person.teaserVideoUrl || 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4';
   const tagLabel = person.directionLabel || 'Résilience';
   const displayName = person.firstName || person.name.split(' ')[0] || person.name;
+  const storyQuestion = person.question || person.centralQuestion;
 
   return (
     <div 
@@ -109,7 +110,7 @@ export const MatrixStoryVideoModal: React.FC<MatrixStoryVideoModalProps> = ({
         <X className="w-5 h-5" />
       </button>
 
-      {/* CARTE VIDÉO VERTICALE AU GABARIT STANDARD (CONFORME À LA CAPTURE FOURNIE) */}
+      {/* CARTE VIDÉO VERTICALE AU GABARIT STANDARD (CONFORME À LA CAPTURE MODÈLE) */}
       <div 
         onClick={(e) => {
           // Clic sur la carte bascule lecture/pause
@@ -142,30 +143,22 @@ export const MatrixStoryVideoModal: React.FC<MatrixStoryVideoModalProps> = ({
           />
         )}
 
-        {/* Voile cinématographique */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/35 pointer-events-none" />
+        {/* Voile cinématographique pour lisibilité optimale */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-black/50 pointer-events-none" />
 
-        {/* Bouton de lecture central discret au repos pour inviter à lancer la vidéo */}
-        {!isPlaying && (
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-15">
-            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-black/45 backdrop-blur-md border border-white/25 flex items-center justify-center text-white shadow-2xl group-hover:scale-110 group-hover:bg-[#A2482B]/80 transition-all duration-300">
-              <TvPlayerIcon className="w-7 h-7 sm:w-8 sm:h-8 text-white drop-shadow-md" strokeWidth={1.7} />
-            </div>
-          </div>
-        )}
-
-        {/* HAUT : Badge Direction à gauche & Icône TvPlayerIcon à droite */}
-        <div className="relative z-10 p-3 sm:p-4 flex items-center justify-between gap-2">
-          <span className="w-fit max-w-[170px] truncate px-3.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-xs font-semibold text-white shadow-md">
+        {/* HAUT : Badge Thématique/Direction à gauche & Déclencheur TV unique à droite (AUCUNE question sur la vidéo) */}
+        <div className="relative z-20 flex items-center justify-between p-3.5 sm:p-4 pointer-events-auto">
+          <span className="w-fit max-w-[200px] truncate px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-xs font-semibold text-white shadow-md">
             {tagLabel}
           </span>
 
+          {/* Bouton lecteur TV officiel en haut à droite (UNIQUE déclencheur visuel) */}
           <button
             onClick={(e) => {
               e.stopPropagation();
               togglePlay(e);
             }}
-            className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0"
+            className="w-8.5 h-8.5 sm:w-9.5 sm:h-9.5 rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0"
             title={isPlaying ? "Mettre en pause" : "Lire la vidéo"}
           >
             {isPlaying ? (
@@ -197,18 +190,19 @@ export const MatrixStoryVideoModal: React.FC<MatrixStoryVideoModalProps> = ({
             <Bookmark className={`w-4 h-4 ${isBookmarked ? 'fill-white text-white' : 'text-white'}`} />
           </button>
 
-          {/* 2. Bouton Livre / Question existentielle */}
+          {/* 2. Bouton Livre / Question existentielle (s'affiche en bas au clic) */}
           <button
+            id="matrix-modal-btn-question"
             onClick={(e) => {
               e.stopPropagation();
               setIsQuestionOpen(prev => !prev);
             }}
             className={`w-8 h-8 sm:w-9 sm:h-9 rounded-xl backdrop-blur-md border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
               isQuestionOpen
-                ? 'bg-[#A2482B] border-[#A2482B] text-white'
+                ? 'bg-[#A2482B] border-[#A2482B] text-white shadow-[0_0_12px_rgba(162,72,43,0.5)]'
                 : 'bg-black/45 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white'
             }`}
-            title="Question & Témoignage"
+            title="Découvrir la question"
           >
             <BookOpen className="w-4 h-4 text-white" />
           </button>
@@ -243,54 +237,53 @@ export const MatrixStoryVideoModal: React.FC<MatrixStoryVideoModalProps> = ({
           </button>
         </div>
 
-        {/* POPOVER QUESTION AU CLIC SUR LE LIVRE */}
+        {/* QUESTION EN BAS : N'apparaît QUE lorsqu'on clique sur l'icône livre ouvert */}
         {isQuestionOpen && (
           <div 
             onClick={(e) => e.stopPropagation()}
-            className="absolute inset-x-3 top-16 z-40 bg-stone-900/95 backdrop-blur-md p-3.5 rounded-2xl border border-[#A2482B]/60 shadow-xl text-white animate-in fade-in zoom-in-95 duration-150"
+            className="absolute inset-x-3 bottom-16 sm:bottom-20 z-40 bg-stone-900/95 backdrop-blur-md p-3.5 rounded-2xl border border-white/20 shadow-2xl text-white animate-in fade-in slide-in-from-bottom-3 duration-200 pointer-events-auto"
           >
             <div className="flex items-center justify-between pb-1.5 border-b border-white/10 mb-2">
               <span className="text-[10px] font-semibold text-[#FFE7A3] uppercase tracking-wider">
-                {tagLabel} · Question existentielle
+                {tagLabel} · Question d'héritage
               </span>
               <button
                 onClick={() => setIsQuestionOpen(false)}
-                className="text-stone-400 hover:text-white cursor-pointer"
+                className="w-5 h-5 rounded-full bg-white/10 hover:bg-white/20 text-stone-300 hover:text-white flex items-center justify-center cursor-pointer transition-colors text-xs"
+                title="Fermer"
               >
-                <X className="w-3.5 h-3.5" />
+                ✕
               </button>
             </div>
-            <p className="text-xs sm:text-sm font-serif italic text-stone-100 leading-relaxed">
-              « {person.question || person.centralQuestion || person.invitationStory || "Quelle mémoire choisissons-nous de transmettre aux générations qui viennent ?"} »
+            <p className="text-xs sm:text-[13px] font-serif italic text-stone-100 leading-snug drop-shadow-sm">
+              « {storyQuestion || person.invitationStory || "Quelle mémoire choisissons-nous de transmettre aux générations qui viennent ?"} »
             </p>
           </div>
         )}
 
-        {/* BAS : Prénom à gauche & Bouton Muet / Son à droite */}
-        <div className="relative z-10 p-3 sm:p-4 flex items-end justify-between gap-2">
-          <div className="space-y-0.5">
-            <h3 className="font-editorial text-lg sm:text-xl font-bold text-white tracking-wide leading-none drop-shadow-md">
+        {/* BAS : STRICTEMENT LE PRÉNOM AU GABARIT STANDARD (MODÈLE DIEUDONNÉ) & BOUTON MUTE UNIQUEMENT SI VIDÉO EN LECTURE */}
+        <div className="relative z-20 flex items-end justify-between pointer-events-auto pb-4 sm:pb-5 px-3.5 sm:px-4 mt-auto gap-2">
+          <div className="flex flex-col min-w-0">
+            <h3 className="font-editorial text-[15px] sm:text-base font-bold text-white tracking-wider leading-snug pb-0.5 drop-shadow-md truncate">
               {displayName}
             </h3>
-            {person.duoPartnerName && (
-              <p className="text-[10.5px] text-stone-300 font-medium drop-shadow-xs">
-                Duo avec <span className="text-[#FFE7A3]">{person.duoPartnerName}</span>
-              </p>
-            )}
           </div>
 
-          {/* Bouton Muet / Son en bas à droite */}
-          <button
-            onClick={toggleMute}
-            className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center cursor-pointer transition-all shadow-md hover:scale-105 active:scale-95 shrink-0"
-            title={isMuted ? "Activer le son" : "Couper le son"}
-          >
-            {isMuted ? (
-              <VolumeX className="w-4 h-4 text-white" />
-            ) : (
-              <Volume2 className="w-4 h-4 text-white" />
-            )}
-          </button>
+          {/* Bouton Muet / Son : N'apparaît QUE lorsque la vidéo est lancée à partir du lecteur TV vintage */}
+          {isPlaying && (
+            <button
+              id="matrix-modal-btn-mute"
+              onClick={toggleMute}
+              className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/50 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center cursor-pointer transition-colors shadow-md hover:scale-105 active:scale-95 shrink-0 animate-in fade-in duration-150"
+              title={isMuted ? "Activer le son" : "Couper le son"}
+            >
+              {isMuted ? (
+                <VolumeX className="w-3.5 h-3.5 text-white" />
+              ) : (
+                <Volume2 className="w-3.5 h-3.5 text-white" />
+              )}
+            </button>
+          )}
         </div>
       </div>
 

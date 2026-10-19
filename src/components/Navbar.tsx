@@ -83,7 +83,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentScreen, onNavigate, onOpe
   }
 
   return (
-    <header className="sticky top-0 z-40 w-full backdrop-blur-md bg-white/95 border-b border-stone-200 shadow-2xs">
+    <header className="shrink-0 z-40 w-full backdrop-blur-md bg-white/95 border-b border-stone-200 shadow-2xs">
       <div className="w-full px-3 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-2 relative">
         
         {/* Gauche : Logo officiel YonyWood */}

@@ -1329,34 +1329,17 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
   };
 
   const onTouchMove = (e: React.TouchEvent) => {
-    if (touchStartX === null || touchStartY === null) return;
+    if (touchStartX === null) return;
     const currentX = e.touches[0].clientX;
-    const currentY = e.touches[0].clientY;
     const diffX = currentX - touchStartX;
-    const diffY = currentY - touchStartY;
-
-    if (Math.abs(diffY) > Math.abs(diffX)) {
-      if (Math.abs(diffY) < 120) {
-        setSwipeOffsetY(diffY);
-        setSwipeOffsetX(0);
-      }
-    } else {
-      if (Math.abs(diffX) < 120) {
-        setSwipeOffsetX(diffX);
-        setSwipeOffsetY(0);
-      }
+    if (Math.abs(diffX) < 120) {
+      setSwipeOffsetX(diffX);
     }
   };
 
   const onTouchEnd = () => {
     const threshold = 35;
-    if (Math.abs(swipeOffsetY) > Math.abs(swipeOffsetX) && Math.abs(swipeOffsetY) > threshold) {
-      if (swipeOffsetY < -threshold) {
-        handleNextCategory();
-      } else if (swipeOffsetY > threshold) {
-        handlePrevCategory();
-      }
-    } else if (Math.abs(swipeOffsetX) > threshold) {
+    if (Math.abs(swipeOffsetX) > threshold) {
       if (swipeOffsetX < -threshold) {
         handleNextVideo();
       } else if (swipeOffsetX > threshold) {
@@ -1369,43 +1352,26 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
     setSwipeOffsetY(0);
   };
 
-  // Mouse Drag Handlers (2D)
+  // Mouse Drag Handlers (Horizontal only - no vertical shifting)
   const onMouseDown = (e: React.MouseEvent) => {
     setIsMouseDown(true);
     setTouchStartX(e.clientX);
-    setTouchStartY(e.clientY);
     setSwipeOffsetX(0);
     setSwipeOffsetY(0);
   };
 
   const onMouseMove = (e: React.MouseEvent) => {
-    if (!isMouseDown || touchStartX === null || touchStartY === null) return;
+    if (!isMouseDown || touchStartX === null) return;
     const diffX = e.clientX - touchStartX;
-    const diffY = e.clientY - touchStartY;
-
-    if (Math.abs(diffY) > Math.abs(diffX)) {
-      if (Math.abs(diffY) < 120) {
-        setSwipeOffsetY(diffY);
-        setSwipeOffsetX(0);
-      }
-    } else {
-      if (Math.abs(diffX) < 120) {
-        setSwipeOffsetX(diffX);
-        setSwipeOffsetY(0);
-      }
+    if (Math.abs(diffX) < 120) {
+      setSwipeOffsetX(diffX);
     }
   };
 
   const onMouseUp = () => {
     if (!isMouseDown) return;
     const threshold = 35;
-    if (Math.abs(swipeOffsetY) > Math.abs(swipeOffsetX) && Math.abs(swipeOffsetY) > threshold) {
-      if (swipeOffsetY < -threshold) {
-        handleNextCategory();
-      } else if (swipeOffsetY > threshold) {
-        handlePrevCategory();
-      }
-    } else if (Math.abs(swipeOffsetX) > threshold) {
+    if (Math.abs(swipeOffsetX) > threshold) {
       if (swipeOffsetX < -threshold) {
         handleNextVideo();
       } else if (swipeOffsetX > threshold) {
@@ -1607,7 +1573,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
 
 
   return (
-    <div className="max-w-3xl mx-auto px-3 sm:px-6 py-2 pb-24 sm:pb-28 pt-safe pb-safe h-[calc(100dvh-56px)] max-h-[calc(100dvh-56px)] overflow-hidden flex flex-col justify-between text-[#1C1917]">
+    <div className="w-full max-w-3xl mx-auto px-3 sm:px-6 py-2 pb-24 sm:pb-28 pt-safe pb-safe h-full max-h-full overflow-hidden flex flex-col justify-between text-[#1C1917]">
       
       {/* ========================================================================= */}
       {/* 1. EN-TÊTE HARMONISÉ EXACTEMENT AU MÊME FORMAT QUE TOUTES LES AUTRES PAGES */}
@@ -1799,13 +1765,12 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
               onMouseDown={onMouseDown}
               onMouseMove={onMouseMove}
               onMouseUp={onMouseUp}
-              onWheel={onWheel}
               onClick={(e) => {
                 if ((e.target as HTMLElement).closest('button, a, input, textarea, select')) return;
                 toggleVideoPlayback();
               }}
               className="h-[min(480px,calc(100dvh-230px))] sm:h-[min(520px,calc(100dvh-210px))] lg:h-[min(550px,calc(100dvh-200px))] aspect-[9/16] w-auto mx-auto rounded-3xl overflow-hidden bg-stone-950 text-white shadow-2xl border border-stone-200/40 relative flex flex-col justify-between p-3.5 sm:p-4.5 cursor-pointer group select-none shrink-0"
-              style={{ transform: `translate(${swipeOffsetX}px, ${swipeOffsetY}px)` }}
+              style={{ transform: `translateX(${swipeOffsetX}px)` }}
             >
             {/* ================================================================= */}
             {/* FLANC DROIT : ÉVALUATION (AWARD) & LIGNÉE (ÉTOILE)               */}

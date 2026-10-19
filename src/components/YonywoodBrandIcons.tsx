@@ -738,5 +738,47 @@ export const YonyWoodLogo: React.FC<YonyWoodLogoProps> = ({
   );
 };
 
+/**
+ * PortraitsViseurIcon:
+ * Symbole officiel « Portraits » :
+ * Viseur de caméra formé de quatre angles géométriques (stroke="currentColor")
+ * et d'une petite étoile à quatre branches au centre (grise en inactive, blanche en actif).
+ */
+export const PortraitsViseurIcon: React.FC<IconProps & { isActive?: boolean }> = ({ 
+  className = 'w-5 h-5',
+  strokeWidth = 2.5,
+  isActive
+}) => {
+  // En inactif l'étoile est grise (#57534E), en actif elle devient blanche (#FFFFFF)
+  const starColor = isActive === true ? '#FFFFFF' : isActive === false ? '#57534E' : 'currentColor';
 
-
+  return (
+    <svg 
+      viewBox="0 0 48 48" 
+      fill="none" 
+      className={className}
+      aria-hidden="true"
+    >
+      {/* Cadre de viseur : 4 angles géométriques */}
+      <g 
+        stroke="currentColor" 
+        strokeWidth={typeof strokeWidth === 'number' ? strokeWidth : 2.5} 
+        strokeLinecap="round" 
+        strokeLinejoin="round"
+      >
+        <path d="M8 17V11a3 3 0 0 1 3-3h6" />
+        <path d="M31 8h6a3 3 0 0 1 3 3v6" />
+        <path d="M40 31v6a3 3 0 0 1-3 3h-6" />
+        <path d="M17 40h-6a3 3 0 0 1-3-3v-6" />
+      </g>
+      {/* Étoile à quatre branches au centre : grise en inactif, blanche en actif */}
+      <path 
+        d="M24 18C24.5 21.7 26.3 23.5 30 24C26.3 24.5 24.5 26.3 24 30C23.5 26.3 21.7 24.5 18 24C21.7 23.5 23.5 21.7 24 18Z"
+        fill={starColor} 
+        stroke={starColor} 
+        strokeWidth="1.2" 
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};

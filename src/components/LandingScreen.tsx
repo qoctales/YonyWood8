@@ -10,8 +10,8 @@ import { ViewScreen } from '../types';
 import { AuthModal } from './AuthModal';
 import { 
   DirectorChairIcon,
-  FilmReelIcon,
   DuocumentairesTvIcon,
+  PortraitsViseurIcon,
   ProfileSoloIcon
 } from './YonywoodBrandIcons';
 import { DemoStudioSection } from './landing/DemoStudioSection';
@@ -25,7 +25,7 @@ interface LandingScreenProps {
   onNavigate: (screen: ViewScreen) => void;
 }
 
-type DemoTabId = 'studio' | 'heritages' | 'duos' | 'productions' | 'entreprise' | 'profil';
+type DemoTabId = 'studio' | 'heritages' | 'duos' | 'entreprise' | 'productions' | 'profil';
 
 export const LandingScreen: React.FC<LandingScreenProps> = ({ onNavigate }) => {
   const [authModalOpen, setAuthModalOpen] = useState(false);
@@ -45,10 +45,10 @@ export const LandingScreen: React.FC<LandingScreenProps> = ({ onNavigate }) => {
 
   const navItems: { id: DemoTabId; label: string; icon: any; screenId: string }[] = [
     { id: 'studio', label: 'Studio', icon: DirectorChairIcon, screenId: 'menu-demo-studio' },
-    { id: 'heritages', label: 'Héritages', icon: FilmReelIcon, screenId: 'menu-demo-heritages' },
-    { id: 'duos', label: 'Duos', icon: DuocumentairesTvIcon, screenId: 'menu-demo-duos' },
-    { id: 'productions', label: 'Productions', icon: Clapperboard, screenId: 'menu-demo-productions' },
-    { id: 'entreprise', label: 'Entreprises', icon: Film, screenId: 'menu-demo-entreprise' },
+    { id: 'heritages', label: 'Héritages', icon: Film, screenId: 'menu-demo-heritages' },
+    { id: 'duos', label: 'Perspectives', icon: DuocumentairesTvIcon, screenId: 'menu-demo-perspectives' },
+    { id: 'entreprise', label: 'Portraits', icon: PortraitsViseurIcon, screenId: 'menu-demo-portraits' },
+    { id: 'productions', label: 'Production', icon: Clapperboard, screenId: 'menu-demo-production' },
     { id: 'profil', label: 'Profil', icon: ProfileSoloIcon, screenId: 'menu-demo-profil' },
   ];
 

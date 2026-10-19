@@ -122,7 +122,7 @@ export default function App() {
     currentScreen.type === 'submit_story';
 
   return (
-    <div className={`min-h-screen flex flex-col font-sans antialiased selection:bg-[#C89B3C]/20 selection:text-[#1C1917] relative ${
+    <div className={`h-[100dvh] max-h-[100dvh] w-full overflow-hidden flex flex-col font-sans antialiased selection:bg-[#C89B3C]/20 selection:text-[#1C1917] relative ${
       isDarkScreen ? 'bg-[#0E0D0B] text-white' : 'bg-white text-[#1C1917]'
     }`}>
       
@@ -138,8 +138,8 @@ export default function App() {
         />
       )}
 
-      {/* Main Content Area - Immersion directe avec marge pour le menu du bas */}
-      <main className={`flex-1 ${!isVideoPlayer && !isFixedViewportScreen ? 'pb-24 sm:pb-28' : ''}`}>
+      {/* Main Content Area - Immersion directe parfaitement calibrée */}
+      <main className="flex-1 min-h-0 relative overflow-hidden flex flex-col">
         {currentScreen.type === 'landing' && (
           <DuoFeedScreen 
             onNavigate={setCurrentScreen} 

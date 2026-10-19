@@ -290,7 +290,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
     || 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4';
 
   return (
-    <div className="w-full h-[calc(100dvh-56px)] max-h-[calc(100dvh-56px)] pb-24 sm:pb-28 pt-safe pb-safe overflow-hidden flex flex-col justify-between text-[#1C1917] select-none">
+    <div className="w-full h-full max-h-full pb-24 sm:pb-28 pt-safe pb-safe overflow-hidden flex flex-col justify-between text-[#1C1917] select-none">
       
       {/* ========================================================================= */}
       {/* 1. EN-TÊTE HARMONISÉ EXACTEMENT AU MÊME ENDROIT QUE STUDIO, HÉRITAGES, PRODUCTIONS */}
@@ -299,7 +299,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
         <header className="relative flex items-center justify-between h-8 sm:h-9 shrink-0 gap-2">
           <div className="relative flex items-center h-full shrink-0">
             <h1 className="font-editorial text-base sm:text-[18px] font-bold text-[#1C1917] tracking-tight leading-none">
-              Duos
+              Perspectives
             </h1>
             <div className="absolute left-0 -bottom-2 w-8 h-0.5 bg-[#A2482B] rounded-full" />
           </div>
@@ -600,21 +600,23 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                         </h3>
                       </div>
 
-                      {/* Symbole Muet en bas à droite */}
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setIsMutedA(prev => !prev);
-                        }}
-                        className="w-7 h-7 sm:w-8.5 sm:h-8.5 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0"
-                        title={isMutedA ? "Activer le son" : "Couper le son"}
-                      >
-                        {isMutedA ? (
-                          <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
-                        ) : (
-                          <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
-                        )}
-                      </button>
+                      {/* Symbole Muet en bas à droite : uniquement lorsque la vidéo est lancée */}
+                      {isPlayingA && (
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setIsMutedA(prev => !prev);
+                          }}
+                          className="w-7 h-7 sm:w-8.5 sm:h-8.5 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0 animate-in fade-in duration-150"
+                          title={isMutedA ? "Activer le son" : "Couper le son"}
+                        >
+                          {isMutedA ? (
+                            <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
+                          ) : (
+                            <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
+                          )}
+                        </button>
+                      )}
                     </div>
                   </div>
 
@@ -768,21 +770,23 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                         </h3>
                       </div>
 
-                      {/* Symbole Muet en bas à droite */}
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setIsMutedB(prev => !prev);
-                        }}
-                        className="w-7 h-7 sm:w-8.5 sm:h-8.5 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0"
-                        title={isMutedB ? "Activer le son" : "Couper le son"}
-                      >
-                        {isMutedB ? (
-                          <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
-                        ) : (
-                          <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
-                        )}
-                      </button>
+                      {/* Symbole Muet en bas à droite : uniquement lorsque la vidéo est lancée */}
+                      {isPlayingB && (
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setIsMutedB(prev => !prev);
+                          }}
+                          className="w-7 h-7 sm:w-8.5 sm:h-8.5 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0 animate-in fade-in duration-150"
+                          title={isMutedB ? "Activer le son" : "Couper le son"}
+                        >
+                          {isMutedB ? (
+                            <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
+                          ) : (
+                            <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
+                          )}
+                        </button>
+                      )}
                     </div>
                   </div>
 

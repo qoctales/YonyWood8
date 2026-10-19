@@ -6,8 +6,8 @@ import {
 import { ViewScreen } from '../types';
 import { 
   DirectorChairIcon,
-  FilmReelIcon,
   DuocumentairesTvIcon,
+  PortraitsViseurIcon,
   ProfileSoloIcon
 } from './YonywoodBrandIcons';
 
@@ -19,10 +19,10 @@ interface BottomMenuProps {
 export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigate }) => {
   // Déterminer l'élément actif selon l'écran en cours
   const isStudioActive = currentScreen.type === 'submit_story' || currentScreen.type === 'request_videographer';
-  const isAgoraActive = currentScreen.type === 'home' || currentScreen.type === 'matrix_view' || currentScreen.type === 'documentaries' || currentScreen.type === 'documentary_detail';
-  const isDuocumentairesActive = currentScreen.type === 'duo_feed' || currentScreen.type === 'duo_detail';
-  const isMarcheActive = currentScreen.type === 'marketplace';
-  const isEnterpriseActive = currentScreen.type === 'enterprise';
+  const isHeritagesActive = currentScreen.type === 'home' || currentScreen.type === 'matrix_view' || currentScreen.type === 'documentaries' || currentScreen.type === 'documentary_detail';
+  const isPerspectivesActive = currentScreen.type === 'duo_feed' || currentScreen.type === 'duo_detail' || currentScreen.type === 'landing';
+  const isPortraitsActive = currentScreen.type === 'enterprise';
+  const isProductionActive = currentScreen.type === 'marketplace';
   const isProfilActive = 
     currentScreen.type === 'profile' || 
     currentScreen.type === 'settings' || 
@@ -38,6 +38,7 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
     return null;
   }
 
+  // Exactement six rubriques : Studio · Héritages · Perspectives · Portraits · Production · Profil
   const menuItems = [
     {
       id: 'studio',
@@ -50,49 +51,49 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
       strokeWidth: 1.6
     },
     {
-      id: 'agora',
+      id: 'heritages',
       label: 'Héritages',
-      icon: FilmReelIcon,
-      isActive: isAgoraActive,
+      icon: Film, // icône de bande de film (associée à Héritages)
+      isActive: isHeritagesActive,
       onClick: () => onNavigate({ type: 'home' }),
-      screenId: 'menu-item-agora',
-      iconClassName: 'w-[22px] h-[22px] sm:w-[23px] sm:h-[23px]',
-      strokeWidth: 1.7
+      screenId: 'menu-item-heritages',
+      iconClassName: 'w-[20px] h-[20px] sm:w-[21px] sm:h-[21px]',
+      strokeWidth: 1.65
     },
     {
-      id: 'duocumentaires',
-      label: 'Duos',
-      icon: DuocumentairesTvIcon,
-      isActive: isDuocumentairesActive,
+      id: 'perspectives',
+      label: 'Perspectives',
+      icon: DuocumentairesTvIcon, // deux télévisions juxtaposées
+      isActive: isPerspectivesActive,
       onClick: () => onNavigate({ type: 'duo_feed' }),
-      screenId: 'menu-item-duocumentaires',
+      screenId: 'menu-item-perspectives',
       iconClassName: 'w-[20.5px] h-[20.5px] sm:w-[21.5px] sm:h-[21.5px]',
       strokeWidth: 1.55
     },
     {
-      id: 'productions',
-      label: 'Productions',
-      icon: Clapperboard,
-      isActive: isMarcheActive,
+      id: 'portraits',
+      label: 'Portraits',
+      icon: PortraitsViseurIcon, // nouvelle icône viseur de caméra + étoile centrale à 4 branches
+      isActive: isPortraitsActive,
+      onClick: () => onNavigate({ type: 'enterprise' }),
+      screenId: 'menu-item-portraits',
+      iconClassName: 'w-[21px] h-[21px] sm:w-[22px] sm:h-[22px]',
+      strokeWidth: 2.5
+    },
+    {
+      id: 'production',
+      label: 'Production',
+      icon: Clapperboard, // clap de cinéma
+      isActive: isProductionActive,
       onClick: () => onNavigate({ type: 'marketplace' }),
-      screenId: 'menu-item-productions',
+      screenId: 'menu-item-production',
       iconClassName: 'w-[19.5px] h-[19.5px] sm:w-[20px] sm:h-[20px]',
       strokeWidth: 1.5
     },
     {
-      id: 'entreprise',
-      label: 'Entreprises',
-      icon: Film,
-      isActive: isEnterpriseActive,
-      onClick: () => onNavigate({ type: 'enterprise' }),
-      screenId: 'menu-item-entreprise',
-      iconClassName: 'w-[19.5px] h-[19.5px] sm:w-[20px] sm:h-[20px]',
-      strokeWidth: 1.6
-    },
-    {
       id: 'profil',
       label: 'Profil',
-      icon: ProfileSoloIcon,
+      icon: ProfileSoloIcon, // télévision retournée formant un visage
       isActive: isProfilActive,
       onClick: () => onNavigate({ type: 'profile' }),
       screenId: 'menu-item-profil',
@@ -109,7 +110,7 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
         className="pointer-events-auto max-w-md sm:max-w-lg mx-auto bg-white/95 backdrop-blur-xl border border-stone-200/90 rounded-full shadow-2xl shadow-stone-900/10 px-1.5 sm:px-4 py-1 sm:py-1.5 flex items-center justify-between gap-0.5 sm:gap-2"
       >
         {menuItems.map((item) => {
-          const Icon = item.icon;
+          const Icon = item.icon as any;
 
           return (
             <button
@@ -123,7 +124,7 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
                   : 'text-stone-500 hover:text-stone-800'
               }`}
             >
-              {/* Capsule changeante uniquement sur l'icône en Terre Cuite signature (#A2482B) */}
+              {/* Capsule changeante uniquement sur l'icône en Terre Cuite signature (#A2482B) pour TOUTES les rubriques actives */}
               <div 
                 className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-all duration-200 ${
                   item.isActive 
@@ -131,10 +132,18 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
                     : 'bg-transparent text-stone-600 group-hover:bg-stone-100/80'
                 }`}
               >
-                <Icon 
-                  className={`${item.iconClassName} transition-transform duration-200`} 
-                  strokeWidth={item.strokeWidth} 
-                />
+                {item.id === 'portraits' ? (
+                  <PortraitsViseurIcon 
+                    className={`${item.iconClassName} transition-transform duration-200`} 
+                    strokeWidth={item.strokeWidth} 
+                    isActive={item.isActive}
+                  />
+                ) : (
+                  <Icon 
+                    className={`${item.iconClassName} transition-transform duration-200`} 
+                    strokeWidth={item.strokeWidth} 
+                  />
+                )}
               </div>
 
               {/* Libellé textuel en noms communs uniformes, taille optimisée sur mobile pour éviter toute coupure */}

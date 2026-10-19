@@ -178,10 +178,19 @@ export function getAllRealProfiles(): MatrixProfile[] {
     }
   });
 
-  // Assurer la liaison mutuelle des contrepoints et assigner les directions officielles YonyWood
+  // Assurer la liaison mutuelle des contrepoints et assigner les 7 Portes thématiques officielles YonyWood
   const allList = Array.from(profileMap.values());
+  const SEVEN_THEMATIC_DOORS = [
+    'sagesses',
+    'territoires',
+    'expertises',
+    'produits-services',
+    'projets',
+    'marques',
+    'personnalites'
+  ] as const;
+
   const DOOR_LABELS: Record<string, string> = {
-    series: 'Séries',
     sagesses: 'Sagesses',
     territoires: 'Territoires',
     expertises: 'Expertises',
@@ -218,32 +227,56 @@ export function getAllRealProfiles(): MatrixProfile[] {
       prof.duoPartnerName = prof.counterpointName;
     }
 
-    // 2. Assignation de la Direction officielle (issue de la Porte)
-    // Cas spécifique : Cheikh Fall -> Résilience (conformité absolue à la capture utilisateur)
+    // Assurer que le prénom est toujours isolé proprement
+    if (!prof.firstName) {
+      prof.firstName = prof.name.split(' ')[0];
+    }
+
+    // 2. Strictement assigner à l'une des 7 Portes thématiques (Les séries vont dans Duos)
+    let dId = prof.doorId;
+    if (!dId || dId === 'series' || !SEVEN_THEMATIC_DOORS.includes(dId as any)) {
+      dId = SEVEN_THEMATIC_DOORS[idx % SEVEN_THEMATIC_DOORS.length];
+      prof.doorId = dId;
+    }
+    prof.doorLabel = DOOR_LABELS[dId] || 'Sagesses';
+
+    // 3. Direction et question d'héritage associées
     if (prof.name.toLowerCase().includes('cheikh')) {
       prof.doorId = 'sagesses';
       prof.doorLabel = 'Sagesses';
       prof.directionLabel = 'Résilience';
+      const resSub = SOUS_CATEGORIES.find(s => s.slug === 'resilience' || s.label.toLowerCase() === 'résilience');
+      if (resSub?.question) {
+        prof.question = resSub.question;
+        prof.centralQuestion = resSub.question;
+      }
+    } else if (prof.name.toLowerCase().includes('dieudonné') || prof.name.toLowerCase().includes('dieudonne')) {
+      prof.doorId = 'territoires';
+      prof.doorLabel = 'Territoires';
+      prof.directionLabel = 'Traditions';
+      const tradSub = SOUS_CATEGORIES.find(s => s.dimensionId === 'territoires' && s.slug === 'traditions');
+      if (tradSub?.question) {
+        prof.question = tradSub.question;
+        prof.centralQuestion = tradSub.question;
+      }
     } else {
-      const dId = prof.doorId || 'sagesses';
-      prof.doorLabel = DOOR_LABELS[dId] || 'Héritages';
       const doorSubs = SOUS_CATEGORIES.filter(s => s.dimensionId === dId);
       if (doorSubs.length > 0) {
+        let chosen = doorSubs[idx % doorSubs.length];
         const text = `${prof.name} ${prof.universeTag || ''} ${prof.role || ''}`.toLowerCase();
         const matched = doorSubs.find(s => text.includes(s.slug.toLowerCase()) || text.includes(s.label.toLowerCase()));
         if (matched) {
-          prof.directionLabel = matched.label;
-        } else {
-          let hash = 0;
-          for (let i = 0; i < prof.id.length; i++) {
-            hash = (hash << 5) - hash + prof.id.charCodeAt(i);
-            hash |= 0;
-          }
-          const chosen = doorSubs[Math.abs(hash + idx) % doorSubs.length];
-          prof.directionLabel = chosen.label;
+          chosen = matched;
+        }
+        prof.directionLabel = chosen.label;
+        if (chosen.question) {
+          prof.question = chosen.question;
+          prof.centralQuestion = chosen.question;
         }
       } else {
         prof.directionLabel = 'Résilience';
+        prof.question = 'Quelle épreuve majeure a brisé vos certitudes pour forger votre résilience et votre force intérieure ?';
+        prof.centralQuestion = prof.question;
       }
     }
   });
@@ -251,17 +284,19 @@ export function getAllRealProfiles(): MatrixProfile[] {
   return allList;
 }
 
-// Mapper une thématique vers l'une des 8 Portes principales
+// Mapper une thématique vers l'une des 7 Portes principales (Hors séries qui vont dans Duos)
 export function mapUniverseToDoor(universe: string): string {
   const u = (universe || '').toLowerCase();
-  if (u.includes('sagesse') || u.includes('philosophie') || u.includes('pensée') || u.includes('science')) return 'sagesses';
-  if (u.includes('territoire') || u.includes('terroir') || u.includes('tradition') || u.includes('paysage')) return 'territoires';
-  if (u.includes('expertise') || u.includes('artisanat') || u.includes('metier') || u.includes('savoir')) return 'expertises';
-  if (u.includes('produit') || u.includes('service') || u.includes('gastronomie') || u.includes('vin')) return 'produits-services';
-  if (u.includes('projet') || u.includes('ecologie') || u.includes('foret') || u.includes('arbre')) return 'projets';
-  if (u.includes('marque') || u.includes('entreprise') || u.includes('patrimoine')) return 'marques';
-  if (u.includes('personnalit') || u.includes('art') || u.includes('musique') || u.includes('sport')) return 'personnalites';
-  return 'series';
+  if (u.includes('sagesse') || u.includes('philosophie') || u.includes('pensée') || u.includes('résilience') || u.includes('amour') || u.includes('solidarité')) return 'sagesses';
+  if (u.includes('territoire') || u.includes('terroir') || u.includes('tradition') || u.includes('paysage') || u.includes('patrimoine') || u.includes('benin')) return 'territoires';
+  if (u.includes('expertise') || u.includes('artisanat') || u.includes('metier') || u.includes('savoir') || u.includes('phd') || u.includes('science')) return 'expertises';
+  if (u.includes('produit') || u.includes('service') || u.includes('gastronomie') || u.includes('vin') || u.includes('dixeat') || u.includes('fiat luxe')) return 'produits-services';
+  if (u.includes('projet') || u.includes('ecologie') || u.includes('foret') || u.includes('arbre') || u.includes('investors') || u.includes('makers')) return 'projets';
+  if (u.includes('marque') || u.includes('entreprise') || u.includes('sweet street') || u.includes('luxe')) return 'marques';
+  if (u.includes('personnalit') || u.includes('art') || u.includes('musique') || u.includes('sport') || u.includes('coaching') || u.includes('blacks one')) return 'personnalites';
+  
+  // Par défaut, distribuer sur les 7 Portes thématiques de la Matrice
+  return 'sagesses';
 }
 
 // 2. Génération de la Matrice 16 x 16 = 256 emplacements

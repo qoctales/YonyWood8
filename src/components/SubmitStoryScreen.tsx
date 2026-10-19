@@ -501,7 +501,7 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
   }
 
   return (
-    <div className={`max-w-3xl mx-auto px-3 sm:px-6 py-2 pb-24 sm:pb-28 pt-safe pb-safe overflow-x-hidden ${step === 3 && chosenFlow === 'UPLOAD_DIRECT' ? 'min-h-[calc(100dvh-56px)] flex flex-col' : 'h-[calc(100dvh-56px)] max-h-[calc(100dvh-56px)] overflow-hidden flex flex-col justify-between'} text-[#1C1917]`}>
+    <div className={`w-full max-w-3xl mx-auto px-3 sm:px-6 py-2 pb-24 sm:pb-28 pt-safe pb-safe overflow-x-hidden ${step === 3 && chosenFlow === 'UPLOAD_DIRECT' ? 'h-full max-h-full overflow-y-auto flex flex-col' : 'h-full max-h-full overflow-hidden flex flex-col justify-between'} text-[#1C1917]`}>
       
       {/* En-tête dynamique du Studio : Choix progressifs validés (Porte, Sujet, Format) avec bouton Modifier */}
       <div className="flex items-center justify-between h-8 sm:h-9 shrink-0 gap-2 mb-1.5 sm:mb-2">
@@ -1417,11 +1417,7 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                   
                   {/* CARTE 1 : J'AI MA VIDÉO (Dépôt autonome) */}
                   <div 
-                    onClick={() => {
-                      setIsChoiceBVideoPlaying(false);
-                      setIsChoiceAVideoPlaying(prev => !prev);
-                    }}
-                    className="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl flex flex-col justify-between aspect-[9/16] w-[min(calc((100vw-28px)/2),calc((100dvh-210px)*9/16))] max-w-[175px] max-h-[min(490px,calc(100dvh-210px))] sm:max-w-none sm:max-h-none sm:w-[min(280px,calc((100dvh-190px)*9/16))] sm:h-[min(540px,calc(100dvh-190px))] lg:w-[min(310px,calc((100dvh-180px)*9/16))] lg:h-[min(570px,calc(100dvh-180px))] shrink-0 transition-all duration-300 cursor-pointer select-none p-2.5 sm:p-4.5"
+                    className="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl flex flex-col justify-between aspect-[9/16] w-[min(calc((100vw-28px)/2),calc((100dvh-210px)*9/16))] max-w-[175px] max-h-[min(490px,calc(100dvh-210px))] sm:max-w-none sm:max-h-none sm:w-[min(280px,calc((100dvh-190px)*9/16))] sm:h-[min(540px,calc(100dvh-190px))] lg:w-[min(310px,calc((100dvh-180px)*9/16))] lg:h-[min(570px,calc(100dvh-180px))] shrink-0 transition-all duration-300 select-none p-2.5 sm:p-4.5"
                     id="card-choice-upload-direct"
                   >
                     {/* Média : Vidéo animée ou illustration IA 9:16 */}
@@ -1500,18 +1496,14 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
 
                       <button
                         type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setIsChoiceAVideoPlaying(false);
-                          setIsChoiceBVideoPlaying(false);
-                          setChosenFlow('UPLOAD_DIRECT');
-                        }}
-                        className="px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white/20 hover:bg-[#A2482B] text-white text-[10px] sm:text-xs font-semibold backdrop-blur-md transition-all flex items-center gap-1 sm:gap-1.5 shadow-md border border-white/25 hover:border-transparent cursor-pointer shrink-0"
-                        title="Télécharger"
+                        disabled
+                        aria-disabled="true"
+                        className="px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-full bg-stone-800/80 text-stone-400 text-[10px] sm:text-xs font-semibold backdrop-blur-md flex items-center gap-1 sm:gap-1.5 shadow-md border border-white/10 cursor-not-allowed shrink-0 select-none opacity-85"
+                        title="Télécharger — Bientôt disponible"
                         id="btn-choose-direct-upload"
                       >
                         <span className="truncate">Télécharger</span>
-                        <ArrowRight className="w-3 sm:w-3.5 h-3 sm:h-3.5 shrink-0" />
+                        <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-white/10 text-stone-300 font-normal">Bientôt</span>
                       </button>
                     </div>
 
@@ -1565,16 +1557,13 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                           </button>
                           <button
                             type="button"
-                            onClick={() => {
-                              setShowDetailsA(false);
-                              setIsChoiceAVideoPlaying(false);
-                              setIsChoiceBVideoPlaying(false);
-                              setChosenFlow('UPLOAD_DIRECT');
-                            }}
-                            className="px-3 sm:px-4 py-1.5 rounded-full bg-white/20 hover:bg-[#A2482B] text-white text-[10px] sm:text-xs font-semibold backdrop-blur-md flex items-center gap-1 cursor-pointer"
+                            disabled
+                            aria-disabled="true"
+                            className="px-3 sm:px-4 py-1.5 rounded-full bg-stone-800/80 text-stone-400 text-[10px] sm:text-xs font-semibold backdrop-blur-md flex items-center gap-1.5 border border-white/10 cursor-not-allowed select-none opacity-85"
+                            title="Télécharger — Bientôt disponible"
                           >
                             <span>Télécharger</span>
-                            <ArrowRight className="w-3 h-3" />
+                            <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-white/10 text-stone-300 font-normal">Bientôt disponible</span>
                           </button>
                         </div>
                       </div>
@@ -1583,11 +1572,7 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
 
                   {/* CARTE 2 : RECRUTER UN VIDÉASTE */}
                   <div 
-                    onClick={() => {
-                      setIsChoiceAVideoPlaying(false);
-                      setIsChoiceBVideoPlaying(prev => !prev);
-                    }}
-                    className="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl flex flex-col justify-between aspect-[9/16] w-[min(calc((100vw-28px)/2),calc((100dvh-210px)*9/16))] max-w-[175px] max-h-[min(490px,calc(100dvh-210px))] sm:max-w-none sm:max-h-none sm:w-[min(280px,calc((100dvh-190px)*9/16))] sm:h-[min(540px,calc(100dvh-190px))] lg:w-[min(310px,calc((100dvh-180px)*9/16))] lg:h-[min(570px,calc(100dvh-180px))] shrink-0 transition-all duration-300 cursor-pointer select-none p-2.5 sm:p-4.5"
+                    className="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl flex flex-col justify-between aspect-[9/16] w-[min(calc((100vw-28px)/2),calc((100dvh-210px)*9/16))] max-w-[175px] max-h-[min(490px,calc(100dvh-210px))] sm:max-w-none sm:max-h-none sm:w-[min(280px,calc((100dvh-190px)*9/16))] sm:h-[min(540px,calc(100dvh-190px))] lg:w-[min(310px,calc((100dvh-180px)*9/16))] lg:h-[min(570px,calc(100dvh-180px))] shrink-0 transition-all duration-300 select-none p-2.5 sm:p-4.5"
                     id="card-choice-recruit-videographer"
                   >
                     {/* Média : Vidéo animée ou illustration IA 9:16 */}
@@ -1666,18 +1651,14 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
 
                       <button
                         type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setIsChoiceAVideoPlaying(false);
-                          setIsChoiceBVideoPlaying(false);
-                          setChosenFlow('BROWSE_VIDEOGRAPHERS');
-                        }}
-                        className="px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white/20 hover:bg-[#A2482B] text-white text-[10px] sm:text-xs font-semibold backdrop-blur-md transition-all flex items-center gap-1 sm:gap-1.5 shadow-md border border-white/25 hover:border-transparent cursor-pointer shrink-0"
-                        title="Recruter un vidéaste"
+                        disabled
+                        aria-disabled="true"
+                        className="px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-full bg-stone-800/80 text-stone-400 text-[10px] sm:text-xs font-semibold backdrop-blur-md flex items-center gap-1 sm:gap-1.5 shadow-md border border-white/10 cursor-not-allowed shrink-0 select-none opacity-85"
+                        title="Recruter un vidéaste — Bientôt disponible"
                         id="btn-choose-recruit-videographer"
                       >
                         <span className="truncate">Recruter un vidéaste</span>
-                        <ArrowRight className="w-3 sm:w-3.5 h-3 sm:h-3.5 shrink-0" />
+                        <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-white/10 text-stone-300 font-normal">Bientôt</span>
                       </button>
                     </div>
 
@@ -1727,16 +1708,13 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                           </button>
                           <button
                             type="button"
-                            onClick={() => {
-                              setShowDetailsB(false);
-                              setIsChoiceAVideoPlaying(false);
-                              setIsChoiceBVideoPlaying(false);
-                              setChosenFlow('BROWSE_VIDEOGRAPHERS');
-                            }}
-                            className="px-3 sm:px-4 py-1.5 rounded-full bg-white/20 hover:bg-[#A2482B] text-white text-[10px] sm:text-xs font-semibold backdrop-blur-md flex items-center gap-1 cursor-pointer"
+                            disabled
+                            aria-disabled="true"
+                            className="px-3 sm:px-4 py-1.5 rounded-full bg-stone-800/80 text-stone-400 text-[10px] sm:text-xs font-semibold backdrop-blur-md flex items-center gap-1.5 border border-white/10 cursor-not-allowed select-none opacity-85"
+                            title="Recruter un vidéaste — Bientôt disponible"
                           >
                             <span>Recruter un vidéaste</span>
-                            <ArrowRight className="w-3 h-3" />
+                            <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-white/10 text-stone-300 font-normal">Bientôt disponible</span>
                           </button>
                         </div>
                       </div>
@@ -1787,13 +1765,7 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                         onTouchEnd={onVidTouchEnd}
                         onMouseDown={onVidMouseDown}
                         onMouseMove={onVidMouseMove}
-                        onMouseUp={onVidMouseUp}
-                        onClick={() => {
-                          if (!vidHasDraggedRef.current) {
-                            setIsVideographerVideoPlaying(prev => !prev);
-                          }
-                        }}
-                        className="aspect-[9/16] w-auto h-[min(490px,calc(100dvh-210px))] sm:h-[min(540px,calc(100dvh-190px))] lg:h-[min(570px,calc(100dvh-180px))] max-w-[calc(100vw-28px)] mx-auto rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl flex flex-col justify-between p-4 sm:p-5 transition-transform duration-150 ease-out select-none cursor-pointer shrink-0 relative"
+                        className="aspect-[9/16] w-auto h-[min(490px,calc(100dvh-210px))] sm:h-[min(540px,calc(100dvh-190px))] lg:h-[min(570px,calc(100dvh-180px))] max-w-[calc(100vw-28px)] mx-auto rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl flex flex-col justify-between p-4 sm:p-5 transition-transform duration-150 ease-out select-none cursor-grab active:cursor-grabbing shrink-0 relative"
                         id={`videographer-card-${v.id}`}
                       >
                         {/* Vidéo ou Affiche de présentation */}
