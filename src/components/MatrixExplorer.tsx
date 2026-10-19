@@ -3,6 +3,7 @@ import {
   Tv, 
   Globe,
   Compass, 
+  Grid,
   Sparkles,
   Star,
   Award,
@@ -14,6 +15,7 @@ import {
   Flame,
   Users,
   X, 
+  Play,
   Pause,
   Volume2,
   VolumeX,
@@ -170,13 +172,23 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
 
   // 1b. NOUVELLE ARCHITECTURE HÉRITAGES EN 2 NIVEAUX :
   // 'matrix' (Niveau 1 : Le grand mur 16x16 vivant) | 'sun' (Niveau 2 : Le Soleil et ses 16 voisins) | 'swipe' (Mode cartes vidéo conservé)
-  const [heritageMode, setHeritageMode] = useState<'matrix' | 'sun' | 'swipe'>('matrix');
+  const [heritageMode, setHeritageMode] = useState<'matrix' | 'sun' | 'swipe' | 'circle'>('matrix');
   const [selectedSun, setSelectedSun] = useState<MatrixProfile | null>(null);
   const [sunBreadcrumbs, setSunBreadcrumbs] = useState<MatrixProfile[]>([]);
+  const [lastVisitedProfileId, setLastVisitedProfileId] = useState<string | null>(null);
   const [matrixShuffleSeed, setMatrixShuffleSeed] = useState<number>(0);
   const [matrixActiveDoor, setMatrixActiveDoor] = useState<string | null>(null);
   const [matrixPanOffset, setMatrixPanOffset] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [duoModalPair, setDuoModalPair] = useState<{ sun: MatrixProfile; counterpoint: MatrixProfile } | null>(null);
+
+  // 4. Modale vidéo 9:16 pour la personne sélectionnée
+  const [modalPerson, setModalPerson] = useState<AffiliationPerson | null>(null);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [isMuted, setIsMuted] = useState<boolean>(true);
+  const [isResonanceModalOpen, setIsResonanceModalOpen] = useState<boolean>(false);
+  const [personResonancePct, setPersonResonancePct] = useState<number | null>(null);
+  const [isShareCopied, setIsShareCopied] = useState<boolean>(false);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   // Tous les profils réels consolidés
   const allMatrixProfiles = useMemo(() => getAllRealProfiles(), []);
@@ -258,6 +270,7 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
   const handleSelectPersonFromMatrix = (person: MatrixProfile) => {
     setSelectedSun(person);
     setSunBreadcrumbs([person]);
+    setLastVisitedProfileId(person.id);
     setHeritageMode('sun');
     try {
       window.history.pushState({ screen: 'matrix_view', soleilId: person.id }, '', `?soleil=${person.id}`);
@@ -268,6 +281,7 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
 
   const handleSelectNeighborAsSun = (neighbor: MatrixProfile) => {
     setSelectedSun(neighbor);
+    setLastVisitedProfileId(neighbor.id);
     setSunBreadcrumbs(prev => {
       const filtered = prev.filter(p => p.id !== neighbor.id);
       return [...filtered, neighbor];
@@ -288,6 +302,30 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
     }
   };
 
+  const handleOpenSunStoryModal = (person: MatrixProfile) => {
+    setModalPerson({
+      id: person.id,
+      name: person.name,
+      firstName: person.firstName,
+      role: person.role,
+      territory: person.territory,
+      country: person.country,
+      flag: person.flag,
+      universeTag: person.universeTag,
+      photoUrl: person.photoUrl,
+      teaserVideoUrl: person.teaserVideoUrl,
+      teaserPitch: person.teaserPitch,
+      invitationStory: person.invitationStory,
+      question: person.question || person.centralQuestion,
+      badge: person.badge
+    });
+    setIsPlaying(false);
+  };
+
+  const handleOpenDuoModal = (sun: MatrixProfile, counterpoint: MatrixProfile) => {
+    setDuoModalPair({ sun, counterpoint });
+  };
+
   const handleBackToPreviousSun = () => {
     if (sunBreadcrumbs.length > 1) {
       const next = [...sunBreadcrumbs];
@@ -295,6 +333,7 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
       const prevSun = next[next.length - 1];
       setSunBreadcrumbs(next);
       setSelectedSun(prevSun);
+      setLastVisitedProfileId(prevSun.id);
       try {
         window.history.replaceState({ screen: 'matrix_view', soleilId: prevSun.id }, '', `?soleil=${prevSun.id}`);
       } catch {
@@ -384,29 +423,6 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
 
   // 3. Chemin de cooptation généalogique [idGen1, idGen2, ...] en mode Séries & Lignée
   const [selectedPath, setSelectedPath] = useState<string[]>([]);
-
-  // 4. Modale vidéo 9:16 pour la personne sélectionnée
-  const [modalPerson, setModalPerson] = useState<AffiliationPerson | null>(null);
-  const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [isMuted, setIsMuted] = useState<boolean>(true);
-  const [isResonanceModalOpen, setIsResonanceModalOpen] = useState<boolean>(false);
-  const [personResonancePct, setPersonResonancePct] = useState<number | null>(null);
-  const [isShareCopied, setIsShareCopied] = useState<boolean>(false);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-
-  // Fermeture de la modale protagoniste par la touche Échap
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && modalPerson) {
-        setModalPerson(null);
-        setIsPlaying(false);
-        setIsResonanceModalOpen(false);
-        setIsPersonQuestionModalOpen(false);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [modalPerson]);
 
   // Configuration de la catégorie active
   const activeCategoryConfig = useMemo<ExplorerCategoryConfig>(() => {
@@ -1933,37 +1949,22 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
                 </span>
               </div>
 
-              <div className="flex items-center gap-1.5">
-                {isPlaying && (
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      toggleMute();
-                    }}
-                    className="p-1.5 rounded-full bg-black/60 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/15 hover:border-[#A2482B] transition-colors cursor-pointer"
-                    title={isMuted ? 'Activer le son' : 'Couper le son'}
-                  >
-                    {isMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
-                  </button>
+              {/* Déclencheur lecteur vidéo vintage officiel TvPlayerIcon en haut à droite */}
+              <button 
+                id="btn-play-pause-modal"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleVideoPlayback();
+                }}
+                className="w-8.5 h-8.5 sm:w-9.5 sm:h-9.5 rounded-xl bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0"
+                title={isPlaying ? 'Mettre en pause' : 'Lire la vidéo'}
+              >
+                {isPlaying ? (
+                  <Pause className="w-3.5 h-3.5 fill-white text-white" />
+                ) : (
+                  <TvPlayerIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white transition-transform" strokeWidth={1.6} />
                 )}
-
-                {/* Déclencheur lecteur vidéo standardisé en haut à droite */}
-                <button 
-                  id="btn-play-pause-modal"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    toggleVideoPlayback();
-                  }}
-                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0"
-                  title={isPlaying ? 'Mettre en pause' : 'Lire la vidéo'}
-                >
-                  {isPlaying ? (
-                    <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
-                  ) : (
-                    <TvPlayerIcon className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-white transition-transform" strokeWidth={1.6} />
-                  )}
-                </button>
-              </div>
+              </button>
             </div>
 
 

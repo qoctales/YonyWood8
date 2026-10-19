@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { 
   ChevronLeft, 
   ChevronRight, 
+  Play,
   Pause, 
   Volume2, 
   VolumeX, 
@@ -319,12 +320,13 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
                       {isMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
                     </button>
                   )}
+                  {/* Déclencheur lecteur vidéo vintage officiel TvPlayerIcon en haut à droite */}
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
                       togglePlay1();
                     }}
-                    className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
+                    className="w-8.5 h-8.5 sm:w-9.5 sm:h-9.5 rounded-xl bg-black/45 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
                     title={isPlayingStep1 ? 'Mettre en pause' : 'Lire la vidéo'}
                   >
                     {isPlayingStep1 ? (
@@ -440,12 +442,13 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
                       {isMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
                     </button>
                   )}
+                  {/* Déclencheur lecteur vidéo vintage officiel TvPlayerIcon en haut à droite */}
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
                       togglePlay2();
                     }}
-                    className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
+                    className="w-8.5 h-8.5 sm:w-9.5 sm:h-9.5 rounded-xl bg-black/45 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
                     title={isPlayingStep2 ? 'Mettre en pause' : 'Lire la vidéo'}
                   >
                     {isPlayingStep2 ? (
@@ -570,33 +573,21 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
                   <span className="truncate">{effectiveSubcategory?.label}</span>
                 </div>
 
-                <div className="flex items-center gap-1.5">
-                  {isPlayingStep3 && (
-                    <button
-                      onClick={toggleMute}
-                      className="p-1.5 rounded-full bg-black/60 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/15 hover:border-[#A2482B] transition-colors cursor-pointer"
-                      title={isMuted ? 'Activer le son' : 'Couper le son'}
-                    >
-                      {isMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
-                    </button>
+                {/* Déclencheur lecteur vidéo vintage officiel TvPlayerIcon en haut à droite */}
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    togglePlay3();
+                  }}
+                  className="w-8.5 h-8.5 sm:w-9.5 sm:h-9.5 rounded-xl bg-black/45 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
+                  title={isPlayingStep3 ? 'Mettre en pause' : 'Lire la vidéo'}
+                >
+                  {isPlayingStep3 ? (
+                    <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
+                  ) : (
+                    <TvPlayerIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white transition-transform" strokeWidth={1.6} />
                   )}
-
-                  {/* Déclencheur lecteur vidéo standardisé en haut à droite (format carré arrondi) */}
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      togglePlay3();
-                    }}
-                    className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
-                    title={isPlayingStep3 ? 'Mettre en pause' : 'Lire la vidéo'}
-                  >
-                    {isPlayingStep3 ? (
-                      <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
-                    ) : (
-                      <TvPlayerIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white transition-transform" strokeWidth={1.6} />
-                    )}
-                  </button>
-                </div>
+                </button>
               </div>
 
               {/* CÔTÉ DROIT : ICÔNES D'ACTION VERTICALES (Résonance, Question, Profil, Partage) */}

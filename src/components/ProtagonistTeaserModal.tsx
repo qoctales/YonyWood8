@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Pause, Volume2, VolumeX, X, ArrowRight, Sparkles, MapPin, Award } from 'lucide-react';
+import { Play, Pause, Volume2, VolumeX, X, ArrowRight, Sparkles, MapPin, Award } from 'lucide-react';
 import { Protagonist } from '../types';
 import { ResonanceModal } from './ResonanceModal';
 import { ProfileSoloIcon, TvPlayerIcon } from './YonywoodBrandIcons';
@@ -122,13 +122,13 @@ export const ProtagonistTeaserModal: React.FC<ProtagonistTeaserModalProps> = ({
             <Award className="w-4 h-4 text-white" />
           </button>
 
-          {/* Déclencheur vidéo vintage en haut à droite (format carré arrondi signature TvPlayerIcon) */}
+          {/* Déclencheur lecteur vidéo vintage officiel TvPlayerIcon en haut à droite */}
           <button
             onClick={(e) => {
               e.stopPropagation();
               togglePlay(e);
             }}
-            className="w-8.5 h-8.5 sm:w-9.5 sm:h-9.5 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0"
+            className="w-8.5 h-8.5 sm:w-9.5 sm:h-9.5 rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0"
             title={isPlaying ? 'Pause' : 'Lecture vidéo'}
           >
             {isPlaying ? (

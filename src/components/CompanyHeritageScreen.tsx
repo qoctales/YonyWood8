@@ -477,12 +477,28 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/45 pointer-events-none" />
 
               {/* =========================================================== */}
-              {/* HAUT DE CARTE : DOMAINE / CATÉGORIE EN HAUT EN TITRE        */}
+              {/* HAUT DE CARTE : DOMAINE EN TITRE À GAUCHE & LECTEUR VIDÉO EN HAUT À DROITE */}
               {/* =========================================================== */}
-              <div className="relative z-20 pointer-events-auto">
+              <div className="relative z-20 flex items-center justify-between w-full pointer-events-auto">
                 <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-[10.5px] sm:text-xs font-bold text-white tracking-wider uppercase drop-shadow-sm truncate inline-block">
                   {currentCompany.category}
                 </span>
+
+                {/* Lecteur vidéo vintage officiel TvPlayerIcon en haut à droite */}
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsPlaying(prev => !prev);
+                  }}
+                  className="w-8.5 h-8.5 sm:w-9.5 sm:h-9.5 rounded-xl bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center text-white transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0"
+                  title={isPlaying ? "Mettre en pause" : `Regarder la vidéo de ${currentCompany.companyName}`}
+                >
+                  {isPlaying ? (
+                    <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
+                  ) : (
+                    <TvPlayerIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white transition-transform" strokeWidth={1.6} />
+                  )}
+                </button>
               </div>
 
               {/* =========================================================== */}
@@ -524,49 +540,27 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
               </div>
 
               {/* =========================================================== */}
-              {/* BAS DE LA CARTE : NOM DE L'ENTREPRISE À GAUCHE             */}
-              {/* ET LECTEUR VIDÉO EN BAS À DROITE EN FACE DU NOM             */}
+              {/* BAS DE LA CARTE : NOM DE L'ENTREPRISE SEUL À GAUCHE         */}
+              {/* ET SYMBOLE MUTE EN BAS À DROITE                             */}
               {/* =========================================================== */}
-              <div className="relative z-10 pt-2 mt-auto flex items-end justify-between gap-2 pointer-events-auto">
-                <div className="space-y-0.5 min-w-0 pr-2">
+              <div className="relative z-20 pt-2 mt-auto flex items-end justify-between gap-2 pointer-events-auto">
+                <div className="min-w-0 pr-2">
                   <h4 className="font-editorial text-base sm:text-lg font-bold text-white drop-shadow-md tracking-wider leading-tight">
                     {currentCompany.companyName}
                   </h4>
-                  <span className="text-[10px] sm:text-[11px] text-white/80 font-medium block truncate">
-                    {currentCompany.tagline}
-                  </span>
                 </div>
 
-                <div className="flex items-center gap-1.5 shrink-0">
-                  {isPlaying && (
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setIsMuted(prev => !prev);
-                      }}
-                      className="w-8 h-8 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 text-white flex items-center justify-center cursor-pointer transition-all shadow-md hover:scale-105 active:scale-95"
-                      title={isMuted ? "Activer le son" : "Couper le son"}
-                    >
-                      {isMuted ? <VolumeX className="w-3.5 h-3.5 text-white" /> : <Volume2 className="w-3.5 h-3.5 text-white" />}
-                    </button>
-                  )}
-
-                  {/* Lecteur vidéo en bas à droite en face du nom */}
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setIsPlaying(prev => !prev);
-                    }}
-                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/25 hover:border-[#A2482B] flex items-center justify-center text-white transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0"
-                    title={isPlaying ? "Mettre en pause" : `Regarder la vidéo de ${currentCompany.companyName}`}
-                  >
-                    {isPlaying ? (
-                      <Pause className="w-4 h-4 fill-white text-white" />
-                    ) : (
-                      <TvPlayerIcon className="w-5 h-5 text-white transition-transform" strokeWidth={1.6} />
-                    )}
-                  </button>
-                </div>
+                {/* Symbole Muet en bas à droite */}
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsMuted(prev => !prev);
+                  }}
+                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center cursor-pointer transition-all shadow-md hover:scale-105 active:scale-95 shrink-0"
+                  title={isMuted ? "Activer le son" : "Couper le son"}
+                >
+                  {isMuted ? <VolumeX className="w-3.5 h-3.5 text-white" /> : <Volume2 className="w-3.5 h-3.5 text-white" />}
+                </button>
               </div>
             </div>
 
@@ -623,12 +617,29 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/65 pointer-events-none" />
 
               {/* =========================================================== */}
-              {/* HAUT DE CARTE : NOM DE L'ENTREPRISE EN BADGE SUPÉRIEUR      */}
+              {/* HAUT DE CARTE : NOM DE L'ENTREPRISE EN TITRE À GAUCHE &     */}
+              {/* LECTEUR VIDÉO EN HAUT À DROITE                              */}
               {/* =========================================================== */}
-              <div className="relative z-20 pointer-events-auto">
+              <div className="relative z-20 flex items-center justify-between w-full pointer-events-auto">
                 <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-[10.5px] sm:text-xs font-bold text-white tracking-wider uppercase drop-shadow-sm truncate inline-block">
                   {selectedCompanyForSpace.companyName}
                 </span>
+
+                {/* Lecteur vidéo vintage officiel TvPlayerIcon en haut à droite */}
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsStakeholderPlaying(prev => !prev);
+                  }}
+                  className="w-8.5 h-8.5 sm:w-9.5 sm:h-9.5 rounded-xl bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center text-white transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0"
+                  title={isStakeholderPlaying ? "Mettre en pause" : `Regarder la vidéo de ${currentStakeholder.name}`}
+                >
+                  {isStakeholderPlaying ? (
+                    <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
+                  ) : (
+                    <TvPlayerIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white transition-transform" strokeWidth={1.6} />
+                  )}
+                </button>
               </div>
 
               {/* =========================================================== */}
@@ -692,48 +703,29 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
 
               {/* =========================================================== */}
               {/* BAS : PRÉNOM DE LA PERSONNE & STATUT SIMPLE (Fondateur...)  */}
-              {/* ET LECTEUR VIDÉO EN BAS À DROITE EN FACE DU NOM             */}
+              {/* ET SYMBOLE MUTE EN BAS À DROITE                             */}
               {/* =========================================================== */}
-              <div className="relative z-10 pt-2 mt-auto flex items-end justify-between gap-2 pointer-events-auto">
+              <div className="relative z-20 pt-2 mt-auto flex items-end justify-between gap-2 pointer-events-auto">
                 <div className="space-y-0.5 min-w-0 pr-2">
-                  <h3 className="font-editorial text-base sm:text-lg font-bold text-white tracking-wider leading-tight drop-shadow-md">
+                  <h3 className="font-editorial text-[15px] sm:text-base md:text-lg font-bold text-white tracking-wider leading-tight drop-shadow-md">
                     {currentStakeholder.name.split(' ')[0]}
                   </h3>
-                  <span className="text-[10px] sm:text-[11px] text-white/85 font-medium block truncate">
-                    {currentStakeholder.roleCategory} · {currentStakeholder.name}
+                  <span className="text-[11px] sm:text-xs text-white/85 font-medium block truncate">
+                    {currentStakeholder.roleCategory}
                   </span>
                 </div>
 
-                <div className="flex items-center gap-1.5 shrink-0">
-                  {isStakeholderPlaying && (
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setIsStakeholderMuted(prev => !prev);
-                      }}
-                      className="w-8 h-8 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 text-white flex items-center justify-center cursor-pointer transition-all shadow-md hover:scale-105 active:scale-95"
-                      title={isStakeholderMuted ? 'Activer le son' : 'Couper le son'}
-                    >
-                      {isStakeholderMuted ? <VolumeX className="w-3.5 h-3.5 text-white" /> : <Volume2 className="w-3.5 h-3.5 text-white" />}
-                    </button>
-                  )}
-
-                  {/* Lecteur vidéo en bas à droite en face du nom */}
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setIsStakeholderPlaying(prev => !prev);
-                    }}
-                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/25 hover:border-[#A2482B] flex items-center justify-center text-white transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0"
-                    title={isStakeholderPlaying ? "Mettre en pause" : `Regarder la vidéo de ${currentStakeholder.name}`}
-                  >
-                    {isStakeholderPlaying ? (
-                      <Pause className="w-4 h-4 fill-white text-white" />
-                    ) : (
-                      <TvPlayerIcon className="w-5 h-5 text-white transition-transform" strokeWidth={1.6} />
-                    )}
-                  </button>
-                </div>
+                {/* Symbole Muet en bas à droite */}
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsStakeholderMuted(prev => !prev);
+                  }}
+                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center cursor-pointer transition-all shadow-md hover:scale-105 active:scale-95 shrink-0"
+                  title={isStakeholderMuted ? 'Activer le son' : 'Couper le son'}
+                >
+                  {isStakeholderMuted ? <VolumeX className="w-3.5 h-3.5 text-white" /> : <Volume2 className="w-3.5 h-3.5 text-white" />}
+                </button>
               </div>
             </div>
 

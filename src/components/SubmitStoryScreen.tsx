@@ -5,6 +5,7 @@ import {
   Check, 
   UploadCloud, 
   Camera, 
+  Play,
   Pause, 
   Volume2, 
   VolumeX, 
@@ -722,14 +723,14 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                       </button>
                     )}
 
-                    {/* Déclencheur lecteur vidéo « Petite Télé » standardisé en haut à droite */}
+                    {/* Déclencheur lecteur vidéo vintage officiel TvPlayerIcon en haut à droite */}
                     <button
                       type="button"
                       onClick={(e) => {
                         e.stopPropagation();
                         setIsDoorVideoPlaying(!isDoorVideoPlaying);
                       }}
-                      className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
+                      className="w-8.5 h-8.5 sm:w-9.5 sm:h-9.5 rounded-xl bg-black/45 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
                       title={isDoorVideoPlaying ? 'Mettre en pause' : `Visionner la présentation ${currentDoor.label}`}
                     >
                       {isDoorVideoPlaying ? (
@@ -953,14 +954,14 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                     </button>
                   )}
 
-                  {/* Déclencheur lecteur vidéo « Petite Télé » standardisé en haut à droite */}
+                  {/* Déclencheur lecteur vidéo vintage officiel TvPlayerIcon en haut à droite */}
                   <button
                     type="button"
                     onClick={(e) => {
                       e.stopPropagation();
                       setIsSubjectVideoPlaying(!isSubjectVideoPlaying);
                     }}
-                    className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
+                    className="w-8.5 h-8.5 sm:w-9.5 sm:h-9.5 rounded-xl bg-black/45 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
                     title={isSubjectVideoPlaying ? 'Mettre en pause' : 'Visionner la vidéo'}
                   >
                     {isSubjectVideoPlaying ? (
@@ -1470,7 +1471,7 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                             setIsChoiceBVideoPlaying(false);
                             setIsChoiceAVideoPlaying(!isChoiceAVideoPlaying);
                           }}
-                          className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
+                          className="w-8.5 h-8.5 sm:w-9.5 sm:h-9.5 rounded-xl bg-black/45 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
                           title={isChoiceAVideoPlaying ? 'Mettre en pause' : 'Lire la vidéo'}
                         >
                           {isChoiceAVideoPlaying ? (
@@ -1636,7 +1637,7 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                             setIsChoiceAVideoPlaying(false);
                             setIsChoiceBVideoPlaying(!isChoiceBVideoPlaying);
                           }}
-                          className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
+                          className="w-8.5 h-8.5 sm:w-9.5 sm:h-9.5 rounded-xl bg-black/45 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
                           title={isChoiceBVideoPlaying ? 'Mettre en pause' : 'Lire la vidéo'}
                         >
                           {isChoiceBVideoPlaying ? (
@@ -1843,7 +1844,7 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                                 e.stopPropagation();
                                 setIsVideographerVideoPlaying(!isVideographerVideoPlaying);
                               }}
-                              className="w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
+                              className="w-8.5 h-8.5 sm:w-9.5 sm:h-9.5 rounded-xl bg-black/45 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
                               title={isVideographerVideoPlaying ? 'Mettre en pause' : 'Lire la vidéo'}
                             >
                               {isVideographerVideoPlaying ? (

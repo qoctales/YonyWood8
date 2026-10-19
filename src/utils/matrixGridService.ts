@@ -425,3 +425,100 @@ export function get16SunNeighbors(
 
   return result.slice(0, 16);
 }
+
+export interface InterNeighborLink {
+  id: string;
+  fromIndex: number;
+  toIndex: number;
+  fromPersonId: string;
+  toPersonId: string;
+  type: 'duo' | 'lineage' | 'theme' | 'territory';
+  label: string;
+  strokeColor: string;
+}
+
+// 6. Calcul des liens transversaux entre les 16 voisins d'un même Soleil
+export function computeInterNeighborLinks(
+  sun: MatrixProfile, 
+  neighbors: SunNeighbor[]
+): InterNeighborLink[] {
+  const links: InterNeighborLink[] = [];
+  const linkKeySet = new Set<string>();
+
+  for (let i = 0; i < neighbors.length; i++) {
+    for (let j = i + 1; j < neighbors.length; j++) {
+      const a = neighbors[i].person;
+      const b = neighbors[j].person;
+
+      const key = [a.id, b.id].sort().join('-');
+      if (linkKeySet.has(key)) continue;
+
+      // 1. Duo / Contrepoint
+      if (a.counterpointId === b.id || b.counterpointId === a.id || (a.duoId && a.duoId === b.duoId)) {
+        linkKeySet.add(key);
+        links.push({
+          id: `link-duo-${key}`,
+          fromIndex: i,
+          toIndex: j,
+          fromPersonId: a.id,
+          toPersonId: b.id,
+          type: 'duo',
+          label: 'Duo & Contrepoint',
+          strokeColor: '#C89B3C'
+        });
+        continue;
+      }
+
+      // 2. Lignée & Cooptation directe ou partagée
+      const isDirectLineage = a.invitedById === b.id || b.invitedById === a.id;
+      const isSharedLineage = a.invitedById && a.invitedById === b.invitedById;
+      if (isDirectLineage || isSharedLineage) {
+        linkKeySet.add(key);
+        links.push({
+          id: `link-lineage-${key}`,
+          fromIndex: i,
+          toIndex: j,
+          fromPersonId: a.id,
+          toPersonId: b.id,
+          type: 'lineage',
+          label: isDirectLineage ? 'Cooptation directe' : 'Même filiation de cooptation',
+          strokeColor: '#A2482B'
+        });
+        continue;
+      }
+
+      // 3. Même Porte thématique (Sagesses, Séries, Territoires, etc.)
+      if (a.doorId === b.doorId && (a.doorId !== 'series' || a.universeTag === b.universeTag)) {
+        linkKeySet.add(key);
+        links.push({
+          id: `link-theme-${key}`,
+          fromIndex: i,
+          toIndex: j,
+          fromPersonId: a.id,
+          toPersonId: b.id,
+          type: 'theme',
+          label: `Porte ${a.doorId}`,
+          strokeColor: '#D97706'
+        });
+        continue;
+      }
+
+      // 4. Même Territoire / Pays
+      if (a.country && a.country === b.country && a.country !== 'France') {
+        linkKeySet.add(key);
+        links.push({
+          id: `link-territory-${key}`,
+          fromIndex: i,
+          toIndex: j,
+          fromPersonId: a.id,
+          toPersonId: b.id,
+          type: 'territory',
+          label: `Territoire ${a.country}`,
+          strokeColor: '#A8A29E'
+        });
+      }
+    }
+  }
+
+  return links;
+}

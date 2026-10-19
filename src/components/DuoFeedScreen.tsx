@@ -488,24 +488,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       </span>
 
                       <div className="flex items-center gap-1 sm:gap-2">
-                        {isPlayingA && (
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setIsMutedA(prev => !prev);
-                            }}
-                            className="w-7 h-7 sm:w-8.5 sm:h-8.5 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
-                            title={isMutedA ? "Activer le son" : "Couper le son"}
-                          >
-                            {isMutedA ? (
-                              <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
-                            ) : (
-                              <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
-                            )}
-                          </button>
-                        )}
-
-                        {/* Déclencheur lecteur vidéo en haut à droite (format carré arrondi) */}
+                        {/* Déclencheur lecteur vidéo standardisé en haut à droite (format carré arrondi avec triangle plus petit) */}
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
@@ -596,24 +579,42 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       </button>
                     </div>
 
-                    {/* BAS : Prénom uniquement - Typographie agrandie et espacée */}
-                    <div 
-                      className="relative z-20 p-2.5 sm:p-4 pb-3.5 sm:pb-5 flex flex-col pointer-events-auto cursor-pointer group/title mt-auto"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onNavigate({
-                          type: 'protagonist_profile',
-                          protagonistId: pA.id,
-                          returnToDuoId: currentDuo.id,
-                          returnToDuoIndex: safeIndex,
-                          returnToDocId: selectedDocId || currentDuo.documentaryId
-                        });
-                      }}
-                      title={`Découvrir le profil de ${pA.name}`}
-                    >
-                      <h3 className="font-editorial text-[15px] sm:text-base font-bold text-white tracking-wider leading-snug pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors truncate">
-                        {pA.name.split(' ')[0]}
-                      </h3>
+                    {/* BAS : Prénom à gauche & Symbole Muet à droite */}
+                    <div className="relative z-20 p-2.5 sm:p-4 pb-3.5 sm:pb-5 flex items-end justify-between gap-1 pointer-events-auto mt-auto">
+                      <div 
+                        className="flex flex-col cursor-pointer group/title min-w-0"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onNavigate({
+                            type: 'protagonist_profile',
+                            protagonistId: pA.id,
+                            returnToDuoId: currentDuo.id,
+                            returnToDuoIndex: safeIndex,
+                            returnToDocId: selectedDocId || currentDuo.documentaryId
+                          });
+                        }}
+                        title={`Découvrir le profil de ${pA.name}`}
+                      >
+                        <h3 className="font-editorial text-[15px] sm:text-base font-bold text-white tracking-wider leading-snug pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors truncate">
+                          {pA.name.split(' ')[0]}
+                        </h3>
+                      </div>
+
+                      {/* Symbole Muet en bas à droite */}
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setIsMutedA(prev => !prev);
+                        }}
+                        className="w-7 h-7 sm:w-8.5 sm:h-8.5 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0"
+                        title={isMutedA ? "Activer le son" : "Couper le son"}
+                      >
+                        {isMutedA ? (
+                          <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
+                        ) : (
+                          <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
+                        )}
+                      </button>
                     </div>
                   </div>
 
@@ -655,24 +656,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       </span>
 
                       <div className="flex items-center gap-1 sm:gap-2">
-                        {isPlayingB && (
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setIsMutedB(prev => !prev);
-                            }}
-                            className="w-7 h-7 sm:w-8.5 sm:h-8.5 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
-                            title={isMutedB ? "Activer le son" : "Couper le son"}
-                          >
-                            {isMutedB ? (
-                              <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
-                            ) : (
-                              <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
-                            )}
-                          </button>
-                        )}
-
-                        {/* Déclencheur lecteur vidéo en haut à droite (format carré arrondi) */}
+                        {/* Déclencheur lecteur vidéo standardisé en haut à droite (format carré arrondi avec triangle plus petit) */}
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
@@ -763,24 +747,42 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       </button>
                     </div>
 
-                    {/* BAS : Prénom uniquement - Typographie agrandie et espacée */}
-                    <div 
-                      className="relative z-20 p-2.5 sm:p-4 pb-3.5 sm:pb-5 flex flex-col pointer-events-auto cursor-pointer group/title mt-auto"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onNavigate({
-                          type: 'protagonist_profile',
-                          protagonistId: pB.id,
-                          returnToDuoId: currentDuo.id,
-                          returnToDuoIndex: safeIndex,
-                          returnToDocId: selectedDocId || currentDuo.documentaryId
-                        });
-                      }}
-                      title={`Découvrir le profil de ${pB.name}`}
-                    >
-                      <h3 className="font-editorial text-[15px] sm:text-base font-bold text-white tracking-wider leading-snug pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors truncate">
-                        {pB.name.split(' ')[0]}
-                      </h3>
+                    {/* BAS : Prénom à gauche & Symbole Muet à droite */}
+                    <div className="relative z-20 p-2.5 sm:p-4 pb-3.5 sm:pb-5 flex items-end justify-between gap-1 pointer-events-auto mt-auto">
+                      <div 
+                        className="flex flex-col cursor-pointer group/title min-w-0"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onNavigate({
+                            type: 'protagonist_profile',
+                            protagonistId: pB.id,
+                            returnToDuoId: currentDuo.id,
+                            returnToDuoIndex: safeIndex,
+                            returnToDocId: selectedDocId || currentDuo.documentaryId
+                          });
+                        }}
+                        title={`Découvrir le profil de ${pB.name}`}
+                      >
+                        <h3 className="font-editorial text-[15px] sm:text-base font-bold text-white tracking-wider leading-snug pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors truncate">
+                          {pB.name.split(' ')[0]}
+                        </h3>
+                      </div>
+
+                      {/* Symbole Muet en bas à droite */}
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setIsMutedB(prev => !prev);
+                        }}
+                        className="w-7 h-7 sm:w-8.5 sm:h-8.5 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0"
+                        title={isMutedB ? "Activer le son" : "Couper le son"}
+                      >
+                        {isMutedB ? (
+                          <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
+                        ) : (
+                          <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
+                        )}
+                      </button>
                     </div>
                   </div>
 
