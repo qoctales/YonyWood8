@@ -1,8 +1,6 @@
 import React from 'react';
 import { 
-  LogIn, 
-  UserPlus, 
-  User,
+  User, 
   LogOut
 } from 'lucide-react';
 import { ViewScreen } from '../types';
@@ -21,6 +19,11 @@ interface TaglineInfo {
 
 const getHeaderTagline = (screen: ViewScreen): TaglineInfo => {
   switch (screen.type) {
+    case 'participate':
+      return {
+        title: "On est ensemble",
+        subtitle: "Choisissez votre mode de contribution et d'action"
+      };
     case 'duo_feed':
     case 'duo_detail':
     case 'landing':
@@ -81,7 +84,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentScreen, onNavigate, onOpe
 
   return (
     <header className="sticky top-0 z-40 w-full backdrop-blur-md bg-white/95 border-b border-stone-200 shadow-2xs">
-      <div className="max-w-6xl mx-auto px-3 sm:px-6 h-14 sm:h-15 flex items-center justify-between gap-2 relative">
+      <div className="max-w-6xl mx-auto px-3 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-2 relative">
         
         {/* Gauche : Logo officiel YonyWood */}
         <div 
@@ -91,9 +94,9 @@ export const Navbar: React.FC<NavbarProps> = ({ currentScreen, onNavigate, onOpe
           title="YonyWood — Accueil"
         >
           <img 
-            src="/yonywoodlogo.jpg" 
+            src="/yonywood-logo-gras.svg" 
             alt="YonyWood" 
-            className="h-7 sm:h-8.5 w-auto object-contain mix-blend-multiply select-none group-hover:opacity-90 transition-opacity"
+            className="h-10 sm:h-12 w-auto object-contain select-none group-hover:opacity-90 transition-all"
           />
         </div>
 
@@ -107,17 +110,32 @@ export const Navbar: React.FC<NavbarProps> = ({ currentScreen, onNavigate, onOpe
           </span>
         </div>
 
-        {/* Droite : Boutons Connexion / Inscription ou Profil Utilisateur */}
+        {/* Droite : Bouton d'action phare Co-construire Yonywood */}
         <div className="flex items-center gap-2 sm:gap-2.5 z-10">
-          {user ? (
-            <div className="flex items-center gap-2">
+          
+          {/* Bouton Co-construire Yonywood */}
+          <button
+            onClick={() => onNavigate({ type: 'participate' })}
+            id="nav-participate-btn"
+            className={`px-3.5 sm:px-4.5 py-1.5 sm:py-2 rounded-full font-bold text-xs sm:text-sm shadow-xs transition-all cursor-pointer flex items-center justify-center active:scale-95 ${
+              currentScreen.type === 'participate'
+                ? 'bg-[#8A3B22] text-white ring-2 ring-[#A2482B]/40 shadow-sm'
+                : 'bg-[#A2482B] hover:bg-[#8A3B22] text-white hover:scale-105 hover:shadow-sm'
+            }`}
+            title="Co-construire Yonywood : Devenir égérie, coproduction, entreprises"
+          >
+            <span>Co-construire Yonywood</span>
+          </button>
+
+          {user && (
+            <div className="flex items-center gap-1.5 sm:gap-2">
               <button
                 onClick={() => onNavigate({ type: 'profile' })}
-                className="px-3 py-1.5 rounded-full border border-stone-200 hover:border-stone-300 bg-stone-50 hover:bg-stone-100 text-stone-800 text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
+                className="px-2.5 sm:px-3 py-1.5 rounded-full border border-stone-200 hover:border-stone-300 bg-stone-50 hover:bg-stone-100 text-stone-800 text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
                 title="Accéder à mon profil"
               >
                 <User className="w-3.5 h-3.5 text-[#A2482B]" />
-                <span className="max-w-[100px] truncate">{user.firstName || user.name}</span>
+                <span className="max-w-[80px] sm:max-w-[100px] truncate">{user.firstName || user.name}</span>
               </button>
               <button
                 onClick={logout}
@@ -127,26 +145,6 @@ export const Navbar: React.FC<NavbarProps> = ({ currentScreen, onNavigate, onOpe
                 <LogOut className="w-3.5 h-3.5" />
               </button>
             </div>
-          ) : (
-            <>
-              <button
-                onClick={() => onOpenAuth ? onOpenAuth('login') : onNavigate({ type: 'profile' })}
-                className="px-3 sm:px-3.5 py-1.5 rounded-full border border-stone-300 hover:border-stone-400 text-stone-700 hover:text-stone-900 text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 hover:bg-stone-50"
-                id="nav-login-btn"
-              >
-                <LogIn className="w-3.5 h-3.5" />
-                <span>Connexion</span>
-              </button>
-
-              <button
-                onClick={() => onOpenAuth ? onOpenAuth('register') : onNavigate({ type: 'profile' })}
-                className="px-3 sm:px-4 py-1.5 rounded-full bg-[#A2482B] hover:bg-[#8A3B22] text-white text-xs font-semibold shadow-xs transition-all cursor-pointer flex items-center gap-1.5 hover:scale-105 active:scale-95"
-                id="nav-register-btn"
-              >
-                <UserPlus className="w-3.5 h-3.5" />
-                <span>Inscription</span>
-              </button>
-            </>
           )}
         </div>
 

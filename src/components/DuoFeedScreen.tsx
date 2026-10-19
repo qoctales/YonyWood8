@@ -243,7 +243,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
 
   // Extraction robuste des deux pendants de la série
   const getSeriesHalves = (): [string, string] => {
-    if (isBeninSeries) return ['Bénin', 'Pérou'];
+    if (isBeninSeries) return ['Bénin', '...'];
     if (activeDoc?.universes && activeDoc.universes.length >= 2) {
       return [activeDoc.universes[0].name, activeDoc.universes[1].name];
     }
@@ -261,8 +261,16 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
   const seriesNameA = formatTitleCase(rawPartA);
   const seriesNameB = formatTitleCase(rawPartB);
 
-  const themeA = seriesNameA;
-  const themeB = seriesNameB;
+  // Titre officiel de la série dans la pastille d'en-tête (ex: Bénin < > ...)
+  const headerPartA = isBeninSeries ? 'Bénin' : seriesNameA;
+  const headerPartB = isBeninSeries ? '...' : seriesNameB;
+
+  // Badges de pays / univers sur les cartes vidéo individuelles (ex: Bénin vs Pérou)
+  const cardTagA = isBeninSeries ? (pA.country || 'Bénin') : seriesNameA;
+  const cardTagB = isBeninSeries ? (pB.country || 'Pérou') : seriesNameB;
+
+  const themeA = cardTagA;
+  const themeB = cardTagB;
 
   // Clean quotes helper
   const cleanQuotes = (str?: string) => {
@@ -296,15 +304,15 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
             <div className="absolute left-0 -bottom-2 w-8 h-0.5 bg-[#A2482B] rounded-full" />
           </div>
 
-          {/* Centre absolu : Le nom de la série centré avec le symbole < > au centre mort, parfaitement aligné verticalement avec le titre et le bouton */}
+          {/* Centre absolu : Le nom officiel de la série centré avec le symbole < > au centre mort, parfaitement aligné verticalement avec le titre et le bouton */}
           <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-none max-w-[44vw] sm:max-w-[48vw]">
             <div 
-              key={`duo-series-header-${currentDuo.id}-${seriesNameA}-${seriesNameB}`}
+              key={`duo-series-header-${currentDuo.id}-${headerPartA}-${headerPartB}`}
               className="inline-flex items-center gap-1 sm:gap-2 h-7 sm:h-8 px-2.5 sm:px-3.5 rounded-full bg-[#A2482B] border border-[#8A3B22] shadow-xs text-[10.5px] sm:text-xs text-white pointer-events-auto select-none"
-              title={`${seriesNameA} < > ${seriesNameB}`}
+              title={`${headerPartA} < > ${headerPartB}`}
             >
               <span className="font-sans font-bold text-white tracking-tight truncate max-w-[65px] sm:max-w-[130px] text-right">
-                {seriesNameA}
+                {headerPartA}
               </span>
               <span 
                 className="font-mono text-[9px] sm:text-[11px] font-black text-white/95 px-0.5 select-none shrink-0 tracking-wider flex items-center gap-0.5"
@@ -314,7 +322,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                 <span>&gt;</span>
               </span>
               <span className="font-sans font-bold text-white tracking-tight truncate max-w-[65px] sm:max-w-[130px] text-left">
-                {seriesNameB}
+                {headerPartB}
               </span>
             </div>
           </div>
@@ -476,7 +484,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                     {/* Top Header: Pole Tag on left & Video Player + Mute toggle on right */}
                     <div className="relative z-10 p-2 sm:p-4 flex items-center justify-between gap-1">
                       <span className="w-fit max-w-[95px] sm:max-w-[150px] truncate px-2.5 sm:px-3.5 py-0.5 sm:py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-[10px] sm:text-xs font-bold text-white shadow-md shrink-0">
-                        {seriesNameA}
+                        {cardTagA}
                       </span>
 
                       <div className="flex items-center gap-1 sm:gap-2">
@@ -643,7 +651,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                     {/* Top Header: Pole Tag on left & Video Player + Mute toggle on right */}
                     <div className="relative z-10 p-2 sm:p-4 flex items-center justify-between gap-1">
                       <span className="w-fit max-w-[95px] sm:max-w-[150px] truncate px-2.5 sm:px-3.5 py-0.5 sm:py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-[10px] sm:text-xs font-bold text-white shadow-md shrink-0">
-                        {seriesNameB}
+                        {cardTagB}
                       </span>
 
                       <div className="flex items-center gap-1 sm:gap-2">
@@ -818,7 +826,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       {/* Header Deck : Tag pôle + switch vers l'autre pendant */}
                       <div className="relative z-10 p-3 sm:p-4 flex items-center justify-between gap-1.5">
                         <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-xs font-bold text-white shadow-md truncate">
-                          {seriesNameA}
+                          {cardTagA}
                         </span>
 
                         <div className="flex items-center gap-1.5">
@@ -998,7 +1006,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       {/* Header Deck : Tag pôle + switch vers l'autre pendant */}
                       <div className="relative z-10 p-3 sm:p-4 flex items-center justify-between gap-1.5">
                         <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-xs font-bold text-white shadow-md truncate">
-                          {seriesNameB}
+                          {cardTagB}
                         </span>
 
                         <div className="flex items-center gap-1.5">

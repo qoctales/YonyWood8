@@ -1,9 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Play, Pause, Volume2, VolumeX, ArrowRight, X, Award, BookOpen, User, Sparkles, Clapperboard } from 'lucide-react';
+import { Play, Pause, Volume2, VolumeX, ArrowRight, X, Award, BookOpen, Sparkles, Clapperboard, Check } from 'lucide-react';
 import { getLineageTree, LineageMember, LINEAGE_COLORS } from '../utils/lineageService';
 import { ResonanceModal } from './ResonanceModal';
 import { SequenceCreditsModal } from './SequenceCreditsModal';
 import { getSeriesCredits } from '../data/seriesTeamData';
+import { ProfileSoloIcon, TvPlayerIcon } from './YonywoodBrandIcons';
+import { ShareIcon } from './ShareIcon';
 
 interface ProfileLineageFriseProps {
   personIdOrName: string;
@@ -24,6 +26,7 @@ export const ProfileLineageFrise: React.FC<ProfileLineageFriseProps> = ({
   const [isQuestionModalOpen, setIsQuestionModalOpen] = useState(false);
   const [isCreditsModalOpen, setIsCreditsModalOpen] = useState(false);
   const [personResonancePct, setPersonResonancePct] = useState<number | null>(null);
+  const [copied, setCopied] = useState<boolean>(false);
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -54,16 +57,12 @@ export const ProfileLineageFrise: React.FC<ProfileLineageFriseProps> = ({
   }, [personIdOrName, tree.current.id]);
 
   const handleMemberClick = (member: LineageMember) => {
-    // 1er clic : sélectionne et affiche uniquement le prénom épuré
-    // 2nd clic : ouvre sa vidéo de présentation identique à la matrice
-    if (selectedMemberId === member.id) {
-      setVideoModalMember(member);
-      setIsPlaying(true);
-      setIsResonanceModalOpen(false);
-      setIsQuestionModalOpen(false);
-    } else {
-      setSelectedMemberId(member.id);
-    }
+    // Clic sur un visage : sélectionne et ouvre immédiatement la carte vidéo format Héritage
+    setSelectedMemberId(member.id);
+    setVideoModalMember(member);
+    setIsPlaying(true);
+    setIsResonanceModalOpen(false);
+    setIsQuestionModalOpen(false);
   };
 
   const togglePlayback = () => {
@@ -278,20 +277,44 @@ export const ProfileLineageFrise: React.FC<ProfileLineageFriseProps> = ({
         </div>
       </div>
 
-      {/* MODALE VIDÉO DE PRÉSENTATION AU RE-CLIC (IDENTIQUE À LA MATRICE) */}
+      {/* MODALE VIDÉO DE PRÉSENTATION AU CLIC (STRUCTURE & FORME IDENTIQUE AUX PROTAGONISTES HÉRITAGE) */}
       {videoModalMember && (
         <div 
-          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 animate-in fade-in duration-200"
+          className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 animate-in fade-in duration-200"
           onClick={() => {
             setVideoModalMember(null);
             setIsResonanceModalOpen(false);
             setIsQuestionModalOpen(false);
           }}
         >
+          {/* Bouton Fermer la modale en haut à droite de l'écran */}
+          <button
+            type="button"
+            id="btn-close-lineage-video-modal"
+            onClick={(e) => {
+              e.stopPropagation();
+              setVideoModalMember(null);
+              setIsPlaying(false);
+              setIsResonanceModalOpen(false);
+              setIsQuestionModalOpen(false);
+            }}
+            className="fixed top-4 right-4 sm:top-6 sm:right-6 z-50 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-black/60 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all cursor-pointer shadow-xl hover:scale-105 active:scale-95 shrink-0"
+            title="Fermer"
+          >
+            <X className="w-5 h-5 text-white" />
+          </button>
+
           <div 
-            className="relative aspect-[9/16] w-[min(340px,calc((100dvh-140px)*9/16))] h-[min(600px,calc(100dvh-140px))] rounded-3xl overflow-hidden shadow-2xl bg-stone-950 border border-white/15 flex flex-col justify-between"
+            className="h-[min(490px,calc(100dvh-210px))] sm:h-[min(540px,calc(100dvh-190px))] lg:h-[min(570px,calc(100dvh-180px))] aspect-[9/16] w-auto mx-auto rounded-3xl overflow-hidden bg-stone-950 text-white shadow-2xl border border-stone-200/40 relative flex flex-col justify-between p-4 sm:p-5 select-none shrink-0 animate-in zoom-in-95 duration-200"
             onClick={(e) => e.stopPropagation()}
           >
+            {/* Poster de fond */}
+            <img
+              src={videoModalMember.photoUrl}
+              alt={videoModalMember.name}
+              className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+            />
+
             {/* Vidéo de fond */}
             <video
               ref={videoRef}
@@ -301,131 +324,134 @@ export const ProfileLineageFrise: React.FC<ProfileLineageFriseProps> = ({
               loop
               playsInline
               muted={isMuted}
-              onClick={togglePlayback}
-              className="absolute inset-0 w-full h-full object-cover cursor-pointer"
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 pointer-events-none ${
+                isPlaying ? 'opacity-100' : 'opacity-0'
+              }`}
             />
 
             {/* Gradient sombre pour lisibilité cinématographique */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/60 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/65 pointer-events-none" />
 
-            {/* HAUT : Strictement aucun titre / pays / territoire (juste le son et la fermeture) */}
-            <div className="relative z-20 p-4 flex items-center justify-end pointer-events-auto">
-              <div className="flex items-center gap-2">
-                {/* Muet / Son */}
-                <button
-                  type="button"
-                  onClick={() => setIsMuted(prev => !prev)}
-                  className="w-9 h-9 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center cursor-pointer transition-all shadow-md hover:scale-105 active:scale-95"
-                  title={isMuted ? 'Activer le son' : 'Couper le son'}
-                >
-                  {isMuted ? (
-                    <VolumeX className="w-4 h-4 text-white" />
-                  ) : (
-                    <Volume2 className="w-4 h-4 text-white" />
-                  )}
-                </button>
-
-                {/* Fermer */}
-                <button 
-                  type="button"
-                  id="btn-close-lineage-video-modal"
-                  onClick={() => {
-                    setVideoModalMember(null);
-                    setIsPlaying(false);
-                    setIsResonanceModalOpen(false);
-                    setIsQuestionModalOpen(false);
-                  }}
-                  className="w-9 h-9 rounded-full bg-black/50 hover:bg-[#A2482B] text-white border border-white/20 hover:border-[#A2482B] backdrop-blur-md flex items-center justify-center transition-all cursor-pointer shadow-md hover:scale-105 active:scale-95"
-                  title="Fermer"
-                >
-                  <X className="w-4 h-4 text-white" />
-                </button>
-              </div>
-            </div>
-
-            {/* Contrôle Play/Pause au centre si en pause */}
-            {!isPlaying && (
+            {/* =========================================================== */}
+            {/* HAUT DE CARTE : LECTEUR VINTAGE EN HAUT À DROITE ET C'EST TOUT */}
+            {/* (AUCUN TITRE, EXACTEMENT COMME DEMANDÉ)                     */}
+            {/* =========================================================== */}
+            <div className="relative z-20 flex items-center justify-end w-full pointer-events-auto">
               <button
                 type="button"
-                onClick={togglePlayback}
-                className="relative z-10 mx-auto my-auto w-14 h-14 rounded-full bg-white/25 hover:bg-white/35 backdrop-blur-md border border-white/40 text-white flex items-center justify-center shadow-lg cursor-pointer transition-transform active:scale-95"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  togglePlayback();
+                }}
+                className="w-8.5 h-8.5 sm:w-9.5 sm:h-9.5 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center text-white transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0"
+                title={isPlaying ? "Mettre en pause" : `Regarder la vidéo de ${videoModalMember.firstName || videoModalMember.name.split(' ')[0]}`}
               >
-                <Play className="w-6 h-6 ml-0.5 fill-white text-white" />
+                {isPlaying ? (
+                  <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
+                ) : (
+                  <TvPlayerIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white transition-transform" strokeWidth={1.6} />
+                )}
               </button>
-            )}
+            </div>
 
-            {/* BAS : Prénom (surélevé et sans coupure de lettre) & Boutons à droite */}
-            <div className="relative z-20 p-5 sm:p-6 pb-8 sm:pb-9 flex items-end justify-between pointer-events-auto mt-auto">
-              <div className="text-left font-sans">
-                <h3 className="font-editorial text-sm sm:text-base font-bold text-white tracking-tight leading-tight pb-0.5 drop-shadow-md">
+            {/* =========================================================== */}
+            {/* FLANC DROIT : MÊME CONFIGURATION QUE PROTAGONISTES HÉRITAGE */}
+            {/* 1. Résonance, 2. Question, 3. Profil, 4. Partager           */}
+            {/* =========================================================== */}
+            <div 
+              onClick={(e) => e.stopPropagation()}
+              className="absolute right-3 sm:right-3.5 top-[60%] -translate-y-1/2 z-20 flex flex-col items-center gap-2.5 sm:gap-3 pointer-events-auto"
+            >
+              {/* 1. Évaluation résonance */}
+              <button
+                id={`lineage-btn-resonance-${videoModalMember.id}`}
+                onClick={() => setIsResonanceModalOpen(true)}
+                className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl backdrop-blur-md border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
+                  personResonancePct !== null
+                    ? 'bg-[#A2482B] border-[#A2482B] text-white shadow-[0_0_14px_rgba(162,72,43,0.5)]'
+                    : 'bg-black/45 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white'
+                }`}
+                title={personResonancePct !== null ? `Résonance : ${personResonancePct}%` : "Évaluer la résonance"}
+              >
+                <Award className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+              </button>
+
+              {/* 2. Question existentielle */}
+              <button
+                id={`lineage-btn-question-${videoModalMember.id}`}
+                onClick={() => setIsQuestionModalOpen(true)}
+                className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
+                title="Découvrir la question"
+              >
+                <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+              </button>
+
+              {/* 3. Découvrir son profil complet */}
+              <button
+                id={`lineage-btn-profile-${videoModalMember.id}`}
+                onClick={() => {
+                  const targetId = videoModalMember.id;
+                  setVideoModalMember(null);
+                  onNavigateToPerson(targetId);
+                }}
+                className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
+                title={`Découvrir le profil de ${videoModalMember.name}`}
+              >
+                <ProfileSoloIcon className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-white" />
+              </button>
+
+              {/* 4. Bouton Partager */}
+              <button
+                onClick={() => {
+                  if (navigator.share) {
+                    navigator.share({
+                      title: videoModalMember.name,
+                      text: `Découvrez la lignée de ${videoModalMember.name} sur YonyWood`,
+                      url: window.location.href,
+                    }).catch(() => {});
+                  } else {
+                    navigator.clipboard.writeText(window.location.href);
+                    setCopied(true);
+                    setTimeout(() => setCopied(false), 2000);
+                  }
+                }}
+                className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl border flex items-center justify-center transition-all cursor-pointer shadow-md hover:scale-105 active:scale-95 ${
+                  copied
+                    ? 'bg-emerald-700/85 border-emerald-600 text-white'
+                    : 'bg-black/45 hover:bg-[#A2482B] border-white/20 text-white'
+                }`}
+                title="Partager ce témoignage"
+              >
+                {copied ? <Check className="w-4 h-4 text-white" /> : <ShareIcon className="w-4 h-4 text-white" />}
+              </button>
+            </div>
+
+            {/* =========================================================== */}
+            {/* BAS : PRÉNOM SEUL (AUCUNE FONCTION) & SYMBOLE MUTE EN BAS   */}
+            {/* =========================================================== */}
+            <div className="relative z-10 pt-2 mt-auto flex items-end justify-between gap-2 pointer-events-auto">
+              <div className="space-y-0.5">
+                <h3 className="font-editorial text-[15px] sm:text-base font-bold text-white tracking-wider leading-snug drop-shadow-md">
                   {videoModalMember.firstName || videoModalMember.name.split(' ')[0]}
                 </h3>
               </div>
 
-              <div className="flex flex-col items-center gap-2.5 sm:gap-3 shrink-0">
-                {/* 1. Bouton Générique & Crédits (Clapperboard) */}
+              {/* Symbole Muet / Son en bas à droite (visible lorsque la vidéo est en lecture) */}
+              {isPlaying && (
                 <button
                   type="button"
-                  id={`btn-credits-${videoModalMember.id}`}
                   onClick={(e) => {
                     e.stopPropagation();
-                    setIsCreditsModalOpen(true);
+                    setIsMuted(prev => !prev);
                   }}
-                  className="w-10 h-10 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/25 hover:border-[#A2482B] text-white flex items-center justify-center transition-all shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0"
-                  title="Générique & Crédits de la séquence"
+                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center cursor-pointer transition-all shadow-md hover:scale-105 active:scale-95 shrink-0"
+                  title={isMuted ? 'Activer le son' : 'Couper le son'}
                 >
-                  <Clapperboard className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                  {isMuted ? <VolumeX className="w-3.5 h-3.5 text-white" /> : <Volume2 className="w-3.5 h-3.5 text-white" />}
                 </button>
-
-                {/* 2. Bouton Évaluer (Award en Terre Cuite) */}
-                <button
-                  type="button"
-                  id={`btn-eval-resonance-${videoModalMember.id}`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsResonanceModalOpen(true);
-                  }}
-                  className={`w-10 h-10 rounded-full backdrop-blur-md border flex items-center justify-center transition-all shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
-                    personResonancePct !== null
-                      ? 'bg-[#A2482B] border-[#A2482B] text-white shadow-[0_0_14px_rgba(162,72,43,0.5)]'
-                      : 'bg-black/50 hover:bg-[#A2482B] border-white/25 hover:border-[#A2482B] text-white'
-                  }`}
-                  title={personResonancePct !== null ? `Résonance : ${personResonancePct}%` : "Évaluer la résonance"}
-                >
-                  <Award className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-                </button>
-
-                {/* 2. Bouton Question à laquelle la personne a répondu (Livre ouvert) */}
-                <button
-                  type="button"
-                  id={`btn-question-${videoModalMember.id}`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsQuestionModalOpen(true);
-                  }}
-                  className="w-10 h-10 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/25 hover:border-[#A2482B] text-white flex items-center justify-center transition-all shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0"
-                  title="Découvrir la question"
-                >
-                  <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-                </button>
-
-                {/* 3. Bouton Profil qui renvoie vers son profil */}
-                <button
-                  type="button"
-                  id={`btn-profile-${videoModalMember.id}`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    const targetId = videoModalMember.id;
-                    setVideoModalMember(null);
-                    onNavigateToPerson(targetId);
-                  }}
-                  className="w-10 h-10 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/25 hover:border-[#A2482B] text-white flex items-center justify-center transition-all shadow-md cursor-pointer hover:scale-105 active:scale-95"
-                  title={`Voir le profil de ${videoModalMember.firstName || videoModalMember.name.split(' ')[0]}`}
-                >
-                  <User className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-                </button>
-              </div>
+              )}
             </div>
+          </div>
 
             {/* Volet d'évaluation de résonance */}
             <ResonanceModal
@@ -495,7 +521,6 @@ export const ProfileLineageFrise: React.FC<ProfileLineageFriseProps> = ({
                 </div>
               </div>
             )}
-          </div>
         </div>
       )}
     </div>

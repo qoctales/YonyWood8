@@ -3,7 +3,8 @@ import {
   LogIn,
   UserPlus,
   Clapperboard,
-  Film
+  Film,
+  Sparkles
 } from 'lucide-react';
 import { ViewScreen } from '../types';
 import { AuthModal } from './AuthModal';
@@ -71,9 +72,9 @@ export const LandingScreen: React.FC<LandingScreenProps> = ({ onNavigate }) => {
           {/* Gauche : Logo officiel YonyWood */}
           <div className="flex items-center gap-3">
             <img 
-              src="/yonywoodlogo.jpg" 
+              src="/yonywood-logo-gras.svg" 
               alt="YonyWood" 
-              className="h-8 sm:h-10 w-auto object-contain mix-blend-multiply cursor-pointer hover:opacity-90 transition-opacity"
+              className="h-11 sm:h-14 w-auto object-contain cursor-pointer hover:opacity-90 transition-all"
               onClick={() => setActiveDemoTab('studio')}
             />
           </div>
@@ -85,22 +86,13 @@ export const LandingScreen: React.FC<LandingScreenProps> = ({ onNavigate }) => {
             </p>
           </div>
 
-          {/* Droite : Uniquement Connexion & Inscription */}
+          {/* Droite : Bouton Participer & Connexion */}
           <div className="flex items-center gap-2 sm:gap-3">
             <button
-              onClick={() => openAuth('login')}
-              className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs font-semibold text-stone-700 hover:text-black hover:bg-stone-100 border border-stone-300 transition-all cursor-pointer flex items-center gap-1.5 active:scale-95 whitespace-nowrap"
+              onClick={() => onNavigate({ type: 'participate' })}
+              className="px-3.5 sm:px-4.5 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-bold text-white bg-[#A2482B] hover:bg-[#8A3B22] shadow-xs hover:shadow-sm transition-all cursor-pointer flex items-center justify-center active:scale-95 whitespace-nowrap hover:scale-105"
             >
-              <LogIn className="w-3.5 h-3.5 text-stone-600" />
-              <span>Connexion</span>
-            </button>
-
-            <button
-              onClick={() => openAuth('register')}
-              className="px-3.5 sm:px-4.5 py-1.5 sm:py-2 rounded-full text-xs font-bold text-white bg-[#A2482B] hover:bg-[#8A3B22] shadow-xs hover:shadow-sm transition-all cursor-pointer flex items-center gap-1.5 active:scale-95 whitespace-nowrap"
-            >
-              <UserPlus className="w-3.5 h-3.5" />
-              <span>Inscription</span>
+              <span>Co-construire Yonywood</span>
             </button>
           </div>
 

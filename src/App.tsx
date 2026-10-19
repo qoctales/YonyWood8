@@ -28,6 +28,7 @@ import { BottomMenu } from './components/BottomMenu';
 import { Navbar } from './components/Navbar';
 import { AuthModal } from './components/AuthModal';
 import { CompanyHeritageScreen } from './components/CompanyHeritageScreen';
+import { ParticipateScreen } from './components/ParticipateScreen';
 import { io } from 'socket.io-client';
 
 export default function App() {
@@ -334,6 +335,14 @@ export default function App() {
 
         {currentScreen.type === 'site_map' && (
           <NavigationScreen onNavigate={setCurrentScreen} />
+        )}
+
+        {currentScreen.type === 'participate' && (
+          <ParticipateScreen 
+            onNavigate={setCurrentScreen} 
+            initialRole={currentScreen.initialRole}
+            preselectedSeriesId={currentScreen.preselectedSeriesId}
+          />
         )}
       </main>
 

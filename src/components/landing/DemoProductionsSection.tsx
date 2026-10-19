@@ -37,7 +37,7 @@ const ALL_8_PRODUCTIONS: ProductionItem[] = [
   },
   {
     id: 'finagnon-qosqorico',
-    title: 'Benin <> ...',
+    title: 'Bénin <> ...',
     posterImage: '/assets/posters/Benin < >.jpg',
     sharePrice: 50,
     totalShares: 200,

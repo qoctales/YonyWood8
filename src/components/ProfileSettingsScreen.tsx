@@ -52,6 +52,7 @@ import {
   Crown,
   LogIn,
   Star,
+  Award,
   ReceiptText
 } from 'lucide-react';
 import { useAuth } from '../services/authContext';
@@ -61,6 +62,7 @@ import { ProfileSoloIcon, TvPlayerIcon } from './YonywoodBrandIcons';
 import { OrdersAndContributionsModal } from './OrdersAndContributionsModal';
 import { transactionService } from '../utils/transactionService';
 import { ProfileLineageFrise } from './ProfileLineageFrise';
+import { ResonanceModal } from './ResonanceModal';
 import { ViewScreen, AffiliationPerson, Protagonist } from '../types';
 import { PROTAGONISTS, DOCUMENTARIES, DUOS } from '../data/mockData';
 import { MATRIX_SERIES_DATA } from '../data/matrixData';
@@ -221,11 +223,8 @@ const MEDIA_VIDEO_PRESETS = [
 
 // Sous-composant : En-tête haut de vidéo avec capsule opaque à gauche & Déclencheur vidéo + Partager à droite
 interface VideoTopHeaderProps {
-  seriesOrTitle: string;
+  seriesOrTitle?: string;
   badge?: string;
-  onShare: () => void;
-  isMuted?: boolean;
-  onToggleMute?: () => void;
   isPlaying?: boolean;
   onTogglePlay?: () => void;
 }
@@ -233,79 +232,43 @@ interface VideoTopHeaderProps {
 const VideoTopHeader: React.FC<VideoTopHeaderProps> = ({ 
   seriesOrTitle, 
   badge,
-  onShare, 
-  isMuted = true, 
-  onToggleMute,
   isPlaying = false,
   onTogglePlay,
 }) => (
-  <div className="relative z-20 flex items-center justify-between gap-2 w-full">
-    {/* HAUT GAUCHE : Titre court et précis dans une capsule semi-opaque dont le fond s'adapte sans jamais tronquer */}
-    <div className="inline-flex w-fit items-center gap-1.5 px-3 py-1.5 rounded-xl bg-black/65 backdrop-blur-md border border-white/20 shadow-md">
-      <span className="font-editorial text-xs font-semibold text-white whitespace-nowrap tracking-wide select-none">
-        {seriesOrTitle}
-      </span>
-      {badge && (
-        <span className="ml-1 px-1.5 py-0.5 rounded-md bg-white/20 border border-white/40 text-white font-mono text-[10px] font-bold shrink-0 whitespace-nowrap">
-          {badge}
+  <div className={`relative z-20 flex items-center ${seriesOrTitle ? 'justify-between' : 'justify-end'} gap-2 w-full pointer-events-auto`}>
+    {/* HAUT GAUCHE : Titre optionnel */}
+    {seriesOrTitle && (
+      <div className="inline-flex w-fit items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 shadow-md">
+        <span className="font-editorial text-xs font-semibold text-white whitespace-nowrap tracking-wide select-none">
+          {seriesOrTitle}
         </span>
-      )}
-    </div>
+        {badge && (
+          <span className="ml-1 px-1.5 py-0.5 rounded-md bg-white/20 border border-white/40 text-white font-mono text-[10px] font-bold shrink-0 whitespace-nowrap">
+            {badge}
+          </span>
+        )}
+      </div>
+    )}
 
-    {/* HAUT DROITE : Harmonisé avec le gabarit et l'alignement en colonne des 4 icônes du flanc droit */}
-    <div className="flex items-center gap-2 shrink-0">
-      {onToggleMute && (
-        <button
-          type="button"
-          onClick={(e) => {
-            e.stopPropagation();
-            onToggleMute();
-          }}
-          id="btn-video-top-mute"
-          className="w-9 h-9 rounded-xl bg-black/50 hover:bg-[#A2482B] active:scale-95 backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center shadow-md transition-all cursor-pointer"
-          title={isMuted ? "Activer le son" : "Couper le son"}
-        >
-          {isMuted ? (
-            <VolumeX className="w-4 h-4 text-white" />
-          ) : (
-            <Volume2 className="w-4 h-4 text-white" />
-          )}
-        </button>
-      )}
-
-      {/* Déclencheur vidéo signature YonyWood en carré arrondi (télé vintage) */}
-      {onTogglePlay && (
-        <button
-          type="button"
-          onClick={(e) => {
-            e.stopPropagation();
-            onTogglePlay();
-          }}
-          id="btn-video-top-play-brand"
-          className="w-9 h-9 rounded-xl bg-black/50 hover:bg-[#A2482B] active:scale-95 backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center shadow-md transition-all cursor-pointer"
-          title={isPlaying ? "Mettre en pause" : "Regarder la vidéo"}
-        >
-          {isPlaying ? (
-            <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
-          ) : (
-            <TvPlayerIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white transition-transform" strokeWidth={1.6} />
-          )}
-        </button>
-      )}
-
+    {/* HAUT DROITE : Déclencheur lecteur vidéo signature en haut à droite (format carré arrondi) */}
+    {onTogglePlay && (
       <button
         type="button"
         onClick={(e) => {
           e.stopPropagation();
-          onShare();
+          onTogglePlay();
         }}
-        id="btn-video-top-share"
-        className="w-9 h-9 rounded-xl bg-black/50 hover:bg-[#A2482B] active:scale-95 backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center shadow-md transition-all cursor-pointer"
-        title="Partager"
+        id="btn-video-top-play-brand"
+        className="w-8.5 h-8.5 sm:w-9.5 sm:h-9.5 rounded-xl bg-black/45 hover:bg-[#A2482B] active:scale-95 backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center shadow-md transition-all cursor-pointer hover:scale-105 shrink-0"
+        title={isPlaying ? "Mettre en pause" : "Regarder la vidéo"}
       >
-        <ShareIcon className="w-4 h-4 text-white" />
+        {isPlaying ? (
+          <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
+        ) : (
+          <TvPlayerIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white transition-transform" strokeWidth={1.6} />
+        )}
       </button>
-    </div>
+    )}
   </div>
 );
 
@@ -527,6 +490,8 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
   const { currentUser, isAdmin, isAuthenticated, login, logout } = useAuth();
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [showLineageFrise, setShowLineageFrise] = useState(initialShowLineage);
+  const [isResonanceModalOpen, setIsResonanceModalOpen] = useState(false);
+  const [profileResonancePct, setProfileResonancePct] = useState<number | null>(null);
 
   // Identité du profil affiché (Pascal Cossi par défaut)
   const [userName, setUserName] = useState<string>(() => {
@@ -640,7 +605,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
     {
       id: 'tx-1',
       seriesId: 'finagnon-qosqorico',
-      seriesTitle: 'Benin < > ...',
+      seriesTitle: 'Bénin < > ...',
       sharesSold: 4,
       boughtPriceUnit: 35,
       soldPriceUnit: 55,
@@ -1262,6 +1227,13 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
     { key: 'appel', label: 'Projets', tooltip: 'Projets', icon: Sprout },
   ];
 
+  // Catégories affichées sur le flanc droit de la carte vidéo (Série supprimée, Lignée avec l'étoile placée en premier)
+  const OTHER_CATEGORIES: { key: ProfileCategory; label: string; tooltip: string; icon: React.FC<{ className?: string }> }[] = [
+    { key: 'production', label: 'Productions', tooltip: 'Productions', icon: Clapperboard },
+    { key: 'offre', label: 'Offres', tooltip: 'Produits et services', icon: ShoppingBag },
+    { key: 'appel', label: 'Projets', tooltip: 'Projets', icon: Sprout },
+  ];
+
   // Calcul du nombre de vidéos de la catégorie active
   const totalItemsInActiveCategory = 
     activeCategory === 'recit' ? recitUnifiedItems.length :
@@ -1533,6 +1505,28 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
     return 'Appel solidaire';
   };
 
+  // Question existentielle à laquelle répond la personne dans la vidéo
+  const getQuestionText = () => {
+    if (targetProtagonist) {
+      if (targetProtagonist.stories && targetProtagonist.stories.length > 0) {
+        const story = targetProtagonist.stories[0];
+        if (story.questionTitle) return story.questionTitle;
+        if (story.title) return story.title;
+      }
+      if (targetProtagonist.documentaryId) {
+        const doc = DOCUMENTARIES.find(d => d.id === targetProtagonist.documentaryId);
+        if (doc?.centralQuestion) return doc.centralQuestion;
+        if (doc?.questions && doc.questions.length > 0) return doc.questions[0].prompt;
+      }
+    }
+    if (activeCategory === 'recit' && currentRecitUnified?.item) {
+      const it = currentRecitUnified.item as any;
+      if (it.question) return it.question;
+      if (it.subtitle) return it.subtitle;
+    }
+    return "Qu’est-ce qui, un jour, vous a fait sentir que quelque chose de plus grand que vous était présent ?";
+  };
+
   // Résolution du média actif pour le lecteur moderne style Image 2
   const currentMedia = useMemo(() => {
     if (activeCategory === 'recit') {
@@ -1619,8 +1613,8 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
       {/* 1. EN-TÊTE D'IDENTITÉ OU EN-TÊTE LIGNÉE ALIGNÉ SUR MESSAGERIE & MES PARTS */}
       {/* ========================================================================= */}
       {showLineageFrise ? (
-        <div className="pb-3 border-b border-[#E7E5E4] mb-4 flex items-center justify-between shrink-0">
-          <div className="flex items-center gap-3">
+        <div className="pb-2 pt-1 mb-2 flex items-center justify-between shrink-0">
+          <div className="flex items-center gap-2.5">
             <button
               onClick={() => {
                 if (returnToProtagonistId) {
@@ -1642,102 +1636,85 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                   setShowLineageFrise(false);
                 }
               }}
-              className="w-8 h-8 rounded-full bg-white hover:bg-stone-100 border border-stone-200 text-[#1C1917] flex items-center justify-center transition-all cursor-pointer shadow-xs active:scale-95 shrink-0"
-              title="Retour"
+              className="w-8 h-8 rounded-xl bg-white hover:bg-stone-100 border border-stone-200 text-[#1C1917] flex items-center justify-center transition-all cursor-pointer shadow-xs active:scale-95 shrink-0"
+              title="Retour au profil"
               id="btn-back-from-lineage"
             >
               <ChevronLeft className="w-4 h-4 stroke-[2.2]" />
             </button>
-            <h1 className="font-editorial text-2xl sm:text-3xl font-bold text-[#1C1917] leading-none">
-              Lignée
-            </h1>
+            <div className="flex flex-col items-start">
+              <h2 className="font-editorial text-lg sm:text-xl font-bold text-stone-900 tracking-wide leading-tight">
+                Lignée de {profileDisplayName}
+              </h2>
+              <div className="w-8 h-0.5 bg-[#A2482B] mt-0.5 rounded-full" />
+            </div>
           </div>
+
+          <button
+            onClick={() => setShowLineageFrise(false)}
+            className="text-xs font-semibold px-3 py-1.5 rounded-full bg-white hover:bg-stone-100 border border-stone-200 text-stone-700 transition-all cursor-pointer active:scale-95"
+          >
+            Fermer
+          </button>
         </div>
       ) : (
-        <div className="border-b border-[#E7E5E4] pb-2 sm:pb-2.5 shrink-0 space-y-2">
-          {/* En-tête standardisé avec le petit trait signature */}
-          <div className="flex flex-col items-start px-0.5">
-            <h2 className="font-editorial text-2xl sm:text-3xl font-bold text-stone-900 tracking-wide">
-              Profil
-            </h2>
-            <div className="w-10 h-0.5 bg-[#A2482B] mt-1.5 rounded-full" />
-          </div>
+        <div className="pb-1 sm:pb-2 pt-1 shrink-0 flex items-center justify-between gap-2">
+          {/* GAUCHE : Bouton retour conditionnel + Vignette carrée arrondie + Prénom avec trait signature */}
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+            {/* Bouton retour conditionnel */}
+            {(returnToProtagonistId || returnToDuoId || returnToMarketplace || !isOwner) && (
+              <button
+                onClick={() => {
+                  if (returnToProtagonistId) {
+                    onNavigate({
+                      type: 'protagonist_profile',
+                      protagonistId: returnToProtagonistId,
+                      returnToDuoId,
+                      returnToDuoIndex,
+                      returnToDocId,
+                      initialShowLineage: true
+                    });
+                  } else if (returnToDuoId) {
+                    onNavigate({
+                      type: 'duo_feed',
+                      currentDuoIndex: returnToDuoIndex ?? 0,
+                      selectedDocId: returnToDocId
+                    });
+                  } else {
+                    onNavigate({ type: 'home' });
+                  }
+                }}
+                className="w-8 h-8 rounded-xl bg-white hover:bg-stone-100 border border-stone-200 text-[#1C1917] flex items-center justify-center transition-all cursor-pointer shadow-xs active:scale-95 shrink-0"
+                title="Retour"
+                id="btn-profile-back"
+              >
+                <ChevronLeft className="w-4 h-4 stroke-[2.2]" />
+              </button>
+            )}
 
-          {/* LIGNE PRINCIPALE : IDENTITÉ & ACTIONS RAPIDES SANS COLLISION */}
-          <div className="flex items-center justify-between gap-1.5 sm:gap-3">
-            <div className="flex items-center gap-2 sm:gap-3.5 min-w-0">
-              {/* Bouton retour conditionnel (uniquement si navigation contextuelle ou profil visité tiers) */}
-              {(returnToProtagonistId || returnToDuoId || returnToMarketplace || !isOwner) && (
-                <button
-                  onClick={() => {
-                    if (returnToProtagonistId) {
-                      onNavigate({
-                        type: 'protagonist_profile',
-                        protagonistId: returnToProtagonistId,
-                        returnToDuoId,
-                        returnToDuoIndex,
-                        returnToDocId,
-                        initialShowLineage: true
-                      });
-                    } else if (returnToDuoId) {
-                      onNavigate({
-                        type: 'duo_feed',
-                        currentDuoIndex: returnToDuoIndex ?? 0,
-                        selectedDocId: returnToDocId
-                      });
-                    } else {
-                      onNavigate({ type: 'home' });
-                    }
-                  }}
-                  className="w-8 h-8 rounded-full bg-white hover:bg-stone-100 border border-stone-200 text-[#1C1917] flex items-center justify-center transition-all cursor-pointer shadow-xs active:scale-95 shrink-0"
-                  title="Retour"
-                  id="btn-profile-back"
-                >
-                  <ChevronLeft className="w-4 h-4 stroke-[2.2]" />
-                </button>
-              )}
-
+            {/* Vignette carrée arrondie faisant écho aux logos et cartes */}
             <div className="relative shrink-0">
-              <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-full p-0.5 border-2 border-[#C89B3C] shadow-sm overflow-hidden bg-white">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl p-0.5 border border-[#C89B3C]/80 shadow-xs overflow-hidden bg-white">
                 <img
                   src={userPhoto}
-                  alt={userFullName}
-                  className="w-full h-full object-cover rounded-full"
+                  alt={profileDisplayName}
+                  className="w-full h-full object-cover rounded-[9px] sm:rounded-[13px]"
                 />
               </div>
-              {isOwner && (
-                <button
-                  onClick={() => setIsEditingProfile(true)}
-                  className="absolute -bottom-0.5 -right-0.5 w-4.5 h-4.5 sm:w-6 sm:h-6 rounded-full bg-[#1C1917] hover:bg-[#C89B3C] text-white flex items-center justify-center shadow-md cursor-pointer transition-colors border border-white"
-                  title="Modifier mon profil"
-                  id="btn-edit-profile-avatar"
-                >
-                  <Camera className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
-                </button>
-              )}
             </div>
 
-            <div className="min-w-0">
-              <div className="flex items-center gap-1.5 sm:gap-2">
-                <h1 className="font-editorial text-base sm:text-xl font-bold text-[#1C1917] leading-tight truncate">
-                  {profileDisplayName}
-                </h1>
-                {isOwner && (
-                  <button
-                    onClick={() => setIsEditingProfile(true)}
-                    className="p-1 rounded-full text-stone-400 hover:text-[#A2482B] hover:bg-[#A2482B]/10 transition-colors cursor-pointer shrink-0"
-                    title="Modifier mon profil"
-                    id="btn-edit-profile-inline"
-                  >
-                    <Edit3 className="w-3.5 h-3.5" />
-                  </button>
-                )}
-              </div>
+            {/* Prénom de la personne (au lieu du mot "Profil" trop gros) avec tiret rouge signature */}
+            <div className="flex flex-col items-start min-w-0">
+              <h2 className="font-editorial text-lg sm:text-xl font-bold text-stone-900 tracking-wide truncate leading-tight">
+                {profileDisplayName}
+              </h2>
+              <div className="w-8 h-0.5 bg-[#A2482B] mt-0.5 rounded-full" />
             </div>
           </div>
 
-          <div className="flex items-center gap-1 sm:gap-2 shrink-0">
-            {/* Bouton Retour au Marché (si navigation contextuelle depuis une offre de vente) */}
+          {/* DROITE : Boutons d'action adaptés (Visiteur : Messagerie + Partage | Propriétaire : Paramètres) */}
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+            {/* Bouton Retour au Marché (si navigation contextuelle depuis le marché) */}
             {returnToMarketplace && (
               <button
                 type="button"
@@ -1753,11 +1730,12 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                 id="btn-return-to-market-header"
               >
                 <ChevronLeft className="w-3.5 h-3.5 text-white stroke-[2.2]" />
-                <span>Retour au Marché</span>
+                <span className="hidden sm:inline">Retour au Marché</span>
+                <span className="sm:hidden">Marché</span>
               </button>
             )}
 
-            {/* Bouton Revenir au Duo placé à côté des actions (mobile & desktop) */}
+            {/* Bouton Revenir au Duo (si navigation contextuelle depuis un duo) */}
             {returnToDuoId && (
               <button
                 type="button"
@@ -1771,43 +1749,24 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                 id="btn-return-to-duo-actions"
               >
                 <ChevronLeft className="w-3.5 h-3.5 text-stone-700 group-hover:text-white stroke-[2.2] transition-colors" />
-                <span className="hidden sm:inline">Revenir au Duo</span>
-                <span className="sm:hidden">Duo</span>
+                <span className="hidden sm:inline">Duo</span>
               </button>
             )}
 
             {isOwner ? (
               <>
-                {/* Bouton Messagerie : fond terre cuite et contenu blanc au survol */}
+                {/* Propriétaire : Bouton Paramètres où l'on peut tout changer (photo, prénom, nom, bio...) */}
                 <button
-                  onClick={() => onNavigate({ type: 'messaging' })}
-                  id="btn-profile-messages"
-                  className="group w-8 h-8 sm:w-auto sm:h-8.5 sm:px-3.5 rounded-full bg-white hover:bg-[#A2482B] border border-stone-200 hover:border-[#A2482B] text-xs font-semibold text-[#1C1917] hover:text-white flex items-center justify-center sm:gap-1.5 transition-all shadow-xs cursor-pointer relative"
-                  title="Ouvrir la messagerie"
+                  onClick={() => setIsEditingProfile(true)}
+                  id="btn-profile-settings-gear"
+                  className="group h-8 sm:h-8.5 px-3 sm:px-3.5 rounded-full bg-white hover:bg-[#A2482B] border border-stone-200 hover:border-[#A2482B] text-xs font-semibold text-[#1C1917] hover:text-white flex items-center justify-center gap-1.5 transition-all shadow-xs cursor-pointer active:scale-95"
+                  title="Paramètres de mon profil"
                 >
-                  <MessageSquare className="w-3.5 h-3.5 text-stone-700 group-hover:text-white transition-colors" />
-                  <span className="hidden sm:inline">Messages</span>
-                  <span className="absolute -top-1 -right-1 sm:static sm:top-auto sm:right-auto w-4 h-4 rounded-full bg-[#A2482B] group-hover:bg-white text-white group-hover:text-[#A2482B] text-[9px] font-bold flex items-center justify-center transition-colors">
-                    2
-                  </span>
+                  <Sliders className="w-3.5 h-3.5 text-stone-700 group-hover:text-white transition-colors" />
+                  <span className="text-xs font-semibold">Paramètres</span>
                 </button>
 
-                {/* Bouton Lignée : étoile, aucun chiffre, bascule la frise directement sur la page */}
-                <button
-                  onClick={() => setShowLineageFrise(prev => !prev)}
-                  id="btn-profile-lineage-header"
-                  className={`group w-8 h-8 sm:w-auto sm:h-8.5 sm:px-3.5 rounded-full border text-xs font-semibold flex items-center justify-center sm:gap-1.5 transition-all shadow-xs cursor-pointer relative ${
-                    showLineageFrise 
-                      ? 'bg-[#A2482B] border-[#A2482B] text-white' 
-                      : 'bg-white hover:bg-[#A2482B] border-stone-200 hover:border-[#A2482B] text-[#1C1917] hover:text-white'
-                  }`}
-                  title="Afficher la frise de lignée"
-                >
-                  <Star className={`w-3.5 h-3.5 transition-colors ${showLineageFrise ? 'text-white fill-white' : 'text-stone-700 group-hover:text-white'}`} />
-                  <span className="hidden sm:inline">Lignée</span>
-                </button>
-
-                {/* Bouton Partager : fond blanc avec icône noire au repos, fond terre cuite avec icône blanche au survol */}
+                {/* Bouton Partager */}
                 <button
                   onClick={handleShareProfile}
                   id="btn-share-profile"
@@ -1816,51 +1775,25 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                 >
                   <ShareIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#1C1917] group-hover:text-white transition-colors" />
                 </button>
-
-                {/* Icône Paramètres : fond terre cuite et contenu blanc au survol */}
-                <button
-                  onClick={() => onNavigate({ type: 'settings', returnTo: 'profile' })}
-                  id="btn-profile-settings-gear"
-                  className="group w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-full bg-white hover:bg-[#A2482B] border border-stone-200 hover:border-[#A2482B] text-[#1C1917] hover:text-white flex items-center justify-center transition-all shadow-xs cursor-pointer active:scale-95"
-                  title="Paramètres & Séries du flux"
-                >
-                  <Sliders className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#1C1917] group-hover:text-white transition-colors" />
-                </button>
               </>
             ) : (
               <>
-                {/* Visiteur : Bouton Message (fond terre cuite et texte blanc au survol) */}
+                {/* Visiteur : Messagerie et Partage, c'est tout */}
                 <button
                   onClick={handleContactProtagonist}
                   id="btn-visitor-message"
-                  className="group h-8 sm:h-8.5 px-3 sm:px-4 rounded-full bg-white hover:bg-[#A2482B] border border-stone-200 hover:border-[#A2482B] text-xs font-semibold text-[#1C1917] hover:text-white flex items-center gap-1.5 transition-all shadow-xs cursor-pointer whitespace-nowrap"
-                  title={`Envoyer un message à ${userName}`}
+                  className="group h-8 sm:h-8.5 px-3 sm:px-3.5 rounded-full bg-white hover:bg-[#A2482B] border border-stone-200 hover:border-[#A2482B] text-xs font-semibold text-[#1C1917] hover:text-white flex items-center gap-1.5 transition-all shadow-xs cursor-pointer whitespace-nowrap active:scale-95"
+                  title={`Envoyer un message à ${profileDisplayName}`}
                 >
                   <MessageSquare className="w-3.5 h-3.5 text-stone-700 group-hover:text-white transition-colors" />
-                  <span>Message</span>
+                  <span>Messagerie</span>
                 </button>
 
-                {/* Visiteur : Bouton Lignée (visible pour tous les profils visités) */}
-                <button
-                  onClick={() => setShowLineageFrise(prev => !prev)}
-                  id="btn-visitor-lineage-header"
-                  className={`group h-8 sm:h-8.5 px-3 sm:px-3.5 rounded-full border text-xs font-semibold flex items-center gap-1.5 transition-all shadow-xs cursor-pointer whitespace-nowrap ${
-                    showLineageFrise 
-                      ? 'bg-[#A2482B] border-[#A2482B] text-white' 
-                      : 'bg-white hover:bg-[#A2482B] border-stone-200 hover:border-[#A2482B] text-[#1C1917] hover:text-white'
-                  }`}
-                  title={`Voir la lignée de ${userName}`}
-                >
-                  <Star className={`w-3.5 h-3.5 transition-colors ${showLineageFrise ? 'text-white fill-white' : 'text-stone-700 group-hover:text-white'}`} />
-                  <span>Lignée</span>
-                </button>
-
-                {/* Visiteur : Bouton Partager (fond blanc avec icône noire au repos, fond terre cuite avec icône blanche au survol) */}
                 <button
                   onClick={handleShareProfile}
                   id="btn-share-visitor-profile"
                   className="group w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-full bg-white hover:bg-[#A2482B] border border-stone-200 hover:border-[#A2482B] text-[#1C1917] hover:text-white flex items-center justify-center transition-all shadow-xs cursor-pointer active:scale-95"
-                  title={`Partager le profil de ${userName}`}
+                  title={`Partager le profil de ${profileDisplayName}`}
                 >
                   <ShareIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#1C1917] group-hover:text-white transition-colors" />
                 </button>
@@ -1868,8 +1801,6 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
             )}
           </div>
         </div>
-
-      </div>
       )}
 
       {/* BANNIÈRE CONTEXTUELLE DE REPRISE D'ACHAT DEPUIS LE MARCHÉ */}
@@ -1947,80 +1878,74 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                 if ((e.target as HTMLElement).closest('button, a, input, textarea, select')) return;
                 toggleVideoPlayback();
               }}
-              className="aspect-[9/16] w-auto h-[min(510px,calc(100vh-230px))] max-w-[calc(100vw-28px)] mx-auto transition-transform duration-150 ease-out select-none cursor-pointer relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-stone-200/80 bg-stone-950 outline-none focus:outline-none ring-0 shrink-0"
+              className="h-[min(490px,calc(100dvh-210px))] sm:h-[min(540px,calc(100dvh-190px))] lg:h-[min(570px,calc(100dvh-180px))] aspect-[9/16] w-auto mx-auto rounded-3xl overflow-hidden bg-stone-950 text-white shadow-2xl border border-stone-200/40 relative flex flex-col justify-between p-4 sm:p-5 cursor-pointer group select-none shrink-0"
               style={{ transform: `translate(${swipeOffsetX}px, ${swipeOffsetY}px)` }}
             >
             {/* ================================================================= */}
-            {/* 4 ICÔNES SUR LE CÔTÉ DROIT DE LA VIDÉO                            */}
-            {/* Même gabarit que le bouton Partager en haut (w-9 h-9, icône w-4)   */}
-            {/* Même axe vertical exact : right-5                                 */}
-            {/* Disparaissent en cours de lecture pour ne pas gêner le visionnage  */}
+            {/* FLANC DROIT : ÉVALUATION (AWARD) & LIGNÉE (ÉTOILE)               */}
             {/* ================================================================= */}
             <div 
-              className={`absolute right-5 top-[64%] -translate-y-1/2 z-30 flex flex-col items-center gap-3 transition-all duration-300 pointer-events-auto ${
+              className={`absolute right-3 sm:right-3.5 top-[60%] -translate-y-1/2 z-30 flex flex-col items-center gap-2.5 sm:gap-3 transition-all duration-300 pointer-events-auto ${
                 isPlaying 
                   ? 'opacity-0 pointer-events-none scale-90 -translate-x-1' 
                   : 'opacity-100 pointer-events-auto scale-100 translate-x-0'
               }`}
             >
-              {CATEGORIES.map(({ key, label, tooltip, icon: IconComponent }) => {
-                const isActive = activeCategory === key;
-                const isTooltipVisible = activeTooltipCat === key;
-                return (
-                  <div key={key} className="relative group/catbtn flex items-center">
-                    {/* Infobulle : visible au survol sur desktop ET au tap sur mobile tactile */}
-                    <div 
-                      className={`absolute right-11 top-1/2 -translate-y-1/2 z-40 pointer-events-none transition-all duration-200 ${
-                        isTooltipVisible 
-                          ? 'opacity-100 translate-x-0' 
-                          : 'opacity-0 translate-x-1 group-hover/catbtn:opacity-100 group-hover/catbtn:translate-x-0'
-                      }`}
-                    >
-                      <div className="px-2.5 py-1 rounded-lg bg-black/90 text-white text-[10.5px] font-semibold whitespace-nowrap shadow-xl border border-white/15">
-                        {tooltip}
-                      </div>
-                    </div>
-
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        switchCategory(key);
-                        // Toggle tooltip for touch mobile devices
-                        setActiveTooltipCat(prev => prev === key ? null : key);
-                      }}
-                      onMouseEnter={() => setActiveTooltipCat(key)}
-                      onMouseLeave={() => setActiveTooltipCat(null)}
-                      id={`btn-profile-cat-${key}`}
-                      title={tooltip}
-                      aria-label={tooltip}
-                      className={`w-9 h-9 rounded-xl backdrop-blur-md flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md active:scale-90 ${
-                        isActive
-                          ? 'bg-[#A2482B] border border-[#A2482B] text-white scale-105 shadow-[0_2px_12px_rgba(162,72,43,0.45)]'
-                          : 'bg-black/50 hover:bg-[#A2482B] border border-white/20 hover:border-[#A2482B] text-white hover:text-white'
-                      }`}
-                    >
-                      <IconComponent
-                        className={`w-4 h-4 transition-all duration-200 text-white ${
-                          isActive
-                            ? 'stroke-[2.4]'
-                            : 'stroke-[2]'
-                        }`}
-                      />
-                    </button>
+              {/* 1. Évaluation résonance vidéo */}
+              <div className="relative group/flankbtn flex items-center">
+                <div className="absolute right-11 top-1/2 -translate-y-1/2 z-40 pointer-events-none opacity-0 translate-x-1 group-hover/flankbtn:opacity-100 group-hover/flankbtn:translate-x-0 transition-all duration-200">
+                  <div className="px-2.5 py-1 rounded-lg bg-black/90 text-white text-[10.5px] font-semibold whitespace-nowrap shadow-xl border border-white/15">
+                    {profileResonancePct !== null ? `Résonance : ${profileResonancePct}%` : 'Évaluer la résonance'}
                   </div>
-                );
-              })}
+                </div>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsResonanceModalOpen(true);
+                  }}
+                  id="btn-profile-card-resonance"
+                  title={profileResonancePct !== null ? `Résonance : ${profileResonancePct}%` : 'Évaluer la résonance'}
+                  className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl backdrop-blur-md flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md active:scale-90 ${
+                    profileResonancePct !== null
+                      ? 'bg-[#A2482B] border border-[#A2482B] text-white shadow-[0_2px_12px_rgba(162,72,43,0.45)]'
+                      : 'bg-black/50 hover:bg-[#A2482B] border border-white/20 hover:border-[#A2482B] text-white hover:text-white'
+                  }`}
+                >
+                  <Award className="w-4 h-4 text-white" />
+                </button>
+              </div>
+
+              {/* 2. Bouton Lignée avec icône Étoile */}
+              <div className="relative group/flankbtn flex items-center">
+                <div className="absolute right-11 top-1/2 -translate-y-1/2 z-40 pointer-events-none opacity-0 translate-x-1 group-hover/flankbtn:opacity-100 group-hover/flankbtn:translate-x-0 transition-all duration-200">
+                  <div className="px-2.5 py-1 rounded-lg bg-black/90 text-white text-[10.5px] font-semibold whitespace-nowrap shadow-xl border border-white/15">
+                    Lignée
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowLineageFrise(true);
+                  }}
+                  id="btn-profile-card-lineage-star"
+                  title="Explorer la lignée"
+                  aria-label="Lignée"
+                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl backdrop-blur-md flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md active:scale-90 bg-black/50 hover:bg-[#A2482B] border border-white/20 hover:border-[#A2482B] text-white hover:text-white"
+                >
+                  <Star className="w-4 h-4 text-white stroke-[2]" />
+                </button>
+              </div>
             </div>
-
-
 
             {/* ================================================================= */}
             {/* CATÉGORIE 1 : RÉCIT (Récits personnels & Épisodes réunis)         */}
             {/* ================================================================= */}
             {activeCategory === 'recit' && currentRecitUnified && (
               <div 
-                className="group relative w-full h-full flex flex-col justify-between p-5 text-white"
+                className="group relative w-full h-full flex flex-col justify-between p-4 sm:p-5 text-white"
                 id={`card-recit-${currentRecitUnified.item.id}`}
               >
                 <img
@@ -2034,18 +1959,6 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                   loop
                   muted={isMuted}
                   playsInline
-                  onTimeUpdate={(e) => {
-                    const v = e.currentTarget;
-                    if (!isScrubbing) {
-                      setVideoCurrentTime(v.currentTime);
-                    }
-                  }}
-                  onLoadedMetadata={(e) => {
-                    const v = e.currentTarget;
-                    if (v.duration && !isNaN(v.duration) && isFinite(v.duration)) {
-                      setVideoDuration(v.duration);
-                    }
-                  }}
                   onEnded={() => setIsPlaying(false)}
                   className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 pointer-events-none ${
                     isPlaying ? 'opacity-100' : 'opacity-0'
@@ -2053,83 +1966,51 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/35 pointer-events-none" />
 
-                {/* HAUT : Nom de la série ou titre court dans une capsule opaque & Bouton Partager bien calé en haut à droite */}
+                {/* HAUT : Déclencheur lecteur en haut à droite uniquement (aucun titre) */}
                 <VideoTopHeader 
-                  seriesOrTitle={getSeriesBadgeTitle()}
-                  onShare={handleShareProfile}
-                  isMuted={isMuted}
-                  onToggleMute={toggleMute}
                   isPlaying={isPlaying}
                   onTogglePlay={toggleVideoPlayback}
                 />
 
                 <div className="my-auto" />
 
-                {/* BAS : Titre, durée/vues, actions & lecteur moderne (Style Image 2) */}
-                <div className="relative z-10 space-y-2 sm:space-y-2.5 pr-12 sm:pr-14 pb-0.5">
-                  <div>
-                    <h3 className="font-editorial text-xs sm:text-base font-bold text-white leading-tight line-clamp-2 drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
-                      {currentRecitUnified.kind === 'recit'
-                        ? (currentRecitUnified.item.subtitle || currentRecitUnified.item.chapter || currentRecitUnified.item.title)
-                        : currentRecitUnified.item.title}
-                    </h3>
-                    <div className="flex items-center gap-1.5 text-[10.5px] sm:text-[11px] text-white/80 mt-0.5 font-medium drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)]">
-                      <span>{currentRecitUnified.item.duration}</span>
-                      <span>•</span>
-                      <span>{currentRecitUnified.item.viewsCount?.toLocaleString()} vues</span>
-                    </div>
+                {/* BAS : QUESTION EXISTENTIELLE + MUTE EN LECTURE + PARTAGE (AUCUN AUTRE TEXTE) */}
+                <div className="relative z-20 w-full pt-1 flex items-end justify-between gap-3 pointer-events-auto">
+                  <div className="flex-1 min-w-0 pr-2">
+                    <p className="font-serif-editorial text-xs sm:text-sm md:text-base text-white/95 font-medium leading-snug italic line-clamp-3 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
+                      « {getQuestionText()} »
+                    </p>
                   </div>
 
-                  {isOwner && (
-                    <div className="grid grid-cols-2 gap-1.5 sm:gap-2 pt-0.5">
+                  <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+                    {isPlaying && (
                       <button
+                        type="button"
                         onClick={(e) => {
                           e.stopPropagation();
-                          if (currentRecitUnified.kind === 'recit') {
-                            setEditingRecit(currentRecitUnified.item);
-                            setRecitFormTitle(currentRecitUnified.item.title);
-                            setRecitFormSubtitle(currentRecitUnified.item.subtitle || '');
-                          } else {
-                            setEditingEpisode(currentRecitUnified.item);
-                            setEpisodeFormDuration(currentRecitUnified.item.duration);
-                            setEpisodeFormViews(currentRecitUnified.item.viewsCount);
-                          }
+                          toggleMute();
                         }}
-                        className="h-7.5 sm:h-8.5 px-2.5 sm:px-3 rounded-lg sm:rounded-xl bg-stone-100 hover:bg-[#A2482B] text-stone-800 hover:text-white text-[11px] sm:text-xs font-bold transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer active:scale-[0.98] border border-stone-200/80 hover:border-[#A2482B] group/editcard"
-                        id="btn-edit-recit-unified"
+                        id="btn-video-card-mute-bottom"
+                        className="w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-xl bg-black/50 hover:bg-[#A2482B] active:scale-95 backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center shadow-md transition-all cursor-pointer shrink-0"
+                        title={isMuted ? "Activer le son" : "Couper le son"}
                       >
-                        <Edit3 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-stone-600 group-hover/editcard:text-white transition-colors" />
-                        <span>Modifier</span>
+                        {isMuted ? <VolumeX className="w-4 h-4 text-white" /> : <Volume2 className="w-4 h-4 text-white" />}
                       </button>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          if (currentRecitUnified.kind === 'recit') {
-                            setEditingRecit(currentRecitUnified.item);
-                            setIsDeletingRecit(true);
-                          } else {
-                            setEditingEpisode(currentRecitUnified.item);
-                            setIsDeletingEpisode(true);
-                          }
-                        }}
-                        className="h-7.5 sm:h-8.5 px-2.5 sm:px-3 rounded-lg sm:rounded-xl bg-black/65 hover:bg-red-600/90 border border-white/20 hover:border-red-500 text-white text-[11px] sm:text-xs font-bold transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer active:scale-[0.98] backdrop-blur-sm"
-                        id="btn-delete-recit-unified"
-                      >
-                        <Trash2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-red-400" />
-                        <span>Retirer</span>
-                      </button>
-                    </div>
-                  )}
+                    )}
 
-                  {/* Lecteur moderne épuré sans onde sonore */}
-                  <VideoModernPlayerBar 
-                    videoCurrentTime={videoCurrentTime}
-                    activeDuration={activeDuration}
-                    progressPercent={progressPercent}
-                    onSeek={handleTimelineSeek}
-                    formatTime={formatVideoTime}
-                    isPlaying={isPlaying}
-                  />
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleShareProfile();
+                      }}
+                      id="btn-video-card-share-bottom"
+                      className="w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-xl bg-black/50 hover:bg-[#A2482B] active:scale-95 backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center shadow-md transition-all cursor-pointer shrink-0"
+                      title="Partager"
+                    >
+                      <ShareIcon className="w-4 h-4 text-white" />
+                    </button>
+                  </div>
                 </div>
               </div>
             )}
@@ -2172,12 +2053,9 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/35 pointer-events-none" />
 
-                {/* HAUT : Nom de la série dans une capsule opaque & Bouton Partager bien calé en haut à droite */}
+                {/* HAUT : Nom de la série & Déclencheur lecteur en haut à droite */}
                 <VideoTopHeader 
                   seriesOrTitle={getSeriesBadgeTitle()}
-                  onShare={handleShareProfile}
-                  isMuted={isMuted}
-                  onToggleMute={toggleMute}
                   isPlaying={isPlaying}
                   onTogglePlay={toggleVideoPlayback}
                 />
@@ -2298,12 +2176,9 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/35 pointer-events-none" />
 
-                {/* HAUT : Catégorie ou titre court dans une capsule opaque & Bouton Partager bien calé en haut à droite */}
+                {/* HAUT : Catégorie & Déclencheur lecteur en haut à droite */}
                 <VideoTopHeader 
                   seriesOrTitle={getSeriesBadgeTitle()}
-                  onShare={handleShareProfile}
-                  isMuted={isMuted}
-                  onToggleMute={toggleMute}
                   isPlaying={isPlaying}
                   onTogglePlay={toggleVideoPlayback}
                 />
@@ -2420,15 +2295,12 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/35 pointer-events-none" />
 
-                {/* HAUT : Titre ou type dans une capsule opaque avec badge & Bouton Partager bien calé en haut à droite */}
+                {/* HAUT : Titre ou type avec badge & Déclencheur lecteur en haut à droite */}
                 <VideoTopHeader
                   seriesOrTitle={getSeriesBadgeTitle()}
                   badge={currentAppelUnified.kind === 'initiative' 
                     ? `${Math.round((currentAppelUnified.item.collectedAmount / currentAppelUnified.item.targetAmount) * 100)}%`
                     : (currentAppelUnified.item.urgency || 'Urgent')}
-                  onShare={handleShareProfile}
-                  isMuted={isMuted}
-                  onToggleMute={toggleMute}
                   isPlaying={isPlaying}
                   onTogglePlay={toggleVideoPlayback}
                 />
@@ -4759,6 +4631,19 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
         onNavigateToSeller={(sellerId) => {
           setIsOrdersModalOpen(false);
           onNavigate({ type: 'protagonist_profile', protagonistId: sellerId });
+        }}
+      />
+
+      {/* Modale d'évaluation de la résonance */}
+      <ResonanceModal
+        isOpen={isResonanceModalOpen}
+        onClose={() => setIsResonanceModalOpen(false)}
+        storyId={targetProtagonist?.stories?.[0]?.id || `profile-story-${protagonistId || 'user'}`}
+        topicId={targetProtagonist?.documentaryId || 'exploration-generale'}
+        personName={profileDisplayName}
+        initialPercentage={profileResonancePct}
+        onRatingSubmitted={(pct) => {
+          setProfileResonancePct(pct);
         }}
       />
 

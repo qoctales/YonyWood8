@@ -48,7 +48,7 @@ const SHOWCASE_DUOS: DuoShowcase[] = [
   },
   {
     id: 'duo-benin-perou',
-    seriesTitle: 'Benin <> ...',
+    seriesTitle: 'Bénin <> ...',
     question: '« Racontez un moment où vous avez compris ce qui rend votre pays unique. »',
     universeA: {
       name: 'Tobi Houndégla',

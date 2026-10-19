@@ -63,7 +63,7 @@ const PRODUCTIONS: ProductionPoster[] = [
   },
   {
     id: 'finagnon-qosqorico',
-    title: 'Benin <> ...',
+    title: 'Bénin <> ...',
     posterImage: '/assets/posters/Benin < >.jpg',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
     sharePrice: 50
@@ -129,7 +129,7 @@ const INITIAL_PEER_OFFERS: PeerOffer[] = [
     sellerId: 'nadia-artist',
     sellerName: 'Nadia',
     sellerPhoto: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80',
-    seriesTitle: 'Benin <> ...',
+    seriesTitle: 'Bénin <> ...',
     posterImage: '/assets/posters/Benin < >.jpg',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
     sharesCount: 5,

@@ -20,9 +20,8 @@ interface DuoScreenProps {
 
 export const DuoScreen: React.FC<DuoScreenProps> = ({ duoId, onNavigate }) => {
   const duo = DUOS.find(d => d.id === duoId) || DUOS[0];
-  const partnerCountry = duo.protagonistB.country || 'Pérou';
-  const isBeninSeries = duo.documentaryId === 'finagnon-qosqorico' || duo.documentaryTitle?.toLowerCase().startsWith('benin');
-  const displaySeriesTitle = isBeninSeries ? `Benin <> ${partnerCountry}` : duo.documentaryTitle;
+  const isBeninSeries = duo.documentaryId === 'finagnon-qosqorico' || duo.documentaryTitle?.toLowerCase().includes('benin');
+  const displaySeriesTitle = isBeninSeries ? 'Bénin <> ...' : duo.documentaryTitle;
 
   return (
     <div className="min-h-screen bg-[#F3E9D2]/40 pb-20">
@@ -48,8 +47,8 @@ export const DuoScreen: React.FC<DuoScreenProps> = ({ duoId, onNavigate }) => {
               className="text-xs bg-[#FFFFFF] border border-[#E7E5E4] rounded-lg px-2.5 py-1.5 text-[#1C1917]"
             >
               {DUOS.map(item => {
-                const itemIsBenin = item.documentaryId === 'finagnon-qosqorico' || item.documentaryTitle?.toLowerCase().startsWith('benin');
-                const itemTitle = itemIsBenin ? `Benin <> ${item.protagonistB.country || 'Pérou'}` : item.documentaryTitle;
+                const itemIsBenin = item.documentaryId === 'finagnon-qosqorico' || item.documentaryTitle?.toLowerCase().includes('benin');
+                const itemTitle = itemIsBenin ? 'Bénin <> ...' : item.documentaryTitle;
                 return (
                   <option key={item.id} value={item.id}>
                     {itemTitle} — {item.protagonistA.name.split(' ')[0]} × {item.protagonistB.name.split(' ')[0]}

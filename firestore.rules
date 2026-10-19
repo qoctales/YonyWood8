@@ -42,5 +42,15 @@ service cloud.firestore {
         request.auth.token.email == 'nonvideromeo@gmail.com'
       );
     }
+
+    // Mobilisation et inscriptions citoyennes (Coproducteurs, Effigies, Entreprises)
+    match /participations/{participationId} {
+      allow read: if true;
+      allow create: if true;
+      allow update, delete: if request.auth != null && (
+        request.auth.token.email == 'qoctales@gmail.com' ||
+        request.auth.token.email == 'nonvideromeo@gmail.com'
+      );
+    }
   }
 }

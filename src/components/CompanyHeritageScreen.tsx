@@ -709,22 +709,21 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
                   <h3 className="font-editorial text-[15px] sm:text-base font-bold text-white tracking-wider leading-snug drop-shadow-md">
                     {currentStakeholder.name.split(' ')[0]}
                   </h3>
-                  <p className="text-xs text-stone-200 font-medium tracking-wide drop-shadow-sm">
-                    {currentStakeholder.roleCategory}
-                  </p>
                 </div>
 
-                {/* Symbole Muet / Son baissé en bas à droite */}
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsStakeholderMuted(prev => !prev);
-                  }}
-                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center cursor-pointer transition-all shadow-md hover:scale-105 active:scale-95 shrink-0"
-                  title={isStakeholderMuted ? 'Activer le son' : 'Couper le son'}
-                >
-                  {isStakeholderMuted ? <VolumeX className="w-3.5 h-3.5 text-white" /> : <Volume2 className="w-3.5 h-3.5 text-white" />}
-                </button>
+                {/* Symbole Muet / Son baissé en bas à droite (visible uniquement en lecture) */}
+                {isStakeholderPlaying && (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsStakeholderMuted(prev => !prev);
+                    }}
+                    className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center cursor-pointer transition-all shadow-md hover:scale-105 active:scale-95 shrink-0"
+                    title={isStakeholderMuted ? 'Activer le son' : 'Couper le son'}
+                  >
+                    {isStakeholderMuted ? <VolumeX className="w-3.5 h-3.5 text-white" /> : <Volume2 className="w-3.5 h-3.5 text-white" />}
+                  </button>
+                )}
               </div>
             </div>
 

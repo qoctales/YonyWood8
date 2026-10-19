@@ -75,6 +75,23 @@
         "createdAt": { "type": "string" }
       },
       "required": ["targetId", "reason", "targetTitle"]
+    },
+    "Participation": {
+      "title": "Participation",
+      "description": "Engagements et candidatures citoyennes (coproducteurs, effigies, entreprises)",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "type": "string", "enum": ["coproducteur", "effigie", "entreprise"] },
+        "seriesId": { "type": "string" },
+        "seriesTitle": { "type": "string" },
+        "name": { "type": "string" },
+        "phoneWhatsApp": { "type": "string" },
+        "email": { "type": "string" },
+        "sharesCount": { "type": "number" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["type", "name", "phoneWhatsApp"]
     }
   },
   "firestore": {
@@ -93,6 +110,10 @@
     "/reports/{reportId}": {
       "schema": "Report",
       "description": "Collection des signalements pour la modération éditoriale"
+    },
+    "/participations/{participationId}": {
+      "schema": "Participation",
+      "description": "Collection des promesses de coproduction et candidatures citoyennes"
     }
   }
 }

@@ -80,9 +80,9 @@ export const ProtagonistTeaserModal: React.FC<ProtagonistTeaserModalProps> = ({
       className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 animate-in fade-in duration-200"
       onClick={onClose}
     >
-      {/* Container vertical 9:16 adapté à l'écran mobile */}
+      {/* Container vertical 9:16 standardisé */}
       <div 
-        className="relative aspect-[9/16] w-[min(340px,calc((100dvh-200px)*9/16))] h-[min(604px,calc(100dvh-200px))] max-w-[calc(100vw-28px)] mx-auto rounded-2xl sm:rounded-3xl shadow-2xl border border-stone-200/80 bg-black flex flex-col justify-between p-4 sm:p-5 text-white animate-in zoom-in-95 duration-200 group/modal select-none shrink-0"
+        className="h-[min(490px,calc(100dvh-210px))] sm:h-[min(540px,calc(100dvh-190px))] lg:h-[min(570px,calc(100dvh-180px))] aspect-[9/16] w-auto mx-auto rounded-3xl overflow-hidden bg-stone-950 text-white shadow-2xl border border-stone-200/40 relative flex flex-col justify-between p-4 sm:p-5 select-none shrink-0 animate-in zoom-in-95 duration-200"
       >
         {/* Fond vidéo ou poster */}
         <img
@@ -105,7 +105,7 @@ export const ProtagonistTeaserModal: React.FC<ProtagonistTeaserModalProps> = ({
         {/* Voile d'ambiance cinématographique */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/50 pointer-events-none" />
 
-        {/* HAUT : Bouton Évaluer à gauche & Lecteur Vidéo en haut à droite */}
+        {/* HAUT : Bouton Évaluer à gauche & Lecteur Vidéo vintage seul en haut à droite */}
         <div className="relative z-10 flex items-center justify-between gap-2 w-full">
           <button
             onClick={(e) => {
@@ -122,33 +122,21 @@ export const ProtagonistTeaserModal: React.FC<ProtagonistTeaserModalProps> = ({
             <Award className="w-4 h-4 text-white" />
           </button>
 
-          <div className="flex items-center gap-1.5">
-            {isPlaying && (
-              <button
-                onClick={toggleMute}
-                className="p-1.5 rounded-full bg-black/60 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/15 hover:border-[#A2482B] transition-colors cursor-pointer"
-                title={isMuted ? 'Activer le son' : 'Couper le son'}
-              >
-                {isMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
-              </button>
+          {/* Déclencheur vidéo vintage en haut à droite (format carré arrondi signature TvPlayerIcon) */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              togglePlay(e);
+            }}
+            className="w-8.5 h-8.5 sm:w-9.5 sm:h-9.5 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0"
+            title={isPlaying ? 'Pause' : 'Lecture vidéo'}
+          >
+            {isPlaying ? (
+              <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
+            ) : (
+              <TvPlayerIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white transition-transform" strokeWidth={1.6} />
             )}
-
-            {/* Déclencheur vidéo standardisé en haut à droite (format carré arrondi) */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                togglePlay(e);
-              }}
-              className="w-9 h-9 rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
-              title={isPlaying ? 'Pause' : 'Lecture vidéo'}
-            >
-              {isPlaying ? (
-                <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
-              ) : (
-                <TvPlayerIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white transition-transform" strokeWidth={1.6} />
-              )}
-            </button>
-          </div>
+          </button>
         </div>
 
 
@@ -170,30 +158,23 @@ export const ProtagonistTeaserModal: React.FC<ProtagonistTeaserModalProps> = ({
           <div className="flex items-end justify-between gap-2.5">
             <div className="space-y-1 flex-1 min-w-0">
               <div className="flex items-center gap-2">
-                <h3 className="font-editorial text-lg sm:text-xl font-bold text-white tracking-wider leading-tight pb-0.5 truncate">
-                  {protagonist.name}
+                <h3 className="font-editorial text-[15px] sm:text-base font-bold text-white tracking-wider leading-snug drop-shadow-md truncate">
+                  {protagonist.name.split(' ')[0]}
                 </h3>
                 {protagonist.flag && <span className="text-base shrink-0">{protagonist.flag}</span>}
               </div>
-
-              <p className="text-xs text-white/90 font-medium flex items-center gap-1.5 truncate">
-                <span>{protagonist.role}</span>
-                <span className="text-white/40">•</span>
-                <span className="text-white/80 flex items-center gap-1 truncate">
-                  <MapPin className="w-3 h-3 text-white/60 shrink-0" />
-                  {protagonist.territory}
-                </span>
-              </p>
             </div>
 
-            {/* Bouton Muet / Son déplacé en bas à droite */}
-            <button
-              onClick={toggleMute}
-              className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center cursor-pointer transition-all shadow-md hover:scale-105 active:scale-95 shrink-0"
-              title={isMuted ? 'Activer le son' : 'Couper le son'}
-            >
-              {isMuted ? <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" /> : <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />}
-            </button>
+            {/* Bouton Muet / Son en bas à droite (visible uniquement en lecture) */}
+            {isPlaying && (
+              <button
+                onClick={toggleMute}
+                className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center cursor-pointer transition-all shadow-md hover:scale-105 active:scale-95 shrink-0"
+                title={isMuted ? 'Activer le son' : 'Couper le son'}
+              >
+                {isMuted ? <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" /> : <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />}
+              </button>
+            )}
           </div>
 
           {/* Action : Entrer dans son univers */}

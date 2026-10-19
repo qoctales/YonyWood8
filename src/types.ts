@@ -674,4 +674,9 @@ export type ViewScreen =
       tab?: 'overview' | 'users' | 'heritage' | 'series' | 'producers' | 'cooptations' | 'advertising' | 'finances' | 'moderation' | 'audit' | string;
       filterId?: string;
       seriesId?: string;
+    }
+  | {
+      type: 'participate';
+      initialRole?: 'effigie' | 'coproducteur' | 'entreprise' | 'partenaire';
+      preselectedSeriesId?: string;
     };
