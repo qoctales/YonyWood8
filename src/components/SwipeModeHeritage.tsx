@@ -16,10 +16,10 @@ import { Dimension, SousCategorie } from '../data/dimensionsData';
 import { AffiliationPerson, ViewScreen } from '../types';
 import { DimensionIcon } from './DimensionIcon';
 import { ProfileSoloIcon, TvPlayerIcon } from './YonywoodBrandIcons';
-import { ShareIcon } from './ShareIcon';
 import { VideoReportModal } from './VideoReportModal';
 import { celestialAudio } from '../utils/celestialAudio';
 import { get16StoriesForTopic } from '../data/explorerTopicsData';
+import { UnifiedVideoCardOverlay } from './UnifiedVideoCardOverlay';
 
 interface SwipeModeHeritageProps {
   swipeStep: 1 | 2 | 3;
@@ -544,140 +544,58 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
               {/* Gradient pour contraste cinématographique */}
               <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/85 pointer-events-none" />
 
-              {/* HAUT : Badge Direction + Déclencheur vidéo en haut à droite */}
-              <div className="relative z-20 flex items-center justify-between pointer-events-auto">
-                <div className="px-3.5 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-[11px] sm:text-xs font-semibold text-white shadow-sm tracking-wide flex items-center gap-1.5 max-w-[70%]">
+              {/* Overlay standardisé : alignement vertical strict, 6 actions, pas de croix, titre en haut à gauche et prénom épuré en bas à gauche */}
+              <UnifiedVideoCardOverlay
+                titleBadge={effectiveSubcategory?.label || 'Héritage'}
+                badgeIcon={
                   <DimensionIcon 
                     name={effectiveSubcategory?.icone || '01-sagesses/_dimension'} 
                     size={14} 
                     className="text-[#FFE7A3] shrink-0" 
                   />
-                  <span className="truncate">{effectiveSubcategory?.label}</span>
-                </div>
-
-                {/* Déclencheur lecteur vidéo vintage officiel TvPlayerIcon en haut à droite */}
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    togglePlay3();
-                  }}
-                  className="w-8.5 h-8.5 sm:w-9.5 sm:h-9.5 rounded-xl bg-black/45 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
-                  title={isPlayingStep3 ? 'Mettre en pause' : 'Lire la vidéo'}
-                >
-                  {isPlayingStep3 ? (
-                    <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
-                  ) : (
-                    <TvPlayerIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white transition-transform" strokeWidth={1.6} />
-                  )}
-                </button>
-              </div>
-
-              {/* CÔTÉ DROIT : ICÔNES D'ACTION VERTICALES (Résonance, Question, Profil, Partage) */}
-              <div 
-                className="absolute right-3 sm:right-4 top-[64%] -translate-y-1/2 z-30 flex flex-col items-center gap-2.5 sm:gap-3 pointer-events-auto"
-                onClick={(e) => e.stopPropagation()}
-              >
-                {/* 1. Résonance */}
-                <button
-                  id={`swipe-btn-resonance-${effectivePerson.id}`}
-                  onClick={() => onOpenResonanceModal(effectivePerson)}
-                  className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl backdrop-blur-md border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
-                    personResonancePct !== null
-                      ? 'bg-[#A2482B] border-[#A2482B] text-white shadow-[0_0_14px_rgba(162,72,43,0.5)]'
-                      : 'bg-black/45 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white'
-                  }`}
-                  title={personResonancePct !== null ? `Résonance : ${personResonancePct}%` : "Évaluer la résonance"}
-                >
-                  <Award className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-                </button>
-
-                {/* 2. Question existentielle */}
-                <button
-                  id={`swipe-btn-question-${effectivePerson.id}`}
-                  onClick={() => {
-                    const qText = effectiveSubcategory?.question || 
-                      (effectivePerson as any).question || 
-                      effectivePerson.teaserPitch || 
-                      "Quelle vision singulière ce parcours apporte-t-il au monde ?";
-                    onOpenQuestionModal(effectiveSubcategory?.label || effectivePerson.name, qText);
-                  }}
-                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
-                  title="Découvrir la question"
-                >
-                  <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-                </button>
-
-                {/* 3. Découvrir son univers complet */}
-                <button
-                  id={`swipe-btn-universe-${effectivePerson.id}`}
-                  onClick={() => onNavigate({ type: 'protagonist_profile', protagonistId: effectivePerson.id })}
-                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
-                  title="Découvrir son profil complet"
-                >
-                  <ProfileSoloIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white" />
-                </button>
-
-                {/* 4. Bouton Partager */}
-                <button
-                  id={`swipe-btn-share-${effectivePerson.id}`}
-                  onClick={() => onSharePerson(effectivePerson)}
-                  className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl backdrop-blur-md border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
-                    isShareCopied 
-                      ? 'bg-emerald-700/85 border-emerald-600 text-white' 
-                      : 'bg-black/45 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white'
-                  }`}
-                  title={isShareCopied ? "Lien copié !" : "Partager"}
-                >
-                  {isShareCopied ? (
-                    <Check className="w-4 h-4 text-white" />
-                  ) : (
-                    <ShareIcon className="w-4 h-4 text-white" />
-                  )}
-                </button>
-
-                {/* 5. Bouton Options & Signalement (3 points sous l'icône Partage) */}
-                <button
-                  id={`swipe-btn-more-${effectivePerson.id}`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setReportingTarget({
-                      id: effectivePerson.id,
-                      title: `${effectivePerson.name} — ${effectivePerson.story?.title || 'Récit d\'héritage'}`
-                    });
-                  }}
-                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
-                  title="Options et signalement"
-                >
-                  <MoreVertical className="w-4 h-4 text-white" />
-                </button>
-              </div>
-
-              {/* BAS : PRÉNOM ÉLARGI & SYMBOLE MUTE EN BAS À DROITE */}
-              <div className="relative z-20 flex items-end justify-between pointer-events-auto pb-4 sm:pb-5 pl-1 pr-1 mt-auto gap-2">
-                <div 
-                  className="flex flex-col cursor-pointer group/title"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onNavigate({ type: 'protagonist_profile', protagonistId: effectivePerson.id });
-                  }}
-                >
-                  <h3 className="font-editorial text-[15px] sm:text-base font-bold text-white tracking-wider leading-snug pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors">
-                    {effectivePerson.firstName || effectivePerson.name.split(' ')[0]}
-                  </h3>
-                </div>
-
-                {/* Symbole Muet / Son baissé en bas à droite */}
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    toggleMute();
-                  }}
-                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/50 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-colors cursor-pointer shrink-0 shadow-md hover:scale-105 active:scale-95"
-                  title={isMuted ? 'Activer le son' : 'Couper le son'}
-                >
-                  {isMuted ? <VolumeX className="w-3.5 h-3.5 text-white" /> : <Volume2 className="w-3.5 h-3.5 text-white" />}
-                </button>
-              </div>
+                }
+                displayName={effectivePerson.firstName || effectivePerson.name.split(' ')[0]}
+                isPlaying={isPlayingStep3}
+                onTogglePlay={() => togglePlay3()}
+                isMuted={isMuted}
+                onToggleMute={toggleMute}
+                resonanceScore={personResonancePct}
+                onOpenResonance={() => onOpenResonanceModal(effectivePerson)}
+                questionText={
+                  effectiveSubcategory?.question || 
+                  (effectivePerson as any).question || 
+                  effectivePerson.teaserPitch || 
+                  "Quelle vision singulière ce parcours apporte-t-il au monde ?"
+                }
+                onOpenQuestionModal={() => {
+                  const qText = effectiveSubcategory?.question || 
+                    (effectivePerson as any).question || 
+                    effectivePerson.teaserPitch || 
+                    "Quelle vision singulière ce parcours apporte-t-il au monde ?";
+                  onOpenQuestionModal(effectiveSubcategory?.label || effectivePerson.name, qText);
+                }}
+                factText={
+                  effectivePerson.teaserPitch || 
+                  effectivePerson.quote || 
+                  (effectivePerson as any).story?.description || 
+                  "Passeur d'un savoir vivant transmis à sa communauté."
+                }
+                onOpenProfile={() => onNavigate({ type: 'protagonist_profile', protagonistId: effectivePerson.id })}
+                onShare={() => onSharePerson(effectivePerson)}
+                isShareCopied={isShareCopied}
+                onReportVideo={() => {
+                  setReportingTarget({
+                    id: effectivePerson.id,
+                    title: `${effectivePerson.name} — ${effectivePerson.story?.title || 'Récit d\'héritage'}`
+                  });
+                }}
+                onBlockVideo={() => {
+                  setReportingTarget({
+                    id: effectivePerson.id,
+                    title: `${effectivePerson.name} — ${effectivePerson.story?.title || 'Récit d\'héritage'}`
+                  });
+                }}
+              />
             </div>
 
             {/* Flèche Personne Suivante */}

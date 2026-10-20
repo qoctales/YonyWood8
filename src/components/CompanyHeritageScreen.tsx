@@ -17,12 +17,9 @@ import { ShareIcon } from './ShareIcon';
 import { ResonanceModal } from './ResonanceModal';
 import { ProfileSoloIcon, TvPlayerIcon } from './YonywoodBrandIcons';
 import { ViewScreen } from '../types';
-import { 
-  CompanyStakeholder, 
-  CompanyEntity, 
-  COMPANIES_DATA 
-} from '../data/companyPortraitsData';
+import { CompanyEntity, CompanyStakeholder, COMPANIES_DATA } from '../data/companyPortraitsData';
 import { PortraitsCircleView } from './PortraitsCircleView';
+import { UnifiedVideoCardOverlay } from './UnifiedVideoCardOverlay';
 
 export type { CompanyStakeholder, CompanyEntity };
 export { COMPANIES_DATA };
@@ -54,6 +51,7 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
 
   // Partage
   const [copied, setCopied] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   // Swipe tactile
   const touchStartXRef = useRef<number | null>(null);
@@ -368,117 +366,34 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
               )}
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/65 pointer-events-none" />
 
-              {/* =========================================================== */}
-              {/* HAUT DE CARTE : NOM DE L'ENTREPRISE EN TITRE À GAUCHE &     */}
-              {/* LECTEUR VIDÉO EN HAUT À DROITE                              */}
-              {/* =========================================================== */}
-              <div className="relative z-20 flex items-center justify-between w-full pointer-events-auto">
-                <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-[10.5px] sm:text-xs font-bold text-white tracking-wider uppercase drop-shadow-sm truncate inline-block">
-                  {selectedCompanyForSpace.companyName}
-                </span>
-
-                {/* Lecteur vidéo vintage officiel TvPlayerIcon en haut à droite */}
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsStakeholderPlaying(prev => !prev);
-                  }}
-                  className="w-8.5 h-8.5 sm:w-9.5 sm:h-9.5 rounded-xl bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center text-white transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0"
-                  title={isStakeholderPlaying ? "Mettre en pause" : `Regarder la vidéo de ${currentStakeholder.name}`}
-                >
-                  {isStakeholderPlaying ? (
-                    <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
-                  ) : (
-                    <TvPlayerIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white transition-transform" strokeWidth={1.6} />
-                  )}
-                </button>
-              </div>
-
-              {/* =========================================================== */}
-              {/* FLANC DROIT : ÉVALUATION, QUESTION, PROFIL & PARTAGE        */}
-              {/* =========================================================== */}
-              <div 
-                onClick={(e) => e.stopPropagation()}
-                className="absolute right-3 sm:right-3.5 top-[58%] -translate-y-1/2 z-20 flex flex-col items-center gap-2.5 sm:gap-3 pointer-events-auto"
-              >
-                {/* 1. Évaluation résonance */}
-                <button
-                  id={`stakeholder-btn-resonance-${currentStakeholder.id}`}
-                  onClick={() => setResonanceTargetStakeholder(currentStakeholder)}
-                  className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl backdrop-blur-md border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
-                    stakeholderResonances[currentStakeholder.id] !== undefined
-                      ? 'bg-[#A2482B] border-[#A2482B] text-white shadow-[0_0_14px_rgba(162,72,43,0.5)]'
-                      : 'bg-black/45 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white'
-                  }`}
-                  title={stakeholderResonances[currentStakeholder.id] !== undefined ? `Résonance : ${stakeholderResonances[currentStakeholder.id]}%` : "Évaluer la résonance"}
-                >
-                  <Award className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-                </button>
-
-                {/* 2. Question existentielle */}
-                <button
-                  id={`stakeholder-btn-question-${currentStakeholder.id}`}
-                  onClick={() => setQuestionModalStakeholder(currentStakeholder)}
-                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
-                  title="Découvrir la question"
-                >
-                  <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-                </button>
-
-                {/* 3. Découvrir son profil complet */}
-                <button
-                  id={`stakeholder-btn-profile-${currentStakeholder.id}`}
-                  onClick={() => onNavigate && onNavigate({ type: 'profile' })}
-                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
-                  title={`Découvrir le profil de ${currentStakeholder.name}`}
-                >
-                  <ProfileSoloIcon className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-white" />
-                </button>
-
-                {/* 4. Bouton Partager */}
-                <button
-                  onClick={handleShare}
-                  className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl border flex items-center justify-center transition-all cursor-pointer shadow-md hover:scale-105 active:scale-95 ${
-                    copied
-                      ? 'bg-emerald-700/85 border-emerald-600 text-white'
-                      : 'bg-black/45 hover:bg-[#A2482B] border-white/20 text-white'
-                  }`}
-                  title="Partager ce témoignage"
-                >
-                  {copied ? (
-                    <Check className="w-4 h-4 text-white" />
-                  ) : (
-                    <ShareIcon className="w-4 h-4 text-white" />
-                  )}
-                </button>
-              </div>
-
-              {/* =========================================================== */}
-              {/* BAS : PRÉNOM DE LA PERSONNE & STATUT SIMPLE (Fondateur...)  */}
-              {/* ET SYMBOLE MUTE EN BAS À DROITE                             */}
-              {/* =========================================================== */}
-              <div className="relative z-20 pt-2 mt-auto flex items-end justify-between gap-2 pointer-events-auto">
-                <div className="space-y-0.5 min-w-0 pr-2">
-                  <h3 className="font-editorial text-[15px] sm:text-base md:text-lg font-bold text-white tracking-wider leading-tight drop-shadow-md">
-                    {currentStakeholder.name.split(' ')[0]}
-                  </h3>
-                  <span className="text-[11px] sm:text-xs text-white/85 font-medium block truncate">
-                    {currentStakeholder.roleCategory}
-                  </span>
-                </div>
-
-                {/* Symbole Muet en bas à droite */}
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsStakeholderMuted(prev => !prev);
-                  }}
-                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center cursor-pointer transition-all shadow-md hover:scale-105 active:scale-95 shrink-0"
-                  title={isStakeholderMuted ? 'Activer le son' : 'Couper le son'}
-                >
-                  {isStakeholderMuted ? <VolumeX className="w-3.5 h-3.5 text-white" /> : <Volume2 className="w-3.5 h-3.5 text-white" />}
-                </button>
-              </div>
+              {/* Overlay standardisé : alignement vertical strict, 6 actions, pas de croix, titre en haut à gauche et prénom épuré en bas à gauche */}
+              <UnifiedVideoCardOverlay
+                titleBadge={selectedCompanyForSpace.companyName}
+                displayName={currentStakeholder.name}
+                isPlaying={isStakeholderPlaying}
+                onTogglePlay={() => setIsStakeholderPlaying(prev => !prev)}
+                isMuted={isStakeholderMuted}
+                onToggleMute={() => setIsStakeholderMuted(prev => !prev)}
+                resonanceScore={stakeholderResonances[currentStakeholder.id]}
+                onOpenResonance={() => setResonanceTargetStakeholder(currentStakeholder)}
+                questionText={currentStakeholder.question}
+                factText={`${currentStakeholder.roleCategory} : ${currentStakeholder.roleDetail || 'partenaire de transmission et d’action territoriale'}`}
+                onOpenProfile={() => {
+                  if (onNavigate) {
+                    onNavigate({ type: 'profile' });
+                  }
+                }}
+                onShare={handleShare}
+                isShareCopied={copied}
+                onReportVideo={() => {
+                  setToastMessage('Vidéo signalée à la modération.');
+                  setTimeout(() => setToastMessage(null), 2500);
+                }}
+                onBlockVideo={() => {
+                  setToastMessage('Cette vidéo a été masquée.');
+                  setTimeout(() => setToastMessage(null), 2500);
+                }}
+              />
             </div>
 
             {/* Flèche droite pour défiler les voix de l'entreprise */}

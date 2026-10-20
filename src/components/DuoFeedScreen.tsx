@@ -26,6 +26,7 @@ import { ReportModal } from './ReportModal';
 import { ProfileSoloIcon, TvPlayerIcon } from './YonywoodBrandIcons';
 import { ShareIcon } from './ShareIcon';
 import { ResonanceModal } from './ResonanceModal';
+import { UnifiedVideoCardOverlay } from './UnifiedVideoCardOverlay';
 
 interface DuoFeedScreenProps {
   onNavigate: (screen: ViewScreen) => void;
@@ -494,143 +495,38 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/25 pointer-events-none" />
 
-                    {/* Top Header: Pole Tag on left & Video Player + Mute toggle on right */}
-                    <div className="relative z-10 p-2 sm:p-4 flex items-center justify-between gap-1">
-                      <span className="w-fit max-w-[95px] sm:max-w-[150px] truncate px-2.5 sm:px-3.5 py-0.5 sm:py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-[10px] sm:text-xs font-bold text-white shadow-md shrink-0">
-                        {cardTagA}
-                      </span>
-
-                      <div className="flex items-center gap-1 sm:gap-2">
-                        {/* Déclencheur lecteur vidéo standardisé en haut à droite (format carré arrondi avec triangle plus petit) */}
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            togglePlayA();
-                          }}
-                          className="w-7 h-7 sm:w-8.5 sm:h-8.5 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
-                          title={isPlayingA ? "Mettre en pause" : "Lire la vidéo"}
-                        >
-                          {isPlayingA ? (
-                            <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
-                          ) : (
-                            <TvPlayerIcon className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-white transition-transform" strokeWidth={1.6} />
-                          )}
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* ICÔNES D'ACTION SUR LE CÔTÉ DROIT DE LA VIDÉO (AUX 2/3 POUR DÉGAGER LE VISAGE DU PROTAGONISTE) */}
-                    <div 
-                      className="absolute right-1.5 sm:right-3 top-[64%] -translate-y-1/2 z-30 flex flex-col items-center gap-1.5 sm:gap-2.5 pointer-events-auto"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      {/* 1. Évaluation résonance */}
-                      <button
-                        id={`duo-btn-resonance-a-${pA.id}`}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setResonanceTargetPerson(pA);
-                        }}
-                        className={`w-7 h-7 sm:w-8.5 sm:h-8.5 rounded-lg sm:rounded-xl backdrop-blur-md border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
-                          personResonances[pA.id] !== undefined
-                            ? 'bg-[#A2482B] border-[#A2482B] text-white shadow-[0_0_12px_rgba(162,72,43,0.5)]'
-                            : 'bg-black/45 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white'
-                        }`}
-                        title={personResonances[pA.id] !== undefined ? `Résonance : ${personResonances[pA.id]}%` : "Évaluer la résonance"}
-                      >
-                        <Award className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
-                      </button>
-
-                      {/* 2. Question */}
-                      <button
-                        id={`duo-btn-question-a-${pA.id}`}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setIsQuestionModalOpen(true);
-                        }}
-                        className="w-7 h-7 sm:w-8.5 sm:h-8.5 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
-                        title="Découvrir la question"
-                      >
-                        <BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
-                      </button>
-
-                      {/* 3. Découvrir son univers complet */}
-                      <button
-                        id={`duo-btn-universe-a-${pA.id}`}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onNavigate({
-                            type: 'protagonist_profile',
-                            protagonistId: pA.id,
-                            returnToDuoId: currentDuo.id,
-                            returnToDuoIndex: safeIndex,
-                            returnToDocId: selectedDocId || currentDuo.documentaryId
-                          });
-                        }}
-                        className="w-7 h-7 sm:w-8.5 sm:h-8.5 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
-                        title={`Découvrir le profil de ${pA.name}`}
-                      >
-                        <ProfileSoloIcon className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-white" />
-                      </button>
-
-                      {/* 4. Bouton Partager */}
-                      <button
-                        id={`duo-btn-share-a-${pA.id}`}
-                        onClick={(e) => handleSharePerson(pA, e)}
-                        className={`w-7 h-7 sm:w-8.5 sm:h-8.5 rounded-lg sm:rounded-xl backdrop-blur-md border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
-                          copiedPersonId === pA.id
-                            ? 'bg-emerald-700/85 border-emerald-600 text-white'
-                            : 'bg-black/45 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white'
-                        }`}
-                        title={copiedPersonId === pA.id ? "Lien copié !" : "Partager"}
-                      >
-                        {copiedPersonId === pA.id ? (
-                          <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
-                        ) : (
-                          <ShareIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
-                        )}
-                      </button>
-                    </div>
-
-                    {/* BAS : Prénom à gauche & Symbole Muet à droite */}
-                    <div className="relative z-20 p-2.5 sm:p-4 pb-3.5 sm:pb-5 flex items-end justify-between gap-1 pointer-events-auto mt-auto">
-                      <div 
-                        className="flex flex-col cursor-pointer group/title min-w-0"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onNavigate({
-                            type: 'protagonist_profile',
-                            protagonistId: pA.id,
-                            returnToDuoId: currentDuo.id,
-                            returnToDuoIndex: safeIndex,
-                            returnToDocId: selectedDocId || currentDuo.documentaryId
-                          });
-                        }}
-                        title={`Découvrir le profil de ${pA.name}`}
-                      >
-                        <h3 className="font-editorial text-[15px] sm:text-base font-bold text-white tracking-wider leading-snug pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors truncate">
-                          {pA.name.split(' ')[0]}
-                        </h3>
-                      </div>
-
-                      {/* Symbole Muet en bas à droite : uniquement lorsque la vidéo est lancée */}
-                      {isPlayingA && (
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setIsMutedA(prev => !prev);
-                          }}
-                          className="w-7 h-7 sm:w-8.5 sm:h-8.5 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0 animate-in fade-in duration-150"
-                          title={isMutedA ? "Activer le son" : "Couper le son"}
-                        >
-                          {isMutedA ? (
-                            <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
-                          ) : (
-                            <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
-                          )}
-                        </button>
-                      )}
-                    </div>
+                    {/* Overlay standardisé : alignement vertical strict, 6 actions, pas de croix, titre en haut à gauche et prénom épuré en bas à gauche */}
+                    <UnifiedVideoCardOverlay
+                      titleBadge={cardTagA}
+                      displayName={pA.name}
+                      isPlaying={isPlayingA}
+                      onTogglePlay={togglePlayA}
+                      isMuted={isMutedA}
+                      onToggleMute={() => setIsMutedA(prev => !prev)}
+                      resonanceScore={personResonances[pA.id]}
+                      onOpenResonance={() => setResonanceTargetPerson(pA)}
+                      questionText={(pA as any).question || (currentDuo as any).theme || "Quelle vision singulière ce parcours apporte-t-il au monde ?"}
+                      factText={(pA as any).teaserPitch || pA.bio || "Passeur d'un savoir vivant et acteur du dialogue d'héritage."}
+                      onOpenProfile={() => {
+                        onNavigate({
+                          type: 'protagonist_profile',
+                          protagonistId: pA.id,
+                          returnToDuoId: currentDuo.id,
+                          returnToDuoIndex: safeIndex,
+                          returnToDocId: selectedDocId || currentDuo.documentaryId
+                        });
+                      }}
+                      onShare={() => handleSharePerson(pA)}
+                      isShareCopied={copiedPersonId === pA.id}
+                      onReportVideo={() => {
+                        setCustomReportTarget({ id: pA.id, title: pA.name, type: 'video' });
+                        setIsReportModalOpen(true);
+                      }}
+                      onBlockVideo={() => {
+                        setCustomReportTarget({ id: pA.id, title: pA.name, type: 'video' });
+                        setIsReportModalOpen(true);
+                      }}
+                    />
                   </div>
 
                   {/* CARTE PROTAGONISTE B */}
@@ -664,143 +560,38 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/25 pointer-events-none" />
 
-                    {/* Top Header: Pole Tag on left & Video Player + Mute toggle on right */}
-                    <div className="relative z-10 p-2 sm:p-4 flex items-center justify-between gap-1">
-                      <span className="w-fit max-w-[95px] sm:max-w-[150px] truncate px-2.5 sm:px-3.5 py-0.5 sm:py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-[10px] sm:text-xs font-bold text-white shadow-md shrink-0">
-                        {cardTagB}
-                      </span>
-
-                      <div className="flex items-center gap-1 sm:gap-2">
-                        {/* Déclencheur lecteur vidéo standardisé en haut à droite (format carré arrondi avec triangle plus petit) */}
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            togglePlayB();
-                          }}
-                          className="w-7 h-7 sm:w-8.5 sm:h-8.5 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
-                          title={isPlayingB ? "Mettre en pause" : "Lire la vidéo"}
-                        >
-                          {isPlayingB ? (
-                            <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
-                          ) : (
-                            <TvPlayerIcon className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-white transition-transform" strokeWidth={1.6} />
-                          )}
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* ICÔNES D'ACTION SUR LE CÔTÉ DROIT DE LA VIDÉO (AUX 2/3 POUR DÉGAGER LE VISAGE DU PROTAGONISTE) */}
-                    <div 
-                      className="absolute right-1.5 sm:right-3 top-[64%] -translate-y-1/2 z-30 flex flex-col items-center gap-1.5 sm:gap-2.5 pointer-events-auto"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      {/* 1. Évaluation résonance */}
-                      <button
-                        id={`duo-btn-resonance-b-${pB.id}`}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setResonanceTargetPerson(pB);
-                        }}
-                        className={`w-7 h-7 sm:w-8.5 sm:h-8.5 rounded-lg sm:rounded-xl backdrop-blur-md border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
-                          personResonances[pB.id] !== undefined
-                            ? 'bg-[#A2482B] border-[#A2482B] text-white shadow-[0_0_12px_rgba(162,72,43,0.5)]'
-                            : 'bg-black/45 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white'
-                        }`}
-                        title={personResonances[pB.id] !== undefined ? `Résonance : ${personResonances[pB.id]}%` : "Évaluer la résonance"}
-                      >
-                        <Award className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
-                      </button>
-
-                      {/* 2. Question */}
-                      <button
-                        id={`duo-btn-question-b-${pB.id}`}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setIsQuestionModalOpen(true);
-                        }}
-                        className="w-7 h-7 sm:w-8.5 sm:h-8.5 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
-                        title="Découvrir la question"
-                      >
-                        <BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
-                      </button>
-
-                      {/* 3. Découvrir son univers complet */}
-                      <button
-                        id={`duo-btn-universe-b-${pB.id}`}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onNavigate({
-                            type: 'protagonist_profile',
-                            protagonistId: pB.id,
-                            returnToDuoId: currentDuo.id,
-                            returnToDuoIndex: safeIndex,
-                            returnToDocId: selectedDocId || currentDuo.documentaryId
-                          });
-                        }}
-                        className="w-7 h-7 sm:w-8.5 sm:h-8.5 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
-                        title={`Découvrir le profil de ${pB.name}`}
-                      >
-                        <ProfileSoloIcon className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-white" />
-                      </button>
-
-                      {/* 4. Bouton Partager */}
-                      <button
-                        id={`duo-btn-share-b-${pB.id}`}
-                        onClick={(e) => handleSharePerson(pB, e)}
-                        className={`w-7 h-7 sm:w-8.5 sm:h-8.5 rounded-lg sm:rounded-xl backdrop-blur-md border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
-                          copiedPersonId === pB.id
-                            ? 'bg-emerald-700/85 border-emerald-600 text-white'
-                            : 'bg-black/45 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white'
-                        }`}
-                        title={copiedPersonId === pB.id ? "Lien copié !" : "Partager"}
-                      >
-                        {copiedPersonId === pB.id ? (
-                          <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
-                        ) : (
-                          <ShareIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
-                        )}
-                      </button>
-                    </div>
-
-                    {/* BAS : Prénom à gauche & Symbole Muet à droite */}
-                    <div className="relative z-20 p-2.5 sm:p-4 pb-3.5 sm:pb-5 flex items-end justify-between gap-1 pointer-events-auto mt-auto">
-                      <div 
-                        className="flex flex-col cursor-pointer group/title min-w-0"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onNavigate({
-                            type: 'protagonist_profile',
-                            protagonistId: pB.id,
-                            returnToDuoId: currentDuo.id,
-                            returnToDuoIndex: safeIndex,
-                            returnToDocId: selectedDocId || currentDuo.documentaryId
-                          });
-                        }}
-                        title={`Découvrir le profil de ${pB.name}`}
-                      >
-                        <h3 className="font-editorial text-[15px] sm:text-base font-bold text-white tracking-wider leading-snug pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors truncate">
-                          {pB.name.split(' ')[0]}
-                        </h3>
-                      </div>
-
-                      {/* Symbole Muet en bas à droite : uniquement lorsque la vidéo est lancée */}
-                      {isPlayingB && (
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setIsMutedB(prev => !prev);
-                          }}
-                          className="w-7 h-7 sm:w-8.5 sm:h-8.5 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0 animate-in fade-in duration-150"
-                          title={isMutedB ? "Activer le son" : "Couper le son"}
-                        >
-                          {isMutedB ? (
-                            <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
-                          ) : (
-                            <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
-                          )}
-                        </button>
-                      )}
-                    </div>
+                    {/* Overlay standardisé : alignement vertical strict, 6 actions, pas de croix, titre en haut à gauche et prénom épuré en bas à gauche */}
+                    <UnifiedVideoCardOverlay
+                      titleBadge={cardTagB}
+                      displayName={pB.name}
+                      isPlaying={isPlayingB}
+                      onTogglePlay={togglePlayB}
+                      isMuted={isMutedB}
+                      onToggleMute={() => setIsMutedB(prev => !prev)}
+                      resonanceScore={personResonances[pB.id]}
+                      onOpenResonance={() => setResonanceTargetPerson(pB)}
+                      questionText={(pB as any).question || (currentDuo as any).theme || "Quelle vision singulière ce parcours apporte-t-il au monde ?"}
+                      factText={(pB as any).teaserPitch || pB.bio || "Passeur d'un savoir vivant et acteur du dialogue d'héritage."}
+                      onOpenProfile={() => {
+                        onNavigate({
+                          type: 'protagonist_profile',
+                          protagonistId: pB.id,
+                          returnToDuoId: currentDuo.id,
+                          returnToDuoIndex: safeIndex,
+                          returnToDocId: selectedDocId || currentDuo.documentaryId
+                        });
+                      }}
+                      onShare={() => handleSharePerson(pB)}
+                      isShareCopied={copiedPersonId === pB.id}
+                      onReportVideo={() => {
+                        setCustomReportTarget({ id: pB.id, title: pB.name, type: 'video' });
+                        setIsReportModalOpen(true);
+                      }}
+                      onBlockVideo={() => {
+                        setCustomReportTarget({ id: pB.id, title: pB.name, type: 'video' });
+                        setIsReportModalOpen(true);
+                      }}
+                    />
                   </div>
 
                 </div>

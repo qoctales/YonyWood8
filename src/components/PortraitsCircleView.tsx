@@ -18,6 +18,7 @@ import { CompanyEntity, CompanyStakeholder } from '../data/companyPortraitsData'
 import { TvPlayerIcon, ProfileSoloIcon } from './YonywoodBrandIcons';
 import { ShareIcon } from './ShareIcon';
 import { ResonanceModal } from './ResonanceModal';
+import { UnifiedVideoCardOverlay } from './UnifiedVideoCardOverlay';
 import { ViewScreen } from '../types';
 
 interface PortraitsCircleViewProps {
@@ -365,184 +366,37 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
             {/* Dégradé cinématique sombre */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/50 pointer-events-none" />
 
-            {/* BARRE DU HAUT : Tag à gauche, Petite Télé & Fermer à droite */}
-            <div className="relative z-20 flex items-center justify-between w-full pointer-events-auto">
-              <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-white text-[11px] sm:text-xs font-semibold tracking-wide border border-white/20">
-                {activeCompany?.companyName || 'Organisation'}
-              </span>
-
-              <div className="flex items-center gap-1.5">
-                {/* Bouton Muet si vidéo en cours */}
-                {isStakeholderPlaying && (
-                  <button
-                    onClick={() => setIsStakeholderMuted(!isStakeholderMuted)}
-                    className="w-8 h-8 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all cursor-pointer shadow-md"
-                    title={isStakeholderMuted ? "Activer le son" : "Couper le son"}
-                  >
-                    {isStakeholderMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
-                  </button>
-                )}
-
-                {/* Petite Télé / Lecture */}
-                <button
-                  onClick={() => setIsStakeholderPlaying(!isStakeholderPlaying)}
-                  className="w-8.5 h-8.5 rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all cursor-pointer shadow-md active:scale-95 shrink-0"
-                  title={isStakeholderPlaying ? "Mettre en pause" : "Regarder la vidéo"}
-                >
-                  {isStakeholderPlaying ? (
-                    <Pause className="w-3.5 h-3.5 fill-white text-white" />
-                  ) : (
-                    <TvPlayerIcon className="w-5 h-5 text-white" strokeWidth={1.6} />
-                  )}
-                </button>
-
-                {/* Bouton Fermer */}
-                <button
-                  onClick={() => setActiveStakeholderModal(null)}
-                  className="w-8 h-8 rounded-full bg-black/50 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all cursor-pointer shadow-md"
-                  title="Fermer"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-
-            {/* FLANC DROIT VERTICAL : MODÈLE EXACT DIEUDONNÉ + 3 POINTS DE SUSPENSION */}
-            <div className="absolute right-3.5 top-[60%] -translate-y-1/2 z-30 flex flex-col items-center gap-2.5 pointer-events-auto">
-              
-              {/* 1. Icône Évaluation (Award) */}
-              <button
-                onClick={() => setIsResonanceOpen(true)}
-                className={`w-9 h-9 rounded-xl border flex items-center justify-center transition-all cursor-pointer shadow-md active:scale-95 ${
-                  resonancePct !== null
-                    ? 'bg-[#A2482B] border-[#A2482B] text-white shadow-[0_0_12px_rgba(162,72,43,0.5)]'
-                    : 'bg-black/45 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white backdrop-blur-md'
-                }`}
-                title={resonancePct !== null ? `Résonance : ${resonancePct}%` : "Évaluer le témoignage"}
-              >
-                <Award className="w-4 h-4 text-white" />
-              </button>
-
-              {/* 2. Icône Question existentielle (BookOpen) */}
-              <button
-                onClick={() => setShowQuestion(!showQuestion)}
-                className={`w-9 h-9 rounded-xl border flex items-center justify-center transition-all cursor-pointer shadow-md active:scale-95 ${
-                  showQuestion
-                    ? 'bg-[#FFE7A3] text-stone-900 border-[#FFE7A3]'
-                    : 'bg-black/45 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white backdrop-blur-md'
-                }`}
-                title="Afficher la question posée"
-              >
-                <BookOpen className="w-4 h-4" />
-              </button>
-
-              {/* 3. Icône Profil de la personne (ProfileSoloIcon avec les 2 pieds) */}
-              <button
-                onClick={() => {
-                  if (onNavigate) {
-                    onNavigate({ type: 'profile' });
-                  }
-                }}
-                className="w-9 h-9 rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all cursor-pointer shadow-md active:scale-95"
-                title={`Profil de ${activeStakeholderModal.name}`}
-              >
-                <ProfileSoloIcon className="w-4.5 h-4.5 text-white" />
-              </button>
-
-              {/* 4. Icône Partager (ShareIcon) */}
-              <button
-                onClick={() => handleShareStakeholder(activeStakeholderModal)}
-                className={`w-9 h-9 rounded-xl border flex items-center justify-center transition-all cursor-pointer shadow-md active:scale-95 ${
-                  copied
-                    ? 'bg-emerald-600 border-emerald-500 text-white'
-                    : 'bg-black/45 hover:bg-[#A2482B] border-white/20 text-white backdrop-blur-md'
-                }`}
-                title="Partager ce témoignage"
-              >
-                {copied ? <Check className="w-4 h-4 text-white" /> : <ShareIcon className="w-4 h-4 text-white" />}
-              </button>
-
-              {/* 5. NOUVEAU : 3 points de suspension sous Partager (Signaler / Bloquer) */}
-              <div className="relative">
-                <button
-                  onClick={() => setShowMoreMenu(prev => !prev)}
-                  className={`w-9 h-9 rounded-xl border flex items-center justify-center transition-all cursor-pointer shadow-md active:scale-95 ${
-                    showMoreMenu
-                      ? 'bg-white text-stone-900 border-white'
-                      : 'bg-black/45 hover:bg-stone-800 border-white/20 text-white backdrop-blur-md'
-                  }`}
-                  title="Plus d'actions : Signaler ou Bloquer"
-                >
-                  <MoreHorizontal className="w-4 h-4" />
-                </button>
-
-                {/* Menu contextuel Signaler / Bloquer */}
-                {showMoreMenu && (
-                  <div 
-                    onClick={(e) => e.stopPropagation()}
-                    className="absolute right-11 bottom-0 z-40 bg-stone-900/95 backdrop-blur-md border border-white/20 rounded-xl p-1.5 shadow-2xl min-w-[150px] space-y-1 animate-in fade-in zoom-in-95 duration-150"
-                  >
-                    <button
-                      onClick={() => {
-                        setShowMoreMenu(false);
-                        setBlockMessage('Vidéo signalée à la modération.');
-                        setTimeout(() => setBlockMessage(null), 2500);
-                      }}
-                      className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs text-stone-200 hover:text-white hover:bg-white/10 transition-colors text-left cursor-pointer"
-                    >
-                      <Flag className="w-3.5 h-3.5 text-amber-400" />
-                      <span>Signaler la vidéo</span>
-                    </button>
-                    <button
-                      onClick={() => {
-                        setShowMoreMenu(false);
-                        setBlockMessage('Ce contenu a été masqué.');
-                        setTimeout(() => {
-                          setBlockMessage(null);
-                          setActiveStakeholderModal(null);
-                        }, 1200);
-                      }}
-                      className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs text-red-300 hover:text-red-200 hover:bg-red-500/20 transition-colors text-left cursor-pointer"
-                    >
-                      <Ban className="w-3.5 h-3.5 text-red-400" />
-                      <span>Bloquer cette vidéo</span>
-                    </button>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Message de confirmation de signalement/blocage */}
-            {blockMessage && (
-              <div className="absolute inset-x-4 top-16 z-40 bg-stone-900/95 border border-white/25 text-white px-3 py-2 rounded-xl text-center text-xs shadow-xl animate-in fade-in">
-                {blockMessage}
-              </div>
-            )}
-
-            {/* BAS : PRÉNOM EN GRAND AVEC ESPACEMENT + FONCTION EN DESSOUS */}
-            <div className="relative z-20 space-y-1 pointer-events-auto pb-1">
-              {/* Question existentielle à la demande */}
-              {showQuestion && activeStakeholderModal.question && (
-                <div className="p-3 rounded-2xl bg-black/85 backdrop-blur-md border border-white/20 text-xs text-stone-100 shadow-xl mb-2 animate-in slide-in-from-bottom-2 duration-200">
-                  <div className="flex items-center gap-1.5 text-[#FFE7A3] font-bold text-[10px] uppercase tracking-wider mb-1">
-                    <BookOpen className="w-3 h-3" />
-                    <span>Question posée</span>
-                  </div>
-                  <p className="italic leading-relaxed font-serif">
-                    « {activeStakeholderModal.question} »
-                  </p>
-                </div>
-              )}
-
-              <div>
-                <h3 className="font-editorial text-xl sm:text-2xl font-bold text-white tracking-wider leading-snug drop-shadow-md">
-                  {activeStakeholderModal.name.split(' ')[0]}
-                </h3>
-                <p className="text-xs text-stone-300 font-medium tracking-wide">
-                  {activeStakeholderModal.roleDetail || activeStakeholderModal.roleCategory}
-                </p>
-              </div>
-            </div>
+            {/* Overlay standardisé : alignement vertical strict, 6 actions, pas de croix, titre en haut à gauche et prénom épuré en bas à gauche */}
+            <UnifiedVideoCardOverlay
+              titleBadge={activeCompany?.companyName || 'Organisation'}
+              displayName={activeStakeholderModal.name}
+              isPlaying={isStakeholderPlaying}
+              onTogglePlay={() => setIsStakeholderPlaying(prev => !prev)}
+              isMuted={isStakeholderMuted}
+              onToggleMute={() => setIsStakeholderMuted(prev => !prev)}
+              resonanceScore={resonancePct}
+              onOpenResonance={() => setIsResonanceOpen(true)}
+              questionText={activeStakeholderModal.question}
+              factText={`${activeStakeholderModal.roleCategory} : ${activeStakeholderModal.roleDetail || 'partenaire engagé dans la transmission locale'}`}
+              onOpenProfile={() => {
+                if (onNavigate) {
+                  onNavigate({ type: 'profile' });
+                }
+              }}
+              onShare={() => handleShareStakeholder(activeStakeholderModal)}
+              isShareCopied={copied}
+              onReportVideo={() => {
+                setBlockMessage('Vidéo signalée à la modération.');
+                setTimeout(() => setBlockMessage(null), 2500);
+              }}
+              onBlockVideo={() => {
+                setBlockMessage('Ce contenu a été masqué.');
+                setTimeout(() => {
+                  setBlockMessage(null);
+                  setActiveStakeholderModal(null);
+                }, 1200);
+              }}
+            />
 
             {/* MODAL ÉVALUATION STRICTEMENT CANTONNÉE DANS LA CARTE */}
             <ResonanceModal

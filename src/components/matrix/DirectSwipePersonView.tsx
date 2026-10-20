@@ -15,6 +15,7 @@ import { MatrixProfile } from '../../utils/matrixGridService';
 import { TvPlayerIcon } from '../YonywoodBrandIcons';
 import { ShareIcon } from '../ShareIcon';
 import { ResonanceModal } from '../ResonanceModal';
+import { UnifiedVideoCardOverlay } from '../UnifiedVideoCardOverlay';
 import { ViewScreen } from '../../types';
 
 interface DirectSwipePersonViewProps {
@@ -225,145 +226,32 @@ export const DirectSwipePersonView: React.FC<DirectSwipePersonViewProps> = ({
           {/* Voile cinématographique pour lisibilité optimale */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-black/50 pointer-events-none" />
 
-          {/* HAUT : Badge Direction à gauche & Déclencheur TvPlayerIcon unique à droite (AUCUNE question sur la vidéo) */}
-          <div className="relative z-20 flex items-center justify-between p-3.5 sm:p-4 pointer-events-auto">
-            <span className="w-fit max-w-[200px] truncate px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-xs font-semibold text-white shadow-md">
-              {tagLabel}
-            </span>
-
-            {/* Bouton lecteur TV officiel en haut à droite (UNIQUE déclencheur visuel) */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                togglePlay(e);
-              }}
-              className="w-8.5 h-8.5 sm:w-9.5 sm:h-9.5 rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0"
-              title={isPlaying ? "Mettre en pause" : "Lire la vidéo"}
-            >
-              {isPlaying ? (
-                <Pause className="w-3.5 h-3.5 fill-white text-white" />
-              ) : (
-                <TvPlayerIcon className="w-4.5 h-4.5 text-white" strokeWidth={1.6} />
-              )}
-            </button>
-          </div>
-
-          {/* CÔTÉ DROIT : ICÔNES D'ACTION VERTICALES (AUX 2/3 POUR DÉGAGER LE VISAGE) */}
-          <div 
-            className="absolute right-2 sm:right-3.5 top-[60%] -translate-y-1/2 z-30 flex flex-col items-center gap-2 sm:gap-2.5 pointer-events-auto"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* 1. Bouton Favori / Bookmark */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setIsBookmarked(prev => !prev);
-              }}
-              className={`w-8 h-8 sm:w-9 sm:h-9 rounded-xl backdrop-blur-md border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
-                isBookmarked
-                  ? 'bg-[#A2482B] border-[#A2482B] text-white shadow-[0_0_12px_rgba(162,72,43,0.5)]'
-                  : 'bg-black/45 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white'
-              }`}
-              title={isBookmarked ? "Enregistré dans vos favoris" : "Ajouter aux favoris"}
-            >
-              <Bookmark className={`w-4 h-4 ${isBookmarked ? 'fill-white text-white' : 'text-white'}`} />
-            </button>
-
-            {/* 2. Bouton Livre / Question existentielle (s'affiche en bas au clic) */}
-            <button
-              id="swipe-matrix-btn-question"
-              onClick={(e) => {
-                e.stopPropagation();
-                setIsQuestionOpen(prev => !prev);
-              }}
-              className={`w-8 h-8 sm:w-9 sm:h-9 rounded-xl backdrop-blur-md border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
-                isQuestionOpen
-                  ? 'bg-[#A2482B] border-[#A2482B] text-white shadow-[0_0_12px_rgba(162,72,43,0.5)]'
-                  : 'bg-black/45 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white'
-              }`}
-              title="Découvrir la question"
-            >
-              <BookOpen className="w-4 h-4 text-white" />
-            </button>
-
-            {/* 3. Bouton Évaluation Résonance */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setIsResonanceModalOpen(true);
-              }}
-              className={`w-8 h-8 sm:w-9 sm:h-9 rounded-xl backdrop-blur-md border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
-                resonancePct !== null
-                  ? 'bg-[#A2482B] border-[#A2482B] text-white shadow-[0_0_12px_rgba(162,72,43,0.5)]'
-                  : 'bg-black/45 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white'
-              }`}
-              title={resonancePct !== null ? `Résonance : ${resonancePct}%` : "Évaluer la résonance"}
-            >
-              <Award className="w-4 h-4 text-white" />
-            </button>
-
-            {/* 4. Bouton Partager */}
-            <button
-              onClick={handleShare}
-              className={`w-8 h-8 sm:w-9 sm:h-9 rounded-xl backdrop-blur-md border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
-                isCopied
-                  ? 'bg-emerald-700 border-emerald-500 text-white'
-                  : 'bg-black/45 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white'
-              }`}
-              title={isCopied ? "Lien copié !" : "Partager"}
-            >
-              {isCopied ? <Check className="w-4 h-4 text-white" /> : <ShareIcon className="w-4 h-4 text-white" />}
-            </button>
-          </div>
-
-          {/* QUESTION EN BAS : N'apparaît QUE lorsqu'on clique sur l'icône livre ouvert */}
-          {isQuestionOpen && (
-            <div 
-              onClick={(e) => e.stopPropagation()}
-              className="absolute inset-x-3 bottom-16 sm:bottom-20 z-40 bg-stone-900/95 backdrop-blur-md p-3.5 rounded-2xl border border-white/20 shadow-2xl text-white animate-in fade-in slide-in-from-bottom-3 duration-200 pointer-events-auto"
-            >
-              <div className="flex items-center justify-between pb-1.5 border-b border-white/10 mb-2">
-                <span className="text-[10px] font-semibold text-[#FFE7A3] uppercase tracking-wider">
-                  {tagLabel} · Question d'héritage
-                </span>
-                <button
-                  onClick={() => setIsQuestionOpen(false)}
-                  className="w-5 h-5 rounded-full bg-white/10 hover:bg-white/20 text-stone-300 hover:text-white flex items-center justify-center cursor-pointer transition-colors text-xs"
-                  title="Fermer"
-                >
-                  ✕
-                </button>
-              </div>
-              <p className="text-xs sm:text-[13px] font-serif italic text-stone-100 leading-snug drop-shadow-sm">
-                « {currentPerson.question || currentPerson.centralQuestion || currentPerson.invitationStory || "Quelle mémoire choisissons-nous de transmettre aux générations qui viennent ?"} »
-              </p>
-            </div>
-          )}
-
-          {/* BAS : STRICTEMENT LE PRÉNOM AU GABARIT STANDARD (MODÈLE DIEUDONNÉ) & BOUTON MUTE UNIQUEMENT SI VIDÉO EN LECTURE */}
-          <div className="relative z-20 flex items-end justify-between pointer-events-auto pb-4 sm:pb-5 px-3.5 sm:px-4 mt-auto gap-2">
-            <div className="flex flex-col min-w-0">
-              <h3 className="font-editorial text-[15px] sm:text-base font-bold text-white tracking-wider leading-snug pb-0.5 drop-shadow-md truncate">
-                {displayName}
-              </h3>
-            </div>
-
-            {/* Bouton Muet / Son : N'apparaît QUE lorsque la vidéo est lancée à partir du lecteur TV vintage */}
-            {isPlaying && (
-              <button
-                id="swipe-matrix-btn-mute"
-                onClick={toggleMute}
-                className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/50 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center cursor-pointer transition-colors shadow-md hover:scale-105 active:scale-95 shrink-0 animate-in fade-in duration-150"
-                title={isMuted ? "Activer le son" : "Couper le son"}
-              >
-                {isMuted ? (
-                  <VolumeX className="w-3.5 h-3.5 text-white" />
-                ) : (
-                  <Volume2 className="w-3.5 h-3.5 text-white" />
-                )}
-              </button>
-            )}
-          </div>
+          {/* Overlay standardisé : alignement vertical strict, 6 actions, pas de croix, titre en haut à gauche et prénom épuré en bas à gauche */}
+          <UnifiedVideoCardOverlay
+            titleBadge={tagLabel}
+            displayName={displayName}
+            isPlaying={isPlaying}
+            onTogglePlay={togglePlay}
+            isMuted={isMuted}
+            onToggleMute={toggleMute}
+            resonanceScore={resonancePct}
+            onOpenResonance={() => setIsResonanceModalOpen(true)}
+            questionText={currentPerson.question || currentPerson.centralQuestion || currentPerson.invitationStory || "Quelle mémoire choisissons-nous de transmettre aux générations qui viennent ?"}
+            factText={currentPerson.quote || currentPerson.teaserPitch || "Passeur d'un savoir vivant transmis à sa communauté."}
+            onOpenProfile={() => {
+              if (onNavigate) {
+                onNavigate({ type: 'protagonist_profile', protagonistId: currentPerson.id });
+              }
+            }}
+            onShare={handleShare}
+            isShareCopied={isCopied}
+            onReportVideo={() => {
+              // Action de signalement
+            }}
+            onBlockVideo={() => {
+              // Action de blocage
+            }}
+          />
 
           {/* Modal d'évaluation de la résonance confinée dans la carte vidéo */}
           <ResonanceModal

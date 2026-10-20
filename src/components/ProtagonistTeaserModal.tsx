@@ -3,6 +3,7 @@ import { Play, Pause, Volume2, VolumeX, X, ArrowRight, Sparkles, MapPin, Award }
 import { Protagonist } from '../types';
 import { ResonanceModal } from './ResonanceModal';
 import { ProfileSoloIcon, TvPlayerIcon } from './YonywoodBrandIcons';
+import { UnifiedVideoCardOverlay } from './UnifiedVideoCardOverlay';
 
 interface ProtagonistTeaserModalProps {
   protagonist: Protagonist | null;
@@ -105,93 +106,39 @@ export const ProtagonistTeaserModal: React.FC<ProtagonistTeaserModalProps> = ({
         {/* Voile d'ambiance cinématographique */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/50 pointer-events-none" />
 
-        {/* HAUT : Bouton Évaluer à gauche & Lecteur Vidéo vintage seul en haut à droite */}
-        <div className="relative z-10 flex items-center justify-between gap-2 w-full">
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              setIsResonanceModalOpen(true);
-            }}
-            className={`w-9 h-9 rounded-xl backdrop-blur-md border flex items-center justify-center shadow-md transition-all cursor-pointer hover:scale-105 active:scale-95 ${
-              resonancePct !== null
-                ? 'bg-[#A2482B] border-[#A2482B] text-white shadow-[0_0_12px_rgba(162,72,43,0.45)]'
-                : 'bg-black/45 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white'
-            }`}
-            title={resonancePct !== null ? `Résonance : ${resonancePct}%` : "Évaluer la résonance"}
-          >
-            <Award className="w-4 h-4 text-white" />
-          </button>
-
-          {/* Déclencheur lecteur vidéo vintage officiel TvPlayerIcon en haut à droite */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              togglePlay(e);
-            }}
-            className="w-8.5 h-8.5 sm:w-9.5 sm:h-9.5 rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0"
-            title={isPlaying ? 'Pause' : 'Lecture vidéo'}
-          >
-            {isPlaying ? (
-              <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
-            ) : (
-              <TvPlayerIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white transition-transform" strokeWidth={1.6} />
-            )}
-          </button>
-        </div>
-
-
-        {/* Modale d'évaluation de la résonance (au clic sur l'icône) */}
-        <ResonanceModal
-          isOpen={isResonanceModalOpen}
-          onClose={() => setIsResonanceModalOpen(false)}
-          storyId={storyId || protagonist.stories?.[0]?.id || `story-${protagonist.id}`}
-          topicId={topicId || protagonist.documentaryId || 'exploration-generale'}
-          personName={protagonist.name}
-          initialPercentage={resonancePct}
-          onRatingSubmitted={(pct) => {
-            setResonancePct(pct);
+        {/* Overlay standardisé : alignement vertical strict, 6 actions, pas de croix, titre en haut à gauche et prénom épuré en bas à gauche */}
+        <UnifiedVideoCardOverlay
+          titleBadge={protagonist.role || 'Studio'}
+          displayName={protagonist.name}
+          isPlaying={isPlaying}
+          onTogglePlay={togglePlay}
+          isMuted={isMuted}
+          onToggleMute={toggleMute}
+          resonanceScore={resonancePct}
+          onOpenResonance={() => setIsResonanceModalOpen(true)}
+          questionText={protagonist.stories?.[0]?.question || "Quelle vision singulière ce parcours apporte-t-il au monde ?"}
+          factText={protagonist.teaserPitch || protagonist.bio || "Passeur d'un savoir vivant transmis à sa communauté."}
+          onOpenProfile={() => {
+            onClose();
+            onEnterUniverse(protagonist.id);
           }}
-        />
-
-        {/* BAS : Identité & Bouton Muet en bas à droite & Action Entrer dans son univers */}
-        <div className="relative z-10 space-y-3 pt-3">
-          <div className="flex items-end justify-between gap-2.5">
-            <div className="space-y-1 flex-1 min-w-0">
-              <div className="flex items-center gap-2">
-                <h3 className="font-editorial text-[15px] sm:text-base font-bold text-white tracking-wider leading-snug drop-shadow-md truncate">
-                  {protagonist.name.split(' ')[0]}
-                </h3>
-                {protagonist.flag && <span className="text-base shrink-0">{protagonist.flag}</span>}
-              </div>
-            </div>
-
-            {/* Bouton Muet / Son en bas à droite (visible uniquement en lecture) */}
-            {isPlaying && (
-              <button
-                onClick={toggleMute}
-                className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center cursor-pointer transition-all shadow-md hover:scale-105 active:scale-95 shrink-0"
-                title={isMuted ? 'Activer le son' : 'Couper le son'}
-              >
-                {isMuted ? <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" /> : <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />}
-              </button>
-            )}
-          </div>
-
-          {/* Action : Entrer dans son univers */}
-          <div>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onEnterUniverse(protagonist.id);
-              }}
-              id={`enter-universe-btn-${protagonist.id}`}
-              className="w-full h-10 sm:h-11 px-4 rounded-xl bg-[#A2482B] hover:bg-[#8A3B22] text-white font-bold text-xs uppercase tracking-wider shadow-md flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-[0.99]"
-            >
-              <span>Entrer dans son univers</span>
-              <ArrowRight className="w-4 h-4 text-white" />
-            </button>
-          </div>
-        </div>
+          onShare={() => {
+            if (navigator.clipboard) {
+              navigator.clipboard.writeText(window.location.href);
+            }
+          }}
+        >
+          {/* Modale d'évaluation de la résonance */}
+          <ResonanceModal
+            isOpen={isResonanceModalOpen}
+            onClose={() => setIsResonanceModalOpen(false)}
+            storyId={storyId || protagonist.stories?.[0]?.id || `story-${protagonist.id}`}
+            topicId={topicId || protagonist.documentaryId || 'exploration-generale'}
+            personName={protagonist.name}
+            initialPercentage={resonancePct}
+            onRatingSubmitted={(pct) => setResonancePct(pct)}
+          />
+        </UnifiedVideoCardOverlay>
       </div>
     </div>
   );

@@ -63,6 +63,7 @@ import { OrdersAndContributionsModal } from './OrdersAndContributionsModal';
 import { transactionService } from '../utils/transactionService';
 import { ProfileLineageFrise } from './ProfileLineageFrise';
 import { ResonanceModal } from './ResonanceModal';
+import { UnifiedVideoCardOverlay } from './UnifiedVideoCardOverlay';
 import { ViewScreen, AffiliationPerson, Protagonist } from '../types';
 import { PROTAGONISTS, DOCUMENTARIES, DUOS } from '../data/mockData';
 import { MATRIX_SERIES_DATA } from '../data/matrixData';
@@ -1873,52 +1874,39 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/35 pointer-events-none" />
 
-                {/* HAUT : Déclencheur lecteur en haut à droite uniquement (aucun titre) */}
-                <VideoTopHeader 
+                {/* Overlay standardisé : alignement vertical strict, 6 actions, pas de croix, titre en haut à gauche et prénom épuré en bas à gauche */}
+                <UnifiedVideoCardOverlay
+                  titleBadge={
+                    currentRecitUnified.kind === 'recit'
+                      ? (currentRecitUnified.item.subtitle || currentRecitUnified.item.chapter || 'Origines & Mémoire')
+                      : (currentRecitUnified.item.seriesTitle || currentRecitUnified.item.title || 'Origines & Mémoire')
+                  }
+                  displayName={userName.split(' ')[0]}
                   isPlaying={isPlaying}
                   onTogglePlay={toggleVideoPlayback}
+                  isMuted={isMuted}
+                  onToggleMute={toggleMute}
+                  resonanceScore={null}
+                  onOpenResonance={() => setIsResonanceModalOpen(true)}
+                  questionText={getQuestionText()}
+                  factText={
+                    currentRecitUnified.kind === 'recit'
+                      ? (currentRecitUnified.item.description || currentRecitUnified.item.quote || "Récit d'apprentissage, transmission et mémoire partagée.")
+                      : (currentRecitUnified.item.title || "Épisode documentaire de transmission.")
+                  }
+                  onOpenProfile={() => {
+                    // Déjà sur le profil
+                  }}
+                  onShare={handleShareProfile}
+                  onReportVideo={() => {
+                    setShareToast("Vidéo signalée à la modération.");
+                    setTimeout(() => setShareToast(null), 2500);
+                  }}
+                  onBlockVideo={() => {
+                    setShareToast("Cette vidéo a été masquée.");
+                    setTimeout(() => setShareToast(null), 2500);
+                  }}
                 />
-
-                <div className="my-auto" />
-
-                {/* BAS : QUESTION EXISTENTIELLE + MUTE EN LECTURE + PARTAGE (AUCUN AUTRE TEXTE) */}
-                <div className="relative z-20 w-full pt-1 flex items-end justify-between gap-3 pointer-events-auto">
-                  <div className="flex-1 min-w-0 pr-2">
-                    <p className="font-serif-editorial text-xs sm:text-sm md:text-base text-white/95 font-medium leading-snug italic line-clamp-3 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
-                      « {getQuestionText()} »
-                    </p>
-                  </div>
-
-                  <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-                    {isPlaying && (
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          toggleMute();
-                        }}
-                        id="btn-video-card-mute-bottom"
-                        className="w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-xl bg-black/50 hover:bg-[#A2482B] active:scale-95 backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center shadow-md transition-all cursor-pointer shrink-0"
-                        title={isMuted ? "Activer le son" : "Couper le son"}
-                      >
-                        {isMuted ? <VolumeX className="w-4 h-4 text-white" /> : <Volume2 className="w-4 h-4 text-white" />}
-                      </button>
-                    )}
-
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleShareProfile();
-                      }}
-                      id="btn-video-card-share-bottom"
-                      className="w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-xl bg-black/50 hover:bg-[#A2482B] active:scale-95 backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center shadow-md transition-all cursor-pointer shrink-0"
-                      title="Partager"
-                    >
-                      <ShareIcon className="w-4 h-4 text-white" />
-                    </button>
-                  </div>
-                </div>
               </div>
             )}
 
