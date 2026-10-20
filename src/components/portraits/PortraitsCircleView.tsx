@@ -455,7 +455,12 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
           }}
         >
           <div 
-            className="relative h-[min(540px,calc(100dvh-120px))] aspect-[9/16] w-auto mx-auto rounded-3xl overflow-hidden bg-stone-950 text-white shadow-2xl border border-stone-700 flex flex-col justify-between p-3.5 sm:p-4.5 group"
+            className="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl border border-stone-200/40 flex flex-col justify-between 
+              aspect-[9/16] 
+              w-[min(calc(100vw-32px),calc((100dvh-200px)*9/16))] 
+              max-w-[280px] sm:max-w-[290px] 
+              h-[min(500px,calc(100dvh-200px))] 
+              mx-auto shrink-0 select-none animate-in zoom-in-95 duration-200"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Vidéo de l'intervenant */}
@@ -477,104 +482,102 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
             )}
             <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/65 pointer-events-none" />
 
-            {/* Haut : Nom organisation & Fermer */}
-            <div className="relative z-20 flex items-center justify-between w-full pointer-events-auto">
-              <span className="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-[10px] sm:text-xs font-bold text-white tracking-wider uppercase truncate">
+            {/* Haut : Nom organisation & Contrôles */}
+            <div className="absolute top-3 sm:top-3.5 left-3 sm:left-3.5 right-3 sm:right-3.5 z-20 flex items-center justify-between pointer-events-auto">
+              <span className="px-2.5 sm:px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-[10px] sm:text-[11px] font-semibold text-white tracking-wider truncate max-w-[70%]">
                 {selectedCompany.companyName}
               </span>
 
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-1">
                 <button
                   onClick={() => setIsStakeholderPlaying(prev => !prev)}
-                  className="w-8 h-8 rounded-xl bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 flex items-center justify-center text-white cursor-pointer transition-all"
+                  className="w-6.5 h-6.5 sm:w-7 sm:h-7 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0"
                   title={isStakeholderPlaying ? "Pause" : "Lecture"}
                 >
-                  {isStakeholderPlaying ? <Pause className="w-3.5 h-3.5 fill-white" /> : <Play className="w-3.5 h-3.5 fill-white" />}
+                  {isStakeholderPlaying ? <Pause className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-white" /> : <Play className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-white" />}
                 </button>
                 <button
                   onClick={() => {
                     setActiveStakeholder(null);
                     setIsStakeholderPlaying(false);
                   }}
-                  className="w-8 h-8 rounded-xl bg-black/50 hover:bg-stone-800 backdrop-blur-md border border-white/20 flex items-center justify-center text-white cursor-pointer transition-all"
+                  className="w-6.5 h-6.5 sm:w-7 sm:h-7 rounded-lg sm:rounded-xl bg-black/45 hover:bg-stone-800 backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0"
                   title="Fermer"
                 >
-                  <X className="w-4 h-4" />
+                  <X className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                 </button>
               </div>
             </div>
 
-            {/* Flanc droit : Résonance, Question (icône BookOpen), Profil, Partager */}
+            {/* Flanc droit : Résonance, Question, Profil, Partager (icônes réduites de moitié) */}
             <div 
               onClick={(e) => e.stopPropagation()}
-              className="absolute right-3 top-[56%] -translate-y-1/2 z-20 flex flex-col items-center gap-2.5 pointer-events-auto"
+              className="absolute right-2.5 sm:right-3.5 top-[56%] sm:top-[58%] -translate-y-1/2 z-20 flex flex-col items-center gap-1.5 sm:gap-2 pointer-events-auto"
             >
               {/* 1. Évaluation résonance */}
               <button
                 onClick={() => setResonanceTargetStakeholder(activeStakeholder)}
-                className={`w-9 h-9 rounded-xl backdrop-blur-md border flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95 ${
+                className={`w-6.5 h-6.5 sm:w-7 sm:h-7 rounded-lg sm:rounded-xl border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
                   stakeholderResonances[activeStakeholder.id] !== undefined
-                    ? 'bg-[#A2482B] border-[#A2482B] text-white shadow-[0_0_12px_rgba(162,72,43,0.5)]'
-                    : 'bg-black/45 hover:bg-[#A2482B] border-white/20 text-white'
+                    ? 'bg-[#A2482B] border-[#A2482B] text-white shadow-[0_0_10px_rgba(162,72,43,0.5)]'
+                    : 'bg-black/45 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white backdrop-blur-md'
                 }`}
                 title={stakeholderResonances[activeStakeholder.id] !== undefined ? `Résonance : ${stakeholderResonances[activeStakeholder.id]}%` : "Évaluer la résonance"}
               >
-                <Award className="w-4 h-4 text-white" />
+                <Award className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-white" />
               </button>
 
-              {/* 2. Question existentielle (ne s'affiche qu'au clic) */}
+              {/* 2. Question existentielle */}
               <button
                 onClick={() => setQuestionModalStakeholder(activeStakeholder)}
-                className="w-9 h-9 rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
+                className="w-6.5 h-6.5 sm:w-7 sm:h-7 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
                 title="Découvrir la question abordée"
               >
-                <BookOpen className="w-4 h-4 text-white" />
+                <BookOpen className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-white" />
               </button>
 
               {/* 3. Découvrir le profil */}
               <button
                 onClick={() => onNavigate && onNavigate({ type: 'profile' })}
-                className="w-9 h-9 rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
+                className="w-6.5 h-6.5 sm:w-7 sm:h-7 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
                 title={`Découvrir le profil de ${activeStakeholder.name}`}
               >
-                <ProfileSoloIcon className="w-4 h-4 text-white" />
+                <ProfileSoloIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
               </button>
 
               {/* 4. Partager */}
               <button
                 onClick={handleShare}
-                className="w-9 h-9 rounded-xl bg-black/45 hover:bg-[#A2482B] border-white/20 text-white flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
+                className="w-6.5 h-6.5 sm:w-7 sm:h-7 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
                 title="Partager"
               >
-                {copied ? <Check className="w-4 h-4 text-white" /> : <ShareIcon className="w-4 h-4 text-white" />}
+                {copied ? <Check className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-white" /> : <ShareIcon className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-white" />}
               </button>
             </div>
 
-            {/* Bas : Prénom de l'intervenant & Statut simple */}
-            <div className="relative z-20 pt-2 mt-auto flex items-end justify-between gap-2 pointer-events-auto">
-              <div className="space-y-0.5 min-w-0 pr-2">
-                <h3 className="font-editorial text-base sm:text-lg font-bold text-white tracking-wider leading-tight drop-shadow-md">
-                  {activeStakeholder.name.split(' ')[0]}
-                </h3>
-                <span className="text-[11px] sm:text-xs text-white/85 font-medium block truncate">
-                  {activeStakeholder.roleCategory}{activeStakeholder.roleDetail ? ` · ${activeStakeholder.roleDetail}` : ''}
-                </span>
-              </div>
-
-              {/* Symbole Muet (actif uniquement pendant la lecture vidéo) */}
-              {isStakeholderPlaying && (
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsStakeholderMuted(prev => !prev);
-                  }}
-                  className="w-8 h-8 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 text-white flex items-center justify-center cursor-pointer transition-all shrink-0"
-                  title={isStakeholderMuted ? 'Activer le son' : 'Couper le son'}
-                >
-                  {isStakeholderMuted ? <VolumeX className="w-3.5 h-3.5 text-white" /> : <Volume2 className="w-3.5 h-3.5 text-white" />}
-                </button>
-              )}
+            {/* Bas : Prénom de l'intervenant harmonisé */}
+            <div className="absolute bottom-3 sm:bottom-3.5 left-3 sm:left-3.5 z-20 pr-12 max-w-[75%] pointer-events-auto">
+              <h3 className="font-editorial text-[15px] sm:text-[17px] md:text-[18px] font-bold text-white tracking-[0.08em] sm:tracking-[0.1em] leading-snug drop-shadow-md truncate">
+                {activeStakeholder.name.split(' ')[0]}
+              </h3>
+              <span className="text-[10px] sm:text-[11px] text-white/80 font-medium block truncate mt-0.5">
+                {activeStakeholder.roleCategory}{activeStakeholder.roleDetail ? ` · ${activeStakeholder.roleDetail}` : ''}
+              </span>
             </div>
+
+            {/* Symbole Muet (actif uniquement pendant la lecture vidéo) */}
+            {isStakeholderPlaying && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsStakeholderMuted(prev => !prev);
+                }}
+                className="absolute bottom-3 right-3 w-6.5 h-6.5 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 text-white flex items-center justify-center cursor-pointer transition-all shrink-0 z-20"
+                title={isStakeholderMuted ? 'Activer le son' : 'Couper le son'}
+              >
+                {isStakeholderMuted ? <VolumeX className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-white" /> : <Volume2 className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-white" />}
+              </button>
+            )}
           </div>
         </div>
       )}

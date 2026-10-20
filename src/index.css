@@ -102,3 +102,17 @@
 .aura-clairiere {
   background: radial-gradient(circle, rgba(243, 233, 210, 0.9) 0%, rgba(245, 241, 232, 0.3) 65%, transparent 80%);
 }
+
+/* Animation de respiration pour les halos du soleil (Portraits) */
+@keyframes breathe {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.07);
+  }
+}
+
+.animate-breathe {
+  animation: breathe 4s ease-in-out infinite;
+}

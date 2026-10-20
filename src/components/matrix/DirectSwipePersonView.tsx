@@ -197,11 +197,9 @@ export const DirectSwipePersonView: React.FC<DirectSwipePersonViewProps> = ({
           style={{ transform: `translateX(${swipeOffset}px)` }}
           className="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl border border-stone-200/40 flex flex-col justify-between 
             aspect-[9/16] 
-            w-[min(calc(100vw-28px),calc((100dvh-230px)*9/16))] 
-            max-w-[340px] 
-            h-[min(480px,calc(100dvh-230px))] 
-            sm:h-[min(520px,calc(100dvh-210px))] 
-            lg:h-[min(550px,calc(100dvh-200px))] 
+            w-[min(calc(100vw-32px),calc((100dvh-200px)*9/16))] 
+            max-w-[280px] sm:max-w-[290px] 
+            h-[min(500px,calc(100dvh-200px))] 
             mx-auto shrink-0 transition-transform duration-100 cursor-pointer select-none my-auto"
         >
           {/* Media de fond : Vidéo ou Photo */}

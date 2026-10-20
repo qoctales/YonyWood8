@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maquette Portraits : soleil, organisations, collaborateurs</title>
+<style>
+/*
+  MAQUETTE DE RÉFÉRENCE (comportement et animation, pas le code final)
+  Niveau 1 : soleil jaune au centre, 16 organisations en couronne.
+  Niveau 2 : l'organisation touchée passe au centre, ses collaborateurs prennent la couronne.
+  Les valeurs de durée et de proportion sont regroupées dans CFG (bloc script en bas).
+*/
+:root{
+  --bg:#F7F1E3; --ink:#2A2118; --ink2:#6E6254; --ink3:#A39785;
+  --sun:#F5B921; --line:#F0CF73;
+  --org-l:80%; --org-t:26%;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#1B1712; --ink:#F2E9D8; --ink2:#B5A893; --ink3:#7C705E; --line:#8A6A1C}
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font-family:"Avenir Next","Segoe UI",system-ui,sans-serif;display:flex;flex-direction:column;align-items:center}
+header{width:100%;max-width:720px;padding:18px 20px 0;display:flex;justify-content:space-between;align-items:center;min-height:56px}
+#bc{display:flex;gap:10px;align-items:center;font-size:15px;color:var(--ink2)}
+#bc button{all:unset;cursor:pointer;color:var(--ink);padding:6px 2px}
+#bc button:focus-visible{outline:2px solid var(--sun);outline-offset:3px;border-radius:4px}
+#bc .cur{color:var(--ink);font-weight:600}
+#hint{font-size:13px;color:var(--ink3)}
+main{flex:1;width:100%;display:flex;align-items:center;justify-content:center;padding:8px 16px 24px}
+#stage{position:relative;width:min(100%,620px,calc(100vh - 150px));aspect-ratio:1;min-width:280px}
+.el{position:absolute;left:50%;top:50%;transition:transform .6s cubic-bezier(.4,0,.2,1),opacity .45s ease;will-change:transform,opacity}
+.node{border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;border:0;padding:0;font-family:inherit}
+.org{cursor:pointer}
+.org:focus-visible{outline:3px solid var(--sun);outline-offset:3px}
+#rays{position:absolute;inset:0;width:100%;height:100%;transition:opacity .45s ease}
+#sun div{position:absolute;border-radius:50%;left:50%;top:50%;translate:-50% -50%}
+@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+.halo1,.halo2{animation:breathe 4s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){
+  .el{transition:opacity .3s ease}
+  .halo1,.halo2{animation:none}
+}
+</style>
+</head>
+<body>
+<header>
+  <nav id="bc" aria-label="Fil d’Ariane"></nav>
+  <span id="hint"></span>
+</header>
+<main>
+  <div id="stage">
+    <svg id="rays" viewBox="0 0 100 100" aria-hidden="true"></svg>
+    <div class="el" id="sun" aria-hidden="true">
+      <div class="halo2" style="width:200%;height:200%;background:var(--sun);opacity:.16"></div>
+      <div class="halo1" style="width:148%;height:148%;background:var(--sun);opacity:.30"></div>
+      <div style="width:100%;height:100%;background:var(--sun)"></div>
+    </div>
+  </div>
+</main>
+<script>
+const CFG={
+  N:16,
+  ringRadius:.38,
+  orgSize:.085, orgMin:40,
+  collabSize:.075, collabMin:36,
+  sunSize:.30,
+  collabStartMs:450,
+  collabStaggerMs:40,
+  exitCollabMs:300
+};
+const names=['TransExpress','AfrikaFun','Kora Studio','Sahel Films','Baobab Média','Lagune Prod','Harmattan','Ubuntu Lab','Savane Pictures','Cauris','Griot Digital','Niger Waves','Mosaïque','Soleil Noir','Tam-Tam Studio','Orisha Films'];
+const hues=[210,15,160,330,265,30,190,350,95,240,5,175,290,45,140,220];
+const stage=document.getElementById('stage'),sun=document.getElementById('sun'),rays=document.getElementById('rays');
+const bc=document.getElementById('bc'),hint=document.getElementById('hint');
+const N=CFG.N,orgs=[],cols=[];
+let level=0,cur=-1,colsShown=false,timer=null,W=0,R=0,orgPx=0,colPx=0,sunPx=0;
+
+const bgOf=h=>`hsl(${h} 45% 80%)`, fgOf=h=>`hsl(${h} 50% 22%)`;
+const pos=k=>{const a=(-90+k*360/N)*Math.PI/180;return[Math.cos(a)*R,Math.sin(a)*R]};
+function put(el,x,y,s,o){el.style.transform=`translate(-50%,-50%) translate(${x}px,${y}px) scale(${s})`;el.style.opacity=o}
+
+for(let i=0;i<N;i++){
+  const b=document.createElement('button');
+  b.className='el node org';b.type='button';
+  b.style.background=bgOf(hues[i]);b.style.color=fgOf(hues[i]);
+  b.textContent=names[i].slice(0,2);
+  b.setAttribute('aria-label',names[i]);
+  b.onclick=()=>{ if(level===0) enter(i); else if(i===cur) exit(); };
+  stage.appendChild(b);orgs.push(b);
+}
+for(let i=0;i<N;i++){
+  const d=document.createElement('div');
+  d.className='el node';d.setAttribute('role','img');d.setAttribute('aria-label','Collaborateur '+(i+1));
+  d.innerHTML='<svg width="45%" height="45%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg>';
+  d.style.pointerEvents='none';
+  stage.appendChild(d);cols.push(d);
+}
+let lines='';
+for(let i=0;i<N;i++){const a=(-90+i*360/N)*Math.PI/180,r=CFG.ringRadius*100*.92;
+  lines+=`<line x1="50" y1="50" x2="${50+Math.cos(a)*r}" y2="${50+Math.sin(a)*r}" stroke="var(--line)" stroke-width=".18" opacity=".8"/>`}
+rays.innerHTML=lines;
+
+function layout(){
+  W=stage.clientWidth;R=W*CFG.ringRadius;
+  orgPx=Math.max(CFG.orgMin,W*CFG.orgSize);colPx=Math.max(CFG.collabMin,W*CFG.collabSize);sunPx=W*CFG.sunSize;
+  orgs.forEach(o=>{o.style.width=o.style.height=orgPx+'px';o.style.fontSize=Math.round(orgPx*.3)+'px'});
+  cols.forEach(c=>{c.style.width=c.style.height=colPx+'px'});
+  sun.style.width=sun.style.height=sunPx+'px';
+  apply();
+}
+function apply(){
+  const zoom=sunPx/orgPx;
+  orgs.forEach((o,k)=>{
+    const p=pos(k);o.style.pointerEvents='auto';o.style.zIndex=1;
+    if(level===0){put(o,p[0],p[1],1,1)}
+    else if(k===cur){put(o,0,0,zoom,1);o.style.zIndex=3}
+    else{put(o,p[0]*.6,p[1]*.6,0,0);o.style.pointerEvents='none'}
+  });
+  sun.style.zIndex=0;
+  if(level===0){put(sun,0,0,1,1);rays.style.opacity=1}
+  else{put(sun,0,0,.2,0);rays.style.opacity=0}
+  cols.forEach((c,k)=>{
+    const p=pos(k);
+    c.style.transitionDelay=(colsShown?k*CFG.collabStaggerMs:0)+'ms';
+    if(level===1&&colsShown){put(c,p[0],p[1],1,1)}else{put(c,0,0,0,0)}
+    if(level===1){c.style.background=bgOf(hues[cur]);c.style.color=fgOf(hues[cur])}
+  });
+}
+function crumbs(){
+  if(level===0){
+    bc.innerHTML='<span class="cur">Portraits</span>';
+    hint.textContent='Touchez une organisation';
+  }else{
+    bc.innerHTML='<button type="button" id="back">Portraits</button><span aria-hidden="true">›</span><span class="cur" aria-current="page"></span>';
+    bc.querySelector('.cur').textContent=names[cur];
+    bc.querySelector('#back').onclick=exit;
+    hint.textContent='Touchez le centre pour revenir';
+  }
+}
+function enter(i){
+  clearTimeout(timer);level=1;cur=i;colsShown=false;crumbs();apply();
+  timer=setTimeout(()=>{colsShown=true;apply()},CFG.collabStartMs);
+}
+function exit(){
+  if(level===0)return;
+  clearTimeout(timer);colsShown=false;apply();
+  timer=setTimeout(()=>{level=0;crumbs();apply()},CFG.exitCollabMs);
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')exit()});
+window.addEventListener('resize',layout);
+crumbs();layout();
+</script>
+</body>
+</html>

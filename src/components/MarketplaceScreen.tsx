@@ -505,7 +505,7 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
             onMouseDown={onMouseDown}
             onMouseMove={onMouseMove}
             onMouseUp={onMouseUp}
-            className="aspect-[9/16] w-auto h-[min(480px,calc(100dvh-230px))] sm:h-[min(520px,calc(100dvh-210px))] lg:h-[min(550px,calc(100dvh-200px))] max-w-[calc(100vw-28px)] mx-auto transition-transform duration-150 ease-out select-none cursor-grab active:cursor-grabbing flex justify-center shrink-0"
+            className="aspect-[9/16] w-[min(calc(100vw-32px),calc((100dvh-200px)*9/16))] max-w-[280px] sm:max-w-[290px] h-[min(500px,calc(100dvh-200px))] mx-auto transition-transform duration-150 ease-out select-none cursor-grab active:cursor-grabbing flex justify-center shrink-0"
             style={{ transform: `translateX(${swipeOffset}px)` }}
           >
             {/* =================================================================== */}
@@ -545,20 +545,20 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
                     {currentProd.title}
                   </span>
 
-                  {/* Déclencheur lecteur vidéo « Petite Télé » standardisé en haut à droite */}
+                  {/* Déclencheur lecteur vidéo « Petite Télé » standardisé en haut à droite (légèrement augmenté) */}
                   <button
                     type="button"
                     onClick={(e) => {
                       e.stopPropagation();
                       toggleVideoPlayback();
                     }}
-                    className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
+                    className="w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-xl bg-black/45 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
                     title={isPlaying ? 'Mettre en pause' : `Visionner le teaser de ${currentProd.title}`}
                   >
                     {isPlaying ? (
                       <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
                     ) : (
-                      <TvPlayerIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white transition-transform" strokeWidth={1.6} />
+                      <TvPlayerIcon className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-white transition-transform" strokeWidth={1.7} />
                     )}
                   </button>
                 </div>
@@ -663,20 +663,20 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
                     {currentOffer.seriesTitle}
                   </span>
 
-                  {/* Déclencheur lecteur vidéo « Petite Télé » standardisé en haut à droite */}
+                  {/* Déclencheur lecteur vidéo « Petite Télé » standardisé en haut à droite (légèrement augmenté) */}
                   <button
                     type="button"
                     onClick={(e) => {
                       e.stopPropagation();
                       toggleVideoPlayback();
                     }}
-                    className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
+                    className="w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-xl bg-black/45 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
                     title={isPlaying ? 'Mettre en pause' : `Visionner le teaser de ${currentOffer.seriesTitle}`}
                   >
                     {isPlaying ? (
                       <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
                     ) : (
-                      <TvPlayerIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white transition-transform" strokeWidth={1.6} />
+                      <TvPlayerIcon className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-white transition-transform" strokeWidth={1.7} />
                     )}
                   </button>
                 </div>

@@ -647,7 +647,7 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
               onMouseDown={onMouseDown}
               onMouseMove={onMouseMove}
               onMouseUp={onMouseUp}
-              className="aspect-[9/16] w-auto h-[min(480px,calc(100dvh-230px))] sm:h-[min(520px,calc(100dvh-210px))] lg:h-[min(550px,calc(100dvh-200px))] max-w-[calc(100vw-28px)] mx-auto transition-transform duration-150 ease-out select-none cursor-grab active:cursor-grabbing flex justify-center shrink-0"
+              className="aspect-[9/16] w-[min(calc(100vw-32px),calc((100dvh-200px)*9/16))] max-w-[280px] sm:max-w-[290px] h-[min(500px,calc(100dvh-200px))] mx-auto transition-transform duration-150 ease-out select-none cursor-grab active:cursor-grabbing flex justify-center shrink-0"
               style={{ transform: `translateX(${swipeOffset}px)` }}
             >
               <div 
@@ -693,27 +693,27 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                           e.stopPropagation();
                           setIsDoorMuted(!isDoorMuted);
                         }}
-                        className="p-1.5 rounded-full bg-black/60 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/15 hover:border-[#A2482B] transition-colors cursor-pointer"
+                        className="w-7.5 h-7.5 sm:w-8 sm:h-8 rounded-full bg-black/60 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/15 hover:border-[#A2482B] transition-colors cursor-pointer flex items-center justify-center shadow-md hover:scale-105 active:scale-95"
                         title={isDoorMuted ? 'Activer le son' : 'Couper le son'}
                       >
-                        {isDoorMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
+                        {isDoorMuted ? <VolumeX className="w-3 h-3 sm:w-3.5 sm:h-3.5" /> : <Volume2 className="w-3 h-3 sm:w-3.5 sm:h-3.5" />}
                       </button>
                     )}
 
-                    {/* Déclencheur lecteur vidéo vintage officiel TvPlayerIcon en haut à droite */}
+                    {/* Déclencheur lecteur vidéo vintage officiel TvPlayerIcon en haut à droite (légèrement augmenté) */}
                     <button
                       type="button"
                       onClick={(e) => {
                         e.stopPropagation();
                         setIsDoorVideoPlaying(!isDoorVideoPlaying);
                       }}
-                      className="w-8.5 h-8.5 sm:w-9.5 sm:h-9.5 rounded-xl bg-black/45 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
+                      className="w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-xl bg-black/45 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
                       title={isDoorVideoPlaying ? 'Mettre en pause' : `Visionner la présentation ${currentDoor.label}`}
                     >
                       {isDoorVideoPlaying ? (
                         <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
                       ) : (
-                        <TvPlayerIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white transition-transform" strokeWidth={1.6} />
+                        <TvPlayerIcon className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-white transition-transform" strokeWidth={1.7} />
                       )}
                     </button>
                   </div>
@@ -859,7 +859,7 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
               onMouseDown={onSubMouseDown}
               onMouseMove={onSubMouseMove}
               onMouseUp={onSubMouseUp}
-              className="aspect-[9/16] w-auto h-[min(490px,calc(100dvh-210px))] sm:h-[min(540px,calc(100dvh-190px))] lg:h-[min(570px,calc(100dvh-180px))] max-w-[calc(100vw-28px)] mx-auto rounded-2xl sm:rounded-3xl overflow-hidden bg-[#121110] text-white shadow-2xl flex flex-col justify-between p-2.5 sm:p-4.5 transition-transform duration-150 ease-out select-none cursor-pointer shrink-0 relative"
+              className="aspect-[9/16] w-[min(calc(100vw-32px),calc((100dvh-200px)*9/16))] max-w-[280px] sm:max-w-[290px] h-[min(500px,calc(100dvh-200px))] mx-auto rounded-2xl sm:rounded-3xl overflow-hidden bg-[#121110] text-white shadow-2xl flex flex-col justify-between p-2.5 sm:p-4.5 transition-transform duration-150 ease-out select-none cursor-pointer shrink-0 relative"
               id={`current-subject-card-${currentSubject.id}`}
             >
               {/* Bordure discrète et neutre */}
@@ -905,7 +905,7 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
               {/* Voile cinématographique */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-black/35 pointer-events-none" />
 
-              {/* HAUT : Titre épuré de la série ou du sujet (modèle fond noir translucide, texte blanc pur) + Déclencheur Petite Télé en haut à droite */}
+              {/* HAUT : Titre épuré de la série ou du sujet + Déclencheur Petite Télé en haut à droite (réduit de moitié) */}
               <div className="relative z-10 flex items-center justify-between gap-1.5 pointer-events-auto">
                 {activeSeriesOverlay !== 'sponsors' ? (
                   <div className="flex items-center gap-1.5">
@@ -924,48 +924,48 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                         e.stopPropagation();
                         setIsSubjectMuted(!isSubjectMuted);
                       }}
-                      className="p-1.5 rounded-full bg-black/60 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/15 hover:border-[#A2482B] transition-colors cursor-pointer shrink-0"
+                      className="w-7.5 h-7.5 sm:w-8 sm:h-8 rounded-full bg-black/60 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/15 hover:border-[#A2482B] transition-colors cursor-pointer shrink-0 flex items-center justify-center shadow-md hover:scale-105 active:scale-95"
                       title={isSubjectMuted ? 'Activer le son' : 'Couper le son'}
                     >
-                      {isSubjectMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
+                      {isSubjectMuted ? <VolumeX className="w-3 h-3 sm:w-3.5 sm:h-3.5" /> : <Volume2 className="w-3 h-3 sm:w-3.5 sm:h-3.5" />}
                     </button>
                   )}
 
-                  {/* Déclencheur lecteur vidéo vintage officiel TvPlayerIcon en haut à droite */}
+                  {/* Déclencheur lecteur vidéo vintage officiel TvPlayerIcon en haut à droite (légèrement augmenté) */}
                   <button
                     type="button"
                     onClick={(e) => {
                       e.stopPropagation();
                       setIsSubjectVideoPlaying(!isSubjectVideoPlaying);
                     }}
-                    className="w-8.5 h-8.5 sm:w-9.5 sm:h-9.5 rounded-xl bg-black/45 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
+                    className="w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-xl bg-black/45 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
                     title={isSubjectVideoPlaying ? 'Mettre en pause' : 'Visionner la vidéo'}
                   >
                     {isSubjectVideoPlaying ? (
                       <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
                     ) : (
-                      <TvPlayerIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white transition-transform" strokeWidth={1.6} />
+                      <TvPlayerIcon className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-white transition-transform" strokeWidth={1.7} />
                     )}
                   </button>
                 </div>
               </div>
 
               {/* ================================================================= */}
-              {/* 3 BOUTONS SUR LE CÔTÉ DROIT DE LA VIDÉO (STYLE PROFIL)            */}
+              {/* 3 BOUTONS SUR LE CÔTÉ DROIT DE LA VIDÉO (ICÔNES RÉDUITES DE MOITIÉ) */}
               {/* 1. Épisodes (GalleryVerticalEnd)                                  */}
               {/* 2. Générique (ScrollText)                                         */}
               {/* 3. Sponsors (HandCoins)                                           */}
               {/* ================================================================= */}
               {isSeries && (
                 <div 
-                  className={`absolute right-3 sm:right-4 top-[64%] -translate-y-1/2 z-30 flex flex-col items-center gap-2.5 sm:gap-3 transition-all duration-300 pointer-events-auto ${
+                  className={`absolute right-2.5 sm:right-3.5 top-[64%] -translate-y-1/2 z-30 flex flex-col items-center gap-1.5 sm:gap-2 transition-all duration-300 pointer-events-auto ${
                     isSubjectVideoPlaying ? 'opacity-75 hover:opacity-100' : 'opacity-100'
                   }`}
                 >
                   {/* 1. Épisodes */}
                   <div className="relative group/sb flex items-center">
                     <div 
-                      className={`absolute right-11 top-1/2 -translate-y-1/2 z-40 pointer-events-none transition-all duration-200 ${
+                      className={`absolute right-9 top-1/2 -translate-y-1/2 z-40 pointer-events-none transition-all duration-200 ${
                         activeTooltipCat === 'episodes' 
                           ? 'opacity-100 translate-x-0' 
                           : 'opacity-0 translate-x-1 group-hover/sb:opacity-100 group-hover/sb:translate-x-0'
@@ -991,20 +991,20 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                       onMouseLeave={() => setActiveTooltipCat(null)}
                       id={`btn-series-episodes-${currentSubject.id}`}
                       title="Découvrir les épisodes"
-                      className={`w-9 h-9 rounded-xl backdrop-blur-md flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md active:scale-90 ${
+                      className={`w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-xl backdrop-blur-md flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md active:scale-90 ${
                         activeSeriesOverlay === 'episodes'
-                          ? 'bg-[#A2482B] border border-[#A2482B] text-white scale-105 shadow-[0_2px_12px_rgba(162,72,43,0.45)]'
+                          ? 'bg-[#A2482B] border border-[#A2482B] text-white scale-105 shadow-[0_2px_10px_rgba(162,72,43,0.45)]'
                           : 'bg-black/55 hover:bg-[#A2482B] border border-white/20 hover:border-[#A2482B] text-white'
                       }`}
                     >
-                      <GalleryVerticalEnd className="w-4 h-4 stroke-[2.2]" />
+                      <GalleryVerticalEnd className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2]" />
                     </button>
                   </div>
 
                   {/* 2. Générique */}
                   <div className="relative group/sb flex items-center">
                     <div 
-                      className={`absolute right-11 top-1/2 -translate-y-1/2 z-40 pointer-events-none transition-all duration-200 ${
+                      className={`absolute right-9 top-1/2 -translate-y-1/2 z-40 pointer-events-none transition-all duration-200 ${
                         activeTooltipCat === 'generique' 
                           ? 'opacity-100 translate-x-0' 
                           : 'opacity-0 translate-x-1 group-hover/sb:opacity-100 group-hover/sb:translate-x-0'
@@ -1026,20 +1026,20 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                       onMouseLeave={() => setActiveTooltipCat(null)}
                       id={`btn-series-generique-${currentSubject.id}`}
                       title="Générique officiel"
-                      className={`w-9 h-9 rounded-xl backdrop-blur-md flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md active:scale-90 ${
+                      className={`w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-xl backdrop-blur-md flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md active:scale-90 ${
                         activeSeriesOverlay === 'generique'
-                          ? 'bg-[#A2482B] border border-[#A2482B] text-white scale-105 shadow-[0_2px_12px_rgba(162,72,43,0.45)]'
+                          ? 'bg-[#A2482B] border border-[#A2482B] text-white scale-105 shadow-[0_2px_10px_rgba(162,72,43,0.45)]'
                           : 'bg-black/55 hover:bg-[#A2482B] border border-white/20 hover:border-[#A2482B] text-white'
                       }`}
                     >
-                      <ScrollText className="w-4 h-4 stroke-[2.2]" />
+                      <ScrollText className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2]" />
                     </button>
                   </div>
 
                   {/* 3. Sponsors */}
                   <div className="relative group/sb flex items-center">
                     <div 
-                      className={`absolute right-11 top-1/2 -translate-y-1/2 z-40 pointer-events-none transition-all duration-200 ${
+                      className={`absolute right-9 top-1/2 -translate-y-1/2 z-40 pointer-events-none transition-all duration-200 ${
                         activeTooltipCat === 'sponsors' 
                           ? 'opacity-100 translate-x-0' 
                           : 'opacity-0 translate-x-1 group-hover/sb:opacity-100 group-hover/sb:translate-x-0'
@@ -1065,13 +1065,13 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                       onMouseLeave={() => setActiveTooltipCat(null)}
                       id={`btn-series-sponsors-${currentSubject.id}`}
                       title="Sponsors & Partenaires"
-                      className={`w-9 h-9 rounded-xl backdrop-blur-md flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md active:scale-90 ${
+                      className={`w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-xl backdrop-blur-md flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md active:scale-90 ${
                         activeSeriesOverlay === 'sponsors'
-                          ? 'bg-[#A2482B] border border-[#A2482B] text-white scale-105 shadow-[0_2px_12px_rgba(162,72,43,0.45)]'
+                          ? 'bg-[#A2482B] border border-[#A2482B] text-white scale-105 shadow-[0_2px_10px_rgba(162,72,43,0.45)]'
                           : 'bg-black/55 hover:bg-[#A2482B] border border-white/20 hover:border-[#A2482B] text-white'
                       }`}
                     >
-                      <HandCoins className="w-4 h-4 stroke-[2.2]" />
+                      <HandCoins className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2]" />
                     </button>
                   </div>
                 </div>
@@ -1742,7 +1742,7 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                         onTouchEnd={onVidTouchEnd}
                         onMouseDown={onVidMouseDown}
                         onMouseMove={onVidMouseMove}
-                        className="aspect-[9/16] w-auto h-[min(490px,calc(100dvh-210px))] sm:h-[min(540px,calc(100dvh-190px))] lg:h-[min(570px,calc(100dvh-180px))] max-w-[calc(100vw-28px)] mx-auto rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl flex flex-col justify-between p-4 sm:p-5 transition-transform duration-150 ease-out select-none cursor-grab active:cursor-grabbing shrink-0 relative"
+                        className="aspect-[9/16] w-[min(calc(100vw-32px),calc((100dvh-200px)*9/16))] max-w-[280px] sm:max-w-[290px] h-[min(500px,calc(100dvh-200px))] mx-auto rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl border border-stone-200/40 flex flex-col justify-between p-3 sm:p-3.5 transition-transform duration-150 ease-out select-none cursor-grab active:cursor-grabbing shrink-0 relative"
                         id={`videographer-card-${v.id}`}
                       >
                         {/* Vidéo ou Affiche de présentation */}
@@ -1769,9 +1769,9 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/90 pointer-events-none" />
 
 
-                        {/* HAUT : Titre épuré "Video Maker" & Déclencheur lecture */}
+                        {/* HAUT : Titre épuré "Video Maker" & Déclencheur lecture (légèrement augmenté) */}
                         <div className="relative z-20 flex items-center justify-between pointer-events-auto">
-                          <span className="font-editorial text-sm sm:text-base font-bold text-white tracking-wide drop-shadow-md">
+                          <span className="font-editorial text-xs sm:text-sm font-bold text-white tracking-wide drop-shadow-md">
                             Video Maker
                           </span>
 
@@ -1782,10 +1782,10 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                                   e.stopPropagation();
                                   setIsVideographerMuted(!isVideographerMuted);
                                 }}
-                                className="w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center cursor-pointer transition-all shadow-md hover:scale-105 active:scale-95"
+                                className="w-7.5 h-7.5 sm:w-8 sm:h-8 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center cursor-pointer transition-all shadow-md hover:scale-105 active:scale-95"
                                 title={isVideographerMuted ? 'Activer le son' : 'Couper le son'}
                               >
-                                {isVideographerMuted ? <VolumeX className="w-4 h-4 text-white" /> : <Volume2 className="w-4 h-4 text-white" />}
+                                {isVideographerMuted ? <VolumeX className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white" /> : <Volume2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white" />}
                               </button>
                             )}
                             <button
@@ -1793,29 +1793,29 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                                 e.stopPropagation();
                                 setIsVideographerVideoPlaying(!isVideographerVideoPlaying);
                               }}
-                              className="w-8.5 h-8.5 sm:w-9.5 sm:h-9.5 rounded-xl bg-black/45 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
+                              className="w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-xl bg-black/45 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
                               title={isVideographerVideoPlaying ? 'Mettre en pause' : 'Lire la vidéo'}
                             >
                               {isVideographerVideoPlaying ? (
-                                <Pause className="w-4 h-4 fill-white text-white" />
+                                <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
                               ) : (
-                                <TvPlayerIcon className="w-5 h-5 text-white transition-transform" strokeWidth={1.6} />
+                                <TvPlayerIcon className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-white transition-transform" strokeWidth={1.7} />
                               )}
                             </button>
                           </div>
                         </div>
 
-                        {/* BAS : Prénom en bas (exactement comme les vidéos d'Héritage) & Colonne des 3 boutons */}
+                        {/* BAS : Prénom en bas (harmonisé) & Colonne des 3 boutons réduits de moitié */}
                         <div className="relative z-20 flex items-end justify-between pointer-events-auto mt-auto">
                           <div className="text-left font-sans pr-2">
-                            <h3 className="font-editorial text-2xl sm:text-3xl font-bold text-white tracking-tight leading-none drop-shadow-md">
+                            <h3 className="font-editorial text-[15px] sm:text-[17px] md:text-[18px] font-bold text-white tracking-[0.08em] sm:tracking-[0.1em] leading-snug drop-shadow-md truncate">
                               {v.name.split(' ')[0]}
                             </h3>
                           </div>
 
-                          {/* Pile verticale des 3 boutons d'action (Contacter avec caméra, Question, Profil) */}
-                          <div className="flex flex-col items-center gap-2.5 sm:gap-3 shrink-0">
-                            {/* 1. Bouton Contacter pour une prestation (Mains qui se serrent / accord - style neutre non actif par défaut) */}
+                          {/* Pile verticale des 3 boutons d'action (légèrement agrandis) */}
+                          <div className="flex flex-col items-center gap-1.5 sm:gap-2 shrink-0">
+                            {/* 1. Bouton Contacter pour une prestation */}
                             <button
                               id={`btn-contact-videographer-${v.id}`}
                               onClick={(e) => {
@@ -1824,36 +1824,36 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                                 setContactLocation(v.country ? `${v.country}` : '');
                                 setContactSuccess(false);
                               }}
-                              className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/25 hover:border-[#A2482B] text-white flex items-center justify-center transition-all shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0"
+                              className="w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-xl bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/25 hover:border-[#A2482B] text-white flex items-center justify-center transition-all shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0"
                               title="Demande de prestation"
                             >
-                              <Handshake className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                              <Handshake className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
                             </button>
 
-                            {/* 2. Bouton Question (Livre ouvert) */}
+                            {/* 2. Bouton Question */}
                             <button
                               id={`btn-question-videographer-${v.id}`}
                               onClick={(e) => {
                                 e.stopPropagation();
                                 setShowingVideographerQuestion(v);
                               }}
-                              className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/25 hover:border-[#A2482B] text-white flex items-center justify-center transition-all shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0"
+                              className="w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-xl bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/25 hover:border-[#A2482B] text-white flex items-center justify-center transition-all shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0"
                               title="Voir la question"
                             >
-                              <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                              <BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
                             </button>
 
-                            {/* 3. Bouton Profil complet (User) */}
+                            {/* 3. Bouton Profil complet */}
                             <button
                               id={`btn-profile-videographer-${v.id}`}
                               onClick={(e) => {
                                 e.stopPropagation();
                                 setShowingVideographerProfile(v);
                               }}
-                              className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/25 hover:border-[#A2482B] text-white flex items-center justify-center transition-all shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0"
+                              className="w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-xl bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/25 hover:border-[#A2482B] text-white flex items-center justify-center transition-all shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0"
                               title="Découvrir son profil complet"
                             >
-                              <User className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                              <User className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
                             </button>
                           </div>
                         </div>

@@ -136,38 +136,39 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
     >
       
       {/* =========================================================== */}
-      {/* EN-TÊTE : Titre standardisé ou Barre retour Espace Société   */}
+      {/* EN-TÊTE DU MODE CARTES SWIPE (LE MODE CERCLE A SON PROPRE FIL D'ARIANE) */}
       {/* =========================================================== */}
-      {selectedCompanyForSpace ? (
-        <div className="flex items-center justify-between h-8 sm:h-9 shrink-0 gap-2 mb-1.5 sm:mb-2">
-          <button
-            onClick={() => {
-              setSelectedCompanyForSpace(null);
-              setIsStakeholderPlaying(false);
-            }}
-            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-stone-100 hover:bg-[#A2482B] text-stone-700 hover:text-white border border-stone-200 transition-all text-xs font-semibold cursor-pointer shadow-xs group"
-          >
-            <ChevronLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
-            <span>Entreprises</span>
-          </button>
+      {viewMode === 'cards' && (
+        selectedCompanyForSpace ? (
+          <div className="flex items-center justify-between h-8 sm:h-9 shrink-0 gap-2 mb-1.5 sm:mb-2">
+            <button
+              onClick={() => {
+                setSelectedCompanyForSpace(null);
+                setIsStakeholderPlaying(false);
+              }}
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-stone-100 hover:bg-[#A2482B] text-stone-700 hover:text-white border border-stone-200 transition-all text-xs font-semibold cursor-pointer shadow-xs group"
+            >
+              <ChevronLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
+              <span>Entreprises</span>
+            </button>
 
-          <div className="relative flex items-center h-full shrink-0">
-            <h2 className="font-editorial text-sm sm:text-base font-bold text-[#1C1917] tracking-wider">
-              {selectedCompanyForSpace.companyName}
-            </h2>
-            <div className="absolute left-0 -bottom-2 w-8 h-0.5 bg-[#A2482B] rounded-full" />
+            <div className="relative flex items-center h-full shrink-0">
+              <h2 className="font-editorial text-sm sm:text-base font-bold text-[#1C1917] tracking-wider">
+                {selectedCompanyForSpace.companyName}
+              </h2>
+              <div className="absolute left-0 -bottom-2 w-8 h-0.5 bg-[#A2482B] rounded-full" />
+            </div>
           </div>
-        </div>
-      ) : (
-        <div className="flex items-center justify-between h-8 sm:h-9 shrink-0 gap-2 mb-1.5 sm:mb-2">
-          <div className="relative flex items-center h-full shrink-0">
-            <h1 className="font-editorial text-base sm:text-[18px] font-bold text-[#1C1917] tracking-tight leading-none">
-              Portraits
-            </h1>
-            <div className="absolute left-0 -bottom-2 w-8 h-0.5 bg-[#A2482B] rounded-full" />
+        ) : (
+          <div className="flex items-center justify-between h-8 sm:h-9 shrink-0 gap-2 mb-1.5 sm:mb-2">
+            <div className="relative flex items-center h-full shrink-0">
+              <h1 className="font-editorial text-base sm:text-[18px] font-bold text-[#1C1917] tracking-tight leading-none">
+                Portraits
+              </h1>
+              <div className="absolute left-0 -bottom-2 w-8 h-0.5 bg-[#A2482B] rounded-full" />
+            </div>
           </div>
-
-        </div>
+        )
       )}
 
       {/* =========================================================== */}
@@ -344,7 +345,12 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
               onClick={() => {
                 setIsStakeholderPlaying(!isStakeholderPlaying);
               }}
-              className="h-[min(480px,calc(100dvh-230px))] sm:h-[min(520px,calc(100dvh-210px))] lg:h-[min(550px,calc(100dvh-200px))] aspect-[9/16] w-auto mx-auto rounded-3xl overflow-hidden bg-stone-950 text-white shadow-2xl border border-stone-200/40 relative flex flex-col justify-between p-3.5 sm:p-4.5 cursor-pointer group select-none shrink-0"
+              className="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl border border-stone-200/40 flex flex-col justify-between 
+                aspect-[9/16] 
+                w-[min(calc(100vw-32px),calc((100dvh-200px)*9/16))] 
+                max-w-[280px] sm:max-w-[290px] 
+                h-[min(500px,calc(100dvh-200px))] 
+                mx-auto shrink-0 transition-all duration-300 cursor-pointer select-none"
             >
               {/* Média de fond : Vidéo ou Photo */}
               {isStakeholderPlaying ? (

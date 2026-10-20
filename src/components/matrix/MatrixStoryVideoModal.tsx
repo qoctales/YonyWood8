@@ -120,9 +120,9 @@ export const MatrixStoryVideoModal: React.FC<MatrixStoryVideoModalProps> = ({
         }}
         className="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl border border-stone-200/40 flex flex-col justify-between 
           aspect-[9/16] 
-          w-[min(calc(100vw-32px),calc((100dvh-120px)*9/16))] 
-          max-w-[340px] 
-          h-[min(580px,calc(100dvh-120px))] 
+          w-[min(calc(100vw-32px),calc((100dvh-200px)*9/16))] 
+          max-w-[280px] sm:max-w-[290px] 
+          h-[min(500px,calc(100dvh-200px))] 
           mx-auto shrink-0 transition-all duration-300 cursor-pointer animate-in zoom-in-95 duration-200"
       >
         {/* Background Media: Video or Poster Image */}

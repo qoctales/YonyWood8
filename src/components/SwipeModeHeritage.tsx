@@ -256,7 +256,7 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
               style={{ transform: `translateX(${swipeOffset}px)` }}
-              className="group aspect-[9/16] w-auto h-[min(490px,calc(100dvh-210px))] sm:h-[min(540px,calc(100dvh-190px))] lg:h-[min(570px,calc(100dvh-180px))] max-w-[calc(100vw-28px)] mx-auto rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl flex flex-col justify-between p-3.5 sm:p-4.5 relative select-none shrink-0 transition-transform duration-100"
+              className="group aspect-[9/16] w-[min(calc(100vw-32px),calc((100dvh-200px)*9/16))] max-w-[280px] sm:max-w-[290px] h-[min(500px,calc(100dvh-200px))] mx-auto rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl flex flex-col justify-between p-3.5 sm:p-4.5 relative select-none shrink-0 transition-transform duration-100"
             >
               {/* Fond visuel permanent de la Porte */}
               <img
@@ -374,7 +374,7 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
               style={{ transform: `translateX(${swipeOffset}px)` }}
-              className="group aspect-[9/16] w-auto h-[min(490px,calc(100dvh-210px))] sm:h-[min(540px,calc(100dvh-190px))] lg:h-[min(570px,calc(100dvh-180px))] max-w-[calc(100vw-28px)] mx-auto rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl flex flex-col justify-between p-3.5 sm:p-4.5 relative select-none shrink-0 transition-transform duration-100"
+              className="group aspect-[9/16] w-[min(calc(100vw-32px),calc((100dvh-200px)*9/16))] max-w-[280px] sm:max-w-[290px] h-[min(500px,calc(100dvh-200px))] mx-auto rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl flex flex-col justify-between p-3.5 sm:p-4.5 relative select-none shrink-0 transition-transform duration-100"
             >
               {/* Image d'art céleste composée de la Direction */}
               <img
@@ -515,7 +515,7 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
               style={{ transform: `translateX(${swipeOffset}px)` }}
-              className="group aspect-[9/16] w-auto h-[min(490px,calc(100dvh-210px))] sm:h-[min(540px,calc(100dvh-190px))] lg:h-[min(570px,calc(100dvh-180px))] max-w-[calc(100vw-28px)] mx-auto rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl flex flex-col justify-between p-3.5 sm:p-4.5 relative select-none shrink-0 transition-transform duration-100"
+              className="group aspect-[9/16] w-[min(calc(100vw-32px),calc((100dvh-200px)*9/16))] max-w-[280px] sm:max-w-[290px] h-[min(500px,calc(100dvh-200px))] mx-auto rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl border border-stone-200/40 flex flex-col justify-between relative select-none shrink-0 transition-transform duration-100"
             >
               {/* Vidéo ou photo du protagoniste */}
               <img

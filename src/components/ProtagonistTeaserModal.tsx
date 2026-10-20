@@ -81,9 +81,14 @@ export const ProtagonistTeaserModal: React.FC<ProtagonistTeaserModalProps> = ({
       className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 animate-in fade-in duration-200"
       onClick={onClose}
     >
-      {/* Container vertical 9:16 standardisé */}
+      {/* Container vertical 9:16 standardisé (même gabarit que Matrice Héritage & Portraits) */}
       <div 
-        className="h-[min(490px,calc(100dvh-210px))] sm:h-[min(540px,calc(100dvh-190px))] lg:h-[min(570px,calc(100dvh-180px))] aspect-[9/16] w-auto mx-auto rounded-3xl overflow-hidden bg-stone-950 text-white shadow-2xl border border-stone-200/40 relative flex flex-col justify-between p-4 sm:p-5 select-none shrink-0 animate-in zoom-in-95 duration-200"
+        className="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl border border-stone-200/40 flex flex-col justify-between 
+          aspect-[9/16] 
+          w-[min(calc(100vw-32px),calc((100dvh-200px)*9/16))] 
+          max-w-[280px] sm:max-w-[290px] 
+          h-[min(500px,calc(100dvh-200px))] 
+          mx-auto shrink-0 select-none animate-in zoom-in-95 duration-200"
       >
         {/* Fond vidéo ou poster */}
         <img
