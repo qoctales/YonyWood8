@@ -435,9 +435,10 @@ export const DuocumentairesTvIcon: React.FC<IconProps> = ({
  * direct du DuocumentairesTvIcon. Boîtier rétro compact, deux yeux expressifs
  * et les deux pieds évasés vers l'extérieur à la base.
  */
-export const ProfileSoloIcon: React.FC<IconProps> = ({ 
+export const ProfileSoloIcon: React.FC<IconProps & { avatarUrl?: string }> = ({ 
   className = 'w-5 h-5',
-  strokeWidth = 1.55 
+  strokeWidth = 1.55,
+  avatarUrl
 }) => {
   return (
     <svg 
@@ -450,14 +451,34 @@ export const ProfileSoloIcon: React.FC<IconProps> = ({
       className={className}
       aria-hidden="true"
     >
+      <defs>
+        <clipPath id="profile-solo-screen-clip">
+          <rect x="6.8" y="6" width="10.4" height="9.5" rx="1.8" />
+        </clipPath>
+      </defs>
+
       {/* Boîtier / tête rétro compacte du protagoniste solo */}
       <rect x="6.25" y="5.5" width="11.5" height="10.5" rx="2.4" />
 
-      {/* Regard / yeux du protagoniste singulier */}
-      <circle cx="10.3" cy="10.75" r="0.9" fill="currentColor" stroke="none" />
-      <circle cx="13.7" cy="10.75" r="0.9" fill="currentColor" stroke="none" />
+      {avatarUrl ? (
+        <image 
+          href={avatarUrl}
+          x="6.8"
+          y="6"
+          width="10.4"
+          height="9.5"
+          preserveAspectRatio="xMidYMid slice"
+          clipPath="url(#profile-solo-screen-clip)"
+        />
+      ) : (
+        <>
+          {/* Regard / yeux du protagoniste singulier */}
+          <circle cx="10.3" cy="10.75" r="0.9" fill="currentColor" stroke="none" />
+          <circle cx="13.7" cy="10.75" r="0.9" fill="currentColor" stroke="none" />
+        </>
+      )}
 
-      {/* Piétement vintage évasé vers l'extérieur */}
+      {/* Piétement vintage évasé vers l'extérieur (les deux pieds) */}
       <path d="M 9.2 16 L 7.4 19.8" />
       <path d="M 14.8 16 L 16.6 19.8" />
     </svg>

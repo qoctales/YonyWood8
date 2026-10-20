@@ -115,15 +115,15 @@ export const ResonanceModal: React.FC<ResonanceModalProps> = ({
 
   return (
     <div 
-      className="absolute inset-0 z-40 bg-black/40 flex flex-col justify-end pointer-events-auto transition-opacity duration-300"
+      className="absolute inset-0 z-40 bg-black/50 flex flex-col justify-end items-center pointer-events-auto transition-opacity duration-300"
       onClick={(e) => {
         e.stopPropagation();
         onClose();
       }}
     >
-      {/* Volet inférieur coulissant (Bottom Sheet fluide sur fond clair) */}
+      {/* Volet inférieur coulissant cantonné à la largeur de la vidéo (max-w-[420px] w-full mx-auto) */}
       <div 
-        className="w-full bg-[#FAF8F5] border-t border-[#E7E2D6] rounded-t-3xl p-4 sm:p-5 shadow-2xl space-y-3.5 max-h-[82%] overflow-y-auto text-[#1C1917] transform transition-transform duration-300 ease-out animate-in slide-in-from-bottom"
+        className="w-full max-w-[420px] mx-auto bg-[#FAF8F5] border-t border-x border-[#E7E2D6] rounded-t-3xl p-4 sm:p-5 shadow-2xl space-y-3.5 max-h-[82%] overflow-y-auto text-[#1C1917] transform transition-transform duration-300 ease-out animate-in slide-in-from-bottom"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Tirette / indicateur de glissement */}

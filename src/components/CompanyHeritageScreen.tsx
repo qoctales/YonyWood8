@@ -169,41 +169,6 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
             <div className="absolute left-0 -bottom-2 w-8 h-0.5 bg-[#A2482B] rounded-full" />
           </div>
 
-          {/* SÉLECTEUR DE MODE [ CERCLE | SWIPE ] */}
-          <div className="flex items-center bg-stone-100 p-0.5 rounded-full border border-stone-200 shadow-2xs">
-            <button
-              onClick={() => {
-                setViewMode('circle');
-                setIsPlaying(false);
-                setIsStakeholderPlaying(false);
-              }}
-              className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] sm:text-xs font-bold transition-all cursor-pointer ${
-                viewMode === 'circle'
-                  ? 'bg-[#A2482B] text-white shadow-xs'
-                  : 'text-stone-600 hover:text-stone-900'
-              }`}
-              title="Mode Cercle officiel des 16 organisations"
-            >
-              <Compass className="w-3.5 h-3.5" />
-              <span>Cercle</span>
-            </button>
-            <button
-              onClick={() => {
-                setViewMode('swipe');
-                setIsPlaying(false);
-                setIsStakeholderPlaying(false);
-              }}
-              className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] sm:text-xs font-bold transition-all cursor-pointer ${
-                viewMode === 'swipe'
-                  ? 'bg-[#A2482B] text-white shadow-xs'
-                  : 'text-stone-600 hover:text-stone-900'
-              }`}
-              title="Mode Cartes défilantes"
-            >
-              <Layers className="w-3.5 h-3.5" />
-              <span>Swipe</span>
-            </button>
-          </div>
         </div>
       )}
 

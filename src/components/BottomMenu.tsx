@@ -138,6 +138,12 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
                     strokeWidth={item.strokeWidth} 
                     isActive={item.isActive}
                   />
+                ) : item.id === 'profil' ? (
+                  <ProfileSoloIcon 
+                    className={`${item.iconClassName} transition-transform duration-200`} 
+                    strokeWidth={item.strokeWidth}
+                    avatarUrl="/assets/duos/codjo-blind.jpg"
+                  />
                 ) : (
                   <Icon 
                     className={`${item.iconClassName} transition-transform duration-200`} 

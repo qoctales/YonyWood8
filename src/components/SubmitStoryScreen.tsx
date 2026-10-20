@@ -599,7 +599,7 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
           )}
         </div>
 
-        {/* Côté droit épuré : Raccourci retour si applicable et bouton Mes publications */}
+        {/* Côté droit épuré : Raccourci retour si applicable */}
         <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
           {preselectedDocumentaryId && (
             <button
@@ -610,29 +610,6 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
               Quitter
             </button>
           )}
-
-          {/* Bouton d'accès rapide Mes publications */}
-          <button
-            type="button"
-            onClick={() => setActiveStudioTab(prev => prev === 'my_videos' ? 'deposit' : 'my_videos')}
-            id="btn-creator-publications-toggle"
-            className={`h-7.5 sm:h-8.5 px-3 sm:px-3.5 rounded-full text-[11px] sm:text-xs font-semibold backdrop-blur-md transition-all flex items-center gap-1.5 shadow-xs border cursor-pointer shrink-0 active:scale-95 ${
-              activeStudioTab === 'my_videos'
-                ? 'bg-[#1C1917] text-white border-[#1C1917]'
-                : 'bg-white hover:bg-stone-50 text-stone-800 border-stone-200 hover:border-[#A2482B]'
-            }`}
-            title={activeStudioTab === 'my_videos' ? "Retour au studio de dépôt" : "Voir mes publications et statistiques"}
-          >
-            <Film className={`w-3.5 h-3.5 ${activeStudioTab === 'my_videos' ? 'text-[#D9AF52]' : 'text-[#A2482B]'}`} />
-            <span>Mes publications</span>
-            {creatorVideoCount > 0 && (
-              <span className={`px-1.5 py-0.2 rounded-full text-[10px] font-mono font-bold ${
-                activeStudioTab === 'my_videos' ? 'bg-white/20 text-white' : 'bg-[#A2482B]/10 text-[#A2482B]'
-              }`}>
-                {creatorVideoCount}
-              </span>
-            )}
-          </button>
         </div>
       </div>
 

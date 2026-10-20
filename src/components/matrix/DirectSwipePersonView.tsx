@@ -9,7 +9,7 @@ import {
   Bookmark, 
   Check, 
   X,
-  MessageSquare 
+  Award 
 } from 'lucide-react';
 import { MatrixProfile } from '../../utils/matrixGridService';
 import { TvPlayerIcon } from '../YonywoodBrandIcons';
@@ -299,7 +299,7 @@ export const DirectSwipePersonView: React.FC<DirectSwipePersonViewProps> = ({
               }`}
               title={resonancePct !== null ? `Résonance : ${resonancePct}%` : "Évaluer la résonance"}
             >
-              <MessageSquare className="w-4 h-4 text-white" />
+              <Award className="w-4 h-4 text-white" />
             </button>
 
             {/* 4. Bouton Partager */}
@@ -364,6 +364,17 @@ export const DirectSwipePersonView: React.FC<DirectSwipePersonViewProps> = ({
               </button>
             )}
           </div>
+
+          {/* Modal d'évaluation de la résonance confinée dans la carte vidéo */}
+          <ResonanceModal
+            isOpen={isResonanceModalOpen}
+            onClose={() => setIsResonanceModalOpen(false)}
+            storyId={`story-${currentPerson.id}`}
+            topicId={currentPerson.doorId || 'exploration-matrice'}
+            personName={currentPerson.name}
+            initialPercentage={resonancePct}
+            onRatingSubmitted={(pct) => setResonancePct(pct)}
+          />
         </div>
 
         {/* Flèche Personne Suivante (Desktop) */}
@@ -376,17 +387,6 @@ export const DirectSwipePersonView: React.FC<DirectSwipePersonViewProps> = ({
           <ChevronRight className="w-5 h-5" />
         </button>
       </div>
-
-      {/* Modal d'évaluation de la résonance */}
-      <ResonanceModal
-        isOpen={isResonanceModalOpen}
-        onClose={() => setIsResonanceModalOpen(false)}
-        storyId={`story-${currentPerson.id}`}
-        topicId={currentPerson.doorId || 'exploration-matrice'}
-        personName={currentPerson.name}
-        initialPercentage={resonancePct}
-        onRatingSubmitted={(pct) => setResonancePct(pct)}
-      />
     </div>
   );
 };

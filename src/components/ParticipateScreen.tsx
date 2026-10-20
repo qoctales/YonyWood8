@@ -11,7 +11,8 @@ import {
   ArrowRight,
   Sparkles,
   Building2,
-  Handshake
+  Handshake,
+  Info
 } from 'lucide-react';
 import { ViewScreen } from '../types';
 import { db } from '../services/firebase';
@@ -20,60 +21,81 @@ import { TvPlayerIcon } from './YonywoodBrandIcons';
 
 interface ParticipateScreenProps {
   onNavigate: (screen: ViewScreen) => void;
-  initialRole?: 'effigie' | 'coproducteur' | 'entreprise' | 'partenaire';
+  initialRole?: 'coproduction' | 'partenaire' | 'showrunner' | 'distributeur' | 'entreprise' | 'coproducteur' | 'effigie';
   preselectedSeriesId?: string;
 }
 
-interface ParticipateCard {
-  id: 'egerie' | 'coproduction' | 'entreprise' | 'partenaire';
+export interface ParticipateCard {
+  id: 'coproduction' | 'partenaire' | 'showrunner' | 'distributeur' | 'entreprise';
   title: string;
+  roleSummary: string;
+  detailDescription: string;
   photoUrl: string;
   videoUrl: string;
 }
 
 const CARDS_DATA: ParticipateCard[] = [
   {
-    id: 'egerie',
-    title: 'Devenir égérie',
-    photoUrl: '/assets/directions/personnalites-cinema.jpg',
-    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4'
-  },
-  {
     id: 'coproduction',
-    title: 'Coproduction',
+    title: 'Coproducteurs',
+    roleSummary: 'Financent les séries',
+    detailDescription: 'Les coproducteurs financent les séries et soutiennent le partage d’histoires authentiques en devenant co-actionnaires de la production.',
     photoUrl: '/assets/directions/projets-communautaire.jpg',
     videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4'
   },
   {
-    id: 'entreprise',
-    title: 'Entreprises',
-    photoUrl: '/assets/directions/marques-tech.jpg',
-    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4'
-  },
-  {
     id: 'partenaire',
-    title: 'Partenaires',
+    title: 'Partenaires et sponsors',
+    roleSummary: 'Soutiennent et gagnent en visibilité',
+    detailDescription: 'Les partenaires et sponsors soutiennent les récits porteurs de sens et bénéficient d’une visibilité privilégiée auprès d’une communauté engagée.',
     photoUrl: '/assets/directions/projets-innovation.jpg',
     videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4'
+  },
+  {
+    id: 'showrunner',
+    title: 'Showrunners',
+    roleSummary: 'Pilotent et garantissent la qualité d’une série',
+    detailDescription: 'Les showrunners créent, pilotent et garantissent l’exigence artistique, éthique et narrative d’une série ou d’une thématique.',
+    photoUrl: '/assets/directions/personnalites-cinema.jpg',
+    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4'
+  },
+  {
+    id: 'distributeur',
+    title: 'Distributeurs',
+    roleSummary: 'Font connaître et diffusent les séries',
+    detailDescription: 'Les distributeurs font connaître et diffusent les séries sur les réseaux sociaux, en salles, festivals et chaînes partenaires.',
+    photoUrl: '/assets/directions/marques-services.jpg',
+    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4'
+  },
+  {
+    id: 'entreprise',
+    title: 'Entreprises',
+    roleSummary: 'Profitent de la page Portraits',
+    detailDescription: 'Les entreprises valorisent leur marque, leurs fondateurs, collaborateurs et clients au cœur de la rubrique Portraits de Yonywood.',
+    photoUrl: '/assets/directions/marques-tech.jpg',
+    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4'
   }
 ];
 
 export const ParticipateScreen: React.FC<ParticipateScreenProps> = ({ 
-  initialRole = 'coproducteur'
+  initialRole = 'coproduction'
 }) => {
-  // Navigation entre les 4 cartes (0: égérie, 1: coproduction, 2: entreprise, 3: partenaire)
-  const initialIndex = initialRole === 'effigie' 
-    ? 0 
-    : initialRole === 'entreprise' 
-      ? 2 
-      : initialRole === 'partenaire'
+  // Navigation entre les 5 cartes (0: coproduction, 1: partenaire, 2: showrunner, 3: distributeur, 4: entreprise)
+  const initialIndex = initialRole === 'partenaire'
+    ? 1
+    : initialRole === 'showrunner'
+      ? 2
+      : initialRole === 'distributeur'
         ? 3
-        : 1;
+        : initialRole === 'entreprise'
+          ? 4
+          : 0;
   const [currentIndex, setCurrentIndex] = useState<number>(initialIndex);
   
   // Lecture / Pause (AUCUN DÉCLENCHEMENT AUTOMATIQUE - Clic requis sur le lecteur)
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isMuted, setIsMuted] = useState<boolean>(false);
+  const [showDetails, setShowDetails] = useState<boolean>(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   // Swipe tactile
@@ -104,12 +126,14 @@ export const ParticipateScreen: React.FC<ParticipateScreenProps> = ({
   const handlePrev = (e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
     setIsPlaying(false);
+    setShowDetails(false);
     setCurrentIndex(prev => (prev > 0 ? prev - 1 : CARDS_DATA.length - 1));
   };
 
   const handleNext = (e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
     setIsPlaying(false);
+    setShowDetails(false);
     setCurrentIndex(prev => (prev < CARDS_DATA.length - 1 ? prev + 1 : 0));
   };
 
@@ -286,11 +310,70 @@ export const ParticipateScreen: React.FC<ParticipateScreenProps> = ({
           <div className="my-auto" />
 
           {/* =========================================================== */}
-          {/* BAS DE LA CARTE : BOUTON « PARTICIPER » & MUTE (SI LECTURE) */}
-          {/* Même style graphique que « Choisir cette porte »             */}
+          {/* ENCADRÉ DÉTAIL / RÔLE : Apparaît au clic sur « Détails »    */}
           {/* =========================================================== */}
-          <div className="relative z-20 flex items-center justify-between w-full pt-1 pointer-events-auto">
-            {/* Bouton Participer */}
+          {showDetails && (
+            <div 
+              onClick={(e) => e.stopPropagation()}
+              className="absolute inset-x-3.5 bottom-15 sm:bottom-16 z-30 bg-stone-900/95 backdrop-blur-md p-3.5 rounded-2xl border border-white/20 shadow-2xl text-white animate-in fade-in slide-in-from-bottom-2 duration-200 pointer-events-auto"
+            >
+              <div className="flex items-center justify-between pb-1.5 border-b border-white/10 mb-2">
+                <span className="text-[10px] font-bold text-[#FFE7A3] uppercase tracking-wider font-mono">
+                  {currentCard.roleSummary}
+                </span>
+                <button
+                  onClick={() => setShowDetails(false)}
+                  className="w-5 h-5 rounded-full bg-white/10 hover:bg-white/20 text-stone-300 hover:text-white flex items-center justify-center cursor-pointer transition-colors text-xs"
+                  title="Fermer"
+                >
+                  ✕
+                </button>
+              </div>
+              <p className="text-xs sm:text-[13px] text-stone-100 leading-relaxed font-sans">
+                {currentCard.detailDescription}
+              </p>
+            </div>
+          )}
+
+          {/* =========================================================== */}
+          {/* BAS DE LA CARTE : DÉTAILS/SON À GAUCHE & BOUTON À DROITE   */}
+          {/* =========================================================== */}
+          <div className="relative z-20 flex items-center justify-between w-full pt-1 pointer-events-auto gap-2">
+            
+            {/* CÔTÉ GAUCHE : Bouton Détails & Bouton Son (si lecture) */}
+            <div className="flex items-center gap-1.5 shrink-0">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowDetails(prev => !prev);
+                }}
+                className={`h-7.5 sm:h-8.5 px-3 rounded-full backdrop-blur-md transition-all flex items-center gap-1.5 shadow-md border cursor-pointer active:scale-95 text-[11px] sm:text-xs font-semibold ${
+                  showDetails
+                    ? 'bg-[#A2482B] text-white border-[#A2482B]'
+                    : 'bg-black/60 hover:bg-black/80 text-white/95 border-white/20 hover:border-white/40'
+                }`}
+                title="Découvrir le rôle et les missions"
+              >
+                <Info className="w-3.5 h-3.5 text-[#FFE7A3]" />
+                <span>Détails</span>
+              </button>
+
+              {/* Icône Son / Mute : N'APPARAÎT QUE LORSQU'ON A CLIQUÉ SUR LE BOUTON LECTURE */}
+              {isPlaying && (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsMuted(prev => !prev);
+                  }}
+                  className="w-7.5 h-7.5 sm:w-8.5 sm:h-8.5 rounded-full bg-black/60 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center cursor-pointer transition-all shadow-md hover:scale-105 active:scale-95 shrink-0"
+                  title={isMuted ? "Activer le son" : "Couper le son"}
+                >
+                  {isMuted ? <VolumeX className="w-3.5 h-3.5 text-white" /> : <Volume2 className="w-3.5 h-3.5 text-white" />}
+                </button>
+              )}
+            </div>
+
+            {/* CÔTÉ DROIT : BOUTON PRINCIPAL D'ACTION TOUJOURS À DROITE */}
             <button
               onClick={(e) => {
                 e.stopPropagation();
@@ -298,26 +381,12 @@ export const ParticipateScreen: React.FC<ParticipateScreenProps> = ({
                 setIsSubmitted(false);
               }}
               id={`btn-participate-${currentCard.id}`}
-              className="h-7.5 sm:h-8.5 px-3.5 sm:px-4 rounded-full bg-black/60 hover:bg-[#A2482B] active:bg-[#8A3B22] text-white text-[11px] sm:text-xs font-bold backdrop-blur-md transition-all flex items-center gap-1.5 shadow-md border border-white/20 hover:border-[#A2482B] cursor-pointer active:scale-95 group/btn shrink-0"
+              className="h-7.5 sm:h-8.5 px-3.5 sm:px-4 rounded-full bg-[#A2482B] hover:bg-[#8A3B22] active:bg-[#6E2E19] text-white text-[11px] sm:text-xs font-bold backdrop-blur-md transition-all flex items-center gap-1.5 shadow-md border border-[#A2482B]/60 hover:border-white/30 cursor-pointer active:scale-95 group/btn shrink-0 ml-auto"
               title="Participer et ouvrir le formulaire"
             >
               <span>Participer</span>
               <ArrowRight className="w-3.5 h-3.5 text-white/90 group-hover/btn:translate-x-0.5 transition-transform shrink-0" />
             </button>
-
-            {/* Icône Son / Mute : N'APPARAÎT QUE LORSQU'ON A CLIQUÉ SUR LE BOUTON LECTURE */}
-            {isPlaying && (
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setIsMuted(prev => !prev);
-                }}
-                className="w-7.5 h-7.5 sm:w-8.5 sm:h-8.5 rounded-full bg-black/60 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center cursor-pointer transition-all shadow-md hover:scale-105 active:scale-95 shrink-0"
-                title={isMuted ? "Activer le son" : "Couper le son"}
-              >
-                {isMuted ? <VolumeX className="w-3.5 h-3.5 text-white" /> : <Volume2 className="w-3.5 h-3.5 text-white" />}
-              </button>
-            )}
           </div>
         </div>
 

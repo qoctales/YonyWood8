@@ -959,7 +959,7 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
       />
 
       {/* 1. BARRE SUPÉRIEURE : EN-TÊTE FIXE ET HARMONISÉ STRICTEMENT SANS TÉLESCOPAGE */}
-      <div className="w-full max-w-3xl mx-auto px-3 sm:px-6 py-2 pb-1 shrink-0 z-40 border-b border-stone-100/80 bg-white/95">
+      <div className="w-full max-w-3xl mx-auto px-3 sm:px-6 py-2 pb-1 shrink-0 z-40 bg-white/95">
         <header className="relative flex items-center justify-between h-8 sm:h-9 shrink-0 gap-2">
           {/* Titre Héritages */}
           <div className="relative flex items-center h-full shrink-0">
