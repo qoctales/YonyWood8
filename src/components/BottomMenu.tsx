@@ -73,7 +73,7 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
     {
       id: 'portraits',
       label: 'Portraits',
-      icon: PortraitsViseurIcon, // nouvelle icône viseur de caméra + étoile centrale à 4 branches
+      icon: PortraitsViseurIcon, // icône viseur de caméra avec soleil et rayons en son centre
       isActive: isPortraitsActive,
       onClick: () => onNavigate({ type: 'enterprise' }),
       screenId: 'menu-item-portraits',

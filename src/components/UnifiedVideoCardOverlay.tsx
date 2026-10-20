@@ -3,7 +3,7 @@ import {
   Award, 
   BookOpen, 
   Sparkles, 
-  Share2, 
+  Star,
   MoreHorizontal, 
   Flag, 
   Ban, 
@@ -13,6 +13,7 @@ import {
   VolumeX 
 } from 'lucide-react';
 import { TvPlayerIcon, ProfileSoloIcon } from './YonywoodBrandIcons';
+import { ShareIcon } from './ShareIcon';
 
 export interface UnifiedVideoCardOverlayProps {
   // Haut gauche
@@ -43,7 +44,10 @@ export interface UnifiedVideoCardOverlayProps {
   // 4. Profil (ProfileSoloIcon)
   onOpenProfile?: () => void;
 
-  // 5. Partager (Share2)
+  // Lignée (Star)
+  onOpenLineage?: () => void;
+
+  // 5. Partager (ShareIcon)
   onShare?: () => void;
   isShareCopied?: boolean;
 
@@ -70,6 +74,7 @@ export const UnifiedVideoCardOverlay: React.FC<UnifiedVideoCardOverlayProps> = (
   factText,
   onOpenFactModal,
   onOpenProfile,
+  onOpenLineage,
   onShare,
   isShareCopied = false,
   onReportVideo,
@@ -247,7 +252,22 @@ export const UnifiedVideoCardOverlay: React.FC<UnifiedVideoCardOverlayProps> = (
           </button>
         )}
 
-        {/* 5. PARTAGER (Share2) */}
+        {/* LIGNÉE (Star) */}
+        {onOpenLineage && (
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              onOpenLineage();
+            }}
+            className="w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
+            title="Explorer la lignée"
+          >
+            <Star className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white stroke-[2]" />
+          </button>
+        )}
+
+        {/* 5. PARTAGER (ShareIcon) */}
         {onShare && (
           <button
             type="button"
@@ -262,7 +282,7 @@ export const UnifiedVideoCardOverlay: React.FC<UnifiedVideoCardOverlayProps> = (
             }`}
             title={isShareCopied ? 'Lien copié !' : 'Partager'}
           >
-            {isShareCopied ? <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" /> : <Share2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />}
+            {isShareCopied ? <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" /> : <ShareIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />}
           </button>
         )}
 

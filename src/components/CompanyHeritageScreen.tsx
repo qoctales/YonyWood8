@@ -175,7 +175,7 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
       {/* VUE PRINCIPALE : MODE CERCLE OU CARTE VIDÉO 9:16           */}
       {/* =========================================================== */}
       {viewMode === 'circle' ? (
-        <div className="relative w-full flex-1 flex flex-col items-center justify-between min-h-0 my-auto">
+        <div className="relative w-full flex-1 flex flex-col min-h-0">
           <PortraitsCircleView 
             companies={COMPANIES_DATA} 
             selectedCompanyId={selectedCompanyForSpace?.id}

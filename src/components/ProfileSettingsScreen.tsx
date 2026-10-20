@@ -58,7 +58,8 @@ import {
 import { useAuth } from '../services/authContext';
 import { AuthModal } from './AuthModal';
 import { ShareIcon } from './ShareIcon';
-import { ProfileSoloIcon, TvPlayerIcon, ProfilePhotoTvFrame } from './YonywoodBrandIcons';
+import { ProfileSoloIcon, TvPlayerIcon } from './YonywoodBrandIcons';
+import { ProfileAvatarRing } from './ProfileAvatarRing';
 import { OrdersAndContributionsModal } from './OrdersAndContributionsModal';
 import { transactionService } from '../utils/transactionService';
 import { ProfileLineageFrise } from './ProfileLineageFrise';
@@ -730,19 +731,19 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
     return [
       {
         id: 'recit-1',
-        title: 'Le chant de la lagune',
+        title: 'La clairvoyance du Fâ',
         chapter: 'Récit personnel',
         subtitle: 'Origines & Mémoire',
-        description: 'Je raconte mon enfance sur l’eau, mes premières années d’études et la façon dont ma grand-mère m’a transmis la voix des femmes piroguières.',
-        quote: '« L’eau retient tout ce que les hommes oublient de nommer. »',
-        duration: '05:30',
-        viewsCount: 1840,
-        videoUrl: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',
-        posterUrl: '/assets/protagonists/amara-tisserande.jpg'
+        description: 'Pascal Cossy raconte sa cécité précoce à Ganvié, son initiation au Fâ et la façon dont il a appris à écouter la vibration du monde.',
+        quote: '« Vos yeux s’arrêtent aux formes. Mes oreilles, mon cœur et la sagesse du Fâ pénètrent l’épaisseur vivante de l’air et la cadence secrète du destin. »',
+        duration: '06:30',
+        viewsCount: 2450,
+        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+        posterUrl: '/assets/duos/codjo-blind.jpg'
       },
       {
         id: 'recit-2',
-        title: 'Les métiers du fil',
+        title: 'Les métiers du fil & Voir Autrement',
         chapter: 'Parcours de formation',
         subtitle: 'Transmission & Métier',
         description: 'Après ma formation en sociologie, j’ai choisi de réapprendre le geste du tissage auprès des aînées d’Allada pour en faire un pont entre générations.',
@@ -750,7 +751,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
         duration: '07:15',
         viewsCount: 920,
         videoUrl: 'https://media.w3.org/2010/05/sintel/trailer.mp4',
-        posterUrl: '/assets/protagonists/koffi-tisserand.jpg'
+        posterUrl: '/assets/duos/codjo-blind.jpg'
       }
     ];
   });
@@ -770,21 +771,21 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
         viewsCount: 1200 + idx * 300,
         duration: st.duration || '07:30',
         videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        posterUrl: st.videoCoverUrl || '/assets/posters/Benin < >.jpg'
+        posterUrl: st.videoCoverUrl || '/assets/duos/codjo-blind.jpg'
       }));
     }
     return [
       {
         id: 'ep-1',
         title: 'Le chant des piroguiers sous la brume de Ganvié',
-        seriesId: 'finagnon-qosqorico',
-        seriesTitle: 'Benin < > ...',
+        seriesId: 'other-eyes-sixth-sense',
+        seriesTitle: 'Other Sights',
         status: 'Validée',
         submissionDate: '12 Fév 2026',
         viewsCount: 1420,
         duration: '4:18',
         videoUrl: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',
-        posterUrl: '/assets/posters/Benin < >.jpg'
+        posterUrl: '/assets/duos/codjo-blind.jpg'
       },
       {
         id: 'ep-2',
@@ -1502,7 +1503,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
         ? (item?.title || 'Mon chemin')
         : ((item as any)?.seriesTitle || 'Épisode');
       return {
-        posterUrl: item?.posterUrl || '/assets/protagonists/amara-tisserande.jpg',
+        posterUrl: item?.posterUrl || '/assets/duos/codjo-blind.jpg',
         videoUrl: item?.videoUrl || '',
         title: title,
         durationStr: item?.duration || '03:45',
@@ -1580,13 +1581,12 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
       {/* 1. EN-TÊTE HARMONISÉ EXACTEMENT AU MÊME FORMAT QUE TOUTES LES AUTRES PAGES */}
       {/* ========================================================================= */}
       {showLineageFrise ? (
-        <div className="pb-1.5 pt-1 mb-1.5 flex items-center justify-between shrink-0 h-9 sm:h-10">
-          <div className="flex items-center gap-2 sm:gap-2.5 h-full shrink-0">
-            <ProfilePhotoTvFrame 
-              photoUrl={userPhoto}
+        <div className="pb-1.5 pt-1 mb-1.5 flex items-center justify-between shrink-0 h-10 sm:h-12">
+          <div className="flex items-center gap-2.5 sm:gap-3 h-full shrink-0">
+            <ProfileAvatarRing 
+              photoUrl={userPhoto || '/assets/duos/codjo-blind.jpg'}
               alt={profileDisplayName}
-              className="w-8.5 h-8.5 sm:w-9.5 sm:h-9.5"
-              strokeColor="#1C1917"
+              className="w-10 h-10 sm:w-11 sm:h-11 shadow-sm"
             />
             <div className="relative flex items-center h-full shrink-0">
               <h1 className="font-editorial text-base sm:text-[18px] font-bold text-[#1C1917] tracking-tight leading-none">
@@ -1604,15 +1604,9 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
           </button>
         </div>
       ) : (
-        <div className="flex items-center justify-between h-9 sm:h-10 shrink-0 gap-2 mb-1.5 sm:mb-2">
-          {/* GAUCHE : Cadre Télé avec photo de profil & Titre standardisé "Profil" */}
+        <div className="flex items-center justify-between h-10 sm:h-12 shrink-0 gap-2 mb-1.5 sm:mb-2">
+          {/* GAUCHE : Titre standardisé "Profil" avec tiret terracotta signature */}
           <div className="flex items-center gap-2 sm:gap-2.5 h-full shrink-0">
-            <ProfilePhotoTvFrame 
-              photoUrl={userPhoto}
-              alt={profileDisplayName}
-              className="w-8.5 h-8.5 sm:w-9.5 sm:h-9.5"
-              strokeColor="#1C1917"
-            />
             <div className="relative flex items-center h-full shrink-0">
               <h1 className="font-editorial text-base sm:text-[18px] font-bold text-[#1C1917] tracking-tight leading-none">
                 {targetProtagonist ? profileDisplayName : 'Profil'}
@@ -1621,8 +1615,8 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
             </div>
           </div>
 
-          {/* DROITE : Boutons d'action adaptés (Paramètres & Partager) */}
-          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+          {/* DROITE : Photo de profil dans son anneau précieux (SVG) & Bouton Partager */}
+          <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
             {/* Bouton Retour au Marché (si navigation contextuelle depuis le marché) */}
             {returnToMarketplace && (
               <button
@@ -1662,52 +1656,36 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
               </button>
             )}
 
-            {isOwner ? (
-              <>
-                {/* Propriétaire : Bouton Paramètres où l'on peut tout changer (photo, prénom, nom, bio...) */}
-                <button
-                  onClick={() => setIsEditingProfile(true)}
-                  id="btn-profile-settings-gear"
-                  className="group h-8 sm:h-8.5 px-3 sm:px-3.5 rounded-full bg-white hover:bg-[#A2482B] border border-stone-200 hover:border-[#A2482B] text-xs font-semibold text-[#1C1917] hover:text-white flex items-center justify-center gap-1.5 transition-all shadow-xs cursor-pointer active:scale-95"
-                  title="Paramètres de mon profil"
-                >
-                  <Sliders className="w-3.5 h-3.5 text-stone-700 group-hover:text-white transition-colors" />
-                  <span className="text-xs font-semibold">Paramètres</span>
-                </button>
-
-                {/* Bouton Partager */}
-                <button
-                  onClick={handleShareProfile}
-                  id="btn-share-profile"
-                  className="group w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-full bg-white hover:bg-[#A2482B] border border-stone-200 hover:border-[#A2482B] text-[#1C1917] hover:text-white flex items-center justify-center transition-all shadow-xs cursor-pointer active:scale-95"
-                  title="Partager mon profil"
-                >
-                  <ShareIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#1C1917] group-hover:text-white transition-colors" />
-                </button>
-              </>
-            ) : (
-              <>
-                {/* Visiteur : Messagerie et Partage, c'est tout */}
-                <button
-                  onClick={handleContactProtagonist}
-                  id="btn-visitor-message"
-                  className="group h-8 sm:h-8.5 px-3 sm:px-3.5 rounded-full bg-white hover:bg-[#A2482B] border border-stone-200 hover:border-[#A2482B] text-xs font-semibold text-[#1C1917] hover:text-white flex items-center gap-1.5 transition-all shadow-xs cursor-pointer whitespace-nowrap active:scale-95"
-                  title={`Envoyer un message à ${profileDisplayName}`}
-                >
-                  <MessageSquare className="w-3.5 h-3.5 text-stone-700 group-hover:text-white transition-colors" />
-                  <span>Messagerie</span>
-                </button>
-
-                <button
-                  onClick={handleShareProfile}
-                  id="btn-share-visitor-profile"
-                  className="group w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-full bg-white hover:bg-[#A2482B] border border-stone-200 hover:border-[#A2482B] text-[#1C1917] hover:text-white flex items-center justify-center transition-all shadow-xs cursor-pointer active:scale-95"
-                  title={`Partager le profil de ${profileDisplayName}`}
-                >
-                  <ShareIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#1C1917] group-hover:text-white transition-colors" />
-                </button>
-              </>
+            {/* Messagerie visiteur (si profil tiers) */}
+            {!isOwner && (
+              <button
+                onClick={handleContactProtagonist}
+                id="btn-visitor-message"
+                className="group h-8 sm:h-8.5 px-3 sm:px-3.5 rounded-full bg-white hover:bg-[#A2482B] border border-stone-200 hover:border-[#A2482B] text-xs font-semibold text-[#1C1917] hover:text-white flex items-center gap-1.5 transition-all shadow-xs cursor-pointer whitespace-nowrap active:scale-95"
+                title={`Envoyer un message à ${profileDisplayName}`}
+              >
+                <MessageSquare className="w-3.5 h-3.5 text-stone-700 group-hover:text-white transition-colors" />
+                <span>Messagerie</span>
+              </button>
             )}
+
+            {/* Photo de profil de l'avatar dans son anneau signature (filet doré & anneau noir) - bien visible */}
+            <ProfileAvatarRing
+              photoUrl={userPhoto || '/assets/duos/codjo-blind.jpg'}
+              alt={`Photo de profil de ${profileDisplayName}`}
+              className="w-11 h-11 sm:w-12 sm:h-12 shadow-sm"
+              onClick={() => setIsEditingProfile(true)}
+            />
+
+            {/* Bouton Partager la page */}
+            <button
+              onClick={handleShareProfile}
+              id="btn-share-profile"
+              className="group w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white hover:bg-[#A2482B] border border-stone-200 hover:border-[#A2482B] text-[#1C1917] hover:text-white flex items-center justify-center transition-all shadow-xs cursor-pointer active:scale-95"
+              title={`Partager le profil de ${profileDisplayName}`}
+            >
+              <ShareIcon className="w-4 h-4 sm:w-4.5 sm:h-4.5 text-[#1C1917] group-hover:text-white transition-colors" />
+            </button>
           </div>
         </div>
       )}
@@ -1790,65 +1768,6 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
               style={{ transform: `translateX(${swipeOffsetX}px)` }}
             >
             {/* ================================================================= */}
-            {/* FLANC DROIT : ÉVALUATION (AWARD) & LIGNÉE (ÉTOILE)               */}
-            {/* ================================================================= */}
-            <div 
-              className={`absolute right-3 sm:right-3.5 top-[60%] -translate-y-1/2 z-30 flex flex-col items-center gap-2.5 sm:gap-3 transition-all duration-300 pointer-events-auto ${
-                isPlaying 
-                  ? 'opacity-0 pointer-events-none scale-90 -translate-x-1' 
-                  : 'opacity-100 pointer-events-auto scale-100 translate-x-0'
-              }`}
-            >
-              {/* 1. Évaluation résonance vidéo */}
-              <div className="relative group/flankbtn flex items-center">
-                <div className="absolute right-11 top-1/2 -translate-y-1/2 z-40 pointer-events-none opacity-0 translate-x-1 group-hover/flankbtn:opacity-100 group-hover/flankbtn:translate-x-0 transition-all duration-200">
-                  <div className="px-2.5 py-1 rounded-lg bg-black/90 text-white text-[10.5px] font-semibold whitespace-nowrap shadow-xl border border-white/15">
-                    {profileResonancePct !== null ? `Résonance : ${profileResonancePct}%` : 'Évaluer la résonance'}
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsResonanceModalOpen(true);
-                  }}
-                  id="btn-profile-card-resonance"
-                  title={profileResonancePct !== null ? `Résonance : ${profileResonancePct}%` : 'Évaluer la résonance'}
-                  className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl backdrop-blur-md flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md active:scale-90 ${
-                    profileResonancePct !== null
-                      ? 'bg-[#A2482B] border border-[#A2482B] text-white shadow-[0_2px_12px_rgba(162,72,43,0.45)]'
-                      : 'bg-black/50 hover:bg-[#A2482B] border border-white/20 hover:border-[#A2482B] text-white hover:text-white'
-                  }`}
-                >
-                  <Award className="w-4 h-4 text-white" />
-                </button>
-              </div>
-
-              {/* 2. Bouton Lignée avec icône Étoile */}
-              <div className="relative group/flankbtn flex items-center">
-                <div className="absolute right-11 top-1/2 -translate-y-1/2 z-40 pointer-events-none opacity-0 translate-x-1 group-hover/flankbtn:opacity-100 group-hover/flankbtn:translate-x-0 transition-all duration-200">
-                  <div className="px-2.5 py-1 rounded-lg bg-black/90 text-white text-[10.5px] font-semibold whitespace-nowrap shadow-xl border border-white/15">
-                    Lignée
-                  </div>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setShowLineageFrise(true);
-                  }}
-                  id="btn-profile-card-lineage-star"
-                  title="Explorer la lignée"
-                  aria-label="Lignée"
-                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl backdrop-blur-md flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md active:scale-90 bg-black/50 hover:bg-[#A2482B] border border-white/20 hover:border-[#A2482B] text-white hover:text-white"
-                >
-                  <Star className="w-4 h-4 text-white stroke-[2]" />
-                </button>
-              </div>
-            </div>
-
-            {/* ================================================================= */}
             {/* CATÉGORIE 1 : RÉCIT (Récits personnels & Épisodes réunis)         */}
             {/* ================================================================= */}
             {activeCategory === 'recit' && currentRecitUnified && (
@@ -1874,29 +1793,27 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/35 pointer-events-none" />
 
-                {/* Overlay standardisé : alignement vertical strict, 6 actions, pas de croix, titre en haut à gauche et prénom épuré en bas à gauche */}
+                {/* Overlay standardisé unique : alignement vertical strict, pas de dédoublement, titre en haut à gauche et prénom épuré en bas à gauche */}
                 <UnifiedVideoCardOverlay
                   titleBadge={
                     currentRecitUnified.kind === 'recit'
                       ? (currentRecitUnified.item.subtitle || currentRecitUnified.item.chapter || 'Origines & Mémoire')
                       : (currentRecitUnified.item.seriesTitle || currentRecitUnified.item.title || 'Origines & Mémoire')
                   }
-                  displayName={userName.split(' ')[0]}
+                  displayName="Pascal"
                   isPlaying={isPlaying}
                   onTogglePlay={toggleVideoPlayback}
                   isMuted={isMuted}
                   onToggleMute={toggleMute}
-                  resonanceScore={null}
+                  resonanceScore={profileResonancePct}
                   onOpenResonance={() => setIsResonanceModalOpen(true)}
+                  onOpenLineage={() => setShowLineageFrise(true)}
                   questionText={getQuestionText()}
                   factText={
                     currentRecitUnified.kind === 'recit'
                       ? (currentRecitUnified.item.description || currentRecitUnified.item.quote || "Récit d'apprentissage, transmission et mémoire partagée.")
                       : (currentRecitUnified.item.title || "Épisode documentaire de transmission.")
                   }
-                  onOpenProfile={() => {
-                    // Déjà sur le profil
-                  }}
                   onShare={handleShareProfile}
                   onReportVideo={() => {
                     setShareToast("Vidéo signalée à la modération.");
@@ -3887,11 +3804,10 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
           <div className="bg-white max-w-md w-full rounded-3xl p-5 sm:p-6 shadow-2xl border border-stone-200 space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-stone-200">
               <div className="flex items-center gap-3">
-                <ProfilePhotoTvFrame
-                  photoUrl={userPhoto}
+                <ProfileAvatarRing
+                  photoUrl={userPhoto || '/assets/duos/codjo-blind.jpg'}
                   alt={profileDisplayName}
-                  className="w-11 h-11"
-                  strokeColor="#A2482B"
+                  className="w-12 h-12 shadow-sm"
                 />
                 <div>
                   <h3 className="font-editorial text-base sm:text-lg font-bold text-[#1C1917]">
@@ -3989,12 +3905,11 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
         <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in">
           <div className="bg-white max-w-sm w-full rounded-3xl p-6 shadow-2xl border border-stone-200 space-y-4">
             <div className="flex items-center justify-between pb-2 border-b border-stone-200">
-              <div className="flex items-center gap-2.5">
-                <ProfilePhotoTvFrame
-                  photoUrl={profileEditPhoto || userPhoto}
+              <div className="flex items-center gap-3">
+                <ProfileAvatarRing
+                  photoUrl={profileEditPhoto || userPhoto || '/assets/duos/codjo-blind.jpg'}
                   alt={profileEditName || profileDisplayName}
-                  className="w-10 h-10"
-                  strokeColor="#A2482B"
+                  className="w-12 h-12 shadow-sm"
                 />
                 <h3 className="font-editorial text-base font-bold text-[#1C1917]">Modifier mon profil</h3>
               </div>

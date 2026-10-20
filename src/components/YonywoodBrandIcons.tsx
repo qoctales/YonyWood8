@@ -745,15 +745,15 @@ export const YonyWoodLogo: React.FC<YonyWoodLogoProps> = ({
  * PortraitsViseurIcon:
  * Symbole officiel « Portraits » :
  * Viseur de caméra formé de quatre angles géométriques (stroke="currentColor")
- * et d'une petite étoile à quatre branches au centre (grise en inactive, blanche en actif).
+ * et d'un petit soleil lumineux avec ses rayons en son centre.
  */
 export const PortraitsViseurIcon: React.FC<IconProps & { isActive?: boolean }> = ({ 
   className = 'w-5 h-5',
   strokeWidth = 2.5,
   isActive
 }) => {
-  // En inactif l'étoile est grise (#57534E), en actif elle devient blanche (#FFFFFF)
-  const starColor = isActive === true ? '#FFFFFF' : isActive === false ? '#57534E' : 'currentColor';
+  // Couleur adaptée : blanc en actif sur la capsule terracotta, couleur courante sinon
+  const sunColor = isActive === true ? '#FFFFFF' : 'currentColor';
 
   return (
     <svg 
@@ -762,7 +762,7 @@ export const PortraitsViseurIcon: React.FC<IconProps & { isActive?: boolean }> =
       className={className}
       aria-hidden="true"
     >
-      {/* Cadre de viseur : 4 angles géométriques */}
+      {/* Cadre de viseur de caméra : 4 angles géométriques */}
       <g 
         stroke="currentColor" 
         strokeWidth={typeof strokeWidth === 'number' ? strokeWidth : 2.5} 
@@ -774,14 +774,34 @@ export const PortraitsViseurIcon: React.FC<IconProps & { isActive?: boolean }> =
         <path d="M40 31v6a3 3 0 0 1-3 3h-6" />
         <path d="M17 40h-6a3 3 0 0 1-3-3v-6" />
       </g>
-      {/* Étoile à quatre branches au centre : grise en inactif, blanche en actif */}
-      <path 
-        d="M24 18C24.5 21.7 26.3 23.5 30 24C26.3 24.5 24.5 26.3 24 30C23.5 26.3 21.7 24.5 18 24C21.7 23.5 23.5 21.7 24 18Z"
-        fill={starColor} 
-        stroke={starColor} 
-        strokeWidth="1.2" 
-        strokeLinejoin="round"
+
+      {/* Petit soleil en son centre */}
+      {/* Disque solaire central */}
+      <circle 
+        cx="24" 
+        cy="24" 
+        r="3.8" 
+        fill={sunColor} 
       />
+
+      {/* Rayons solaires (8 rayons équidistants et calibrés) */}
+      <g 
+        stroke={sunColor} 
+        strokeWidth="2" 
+        strokeLinecap="round"
+      >
+        {/* Rayons cardinaux */}
+        <line x1="24" y1="15.8" x2="24" y2="18.6" />
+        <line x1="24" y1="29.4" x2="24" y2="32.2" />
+        <line x1="15.8" y1="24" x2="18.6" y2="24" />
+        <line x1="29.4" y1="24" x2="32.2" y2="24" />
+
+        {/* Rayons diagonaux orientés vers les coins du viseur */}
+        <line x1="18.2" y1="18.2" x2="20.2" y2="20.2" />
+        <line x1="27.8" y1="20.2" x2="29.8" y2="18.2" />
+        <line x1="18.2" y1="29.8" x2="20.2" y2="27.8" />
+        <line x1="27.8" y1="27.8" x2="29.8" y2="29.8" />
+      </g>
     </svg>
   );
 };

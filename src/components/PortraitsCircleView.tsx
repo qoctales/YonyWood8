@@ -1,5 +1,9 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { ChevronLeft } from 'lucide-react';
+import { 
+  ChevronLeft, 
+  RotateCw, 
+  X
+} from 'lucide-react';
 import { CompanyEntity, CompanyStakeholder } from '../data/companyPortraitsData';
 import { ResonanceModal } from './ResonanceModal';
 import { UnifiedVideoCardOverlay } from './UnifiedVideoCardOverlay';
@@ -24,17 +28,43 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
     return companies.findIndex((c) => c.id === selectedCompanyId);
   }, [selectedCompanyId, companies]);
 
+  // Batch actuel des 16 organisations proposées (cyclable au clic sur le soleil)
+  const [companyBatchIndex, setCompanyBatchIndex] = useState<number>(() => {
+    if (initialIndex >= 0) return Math.floor(initialIndex / 16);
+    return 0;
+  });
+  const [isSunRotating, setIsSunRotating] = useState<boolean>(false);
+
+  const totalCompanyBatches = Math.max(1, Math.ceil(companies.length / 16));
+
+  // Les 16 organisations actuellement proposées sur le cercle
+  const displayedCompanies = useMemo(() => {
+    if (companies.length <= 16) return companies;
+    const start = (companyBatchIndex * 16) % companies.length;
+    let slice = companies.slice(start, start + 16);
+    if (slice.length < 16) {
+      slice = [...slice, ...companies.slice(0, 16 - slice.length)];
+    }
+    return slice;
+  }, [companies, companyBatchIndex]);
+
   // Niveau 1 : organisations (0) | Niveau 2 : collaborateurs d'une organisation (1)
   const [level, setLevel] = useState<0 | 1>(initialIndex >= 0 ? 1 : 0);
-  const [curIndex, setCurIndex] = useState<number>(initialIndex);
+  const [curIndex, setCurIndex] = useState<number>(initialIndex >= 0 ? initialIndex % 16 : -1);
   const [colsShown, setColsShown] = useState<boolean>(initialIndex >= 0);
+  const [collabsInteractive, setCollabsInteractive] = useState<boolean>(initialIndex >= 0);
+
+  // Volet actif des intervenants (16 par volet pour les organisations à 32 intervenants)
+  const [activeBatchIndex, setActiveBatchIndex] = useState<number>(0);
+  const [isRotatingBatch, setIsRotatingBatch] = useState<boolean>(false);
 
   // Timer pour orchestrer les transitions entrée / sortie
   const animTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const interactiveTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   // Mesure dynamique de la taille du conteneur circulaire (#stage)
   const stageRef = useRef<HTMLDivElement>(null);
-  const [stageWidth, setStageWidth] = useState<number>(0);
+  const [stageWidth, setStageWidth] = useState<number>(380);
 
   // Modale vidéo pour collaborateur (témoignage 9:16)
   const [activeStakeholderModal, setActiveStakeholderModal] = useState<CompanyStakeholder | null>(null);
@@ -44,16 +74,59 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
   const [resonancePct, setResonancePct] = useState<number | null>(null);
   const [copied, setCopied] = useState<boolean>(false);
 
-  // Suivi de redimensionnement pour caler les coordonnées précises
+  // Données de l'organisation active
+  const curOrg = curIndex >= 0 && curIndex < displayedCompanies.length ? displayedCompanies[curIndex] : null;
+  const allStakeholders = curOrg?.stakeholders || [];
+  const totalStakeholdersCount = allStakeholders.length;
+  const totalBatches = Math.max(1, Math.ceil(totalStakeholdersCount / 16));
+
+  // Action au clic sur le soleil central : actualiser et proposer 16 autres sociétés
+  const handleShuffleCompanies = () => {
+    if (level !== 0 || totalCompanyBatches <= 1) return;
+    setIsSunRotating(true);
+    setTimeout(() => {
+      setCompanyBatchIndex((prev) => (prev + 1) % totalCompanyBatches);
+      setIsSunRotating(false);
+    }, 300);
+  };
+
+  // 16 intervenants du volet actif
+  const displayedCollabs = useMemo(() => {
+    if (!curOrg || allStakeholders.length === 0) return [];
+    const start = activeBatchIndex * 16;
+    const slice = allStakeholders.slice(start, start + 16);
+    // Si moins de 16, compléter harmonieusement pour préserver les 16 rayons réguliers
+    if (slice.length < 16 && allStakeholders.length > 0) {
+      const full: CompanyStakeholder[] = [];
+      for (let i = 0; i < 16; i++) {
+        full.push(allStakeholders[i % allStakeholders.length]);
+      }
+      return full;
+    }
+    return slice;
+  }, [curOrg, allStakeholders, activeBatchIndex]);
+
+  // Suivi de redimensionnement sécurisé (évite les boucles de micro-rebond)
   useEffect(() => {
     const updateSize = () => {
       if (stageRef.current) {
-        setStageWidth(stageRef.current.clientWidth);
+        const measured = Math.round(stageRef.current.clientWidth);
+        if (measured > 0) {
+          setStageWidth((prev) => (Math.abs(prev - measured) >= 2 ? measured : prev));
+        }
       }
     };
     updateSize();
 
-    const ro = new ResizeObserver(updateSize);
+    const ro = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const measured = Math.round(entry.contentRect.width);
+        if (measured > 0) {
+          setStageWidth((prev) => (Math.abs(prev - measured) >= 2 ? measured : prev));
+        }
+      }
+    });
+
     if (stageRef.current) ro.observe(stageRef.current);
     window.addEventListener('resize', updateSize);
 
@@ -61,6 +134,7 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
       ro.disconnect();
       window.removeEventListener('resize', updateSize);
       if (animTimerRef.current) clearTimeout(animTimerRef.current);
+      if (interactiveTimerRef.current) clearTimeout(interactiveTimerRef.current);
     };
   }, []);
 
@@ -68,25 +142,29 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
   useEffect(() => {
     if (selectedCompanyId) {
       const idx = companies.findIndex((c) => c.id === selectedCompanyId);
-      if (idx >= 0 && idx !== curIndex) {
+      if (idx >= 0) {
+        const batch = Math.floor(idx / 16);
+        setCompanyBatchIndex(batch);
         setLevel(1);
-        setCurIndex(idx);
+        setCurIndex(idx % 16);
         setColsShown(true);
+        setCollabsInteractive(true);
+        setActiveBatchIndex(0);
       }
     } else if (level === 1 && !selectedCompanyId && curIndex !== -1) {
       exit();
     }
   }, [selectedCompanyId]);
 
-  // Proportions du modèle CFG (maquette de référence)
+  // Proportions géométriques
   const W = stageWidth || 380;
-  const R = W * 0.38; // Rayon de la couronne (38% de la largeur)
-  const orgPx = Math.max(40, W * 0.085); // Taille des vignettes organisations (8.5%, min 40px)
-  const colPx = Math.max(36, W * 0.075); // Taille des vignettes collaborateurs (7.5%, min 36px)
+  const R = W * 0.38; // Rayon orbital (38% de la largeur)
+  const orgPx = Math.max(42, W * 0.088); // Taille des vignettes organisations
+  const colPx = Math.max(38, W * 0.078); // Taille des vignettes collaborateurs
   const sunPx = W * 0.30; // Taille du centre / soleil (30% de la largeur)
-  const zoom = sunPx / orgPx; // Facteur d'agrandissement de l'organisation pour occuper exactement la place du soleil
+  const zoom = sunPx / orgPx; // Facteur pour que l'organisation au centre remplace exactement le soleil
 
-  // Calcul d'angle régulier démarrant au sommet (-90°) dans le sens horaire
+  // Calcul trigonométrique d'un angle régulier démarrant au sommet (-90°)
   const pos = (k: number, total: number = 16) => {
     const a = (-90 + (k * 360) / total) * (Math.PI / 180);
     return {
@@ -99,32 +177,62 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
   const enter = (i: number) => {
     if (level !== 0) return;
     if (animTimerRef.current) clearTimeout(animTimerRef.current);
+    if (interactiveTimerRef.current) clearTimeout(interactiveTimerRef.current);
+
     setLevel(1);
     setCurIndex(i);
     setColsShown(false);
-    onSelectCompany?.(companies[i]);
+    setCollabsInteractive(false);
+    setActiveBatchIndex(0);
+    onSelectCompany?.(displayedCompanies[i]);
 
-    // Après 450 ms, les collaborateurs se déploient un à un depuis le centre
+    // Déploiement des 16 intervenants depuis le centre
     animTimerRef.current = setTimeout(() => {
       setColsShown(true);
     }, 450);
+
+    // Fin de transition : lever les délais pour que les survols soient fluides et stables
+    interactiveTimerRef.current = setTimeout(() => {
+      setCollabsInteractive(true);
+    }, 1100);
   };
 
-  // Animation de sortie vers le niveau 1 (organisations)
+  // Animation de sortie vers le niveau 1 (organisations / soleil central)
   const exit = () => {
     if (level === 0) return;
     if (animTimerRef.current) clearTimeout(animTimerRef.current);
-    setColsShown(false);
+    if (interactiveTimerRef.current) clearTimeout(interactiveTimerRef.current);
 
-    // Après 300 ms (repli des collaborateurs vers le centre), l'organisation revient à sa place et le soleil renaît
+    setColsShown(false);
+    setCollabsInteractive(false);
+
+    // Repli vers le centre puis réapparition du soleil et des 16 organisations
     animTimerRef.current = setTimeout(() => {
       setLevel(0);
       setCurIndex(-1);
+      setActiveBatchIndex(0);
       onSelectCompany?.(null);
-    }, 300);
+    }, 320);
   };
 
-  // Clavier : touche Échap pour revenir au niveau 1
+  // Passage aux 16 regards suivants
+  const handleNextBatch = () => {
+    if (totalBatches <= 1) return;
+    setIsRotatingBatch(true);
+    setCollabsInteractive(false);
+    setActiveStakeholderModal(null);
+    setIsStakeholderPlaying(false);
+
+    setTimeout(() => {
+      setActiveBatchIndex((prev) => (prev + 1) % totalBatches);
+      setIsRotatingBatch(false);
+      setTimeout(() => {
+        setCollabsInteractive(true);
+      }, 500);
+    }, 240);
+  };
+
+  // Clavier : touche Échap pour fermer modale ou revenir au niveau 1 (soleil central)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -139,12 +247,6 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [level, activeStakeholderModal]);
 
-  // Données de l'organisation active
-  const curOrg = curIndex >= 0 ? companies[curIndex] : null;
-  const collabs = curOrg?.stakeholders || [];
-  const displayedCollabs = collabs.slice(0, 16);
-  const totalCollabs = Math.max(1, displayedCollabs.length);
-
   const handleShareStakeholder = (stk: CompanyStakeholder) => {
     const url = `${window.location.origin}?company=${curOrg?.id}&speaker=${stk.id}`;
     navigator.clipboard?.writeText(url);
@@ -153,24 +255,28 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
   };
 
   return (
-    <div className="relative w-full h-full flex flex-col items-center justify-between min-h-0 select-none pb-2 sm:pb-4">
+    <div className="relative w-full h-full flex flex-col justify-between min-h-0 select-none">
+      
       {/* ========================================================================= */}
-      {/* EN-TÊTE HARMONISÉ : FIL D'ARIANE UNIQUE À GAUCHE & PETIT TEXTE D'AIDE     */}
+      {/* EN-TÊTE HARMONISÉ EXACTEMENT AU MÊME EMPLACEMENT QUE STUDIO, PRODUCTION   */}
       {/* ========================================================================= */}
-      <header className="w-full max-w-2xl px-2 sm:px-4 pt-1 pb-1 flex items-center justify-between shrink-0 min-h-[44px]">
-        {/* Fil d'Ariane en haut à gauche */}
-        <nav aria-label="Fil d’Ariane" className="flex items-center gap-2 text-sm sm:text-base">
+      <header className="w-full flex items-center justify-between h-8 sm:h-9 shrink-0 gap-2 mb-1.5 sm:mb-2">
+        {/* Fil d'Ariane en haut à gauche avec tiret terracotta signature sous le titre */}
+        <nav aria-label="Fil d’Ariane" className="flex items-center gap-2 text-sm sm:text-base h-full">
           {level === 0 ? (
-            <span className="font-editorial text-base sm:text-lg font-bold text-stone-900 tracking-tight leading-none">
-              Portraits
-            </span>
+            <div className="relative flex items-center h-full shrink-0">
+              <h1 className="font-editorial text-base sm:text-[18px] font-bold text-[#1C1917] tracking-tight leading-none">
+                Portraits
+              </h1>
+              <div className="absolute left-0 -bottom-2 w-8 h-0.5 bg-[#A2482B] rounded-full" />
+            </div>
           ) : (
-            <div className="flex items-center gap-1.5 sm:gap-2">
+            <div className="flex items-center gap-1.5 sm:gap-2 h-full">
               <button
                 type="button"
                 onClick={exit}
                 className="font-normal text-stone-500 hover:text-stone-900 transition-colors cursor-pointer flex items-center gap-1 group py-1"
-                title="Revenir à Portraits"
+                title="Revenir au soleil central et à la constellation des 16 organisations"
               >
                 <ChevronLeft className="w-4 h-4 text-stone-400 group-hover:text-stone-700 group-hover:-translate-x-0.5 transition-transform" />
                 <span>Portraits</span>
@@ -178,44 +284,103 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
               <span className="text-stone-300 font-light text-xs" aria-hidden="true">
                 ›
               </span>
-              <span
-                className="font-semibold text-stone-900 truncate max-w-[170px] sm:max-w-[280px]"
-                aria-current="page"
-              >
-                {curOrg?.companyName}
-              </span>
+              <div className="relative flex items-center h-full shrink-0">
+                <span
+                  className="font-editorial text-sm sm:text-base font-bold text-[#1C1917] tracking-tight truncate max-w-[150px] sm:max-w-[260px]"
+                  aria-current="page"
+                >
+                  {curOrg?.companyName}
+                </span>
+                <div className="absolute left-0 -bottom-2 w-8 h-0.5 bg-[#A2482B] rounded-full" />
+              </div>
             </div>
           )}
         </nav>
 
-        {/* Petit texte d'aide discret en haut à droite */}
-        <span className="text-xs sm:text-[13px] text-stone-400 font-normal select-none">
-          {level === 0 ? 'Touchez une organisation' : 'Touchez le centre pour revenir'}
-        </span>
+        {/* Droite : Sélecteur de volets + Bouton clair de retour au soleil central */}
+        <div className="flex items-center gap-2">
+          {level === 1 && totalBatches > 1 && (
+            <button
+              type="button"
+              onClick={handleNextBatch}
+              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-white hover:bg-stone-100 text-stone-800 border border-stone-200 text-xs font-semibold shadow-xs transition-all cursor-pointer group active:scale-95"
+              title="Passer aux 16 regards suivants"
+            >
+              <RotateCw className={`w-3.5 h-3.5 text-[#A2482B] transition-transform duration-300 ${isRotatingBatch ? 'rotate-180' : 'group-hover:rotate-45'}`} />
+              <span className="hidden sm:inline">Regards {activeBatchIndex * 16 + 1}–{Math.min((activeBatchIndex + 1) * 16, totalStakeholdersCount)} / {totalStakeholdersCount}</span>
+              <span className="sm:hidden font-mono text-[11px]">{activeBatchIndex + 1}/{totalBatches}</span>
+            </button>
+          )}
+
+          {level === 1 && (
+            <button
+              type="button"
+              onClick={exit}
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white hover:bg-amber-50 text-stone-700 hover:text-amber-900 border border-stone-200 hover:border-amber-300 text-xs font-medium shadow-xs transition-all cursor-pointer group active:scale-95"
+              title="Revenir au soleil central et à la constellation des 16 organisations"
+            >
+              <ChevronLeft className="w-3.5 h-3.5 text-[#A2482B] group-hover:-translate-x-0.5 transition-transform" />
+              <span>Soleil central</span>
+            </button>
+          )}
+        </div>
       </header>
 
       {/* ========================================================================= */}
       {/* SCÈNE CIRCULAIRE (#stage)                                                */}
       {/* ========================================================================= */}
-      <div className="relative w-full flex-1 flex items-center justify-center min-h-[300px] my-auto">
+      <div className="relative w-full flex-1 flex items-center justify-center min-h-[300px] my-auto overflow-hidden">
         <div
           ref={stageRef}
           id="stage"
-          className="relative w-[min(100%,620px,calc(100vh-170px))] aspect-square min-w-[280px] mx-auto flex items-center justify-center select-none"
+          className="relative w-[min(100%,620px,calc(100vh-170px))] aspect-square min-w-[280px] mx-auto flex items-center justify-center select-none overflow-hidden"
         >
           {/* ===================================================================== */}
-          {/* 1. RAYONS SOLAIRES TRÈS FINS (NIVEAU 1)                              */}
+          {/* SVG UNIFIÉ : LE SOLEIL, SES HALOS ET SES 16 RAYONS EXACTEMENT CENTRÉS */}
+          {/*    -> cx="50", cy="50" et (x1="50", y1="50") : ALIGNEMENT MATHÉMATIQUE */}
           {/* ===================================================================== */}
           <svg
             id="rays"
-            className="absolute inset-0 w-full h-full pointer-events-none select-none z-0"
+            className={`absolute inset-0 w-full h-full pointer-events-none select-none z-0 transition-transform duration-500 ease-out ${
+              isSunRotating ? 'scale-105 rotate-45' : ''
+            }`}
             viewBox="0 0 100 100"
             aria-hidden="true"
             style={{
-              opacity: level === 0 ? 0.85 : 0,
-              transition: 'opacity 0.45s ease',
+              opacity: level === 0 ? 1 : 0,
+              transition: 'opacity 0.45s ease, transform 0.5s ease',
             }}
           >
+            <defs>
+              <radialGradient id="sunAuraGlow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stopColor="#F5B921" stopOpacity="0.45" />
+                <stop offset="55%" stopColor="#F5B921" stopOpacity="0.18" />
+                <stop offset="100%" stopColor="#FAF8F5" stopOpacity="0" />
+              </radialGradient>
+            </defs>
+
+            {/* 1. Halo externe respirant (r=30, exactement centré sur le soleil et les rayons) */}
+            <circle
+              cx="50"
+              cy="50"
+              r="30"
+              fill="#F5B921"
+              className="animate-breathe-svg"
+            />
+
+            {/* 2. Halo interne respirant (r=22, exactement centré) */}
+            <circle
+              cx="50"
+              cy="50"
+              r="22"
+              fill="#F5B921"
+              className="animate-breathe-svg-inner"
+            />
+
+            {/* 3. Lueur diffuse d'ambiance */}
+            <circle cx="50" cy="50" r="26" fill="url(#sunAuraGlow)" />
+
+            {/* 4. Les 16 rayons dorés partant exactement du centre (50, 50) */}
             {Array.from({ length: 16 }).map((_, i) => {
               const a = (-90 + (i * 360) / 16) * (Math.PI / 180);
               const r = 0.38 * 100 * 0.92;
@@ -232,63 +397,52 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
                 />
               );
             })}
+
+            {/* 5. Le disque solaire doré pur (r=15 = sunPx/2) posé au centre sur les rayons */}
+            <circle
+              cx="50"
+              cy="50"
+              r="15"
+              fill="#F5B921"
+            />
           </svg>
 
           {/* ===================================================================== */}
-          {/* 2. LE SOLEIL ET SES DEUX HALOS RESPIRANTS (NIVEAU 1)                 */}
+          {/* BOUTON SOLEIL CENTRAL INTERACTIF (NIVEAU 1)                           */}
+          {/*    -> Clic sur le soleil actualise et propose 16 autres sociétés      */}
           {/* ===================================================================== */}
-          <div
-            id="sun"
-            className="absolute left-1/2 top-1/2 pointer-events-none select-none z-0"
-            aria-hidden="true"
-            style={{
-              width: `${sunPx}px`,
-              height: `${sunPx}px`,
-              transform:
-                level === 0
-                  ? 'translate(-50%, -50%) scale(1)'
-                  : 'translate(-50%, -50%) scale(0.2)',
-              opacity: level === 0 ? 1 : 0,
-              transition: 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.45s ease',
-              willChange: 'transform, opacity',
-            }}
-          >
-            {/* Halo 2 externe (200% taille, 16% opacité) */}
-            <div
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full pointer-events-none animate-breathe"
+          {level === 0 && (
+            <button
+              type="button"
+              onClick={handleShuffleCompanies}
+              title="Cliquer pour proposer d'autres sociétés"
+              aria-label="Cliquer sur le soleil pour proposer d'autres sociétés"
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full cursor-pointer z-10 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#A2482B]/60"
               style={{
-                width: '200%',
-                height: '200%',
-                backgroundColor: '#F5B921',
-                opacity: 0.16,
+                width: `${sunPx}px`,
+                height: `${sunPx}px`,
               }}
-            />
-
-            {/* Halo 1 interne (148% taille, 30% opacité) */}
-            <div
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full pointer-events-none animate-breathe"
-              style={{
-                width: '148%',
-                height: '148%',
-                backgroundColor: '#F5B921',
-                opacity: 0.30,
-              }}
-            />
-
-            {/* Disque jaune doré pur sans image, sans texte, sans anneau décoratif */}
-            <div
-              className="w-full h-full rounded-full shadow-lg"
-              style={{
-                backgroundColor: '#F5B921',
-              }}
-            />
-          </div>
+            >
+              <div 
+                className={`w-full h-full rounded-full flex items-center justify-center transition-all duration-300 ${
+                  isSunRotating ? 'scale-90 rotate-90' : 'group-hover:scale-105 active:scale-95'
+                }`}
+              >
+                {/* Repère discret de rotation au survol */}
+                <div className="w-10 h-10 rounded-full bg-white/0 group-hover:bg-[#FFF8E7]/30 transition-all duration-300 flex items-center justify-center pointer-events-none">
+                  <RotateCw className="w-4 h-4 text-stone-900/40 opacity-0 group-hover:opacity-75 transition-opacity duration-200" />
+                </div>
+              </div>
+            </button>
+          )}
 
           {/* ===================================================================== */}
-          {/* 3. COURONNE DES 16 ORGANISATIONS (NIVEAU 1)                          */}
-          {/*    -> Au clic, glisse vers le centre et grossit à la taille du soleil*/}
+          {/* COURONNE DES 16 ORGANISATIONS (NIVEAU 1)                              */}
+          {/*    -> Conteneur stable à position fixe                                */}
+          {/*    -> Au clic, glisse vers le centre et remplace le soleil            */}
+          {/*    -> Au centre (isCur) : clic permet de revenir au soleil central    */}
           {/* ===================================================================== */}
-          {companies.slice(0, 16).map((org, k) => {
+          {displayedCompanies.map((org, k) => {
             const p = pos(k, 16);
             const isCur = k === curIndex;
 
@@ -298,7 +452,7 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
             let pointerEvents: 'auto' | 'none' = 'auto';
 
             if (level === 0) {
-              transform = `translate(-50%, -50%) translate(${p.x}px, ${p.y}px) scale(1)`;
+              transform = `translate(-50%, -50%) translate(${p.x}px, ${p.y}px)`;
               opacity = 1;
               zIndex = 2;
               pointerEvents = 'auto';
@@ -309,7 +463,7 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
               zIndex = 10;
               pointerEvents = 'auto';
             } else {
-              // Les 15 autres organisations se déplacent vers le centre en s'estompant
+              // Les 15 autres organisations se replient vers le centre en s'estompant
               transform = `translate(-50%, -50%) translate(${p.x * 0.6}px, ${p.y * 0.6}px) scale(0)`;
               opacity = 0;
               zIndex = 0;
@@ -317,85 +471,107 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
             }
 
             return (
-              <button
+              <div
                 key={`org-${org.id}`}
-                type="button"
-                onClick={() => {
-                  if (level === 0) enter(k);
-                  else if (isCur) exit();
-                }}
-                aria-label={org.companyName}
-                title={level === 0 ? org.companyName : (isCur ? 'Touchez pour revenir' : '')}
-                className={`absolute left-1/2 top-1/2 rounded-full overflow-hidden border border-white/80 shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F5B921] group ${
-                  isCur ? 'cursor-pointer' : 'cursor-pointer hover:border-[#F5B921] hover:scale-110 active:scale-95'
-                }`}
+                className="absolute left-1/2 top-1/2 flex items-center justify-center"
                 style={{
-                  width: `${orgPx}px`,
-                  height: `${orgPx}px`,
+                  width: `${orgPx + 14}px`,
+                  height: `${orgPx + 14}px`,
                   transform,
                   opacity,
                   zIndex,
                   pointerEvents,
-                  transition: 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.45s ease',
+                  transition: 'transform 0.55s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease',
                   willChange: 'transform, opacity',
                 }}
               >
-                <img
-                  src={org.photoUrl}
-                  alt={org.companyName}
-                  className="w-full h-full object-cover pointer-events-none group-hover:scale-105 transition-transform duration-300"
-                />
-              </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (level === 0) {
+                      enter(k);
+                    } else if (isCur) {
+                      // Au centre : un clic actualise et présente d'autres protagonistes de l'organisation
+                      handleNextBatch();
+                    }
+                  }}
+                  aria-label={level === 0 ? org.companyName : `Découvrir d'autres collaborateurs de ${org.companyName}`}
+                  title={level === 0 ? org.companyName : (isCur ? `Cliquer pour voir d'autres collaborateurs (${org.companyName})` : '')}
+                  className="w-full h-full rounded-full flex items-center justify-center p-1.5 cursor-pointer group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F5B921]"
+                >
+                  <div 
+                    className={`relative w-full h-full rounded-full overflow-hidden border-2 shadow-md transition-all duration-300 ease-out transform-gpu ${
+                      isCur 
+                        ? `border-[#A2482B] shadow-xl group-hover:scale-103 group-active:scale-95 ${isRotatingBatch ? 'scale-95' : ''}` 
+                        : 'border-white/95 group-hover:border-[#F5B921] group-hover:scale-112 group-hover:shadow-lg group-active:scale-95'
+                    }`}
+                  >
+                    <img
+                      src={org.photoUrl}
+                      alt={org.companyName}
+                      className="w-full h-full object-cover pointer-events-none select-none"
+                      style={{ backfaceVisibility: 'hidden' }}
+                    />
+                  </div>
+                </button>
+              </div>
             );
           })}
 
           {/* ===================================================================== */}
-          {/* 4. COURONNE DES COLLABORATEURS (NIVEAU 2)                             */}
-          {/*    -> Apparaissent un à un depuis le centre (décalage de 40 ms)      */}
+          {/* COURONNE DES COLLABORATEURS (NIVEAU 2)                                */}
+          {/*    -> Conteneur stable anti-tremblement : la zone de clic est FIXE    */}
+          {/*    -> Seul le cercle intérieur s'anime élégamment sans rebond         */}
           {/* ===================================================================== */}
           {displayedCollabs.map((collab, k) => {
-            const p = pos(k, totalCollabs);
+            const p = pos(k, 16);
             const isShown = level === 1 && colsShown;
 
             const transform = isShown
-              ? `translate(-50%, -50%) translate(${p.x}px, ${p.y}px) scale(1)`
-              : `translate(-50%, -50%) translate(0px, 0px) scale(0)`;
+              ? `translate(-50%, -50%) translate(${p.x}px, ${p.y}px)`
+              : `translate(-50%, -50%) translate(0px, 0px)`;
             const opacity = isShown ? 1 : 0;
             const pointerEvents: 'auto' | 'none' = isShown ? 'auto' : 'none';
-            const transitionDelay = isShown ? `${k * 40}ms` : '0ms';
-            const transitionDuration = isShown ? '0.6s' : '0.3s';
+
+            // Transition d'arrivée étalée puis instantanée après déploiement
+            const transitionDelay = collabsInteractive ? '0s' : `${0.04 + k * 0.022}s`;
+            const transitionDuration = collabsInteractive ? '0.2s' : '0.45s';
 
             return (
-              <button
+              <div
                 key={`collab-${collab.id}-${k}`}
-                type="button"
-                onClick={() => {
-                  setActiveStakeholderModal(collab);
-                  setIsStakeholderPlaying(false);
-                }}
-                aria-label={collab.name}
-                title={`${collab.name} · ${collab.roleDetail || collab.roleCategory}`}
-                className="absolute left-1/2 top-1/2 rounded-full overflow-hidden border border-white/80 shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F5B921] group cursor-pointer hover:border-[#F5B921] hover:scale-115 active:scale-95"
+                className="absolute left-1/2 top-1/2 flex items-center justify-center"
                 style={{
-                  width: `${colPx}px`,
-                  height: `${colPx}px`,
+                  width: `${colPx + 14}px`,
+                  height: `${colPx + 14}px`,
                   transform,
                   opacity,
                   pointerEvents,
-                  zIndex: 5,
-                  transitionProperty: 'transform, opacity',
-                  transitionDuration,
-                  transitionTimingFunction: isShown ? 'cubic-bezier(0.4, 0, 0.2, 1)' : 'ease',
-                  transitionDelay,
+                  zIndex: 3,
+                  transition: `transform ${transitionDuration} cubic-bezier(0.16, 1, 0.3, 1) ${transitionDelay}, opacity ${transitionDuration} ease ${transitionDelay}`,
                   willChange: 'transform, opacity',
                 }}
               >
-                <img
-                  src={collab.photoUrl}
-                  alt={collab.name}
-                  className="w-full h-full object-cover pointer-events-none group-hover:scale-110 transition-transform duration-200"
-                />
-              </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setActiveStakeholderModal(collab);
+                    setIsStakeholderPlaying(false);
+                  }}
+                  aria-label={collab.name}
+                  title={`${collab.name} · ${collab.roleDetail || collab.roleCategory}`}
+                  className="w-full h-full rounded-full flex items-center justify-center p-1.5 cursor-pointer group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F5B921]"
+                >
+                  <div className="w-full h-full rounded-full overflow-hidden border-2 border-white/95 shadow-md group-hover:border-[#F5B921] group-hover:shadow-lg group-hover:scale-115 group-active:scale-95 transition-all duration-200 ease-out transform-gpu">
+                    <img
+                      src={collab.photoUrl}
+                      alt={collab.name}
+                      className="w-full h-full object-cover pointer-events-none select-none"
+                      style={{ backfaceVisibility: 'hidden' }}
+                    />
+                  </div>
+                </button>
+              </div>
             );
           })}
         </div>
@@ -439,7 +615,7 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
             {/* Dégradé cinématique sombre */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/50 pointer-events-none" />
 
-            {/* Overlay standardisé : alignement vertical strict, 6 actions, pas de croix, titre en haut à gauche et prénom épuré en bas à gauche */}
+            {/* Overlay standardisé */}
             <UnifiedVideoCardOverlay
               titleBadge={curOrg?.companyName || 'Organisation'}
               displayName={activeStakeholderModal.name}

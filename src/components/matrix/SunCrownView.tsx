@@ -3,7 +3,6 @@ import {
   ArrowLeft, 
   Sparkles, 
   HeartHandshake, 
-  Share2, 
   Check,
   ChevronRight,
   HelpCircle,
@@ -11,6 +10,7 @@ import {
   User,
   RotateCcw
 } from 'lucide-react';
+import { ShareIcon } from '../ShareIcon';
 import { MatrixProfile, PersonSatellite, ThemeSatellite, get16SunSatellites } from '../../utils/matrixGridService';
 import { DimensionIcon } from '../DimensionIcon';
 
@@ -109,7 +109,7 @@ export const SunCrownView: React.FC<SunCrownViewProps> = ({
               className="p-1.5 rounded-lg border border-stone-200 hover:bg-stone-100 text-stone-600 hover:text-stone-900 transition-all cursor-pointer"
               title="Partager ce Soleil"
             >
-              {copiedLink ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Share2 className="w-3.5 h-3.5" />}
+              {copiedLink ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <ShareIcon className="w-3.5 h-3.5" />}
             </button>
           </div>
         </div>
