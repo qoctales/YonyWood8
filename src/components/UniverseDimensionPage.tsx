@@ -24,7 +24,7 @@ import {
   ShoppingBag
 } from 'lucide-react';
 import { ShareIcon } from './ShareIcon';
-import { SingleAlveoleIcon, ProfileSoloIcon, TvPlayerIcon } from './YonywoodBrandIcons';
+import { SingleAlveoleIcon, ProfileSoloIcon, TvPlayerIcon, ProfilePhotoTvFrame } from './YonywoodBrandIcons';
 import { ViewScreen } from '../types';
 import { DUOS, DOCUMENTARIES, PROTAGONISTS } from '../data/mockData';
 
@@ -474,11 +474,11 @@ export const UniverseDimensionPage: React.FC<UniverseDimensionPageProps> = ({
           {/* Identity Capsule */}
           <div className="flex items-center gap-3">
             <div className="relative">
-              <img 
-                src={protagonist.photoUrl} 
+              <ProfilePhotoTvFrame 
+                photoUrl={protagonist.photoUrl} 
                 alt={protagonist.name} 
-                className="w-10 h-10 rounded-full object-cover ring-2 ring-[#C89B3C]"
-                referrerPolicy="no-referrer"
+                className="w-10 h-10 sm:w-11 sm:h-11"
+                strokeColor="#1C1917"
               />
               <span className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-[#1C1917] border-2 border-white flex items-center justify-center text-[9px] text-white font-bold">
                 ✓

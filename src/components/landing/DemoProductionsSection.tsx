@@ -26,7 +26,7 @@ interface ProductionItem {
 const ALL_8_PRODUCTIONS: ProductionItem[] = [
   {
     id: 'jesus-legba',
-    title: 'Vodunrays ‹ › Amen',
+    title: 'Vodun Rays ‹ › Amen',
     posterImage: '/assets/posters/Esu < > Jesus.jpg',
     sharePrice: 50,
     totalShares: 256,

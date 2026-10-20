@@ -15,7 +15,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
   {
     id: 'jesus-legba',
     slug: 'jesus-legba',
-    title: 'Vodunrays ‹ › Amen',
+    title: 'Vodun Rays ‹ › Amen',
     subtitle: 'Deux traditions spirituelles. Une même question de transcendance face au mystère.',
     centralQuestion: 'Qu’est-ce qui, un jour, vous a fait sentir que quelque chose de plus grand que vous était présent ?',
     shortSynopsis: 'Quand la tradition ancestrale et la foi révélée dialoguent d’égal à égal face aux grands mystères humains : l’épreuve, le pardon et la transcendance.',
@@ -26,7 +26,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
     teaserDuration: '1:15',
     universes: [
       {
-        name: 'Vodunrays',
+        name: 'Vodun Rays',
         tagline: 'Le gardien des mémoires et des seuils sacrés',
         description: 'Spiritualité ancestrale où les rites ouvrent les voies, protègent les demeures et relient le monde visible aux forces cosmiques.',
         territory: 'Bénin (Allada, Abomey, Ouidah)'
@@ -1226,7 +1226,7 @@ export const PROTAGONISTS: Protagonist[] = [
     bio: 'Héritier d\'une lignée de prêtres vodoun d’Allada, Mahougnon veille sur l’autel de Legba depuis quarante ans. Pour lui, la foi n’est pas une spéculation : c’est un pacte quotidien d’équilibre avec la nature, les carrefours de la vie et le respect de la parole donnée.',
     photoUrl: '/assets/duos/mahougnon_esu_portrait_1791701582891.jpg',
     documentaryId: 'jesus-legba',
-    universeTag: 'Vodunrays',
+    universeTag: 'Vodun Rays',
     quote: '« Legba ne ferme jamais une porte sans avoir déjà placé la clé entre les mains de celui qui écoute. »',
     tree: {
       transmissions: [
@@ -2554,7 +2554,7 @@ export const DUOS: Duo[] = [
     id: 'duo-jesus-legba-01',
     slug: 'duo-jesus-legba-01',
     documentaryId: 'jesus-legba',
-    documentaryTitle: 'Vodunrays ‹ › Amen',
+    documentaryTitle: 'Vodun Rays ‹ › Amen',
     episodeNumber: 'ÉPISODE 01',
     protagonistA: PROTAGONISTS.find(p => p.id === 'dah-zounon') || PROTAGONISTS[2],
     protagonistB: PROTAGONISTS.find(p => p.id === 'pere-matthieu') || PROTAGONISTS[3],
@@ -3086,8 +3086,8 @@ export const BACKOFFICE_APPLICATIONS: BackOfficeApplication[] = [
     candidatePhoto: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
     territory: 'Bénin (Porto-Novo)',
     documentaryId: 'jesus-legba',
-    documentaryTitle: 'Vodunrays ‹ › Amen',
-    universeGroup: 'Vodunrays',
+    documentaryTitle: 'Vodun Rays ‹ › Amen',
+    universeGroup: 'Vodun Rays',
     status: 'CONTROLE_TECHNIQUE',
     submittedDate: '13 Septembre 2026',
     assignedReviewer: 'Équipe Son/Image',
@@ -3128,7 +3128,7 @@ export const BACKOFFICE_APPLICATIONS: BackOfficeApplication[] = [
     candidatePhoto: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
     territory: 'Bénin (Abomey)',
     documentaryId: 'jesus-legba',
-    documentaryTitle: 'Vodunrays ‹ › Amen',
+    documentaryTitle: 'Vodun Rays ‹ › Amen',
     universeGroup: 'Amen',
     status: 'APPROUVEES',
     submittedDate: '28 Août 2026',
@@ -3141,7 +3141,7 @@ export const BACKOFFICE_APPLICATIONS: BackOfficeApplication[] = [
 export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
   {
     seriesId: 'jesus-legba',
-    seriesTitle: 'Vodunrays ‹ › Amen',
+    seriesTitle: 'Vodun Rays ‹ › Amen',
     subtitle: 'Deux traditions. Une même question de foi.',
     description: 'Comment la rencontre de deux géants de la spiritualité béninoise a ouvert une chaîne vivante d\'initiations, tissant des liens inattendus entre couvents vodoun et monastères chrétiens.',
     centralQuestion: 'La foi',

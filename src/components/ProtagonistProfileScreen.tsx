@@ -18,6 +18,7 @@ import { ShareIcon } from './ShareIcon';
 import { PROTAGONISTS, DUOS, DOCUMENTARIES } from '../data/mockData';
 import { ViewScreen } from '../types';
 import { UniverseDimensionPage, DimensionKey } from './UniverseDimensionPage';
+import { ProfilePhotoTvFrame } from './ProfilePhotoTvFrame';
 
 interface ProtagonistProfileScreenProps {
   protagonistId: string;
@@ -210,14 +211,12 @@ export const ProtagonistProfileScreen: React.FC<ProtagonistProfileScreenProps> =
 
           {/* CENTRAL PROTAGONIST PORTRAIT */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center z-10 text-center pointer-events-auto">
-            <div className="w-24 h-24 rounded-full p-1 bg-[#FFFFFF] border-2 border-[#C89B3C]/50 shadow-lg">
-              <img
-                src={protagonist.photoUrl}
-                alt={protagonist.name}
-                referrerPolicy="no-referrer"
-                className="w-full h-full object-cover rounded-full"
-              />
-            </div>
+            <ProfilePhotoTvFrame
+              photoUrl={protagonist.photoUrl}
+              alt={protagonist.name}
+              className="w-24 h-24 sm:w-28 sm:h-28"
+              strokeColor="#1C1917"
+            />
 
             {/* Prénom harmonisé avec les cartes vidéo, sans coupure de lettre */}
             <div className="mt-2 text-center">
@@ -268,14 +267,12 @@ export const ProtagonistProfileScreen: React.FC<ProtagonistProfileScreenProps> =
         <div className="sm:hidden w-full space-y-4 py-2">
           {/* Center Identity */}
           <div className="flex flex-col items-center justify-center text-center">
-            <div className="w-24 h-24 rounded-full p-1 bg-[#FFFFFF] border-2 border-[#C89B3C]/50 shadow-md">
-              <img
-                src={protagonist.photoUrl}
-                alt={protagonist.name}
-                referrerPolicy="no-referrer"
-                className="w-full h-full object-cover rounded-full"
-              />
-            </div>
+            <ProfilePhotoTvFrame
+              photoUrl={protagonist.photoUrl}
+              alt={protagonist.name}
+              className="w-20 h-20 sm:w-24 sm:h-24"
+              strokeColor="#1C1917"
+            />
             <h2 className="font-editorial text-xl sm:text-2xl font-bold text-[#1C1917] tracking-tight leading-tight pb-0.5 mt-2">
               {protagonist.name.split(' ')[0]}
             </h2>

@@ -58,7 +58,7 @@ import {
 import { useAuth } from '../services/authContext';
 import { AuthModal } from './AuthModal';
 import { ShareIcon } from './ShareIcon';
-import { ProfileSoloIcon, TvPlayerIcon } from './YonywoodBrandIcons';
+import { ProfileSoloIcon, TvPlayerIcon, ProfilePhotoTvFrame } from './YonywoodBrandIcons';
 import { OrdersAndContributionsModal } from './OrdersAndContributionsModal';
 import { transactionService } from '../utils/transactionService';
 import { ProfileLineageFrise } from './ProfileLineageFrise';
@@ -1579,12 +1579,20 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
       {/* 1. EN-TÊTE HARMONISÉ EXACTEMENT AU MÊME FORMAT QUE TOUTES LES AUTRES PAGES */}
       {/* ========================================================================= */}
       {showLineageFrise ? (
-        <div className="pb-1.5 pt-1 mb-1.5 flex items-center justify-between shrink-0 h-8 sm:h-9">
-          <div className="relative flex items-center h-full shrink-0">
-            <h1 className="font-editorial text-base sm:text-[18px] font-bold text-[#1C1917] tracking-tight leading-none">
-              Lignée de {profileDisplayName}
-            </h1>
-            <div className="absolute left-0 -bottom-2 w-8 h-0.5 bg-[#A2482B] rounded-full" />
+        <div className="pb-1.5 pt-1 mb-1.5 flex items-center justify-between shrink-0 h-9 sm:h-10">
+          <div className="flex items-center gap-2 sm:gap-2.5 h-full shrink-0">
+            <ProfilePhotoTvFrame 
+              photoUrl={userPhoto}
+              alt={profileDisplayName}
+              className="w-8.5 h-8.5 sm:w-9.5 sm:h-9.5"
+              strokeColor="#1C1917"
+            />
+            <div className="relative flex items-center h-full shrink-0">
+              <h1 className="font-editorial text-base sm:text-[18px] font-bold text-[#1C1917] tracking-tight leading-none">
+                Lignée de {profileDisplayName}
+              </h1>
+              <div className="absolute left-0 -bottom-2 w-8 h-0.5 bg-[#A2482B] rounded-full" />
+            </div>
           </div>
 
           <button
@@ -1595,13 +1603,21 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
           </button>
         </div>
       ) : (
-        <div className="flex items-center justify-between h-8 sm:h-9 shrink-0 gap-2 mb-1.5 sm:mb-2">
-          {/* GAUCHE : Titre standardisé "Profil" avec petit trait terracotta identique à Studio, Entreprises, Productions, Duos */}
-          <div className="relative flex items-center h-full shrink-0">
-            <h1 className="font-editorial text-base sm:text-[18px] font-bold text-[#1C1917] tracking-tight leading-none">
-              Profil
-            </h1>
-            <div className="absolute left-0 -bottom-2 w-8 h-0.5 bg-[#A2482B] rounded-full" />
+        <div className="flex items-center justify-between h-9 sm:h-10 shrink-0 gap-2 mb-1.5 sm:mb-2">
+          {/* GAUCHE : Cadre Télé avec photo de profil & Titre standardisé "Profil" */}
+          <div className="flex items-center gap-2 sm:gap-2.5 h-full shrink-0">
+            <ProfilePhotoTvFrame 
+              photoUrl={userPhoto}
+              alt={profileDisplayName}
+              className="w-8.5 h-8.5 sm:w-9.5 sm:h-9.5"
+              strokeColor="#1C1917"
+            />
+            <div className="relative flex items-center h-full shrink-0">
+              <h1 className="font-editorial text-base sm:text-[18px] font-bold text-[#1C1917] tracking-tight leading-none">
+                {targetProtagonist ? profileDisplayName : 'Profil'}
+              </h1>
+              <div className="absolute left-0 -bottom-2 w-8 h-0.5 bg-[#A2482B] rounded-full" />
+            </div>
           </div>
 
           {/* DROITE : Boutons d'action adaptés (Paramètres & Partager) */}
@@ -3883,10 +3899,11 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
           <div className="bg-white max-w-md w-full rounded-3xl p-5 sm:p-6 shadow-2xl border border-stone-200 space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-stone-200">
               <div className="flex items-center gap-3">
-                <img
-                  src={userPhoto}
+                <ProfilePhotoTvFrame
+                  photoUrl={userPhoto}
                   alt={profileDisplayName}
-                  className="w-10 h-10 rounded-full object-cover border border-[#A2482B]/30"
+                  className="w-11 h-11"
+                  strokeColor="#A2482B"
                 />
                 <div>
                   <h3 className="font-editorial text-base sm:text-lg font-bold text-[#1C1917]">
@@ -3984,8 +4001,13 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
         <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in">
           <div className="bg-white max-w-sm w-full rounded-3xl p-6 shadow-2xl border border-stone-200 space-y-4">
             <div className="flex items-center justify-between pb-2 border-b border-stone-200">
-              <div className="flex items-center gap-2">
-                <User className="w-5 h-5 text-[#C89B3C]" />
+              <div className="flex items-center gap-2.5">
+                <ProfilePhotoTvFrame
+                  photoUrl={profileEditPhoto || userPhoto}
+                  alt={profileEditName || profileDisplayName}
+                  className="w-10 h-10"
+                  strokeColor="#A2482B"
+                />
                 <h3 className="font-editorial text-base font-bold text-[#1C1917]">Modifier mon profil</h3>
               </div>
               <button 

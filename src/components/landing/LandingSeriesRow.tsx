@@ -46,9 +46,9 @@ const OFFICIAL_SERIES: SeriesItem[] = [
   },
   {
     id: 'jesus-legba',
-    title: 'Vodunrays ‹ › Amen',
+    title: 'Vodun Rays ‹ › Amen',
     posterUrl: '/assets/posters/Esu < > Jesus.jpg',
-    universes: ['Vodunrays', 'Amen'],
+    universes: ['Vodun Rays', 'Amen'],
     territories: 'Bénin (Ouidah, Allada)',
     tagline: 'Deux traditions spirituelles face au mystère et au destin.',
     description: 'Dévots de la tradition ancestrale et fidèles de la foi révélée dialoguent d’égal à égal face aux grands mystères humains : l’épreuve, le pardon et la transcendance.',

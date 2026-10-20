@@ -86,14 +86,16 @@ export const LandingScreen: React.FC<LandingScreenProps> = ({ onNavigate }) => {
             </p>
           </div>
 
-          {/* Droite : Bouton Participer & Connexion */}
+          {/* Droite : Bouton Participer & Connexion (masqué sur l'onglet productions / coproduction) */}
           <div className="flex items-center gap-2 sm:gap-3">
-            <button
-              onClick={() => onNavigate({ type: 'participate' })}
-              className="px-3.5 sm:px-4.5 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-bold text-white bg-[#A2482B] hover:bg-[#8A3B22] shadow-xs hover:shadow-sm transition-all cursor-pointer flex items-center justify-center active:scale-95 whitespace-nowrap hover:scale-105"
-            >
-              <span>Co-construire Yonywood</span>
-            </button>
+            {activeDemoTab !== 'productions' && (
+              <button
+                onClick={() => onNavigate({ type: 'participate' })}
+                className="px-3.5 sm:px-4.5 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-bold text-white bg-[#A2482B] hover:bg-[#8A3B22] shadow-xs hover:shadow-sm transition-all cursor-pointer flex items-center justify-center active:scale-95 whitespace-nowrap hover:scale-105"
+              >
+                <span>Co-construire Yonywood</span>
+              </button>
+            )}
           </div>
 
         </div>

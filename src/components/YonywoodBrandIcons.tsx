@@ -430,15 +430,15 @@ export const DuocumentairesTvIcon: React.FC<IconProps> = ({
 
 /**
  * ProfileSoloIcon:
- * Symbole « Profil / Protagoniste Solo » (Piste 1) :
- * Écran-tête singulier dans le style exact du logo officiel YonyWood et en miroir
- * direct du DuocumentairesTvIcon. Boîtier rétro compact, deux yeux expressifs
- * et les deux pieds évasés vers l'extérieur à la base.
+ * Symbole officiel « Profil » du projet :
+ * Écran-tête singulier en forme de télé retournée formant un visage
+ * (rectangle arrondi, deux points pour les yeux, deux petits pieds vintage évasés vers l'extérieur).
+ * Utilisée dans la barre de navigation et sur les cartes vidéo pour renvoyer vers le profil.
+ * Ne contient JAMAIS de photo.
  */
-export const ProfileSoloIcon: React.FC<IconProps & { avatarUrl?: string }> = ({ 
+export const ProfileSoloIcon: React.FC<IconProps> = ({ 
   className = 'w-5 h-5',
-  strokeWidth = 1.55,
-  avatarUrl
+  strokeWidth = 1.55 
 }) => {
   return (
     <svg 
@@ -451,39 +451,21 @@ export const ProfileSoloIcon: React.FC<IconProps & { avatarUrl?: string }> = ({
       className={className}
       aria-hidden="true"
     >
-      <defs>
-        <clipPath id="profile-solo-screen-clip">
-          <rect x="6.8" y="6" width="10.4" height="9.5" rx="1.8" />
-        </clipPath>
-      </defs>
-
       {/* Boîtier / tête rétro compacte du protagoniste solo */}
       <rect x="6.25" y="5.5" width="11.5" height="10.5" rx="2.4" />
 
-      {avatarUrl ? (
-        <image 
-          href={avatarUrl}
-          x="6.8"
-          y="6"
-          width="10.4"
-          height="9.5"
-          preserveAspectRatio="xMidYMid slice"
-          clipPath="url(#profile-solo-screen-clip)"
-        />
-      ) : (
-        <>
-          {/* Regard / yeux du protagoniste singulier */}
-          <circle cx="10.3" cy="10.75" r="0.9" fill="currentColor" stroke="none" />
-          <circle cx="13.7" cy="10.75" r="0.9" fill="currentColor" stroke="none" />
-        </>
-      )}
+      {/* Regard / yeux du protagoniste singulier (2 points nets) */}
+      <circle cx="10.3" cy="10.75" r="0.9" fill="currentColor" stroke="none" />
+      <circle cx="13.7" cy="10.75" r="0.9" fill="currentColor" stroke="none" />
 
-      {/* Piétement vintage évasé vers l'extérieur (les deux pieds) */}
+      {/* Piétement vintage évasé vers l'extérieur (les deux petits pieds) */}
       <path d="M 9.2 16 L 7.4 19.8" />
       <path d="M 14.8 16 L 16.6 19.8" />
     </svg>
   );
 };
+
+export { ProfilePhotoTvFrame } from './ProfilePhotoTvFrame';
 
 /**
  * TvPlayerIcon:
