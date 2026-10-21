@@ -336,14 +336,14 @@ export const UnifiedVideoCardOverlay: React.FC<UnifiedVideoCardOverlayProps> = (
       </div>
 
       {/* =================================================================== */}
-      {/* BAS GAUCHE : PRÉNOM ET NOM HARMONISÉS, POLICE LÉGÈREMENT RÉDUITE    */}
+      {/* BAS GAUCHE : PRÉNOM EN ENTIER (SANS TRONCATURE PAR POINTS DE SUSPENSION) */}
       {/* =================================================================== */}
-      <div className="absolute bottom-3 sm:bottom-3.5 left-3 sm:left-3.5 z-20 pointer-events-auto pr-12 max-w-[75%]">
-        <h3 className="font-editorial text-[15px] sm:text-[17px] md:text-[18px] font-bold text-white tracking-[0.08em] sm:tracking-[0.1em] leading-snug drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] truncate">
+      <div className="absolute bottom-2.5 sm:bottom-3.5 left-2.5 sm:left-3.5 right-10 sm:right-12 z-20 pointer-events-auto">
+        <h3 className="font-editorial text-[13px] min-[380px]:text-[14px] sm:text-[16px] md:text-[18px] font-bold text-white tracking-tight sm:tracking-normal leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] whitespace-normal break-words">
           {preserveFullName ? displayName : cleanDisplayName}
         </h3>
         {roleSubtitle && (
-          <p className="text-[11px] sm:text-xs text-stone-300 font-medium tracking-wide drop-shadow-md truncate mt-0.5">
+          <p className="text-[10px] sm:text-xs text-stone-300 font-medium tracking-wide drop-shadow-md truncate mt-0.5">
             {roleSubtitle}
           </p>
         )}

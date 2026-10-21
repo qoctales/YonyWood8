@@ -494,7 +494,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       if (isDraggingRef.current) return;
                       togglePlayA();
                     }}
-                    className="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl border border-stone-200/80 flex flex-col justify-between aspect-[9/16] w-[min(calc((100vw-28px)/2),calc((100dvh-230px)*9/16))] max-w-[175px] max-h-[min(480px,calc(100dvh-230px))] sm:max-w-none sm:max-h-none sm:w-[min(280px,calc((100dvh-210px)*9/16))] sm:h-[min(520px,calc(100dvh-210px))] lg:w-[min(310px,calc((100dvh-200px)*9/16))] lg:h-[min(550px,calc(100dvh-200px))] shrink-0 transition-all duration-300 cursor-pointer select-none"
+                    className="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl border border-stone-200/80 flex flex-col justify-between aspect-[9/16] w-[min(calc((100vw-24px)/2),calc((100dvh-230px)*9/16))] max-w-[185px] max-h-[min(480px,calc(100dvh-230px))] sm:max-w-none sm:max-h-none sm:w-[min(280px,calc((100dvh-210px)*9/16))] sm:h-[min(520px,calc(100dvh-210px))] lg:w-[min(310px,calc((100dvh-200px)*9/16))] lg:h-[min(550px,calc(100dvh-200px))] shrink-0 transition-all duration-300 cursor-pointer select-none"
                   >
                     {/* Background Media: Video when isPlayingA, otherwise Poster Photo */}
                     {isPlayingA ? (
@@ -559,7 +559,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       if (isDraggingRef.current) return;
                       togglePlayB();
                     }}
-                    className="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl border border-stone-200/80 flex flex-col justify-between aspect-[9/16] w-[min(calc((100vw-28px)/2),calc((100dvh-230px)*9/16))] max-w-[175px] max-h-[min(480px,calc(100dvh-230px))] sm:max-w-none sm:max-h-none sm:w-[min(280px,calc((100dvh-210px)*9/16))] sm:h-[min(520px,calc(100dvh-210px))] lg:w-[min(310px,calc((100dvh-200px)*9/16))] lg:h-[min(550px,calc(100dvh-200px))] shrink-0 transition-all duration-300 cursor-pointer select-none"
+                    className="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl border border-stone-200/80 flex flex-col justify-between aspect-[9/16] w-[min(calc((100vw-24px)/2),calc((100dvh-230px)*9/16))] max-w-[185px] max-h-[min(480px,calc(100dvh-230px))] sm:max-w-none sm:max-h-none sm:w-[min(280px,calc((100dvh-210px)*9/16))] sm:h-[min(520px,calc(100dvh-210px))] lg:w-[min(310px,calc((100dvh-200px)*9/16))] lg:h-[min(550px,calc(100dvh-200px))] shrink-0 transition-all duration-300 cursor-pointer select-none"
                   >
                     {/* Background Media: Video when isPlayingB, otherwise Poster Photo */}
                     {isPlayingB ? (
@@ -853,7 +853,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       }}
                       title={`Découvrir le profil de ${pA.name}`}
                     >
-                      <h3 className="font-editorial text-[15px] sm:text-base font-bold text-white tracking-wider leading-snug pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors truncate">
+                      <h3 className="font-editorial text-[14px] sm:text-base font-bold text-white tracking-normal leading-tight pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors whitespace-normal break-words">
                         {pA.name.split(' ')[0]}
                       </h3>
                     </div>
@@ -1086,7 +1086,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       }}
                       title={`Découvrir le profil de ${pB.name}`}
                     >
-                      <h3 className="font-editorial text-[15px] sm:text-base font-bold text-white tracking-wider leading-snug pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors truncate">
+                      <h3 className="font-editorial text-[14px] sm:text-base font-bold text-white tracking-normal leading-tight pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors whitespace-normal break-words">
                         {pB.name.split(' ')[0]}
                       </h3>
                     </div>
