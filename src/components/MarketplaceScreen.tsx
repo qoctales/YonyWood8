@@ -239,16 +239,16 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
   const [successToast, setSuccessToast] = useState<string | null>(null);
   const { currentUser } = useAuth();
 
-  // Jauge en temps réel sur 256 parts par série
+  // Jauge en temps réel sur 256 parts par série (~70% parts souscrites par défaut)
   const [remainingSharesMap, setRemainingSharesMap] = useState<Record<string, number>>({
-    'jesus-legba': 218,
-    'finagnon-qosqorico': 194,
-    'blacks-one-beyond-eve': 230,
-    'dixeat-fiat-luxe': 202,
-    'investors-builders': 186,
-    'other-eyes-sixth-sense': 224,
-    'coaching-unlimited': 210,
-    'focus-phd': 198
+    'jesus-legba': 77, // 179 souscrites (70% — 77 restantes)
+    'finagnon-qosqorico': 74, // 182 souscrites (71%)
+    'blacks-one-beyond-eve': 80, // 176 souscrites (69%)
+    'dixeat-fiat-luxe': 72, // 184 souscrites (72%)
+    'investors-builders': 75, // 181 souscrites (71%)
+    'other-eyes-sixth-sense': 77, // 179 souscrites (70%)
+    'coaching-unlimited': 79, // 177 souscrites (69%)
+    'focus-phd': 76 // 180 souscrites (70%)
   });
 
   // Chargement en temps réel des parts restantes depuis Firestore
@@ -258,7 +258,7 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
       const updated: Record<string, number> = {};
       for (const prod of PRODUCTIONS) {
         try {
-          const rem = await getSeriesRemainingShares(prod.id, 32);
+          const rem = await getSeriesRemainingShares(prod.id, 179);
           updated[prod.id] = rem;
         } catch {
           // garder la valeur de repli
@@ -538,7 +538,7 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
 
                 {/* BAS : JAUGE EN TEMPS RÉEL SUR 256 PARTS & BOUTON D'ACQUISITION */}
                 {(() => {
-                  const remaining = remainingSharesMap[currentProd.id] ?? 218;
+                  const remaining = remainingSharesMap[currentProd.id] ?? 77;
                   const taken = Math.max(0, 256 - remaining);
                   const percent = Math.min(100, Math.round((taken / 256) * 100));
 

@@ -85,7 +85,7 @@ export async function recordSharePurchase(data: Omit<SharePurchaseRecord, 'id' |
 }
 
 // 2. Calcul du nombre de parts restantes sur 256 par série
-export async function getSeriesRemainingShares(seriesId: string, initialTaken: number = 32): Promise<number> {
+export async function getSeriesRemainingShares(seriesId: string, initialTaken: number = 179): Promise<number> {
   const maxShares = 256;
   try {
     const q = query(collection(db, 'share_purchases'), where('seriesId', '==', seriesId));

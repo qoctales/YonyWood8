@@ -18,13 +18,13 @@ import marquesLuxeImg from '../assets/images/marques_luxe_1792086431681.jpg';
 import marquesAlimentationImg from '../assets/images/marques_alimentation_1792086435220.jpg';
 import marquesFinanceImg from '../assets/images/marques_finance_1792086436922.jpg';
 import marquesTechImg from '../assets/images/marques_tech_1792086434196.jpg';
-import studioOrganisationsTeamImg from '../assets/images/studio_organisations_team_1792598184063.jpg';
-import koffiTisserandImg from '../assets/images/koffi_tisserand_benin_1789590473954.jpg';
 import recruitVideographerImg from '../assets/images/recruit_videographer_1791825865262.jpg';
 import studioOrgaOriginesImg from '../assets/images/studio_orga_origines_1792608957920.jpg';
 import studioOrgaValeursImg from '../assets/images/studio_orga_valeurs_1792608959843.jpg';
 import studioOrgaQuotidienImg from '../assets/images/studio_orga_quotidien_1792608958971.jpg';
 import studioOrgaEpreuvesImg from '../assets/images/studio_orga_epreuves_1792608979150.jpg';
+import studioOrgaRencontresImg from '../assets/images/orga_rencontres_afro_1792611454422.jpg';
+import studioOrgaTransmissionImg from '../assets/images/orga_transm_afro_1792611469008.jpg';
 import studioSoiParcoursImg from '../assets/images/studio_soi_parcours_1792608978314.jpg';
 
 export interface StudioPillarItem {
@@ -218,7 +218,7 @@ export const STUDIO_PILLARS: StudioPillar[] = [
   // =========================================================================
   {
     id: 'organisations',
-    title: 'Organisation',
+    title: 'Organisations',
     subtitle: 'Les 8 thématiques vivantes au cœur des collectifs et entreprises',
     question: 'Quel défi collectif et quelle fierté humaine soudent votre organisation de l’intérieur ?',
     posterUrl: pillarOrgImg,
@@ -261,7 +261,7 @@ export const STUDIO_PILLARS: StudioPillar[] = [
         title: 'Rencontres',
         subtitle: 'La personne qui a changé quelque chose.',
         question: 'Quelle rencontre décisive a fait basculer le destin de votre entreprise ?',
-        posterUrl: studioOrganisationsTeamImg,
+        posterUrl: studioOrgaRencontresImg,
         videoUrl: STOCK_VIDEOS[4]
       },
       {
@@ -277,7 +277,7 @@ export const STUDIO_PILLARS: StudioPillar[] = [
         title: 'Transmission',
         subtitle: 'Ce qu’on apprend, ce qu’on lègue, la relève.',
         question: 'Quel savoir précieux transmettez-vous à la nouvelle génération pour assurer la suite ?',
-        posterUrl: koffiTisserandImg,
+        posterUrl: studioOrgaTransmissionImg,
         videoUrl: STOCK_VIDEOS[1]
       },
       {
