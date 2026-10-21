@@ -141,64 +141,64 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
     >
       
       {/* =========================================================== */}
-      {/* EN-TÊTE HARMONISÉ : TITRE PORTRAITS & BASCULE CERCLE <-> SWIPE */}
+      {/* EN-TÊTE HARMONISÉ : TITRE LUMIÈRE & BASCULE (MODE SWIPE UNIQUEMENT) */}
+      {/* (En mode Cercle, PortraitsCircleView intègre son propre en-tête unique pour éviter tout dédoublement) */}
       {/* =========================================================== */}
-      {selectedCompanyForSpace ? (
+      {viewMode === 'swipe' && (
         <div className="flex items-center justify-between h-8 sm:h-9 shrink-0 gap-2 mb-1.5 sm:mb-2">
-          <button
-            onClick={() => {
-              setSelectedCompanyForSpace(null);
-              setIsStakeholderPlaying(false);
-            }}
-            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-stone-100 hover:bg-[#A2482B] text-stone-700 hover:text-white border border-stone-200 transition-all text-xs font-semibold cursor-pointer shadow-xs group"
-          >
-            <ChevronLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
-            <span>Entreprises</span>
-          </button>
+          {selectedCompanyForSpace ? (
+            <div className="flex items-center gap-1.5 sm:gap-2 h-full">
+              <button
+                onClick={() => {
+                  setSelectedCompanyForSpace(null);
+                  setIsStakeholderPlaying(false);
+                }}
+                className="font-normal text-stone-500 hover:text-stone-900 transition-colors cursor-pointer flex items-center gap-1 group py-1"
+                title="Revenir à Lumière"
+              >
+                <ChevronLeft className="w-4 h-4 text-stone-400 group-hover:text-stone-700 group-hover:-translate-x-0.5 transition-transform" />
+                <span>Lumière</span>
+              </button>
+              <span className="text-stone-300 font-light text-xs" aria-hidden="true">
+                ›
+              </span>
+              <div className="relative flex items-center h-full shrink-0">
+                <div className="relative inline-flex items-center">
+                  <span
+                    className="font-editorial text-sm sm:text-base font-bold text-[#1C1917] tracking-tight truncate max-w-[150px] sm:max-w-[260px]"
+                    aria-current="page"
+                  >
+                    {selectedCompanyForSpace.companyName}
+                  </span>
+                  <div className="absolute left-0 -bottom-1.5 sm:-bottom-2 w-8 h-0.5 bg-[#A2482B] rounded-full" />
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="relative flex items-center h-full shrink-0">
+              <div className="relative inline-flex items-center">
+                <h1 className="font-editorial text-base sm:text-[18px] font-bold text-[#1C1917] tracking-tight leading-none">
+                  Lumière
+                </h1>
+                <div className="absolute left-0 -bottom-1.5 sm:-bottom-2 w-8 h-0.5 bg-[#A2482B] rounded-full" />
+              </div>
+            </div>
+          )}
 
-          <div className="relative flex items-center h-full shrink-0">
-            <h2 className="font-editorial text-sm sm:text-base font-bold text-[#1C1917] tracking-wider">
-              {selectedCompanyForSpace.companyName}
-            </h2>
-          </div>
-        </div>
-      ) : (
-        <div className="flex items-center justify-between h-8 sm:h-9 shrink-0 gap-2 mb-1.5 sm:mb-2">
-          <div className="relative flex items-center h-full shrink-0">
-            <h1 className="font-editorial text-base sm:text-[18px] font-bold text-[#1C1917] tracking-tight leading-none">
-              Portraits
-            </h1>
-          </div>
-
-          {/* Bascule Mode Cercle <-> Mode Swipe avec son noble celestialAudio */}
+          {/* Bascule vers Mode Cercle avec son noble celestialAudio */}
           <div className="flex items-center gap-1.5 shrink-0">
-            {viewMode === 'circle' ? (
-              <button
-                id="btn-toggle-portraits-swipe"
-                onClick={() => {
-                  setViewMode('swipe');
-                  celestialAudio.playOrbSelect();
-                }}
-                className="flex items-center gap-1.5 h-6.5 sm:h-7 px-3 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-700 hover:text-stone-900 border border-stone-200/90 text-[10.5px] sm:text-[11px] font-semibold transition-all cursor-pointer shadow-2xs shrink-0 active:scale-95"
-                title="Passer en mode Swipe"
-              >
-                <Layers className="w-3 h-3 text-[#A2482B]" />
-                <span>Swipe</span>
-              </button>
-            ) : (
-              <button
-                id="btn-toggle-portraits-circle"
-                onClick={() => {
-                  setViewMode('circle');
-                  celestialAudio.playOrbSelect();
-                }}
-                className="flex items-center gap-1.5 h-6.5 sm:h-7 px-3 rounded-full bg-[#A2482B] hover:bg-[#8A3B22] text-white text-[10.5px] sm:text-[11px] font-semibold transition-all cursor-pointer shadow-2xs shrink-0 active:scale-95"
-                title="Revenir au mode Cercle"
-              >
-                <LayoutGrid className="w-3 h-3 text-white" />
-                <span>Cercle</span>
-              </button>
-            )}
+            <button
+              id="btn-toggle-portraits-circle"
+              onClick={() => {
+                setViewMode('circle');
+                celestialAudio.playOrbSelect();
+              }}
+              className="flex items-center gap-1.5 h-6.5 sm:h-7 px-3 rounded-full bg-[#A2482B] hover:bg-[#8A3B22] text-white text-[10.5px] sm:text-[11px] font-semibold transition-all cursor-pointer shadow-2xs shrink-0 active:scale-95"
+              title="Revenir au mode Cercle"
+            >
+              <LayoutGrid className="w-3 h-3 text-white" />
+              <span>Cercle</span>
+            </button>
           </div>
         </div>
       )}
@@ -213,6 +213,20 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
             selectedCompanyId={selectedCompanyForSpace?.id}
             onSelectCompany={(org) => setSelectedCompanyForSpace(org)}
             onNavigate={onNavigate}
+            topRightAction={
+              <button
+                id="btn-toggle-portraits-swipe"
+                onClick={() => {
+                  setViewMode('swipe');
+                  celestialAudio.playOrbSelect();
+                }}
+                className="flex items-center gap-1.5 h-6.5 sm:h-7 px-3 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-700 hover:text-stone-900 border border-stone-200/90 text-[10.5px] sm:text-[11px] font-semibold transition-all cursor-pointer shadow-2xs shrink-0 active:scale-95"
+                title="Passer en mode Swipe"
+              >
+                <Layers className="w-3 h-3 text-[#A2482B]" />
+                <span>Swipe</span>
+              </button>
+            }
           />
         </div>
       ) : (

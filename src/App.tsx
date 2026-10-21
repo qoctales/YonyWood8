@@ -31,11 +31,94 @@ import { CompanyHeritageScreen } from './components/CompanyHeritageScreen';
 import { ParticipateScreen } from './components/ParticipateScreen';
 import { io } from 'socket.io-client';
 
+// Résolution et redirection permanente des routes d'adresses internes
+const resolveScreenFromPath = (): { screen: ViewScreen | null; redirectFrom?: string; redirectTo?: string } => {
+  if (typeof window === 'undefined') return { screen: null };
+  const path = window.location.pathname.toLowerCase().replace(/\/+$/, '');
+  
+  // Redirections permanentes des anciennes adresses vers les nouvelles
+  if (path === '/portraits') {
+    return { screen: { type: 'enterprise' }, redirectFrom: '/portraits', redirectTo: '/lumiere' };
+  }
+  if (path === '/perspectives') {
+    return { screen: { type: 'duo_feed' }, redirectFrom: '/perspectives', redirectTo: '/duo' };
+  }
+  if (path === '/heritages') {
+    return { screen: { type: 'home' }, redirectFrom: '/heritages', redirectTo: '/heritage' };
+  }
+
+  // Nouvelles adresses officielles
+  if (path === '/lumiere') {
+    return { screen: { type: 'enterprise' } };
+  }
+  if (path === '/duo') {
+    return { screen: { type: 'duo_feed' } };
+  }
+  if (path === '/heritage') {
+    return { screen: { type: 'home' } };
+  }
+  if (path === '/studio') {
+    return { screen: { type: 'submit_story' } };
+  }
+  if (path === '/production') {
+    return { screen: { type: 'marketplace' } };
+  }
+  if (path === '/profil') {
+    return { screen: { type: 'profile' } };
+  }
+  if (path === '/co-construction' || path === '/participer') {
+    return { screen: { type: 'participate' } };
+  }
+
+  return { screen: null };
+};
+
+const getScreenRouteInfo = (screen: ViewScreen): { path: string; title: string } => {
+  switch (screen.type) {
+    case 'home':
+    case 'matrix_view':
+    case 'documentaries':
+    case 'documentary_detail':
+      return { path: '/heritage', title: 'Héritage — YonyWood' };
+    case 'duo_feed':
+    case 'duo_detail':
+    case 'landing':
+      return { path: '/duo', title: 'Duo — YonyWood' };
+    case 'enterprise':
+      return { path: '/lumiere', title: 'Lumière — YonyWood' };
+    case 'submit_story':
+    case 'request_videographer':
+      return { path: '/studio', title: 'Studio — YonyWood' };
+    case 'marketplace':
+      return { path: '/production', title: 'Production — YonyWood' };
+    case 'profile':
+    case 'settings':
+    case 'portfolio':
+    case 'transactions':
+    case 'protagonist_profile':
+    case 'my_forest':
+    case 'lineage':
+    case 'messaging':
+    case 'editorial_backoffice':
+      return { path: '/profil', title: 'Profil — YonyWood' };
+    case 'participate':
+      return { path: '/co-construction', title: 'Co-construction — YonyWood' };
+    default:
+      return { path: '/duo', title: 'Duo — YonyWood' };
+  }
+};
+
 export default function App() {
-  // Immersion directe sans blocage : accès immédiat aux Duos
+  // Immersion directe : reconnaissance de la route et redirection si ancienne adresse
   const [currentScreen, setCurrentScreen] = useState<ViewScreen>(() => {
+    const fromPath = resolveScreenFromPath();
+    if (fromPath.redirectFrom && fromPath.redirectTo && typeof window !== 'undefined') {
+      window.history.replaceState({ screen: fromPath.screen }, '', fromPath.redirectTo + window.location.search);
+    }
+    if (fromPath.screen) {
+      return fromPath.screen;
+    }
     try {
-      const savedUser = localStorage.getItem('yonywood_current_user');
       const savedScreen = localStorage.getItem('yonywood_last_screen');
       if (savedScreen) {
         const parsed = JSON.parse(savedScreen);
@@ -81,9 +164,39 @@ export default function App() {
     }
   };
 
-  // Scroll to top and persist screen on navigation change
+  // Écoute de l'historique du navigateur (boutons Précédent / Suivant) avec redirections permanentes
+  useEffect(() => {
+    const handlePopState = () => {
+      const { screen, redirectFrom, redirectTo } = resolveScreenFromPath();
+      if (redirectFrom && redirectTo) {
+        window.history.replaceState({ screen }, '', redirectTo + window.location.search);
+      }
+      if (screen) {
+        setCurrentScreen(screen);
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  // Synchronisation permanente de l'URL, de la balise title et du défilement
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    const { path, title } = getScreenRouteInfo(currentScreen);
+    document.title = title;
+
+    if (typeof window !== 'undefined') {
+      const currentPath = window.location.pathname.toLowerCase().replace(/\/+$/, '');
+      const { redirectFrom, redirectTo } = resolveScreenFromPath();
+      if (redirectFrom && redirectTo) {
+        window.history.replaceState({ screen: currentScreen }, '', redirectTo + window.location.search);
+      } else if (currentPath !== path && currentPath !== '') {
+        window.history.pushState({ screen: currentScreen }, '', path + window.location.search);
+      }
+    }
+
     try {
       if (currentScreen.type !== 'video_player') {
         localStorage.setItem('yonywood_last_screen', JSON.stringify(currentScreen));
@@ -346,7 +459,7 @@ export default function App() {
         )}
       </main>
 
-      {/* Menu de navigation principal : Studio, Héritages, Duocumentaires, Productions, Entreprises, Profil */}
+      {/* Menu de navigation principal : Studio, Héritage, Duo, Lumière, Production, Profil */}
       {!isVideoPlayer && (
         <BottomMenu 
           currentScreen={currentScreen} 

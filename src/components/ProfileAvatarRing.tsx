@@ -35,8 +35,8 @@ export const ProfileAvatarRing: React.FC<ProfileAvatarRingProps> = ({
         </clipPath>
       </defs>
 
-      {/* Anneau noir extérieur */}
-      <circle cx="100" cy="100" r="98" fill="#0E0C0A" />
+      {/* Anneau terracotta extérieur signature YonyWood */}
+      <circle cx="100" cy="100" r="98" fill="#A2482B" />
 
       {/* Emplacement de la photo découpée */}
       <image

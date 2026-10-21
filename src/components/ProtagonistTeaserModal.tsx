@@ -81,7 +81,7 @@ export const ProtagonistTeaserModal: React.FC<ProtagonistTeaserModalProps> = ({
       className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 animate-in fade-in duration-200"
       onClick={onClose}
     >
-      {/* Container vertical 9:16 standardisé (même gabarit que Matrice Héritage & Portraits) */}
+      {/* Container vertical 9:16 standardisé (même gabarit que Matrice Héritage & Lumière) */}
       <div 
         className="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl border border-stone-200/40 flex flex-col justify-between 
           aspect-[9/16] 

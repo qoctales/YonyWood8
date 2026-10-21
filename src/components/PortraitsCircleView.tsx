@@ -14,6 +14,7 @@ interface PortraitsCircleViewProps {
   selectedCompanyId?: string | null;
   onSelectCompany?: (company: CompanyEntity | null) => void;
   onNavigate?: (screen: ViewScreen) => void;
+  topRightAction?: React.ReactNode;
 }
 
 export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
@@ -21,6 +22,7 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
   selectedCompanyId,
   onSelectCompany,
   onNavigate,
+  topRightAction,
 }) => {
   // Détermination de l'état initial selon selectedCompanyId
   const initialIndex = useMemo(() => {
@@ -265,10 +267,12 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
         <nav aria-label="Fil d’Ariane" className="flex items-center gap-2 text-sm sm:text-base h-full">
           {level === 0 ? (
             <div className="relative flex items-center h-full shrink-0">
-              <h1 className="font-editorial text-base sm:text-[18px] font-bold text-[#1C1917] tracking-tight leading-none">
-                Portraits
-              </h1>
-              <div className="absolute left-0 -bottom-2 w-8 h-0.5 bg-[#A2482B] rounded-full" />
+              <div className="relative inline-flex items-center">
+                <h1 className="font-editorial text-base sm:text-[18px] font-bold text-[#1C1917] tracking-tight leading-none">
+                  Lumière
+                </h1>
+                <div className="absolute left-0 -bottom-1.5 sm:-bottom-2 w-8 h-0.5 bg-[#A2482B] rounded-full" />
+              </div>
             </div>
           ) : (
             <div className="flex items-center gap-1.5 sm:gap-2 h-full">
@@ -276,29 +280,32 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
                 type="button"
                 onClick={exit}
                 className="font-normal text-stone-500 hover:text-stone-900 transition-colors cursor-pointer flex items-center gap-1 group py-1"
-                title="Revenir au soleil central et à la constellation des 16 organisations"
+                title="Revenir à Lumière (constellation des 16 organisations)"
               >
                 <ChevronLeft className="w-4 h-4 text-stone-400 group-hover:text-stone-700 group-hover:-translate-x-0.5 transition-transform" />
-                <span>Portraits</span>
+                <span>Lumière</span>
               </button>
               <span className="text-stone-300 font-light text-xs" aria-hidden="true">
                 ›
               </span>
               <div className="relative flex items-center h-full shrink-0">
-                <span
-                  className="font-editorial text-sm sm:text-base font-bold text-[#1C1917] tracking-tight truncate max-w-[150px] sm:max-w-[260px]"
-                  aria-current="page"
-                >
-                  {curOrg?.companyName}
-                </span>
-                <div className="absolute left-0 -bottom-2 w-8 h-0.5 bg-[#A2482B] rounded-full" />
+                <div className="relative inline-flex items-center">
+                  <span
+                    className="font-editorial text-sm sm:text-base font-bold text-[#1C1917] tracking-tight truncate max-w-[150px] sm:max-w-[260px]"
+                    aria-current="page"
+                  >
+                    {curOrg?.companyName}
+                  </span>
+                  <div className="absolute left-0 -bottom-1.5 sm:-bottom-2 w-8 h-0.5 bg-[#A2482B] rounded-full" />
+                </div>
               </div>
             </div>
           )}
         </nav>
 
-        {/* Droite : Sélecteur de volets + Bouton clair de retour au soleil central */}
+        {/* Droite : Bascule externe (Swipe) + Sélecteur de volets + Bouton clair de retour au soleil central */}
         <div className="flex items-center gap-2">
+          {topRightAction}
           {level === 1 && totalBatches > 1 && (
             <button
               type="button"
@@ -643,7 +650,7 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
               isOpen={isResonanceOpen}
               onClose={() => setIsResonanceOpen(false)}
               storyId={`stakeholder-${activeStakeholderModal.id}`}
-              topicId={curOrg?.companyName || 'portraits'}
+              topicId={curOrg?.companyName || 'lumiere'}
               personName={activeStakeholderModal.name}
               initialPercentage={resonancePct}
               onRatingSubmitted={(pct) => setResonancePct(pct)}

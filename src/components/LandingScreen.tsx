@@ -45,9 +45,9 @@ export const LandingScreen: React.FC<LandingScreenProps> = ({ onNavigate }) => {
 
   const navItems: { id: DemoTabId; label: string; icon: any; screenId: string }[] = [
     { id: 'studio', label: 'Studio', icon: DirectorChairIcon, screenId: 'menu-demo-studio' },
-    { id: 'heritages', label: 'Héritages', icon: Film, screenId: 'menu-demo-heritages' },
-    { id: 'duos', label: 'Perspectives', icon: DuocumentairesTvIcon, screenId: 'menu-demo-perspectives' },
-    { id: 'entreprise', label: 'Portraits', icon: PortraitsViseurIcon, screenId: 'menu-demo-portraits' },
+    { id: 'heritages', label: 'Héritage', icon: Film, screenId: 'menu-demo-heritage' },
+    { id: 'duos', label: 'Duo', icon: DuocumentairesTvIcon, screenId: 'menu-demo-duo' },
+    { id: 'entreprise', label: 'Lumière', icon: PortraitsViseurIcon, screenId: 'menu-demo-lumiere' },
     { id: 'productions', label: 'Production', icon: Clapperboard, screenId: 'menu-demo-production' },
     { id: 'profil', label: 'Profil', icon: ProfileSoloIcon, screenId: 'menu-demo-profil' },
   ];

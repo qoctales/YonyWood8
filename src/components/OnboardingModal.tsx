@@ -42,8 +42,8 @@ const SLIDES: SlideData[] = [
     bgImage: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1400&q=80',
     features: [
       'Documentaires en chapitres immersifs',
-      'Portraits authentiques de passeurs de savoirs',
-      'Archives visuelles et récits vivants'
+      'Récits vivants de passeurs de savoirs',
+      'Archives visuelles et mémoires partagées'
     ]
   },
   {

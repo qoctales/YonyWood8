@@ -19,9 +19,9 @@ interface BottomMenuProps {
 export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigate }) => {
   // Déterminer l'élément actif selon l'écran en cours
   const isStudioActive = currentScreen.type === 'submit_story' || currentScreen.type === 'request_videographer';
-  const isHeritagesActive = currentScreen.type === 'home' || currentScreen.type === 'matrix_view' || currentScreen.type === 'documentaries' || currentScreen.type === 'documentary_detail';
-  const isPerspectivesActive = currentScreen.type === 'duo_feed' || currentScreen.type === 'duo_detail' || currentScreen.type === 'landing';
-  const isPortraitsActive = currentScreen.type === 'enterprise';
+  const isHeritageActive = currentScreen.type === 'home' || currentScreen.type === 'matrix_view' || currentScreen.type === 'documentaries' || currentScreen.type === 'documentary_detail';
+  const isDuoActive = currentScreen.type === 'duo_feed' || currentScreen.type === 'duo_detail' || currentScreen.type === 'landing';
+  const isLumiereActive = currentScreen.type === 'enterprise';
   const isProductionActive = currentScreen.type === 'marketplace';
   const isProfilActive = 
     currentScreen.type === 'profile' || 
@@ -38,7 +38,7 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
     return null;
   }
 
-  // Exactement six rubriques : Studio · Héritages · Perspectives · Portraits · Production · Profil
+  // Exactement six rubriques : Studio · Héritage · Duo · Lumière · Production · Profil
   const menuItems = [
     {
       id: 'studio',
@@ -51,39 +51,39 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
       strokeWidth: 1.6
     },
     {
-      id: 'heritages',
-      label: 'Héritages',
-      icon: Film, // icône de bande de film (associée à Héritages)
-      isActive: isHeritagesActive,
+      id: 'heritage',
+      label: 'Héritage',
+      icon: Film, // bande de pellicule
+      isActive: isHeritageActive,
       onClick: () => onNavigate({ type: 'home' }),
-      screenId: 'menu-item-heritages',
+      screenId: 'menu-item-heritage',
       iconClassName: 'w-[20px] h-[20px] sm:w-[21px] sm:h-[21px]',
       strokeWidth: 1.65
     },
     {
-      id: 'perspectives',
-      label: 'Perspectives',
-      icon: DuocumentairesTvIcon, // deux télévisions juxtaposées
-      isActive: isPerspectivesActive,
+      id: 'duo',
+      label: 'Duo',
+      icon: DuocumentairesTvIcon, // deux écrans (télé divisée en deux)
+      isActive: isDuoActive,
       onClick: () => onNavigate({ type: 'duo_feed' }),
-      screenId: 'menu-item-perspectives',
+      screenId: 'menu-item-duo',
       iconClassName: 'w-[20.5px] h-[20.5px] sm:w-[21.5px] sm:h-[21.5px]',
       strokeWidth: 1.55
     },
     {
-      id: 'portraits',
-      label: 'Portraits',
-      icon: PortraitsViseurIcon, // icône viseur de caméra avec soleil et rayons en son centre
-      isActive: isPortraitsActive,
+      id: 'lumiere',
+      label: 'Lumière',
+      icon: PortraitsViseurIcon, // icône actuelle (viseur), qui sera remplacée à l'étape 2
+      isActive: isLumiereActive,
       onClick: () => onNavigate({ type: 'enterprise' }),
-      screenId: 'menu-item-portraits',
+      screenId: 'menu-item-lumiere',
       iconClassName: 'w-[21px] h-[21px] sm:w-[22px] sm:h-[22px]',
       strokeWidth: 2.5
     },
     {
       id: 'production',
       label: 'Production',
-      icon: Clapperboard, // clap de cinéma
+      icon: Clapperboard, // claquette
       isActive: isProductionActive,
       onClick: () => onNavigate({ type: 'marketplace' }),
       screenId: 'menu-item-production',
@@ -93,12 +93,12 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
     {
       id: 'profil',
       label: 'Profil',
-      icon: ProfileSoloIcon, // télévision retournée formant un visage
+      icon: ProfileSoloIcon, // petite télé
       isActive: isProfilActive,
       onClick: () => onNavigate({ type: 'profile' }),
       screenId: 'menu-item-profil',
       iconClassName: 'w-[20.5px] h-[20.5px] sm:w-[21.5px] sm:h-[21.5px]',
-      strokeWidth: 1.55
+      strokeWidth: 1.6
     }
   ];
 
@@ -132,7 +132,7 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
                     : 'bg-transparent text-stone-600 group-hover:bg-stone-100/80'
                 }`}
               >
-                {item.id === 'portraits' ? (
+                {item.id === 'lumiere' || item.id === 'portraits' ? (
                   <PortraitsViseurIcon 
                     className={`${item.iconClassName} transition-transform duration-200`} 
                     strokeWidth={item.strokeWidth} 

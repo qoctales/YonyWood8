@@ -602,7 +602,7 @@ export const DirectorChairIcon: React.FC<IconProps> = ({
 
 /**
  * FilmReelIcon:
- * Symbole « Héritages » : Bobine de film épurée et d'une clarté immédiate,
+ * Symbole « Héritage » : Bobine de film épurée et d'une clarté immédiate,
  * avec un grand cercle précis, son moyeu central, 4 perforations circulaires équilibrées
  * et bien visibles en petite taille (nord, est, sud, ouest), et une traîne horizontale
  * nette à la base symbolisant l'amorce de pellicule déroulée.
@@ -743,7 +743,7 @@ export const YonyWoodLogo: React.FC<YonyWoodLogoProps> = ({
 
 /**
  * PortraitsViseurIcon:
- * Symbole officiel « Portraits » :
+ * Symbole officiel « Lumière » (icône actuelle viseur, conservée pour l'Étape 1) :
  * Viseur de caméra formé de quatre angles géométriques (stroke="currentColor")
  * et d'un petit soleil lumineux avec ses rayons en son centre.
  */

@@ -70,8 +70,8 @@ const CARDS_DATA: ParticipateCard[] = [
   {
     id: 'entreprise',
     title: 'Entreprises',
-    roleSummary: 'Profitent de la page Portraits',
-    detailDescription: 'Les entreprises valorisent leur marque, leurs fondateurs, collaborateurs et clients au cœur de la rubrique Portraits de Yonywood.',
+    roleSummary: 'Profitent de la page Lumière',
+    detailDescription: 'Les entreprises valorisent leur marque, leurs fondateurs, collaborateurs et clients au cœur de la rubrique Lumière de Yonywood.',
     photoUrl: '/assets/directions/marques-tech.jpg',
     videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4'
   }
@@ -359,14 +359,13 @@ export const ParticipateScreen: React.FC<ParticipateScreenProps> = ({
                   e.stopPropagation();
                   setShowDetails(prev => !prev);
                 }}
-                className={`h-7.5 sm:h-8.5 px-3 rounded-full backdrop-blur-md transition-all flex items-center gap-1.5 shadow-md border cursor-pointer active:scale-95 text-[11px] sm:text-xs font-semibold ${
+                className={`h-7.5 sm:h-8.5 px-3 rounded-full backdrop-blur-md transition-all flex items-center justify-center shadow-md border cursor-pointer active:scale-95 text-[11px] sm:text-xs font-semibold ${
                   showDetails
                     ? 'bg-[#A2482B] text-white border-[#A2482B]'
                     : 'bg-black/60 hover:bg-black/80 text-white/95 border-white/20 hover:border-white/40'
                 }`}
                 title="Découvrir le rôle et les missions"
               >
-                <Info className="w-3.5 h-3.5 text-[#FFE7A3]" />
                 <span>Détails</span>
               </button>
 

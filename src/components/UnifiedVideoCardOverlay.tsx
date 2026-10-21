@@ -57,6 +57,9 @@ export interface UnifiedVideoCardOverlayProps {
   onReportVideo?: () => void;
   onBlockVideo?: () => void;
 
+  // Colonne d'actions personnalisée (ex: boutons de navigation du profil)
+  customActionButtons?: React.ReactNode;
+
   // Enfants optionnels (modales internes spécifiques, etc.)
   children?: React.ReactNode;
 }
@@ -83,6 +86,7 @@ export const UnifiedVideoCardOverlay: React.FC<UnifiedVideoCardOverlayProps> = (
   isShareCopied = false,
   onReportVideo,
   onBlockVideo,
+  customActionButtons,
   children
 }) => {
   const [internalQuestionOpen, setInternalQuestionOpen] = useState(false);
@@ -194,7 +198,11 @@ export const UnifiedVideoCardOverlay: React.FC<UnifiedVideoCardOverlayProps> = (
         className="absolute right-2.5 sm:right-3.5 top-[56%] sm:top-[58%] -translate-y-1/2 z-30 flex flex-col items-center gap-1.5 sm:gap-2 pointer-events-auto"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* 1. ÉVALUATION (Award) */}
+        {customActionButtons ? (
+          customActionButtons
+        ) : (
+          <>
+            {/* 1. ÉVALUATION (Award) */}
         {onOpenResonance && (
           <button
             type="button"
@@ -304,6 +312,8 @@ export const UnifiedVideoCardOverlay: React.FC<UnifiedVideoCardOverlayProps> = (
             </div>
           )}
         </div>
+          </>
+        )}
       </div>
 
       {/* =================================================================== */}

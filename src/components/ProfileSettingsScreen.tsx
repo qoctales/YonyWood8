@@ -53,12 +53,14 @@ import {
   LogIn,
   Star,
   Award,
-  ReceiptText
+  ReceiptText,
+  GitBranch
 } from 'lucide-react';
 import { useAuth } from '../services/authContext';
 import { AuthModal } from './AuthModal';
 import { ShareIcon } from './ShareIcon';
 import { ProfileSoloIcon, TvPlayerIcon } from './YonywoodBrandIcons';
+import { ProfilePhotoTvFrame } from './ProfilePhotoTvFrame';
 import { ProfileAvatarRing } from './ProfileAvatarRing';
 import { OrdersAndContributionsModal } from './OrdersAndContributionsModal';
 import { transactionService } from '../utils/transactionService';
@@ -1405,10 +1407,90 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
   const profileDisplayName = useMemo(() => {
     const raw = targetProtagonist 
       ? targetProtagonist.name 
-      : (userFullName || userName || 'Amina');
+      : (userFullName || userName || 'Pascal');
     // On extrait uniquement le prénom (premier mot, sans tirets complexes si nom composé)
     return raw.trim().split(' ')[0] || raw;
   }, [targetProtagonist, userFullName, userName]);
+
+  // Boutons de navigation verticale du profil (Récits, Lignée, Produits & Services, Projets)
+  const profileCategoryActionButtons = useMemo(() => (
+    <div className="flex flex-col items-center gap-1.5 sm:gap-2">
+      {/* 1. Récits & vidéos partagés (par défaut) */}
+      <button
+        type="button"
+        onClick={(e) => {
+          e.stopPropagation();
+          setShowLineageFrise(false);
+          setActiveCategory('recit');
+        }}
+        className={`w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-xl border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
+          activeCategory === 'recit' && !showLineageFrise
+            ? 'bg-[#A2482B] border-[#A2482B] text-white shadow-[0_0_12px_rgba(162,72,43,0.6)]'
+            : 'bg-black/50 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white/90 backdrop-blur-md'
+        }`}
+        title="Récits & vidéos partagés"
+        aria-label="Récits & vidéos partagés"
+      >
+        <BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
+      </button>
+
+      {/* 2. Lignée de transmission */}
+      <button
+        type="button"
+        onClick={(e) => {
+          e.stopPropagation();
+          setShowLineageFrise(true);
+        }}
+        className={`w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-xl border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
+          showLineageFrise
+            ? 'bg-[#A2482B] border-[#A2482B] text-white shadow-[0_0_12px_rgba(162,72,43,0.6)]'
+            : 'bg-black/50 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white/90 backdrop-blur-md'
+        }`}
+        title="Sa lignée"
+        aria-label="Sa lignée"
+      >
+        <GitBranch className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
+      </button>
+
+      {/* 3. Produits et services */}
+      <button
+        type="button"
+        onClick={(e) => {
+          e.stopPropagation();
+          setShowLineageFrise(false);
+          setActiveCategory('offre');
+        }}
+        className={`w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-xl border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
+          activeCategory === 'offre' && !showLineageFrise
+            ? 'bg-[#A2482B] border-[#A2482B] text-white shadow-[0_0_12px_rgba(162,72,43,0.6)]'
+            : 'bg-black/50 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white/90 backdrop-blur-md'
+        }`}
+        title="Produits & services"
+        aria-label="Produits & services"
+      >
+        <ShoppingBag className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
+      </button>
+
+      {/* 4. Projets & initiatives partagés */}
+      <button
+        type="button"
+        onClick={(e) => {
+          e.stopPropagation();
+          setShowLineageFrise(false);
+          setActiveCategory('appel');
+        }}
+        className={`w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-xl border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
+          activeCategory === 'appel' && !showLineageFrise
+            ? 'bg-[#A2482B] border-[#A2482B] text-white shadow-[0_0_12px_rgba(162,72,43,0.6)]'
+            : 'bg-black/50 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white/90 backdrop-blur-md'
+        }`}
+        title="Projets & initiatives"
+        aria-label="Projets & initiatives"
+      >
+        <Sprout className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
+      </button>
+    </div>
+  ), [activeCategory, showLineageFrise]);
 
   // Partager le profil (ouvre la modale des réseaux sociaux + copie de lien)
   const handleShareProfile = () => {
@@ -1605,17 +1687,19 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
         </div>
       ) : (
         <div className="flex items-center justify-between h-10 sm:h-12 shrink-0 gap-2 mb-1.5 sm:mb-2">
-          {/* GAUCHE : Titre standardisé "Profil" avec tiret terracotta signature */}
+          {/* GAUCHE : Prénom de la personne (ex: Pascal) avec tiret terracotta signature */}
           <div className="flex items-center gap-2 sm:gap-2.5 h-full shrink-0">
             <div className="relative flex items-center h-full shrink-0">
-              <h1 className="font-editorial text-base sm:text-[18px] font-bold text-[#1C1917] tracking-tight leading-none">
-                {targetProtagonist ? profileDisplayName : 'Profil'}
-              </h1>
-              <div className="absolute left-0 -bottom-2 w-8 h-0.5 bg-[#A2482B] rounded-full" />
+              <div className="relative inline-flex items-center">
+                <h1 className="font-editorial text-base sm:text-[18px] font-bold text-[#1C1917] tracking-tight leading-none">
+                  {profileDisplayName || 'Pascal'}
+                </h1>
+                <div className="absolute left-0 -bottom-1.5 sm:-bottom-2 w-8 h-0.5 bg-[#A2482B] rounded-full" />
+              </div>
             </div>
           </div>
 
-          {/* DROITE : Photo de profil dans son anneau précieux (SVG) & Bouton Partager */}
+          {/* DROITE : Photo de profil dans son cadre télé rétro aux deux pieds (Pascal) & Bouton Partager */}
           <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
             {/* Bouton Retour au Marché (si navigation contextuelle depuis le marché) */}
             {returnToMarketplace && (
@@ -1669,11 +1753,11 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
               </button>
             )}
 
-            {/* Photo de profil de l'avatar dans son anneau signature (filet doré & anneau noir) - bien visible */}
+            {/* Photo de profil de Pascal dans son anneau circulaire précieux terracotta (#A2482B) et doré (#D9A441) */}
             <ProfileAvatarRing
               photoUrl={userPhoto || '/assets/duos/codjo-blind.jpg'}
-              alt={`Photo de profil de ${profileDisplayName}`}
-              className="w-11 h-11 sm:w-12 sm:h-12 shadow-sm"
+              alt={`Photo de profil de ${profileDisplayName || 'Pascal'}`}
+              className="w-10 h-10 sm:w-11 sm:h-11 shadow-xs"
               onClick={() => setIsEditingProfile(true)}
             />
 
@@ -1752,21 +1836,52 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
               onClose={() => setShowLineageFrise(false)}
             />
           ) : (
-            /* CARTE FORMAT 9:16 VERTICAL AVEC GESTION DU SWIPE 2D */
-            <div
-              onTouchStart={onTouchStart}
-              onTouchMove={onTouchMove}
-              onTouchEnd={onTouchEnd}
-              onMouseDown={onMouseDown}
-              onMouseMove={onMouseMove}
-              onMouseUp={onMouseUp}
-              onClick={(e) => {
-                if ((e.target as HTMLElement).closest('button, a, input, textarea, select')) return;
-                toggleVideoPlayback();
-              }}
-              className="h-[min(480px,calc(100dvh-230px))] sm:h-[min(520px,calc(100dvh-210px))] lg:h-[min(550px,calc(100dvh-200px))] aspect-[9/16] w-auto mx-auto rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl border border-stone-200/40 relative flex flex-col justify-between cursor-pointer group select-none shrink-0"
-              style={{ transform: `translateX(${swipeOffsetX}px)` }}
-            >
+            <div className="relative flex items-center justify-center">
+              {/* FLÈCHES DE NAVIGATION HORIZONTALE GAUCHE / DROITE */}
+              {totalItemsInActiveCategory > 1 && (
+                <>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handlePrevVideo();
+                    }}
+                    className="absolute -left-3 sm:-left-6 md:-left-12 top-1/2 -translate-y-1/2 z-40 w-8.5 h-8.5 sm:w-10 sm:h-10 rounded-full bg-black/65 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 shadow-xl flex items-center justify-center transition-all cursor-pointer hover:scale-110 active:scale-95 group/arrow"
+                    title="Vidéo précédente"
+                    aria-label="Vidéo précédente"
+                  >
+                    <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 text-white group-hover/arrow:-translate-x-0.5 transition-transform" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleNextVideo();
+                    }}
+                    className="absolute -right-3 sm:-right-6 md:-right-12 top-1/2 -translate-y-1/2 z-40 w-8.5 h-8.5 sm:w-10 sm:h-10 rounded-full bg-black/65 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 shadow-xl flex items-center justify-center transition-all cursor-pointer hover:scale-110 active:scale-95 group/arrow"
+                    title="Vidéo suivante"
+                    aria-label="Vidéo suivante"
+                  >
+                    <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-white group-hover/arrow:translate-x-0.5 transition-transform" />
+                  </button>
+                </>
+              )}
+
+              {/* CARTE FORMAT 9:16 VERTICAL AVEC GESTION DU SWIPE 2D */}
+              <div
+                onTouchStart={onTouchStart}
+                onTouchMove={onTouchMove}
+                onTouchEnd={onTouchEnd}
+                onMouseDown={onMouseDown}
+                onMouseMove={onMouseMove}
+                onMouseUp={onMouseUp}
+                onClick={(e) => {
+                  if ((e.target as HTMLElement).closest('button, a, input, textarea, select')) return;
+                  toggleVideoPlayback();
+                }}
+                className="h-[min(480px,calc(100dvh-230px))] sm:h-[min(520px,calc(100dvh-210px))] lg:h-[min(550px,calc(100dvh-200px))] aspect-[9/16] w-auto mx-auto rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl border border-stone-200/40 relative flex flex-col justify-between cursor-pointer group select-none shrink-0"
+                style={{ transform: `translateX(${swipeOffsetX}px)` }}
+              >
             {/* ================================================================= */}
             {/* CATÉGORIE 1 : RÉCIT (Récits personnels & Épisodes réunis)         */}
             {/* ================================================================= */}
@@ -1823,6 +1938,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                     setShareToast("Cette vidéo a été masquée.");
                     setTimeout(() => setShareToast(null), 2500);
                   }}
+                  customActionButtons={profileCategoryActionButtons}
                 />
               </div>
             )}
@@ -1947,6 +2063,14 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                     isPlaying={isPlaying}
                   />
                 </div>
+
+                {/* Colonne d'actions verticale du profil à droite */}
+                <div 
+                  className="absolute right-2.5 sm:right-3.5 top-[56%] sm:top-[58%] -translate-y-1/2 z-30 pointer-events-auto"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {profileCategoryActionButtons}
+                </div>
               </div>
             )}
 
@@ -2065,6 +2189,14 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                     formatTime={formatVideoTime}
                     isPlaying={isPlaying}
                   />
+                </div>
+
+                {/* Colonne d'actions verticale du profil à droite */}
+                <div 
+                  className="absolute right-2.5 sm:right-3.5 top-[56%] sm:top-[58%] -translate-y-1/2 z-30 pointer-events-auto"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {profileCategoryActionButtons}
                 </div>
               </div>
             )}
@@ -2256,9 +2388,18 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                     isPlaying={isPlaying}
                   />
                 </div>
+
+                {/* Colonne d'actions verticale du profil à droite */}
+                <div 
+                  className="absolute right-2.5 sm:right-3.5 top-[56%] sm:top-[58%] -translate-y-1/2 z-30 pointer-events-auto"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {profileCategoryActionButtons}
+                </div>
               </div>
             )}
 
+            </div>
             </div>
           )}
 
