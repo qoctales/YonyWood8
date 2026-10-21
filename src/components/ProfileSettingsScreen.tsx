@@ -1868,7 +1868,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                   if ((e.target as HTMLElement).closest('button, a, input, textarea, select')) return;
                   toggleVideoPlayback();
                 }}
-                className="aspect-[9/16] w-[min(calc(100vw-32px),calc((100dvh-200px)*9/16))] max-w-[280px] sm:max-w-[290px] h-[min(500px,calc(100dvh-200px))] mx-auto rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl border border-stone-200/40 relative flex flex-col justify-between cursor-pointer group select-none shrink-0"
+                className="aspect-[9/16] w-[min(calc(100vw-72px),calc((100dvh-240px)*9/16))] max-w-[218px] sm:max-w-[260px] md:max-w-[280px] h-[min(388px,calc(100dvh-240px))] sm:h-[min(460px,calc(100dvh-210px))] md:h-[min(500px,calc(100dvh-190px))] mx-auto rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl border border-stone-200/40 relative flex flex-col justify-between cursor-pointer group select-none shrink-0"
                 style={{ transform: `translateX(${swipeOffsetX}px)` }}
               >
             {/* ================================================================= */}

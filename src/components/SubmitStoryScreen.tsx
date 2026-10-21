@@ -152,12 +152,12 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto px-3 sm:px-6 py-2 pb-24 sm:pb-28 pt-safe pb-safe h-full max-h-full overflow-hidden flex flex-col justify-between text-[#1C1917] select-none">
+    <div className="w-full max-w-3xl mx-auto px-3 sm:px-6 pt-1 sm:pt-2 pb-20 sm:pb-24 pt-safe pb-safe h-full max-h-full overflow-hidden flex flex-col justify-between text-[#1C1917] select-none">
       
       {/* ========================================================================= */}
       {/* 1. EN-TÊTE HARMONISÉ STRICTEMENT AU MÊME NIVEAU SUR TOUTES LES PAGES     */}
       {/* ========================================================================= */}
-      <div className="relative flex items-center justify-between h-9 sm:h-10 shrink-0 gap-2 mb-1">
+      <div className="relative flex items-center justify-between h-8 sm:h-10 shrink-0 gap-2 mb-0.5 sm:mb-1">
         <div className="flex items-center gap-1.5 sm:gap-2.5 min-w-0 flex-1 h-full">
           {!activePillar ? (
             /* Accueil Studio : 4 façons de partager son histoire en italique noir avec tiret terracotta */
@@ -230,11 +230,11 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
         {/* Flèche Gauche (accessible sur mobile et desktop) */}
         <button
           onClick={goToPrev}
-          className="flex absolute left-1 sm:left-3 lg:left-6 z-40 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white/95 hover:bg-[#A2482B] text-[#1C1917] hover:text-white border border-[#E7E5E4] hover:border-[#A2482B] shadow-xl items-center justify-center transition-all cursor-pointer transform hover:scale-105 active:scale-95"
+          className="flex absolute left-1 sm:left-3 lg:left-6 z-40 w-8.5 h-8.5 sm:w-11 sm:h-11 rounded-full bg-white/95 hover:bg-[#A2482B] text-[#1C1917] hover:text-white border border-[#E7E5E4] hover:border-[#A2482B] shadow-lg items-center justify-center transition-all cursor-pointer transform hover:scale-105 active:scale-95"
           title="Précédent"
           id="prev-carousel-btn"
         >
-          <ChevronLeft className="w-5 h-5" />
+          <ChevronLeft className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
         </button>
 
         {/* SCÈNE 3D AVEC PERSPECTIVE JEU VIDÉO */}
@@ -336,7 +336,7 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                     pointerEvents,
                     transition: isDraggingRef.current ? 'none' : 'transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.24s ease'
                   }}
-                  className={`absolute aspect-[9/16] w-[min(calc(100vw-32px),calc((100dvh-200px)*9/16))] max-w-[280px] sm:max-w-[290px] h-[min(500px,calc(100dvh-200px))] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl flex flex-col justify-between p-3 sm:p-4 cursor-pointer select-none bg-[#151513] text-white border transition-colors ${
+                  className={`absolute aspect-[9/16] w-[min(calc(100vw-72px),calc((100dvh-240px)*9/16))] max-w-[218px] sm:max-w-[260px] md:max-w-[280px] h-[min(388px,calc(100dvh-240px))] sm:h-[min(460px,calc(100dvh-210px))] md:h-[min(500px,calc(100dvh-190px))] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl flex flex-col justify-between p-3 sm:p-4 cursor-pointer select-none bg-[#151513] text-white border transition-colors ${
                     isCenter ? 'border-stone-200/90 ring-1 ring-white/30' : 'border-white/15'
                   }`}
                 >
@@ -401,11 +401,11 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
         {/* Flèche Droite (accessible sur mobile et desktop) */}
         <button
           onClick={goToNext}
-          className="flex absolute right-1 sm:right-3 lg:right-6 z-40 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white/95 hover:bg-[#A2482B] text-[#1C1917] hover:text-white border border-[#E7E5E4] hover:border-[#A2482B] shadow-xl items-center justify-center transition-all cursor-pointer transform hover:scale-105 active:scale-95"
+          className="flex absolute right-1 sm:right-3 lg:right-6 z-40 w-8.5 h-8.5 sm:w-11 sm:h-11 rounded-full bg-white/95 hover:bg-[#A2482B] text-[#1C1917] hover:text-white border border-[#E7E5E4] hover:border-[#A2482B] shadow-lg items-center justify-center transition-all cursor-pointer transform hover:scale-105 active:scale-95"
           title="Suivant"
           id="next-carousel-btn"
         >
-          <ChevronRight className="w-5 h-5" />
+          <ChevronRight className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
         </button>
       </div>
 

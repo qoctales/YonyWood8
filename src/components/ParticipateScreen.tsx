@@ -263,7 +263,7 @@ export const ParticipateScreen: React.FC<ParticipateScreenProps> = ({
           onClick={() => {
             setIsPlaying(!isPlaying);
           }}
-          className="h-[min(490px,calc(100dvh-210px))] sm:h-[min(540px,calc(100dvh-190px))] lg:h-[min(570px,calc(100dvh-180px))] aspect-[9/16] w-auto mx-auto rounded-3xl overflow-hidden bg-stone-950 text-white shadow-2xl border border-stone-200/40 relative flex flex-col justify-between p-4 sm:p-5 cursor-pointer group select-none shrink-0"
+          className="h-[min(388px,calc(100dvh-240px))] sm:h-[min(460px,calc(100dvh-210px))] lg:h-[min(520px,calc(100dvh-180px))] aspect-[9/16] w-auto mx-auto rounded-2xl sm:rounded-3xl overflow-hidden bg-stone-950 text-white shadow-2xl border border-stone-200/40 relative flex flex-col justify-between p-3.5 sm:p-5 cursor-pointer group select-none shrink-0"
         >
           {/* Média de fond : Vidéo (clic requis) ou Photo (AUCUN TEXTE SUR LA CARTE) */}
           {isPlaying ? (
