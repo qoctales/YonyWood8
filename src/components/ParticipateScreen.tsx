@@ -228,7 +228,7 @@ export const ParticipateScreen: React.FC<ParticipateScreenProps> = ({
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
-      className="w-full max-w-4xl mx-auto px-4 py-3 pb-18 sm:pb-20 pt-safe pb-safe h-[calc(100dvh-56px)] max-h-[calc(100dvh-56px)] overflow-hidden flex flex-col justify-between text-[#1C1917] select-none"
+      className="w-full max-w-4xl mx-auto px-3 sm:px-6 py-2 pb-24 sm:pb-28 pt-safe pb-safe h-full max-h-full overflow-hidden flex flex-col justify-between text-[#1C1917] select-none"
     >
       {/* ========================================================= */}
       {/* LIGNE DU HAUT : TITRE AVEC TIRET ROUGE (SANS 1/3, 2/3, 3/3) */}

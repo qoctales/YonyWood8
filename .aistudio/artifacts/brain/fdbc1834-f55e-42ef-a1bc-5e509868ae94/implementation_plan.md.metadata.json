@@ -1,6 +1,6 @@
 {
-  "summary": "Plan d'implémentation enrichi pour la refonte des cartes Entreprises et l'harmonisation globale :\n- Typographie : prénoms et raisons sociales agrandis (14-16px) avec tracking-wider sur toutes les cartes.\n- Cartes Entreprises principales : Titre du domaine en haut (Audiovisuel, Énergie, Transport, Finance, etc.), nom de l'entreprise uniquement en bas à gauche (sans nom de fondateur ni lieu), suppression du cercle vert, flanc droit réduit à 2 boutons prioritaires (Explorer et Partager), déclencheur vidéo en haut à droite.\n- Espace Entreprise Dédié (au clic sur Explorer) : Carrousel swipe horizontal des voix de l'entreprise (fondateur, collaborateur, client, fournisseur), avec en haut à gauche le prénom et le rôle en dessous, le nom de l'entreprise en bas, le lecteur en haut à droite, et une flèche de retour fluide vers la galerie globale des entreprises.\n- Modale Protagoniste : Muet en bas à droite, fermeture par clic extérieur et touche Échap.",
-  "updatedAt": "2026-10-18T18:26:11.038838725Z",
-  "requestFeedback": true,
-  "userFacing": true
+  "summary":  "Refonte complète de la page Studio YonyWood réalisée : carrousel 3D rotatif des 4 Piliers (Duos en miroir, Sur les routes, Organisations, Récit de soi) avec 4 illustrations cinématographiques sur-mesure, cartes épurées (titre, télé vintage en haut à droite, icône de question en bas), swipe fluide des thématiques sans bouton 'Choisir ce sujet', et fil d'Ariane avec retour vers les 4 piliers.",
+  "updatedAt":  "2026-10-21T16:01:29.695095149Z",
+  "requestFeedback":  true,
+  "userFacing":  true
 }

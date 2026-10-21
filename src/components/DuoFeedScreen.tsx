@@ -314,12 +314,12 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
       {/* ========================================================================= */}
       {/* 1. EN-TÊTE HARMONISÉ EXACTEMENT AU MÊME ENDROIT QUE STUDIO, HÉRITAGES, PRODUCTIONS */}
       {/* ========================================================================= */}
-      <div className="w-full max-w-3xl mx-auto px-4 py-3 pb-2 shrink-0">
-        <header className="relative flex items-center justify-between h-9 sm:h-10 shrink-0 gap-2">
+      <div className="w-full max-w-3xl mx-auto px-3 sm:px-6 py-2 shrink-0">
+        <header className="relative flex items-center justify-between h-9 sm:h-10 shrink-0 gap-2 mb-1">
           {/* Titre officiel de la page en noir, écrit en italique avec trait terracotta */}
-          <div className="relative flex items-center h-full">
-            <h1 className="font-editorial italic text-xs sm:text-sm md:text-base font-bold text-[#1C1917] tracking-tight leading-none whitespace-nowrap">
-              Deux univers, une même question
+          <div className="relative flex items-center h-full overflow-visible">
+            <h1 className="font-editorial italic text-xs sm:text-sm md:text-base font-bold text-[#1C1917] tracking-tight leading-none whitespace-nowrap pr-2">
+              Deux univers mis en miroir
             </h1>
             {/* Petit trait terracotta officiel */}
             <div className="absolute left-0 -bottom-1.5 w-8 h-0.5 bg-[#A2482B] rounded-full" />

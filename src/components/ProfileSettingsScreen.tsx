@@ -1688,11 +1688,11 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
         </div>
       ) : (
         <div className="relative flex items-center justify-between h-9 sm:h-10 shrink-0 gap-2 mb-1">
-          {/* GAUCHE : Prénom de la personne (ex: Pascal) avec tiret terracotta signature */}
+          {/* GAUCHE : Nom de la page 'Chaque parcours compte' avec tiret terracotta signature */}
           <div className="flex items-center gap-2 sm:gap-2.5 h-full shrink-0">
-            <div className="relative flex items-center h-full">
-              <h1 className="font-editorial italic text-xs sm:text-sm md:text-base font-bold text-[#1C1917] tracking-tight leading-none whitespace-nowrap">
-                {profileDisplayName || 'Pascal'}
+            <div className="relative flex items-center h-full overflow-visible">
+              <h1 className="font-editorial italic text-xs sm:text-sm md:text-base font-bold text-[#1C1917] tracking-tight leading-none whitespace-nowrap pr-2">
+                Chaque parcours compte
               </h1>
               {/* Petit trait terracotta officiel */}
               <div className="absolute left-0 -bottom-1.5 w-8 h-0.5 bg-[#A2482B] rounded-full" />
@@ -1982,8 +1982,8 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                 {/* BAS : Détails coproduction, actions & lecteur moderne (Style Image 2) */}
                 <div className="relative z-10 space-y-2 sm:space-y-2.5 pr-12 sm:pr-14 pb-0.5">
                   <div>
-                    <h3 className="font-editorial text-xs sm:text-base font-bold text-white leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
-                      {currentProduction.seriesTitle}
+                    <h3 className="font-editorial text-[15px] sm:text-[17px] font-bold text-white tracking-[0.08em] leading-snug drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] truncate">
+                      {profileDisplayName || 'Pascal'}
                     </h3>
                     <div className="flex items-center gap-2 text-[10.5px] sm:text-[11px] text-white/90 mt-0.5 font-medium drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)]">
                       <span>{currentProduction.sharesCount} parts</span>
@@ -2386,8 +2386,9 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                   {profileCategoryActionButtons}
                 </div>
               </div>
+            )}
 
-              </div>
+          </div>
 
               {/* FLÈCHE DROITE (Strictement identique et alignée sur la page Studio) */}
               {totalItemsInActiveCategory > 1 && (

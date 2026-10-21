@@ -430,9 +430,9 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
       {/* HEADER DISCRET : TITRE COPRODUCTION EN ITALIQUE NOIR AVEC TRAIT TERRACOTTA */}
       {/* ========================================================================= */}
       <div className="relative flex items-center justify-between h-9 sm:h-10 shrink-0 gap-2 mb-1">
-        <div className="relative flex items-center h-full">
-          <h1 className="font-editorial italic text-xs sm:text-sm md:text-base font-bold text-[#1C1917] tracking-tight leading-none whitespace-nowrap">
-            Coproduction
+        <div className="relative flex items-center h-full overflow-visible">
+          <h1 className="font-editorial italic text-xs sm:text-sm md:text-base font-bold text-[#1C1917] tracking-tight leading-none whitespace-nowrap pr-2">
+            Valeurs partagées des récits
           </h1>
           {/* Petit trait terracotta officiel */}
           <div className="absolute left-0 -bottom-1.5 w-8 h-0.5 bg-[#A2482B] rounded-full" />
