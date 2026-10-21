@@ -1599,7 +1599,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
     }
     if (activeCategory === 'offre') {
       return {
-        posterUrl: currentCreation?.posterUrl || '/assets/protagonists/fatou-restauratrice.jpg',
+        posterUrl: currentCreation?.posterUrl || '/assets/protagonists/fatou-diallo.jpg',
         videoUrl: currentCreation?.videoUrl || '',
         title: currentCreation?.title || 'Création',
         durationStr: '02:50',
@@ -1607,7 +1607,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
     }
     const item = currentAppelUnified?.item;
     return {
-      posterUrl: item?.posterUrl || '/assets/protagonists/amadou-pecheur.jpg',
+      posterUrl: item?.posterUrl || '/assets/protagonists/chef-koffi.jpg',
       videoUrl: item?.videoUrl || '',
       title: item?.title || 'Appel',
       durationStr: '03:45',
@@ -1838,35 +1838,22 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
               onClose={() => setShowLineageFrise(false)}
             />
           ) : (
-            <div className="relative flex items-center justify-center">
-              {/* FLÈCHES DE NAVIGATION HORIZONTALE GAUCHE / DROITE */}
+            <>
+              {/* FLÈCHE GAUCHE (Strictement identique et alignée sur la page Studio) */}
               {totalItemsInActiveCategory > 1 && (
-                <>
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handlePrevVideo();
-                    }}
-                    className="absolute -left-3 sm:-left-6 md:-left-12 top-1/2 -translate-y-1/2 z-40 w-8.5 h-8.5 sm:w-10 sm:h-10 rounded-full bg-black/65 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 shadow-xl flex items-center justify-center transition-all cursor-pointer hover:scale-110 active:scale-95 group/arrow"
-                    title="Vidéo précédente"
-                    aria-label="Vidéo précédente"
-                  >
-                    <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 text-white group-hover/arrow:-translate-x-0.5 transition-transform" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleNextVideo();
-                    }}
-                    className="absolute -right-3 sm:-right-6 md:-right-12 top-1/2 -translate-y-1/2 z-40 w-8.5 h-8.5 sm:w-10 sm:h-10 rounded-full bg-black/65 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 shadow-xl flex items-center justify-center transition-all cursor-pointer hover:scale-110 active:scale-95 group/arrow"
-                    title="Vidéo suivante"
-                    aria-label="Vidéo suivante"
-                  >
-                    <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-white group-hover/arrow:translate-x-0.5 transition-transform" />
-                  </button>
-                </>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handlePrevVideo();
+                  }}
+                  className="hidden sm:flex absolute left-2 sm:left-4 lg:left-6 z-20 w-11 h-11 rounded-full shrink-0 bg-white/95 hover:bg-[#A2482B] text-[#1C1917] hover:text-white border border-[#E7E5E4] hover:border-[#A2482B] shadow-xl items-center justify-center transition-all cursor-pointer transform hover:scale-105 active:scale-95"
+                  title="Vidéo précédente"
+                  aria-label="Vidéo précédente"
+                  id="prev-profile-card-btn"
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </button>
               )}
 
               {/* CARTE FORMAT 9:16 VERTICAL AVEC GESTION DU SWIPE 2D */}
@@ -1881,7 +1868,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                   if ((e.target as HTMLElement).closest('button, a, input, textarea, select')) return;
                   toggleVideoPlayback();
                 }}
-                className="h-[min(480px,calc(100dvh-230px))] sm:h-[min(520px,calc(100dvh-210px))] lg:h-[min(550px,calc(100dvh-200px))] aspect-[9/16] w-auto mx-auto rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl border border-stone-200/40 relative flex flex-col justify-between cursor-pointer group select-none shrink-0"
+                className="aspect-[9/16] w-[min(calc(100vw-32px),calc((100dvh-200px)*9/16))] max-w-[280px] sm:max-w-[290px] h-[min(500px,calc(100dvh-200px))] mx-auto rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl border border-stone-200/40 relative flex flex-col justify-between cursor-pointer group select-none shrink-0"
                 style={{ transform: `translateX(${swipeOffsetX}px)` }}
               >
             {/* ================================================================= */}
@@ -2399,10 +2386,26 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                   {profileCategoryActionButtons}
                 </div>
               </div>
-            )}
 
-            </div>
-            </div>
+              </div>
+
+              {/* FLÈCHE DROITE (Strictement identique et alignée sur la page Studio) */}
+              {totalItemsInActiveCategory > 1 && (
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleNextVideo();
+                  }}
+                  className="hidden sm:flex absolute right-2 sm:right-4 lg:right-6 z-20 w-11 h-11 rounded-full shrink-0 bg-white/95 hover:bg-[#A2482B] text-[#1C1917] hover:text-white border border-[#E7E5E4] hover:border-[#A2482B] shadow-xl items-center justify-center transition-all cursor-pointer transform hover:scale-105 active:scale-95"
+                  title="Vidéo suivante"
+                  aria-label="Vidéo suivante"
+                  id="next-profile-card-btn"
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </button>
+              )}
+            </>
           )}
 
         </div>

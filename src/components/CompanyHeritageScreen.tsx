@@ -154,10 +154,10 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
                   setIsStakeholderPlaying(false);
                 }}
                 className="font-normal text-stone-500 hover:text-stone-900 transition-colors cursor-pointer flex items-center gap-1 group py-1"
-                title="Revenir à Lumière"
+                title="Revenir à Lumières"
               >
                 <ChevronLeft className="w-4 h-4 text-stone-400 group-hover:text-stone-700 group-hover:-translate-x-0.5 transition-transform" />
-                <span>Lumière</span>
+                <span>Lumières</span>
               </button>
               <span className="text-stone-300 font-light text-xs" aria-hidden="true">
                 ›
@@ -176,7 +176,7 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
           ) : (
             <div className="relative flex items-center h-full">
               <h1 className="font-editorial italic text-xs sm:text-sm md:text-base font-bold text-[#1C1917] tracking-tight leading-none whitespace-nowrap">
-                Une histoire, plusieurs regards
+                Lumières
               </h1>
               {/* Petit trait terracotta officiel */}
               <div className="absolute left-0 -bottom-1.5 w-8 h-0.5 bg-[#A2482B] rounded-full" />

@@ -141,7 +141,7 @@ export const LandingSeriesRow: React.FC<LandingSeriesRowProps> = () => {
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-103"
                 loading="lazy"
                 onError={(e) => {
-                  (e.currentTarget as HTMLImageElement).src = '/assets/posters/Benin%20%3C%20%3E.jpg';
+                  (e.currentTarget as HTMLImageElement).src = '/assets/doors/door-series.jpg';
                 }}
               />
 

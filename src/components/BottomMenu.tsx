@@ -54,7 +54,7 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
     return null;
   }
 
-  // Exactement six rubriques : Studio · Héritage · Duo · Portrait · Production · Profil (Pascal)
+  // Exactement six rubriques : Studio · Héritages · Duos · Lumières · Productions · Portrait
   const menuItems = [
     {
       id: 'studio',
@@ -68,7 +68,7 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
     },
     {
       id: 'heritage',
-      label: 'Héritage',
+      label: 'Héritages',
       icon: Film, // bande de pellicule
       isActive: isHeritageActive,
       onClick: () => onNavigate({ type: 'home' }),
@@ -78,7 +78,7 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
     },
     {
       id: 'duo',
-      label: 'Duo',
+      label: 'Duos',
       icon: DuocumentairesTvIcon, // deux écrans (télé divisée en deux)
       isActive: isDuoActive,
       onClick: () => onNavigate({ type: 'duo_feed' }),
@@ -87,18 +87,18 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
       strokeWidth: 1.5
     },
     {
-      id: 'portrait',
-      label: 'Portrait',
-      icon: PortraitsViseurIcon, // Visée caméra / soleil portraits
+      id: 'lumiere',
+      label: 'Lumières',
+      icon: LumiereSunDotsIcon, // Soleil et constellations
       isActive: isLumiereActive,
       onClick: () => onNavigate({ type: 'enterprise' }),
-      screenId: 'menu-item-portrait',
-      iconClassName: 'w-[18.5px] h-[18.5px] sm:w-[19.5px] sm:h-[19.5px]',
+      screenId: 'menu-item-lumiere',
+      iconClassName: 'w-[19px] h-[19px] sm:w-[20px] sm:h-[20px]',
       strokeWidth: 1.5
     },
     {
       id: 'production',
-      label: 'Production',
+      label: 'Productions',
       icon: Clapperboard, // claquette
       isActive: isProductionActive,
       onClick: () => onNavigate({ type: 'marketplace' }),
@@ -107,12 +107,12 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
       strokeWidth: 1.5
     },
     {
-      id: 'profil',
-      label: 'Profil',
-      icon: ProfileSoloIcon, // petite télé (icône de lecture tournée à 180°, sans photo)
+      id: 'portrait',
+      label: 'Portrait',
+      icon: ProfileSoloIcon, // petite télé / profil solo (icône singulière officielle)
       isActive: isProfilActive,
       onClick: () => onNavigate({ type: 'profile' }),
-      screenId: 'menu-item-profil',
+      screenId: 'menu-item-portrait',
       iconClassName: 'w-[20.5px] h-[20.5px] sm:w-[21.5px] sm:h-[21.5px]',
       strokeWidth: 1.6
     }
@@ -148,8 +148,8 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
                     : 'bg-transparent text-stone-600 group-hover:bg-stone-100/80'
                 }`}
               >
-                {item.id === 'portrait' || item.id === 'lumiere' || item.id === 'portraits' ? (
-                  <PortraitsViseurIcon 
+                {item.id === 'lumiere' ? (
+                  <LumiereSunDotsIcon 
                     className={`${item.iconClassName} transition-transform duration-200`} 
                     strokeWidth={item.strokeWidth} 
                     isActive={item.isActive}

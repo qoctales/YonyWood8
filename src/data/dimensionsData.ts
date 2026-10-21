@@ -1049,7 +1049,7 @@ export const SOUS_CATEGORIES: SousCategorie[] = [
     question: 'Quel goût inimitable et quelle fidélité au goût d’origine font la réputation de votre marque ?',
     tagline: 'Boissons légendaires, épicerie fine, chocolateries et fleurons du goût',
     badge: 'Alimentation',
-    photoUrl: '/assets/directions/marques-alimentation.jpg',
+    photoUrl: '/assets/directions/produits-services-restauration.jpg',
     accentColor: '#F97316',
     glowColor: 'rgba(249, 115, 22, 0.6)',
     bgGradient: 'from-orange-500 via-amber-700 to-stone-950'

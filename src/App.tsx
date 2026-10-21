@@ -37,33 +37,39 @@ const resolveScreenFromPath = (): { screen: ViewScreen | null; redirectFrom?: st
   const path = window.location.pathname.toLowerCase().replace(/\/+$/, '');
   
   // Redirections permanentes des anciennes adresses vers les nouvelles
-  if (path === '/portraits') {
-    return { screen: { type: 'enterprise' }, redirectFrom: '/portraits', redirectTo: '/lumiere' };
+  if (path === '/portraits' || path === '/lumiere') {
+    return { screen: { type: 'enterprise' }, redirectFrom: path, redirectTo: '/lumieres' };
   }
-  if (path === '/perspectives') {
-    return { screen: { type: 'duo_feed' }, redirectFrom: '/perspectives', redirectTo: '/duo' };
+  if (path === '/perspectives' || path === '/duo') {
+    return { screen: { type: 'duo_feed' }, redirectFrom: path, redirectTo: '/duos' };
   }
-  if (path === '/heritages') {
-    return { screen: { type: 'home' }, redirectFrom: '/heritages', redirectTo: '/heritage' };
+  if (path === '/heritage') {
+    return { screen: { type: 'home' }, redirectFrom: '/heritage', redirectTo: '/heritages' };
+  }
+  if (path === '/production') {
+    return { screen: { type: 'marketplace' }, redirectFrom: '/production', redirectTo: '/productions' };
+  }
+  if (path === '/profil') {
+    return { screen: { type: 'profile' }, redirectFrom: '/profil', redirectTo: '/portrait' };
   }
 
   // Nouvelles adresses officielles
-  if (path === '/lumiere') {
+  if (path === '/lumieres') {
     return { screen: { type: 'enterprise' } };
   }
-  if (path === '/duo') {
+  if (path === '/duos') {
     return { screen: { type: 'duo_feed' } };
   }
-  if (path === '/heritage') {
+  if (path === '/heritages') {
     return { screen: { type: 'home' } };
   }
   if (path === '/studio') {
     return { screen: { type: 'submit_story' } };
   }
-  if (path === '/production') {
+  if (path === '/productions') {
     return { screen: { type: 'marketplace' } };
   }
-  if (path === '/profil') {
+  if (path === '/portrait') {
     return { screen: { type: 'profile' } };
   }
   if (path === '/co-construction' || path === '/participer') {
@@ -79,18 +85,18 @@ const getScreenRouteInfo = (screen: ViewScreen): { path: string; title: string }
     case 'matrix_view':
     case 'documentaries':
     case 'documentary_detail':
-      return { path: '/heritage', title: 'Héritage — YonyWood' };
+      return { path: '/heritages', title: 'Héritages — YonyWood' };
     case 'duo_feed':
     case 'duo_detail':
     case 'landing':
-      return { path: '/duo', title: 'Duo — YonyWood' };
+      return { path: '/duos', title: 'Duos — YonyWood' };
     case 'enterprise':
-      return { path: '/lumiere', title: 'Lumière — YonyWood' };
+      return { path: '/lumieres', title: 'Lumières — YonyWood' };
     case 'submit_story':
     case 'request_videographer':
       return { path: '/studio', title: 'Studio — YonyWood' };
     case 'marketplace':
-      return { path: '/production', title: 'Production — YonyWood' };
+      return { path: '/productions', title: 'Productions — YonyWood' };
     case 'profile':
     case 'settings':
     case 'portfolio':
@@ -100,11 +106,11 @@ const getScreenRouteInfo = (screen: ViewScreen): { path: string; title: string }
     case 'lineage':
     case 'messaging':
     case 'editorial_backoffice':
-      return { path: '/profil', title: 'Profil — YonyWood' };
+      return { path: '/portrait', title: 'Portrait — YonyWood' };
     case 'participate':
       return { path: '/co-construction', title: 'Co-construction — YonyWood' };
     default:
-      return { path: '/duo', title: 'Duo — YonyWood' };
+      return { path: '/duos', title: 'Duos — YonyWood' };
   }
 };
 

@@ -495,10 +495,10 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
       <div className="relative flex items-center justify-between h-9 sm:h-10 shrink-0 gap-2 mb-1">
         <div className="flex items-center gap-1.5 sm:gap-2.5 min-w-0 flex-1 h-full">
           {step === 1 ? (
-            /* Étape 1 : En-tête épuré et sobre - Espace thématique en italique noir */
+            /* Étape 1 : En-tête épuré et sobre - 4 façons de partager son histoire en italique noir */
             <div className="relative flex items-center h-full">
               <h1 className="font-editorial italic text-xs sm:text-sm md:text-base font-bold text-[#1C1917] tracking-tight leading-none whitespace-nowrap">
-                Thématiques
+                4 façons de partager son histoire
               </h1>
               {/* Petit trait terracotta officiel */}
               <div className="absolute left-0 -bottom-1.5 w-8 h-0.5 bg-[#A2482B] rounded-full" />

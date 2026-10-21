@@ -21,6 +21,8 @@ export interface CompanyEntity {
   foundedYear?: string;
   location?: string;
   stakeholders: CompanyStakeholder[];
+  brandColor?: string;
+  initials?: string;
 }
 
 const SAFE_AVATARS = [
@@ -116,6 +118,8 @@ export const COMPANIES_DATA: CompanyEntity[] = [
     description: 'Agence et studio pionnier de création audiovisuelle, de documentaires immersifs et de séries culturelles.',
     foundedYear: '2019',
     location: 'Cotonou, Bénin',
+    brandColor: '#E05A47',
+    initials: 'AF',
     stakeholders: generateStakeholders('afrika', 0)
   },
   {
@@ -130,6 +134,8 @@ export const COMPANIES_DATA: CompanyEntity[] = [
     description: 'Compagnie de transport interurbain et multimodal reliant les capitales et villages de la sous-région.',
     foundedYear: '2015',
     location: 'Cotonou & Parakou',
+    brandColor: '#2563EB',
+    initials: 'TE',
     stakeholders: generateStakeholders('trans', 1)
   },
   {
@@ -144,6 +150,8 @@ export const COMPANIES_DATA: CompanyEntity[] = [
     description: 'Ferme agroécologique modèle et coopérative de transformation de produits vivriers bio.',
     foundedYear: '2017',
     location: 'Ouidah, Bénin',
+    brandColor: '#16A34A',
+    initials: 'TA',
     stakeholders: generateStakeholders('terre', 2)
   },
   {
@@ -158,6 +166,8 @@ export const COMPANIES_DATA: CompanyEntity[] = [
     description: 'Entreprise pionnière d’électrification solaire rurale et de micro-réseaux communautaires.',
     foundedYear: '2020',
     location: 'Parakou, Bénin',
+    brandColor: '#D97706',
+    initials: 'ES',
     stakeholders: generateStakeholders('enersol', 3)
   },
   {
@@ -172,6 +182,8 @@ export const COMPANIES_DATA: CompanyEntity[] = [
     description: 'Manufacture textile artisanale valorisant le coton bio équitable et les teintures végétales.',
     foundedYear: '2018',
     location: 'Abomey, Bénin',
+    brandColor: '#9333EA',
+    initials: 'TA',
     stakeholders: generateStakeholders('tiss', 4)
   },
   {
@@ -186,6 +198,8 @@ export const COMPANIES_DATA: CompanyEntity[] = [
     description: 'Groupe média international engagé dans la coproduction et la diffusion.',
     foundedYear: '2001',
     location: 'Cotonou & Paris',
+    brandColor: '#1E293B',
+    initials: 'C+',
     stakeholders: generateStakeholders('canal', 5)
   },
   {
@@ -200,6 +214,8 @@ export const COMPANIES_DATA: CompanyEntity[] = [
     description: 'Centre de permaculture, d’aquaponie et de formation de jeunes agriculteurs résilients.',
     foundedYear: '2018',
     location: 'Allada, Bénin',
+    brandColor: '#059669',
+    initials: 'EF',
     stakeholders: generateStakeholders('eco', 6)
   },
   {
@@ -214,6 +230,8 @@ export const COMPANIES_DATA: CompanyEntity[] = [
     description: 'Manufacture solidaire de jus de fruits naturels, d’épices rares et de farines locales.',
     foundedYear: '2016',
     location: 'Bohicon, Bénin',
+    brandColor: '#C026D3',
+    initials: 'BS',
     stakeholders: generateStakeholders('bio', 7)
   },
   {
@@ -228,6 +246,8 @@ export const COMPANIES_DATA: CompanyEntity[] = [
     description: 'Laboratoire de phytothérapie et d’infusions médicinales issues de la forêt sacrée.',
     foundedYear: '2015',
     location: 'Porto-Novo, Bénin',
+    brandColor: '#0D9488',
+    initials: 'KC',
     stakeholders: generateStakeholders('kai', 8)
   },
   {
@@ -242,6 +262,8 @@ export const COMPANIES_DATA: CompanyEntity[] = [
     description: 'Maison d’édition et centre d’archivage numérique des généalogies royales et cultuelles.',
     foundedYear: '2014',
     location: 'Abomey, Bénin',
+    brandColor: '#B45309',
+    initials: 'RM',
     stakeholders: generateStakeholders('rac', 9)
   },
   {
@@ -256,6 +278,8 @@ export const COMPANIES_DATA: CompanyEntity[] = [
     description: 'Atelier de maîtres sculpteurs transmettant l’art séculaire des masques et bas-reliefs.',
     foundedYear: '2012',
     location: 'Ouidah, Bénin',
+    brandColor: '#78350F',
+    initials: 'AB',
     stakeholders: generateStakeholders('art', 10)
   },
   {
@@ -270,6 +294,8 @@ export const COMPANIES_DATA: CompanyEntity[] = [
     description: 'Coopérative de piroguiers solaires et de guides historiens natifs de Ganvié.',
     foundedYear: '2019',
     location: 'Ganvié, Bénin',
+    brandColor: '#0284C7',
+    initials: 'VL',
     stakeholders: generateStakeholders('voix', 11)
   },
   {
@@ -284,6 +310,8 @@ export const COMPANIES_DATA: CompanyEntity[] = [
     description: 'Fonderie d’art et joaillerie traditionnelle travaillant les métaux nobles au feu sacré.',
     foundedYear: '2013',
     location: 'Cotonou, Bénin',
+    brandColor: '#CA8A04',
+    initials: 'OA',
     stakeholders: generateStakeholders('or', 12)
   },
   {
@@ -298,6 +326,8 @@ export const COMPANIES_DATA: CompanyEntity[] = [
     description: 'Réseau de transport interurbain éco-responsable reliant les villes et villages du pays.',
     foundedYear: '2016',
     location: 'Cotonou & Parakou',
+    brandColor: '#EA580C',
+    initials: 'TB',
     stakeholders: generateStakeholders('trans', 13)
   },
   {
@@ -312,6 +342,8 @@ export const COMPANIES_DATA: CompanyEntity[] = [
     description: 'Ingénierie de pompage solaire et d’électrification décentralisée à haut rendement.',
     foundedYear: '2017',
     location: 'Natitingou, Bénin',
+    brandColor: '#EAB308',
+    initials: 'EP',
     stakeholders: generateStakeholders('eng', 14)
   },
   {
@@ -326,6 +358,8 @@ export const COMPANIES_DATA: CompanyEntity[] = [
     description: 'Manufacture de tissage artisanal royal perpétuant les motifs et teintes d’antan.',
     foundedYear: '2011',
     location: 'Abomey, Bénin',
+    brandColor: '#4F46E5',
+    initials: 'TR',
     stakeholders: generateStakeholders('tis', 15)
   },
   // BATCH 2 (Organisations 17 à 32)

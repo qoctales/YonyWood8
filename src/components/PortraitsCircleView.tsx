@@ -262,13 +262,16 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
       {/* ========================================================================= */}
       {/* EN-TÊTE HARMONISÉ EXACTEMENT AU MÊME EMPLACEMENT QUE STUDIO, PRODUCTION   */}
       {/* ========================================================================= */}
+      {/* ========================================================================= */}
+      {/* EN-TÊTE UNIFIÉ : FIL D'ARIANE LUMIÈRE & TEXTE D'AIDE                     */}
+      {/* ========================================================================= */}
       <header className="w-full relative flex items-center justify-between h-9 sm:h-10 shrink-0 gap-2 mb-1">
         {/* Fil d'Ariane en haut à gauche avec tiret terracotta signature sous le titre */}
         <nav aria-label="Fil d’Ariane" className="flex items-center gap-2 text-sm sm:text-base h-full">
           {level === 0 ? (
             <div className="relative flex items-center h-full">
               <h1 className="font-editorial italic text-xs sm:text-sm md:text-base font-bold text-[#1C1917] tracking-tight leading-none whitespace-nowrap">
-                Une histoire, plusieurs regards
+                Lumières
               </h1>
               {/* Petit trait terracotta officiel */}
               <div className="absolute left-0 -bottom-1.5 w-8 h-0.5 bg-[#A2482B] rounded-full" />
@@ -279,10 +282,10 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
                 type="button"
                 onClick={exit}
                 className="font-normal text-stone-500 hover:text-stone-900 transition-colors cursor-pointer flex items-center gap-1 group py-1"
-                title="Revenir à Lumière (constellation des 16 organisations)"
+                title="Revenir à Lumières (constellation des 16 organisations)"
               >
                 <ChevronLeft className="w-4 h-4 text-stone-400 group-hover:text-stone-700 group-hover:-translate-x-0.5 transition-transform" />
-                <span>Lumière</span>
+                <span>Lumières</span>
               </button>
               <span className="text-stone-300 font-light text-xs" aria-hidden="true">
                 ›
@@ -301,8 +304,13 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
           )}
         </nav>
 
-        {/* Droite : Bascule externe (Swipe) */}
-        <div className="flex items-center gap-2">
+        {/* Droite : Texte d'aide discret & Bascule externe */}
+        <div className="flex items-center gap-3">
+          <span className="text-xs text-stone-400 font-normal hidden sm:inline select-none">
+            {level === 0 
+              ? "Touchez le centre pour d'autres choix" 
+              : "Touchez le centre pour d'autres voix"}
+          </span>
           {topRightAction}
         </div>
       </header>
@@ -462,7 +470,7 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
                   opacity,
                   zIndex,
                   pointerEvents,
-                  transition: 'transform 0.55s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease',
+                  transition: 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.45s ease',
                   willChange: 'transform, opacity',
                 }}
               >
@@ -472,20 +480,24 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
                     if (level === 0) {
                       enter(k);
                     } else if (isCur) {
-                      // Au centre : un clic actualise et présente d'autres protagonistes de l'organisation
+                      // Au centre : un clic actualise les 16 collaborateurs
                       handleNextBatch();
                     }
                   }}
-                  aria-label={level === 0 ? org.companyName : `Découvrir d'autres collaborateurs de ${org.companyName}`}
-                  title={level === 0 ? org.companyName : (isCur ? `Cliquer pour voir d'autres collaborateurs (${org.companyName})` : '')}
-                  className="w-full h-full rounded-full flex items-center justify-center p-1.5 cursor-pointer group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F5B921]"
+                  aria-label={level === 0 ? org.companyName : (isCur ? `Toucher le centre pour d'autres voix (${org.companyName})` : org.companyName)}
+                  title={level === 0 ? org.companyName : (isCur ? `Toucher le centre pour d'autres voix (${org.companyName})` : '')}
+                  className="w-full h-full rounded-full flex items-center justify-center min-w-[44px] min-h-[44px] cursor-pointer group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F5B921]"
                 >
                   <div 
                     className={`relative w-full h-full rounded-full overflow-hidden border-2 shadow-md transition-all duration-300 ease-out transform-gpu ${
                       isCur 
-                        ? `border-[#A2482B] shadow-xl group-hover:scale-103 group-active:scale-95 ${isRotatingBatch ? 'scale-95' : ''}` 
-                        : 'border-white/95 group-hover:border-[#F5B921] group-hover:scale-112 group-hover:shadow-lg group-active:scale-95'
+                        ? `border-white/90 shadow-2xl ring-2 group-hover:scale-102 group-active:scale-95 ${isRotatingBatch ? 'scale-95 opacity-80' : ''}` 
+                        : 'border-white/95 group-hover:border-[#F5B921] group-hover:scale-105 group-hover:shadow-lg group-active:scale-95'
                     }`}
+                    style={isCur && curOrg?.brandColor ? {
+                      borderColor: curOrg.brandColor,
+                      boxShadow: `0 0 25px ${curOrg.brandColor}50, 0 8px 24px rgba(0,0,0,0.18)`
+                    } : undefined}
                   >
                     <img
                       src={org.photoUrl}
@@ -514,8 +526,9 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
 
           {/* ===================================================================== */}
           {/* COURONNE DES COLLABORATEURS (NIVEAU 2)                                */}
-          {/*    -> Conteneur stable anti-tremblement : la zone de clic est FIXE    */}
-          {/*    -> Seul le cercle intérieur s'anime élégamment sans rebond         */}
+          {/*    -> Conteneur stable anti-tremblement : dimensions fixes             */}
+          {/*    -> Transition conforme au CFG : 600ms cubic-bezier(0.4, 0, 0.2, 1) */}
+          {/*    -> Décalage progressif de 40ms par élément                         */}
           {/* ===================================================================== */}
           {displayedCollabs.map((collab, k) => {
             const p = pos(k, 16);
@@ -523,26 +536,26 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
 
             const transform = isShown
               ? `translate(-50%, -50%) translate(${p.x}px, ${p.y}px)`
-              : `translate(-50%, -50%) translate(0px, 0px)`;
+              : `translate(-50%, -50%) translate(0px, 0px) scale(0)`;
             const opacity = isShown ? 1 : 0;
             const pointerEvents: 'auto' | 'none' = isShown ? 'auto' : 'none';
 
-            // Transition d'arrivée étalée puis instantanée après déploiement
-            const transitionDelay = collabsInteractive ? '0s' : `${0.04 + k * 0.022}s`;
-            const transitionDuration = collabsInteractive ? '0.2s' : '0.45s';
+            // Respect rigoureux du timing CFG : 40ms par étape à l'entrée, 0s au repli fluide
+            const transitionDelay = isShown ? `${k * 40}ms` : '0ms';
+            const transitionDuration = isShown ? '600ms' : '320ms';
 
             return (
               <div
                 key={`collab-${collab.id}-${k}`}
                 className="absolute left-1/2 top-1/2 flex items-center justify-center"
                 style={{
-                  width: `${colPx + 14}px`,
-                  height: `${colPx + 14}px`,
+                  width: `${colPx + 10}px`,
+                  height: `${colPx + 10}px`,
                   transform,
                   opacity,
                   pointerEvents,
                   zIndex: 3,
-                  transition: `transform ${transitionDuration} cubic-bezier(0.16, 1, 0.3, 1) ${transitionDelay}, opacity ${transitionDuration} ease ${transitionDelay}`,
+                  transition: `transform ${transitionDuration} cubic-bezier(0.4, 0, 0.2, 1) ${transitionDelay}, opacity ${transitionDuration} ease ${transitionDelay}`,
                   willChange: 'transform, opacity',
                 }}
               >
@@ -552,11 +565,16 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
                     setActiveStakeholderModal(collab);
                     setIsStakeholderPlaying(false);
                   }}
-                  aria-label={collab.name}
+                  aria-label={`${collab.name} — ${collab.roleDetail || collab.roleCategory}`}
                   title={`${collab.name} · ${collab.roleDetail || collab.roleCategory}`}
-                  className="w-full h-full rounded-full flex items-center justify-center p-1.5 cursor-pointer group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F5B921]"
+                  className="w-full h-full rounded-full flex items-center justify-center p-1 cursor-pointer group min-w-[44px] min-h-[44px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F5B921]"
                 >
-                  <div className="w-full h-full rounded-full overflow-hidden border-2 border-white/95 shadow-md group-hover:border-[#F5B921] group-hover:shadow-lg group-hover:scale-115 group-active:scale-95 transition-all duration-200 ease-out transform-gpu">
+                  <div 
+                    className="w-full h-full rounded-full overflow-hidden border-2 border-white/95 shadow-md group-hover:shadow-lg group-hover:scale-105 group-active:scale-95 transition-transform duration-200 ease-out transform-gpu"
+                    style={curOrg?.brandColor ? {
+                      borderColor: `${curOrg.brandColor}99`
+                    } : undefined}
+                  >
                     <img
                       src={collab.photoUrl}
                       alt={collab.name}
