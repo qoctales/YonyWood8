@@ -390,7 +390,7 @@ export const INITIAL_SERIES_ENVELOPES: SeriesEconomicEnvelope[] = [
   {
     seriesId: 'jesus-legba',
     seriesTitle: 'Èṣù < > Jésus',
-    coverImage: '/assets/posters/jesus-esu.webp',
+    coverImage: '/assets/posters/Esu < > Jesus.png',
     totalRaised: 18500,
     distributableEnvelope: 11100,
     distributedAmount: 3840,
@@ -467,7 +467,7 @@ export const INITIAL_SERIES_ENVELOPES: SeriesEconomicEnvelope[] = [
   {
     seriesId: 'blacks-one-beyond-eve',
     seriesTitle: 'Blacks One < > Beyond Eve',
-    coverImage: '/assets/posters/blacks-one-beyond-eve.webp',
+    coverImage: '/assets/posters/Blacks One < > Beyond Eve.png',
     totalRaised: 29500,
     distributableEnvelope: 17700,
     distributedAmount: 6420,
