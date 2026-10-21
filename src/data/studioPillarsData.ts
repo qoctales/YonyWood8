@@ -21,6 +21,11 @@ import marquesTechImg from '../assets/images/marques_tech_1792086434196.jpg';
 import studioOrganisationsTeamImg from '../assets/images/studio_organisations_team_1792598184063.jpg';
 import koffiTisserandImg from '../assets/images/koffi_tisserand_benin_1789590473954.jpg';
 import recruitVideographerImg from '../assets/images/recruit_videographer_1791825865262.jpg';
+import studioOrgaOriginesImg from '../assets/images/studio_orga_origines_1792608957920.jpg';
+import studioOrgaValeursImg from '../assets/images/studio_orga_valeurs_1792608959843.jpg';
+import studioOrgaQuotidienImg from '../assets/images/studio_orga_quotidien_1792608958971.jpg';
+import studioOrgaEpreuvesImg from '../assets/images/studio_orga_epreuves_1792608979150.jpg';
+import studioSoiParcoursImg from '../assets/images/studio_soi_parcours_1792608978314.jpg';
 
 export interface StudioPillarItem {
   id: string;
@@ -224,7 +229,7 @@ export const STUDIO_PILLARS: StudioPillar[] = [
         title: 'Origines',
         subtitle: 'Pourquoi et comment tout a commencé.',
         question: 'Quelle étincelle visionnaire ou défi initial a donné naissance à votre organisation ?',
-        posterUrl: pillarOrgImg,
+        posterUrl: studioOrgaOriginesImg,
         videoUrl: STOCK_VIDEOS[0]
       },
       {
@@ -232,7 +237,7 @@ export const STUDIO_PILLARS: StudioPillar[] = [
         title: 'Valeurs',
         subtitle: 'Ce qui compte vraiment ici.',
         question: 'Quels principes non négociables guident chaque décision au sein de votre collectif ?',
-        posterUrl: marquesLuxeImg,
+        posterUrl: studioOrgaValeursImg,
         videoUrl: STOCK_VIDEOS[1]
       },
       {
@@ -240,7 +245,7 @@ export const STUDIO_PILLARS: StudioPillar[] = [
         title: 'Quotidien',
         subtitle: 'Une journée, un geste, un rituel.',
         question: 'Quel rituel quotidien ou geste d’attention caractérise l’ambiance de vos journées ?',
-        posterUrl: marquesAlimentationImg,
+        posterUrl: studioOrgaQuotidienImg,
         videoUrl: STOCK_VIDEOS[2]
       },
       {
@@ -248,7 +253,7 @@ export const STUDIO_PILLARS: StudioPillar[] = [
         title: 'Épreuves',
         subtitle: 'Le moment où l’on a failli tout arrêter.',
         question: 'Quelle crise majeure a testé votre foi dans le projet et comment l’avez-vous surmontée ?',
-        posterUrl: marquesFinanceImg,
+        posterUrl: studioOrgaEpreuvesImg,
         videoUrl: STOCK_VIDEOS[3]
       },
       {
@@ -302,7 +307,7 @@ export const STUDIO_PILLARS: StudioPillar[] = [
         title: 'Parcours de vie',
         subtitle: 'Son histoire, les étapes qui l’ont construite.',
         question: 'Quelles étapes fondatrices et quels tournants ont sculpté la personne que vous êtes ?',
-        posterUrl: pillarSoiImg,
+        posterUrl: studioSoiParcoursImg,
         videoUrl: STOCK_VIDEOS[3]
       },
       {

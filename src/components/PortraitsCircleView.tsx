@@ -7,7 +7,6 @@ import {
 import { CompanyEntity, CompanyStakeholder } from '../data/companyPortraitsData';
 import { ResonanceModal } from './ResonanceModal';
 import { UnifiedVideoCardOverlay } from './UnifiedVideoCardOverlay';
-import { TvPlayerIcon } from './YonywoodBrandIcons';
 import { celestialAudio } from '../utils/celestialAudio';
 import { ViewScreen } from '../types';
 
@@ -500,14 +499,17 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
                     if (level === 0) {
                       enter(k);
                     } else if (isCur) {
-                      // Au centre : un clic ouvre la carte vidéo standardisée de l'entreprise
-                      setActiveCompanyModal(org);
-                      setIsCompanyPlaying(false);
+                      // Au centre : un clic actualise les 16 collaborateurs qui sont autour
+                      setIsRotatingBatch(true);
                       celestialAudio.playOrbSelect();
+                      setTimeout(() => {
+                        setActiveBatchIndex((prev) => (prev + 1) % totalBatches);
+                        setIsRotatingBatch(false);
+                      }, 220);
                     }
                   }}
-                  aria-label={level === 0 ? org.companyName : (isCur ? `Visionner la carte vidéo de ${org.companyName}` : org.companyName)}
-                  title={level === 0 ? org.companyName : (isCur ? `Visionner la carte vidéo de ${org.companyName}` : '')}
+                  aria-label={level === 0 ? org.companyName : (isCur ? `Actualiser les 16 regards autour de ${org.companyName}` : org.companyName)}
+                  title={level === 0 ? org.companyName : (isCur ? `Actualiser les 16 regards autour de ${org.companyName}` : '')}
                   className="w-full h-full rounded-full flex items-center justify-center min-w-[44px] min-h-[44px] cursor-pointer group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F5B921]"
                 >
                   <div 
@@ -540,13 +542,6 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
                       className="w-full h-full object-cover pointer-events-none select-none"
                       style={{ backfaceVisibility: 'hidden' }}
                     />
-                    {isCur && (
-                      <div className="absolute inset-0 bg-black/25 flex items-center justify-center pointer-events-none group-hover:bg-black/15 transition-colors">
-                        <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/60 backdrop-blur-md border border-white/30 flex items-center justify-center text-white shadow-md">
-                          <TvPlayerIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" strokeWidth={1.8} />
-                        </div>
-                      </div>
-                    )}
                   </div>
                 </button>
               </div>

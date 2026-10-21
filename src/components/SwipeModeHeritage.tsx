@@ -255,8 +255,15 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
+              onClick={(e) => {
+                if ((e.target as HTMLElement).closest('button')) return;
+                setIsPlayingStep1(false);
+                setIsPlayingStep2(false);
+                setSwipeStep(2);
+                celestialAudio.playOrbSelect();
+              }}
               style={{ transform: `translateX(${swipeOffset}px)` }}
-              className="group aspect-[9/16] w-[min(calc(100vw-32px),calc((100dvh-200px)*9/16))] max-w-[280px] sm:max-w-[290px] h-[min(500px,calc(100dvh-200px))] mx-auto rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl flex flex-col justify-between p-3.5 sm:p-4.5 relative select-none shrink-0 transition-transform duration-100"
+              className="group aspect-[9/16] w-[min(calc(100vw-32px),calc((100dvh-200px)*9/16))] max-w-[280px] sm:max-w-[290px] h-[min(500px,calc(100dvh-200px))] mx-auto rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl flex flex-col justify-between p-3.5 sm:p-4.5 relative select-none shrink-0 transition-transform duration-100 cursor-pointer"
             >
               {/* Fond visuel permanent de la Porte */}
               <img
@@ -319,24 +326,6 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
                   </button>
                 </div>
               </div>
-
-              {/* BAS : BOUTON PETIT & ÉPURÉ « Choisir cette porte » */}
-              <div className="relative z-20 flex items-center justify-end pt-0.5">
-                <button
-                  id={`btn-choose-door-${currentSwipeDoor.id}`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsPlayingStep1(false);
-                    setIsPlayingStep2(false);
-                    setSwipeStep(2);
-                    celestialAudio.playOrbSelect();
-                  }}
-                  className="h-7.5 sm:h-8.5 px-3.5 sm:px-4 rounded-full bg-black/60 hover:bg-[#A2482B] active:bg-[#8A3B22] text-white text-[11px] sm:text-xs font-bold backdrop-blur-md transition-all flex items-center gap-1.5 shadow-md border border-white/20 hover:border-[#A2482B] cursor-pointer active:scale-95 group/btn shrink-0"
-                >
-                  <span>Choisir cette porte</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-white/90 group-hover/btn:translate-x-0.5 transition-transform shrink-0" />
-                </button>
-              </div>
             </div>
 
             {/* Flèche Porte Suivante */}
@@ -373,8 +362,17 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
+              onClick={(e) => {
+                if ((e.target as HTMLElement).closest('button')) return;
+                setSwipeSelectedSubcategory(effectiveSubcategory);
+                setSwipePersonIndex(0);
+                setIsPlayingStep2(false);
+                setIsPlayingStep3(false);
+                setSwipeStep(3);
+                celestialAudio.playOrbSelect();
+              }}
               style={{ transform: `translateX(${swipeOffset}px)` }}
-              className="group aspect-[9/16] w-[min(calc(100vw-32px),calc((100dvh-200px)*9/16))] max-w-[280px] sm:max-w-[290px] h-[min(500px,calc(100dvh-200px))] mx-auto rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl flex flex-col justify-between p-3.5 sm:p-4.5 relative select-none shrink-0 transition-transform duration-100"
+              className="group aspect-[9/16] w-[min(calc(100vw-32px),calc((100dvh-200px)*9/16))] max-w-[280px] sm:max-w-[290px] h-[min(500px,calc(100dvh-200px))] mx-auto rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl flex flex-col justify-between p-3.5 sm:p-4.5 relative select-none shrink-0 transition-transform duration-100 cursor-pointer"
             >
               {/* Image d'art céleste composée de la Direction */}
               <img
@@ -440,43 +438,6 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
                     )}
                   </button>
                 </div>
-              </div>
-
-              {/* BAS : BOUTONS Question + « Choisir cette direction » */}
-              <div className="relative z-20 flex items-center justify-between gap-1.5 pt-0.5">
-                {/* Bouton Question */}
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onOpenQuestionModal(
-                      effectiveSubcategory.label,
-                      effectiveSubcategory.question || effectiveSubcategory.tagline || effectiveSubcategory.description || "Quelle vision singulière ce parcours apporte-t-il au monde ?"
-                    );
-                  }}
-                  className="h-7.5 sm:h-8.5 px-3.5 sm:px-4 rounded-full bg-black/60 hover:bg-[#A2482B] active:bg-[#8A3B22] text-white text-[11px] sm:text-xs font-semibold backdrop-blur-md transition-all flex items-center justify-center border border-white/20 hover:border-[#A2482B] cursor-pointer shadow-md active:scale-95 shrink-0"
-                  title="Découvrir la question"
-                >
-                  <span>Question</span>
-                </button>
-
-                {/* Bouton Choisir cette direction */}
-                <button
-                  id={`btn-choose-direction-${effectiveSubcategory.slug}`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setSwipeSelectedSubcategory(effectiveSubcategory);
-                    setSwipePersonIndex(0);
-                    setIsPlayingStep2(false);
-                    setIsPlayingStep3(false);
-                    setSwipeStep(3);
-                    celestialAudio.playOrbSelect();
-                  }}
-                  className="h-7.5 sm:h-8.5 px-3.5 sm:px-4 rounded-full bg-black/60 hover:bg-[#A2482B] active:bg-[#8A3B22] text-white text-[11px] sm:text-xs font-bold backdrop-blur-md transition-all flex items-center gap-1.5 shadow-md border border-white/20 hover:border-[#A2482B] cursor-pointer active:scale-95 group/btn shrink-0"
-                >
-                  <span>Choisir cette direction</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-white/90 group-hover/btn:translate-x-0.5 transition-transform shrink-0" />
-                </button>
               </div>
             </div>
 

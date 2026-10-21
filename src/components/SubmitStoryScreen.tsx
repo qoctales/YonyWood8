@@ -392,13 +392,6 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                       )}
                     </button>
                   </div>
-
-                  {/* BAS : Question directrice d'accroche */}
-                  <div className="relative z-10 w-full mt-auto p-2 sm:p-2.5 rounded-xl bg-black/50 backdrop-blur-md border border-white/15 flex flex-col gap-0.5 pointer-events-none">
-                    <p className="font-serif-editorial italic text-[10.5px] sm:text-xs text-white/95 leading-snug line-clamp-2">
-                      « {item.question} »
-                    </p>
-                  </div>
                 </div>
               );
             })}
