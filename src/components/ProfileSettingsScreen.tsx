@@ -607,7 +607,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
     {
       id: 'tx-1',
       seriesId: 'finagnon-qosqorico',
-      seriesTitle: 'Bénin < > ...',
+      seriesTitle: 'Bénin < > Le Monde',
       sharesSold: 4,
       boughtPriceUnit: 35,
       soldPriceUnit: 55,

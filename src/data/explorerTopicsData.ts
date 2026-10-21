@@ -71,7 +71,7 @@ const seriesList: ExplorerCatalogItem[] = [
   {
     "id": "finagnon-qosqorico",
     "category": "series",
-    "title": "Benin < > ...",
+    "title": "Bénin < > Le Monde",
     "subtitle": "Bénin face au monde. Deux territoires. Une même réflexion sur ce qui nous relie à un lieu.",
     "question": "Quel est ce lien invisible et indestructible qui vous unit charnellement à la terre de vos ancêtres ?",
     "photoUrl": "/assets/posters/Benin < >.jpg",

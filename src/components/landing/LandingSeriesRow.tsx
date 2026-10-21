@@ -16,9 +16,9 @@ interface SeriesItem {
 const OFFICIAL_SERIES: SeriesItem[] = [
   {
     id: 'finagnon-qosqorico',
-    title: 'Bénin <> ...',
+    title: 'Bénin < > Le Monde',
     posterUrl: '/assets/posters/Benin < >.jpg',
-    universes: ['Bénin', '...'],
+    universes: ['Bénin', 'Le Monde'],
     territories: 'Bénin (Ganvié) & Pérou (Cusco)',
     tagline: 'L’eau lagunaire et les cimes sacrées face à l’amour d’une terre.',
     description: 'Des cités lacustres de Ganvié aux terrasses andines de Cusco, pêcheurs toffinou et paysans quechuas dialoguent sur l’enracinement et la mémoire des terres nourricières.',

@@ -59,7 +59,7 @@ const SERIES_SUBJECTS: ProposeSubject[] = [
   },
   {
     id: 'finagnon-qosqorico',
-    title: 'Benin < > ...',
+    title: 'Bénin < > Le Monde',
     subtitle: 'Bénin face au monde. Pêcheurs toffinou et paysans des terres sacrées.',
     synopsis: 'Des cités lacustres de Ganvié aux terrasses sacrées des Andes péruviennes. Le dialogue sensible entre deux gardiens de l’eau et de la Pachamama qui protègent la mémoire vitale de leurs communautés.',
     question: 'Quel est votre lien intime avec la terre ou l’eau qui nourrit votre communauté ?',

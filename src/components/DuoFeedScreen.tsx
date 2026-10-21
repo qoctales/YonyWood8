@@ -272,7 +272,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
 
   // Extraction robuste des deux pendants de la série
   const getSeriesHalves = (): [string, string] => {
-    if (isBeninSeries) return ['Bénin', '...'];
+    if (isBeninSeries) return ['Bénin', 'Le Monde'];
     if (activeDoc?.universes && activeDoc.universes.length >= 2) {
       return [activeDoc.universes[0].name, activeDoc.universes[1].name];
     }
@@ -303,9 +303,9 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
   const seriesNameA = normalizeUniverseName(rawPartA);
   const seriesNameB = normalizeUniverseName(rawPartB);
 
-  // Titre officiel de la série dans la pastille d'en-tête (ex: Bénin < > ...)
+  // Titre officiel de la série dans la pastille d'en-tête (ex: Bénin < > Le Monde)
   const headerPartA = isBeninSeries ? 'Bénin' : seriesNameA;
-  const headerPartB = isBeninSeries ? '...' : seriesNameB;
+  const headerPartB = isBeninSeries ? 'Le Monde' : seriesNameB;
 
   // Badges de pays / univers sur les cartes vidéo individuelles (ex: Bénin vs Pérou, Vodun Rays vs Amen)
   const cardTagA = isBeninSeries ? (pA.country || 'Bénin') : normalizeUniverseName(pA.universeTag || rawPartA);
@@ -349,7 +349,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
           </div>
 
           {/* Centre : Le nom officiel de la série centré (affiché sur écrans plus larges pour dégager l'espace mobile) */}
-          <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 items-center justify-center pointer-events-none max-w-[44vw]">
+          <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 items-center justify-center pointer-events-none max-w-[60vw]">
             <div 
               key={`duo-series-header-${currentDuo.id}-${headerPartA}-${headerPartB}`}
               className="inline-flex items-center gap-1 sm:gap-2 h-7 sm:h-8 px-2.5 sm:px-3.5 rounded-full bg-[#A2482B] border border-[#8A3B22] shadow-xs text-[10.5px] sm:text-xs text-white pointer-events-auto select-none"
@@ -365,7 +365,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                 <span>&lt;</span>
                 <span>&gt;</span>
               </span>
-              <span className="font-sans font-bold text-white tracking-tight truncate max-w-[130px] text-left">
+              <span className="font-sans font-bold text-white tracking-tight truncate max-w-[160px] text-left">
                 {headerPartB}
               </span>
             </div>

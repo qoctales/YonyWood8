@@ -195,7 +195,7 @@ export const SOUS_CATEGORIES: SousCategorie[] = [
     dimensionId: 'series',
     slug: 'finagnon-qosqorico',
     ordre: 2,
-    label: 'Benin < > ...',
+    label: 'Bénin < > Le Monde',
     icone: '16-series/finagnon-qosqorico',
     question: 'Quel est votre lien intime avec la terre ou l’eau qui nourrit votre communauté ?',
     tagline: 'Pêcheurs toffinou et paysans des terres sacrées',

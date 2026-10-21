@@ -37,7 +37,7 @@ const ALL_8_PRODUCTIONS: ProductionItem[] = [
   },
   {
     id: 'finagnon-qosqorico',
-    title: 'Bénin <> ...',
+    title: 'Bénin < > Le Monde',
     posterImage: '/assets/posters/Benin < >.jpg',
     sharePrice: 50,
     totalShares: 200,
@@ -186,8 +186,8 @@ export const DemoProductionsSection: React.FC = () => {
             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-black/40 pointer-events-none" />
 
             {/* Haut : Badge Titre & Déclencheur lecture */}
-            <div className="relative z-10 flex items-center justify-between pointer-events-auto">
-              <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-xs font-bold text-white tracking-wide">
+            <div className="relative z-10 flex items-start justify-between gap-2 pointer-events-auto">
+              <span className="px-2.5 sm:px-3 py-1 rounded-2xl sm:rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-[10.5px] sm:text-xs font-bold text-white tracking-wide max-w-[calc(100%-44px)] leading-snug">
                 {currentProd.title}
               </span>
 

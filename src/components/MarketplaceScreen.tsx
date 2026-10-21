@@ -63,49 +63,49 @@ const PRODUCTIONS: ProductionPoster[] = [
   },
   {
     id: 'finagnon-qosqorico',
-    title: 'Bénin <> ...',
+    title: 'Bénin < > Le Monde',
     posterImage: '/assets/posters/Benin < >.jpg',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
     sharePrice: 50
   },
   {
     id: 'blacks-one-beyond-eve',
-    title: 'Blacks One <> Beyond Eve',
+    title: 'Blacks One < > Beyond Eve',
     posterImage: '/assets/posters/Blacks One < > Beyond Eve.png',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
     sharePrice: 50
   },
   {
     id: 'dixeat-fiat-luxe',
-    title: 'Fiat Luxe <> Sweet Street',
+    title: 'Fiat Luxe < > Sweet Street',
     posterImage: '/assets/posters/Fiat Luxe < > Street.jpg',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
     sharePrice: 50
   },
   {
     id: 'investors-builders',
-    title: 'Diasporas <> Makers',
+    title: 'Diasporas < > Makers',
     posterImage: '/assets/posters/Diasporas < > Makers.jpg',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
     sharePrice: 50
   },
   {
     id: 'other-eyes-sixth-sense',
-    title: 'Other Sights <> Third Eye',
+    title: 'Other Sights < > Third Eye',
     posterImage: '/assets/posters/Other Eyes < > Third Eye.png',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
     sharePrice: 50
   },
   {
     id: 'coaching-unlimited',
-    title: 'Coach Me <> If You Can',
+    title: 'Coach Me < > If You Can',
     posterImage: '/assets/posters/Coaching < > Sans Limites.png',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
     sharePrice: 50
   },
   {
     id: 'focus-phd',
-    title: 'Pictures <> PhD',
+    title: 'Pictures < > PhD',
     posterImage: '/assets/posters/Focus < >  PhD.jpg',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
     sharePrice: 50
@@ -129,7 +129,7 @@ const INITIAL_PEER_OFFERS: PeerOffer[] = [
     sellerId: 'nadia-artist',
     sellerName: 'Nadia',
     sellerPhoto: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80',
-    seriesTitle: 'Bénin <> ...',
+    seriesTitle: 'Bénin < > Le Monde',
     posterImage: '/assets/posters/Benin < >.jpg',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
     sharesCount: 5,
@@ -140,7 +140,7 @@ const INITIAL_PEER_OFFERS: PeerOffer[] = [
     sellerId: 'marcel-speaker',
     sellerName: 'Marcel',
     sellerPhoto: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=400&q=80',
-    seriesTitle: 'Blacks One <> Beyond Eve',
+    seriesTitle: 'Blacks One < > Beyond Eve',
     posterImage: '/assets/posters/Blacks One < > Beyond Eve.png',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
     sharesCount: 2,
@@ -151,7 +151,7 @@ const INITIAL_PEER_OFFERS: PeerOffer[] = [
     sellerId: 'amina-cook',
     sellerName: 'Amina',
     sellerPhoto: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
-    seriesTitle: 'Fiat Luxe <> Sweet Street',
+    seriesTitle: 'Fiat Luxe < > Sweet Street',
     posterImage: '/assets/posters/Fiat Luxe < > Street.jpg',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
     sharesCount: 4,
@@ -162,7 +162,7 @@ const INITIAL_PEER_OFFERS: PeerOffer[] = [
     sellerId: 'benoit-builder',
     sellerName: 'Benoît',
     sellerPhoto: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80',
-    seriesTitle: 'Diasporas <> Makers',
+    seriesTitle: 'Diasporas < > Makers',
     posterImage: '/assets/posters/Diasporas < > Makers.jpg',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
     sharesCount: 3,
@@ -173,7 +173,7 @@ const INITIAL_PEER_OFFERS: PeerOffer[] = [
     sellerId: 'codjo-voyant',
     sellerName: 'Pascal',
     sellerPhoto: '/assets/duos/codjo-blind.jpg',
-    seriesTitle: 'Other Sights <> Third Eye',
+    seriesTitle: 'Other Sights < > Third Eye',
     posterImage: '/assets/posters/Other Eyes < > Third Eye.png',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
     sharesCount: 4,
@@ -184,7 +184,7 @@ const INITIAL_PEER_OFFERS: PeerOffer[] = [
     sellerId: 'coach-marc-seller',
     sellerName: 'Marc',
     sellerPhoto: '/assets/duos/coach-office.jpg',
-    seriesTitle: 'Coach Me <> If You Can',
+    seriesTitle: 'Coach Me < > If You Can',
     posterImage: '/assets/posters/Coaching < > Sans Limites.png',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
     sharesCount: 6,
@@ -195,7 +195,7 @@ const INITIAL_PEER_OFFERS: PeerOffer[] = [
     sellerId: 'clara-focus-seller',
     sellerName: 'Clara',
     sellerPhoto: '/assets/duos/photographer-focus.jpg',
-    seriesTitle: 'Pictures <> PhD',
+    seriesTitle: 'Pictures < > PhD',
     posterImage: '/assets/posters/Focus < >  PhD.jpg',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
     sharesCount: 5,
@@ -508,11 +508,13 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
                 {/* Voile cinématographique clair pour préserver l'éclat de l'affiche */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20 pointer-events-none" />
 
-                {/* HAUT : Badge du titre de la série à gauche + Déclencheur Petite Télé en haut à droite */}
-                <div className="relative z-10 flex items-center justify-between gap-2 pointer-events-auto">
-                  <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-[10.5px] sm:text-[11px] font-semibold tracking-widest text-white shadow-sm max-w-[75%] truncate leading-relaxed">
-                    {currentProd.title}
-                  </span>
+                {/* HAUT : Badge du titre de la série à gauche (affiché en entier sans troncature) + Déclencheur Petite Télé en haut à droite */}
+                <div className="relative z-10 flex items-start justify-between gap-2 pointer-events-auto">
+                  <div className="inline-flex items-center px-2.5 sm:px-3 py-1 rounded-2xl sm:rounded-full bg-black/65 backdrop-blur-md border border-white/20 text-[10px] sm:text-[11px] font-semibold text-white shadow-sm leading-snug max-w-[calc(100%-42px)]">
+                    <span className="whitespace-normal break-words text-left">
+                      {currentProd.title}
+                    </span>
+                  </div>
 
                   {/* Déclencheur lecteur vidéo « Petite Télé » standardisé en haut à droite (légèrement augmenté) */}
                   <button
@@ -626,11 +628,13 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
                 {/* Voile cinématographique clair pour préserver l'éclat de l'affiche */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20 pointer-events-none" />
 
-                {/* HAUT : Badge du titre de la série à gauche + Déclencheur Petite Télé en haut à droite */}
-                <div className="relative z-10 flex items-center justify-between gap-2 pointer-events-auto">
-                  <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-[10.5px] sm:text-[11px] font-semibold tracking-widest text-white shadow-sm max-w-[75%] truncate leading-relaxed">
-                    {currentOffer.seriesTitle}
-                  </span>
+                {/* HAUT : Badge du titre de la série à gauche (affiché en entier sans troncature) + Déclencheur Petite Télé en haut à droite */}
+                <div className="relative z-10 flex items-start justify-between gap-2 pointer-events-auto">
+                  <div className="inline-flex items-center px-2.5 sm:px-3 py-1 rounded-2xl sm:rounded-full bg-black/65 backdrop-blur-md border border-white/20 text-[10px] sm:text-[11px] font-semibold text-white shadow-sm leading-snug max-w-[calc(100%-42px)]">
+                    <span className="whitespace-normal break-words text-left">
+                      {currentOffer.seriesTitle}
+                    </span>
+                  </div>
 
                   {/* Déclencheur lecteur vidéo « Petite Télé » standardisé en haut à droite (légèrement augmenté) */}
                   <button

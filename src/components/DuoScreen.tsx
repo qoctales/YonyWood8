@@ -21,7 +21,7 @@ interface DuoScreenProps {
 export const DuoScreen: React.FC<DuoScreenProps> = ({ duoId, onNavigate }) => {
   const duo = DUOS.find(d => d.id === duoId) || DUOS[0];
   const isBeninSeries = duo.documentaryId === 'finagnon-qosqorico' || duo.documentaryTitle?.toLowerCase().includes('benin');
-  const displaySeriesTitle = isBeninSeries ? 'Bénin <> ...' : duo.documentaryTitle;
+  const displaySeriesTitle = isBeninSeries ? 'Bénin < > Le Monde' : duo.documentaryTitle;
 
   return (
     <div className="min-h-screen bg-[#F3E9D2]/40 pb-20">
@@ -48,7 +48,7 @@ export const DuoScreen: React.FC<DuoScreenProps> = ({ duoId, onNavigate }) => {
             >
               {DUOS.map(item => {
                 const itemIsBenin = item.documentaryId === 'finagnon-qosqorico' || item.documentaryTitle?.toLowerCase().includes('benin');
-                const itemTitle = itemIsBenin ? 'Bénin <> ...' : item.documentaryTitle;
+                const itemTitle = itemIsBenin ? 'Bénin < > Le Monde' : item.documentaryTitle;
                 return (
                   <option key={item.id} value={item.id}>
                     {itemTitle} — {item.protagonistA.name.split(' ')[0]} × {item.protagonistB.name.split(' ')[0]}

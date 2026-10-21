@@ -136,11 +136,11 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
   {
     id: 'finagnon-qosqorico',
     slug: 'finagnon-qosqorico',
-    title: 'Bénin <> ...',
+    title: 'Bénin < > Le Monde',
     subtitle: 'Racontez un moment où vous avez compris ce qui rend votre pays unique.',
     centralQuestion: 'Racontez un moment où vous avez compris ce qui rend votre pays unique.',
     shortSynopsis: 'Des cités lacustres de Ganvié aux cimes sacrées de Cusco et Pisac, pêcheurs et paysans dialoguent sur l’enracinement, l’eau, la montagne et l’amour inconditionnel d’une terre.',
-    description: 'Des cités lacustres de Ganvié, bâties sur pilotis pour échapper aux razzias du Dahomey, jusqu\'aux terrasses millénaires de Pisac et Cusco au Pérou, perchées à 3 400 mètres d\'altitude. Bénin <> ... réunit des pêcheurs toffinou et des paysans quechuas gardiens de la mémoire. Comment habite-t-on l\'eau ou la roche sacrée ? Que ressent-on lorsqu\'il faut quitter sa lagune ou sa cordillère, et que retrouve-t-on en revenant ? Une épopée intime sur la mémoire des terres nourricières et la résistance poétique des peuples autochtones face à l\'exil.',
+    description: 'Des cités lacustres de Ganvié, bâties sur pilotis pour échapper aux razzias du Dahomey, jusqu\'aux terrasses millénaires de Pisac et Cusco au Pérou, perchées à 3 400 mètres d\'altitude. Bénin < > Le Monde réunit des pêcheurs toffinou et des paysans quechuas gardiens de la mémoire. Comment habite-t-on l\'eau ou la roche sacrée ? Que ressent-on lorsqu\'il faut quitter sa lagune ou sa cordillère, et que retrouve-t-on en revenant ? Une épopée intime sur la mémoire des terres nourricières et la résistance poétique des peuples autochtones face à l\'exil.',
     coverImage: '/assets/posters/Benin < >.jpg',
     posterUrl: '/assets/posters/Benin < >.jpg',
     teaserVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
@@ -153,7 +153,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         territory: 'Bénin (Ganvié, Grand-Popo)'
       },
       {
-        name: '...',
+        name: 'Le Monde',
         tagline: 'L’autre rive, les cimes et les horizons en miroir',
         description: 'Entre cordillères et terrasses millénaires, la relation intime à la terre, la pierre sacrée et la culture vivante.',
         territory: 'Pérou (Cusco, Vallée Sacrée, Pisac)'
@@ -2572,7 +2572,7 @@ export const DUOS: Duo[] = [
     id: 'duo-finagnon-qosqorico-01',
     slug: 'duo-finagnon-qosqorico-01',
     documentaryId: 'finagnon-qosqorico',
-    documentaryTitle: 'Bénin <> ...',
+    documentaryTitle: 'Bénin < > Le Monde',
     episodeNumber: 'ÉPISODE 01',
     protagonistA: PROTAGONISTS.find(p => p.id === 'tobi-houndegla') || PROTAGONISTS[0],
     protagonistB: PROTAGONISTS.find(p => p.id === 'sayri-quispe') || PROTAGONISTS[1],
