@@ -17,7 +17,9 @@ import {
 import { CompanyEntity, CompanyStakeholder } from '../../data/companyPortraitsData';
 import { ShareIcon } from '../ShareIcon';
 import { ResonanceModal } from '../ResonanceModal';
+import { UnifiedVideoCardOverlay } from '../UnifiedVideoCardOverlay';
 import { ProfileSoloIcon, TvPlayerIcon, PortraitsViseurIcon } from '../YonywoodBrandIcons';
+import { blockVideo } from '../../utils/blockedContent';
 import { ViewScreen } from '../../types';
 
 interface PortraitsCircleViewProps {
@@ -46,6 +48,8 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
   const [showManifestoModal, setShowManifestoModal] = useState(false);
   const [isManifestoPlaying, setIsManifestoPlaying] = useState(true);
   const [isManifestoMuted, setIsManifestoMuted] = useState(false);
+  const [isCompanyResonanceOpen, setIsCompanyResonanceOpen] = useState(false);
+  const [companyResonancePct, setCompanyResonancePct] = useState<number | null>(null);
 
   // Modales d'interaction pour les intervenants
   const [resonanceTargetStakeholder, setResonanceTargetStakeholder] = useState<CompanyStakeholder | null>(null);
@@ -57,6 +61,7 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
 
   // Partage
   const [copied, setCopied] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   // Calcul du nombre de volets de 16 intervenants pour l'organisation sélectionnée
   const totalStakeholders = selectedCompany?.stakeholders.length || 0;
@@ -353,109 +358,115 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
       {/* ========================================================================= */}
       {/* MODALE DU MANIFESTE VIDÉO DE L'ORGANISATION (SOLEIL CENTRAL)              */}
       {/* ========================================================================= */}
+      {/* ========================================================================= */}
+      {/* MODALE DU MANIFESTE VIDÉO DE L'ORGANISATION (SOLEIL CENTRAL)              */}
+      {/* 100% IDENTIQUE À LA CARTE VIDÉO D'UNE PERSONNE                            */}
+      {/* ========================================================================= */}
       {showManifestoModal && selectedCompany && (
         <div 
-          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-md animate-in fade-in duration-200"
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md animate-in fade-in duration-200"
           onClick={() => {
             setShowManifestoModal(false);
             setIsManifestoPlaying(false);
           }}
         >
           <div 
-            className="relative w-full max-w-lg bg-stone-950 text-white rounded-3xl overflow-hidden shadow-2xl border border-stone-800 animate-in zoom-in-95 duration-200 flex flex-col"
+            className="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl border border-stone-200/40 flex flex-col justify-between 
+              aspect-[9/16] 
+              w-[min(calc(100vw-32px),calc((100dvh-200px)*9/16))] 
+              max-w-[280px] sm:max-w-[290px] 
+              h-[min(500px,calc(100dvh-200px))] 
+              mx-auto shrink-0 select-none animate-in zoom-in-95 duration-200 cursor-pointer"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Haut de modale */}
-            <div className="flex items-center justify-between p-3.5 sm:p-4 bg-stone-900/80 border-b border-stone-800">
-              <div className="min-w-0 pr-2">
-                <span className="text-[10px] font-bold text-[#A2482B] uppercase tracking-wider block">
-                  Manifeste Officiel · {selectedCompany.category}
-                </span>
-                <h3 className="font-editorial text-sm sm:text-base font-bold text-white truncate">
-                  {selectedCompany.companyName}
-                </h3>
-              </div>
-              <button
-                onClick={() => {
-                  setShowManifestoModal(false);
-                  setIsManifestoPlaying(false);
-                }}
-                className="p-1.5 rounded-full hover:bg-stone-800 text-stone-400 hover:text-white transition-colors cursor-pointer shrink-0"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            {/* Lecteur Vidéo du Manifeste */}
-            <div className="relative aspect-video w-full bg-black flex items-center justify-center">
+            {/* Vidéo de fond ou photo HD de l'entreprise */}
+            {isManifestoPlaying ? (
               <video
                 src={selectedCompany.manifestoVideoUrl || selectedCompany.videoUrl}
                 autoPlay
                 loop
                 playsInline
                 muted={isManifestoMuted}
-                className="w-full h-full object-cover"
+                className="absolute inset-0 w-full h-full object-cover pointer-events-none"
               />
-              
-              {/* Contrôles Vidéo superposés discrets */}
-              <div className="absolute bottom-2 right-2 flex items-center gap-2">
-                <button
-                  onClick={() => setIsManifestoMuted(!isManifestoMuted)}
-                  className="p-1.5 rounded-full bg-black/60 hover:bg-[#A2482B] text-white border border-white/20 transition-all cursor-pointer"
-                  title={isManifestoMuted ? "Activer le son" : "Couper le son"}
-                >
-                  {isManifestoMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
-                </button>
-              </div>
-            </div>
+            ) : (
+              <img
+                src={selectedCompany.photoUrl}
+                alt={selectedCompany.companyName}
+                className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+              />
+            )}
 
-            {/* Contenu et question fondatrice du manifeste */}
-            <div className="p-4 sm:p-5 space-y-3 bg-stone-900/60">
-              <div className="p-3 rounded-2xl bg-white/5 border border-white/10">
-                <span className="text-[10px] font-semibold text-stone-400 block mb-1">
-                  Question fondatrice de l'organisation :
-                </span>
-                <p className="font-serif text-sm sm:text-base text-stone-200 italic leading-snug">
-                  « {selectedCompany.manifestoQuestion || selectedCompany.tagline} »
-                </p>
-              </div>
+            {/* Dégradé cinématique sombre */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/50 pointer-events-none" />
 
-              <p className="text-xs sm:text-[13px] text-stone-300 leading-relaxed">
-                {selectedCompany.manifestoDescription || selectedCompany.tagline}
-              </p>
+            {/* Overlay standardisé identique à celui d'une personne */}
+            <UnifiedVideoCardOverlay
+              videoId={`company-${selectedCompany.id}`}
+              titleBadge={selectedCompany.category}
+              displayName={selectedCompany.companyName}
+              preserveFullName={true}
+              isPlaying={isManifestoPlaying}
+              onTogglePlay={() => setIsManifestoPlaying(prev => !prev)}
+              isMuted={isManifestoMuted}
+              onToggleMute={() => setIsManifestoMuted(prev => !prev)}
+              resonanceScore={companyResonancePct}
+              onOpenResonance={() => setIsCompanyResonanceOpen(true)}
+              questionText={selectedCompany.manifestoQuestion || selectedCompany.tagline}
+              factText={selectedCompany.manifestoDescription || selectedCompany.description}
+              onOpenProfile={() => {
+                setShowManifestoModal(false);
+                if (onSelectCompany) {
+                  onSelectCompany(selectedCompany);
+                }
+              }}
+              onShare={handleShare}
+              isShareCopied={copied}
+              onReportVideo={() => {
+                setToastMessage('Vidéo signalée à la modération.');
+                setTimeout(() => setToastMessage(null), 2500);
+              }}
+              onBlockVideo={() => {
+                blockVideo(`company-${selectedCompany.id}`);
+                setShowManifestoModal(false);
+                setToastMessage('Cette entreprise a été masquée.');
+                setTimeout(() => setToastMessage(null), 2500);
+              }}
+            />
 
-              <div className="flex items-center justify-between pt-1">
-                <span className="text-[11px] text-stone-400">
-                  Écosystème : {selectedCompany.stakeholders.length} voix enregistrées
-                </span>
-                <button
-                  onClick={() => {
-                    setShowManifestoModal(false);
-                    setIsManifestoPlaying(false);
-                  }}
-                  className="px-4 py-1.5 rounded-full bg-[#A2482B] hover:bg-[#8A3B22] text-white text-xs font-semibold cursor-pointer transition-all"
-                >
-                  Explorer les regards
-                </button>
-              </div>
-            </div>
+            {/* Modale d'évaluation résonance entreprise */}
+            <ResonanceModal
+              isOpen={isCompanyResonanceOpen}
+              onClose={() => setIsCompanyResonanceOpen(false)}
+              storyId={`company-${selectedCompany.id}`}
+              topicId={selectedCompany.companyName}
+              personName={selectedCompany.companyName}
+              initialPercentage={companyResonancePct}
+              onRatingSubmitted={(pct) => setCompanyResonancePct(pct)}
+            />
           </div>
         </div>
       )}
 
       {/* ========================================================================= */}
       {/* MODALE DU TÉMOIGNAGE VIDÉO D'UN INTERVENANT EN ORBITE                    */}
+      {/* 100% CONFORME AVEC UNIFIED VIDEO CARD OVERLAY                             */}
       {/* ========================================================================= */}
       {activeStakeholder && selectedCompany && (
         <div 
-          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-md animate-in fade-in duration-200 select-none"
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md animate-in fade-in duration-200 select-none"
           onClick={() => {
             setActiveStakeholder(null);
             setIsStakeholderPlaying(false);
           }}
         >
           <div 
-            className="relative h-[min(540px,calc(100dvh-120px))] aspect-[9/16] w-auto mx-auto rounded-3xl overflow-hidden bg-stone-950 text-white shadow-2xl border border-stone-700 flex flex-col justify-between p-3.5 sm:p-4.5 group"
+            className="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl border border-stone-200/40 flex flex-col justify-between 
+              aspect-[9/16] 
+              w-[min(calc(100vw-32px),calc((100dvh-200px)*9/16))] 
+              max-w-[280px] sm:max-w-[290px] 
+              h-[min(500px,calc(100dvh-200px))] 
+              mx-auto shrink-0 select-none animate-in zoom-in-95 duration-200 cursor-pointer"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Vidéo de l'intervenant */}
@@ -466,116 +477,56 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
                 loop
                 playsInline
                 muted={isStakeholderMuted}
-                className="absolute inset-0 w-full h-full object-cover"
+                className="absolute inset-0 w-full h-full object-cover pointer-events-none"
               />
             ) : (
               <img
                 src={activeStakeholder.photoUrl}
                 alt={activeStakeholder.name}
-                className="absolute inset-0 w-full h-full object-cover"
+                className="absolute inset-0 w-full h-full object-cover pointer-events-none"
               />
             )}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/65 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/50 pointer-events-none" />
 
-            {/* Haut : Nom organisation & Fermer */}
-            <div className="relative z-20 flex items-center justify-between w-full pointer-events-auto">
-              <span className="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-[10px] sm:text-xs font-bold text-white tracking-wider uppercase truncate">
-                {selectedCompany.companyName}
-              </span>
-
-              <div className="flex items-center gap-1.5">
-                <button
-                  onClick={() => setIsStakeholderPlaying(prev => !prev)}
-                  className="w-8 h-8 rounded-xl bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 flex items-center justify-center text-white cursor-pointer transition-all"
-                  title={isStakeholderPlaying ? "Pause" : "Lecture"}
-                >
-                  {isStakeholderPlaying ? <Pause className="w-3.5 h-3.5 fill-white" /> : <Play className="w-3.5 h-3.5 fill-white" />}
-                </button>
-                <button
-                  onClick={() => {
-                    setActiveStakeholder(null);
-                    setIsStakeholderPlaying(false);
-                  }}
-                  className="w-8 h-8 rounded-xl bg-black/50 hover:bg-stone-800 backdrop-blur-md border border-white/20 flex items-center justify-center text-white cursor-pointer transition-all"
-                  title="Fermer"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-
-            {/* Flanc droit : Résonance, Question (icône BookOpen), Profil, Partager */}
-            <div 
-              onClick={(e) => e.stopPropagation()}
-              className="absolute right-3 top-[56%] -translate-y-1/2 z-20 flex flex-col items-center gap-2.5 pointer-events-auto"
-            >
-              {/* 1. Évaluation résonance */}
-              <button
-                onClick={() => setResonanceTargetStakeholder(activeStakeholder)}
-                className={`w-9 h-9 rounded-xl backdrop-blur-md border flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95 ${
-                  stakeholderResonances[activeStakeholder.id] !== undefined
-                    ? 'bg-[#A2482B] border-[#A2482B] text-white shadow-[0_0_12px_rgba(162,72,43,0.5)]'
-                    : 'bg-black/45 hover:bg-[#A2482B] border-white/20 text-white'
-                }`}
-                title={stakeholderResonances[activeStakeholder.id] !== undefined ? `Résonance : ${stakeholderResonances[activeStakeholder.id]}%` : "Évaluer la résonance"}
-              >
-                <Award className="w-4 h-4 text-white" />
-              </button>
-
-              {/* 2. Question existentielle (ne s'affiche qu'au clic) */}
-              <button
-                onClick={() => setQuestionModalStakeholder(activeStakeholder)}
-                className="w-9 h-9 rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
-                title="Découvrir la question abordée"
-              >
-                <BookOpen className="w-4 h-4 text-white" />
-              </button>
-
-              {/* 3. Découvrir le profil */}
-              <button
-                onClick={() => onNavigate && onNavigate({ type: 'profile' })}
-                className="w-9 h-9 rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
-                title={`Découvrir le profil de ${activeStakeholder.name}`}
-              >
-                <ProfileSoloIcon className="w-4 h-4 text-white" />
-              </button>
-
-              {/* 4. Partager */}
-              <button
-                onClick={handleShare}
-                className="w-9 h-9 rounded-xl bg-black/45 hover:bg-[#A2482B] border-white/20 text-white flex items-center justify-center transition-all cursor-pointer hover:scale-105 active:scale-95"
-                title="Partager"
-              >
-                {copied ? <Check className="w-4 h-4 text-white" /> : <ShareIcon className="w-4 h-4 text-white" />}
-              </button>
-            </div>
-
-            {/* Bas : Prénom de l'intervenant & Statut simple */}
-            <div className="relative z-20 pt-2 mt-auto flex items-end justify-between gap-2 pointer-events-auto">
-              <div className="space-y-0.5 min-w-0 pr-2">
-                <h3 className="font-editorial text-base sm:text-lg font-bold text-white tracking-wider leading-tight drop-shadow-md">
-                  {activeStakeholder.name.split(' ')[0]}
-                </h3>
-                <span className="text-[11px] sm:text-xs text-white/85 font-medium block truncate">
-                  {activeStakeholder.roleCategory}{activeStakeholder.roleDetail ? ` · ${activeStakeholder.roleDetail}` : ''}
-                </span>
-              </div>
-
-              {/* Symbole Muet (actif uniquement pendant la lecture vidéo) */}
-              {isStakeholderPlaying && (
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsStakeholderMuted(prev => !prev);
-                  }}
-                  className="w-8 h-8 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 text-white flex items-center justify-center cursor-pointer transition-all shrink-0"
-                  title={isStakeholderMuted ? 'Activer le son' : 'Couper le son'}
-                >
-                  {isStakeholderMuted ? <VolumeX className="w-3.5 h-3.5 text-white" /> : <Volume2 className="w-3.5 h-3.5 text-white" />}
-                </button>
-              )}
-            </div>
+            {/* Overlay standardisé identique */}
+            <UnifiedVideoCardOverlay
+              videoId={`stakeholder-${activeStakeholder.id}`}
+              titleBadge={selectedCompany.companyName}
+              displayName={activeStakeholder.name}
+              isPlaying={isStakeholderPlaying}
+              onTogglePlay={() => setIsStakeholderPlaying(prev => !prev)}
+              isMuted={isStakeholderMuted}
+              onToggleMute={() => setIsStakeholderMuted(prev => !prev)}
+              resonanceScore={stakeholderResonances[activeStakeholder.id]}
+              onOpenResonance={() => setResonanceTargetStakeholder(activeStakeholder)}
+              questionText={activeStakeholder.question}
+              factText={`${activeStakeholder.roleCategory} : ${activeStakeholder.roleDetail || 'partenaire engagé dans la transmission locale'}`}
+              onOpenProfile={() => {
+                setActiveStakeholder(null);
+                if (onNavigate) {
+                  onNavigate({ type: 'profile' });
+                }
+              }}
+              onShare={handleShare}
+              isShareCopied={copied}
+              onReportVideo={() => {
+                setToastMessage('Vidéo signalée à la modération.');
+                setTimeout(() => setToastMessage(null), 2500);
+              }}
+              onBlockVideo={() => {
+                blockVideo(`stakeholder-${activeStakeholder.id}`);
+                setActiveStakeholder(null);
+                setToastMessage('Cette vidéo a été masquée.');
+                setTimeout(() => setToastMessage(null), 2500);
+              }}
+            />
           </div>
+        </div>
+      )}
+
+      {toastMessage && (
+        <div className="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 bg-stone-900/95 backdrop-blur-md text-white border border-white/20 px-4 py-2 rounded-full text-xs font-semibold shadow-2xl animate-in fade-in pointer-events-none">
+          {toastMessage}
         </div>
       )}
 

@@ -149,6 +149,7 @@ export const MatrixStoryVideoModal: React.FC<MatrixStoryVideoModalProps> = ({
 
         {/* Overlay standardisé : alignement vertical strict, 6 actions, pas de croix, titre en haut à gauche et prénom épuré en bas à gauche */}
         <UnifiedVideoCardOverlay
+          videoId={person.id}
           titleBadge={tagLabel}
           displayName={displayName}
           isPlaying={isPlaying}

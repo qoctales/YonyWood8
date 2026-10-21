@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { 
   Award, 
   BookOpen, 
@@ -14,8 +14,12 @@ import {
 } from 'lucide-react';
 import { TvPlayerIcon, ProfileSoloIcon } from './YonywoodBrandIcons';
 import { ShareIcon } from './ShareIcon';
+import { blockVideo } from '../utils/blockedContent';
 
 export interface UnifiedVideoCardOverlayProps {
+  // Identifiant optionnel pour le blocage effectif
+  videoId?: string;
+
   // Haut gauche
   titleBadge: string;
   badgeIcon?: React.ReactNode;
@@ -65,6 +69,7 @@ export interface UnifiedVideoCardOverlayProps {
 }
 
 export const UnifiedVideoCardOverlay: React.FC<UnifiedVideoCardOverlayProps> = ({
+  videoId,
   titleBadge,
   badgeIcon,
   displayName,
@@ -93,6 +98,19 @@ export const UnifiedVideoCardOverlay: React.FC<UnifiedVideoCardOverlayProps> = (
   const [internalFactOpen, setInternalFactOpen] = useState(false);
   const [showMoreMenu, setShowMoreMenu] = useState(false);
   const [feedbackToast, setFeedbackToast] = useState<string | null>(null);
+  const moreMenuRef = useRef<HTMLDivElement>(null);
+
+  // Fermeture automatique du menu 3-points au clic extérieur
+  useEffect(() => {
+    if (!showMoreMenu) return;
+    const handleOutsideClick = (e: MouseEvent) => {
+      if (moreMenuRef.current && !moreMenuRef.current.contains(e.target as Node)) {
+        setShowMoreMenu(false);
+      }
+    };
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => document.removeEventListener('mousedown', handleOutsideClick);
+  }, [showMoreMenu]);
 
   // Gestion du clic sur Question
   const handleQuestionClick = (e: React.MouseEvent) => {
@@ -121,21 +139,22 @@ export const UnifiedVideoCardOverlay: React.FC<UnifiedVideoCardOverlayProps> = (
     setShowMoreMenu(false);
     if (onReportVideo) {
       onReportVideo();
-    } else {
-      setFeedbackToast('Vidéo signalée à la modération.');
-      setTimeout(() => setFeedbackToast(null), 2500);
     }
+    setFeedbackToast('Vidéo signalée à la modération.');
+    setTimeout(() => setFeedbackToast(null), 2500);
   };
 
   const handleBlock = (e: React.MouseEvent) => {
     e.stopPropagation();
     setShowMoreMenu(false);
+    if (videoId) {
+      blockVideo(videoId);
+    }
     if (onBlockVideo) {
       onBlockVideo();
-    } else {
-      setFeedbackToast('Cette vidéo a été masquée.');
-      setTimeout(() => setFeedbackToast(null), 2500);
     }
+    setFeedbackToast('Cette vidéo a été masquée pour votre compte.');
+    setTimeout(() => setFeedbackToast(null), 2500);
   };
 
   // Prénom ou nom épuré
@@ -270,7 +289,7 @@ export const UnifiedVideoCardOverlay: React.FC<UnifiedVideoCardOverlayProps> = (
         )}
 
         {/* 6. OPTIONS (...) SIGNALER / BLOQUER */}
-        <div className="relative">
+        <div className="relative" ref={moreMenuRef}>
           <button
             type="button"
             onClick={(e) => {

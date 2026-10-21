@@ -581,6 +581,7 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
                   "Passeur d'un savoir vivant transmis à sa communauté."
                 }
                 onOpenProfile={() => onNavigate({ type: 'protagonist_profile', protagonistId: effectivePerson.id })}
+                videoId={effectivePerson.id}
                 onShare={() => onSharePerson(effectivePerson)}
                 isShareCopied={isShareCopied}
                 onReportVideo={() => {
@@ -590,10 +591,7 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
                   });
                 }}
                 onBlockVideo={() => {
-                  setReportingTarget({
-                    id: effectivePerson.id,
-                    title: `${effectivePerson.name} — ${effectivePerson.story?.title || 'Récit d\'héritage'}`
-                  });
+                  onNextPerson();
                 }}
               />
             </div>

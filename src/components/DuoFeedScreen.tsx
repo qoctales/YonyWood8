@@ -30,6 +30,7 @@ import { ProfileSoloIcon, TvPlayerIcon } from './YonywoodBrandIcons';
 import { ShareIcon } from './ShareIcon';
 import { ResonanceModal } from './ResonanceModal';
 import { UnifiedVideoCardOverlay } from './UnifiedVideoCardOverlay';
+import { blockVideo, getBlockedVideoIds } from '../utils/blockedContent';
 
 interface DuoFeedScreenProps {
   onNavigate: (screen: ViewScreen) => void;
@@ -104,6 +105,27 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
   const [isMutedB, setIsMutedB] = useState(false);
   const [deckMoreMenuA, setDeckMoreMenuA] = useState(false);
   const [deckMoreMenuB, setDeckMoreMenuB] = useState(false);
+  const [blockedIds, setBlockedIds] = useState<string[]>(() => getBlockedVideoIds());
+
+  // Synchronisation réactive des vidéos bloquées
+  useEffect(() => {
+    const handleBlocked = () => {
+      setBlockedIds(getBlockedVideoIds());
+    };
+    window.addEventListener('yonywood_video_blocked', handleBlocked);
+    return () => window.removeEventListener('yonywood_video_blocked', handleBlocked);
+  }, []);
+
+  // Fermeture des menus Deck au clic extérieur
+  useEffect(() => {
+    if (!deckMoreMenuA && !deckMoreMenuB) return;
+    const handleOutsideClick = () => {
+      setDeckMoreMenuA(false);
+      setDeckMoreMenuB(false);
+    };
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => document.removeEventListener('mousedown', handleOutsideClick);
+  }, [deckMoreMenuA, deckMoreMenuB]);
 
   const videoRefA = useRef<HTMLVideoElement | null>(null);
   const videoRefB = useRef<HTMLVideoElement | null>(null);
@@ -118,10 +140,11 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
   const stampPrevOpacity = useTransform(dragX, [20, 90], [0, 1]);
   const stampNextOpacity = useTransform(dragX, [-20, -90], [0, 1]);
 
-  // Filter duos based on user's profile series filter AND active series selector
-  const baseFilteredDuos = allowedSeriesIds && allowedSeriesIds.length > 0
+  // Filter duos based on user's profile series filter AND active series selector, excluding blocked videos
+  const baseFilteredDuos = (allowedSeriesIds && allowedSeriesIds.length > 0
     ? DUOS.filter(d => allowedSeriesIds.includes(d.documentaryId))
-    : DUOS;
+    : DUOS
+  ).filter(d => !blockedIds.includes(d.protagonistA?.id) && !blockedIds.includes(d.protagonistB?.id));
 
   const filteredDuos = selectedDocId
     ? baseFilteredDuos.filter(d => d.documentaryId === selectedDocId)
@@ -495,8 +518,9 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/25 pointer-events-none" />
 
-                    {/* Overlay standardisé : alignement vertical strict, 6 actions, pas de croix, titre en haut à gauche et prénom épuré en bas à gauche */}
+                    {/* Overlay standardisé : alignement vertical strict, 5 actions, pas de croix, titre en haut à gauche et prénom épuré en bas à gauche */}
                     <UnifiedVideoCardOverlay
+                      videoId={pA.id}
                       titleBadge={cardTagA}
                       displayName={pA.name}
                       isPlaying={isPlayingA}
@@ -523,8 +547,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                         setIsReportModalOpen(true);
                       }}
                       onBlockVideo={() => {
-                        setCustomReportTarget({ id: pA.id, title: pA.name, type: 'video' });
-                        setIsReportModalOpen(true);
+                        handleNext();
                       }}
                     />
                   </div>
@@ -560,8 +583,9 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/25 pointer-events-none" />
 
-                    {/* Overlay standardisé : alignement vertical strict, 6 actions, pas de croix, titre en haut à gauche et prénom épuré en bas à gauche */}
+                    {/* Overlay standardisé : alignement vertical strict, 5 actions, pas de croix, titre en haut à gauche et prénom épuré en bas à gauche */}
                     <UnifiedVideoCardOverlay
+                      videoId={pB.id}
                       titleBadge={cardTagB}
                       displayName={pB.name}
                       isPlaying={isPlayingB}
@@ -588,8 +612,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                         setIsReportModalOpen(true);
                       }}
                       onBlockVideo={() => {
-                        setCustomReportTarget({ id: pB.id, title: pB.name, type: 'video' });
-                        setIsReportModalOpen(true);
+                        handleNext();
                       }}
                     />
                   </div>
@@ -802,8 +825,8 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                               onClick={(e) => {
                                 e.stopPropagation();
                                 setDeckMoreMenuA(false);
-                                setCustomReportTarget({ id: pA.id, title: pA.name, type: 'video' });
-                                setIsReportModalOpen(true);
+                                blockVideo(pA.id);
+                                handleNext();
                               }}
                               className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs text-red-300 hover:text-red-200 hover:bg-red-500/20 transition-colors text-left cursor-pointer"
                             >
@@ -1035,8 +1058,8 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                               onClick={(e) => {
                                 e.stopPropagation();
                                 setDeckMoreMenuB(false);
-                                setCustomReportTarget({ id: pB.id, title: pB.name, type: 'video' });
-                                setIsReportModalOpen(true);
+                                blockVideo(pB.id);
+                                handleNext();
                               }}
                               className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs text-red-300 hover:text-red-200 hover:bg-red-500/20 transition-colors text-left cursor-pointer"
                             >

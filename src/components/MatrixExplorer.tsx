@@ -297,6 +297,7 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
 
   const handleBackToMatrix = () => {
     setHeritageMode('matrix');
+    celestialAudio.playOrbSelect();
     try {
       window.history.replaceState({ screen: 'matrix_view' }, '', window.location.pathname);
     } catch {

@@ -7,6 +7,8 @@ import {
 import { CompanyEntity, CompanyStakeholder } from '../data/companyPortraitsData';
 import { ResonanceModal } from './ResonanceModal';
 import { UnifiedVideoCardOverlay } from './UnifiedVideoCardOverlay';
+import { TvPlayerIcon } from './YonywoodBrandIcons';
+import { celestialAudio } from '../utils/celestialAudio';
 import { ViewScreen } from '../types';
 
 interface PortraitsCircleViewProps {
@@ -75,6 +77,24 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
   const [isResonanceOpen, setIsResonanceOpen] = useState<boolean>(false);
   const [resonancePct, setResonancePct] = useState<number | null>(null);
   const [copied, setCopied] = useState<boolean>(false);
+
+  // Modale vidéo pour l'entreprise (ouverte au centre du portail)
+  const [activeCompanyModal, setActiveCompanyModal] = useState<CompanyEntity | null>(null);
+  const [isCompanyPlaying, setIsCompanyPlaying] = useState<boolean>(false);
+  const [isCompanyMuted, setIsCompanyMuted] = useState<boolean>(false);
+  const [isCompanyResonanceOpen, setIsCompanyResonanceOpen] = useState<boolean>(false);
+  const [companyResonancePct, setCompanyResonancePct] = useState<number | null>(null);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  // Partage de l'entreprise
+  const handleShareCompany = (company: CompanyEntity) => {
+    if (navigator.clipboard) {
+      const url = `${window.location.origin}?company=${company.id}`;
+      navigator.clipboard.writeText(url);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
 
   // Données de l'organisation active
   const curOrg = curIndex >= 0 && curIndex < displayedCompanies.length ? displayedCompanies[curIndex] : null;
@@ -480,12 +500,14 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
                     if (level === 0) {
                       enter(k);
                     } else if (isCur) {
-                      // Au centre : un clic actualise les 16 collaborateurs
-                      handleNextBatch();
+                      // Au centre : un clic ouvre la carte vidéo standardisée de l'entreprise
+                      setActiveCompanyModal(org);
+                      setIsCompanyPlaying(false);
+                      celestialAudio.playOrbSelect();
                     }
                   }}
-                  aria-label={level === 0 ? org.companyName : (isCur ? `Toucher le centre pour d'autres voix (${org.companyName})` : org.companyName)}
-                  title={level === 0 ? org.companyName : (isCur ? `Toucher le centre pour d'autres voix (${org.companyName})` : '')}
+                  aria-label={level === 0 ? org.companyName : (isCur ? `Visionner la carte vidéo de ${org.companyName}` : org.companyName)}
+                  title={level === 0 ? org.companyName : (isCur ? `Visionner la carte vidéo de ${org.companyName}` : '')}
                   className="w-full h-full rounded-full flex items-center justify-center min-w-[44px] min-h-[44px] cursor-pointer group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F5B921]"
                 >
                   <div 
@@ -518,6 +540,13 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
                       className="w-full h-full object-cover pointer-events-none select-none"
                       style={{ backfaceVisibility: 'hidden' }}
                     />
+                    {isCur && (
+                      <div className="absolute inset-0 bg-black/25 flex items-center justify-center pointer-events-none group-hover:bg-black/15 transition-colors">
+                        <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/60 backdrop-blur-md border border-white/30 flex items-center justify-center text-white shadow-md">
+                          <TvPlayerIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" strokeWidth={1.8} />
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </button>
               </div>
@@ -673,6 +702,106 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
               onRatingSubmitted={(pct) => setResonancePct(pct)}
             />
           </div>
+        </div>
+      )}
+
+      {/* ========================================================================= */}
+      {/* MODALE CARTE VIDÉO DE L'ENTREPRISE (OUVERTE DEPUIS LE CENTRE DU PORTAIL) */}
+      {/* Structure, composants et comportement 100% identiques aux cartes de personne */}
+      {/* ========================================================================= */}
+      {activeCompanyModal && (
+        <div
+          onClick={() => {
+            setActiveCompanyModal(null);
+            setIsCompanyPlaying(false);
+          }}
+          className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 animate-in fade-in duration-200"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl border border-stone-200/40 flex flex-col justify-between 
+              aspect-[9/16] 
+              w-[min(calc(100vw-32px),calc((100dvh-200px)*9/16))] 
+              max-w-[280px] sm:max-w-[290px] 
+              h-[min(500px,calc(100dvh-200px))] 
+              mx-auto shrink-0 select-none animate-in zoom-in-95 duration-200 cursor-pointer"
+          >
+            {/* Vidéo de fond ou photo HD */}
+            {isCompanyPlaying ? (
+              <video
+                src={activeCompanyModal.manifestoVideoUrl || activeCompanyModal.videoUrl}
+                autoPlay
+                loop
+                playsInline
+                muted={isCompanyMuted}
+                className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+              />
+            ) : (
+              <img
+                src={activeCompanyModal.photoUrl}
+                alt={activeCompanyModal.companyName}
+                className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+              />
+            )}
+
+            {/* Dégradé cinématique sombre */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/50 pointer-events-none" />
+
+            {/* Overlay standardisé identique à celui d'une personne :
+                - En haut à gauche : le domaine d'activité
+                - En bas : le nom de l'entreprise avec la même police et le même style
+                - Évaluation, Question, Profil de l'entreprise, Partager, Menu 3 points (Signaler / Bloquer)
+            */}
+            <UnifiedVideoCardOverlay
+              videoId={`company-${activeCompanyModal.id}`}
+              titleBadge={activeCompanyModal.category}
+              displayName={activeCompanyModal.companyName}
+              preserveFullName={true}
+              isPlaying={isCompanyPlaying}
+              onTogglePlay={() => setIsCompanyPlaying((prev) => !prev)}
+              isMuted={isCompanyMuted}
+              onToggleMute={() => setIsCompanyMuted((prev) => !prev)}
+              resonanceScore={companyResonancePct}
+              onOpenResonance={() => setIsCompanyResonanceOpen(true)}
+              questionText={activeCompanyModal.manifestoQuestion || activeCompanyModal.tagline}
+              factText={activeCompanyModal.manifestoDescription || activeCompanyModal.description}
+              onOpenProfile={() => {
+                setActiveCompanyModal(null);
+                if (onSelectCompany) {
+                  onSelectCompany(activeCompanyModal);
+                }
+              }}
+              onShare={() => handleShareCompany(activeCompanyModal)}
+              isShareCopied={copied}
+              onReportVideo={() => {
+                setToastMessage('Vidéo signalée à la modération.');
+                setTimeout(() => setToastMessage(null), 2500);
+              }}
+              onBlockVideo={() => {
+                setActiveCompanyModal(null);
+                setToastMessage('Cette entreprise a été masquée.');
+                setTimeout(() => setToastMessage(null), 2500);
+              }}
+            />
+
+            {/* MODALE ÉVALUATION DE L'ENTREPRISE */}
+            <ResonanceModal
+              isOpen={isCompanyResonanceOpen}
+              onClose={() => setIsCompanyResonanceOpen(false)}
+              storyId={`company-${activeCompanyModal.id}`}
+              topicId={activeCompanyModal.companyName}
+              personName={activeCompanyModal.companyName}
+              initialPercentage={companyResonancePct}
+              onRatingSubmitted={(pct) => setCompanyResonancePct(pct)}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Toast de confirmation */}
+      {toastMessage && (
+        <div className="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 bg-stone-900/95 backdrop-blur-md text-white border border-white/20 px-4 py-2 rounded-full text-xs font-semibold shadow-2xl animate-in fade-in pointer-events-none">
+          {toastMessage}
         </div>
       )}
     </div>

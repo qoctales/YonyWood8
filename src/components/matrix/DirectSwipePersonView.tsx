@@ -226,6 +226,7 @@ export const DirectSwipePersonView: React.FC<DirectSwipePersonViewProps> = ({
 
           {/* Overlay standardisé : alignement vertical strict, 6 actions, pas de croix, titre en haut à gauche et prénom épuré en bas à gauche */}
           <UnifiedVideoCardOverlay
+            videoId={currentPerson.id}
             titleBadge={tagLabel}
             displayName={displayName}
             isPlaying={isPlaying}
@@ -243,11 +244,8 @@ export const DirectSwipePersonView: React.FC<DirectSwipePersonViewProps> = ({
             }}
             onShare={handleShare}
             isShareCopied={isCopied}
-            onReportVideo={() => {
-              // Action de signalement
-            }}
             onBlockVideo={() => {
-              // Action de blocage
+              goToNext();
             }}
           />
 

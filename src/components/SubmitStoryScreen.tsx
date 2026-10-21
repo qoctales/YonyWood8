@@ -283,17 +283,17 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                 opacity = 0.75;
                 pointerEvents = 'auto';
               } else if (diff === 2) {
-                // Carte droite plus éloignée (pour 8 séries)
-                transformStyle = `translateX(calc(105% + ${dragOffset}px)) translateZ(-150px) rotateY(-45deg) scale(0.7)`;
+                // Carte droite plus éloignée (pour les piliers à 8 éléments)
+                transformStyle = `translateX(calc(100% + ${dragOffset}px)) translateZ(-140px) rotateY(-40deg) scale(0.72)`;
                 zIndex = 10;
-                opacity = 0.25;
-                pointerEvents = 'none';
+                opacity = 0.35;
+                pointerEvents = 'auto';
               } else if (diff === -2) {
-                // Carte gauche plus éloignée (pour 8 séries)
-                transformStyle = `translateX(calc(-105% + ${dragOffset}px)) translateZ(-150px) rotateY(45deg) scale(0.7)`;
+                // Carte gauche plus éloignée (pour les piliers à 8 éléments)
+                transformStyle = `translateX(calc(-100% + ${dragOffset}px)) translateZ(-140px) rotateY(40deg) scale(0.72)`;
                 zIndex = 10;
-                opacity = 0.25;
-                pointerEvents = 'none';
+                opacity = 0.35;
+                pointerEvents = 'auto';
               } else {
                 // Cartes masquées à l'arrière
                 transformStyle = `translateX(0px) translateZ(-250px) rotateY(180deg) scale(0.5)`;
@@ -315,6 +315,12 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                         setSelectedThemeIndex(0);
                         setPlayingCardId(null);
                         celestialAudio?.playOrbSelect?.();
+                      } else {
+                        // Au clic sur une thématique centrale : lancer la proposition d'histoire
+                        onNavigate({ 
+                          type: 'participate', 
+                          preselectedSeriesId: item.id 
+                        });
                       }
                     } else {
                       // Clic direct sur une carte latérale : la faire pivoter immédiatement au centre
@@ -330,7 +336,7 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                     pointerEvents,
                     transition: isDraggingRef.current ? 'none' : 'transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.24s ease'
                   }}
-                  className={`absolute aspect-[9/16] w-[min(calc(100vw-32px),calc((100dvh-200px)*9/16))] max-w-[280px] sm:max-w-[290px] h-[min(500px,calc(100dvh-200px))] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl flex flex-col justify-between p-2.5 sm:p-4 cursor-pointer select-none bg-[#151513] text-white border transition-colors ${
+                  className={`absolute aspect-[9/16] w-[min(calc(100vw-32px),calc((100dvh-200px)*9/16))] max-w-[280px] sm:max-w-[290px] h-[min(500px,calc(100dvh-200px))] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl flex flex-col justify-between p-3 sm:p-4 cursor-pointer select-none bg-[#151513] text-white border transition-colors ${
                     isCenter ? 'border-stone-200/90 ring-1 ring-white/30' : 'border-white/15'
                   }`}
                 >
@@ -353,13 +359,13 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                     />
                   )}
 
-                  {/* Voile discret en haut pour que la capsule ressorte nettement sans masquer l'image */}
-                  <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-transparent to-transparent pointer-events-none" />
+                  {/* Voile cinématographique pour une visibilité optimale */}
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/75 pointer-events-none" />
 
-                  {/* HAUT : Titre complet non coupé sur capsule classique à gauche + Petite télé à droite */}
+                  {/* HAUT : Titre épuré en haut à gauche + Déclencheur Petite Télé en haut à droite */}
                   <div className="relative z-10 flex items-center justify-between gap-1.5 pointer-events-auto w-full min-w-0">
                     <span 
-                      className="inline-flex items-center px-2.5 sm:px-3 py-1 rounded-full bg-black/75 backdrop-blur-md border border-white/20 text-[9.5px] sm:text-[10.5px] font-semibold tracking-wide text-white shadow-sm shrink-0 whitespace-nowrap leading-none select-none"
+                      className="inline-flex items-center px-2.5 sm:px-3 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-[10px] sm:text-[11px] font-semibold tracking-wide text-white shadow-sm shrink-0 whitespace-nowrap leading-none select-none max-w-[calc(100%-48px)] truncate"
                       title={item.title}
                     >
                       {item.title}
@@ -387,8 +393,12 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                     </button>
                   </div>
 
-                  {/* CENTRE ET BAS : ENTIÈREMENT DÉGAGÉS, AUCUN TEXTE SUR L'IMAGE */}
-                  <div className="my-auto" />
+                  {/* BAS : Question directrice d'accroche */}
+                  <div className="relative z-10 w-full mt-auto p-2 sm:p-2.5 rounded-xl bg-black/50 backdrop-blur-md border border-white/15 flex flex-col gap-0.5 pointer-events-none">
+                    <p className="font-serif-editorial italic text-[10.5px] sm:text-xs text-white/95 leading-snug line-clamp-2">
+                      « {item.question} »
+                    </p>
+                  </div>
                 </div>
               );
             })}
