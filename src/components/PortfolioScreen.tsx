@@ -362,7 +362,7 @@ export const PortfolioScreen: React.FC<PortfolioScreenProps> = ({
           </button>
 
           <div className="relative flex items-center h-full">
-            <h1 className="font-editorial text-base sm:text-lg font-bold text-[#1C1917] tracking-tight leading-none">
+            <h1 className="font-editorial italic text-xs sm:text-sm md:text-base font-bold text-[#1C1917] tracking-tight leading-none whitespace-nowrap">
               {currentTab === 'shares' ? 'Mes parts' : 'Historique'}
             </h1>
             {/* Petit trait terracotta officiel */}

@@ -427,6 +427,10 @@ async function startServer() {
       // ignore
     }
 
+    // Servir directement les médias et assets publics avec le bon type MIME
+    app.use('/assets', express.static(path.resolve(__dirname, 'public/assets'), { maxAge: '1h' }));
+    app.use(express.static(path.resolve(__dirname, 'public'), { maxAge: '1h' }));
+
     const vite = await createViteServer({
       server: { 
         middlewareMode: true,
@@ -439,6 +443,11 @@ async function startServer() {
     app.use('*', async (req: Request, res: Response, next) => {
       if (req.originalUrl.startsWith('/api') || req.originalUrl.startsWith('/socket.io')) {
         return next();
+      }
+      // Ne jamais renvoyer de page HTML si une ressource média/image est demandée
+      if (req.originalUrl.match(/\.(jpg|jpeg|png|gif|svg|webp|avif|ico|mp4|webm|woff|woff2|ttf|eot)$/i)) {
+        res.status(404).end();
+        return;
       }
       try {
         const url = req.originalUrl;

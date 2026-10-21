@@ -12,51 +12,8 @@ interface NavbarProps {
   onOpenAuth?: (mode: 'login' | 'register') => void;
 }
 
-const getHeaderTagline = (screen: ViewScreen): string => {
-  switch (screen.type) {
-    case 'submit_story':
-    case 'request_videographer':
-      return "Espace des thématiques proposées";
-
-    case 'home':
-    case 'matrix_view':
-    case 'documentaries':
-    case 'documentary_detail':
-      return "Matrice des transmissions collaboratives";
-
-    case 'duo_feed':
-    case 'duo_detail':
-    case 'landing':
-      return "Deux univers, une même question";
-
-    case 'enterprise':
-      return "Plusieurs regards, une histoire commune";
-
-    case 'marketplace':
-      return "Cofinancement des histoires qui comptent";
-
-    case 'profile':
-    case 'settings':
-    case 'portfolio':
-    case 'my_forest':
-    case 'protagonist_profile':
-    case 'lineage':
-    case 'transactions':
-    case 'messaging':
-    case 'editorial_backoffice':
-      return "Gestion des préférences et récits partagés";
-
-    case 'participate':
-      return "Espace de co-construction";
-
-    default:
-      return "Deux univers, une même question";
-  }
-};
-
 export const Navbar: React.FC<NavbarProps> = ({ currentScreen, onNavigate, onOpenAuth }) => {
   const { user, logout } = useAuth();
-  const tagline = getHeaderTagline(currentScreen);
 
   // Ne pas afficher pendant le lecteur vidéo plein écran
   if (currentScreen.type === 'video_player') {
@@ -67,7 +24,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentScreen, onNavigate, onOpe
     <header className="shrink-0 z-40 w-full backdrop-blur-md bg-white/95 border-b border-stone-200 shadow-2xs">
       <div className="w-full px-3 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-2 relative">
         
-        {/* Gauche : Logo officiel YonyWood */}
+        {/* Gauche : Logo officiel YonyWood aligné à gauche sur mobile et desktop */}
         <div 
           onClick={() => onNavigate({ type: 'duo_feed' })}
           className="flex items-center cursor-pointer group select-none py-1 shrink-0 z-20"
@@ -81,28 +38,18 @@ export const Navbar: React.FC<NavbarProps> = ({ currentScreen, onNavigate, onOpe
           />
         </div>
 
-        {/* Centre : Tagline courte officielle en gras sur toutes les pages */}
-        <div className="flex absolute inset-0 items-center justify-center text-center select-none pointer-events-none z-10 px-16 sm:px-24 md:px-28 lg:px-36">
-          <span className="font-editorial text-[10.5px] sm:text-xs md:text-[13.5px] lg:text-[14px] font-bold text-stone-900 tracking-tight leading-snug truncate max-w-[170px] sm:max-w-sm md:max-w-xl">
-            {tagline}
-          </span>
-        </div>
-
-        {/* Droite : Bouton d'action phare Co-construire Yonywood */}
-        <div className="flex items-center gap-1.5 sm:gap-2.5 z-20 shrink-0">
+        {/* Droite : Bouton d'action phare Participer */}
+        <div className="flex items-center gap-1.5 sm:gap-2.5 z-20 shrink-0 ml-auto">
           
-          {/* Bouton Co-construire Yonywood (masqué sur les pages de co-construction, coproduction et studio) */}
-          {currentScreen.type !== 'marketplace' && 
-           currentScreen.type !== 'participate' && 
-           currentScreen.type !== 'submit_story' && 
-           currentScreen.type !== 'request_videographer' && (
+          {/* Bouton Participer (affiché sur Studio et les autres pages, masqué uniquement quand on est déjà sur la page Participer) */}
+          {currentScreen.type !== 'participate' && (
             <button
               onClick={() => onNavigate({ type: 'participate' })}
               id="nav-participate-btn"
-              className="px-2.5 sm:px-4.5 py-1.5 sm:py-2 rounded-full font-bold text-[11px] sm:text-xs md:text-sm shadow-xs transition-all cursor-pointer flex items-center justify-center whitespace-nowrap active:scale-95 bg-[#A2482B] hover:bg-[#8A3B22] text-white hover:scale-102 hover:shadow-sm"
-              title="Co-construire Yonywood : Devenir égérie, coproduction, entreprises"
+              className="px-3 sm:px-4.5 py-1.5 sm:py-2 rounded-full font-bold text-[11px] sm:text-xs md:text-sm shadow-xs transition-all cursor-pointer flex items-center justify-center whitespace-nowrap active:scale-95 bg-[#A2482B] hover:bg-[#8A3B22] text-white hover:scale-102 hover:shadow-sm"
+              title="Participer : Devenir égérie, coproduction, entreprises"
             >
-              <span>Co-construire Yonywood</span>
+              <span>Participer</span>
             </button>
           )}
 

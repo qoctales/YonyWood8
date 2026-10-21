@@ -961,10 +961,10 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
       {/* 1. BARRE SUPÉRIEURE : EN-TÊTE FIXE ET HARMONISÉ STRICTEMENT SANS TÉLESCOPAGE NI LIGNE */}
       <div className="w-full max-w-3xl mx-auto px-4 py-3 pb-2 shrink-0 z-40 bg-white/95 border-none shadow-none">
         <header className="relative flex items-center justify-between h-9 sm:h-10 shrink-0 gap-2 border-none">
-          {/* Titre Héritage avec trait terracotta signature */}
+          {/* Titre officiel de la page en noir, écrit en italique avec trait terracotta */}
           <div className="relative flex items-center h-full">
-            <h1 className="font-editorial text-base sm:text-lg font-bold text-[#1C1917] tracking-tight leading-none">
-              Héritage
+            <h1 className="font-editorial italic text-xs sm:text-sm md:text-base font-bold text-[#1C1917] tracking-tight leading-none whitespace-nowrap">
+              Matrice de transmission
             </h1>
             {/* Petit trait terracotta officiel */}
             <div className="absolute left-0 -bottom-1.5 w-8 h-0.5 bg-[#A2482B] rounded-full" />

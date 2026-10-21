@@ -989,21 +989,21 @@ export const PROTAGONISTS: Protagonist[] = [
           name: 'Maître Tanaka',
           role: 'Maître ébéniste',
           country: 'Japon',
-          photo: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80'
+          photo: '/assets/protagonists/adjovi-blandine.jpg'
         },
         {
           id: 'p-sayuri',
           name: 'Sayuri',
           role: 'Laqueuse',
           country: 'Japon',
-          photo: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80'
+          photo: '/assets/protagonists/amara-tisserande.jpg'
         },
         {
           id: 'p-goro',
           name: 'Goro',
           role: 'Bûcheron',
           country: 'Japon',
-          photo: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&q=80'
+          photo: '/assets/protagonists/armel-hounkpatin.jpg'
         }
       ],
       heritiers: [
@@ -1012,14 +1012,14 @@ export const PROTAGONISTS: Protagonist[] = [
           name: 'Yuki',
           role: 'Apprentie tissage',
           country: 'Japon',
-          photo: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80'
+          photo: '/assets/protagonists/athlete-hurdle.jpg'
         },
         {
           id: 'h-awa',
           name: 'Awa',
           role: 'Luthière',
           country: 'Sénégal',
-          photo: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=400&q=80'
+          photo: '/assets/protagonists/chef-koffi.jpg'
         }
       ],
       transmissions: [
@@ -1125,14 +1125,14 @@ export const PROTAGONISTS: Protagonist[] = [
           name: 'Mama Asunta',
           role: 'Grand-mère tisseuse',
           country: 'Pérou',
-          photo: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80'
+          photo: '/assets/protagonists/coach-office.jpg'
         },
         {
           id: 'p-huaman',
           name: 'Don Huamán',
           role: 'Teinturier d’altitude',
           country: 'Pérou',
-          photo: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80'
+          photo: '/assets/protagonists/codjo-blind.jpg'
         }
       ],
       heritiers: [
@@ -1141,7 +1141,7 @@ export const PROTAGONISTS: Protagonist[] = [
           name: 'Nayra',
           role: 'Apprentie fileuse',
           country: 'Pérou',
-          photo: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=400&q=80'
+          photo: '/assets/protagonists/dah-zounon.jpg'
         }
       ],
       transmissions: [
@@ -1923,7 +1923,7 @@ export const PROTAGONISTS: Protagonist[] = [
           name: 'Amadou Kane',
           role: 'Banquier de développement solidaire',
           country: 'Sénégal',
-          photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80'
+          photo: '/assets/protagonists/eleonore-vance.jpg'
         }
       ],
       heritiers: [
@@ -1932,7 +1932,7 @@ export const PROTAGONISTS: Protagonist[] = [
           name: 'Mariama Fall',
           role: 'Analyste d’impact environnemental',
           country: 'Sénégal',
-          photo: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80'
+          photo: '/assets/protagonists/fatou-diallo.jpg'
         }
       ],
       transmissions: [
@@ -2023,7 +2023,7 @@ export const PROTAGONISTS: Protagonist[] = [
           name: 'Maître Kofi Annan',
           role: 'Maçon traditionnel de voûtes nubiennes',
           country: 'Ghana',
-          photo: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80'
+          photo: '/assets/protagonists/helene-saint-amand.jpg'
         }
       ],
       heritiers: [
@@ -2032,7 +2032,7 @@ export const PROTAGONISTS: Protagonist[] = [
           name: 'Sena Houndété',
           role: 'Apprenti maçon en terre battue',
           country: 'Bénin',
-          photo: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80'
+          photo: '/assets/protagonists/koffi-tisserand.jpg'
         }
       ],
       transmissions: [
@@ -2876,8 +2876,8 @@ export const VIDEOGRAPHERS: Videographer[] = [
     id: 'vid-1',
     name: 'Ayaba Senou',
     age: 28,
-    photo: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80',
-    photoUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80',
+    photo: '/assets/protagonists/kwame-mensah.jpg',
+    photoUrl: '/assets/protagonists/mahougnon-zounon.jpg',
     territory: 'Bénin (Cotonou, Ouidah, Allada)',
     country: 'Bénin',
     bio: 'Documentariste diplômée de l’ISMA. Spécialiste de la lumière naturelle et des récits de mémoire vivante.',
@@ -2897,8 +2897,8 @@ export const VIDEOGRAPHERS: Videographer[] = [
     id: 'vid-2',
     name: 'Mateo Quispe Flores',
     age: 32,
-    photo: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80',
-    photoUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80',
+    photo: '/assets/protagonists/malik-diop.jpg',
+    photoUrl: '/assets/protagonists/mawuna-medium.jpg',
     territory: 'Pérou (Cusco, Vallée Sacrée, Pisac)',
     country: 'Pérou',
     bio: 'Natif de la région de Pisac, réalisateur indépendant formé à Lima. Passionné par les cosmologies andines et l’agriculture paysanne d’altitude.',
@@ -2918,8 +2918,8 @@ export const VIDEOGRAPHERS: Videographer[] = [
     id: 'vid-3',
     name: 'Kadiatou Bocoum',
     age: 29,
-    photo: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80',
-    photoUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80',
+    photo: '/assets/protagonists/pere-matthieu.jpg',
+    photoUrl: '/assets/protagonists/photographer-focus.jpg',
     territory: 'Sénégal (Dakar, Saint-Louis, Rufisque)',
     country: 'Sénégal',
     bio: 'Cheffe opératrice et monteuse. Son regard sensible saisit la spontanéité des collectifs urbains, de la danse et des paroles féminines insoumises.',
@@ -2939,8 +2939,8 @@ export const VIDEOGRAPHERS: Videographer[] = [
     id: 'vid-4',
     name: 'Adrien Vasseur',
     age: 35,
-    photo: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=600&q=80',
-    photoUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=600&q=80',
+    photo: '/assets/protagonists/researcher-phd.jpg',
+    photoUrl: '/assets/protagonists/sayri-quispe.jpg',
     territory: 'France (Paris, Île-de-France, Lyon)',
     country: 'France',
     bio: 'Cadreur spécialisé dans la gastronomie sensorielle, les ateliers d’art et l’architecture d’intérieur. Travail subtil sur le clair-obscur et la texture des matières.',
@@ -3176,7 +3176,7 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
             country: 'Bénin',
             flag: '🇧🇯',
             universeTag: 'Jésus',
-            photoUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80',
+            photoUrl: '/assets/protagonists/senan-agossa.jpg',
             badge: 'Invité(e)',
             invitedById: 'dah-zounon',
             invitedByName: 'Mahougnon',
@@ -3195,7 +3195,7 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
                 country: 'Bénin',
                 flag: '🇧🇯',
                 universeTag: 'Jésus',
-                photoUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80',
+                photoUrl: '/assets/protagonists/sika-dossou.jpg',
                 badge: 'Invité(e)',
                 invitedById: 'soeur-blandine',
                 invitedByName: 'Sœur Blandine',
@@ -3216,7 +3216,7 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
             country: 'Bénin',
             flag: '🇧🇯',
             universeTag: 'Èṣù',
-            photoUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=800&q=80',
+            photoUrl: '/assets/protagonists/tobi-ganvie.jpg',
             badge: 'Invité(e)',
             invitedById: 'dah-zounon',
             invitedByName: 'Mahougnon',
@@ -3256,7 +3256,7 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
             country: 'Bénin',
             flag: '🇧🇯',
             universeTag: 'Amen',
-            photoUrl: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=800&q=80',
+            photoUrl: '/assets/protagonists/tobi-houndegla.jpg',
             badge: 'Invité(e)',
             invitedById: 'pere-matthieu',
             invitedByName: 'Dieudonné',
@@ -3275,7 +3275,7 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
                 country: 'Bénin',
                 flag: '🇧🇯',
                 universeTag: 'Jésus',
-                photoUrl: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=800&q=80',
+                photoUrl: '/assets/protagonists/adjovi-blandine.jpg',
                 badge: 'Invité(e)',
                 invitedById: 'pasteur-emmanuel',
                 invitedByName: 'Pasteur Emmanuel',
@@ -3296,7 +3296,7 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
             country: 'Bénin',
             flag: '🇧🇯',
             universeTag: 'Amen',
-            photoUrl: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=800&q=80',
+            photoUrl: '/assets/protagonists/amara-tisserande.jpg',
             badge: 'Invité(e)',
             invitedById: 'pere-matthieu',
             invitedByName: 'Dieudonné',
@@ -3328,7 +3328,7 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
         country: 'Bénin',
         flag: '🇧🇯',
         universeTag: 'Finagnon',
-        photoUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80',
+        photoUrl: '/assets/protagonists/armel-hounkpatin.jpg',
         isPioneer: true,
         badge: 'Première effigie',
         invitationStory: 'Première effigie et initiateur du volet Finagnon. A posé la question originelle : « Que transmet une main qui tisse depuis l\'enfance ? »',
@@ -3347,7 +3347,7 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
             country: 'Bénin',
             flag: '🇧🇯',
             universeTag: 'Finagnon',
-            photoUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80',
+            photoUrl: '/assets/protagonists/athlete-hurdle.jpg',
             badge: 'Invité(e)',
             invitedById: 'koffi-tisserand',
             invitedByName: 'Koffi',
@@ -3366,7 +3366,7 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
                 country: 'Bénin',
                 flag: '🇧🇯',
                 universeTag: 'Finagnon',
-                photoUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80',
+                photoUrl: '/assets/protagonists/chef-koffi.jpg',
                 badge: 'Invité(e)',
                 invitedById: 'tobi-ganvie',
                 invitedByName: 'Tobi',
@@ -3385,7 +3385,7 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
                     country: 'Bénin',
                     flag: '🇧🇯',
                     universeTag: 'Finagnon',
-                    photoUrl: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=800&q=80',
+                    photoUrl: '/assets/protagonists/coach-office.jpg',
                     badge: 'Invité(e)',
                     invitedById: 'amina-diallo',
                     invitedByName: 'Amina',
@@ -3408,7 +3408,7 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
             country: 'Bénin',
             flag: '🇧🇯',
             universeTag: 'Finagnon',
-            photoUrl: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=80',
+            photoUrl: '/assets/protagonists/codjo-blind.jpg',
             badge: 'Invité(e)',
             invitedById: 'koffi-tisserand',
             invitedByName: 'Koffi',
@@ -3429,7 +3429,7 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
         country: 'Pérou',
         flag: '🇵🇪',
         universeTag: 'Qosqorico',
-        photoUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80',
+        photoUrl: '/assets/protagonists/dah-zounon.jpg',
         isPioneer: true,
         badge: 'Première effigie',
         invitationStory: 'Première effigie du volet Qosqorico. A fait résonner la laine d\'alpaga avec le coton de Koffi par-delà l\'océan Pacifique et l\'Atlantique.',
@@ -3448,7 +3448,7 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
             country: 'Pérou',
             flag: '🇵🇪',
             universeTag: 'Qosqorico',
-            photoUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80',
+            photoUrl: '/assets/protagonists/eleonore-vance.jpg',
             badge: 'Invité(e)',
             invitedById: 'amara-tisserande',
             invitedByName: 'Amara',
@@ -3467,7 +3467,7 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
                 country: 'Pérou',
                 flag: '🇵🇪',
                 universeTag: 'Qosqorico',
-                photoUrl: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=800&q=80',
+                photoUrl: '/assets/protagonists/fatou-diallo.jpg',
                 badge: 'Invité(e)',
                 invitedById: 'sayri-pisac',
                 invitedByName: 'Sayri',
@@ -3488,7 +3488,7 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
             country: 'Pérou',
             flag: '🇵🇪',
             universeTag: 'Qosqorico',
-            photoUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=800&q=80',
+            photoUrl: '/assets/protagonists/helene-saint-amand.jpg',
             badge: 'Invité(e)',
             invitedById: 'amara-tisserande',
             invitedByName: 'Amara',
@@ -3539,7 +3539,7 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
             country: 'Sénégal',
             flag: '🇸🇳',
             universeTag: 'Blacks One',
-            photoUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80',
+            photoUrl: '/assets/protagonists/koffi-tisserand.jpg',
             badge: 'Invité(e)',
             invitedById: 'malik-barou',
             invitedByName: 'Malik Diop',
@@ -3558,7 +3558,7 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
                 country: 'Sénégal',
                 flag: '🇸🇳',
                 universeTag: 'Blacks One',
-                photoUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80',
+                photoUrl: '/assets/protagonists/kwame-mensah.jpg',
                 badge: 'Invité(e)',
                 invitedById: 'cheikh-slam',
                 invitedByName: 'Cheikh Fall',
@@ -3579,7 +3579,7 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
             country: 'Sénégal',
             flag: '🇸🇳',
             universeTag: 'Blacks One',
-            photoUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=800&q=80',
+            photoUrl: '/assets/protagonists/mahougnon-zounon.jpg',
             badge: 'Invité(e)',
             invitedById: 'malik-barou',
             invitedByName: 'Malik Diop',
@@ -3619,7 +3619,7 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
             country: 'Côte d’Ivoire',
             flag: '🇨🇮',
             universeTag: 'Beyond Eve',
-            photoUrl: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=80',
+            photoUrl: '/assets/protagonists/malik-diop.jpg',
             badge: 'Invité(e)',
             invitedById: 'eleonore-saint-cloud',
             invitedByName: 'Éléonore Vance',
@@ -3638,7 +3638,7 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
                 country: 'France',
                 flag: '🇫🇷',
                 universeTag: 'Beyond Eve',
-                photoUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80',
+                photoUrl: '/assets/protagonists/mawuna-medium.jpg',
                 badge: 'Invité(e)',
                 invitedById: 'fatou-bamba',
                 invitedByName: 'Fatou Bamba',
@@ -3659,7 +3659,7 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
             country: 'Côte d’Ivoire',
             flag: '🇨🇮',
             universeTag: 'Beyond Eve',
-            photoUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80',
+            photoUrl: '/assets/protagonists/pere-matthieu.jpg',
             badge: 'Invité(e)',
             invitedById: 'eleonore-saint-cloud',
             invitedByName: 'Éléonore Vance',
@@ -3691,7 +3691,7 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
         country: 'Bénin',
         flag: '🇧🇯',
         universeTag: 'Sweet Street',
-        photoUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80',
+        photoUrl: '/assets/protagonists/photographer-focus.jpg',
         isPioneer: true,
         badge: 'Première effigie',
         invitationStory: 'Première effigie de Sweet Street. Ils préparent 400 repas chaque jour dès l\'aurore à Dantokpa avec une dignité royale et le respect absolu de chaque convive.',
@@ -3710,7 +3710,7 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
             country: 'Bénin',
             flag: '🇧🇯',
             universeTag: 'Sweet Street',
-            photoUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80',
+            photoUrl: '/assets/protagonists/researcher-phd.jpg',
             badge: 'Invité(e)',
             invitedById: 'chef-koffi',
             invitedByName: 'Chef Koffi',
@@ -3729,7 +3729,7 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
                 country: 'Bénin',
                 flag: '🇧🇯',
                 universeTag: 'Sweet Street',
-                photoUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80',
+                photoUrl: '/assets/protagonists/sayri-quispe.jpg',
                 badge: 'Invité(e)',
                 invitedById: 'roland-huile',
                 invitedByName: 'Roland',
@@ -3752,7 +3752,7 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
         country: 'France & Maroc',
         flag: '🇫🇷',
         universeTag: 'Fiat Luxe',
-        photoUrl: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=80',
+        photoUrl: '/assets/protagonists/senan-agossa.jpg',
         isPioneer: true,
         badge: 'Première effigie',
         invitationStory: 'Première effigie de Fiat Luxe. Crée des dîners pour 12 convives où chaque assiette, odeur et bougie est pensée comme une partition théâtrale pour susciter l’émotion pure.',
@@ -3771,7 +3771,7 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
             country: 'France',
             flag: '🇫🇷',
             universeTag: 'Fiat Luxe',
-            photoUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80',
+            photoUrl: '/assets/protagonists/sika-dossou.jpg',
             badge: 'Invité(e)',
             invitedById: 'helene-saint-amand',
             invitedByName: 'Hélène Saint-Amand',
@@ -3790,7 +3790,7 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
                 country: 'Maroc',
                 flag: '🇲🇦',
                 universeTag: 'Fiat Luxe',
-                photoUrl: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=800&q=80',
+                photoUrl: '/assets/protagonists/tobi-ganvie.jpg',
                 badge: 'Invité(e)',
                 invitedById: 'marc-antoine-sommelier',
                 invitedByName: 'Marc-Antoine',
@@ -3843,7 +3843,7 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
             country: 'Sénégal',
             flag: '🇸🇳',
             universeTag: 'Investors',
-            photoUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80',
+            photoUrl: '/assets/protagonists/tobi-houndegla.jpg',
             badge: 'Invité(e)',
             invitedById: 'fatou-diallo',
             invitedByName: 'Fatou Diallo',
@@ -3884,7 +3884,7 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
             country: 'Bénin',
             flag: '🇧🇯',
             universeTag: 'Builders',
-            photoUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80',
+            photoUrl: '/assets/protagonists/adjovi-blandine.jpg',
             badge: 'Invité(e)',
             invitedById: 'kwame-mensah',
             invitedByName: 'Kwame Mensah',

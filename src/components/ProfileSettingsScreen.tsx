@@ -1687,11 +1687,11 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
           </button>
         </div>
       ) : (
-        <div className="flex items-center justify-between h-9 sm:h-10 shrink-0 gap-2 mb-1">
+        <div className="relative flex items-center justify-between h-9 sm:h-10 shrink-0 gap-2 mb-1">
           {/* GAUCHE : Prénom de la personne (ex: Pascal) avec tiret terracotta signature */}
           <div className="flex items-center gap-2 sm:gap-2.5 h-full shrink-0">
             <div className="relative flex items-center h-full">
-              <h1 className="font-editorial text-base sm:text-lg font-bold text-[#1C1917] tracking-tight leading-none">
+              <h1 className="font-editorial italic text-xs sm:text-sm md:text-base font-bold text-[#1C1917] tracking-tight leading-none whitespace-nowrap">
                 {profileDisplayName || 'Pascal'}
               </h1>
               {/* Petit trait terracotta officiel */}
@@ -1760,16 +1760,6 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
               className="w-10 h-10 sm:w-11 sm:h-11 shadow-xs"
               onClick={() => setIsEditingProfile(true)}
             />
-
-            {/* Bouton Partager la page */}
-            <button
-              onClick={handleShareProfile}
-              id="btn-share-profile"
-              className="group w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white hover:bg-[#A2482B] border border-stone-200 hover:border-[#A2482B] text-[#1C1917] hover:text-white flex items-center justify-center transition-all shadow-xs cursor-pointer active:scale-95"
-              title={`Partager le profil de ${profileDisplayName}`}
-            >
-              <ShareIcon className="w-4 h-4 sm:w-4.5 sm:h-4.5 text-[#1C1917] group-hover:text-white transition-colors" />
-            </button>
           </div>
         </div>
       )}

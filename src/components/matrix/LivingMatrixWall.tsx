@@ -48,10 +48,17 @@ const MatrixCell: React.FC<MatrixCellProps> = React.memo(({
     setProfile(initialProfile);
   }, [initialProfile]);
 
+  const isPausedRef = useRef(isPaused);
   useEffect(() => {
-    const isReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (isReduced) return;
+    isPausedRef.current = isPaused;
+  }, [isPaused]);
 
+  const currentProfileRef = useRef(profile);
+  useEffect(() => {
+    currentProfileRef.current = profile;
+  }, [profile]);
+
+  useEffect(() => {
     let isMounted = true;
     let timerOut: NodeJS.Timeout | null = null;
     let timerIn: NodeJS.Timeout | null = null;
@@ -63,8 +70,8 @@ const MatrixCell: React.FC<MatrixCellProps> = React.memo(({
     const executeCycle = () => {
       if (!isMounted) return;
 
-      // Si l'utilisateur est en train d'explorer (survol, pan ou zoom), repousser doucement de 2s
-      if (isPaused) {
+      // Si l'utilisateur est en train de glisser activement la grille, repousser doucement de 2s
+      if (isPausedRef.current) {
         nextTimer = setTimeout(executeCycle, 2000);
         return;
       }
@@ -76,8 +83,9 @@ const MatrixCell: React.FC<MatrixCellProps> = React.memo(({
         if (!isMounted) return;
 
         // Phase 2 : Remplacement ou échange de visage dans l'obscurité totale
-        const nextProfile = onRequestNewProfile(profile.id, idx);
+        const nextProfile = onRequestNewProfile(currentProfileRef.current.id, idx);
         setProfile(nextProfile);
+        currentProfileRef.current = nextProfile;
         setFadePhase('fadeIn');
         setIsEmerging(true);
 
@@ -102,7 +110,7 @@ const MatrixCell: React.FC<MatrixCellProps> = React.memo(({
       if (timerOut) clearTimeout(timerOut);
       if (timerIn) clearTimeout(timerIn);
     };
-  }, [idx, isPaused, onRequestNewProfile, profile.id]);
+  }, [idx, onRequestNewProfile]);
 
   const isHighlighted = highlightedPersonId === profile.id;
   const isCounterpoint = activeCounterpointId === profile.id;
@@ -129,6 +137,23 @@ const MatrixCell: React.FC<MatrixCellProps> = React.memo(({
         src={profile.photoUrl}
         alt={displayName}
         loading="lazy"
+        onError={(e) => {
+          const target = e.currentTarget;
+          target.onerror = null;
+          const fallbackAvatars = [
+            '/assets/protagonists/adjovi-blandine.jpg',
+            '/assets/protagonists/chef-koffi.jpg',
+            '/assets/protagonists/kwame-mensah.jpg',
+            '/assets/protagonists/amara-tisserande.jpg',
+            '/assets/protagonists/dah-zounon.jpg',
+            '/assets/protagonists/fatou-diallo.jpg',
+            '/assets/protagonists/koffi-tisserand.jpg',
+            '/assets/protagonists/malik-diop.jpg',
+            '/assets/protagonists/mawuna-medium.jpg',
+            '/assets/protagonists/senan-agossa.jpg'
+          ];
+          target.src = fallbackAvatars[idx % fallbackAvatars.length];
+        }}
         className={`w-full h-full object-cover pointer-events-none ${
           fadePhase === 'fadeOut'
             ? 'opacity-0 scale-95 transition-all duration-[1400ms] ease-in-out'
@@ -171,9 +196,7 @@ export const LivingMatrixWall: React.FC<LivingMatrixWallProps> = ({
     currentGridProfilesRef.current = grid.slice(0, 256);
   }, [grid]);
 
-  // Sur mobile, pré-zoomer à ~1.55 pour afficher ~10x10 visages nets, faciles à toucher et à explorer
-  const isMobileInitial = typeof window !== 'undefined' && window.innerWidth < 640;
-  const [zoomLevel, setZoomLevel] = useState<number>(isMobileInitial ? 1.55 : 1);
+  const [zoomLevel, setZoomLevel] = useState<number>(1);
   const [panOffset, setPanOffset] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -197,18 +220,30 @@ export const LivingMatrixWall: React.FC<LivingMatrixWallProps> = ({
   const animFrameRef = useRef<number | null>(null);
   const driftStartTimeRef = useRef<number>(Date.now());
 
+  // Écouteur global pour relâcher tout glissement sur mobile ou desktop
   useEffect(() => {
-    const isReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (isReduced) return;
+    const handleGlobalRelease = () => {
+      setIsDragging(false);
+    };
+    window.addEventListener('pointerup', handleGlobalRelease);
+    window.addEventListener('touchend', handleGlobalRelease);
+    window.addEventListener('touchcancel', handleGlobalRelease);
+    return () => {
+      window.removeEventListener('pointerup', handleGlobalRelease);
+      window.removeEventListener('touchend', handleGlobalRelease);
+      window.removeEventListener('touchcancel', handleGlobalRelease);
+    };
+  }, []);
 
+  useEffect(() => {
     let active = true;
     const animate = () => {
       if (!active) return;
-      // Ne dérive que si l'utilisateur ne touche pas et ne survole pas le mur
-      if (!isHovered && !isDragging && zoomLevel <= 1.1) {
+      // La dérive subtile et poétique s'anime dès que l'utilisateur ne glisse pas la grille
+      if (!isDragging) {
         const elapsed = (Date.now() - driftStartTimeRef.current) / 1000;
-        const dx = Math.sin(elapsed * 0.45) * 5;
-        const dy = Math.cos(elapsed * 0.35) * 5;
+        const dx = Math.sin(elapsed * 0.45) * 4;
+        const dy = Math.cos(elapsed * 0.35) * 4;
         setDriftOffset({ x: dx, y: dy });
       }
       animFrameRef.current = requestAnimationFrame(animate);
@@ -219,7 +254,7 @@ export const LivingMatrixWall: React.FC<LivingMatrixWallProps> = ({
       active = false;
       if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
     };
-  }, [isHovered, isDragging, zoomLevel]);
+  }, [isDragging]);
 
   // Fournisseur de nouveaux profils : alterne entre permutation de cases et arrivée de nouveaux visages de la forêt
   const handleRequestNewProfile = useCallback((currentId: string, cellIdx: number): MatrixProfile => {
@@ -337,6 +372,7 @@ export const LivingMatrixWall: React.FC<LivingMatrixWallProps> = ({
 
   const handleTouchEnd = () => {
     initialPinchDistRef.current = null;
+    setIsDragging(false);
   };
 
   const handleHoverProfile = useCallback((profile: MatrixProfile | null, e?: React.MouseEvent) => {
@@ -357,9 +393,9 @@ export const LivingMatrixWall: React.FC<LivingMatrixWallProps> = ({
     onSelectPerson(profile);
   }, [onSelectPerson]);
 
-  const currentTotalX = panOffset.x + (zoomLevel <= 1.1 ? driftOffset.x : 0);
-  const currentTotalY = panOffset.y + (zoomLevel <= 1.1 ? driftOffset.y : 0);
-  const isInteractionActive = isHovered || isDragging || zoomLevel > 1.15;
+  const currentTotalX = panOffset.x + driftOffset.x;
+  const currentTotalY = panOffset.y + driftOffset.y;
+  const isInteractionActive = isDragging;
 
   return (
     <div 

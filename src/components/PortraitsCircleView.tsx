@@ -262,13 +262,13 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
       {/* ========================================================================= */}
       {/* EN-TÊTE HARMONISÉ EXACTEMENT AU MÊME EMPLACEMENT QUE STUDIO, PRODUCTION   */}
       {/* ========================================================================= */}
-      <header className="w-full flex items-center justify-between h-9 sm:h-10 shrink-0 gap-2 mb-1">
+      <header className="w-full relative flex items-center justify-between h-9 sm:h-10 shrink-0 gap-2 mb-1">
         {/* Fil d'Ariane en haut à gauche avec tiret terracotta signature sous le titre */}
         <nav aria-label="Fil d’Ariane" className="flex items-center gap-2 text-sm sm:text-base h-full">
           {level === 0 ? (
             <div className="relative flex items-center h-full">
-              <h1 className="font-editorial text-base sm:text-lg font-bold text-[#1C1917] tracking-tight leading-none">
-                Lumière
+              <h1 className="font-editorial italic text-xs sm:text-sm md:text-base font-bold text-[#1C1917] tracking-tight leading-none whitespace-nowrap">
+                Une histoire, plusieurs regards
               </h1>
               {/* Petit trait terracotta officiel */}
               <div className="absolute left-0 -bottom-1.5 w-8 h-0.5 bg-[#A2482B] rounded-full" />
@@ -301,33 +301,9 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
           )}
         </nav>
 
-        {/* Droite : Bascule externe (Swipe) + Sélecteur de volets + Bouton clair de retour au soleil central */}
+        {/* Droite : Bascule externe (Swipe) */}
         <div className="flex items-center gap-2">
           {topRightAction}
-          {level === 1 && totalBatches > 1 && (
-            <button
-              type="button"
-              onClick={handleNextBatch}
-              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-white hover:bg-stone-100 text-stone-800 border border-stone-200 text-xs font-semibold shadow-xs transition-all cursor-pointer group active:scale-95"
-              title="Passer aux 16 regards suivants"
-            >
-              <RotateCw className={`w-3.5 h-3.5 text-[#A2482B] transition-transform duration-300 ${isRotatingBatch ? 'rotate-180' : 'group-hover:rotate-45'}`} />
-              <span className="hidden sm:inline">Regards {activeBatchIndex * 16 + 1}–{Math.min((activeBatchIndex + 1) * 16, totalStakeholdersCount)} / {totalStakeholdersCount}</span>
-              <span className="sm:hidden font-mono text-[11px]">{activeBatchIndex + 1}/{totalBatches}</span>
-            </button>
-          )}
-
-          {level === 1 && (
-            <button
-              type="button"
-              onClick={exit}
-              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white hover:bg-amber-50 text-stone-700 hover:text-amber-900 border border-stone-200 hover:border-amber-300 text-xs font-medium shadow-xs transition-all cursor-pointer group active:scale-95"
-              title="Revenir au soleil central et à la constellation des 16 organisations"
-            >
-              <ChevronLeft className="w-3.5 h-3.5 text-[#A2482B] group-hover:-translate-x-0.5 transition-transform" />
-              <span>Soleil central</span>
-            </button>
-          )}
         </div>
       </header>
 
@@ -514,6 +490,19 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
                     <img
                       src={org.photoUrl}
                       alt={org.companyName}
+                      onError={(e) => {
+                        const target = e.currentTarget;
+                        target.onerror = null;
+                        const fallbackOrgPhotos = [
+                          '/assets/doors/door-marques.jpg',
+                          '/assets/doors/door-memoires.jpg',
+                          '/assets/doors/door-projets.jpg',
+                          '/assets/doors/door-competences.jpg',
+                          '/assets/doors/door-territoires.jpg',
+                          '/assets/doors/door-sagesses.jpg'
+                        ];
+                        target.src = fallbackOrgPhotos[k % fallbackOrgPhotos.length];
+                      }}
                       className="w-full h-full object-cover pointer-events-none select-none"
                       style={{ backfaceVisibility: 'hidden' }}
                     />
@@ -571,6 +560,18 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
                     <img
                       src={collab.photoUrl}
                       alt={collab.name}
+                      onError={(e) => {
+                        const target = e.currentTarget;
+                        target.onerror = null;
+                        const fallbackCollabPhotos = [
+                          '/assets/protagonists/adjovi-blandine.jpg',
+                          '/assets/protagonists/chef-koffi.jpg',
+                          '/assets/protagonists/kwame-mensah.jpg',
+                          '/assets/protagonists/amara-tisserande.jpg',
+                          '/assets/protagonists/dah-zounon.jpg'
+                        ];
+                        target.src = fallbackCollabPhotos[k % fallbackCollabPhotos.length];
+                      }}
                       className="w-full h-full object-cover pointer-events-none select-none"
                       style={{ backfaceVisibility: 'hidden' }}
                     />

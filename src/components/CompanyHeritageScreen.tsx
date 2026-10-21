@@ -145,7 +145,7 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
       {/* (En mode Cercle, PortraitsCircleView intègre son propre en-tête unique pour éviter tout dédoublement) */}
       {/* =========================================================== */}
       {viewMode === 'swipe' && (
-        <div className="flex items-center justify-between h-9 sm:h-10 shrink-0 gap-2 mb-1">
+        <div className="relative flex items-center justify-between h-9 sm:h-10 shrink-0 gap-2 mb-1">
           {selectedCompanyForSpace ? (
             <div className="flex items-center gap-1.5 sm:gap-2 h-full">
               <button
@@ -175,8 +175,8 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
             </div>
           ) : (
             <div className="relative flex items-center h-full">
-              <h1 className="font-editorial text-base sm:text-lg font-bold text-[#1C1917] tracking-tight leading-none">
-                Lumière
+              <h1 className="font-editorial italic text-xs sm:text-sm md:text-base font-bold text-[#1C1917] tracking-tight leading-none whitespace-nowrap">
+                Une histoire, plusieurs regards
               </h1>
               {/* Petit trait terracotta officiel */}
               <div className="absolute left-0 -bottom-1.5 w-8 h-0.5 bg-[#A2482B] rounded-full" />

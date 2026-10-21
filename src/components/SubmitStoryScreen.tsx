@@ -492,13 +492,13 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
     <div className={`w-full max-w-3xl mx-auto px-3 sm:px-6 py-2 pb-24 sm:pb-28 pt-safe pb-safe overflow-x-hidden ${step === 3 && chosenFlow === 'UPLOAD_DIRECT' ? 'h-full max-h-full overflow-y-auto flex flex-col' : 'h-full max-h-full overflow-hidden flex flex-col justify-between'} text-[#1C1917]`}>
       
       {/* En-tête dynamique du Studio : Choix progressifs validés (Porte, Sujet, Format) avec bouton Modifier */}
-      <div className="flex items-center justify-between h-9 sm:h-10 shrink-0 gap-2 mb-1">
+      <div className="relative flex items-center justify-between h-9 sm:h-10 shrink-0 gap-2 mb-1">
         <div className="flex items-center gap-1.5 sm:gap-2.5 min-w-0 flex-1 h-full">
           {step === 1 ? (
-            /* Étape 1 : En-tête épuré et sobre - Juste Studio strictement calibré sur Coproduction */
+            /* Étape 1 : En-tête épuré et sobre - Espace thématique en italique noir */
             <div className="relative flex items-center h-full">
-              <h1 className="font-editorial text-base sm:text-lg font-bold text-[#1C1917] tracking-tight leading-none">
-                Studio
+              <h1 className="font-editorial italic text-xs sm:text-sm md:text-base font-bold text-[#1C1917] tracking-tight leading-none whitespace-nowrap">
+                Thématiques
               </h1>
               {/* Petit trait terracotta officiel */}
               <div className="absolute left-0 -bottom-1.5 w-8 h-0.5 bg-[#A2482B] rounded-full" />
@@ -660,7 +660,11 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                     alt={currentDoor.label} 
                     loading="eager"
                     decoding="async"
-                    referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      const target = e.currentTarget;
+                      target.onerror = null;
+                      target.src = '/assets/doors/door-series.jpg';
+                    }}
                     className="absolute inset-0 w-full h-full object-cover pointer-events-none transition-opacity duration-200"
                   />
                 )}
@@ -887,6 +891,11 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                       : currentSubject.posterUrl
                   }
                   alt={currentSubject.title}
+                  onError={(e) => {
+                    const target = e.currentTarget;
+                    target.onerror = null;
+                    target.src = '/assets/doors/door-series.jpg';
+                  }}
                   className="absolute inset-0 w-full h-full object-cover pointer-events-none"
                 />
               )}

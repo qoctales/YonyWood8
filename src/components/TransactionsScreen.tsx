@@ -140,7 +140,7 @@ export const TransactionsScreen: React.FC<TransactionsScreenProps> = ({
     <div className="w-full max-w-3xl mx-auto px-3 sm:px-6 py-2 sm:py-4 pb-20 sm:pb-24 pt-safe pb-safe h-[100dvh] max-h-[100dvh] overflow-hidden flex flex-col justify-between text-[#1C1917]">
       
       {/* 1. EN-TÊTE HARMONISÉ IDENTIQUE À MESSAGERIE & LIGNÉE */}
-      <div className="pb-3 border-b border-[#E7E5E4] mb-1 flex items-center justify-between shrink-0">
+      <div className="relative pb-3 border-b border-[#E7E5E4] mb-1 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-3">
           <button
             onClick={handleBack}
@@ -151,7 +151,7 @@ export const TransactionsScreen: React.FC<TransactionsScreenProps> = ({
             <ChevronLeft className="w-4 h-4 stroke-[2.2]" />
           </button>
           <div className="relative flex items-center h-full">
-            <h1 className="font-editorial text-base sm:text-lg font-bold text-[#1C1917] tracking-tight leading-none">
+            <h1 className="font-editorial italic text-xs sm:text-sm md:text-base font-bold text-[#1C1917] tracking-tight leading-none whitespace-nowrap">
               Transactions
             </h1>
             {/* Petit trait terracotta officiel */}

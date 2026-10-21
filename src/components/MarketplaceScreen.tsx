@@ -210,11 +210,7 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
   initialTab,
   restoreContext
 }) => {
-  const [activeTab, setActiveTab] = useState<'coproduire' | 'marche'>(() => {
-    if (initialTab) return initialTab;
-    if (restoreContext || initialPeerOfferId || typeof initialPeerIndex === 'number') return 'marche';
-    return 'coproduire';
-  });
+  const [activeTab] = useState<'coproduire' | 'marche'>('coproduire');
 
   // Indexes
   const [currentIndex, setCurrentIndex] = useState<number>(0);
@@ -431,43 +427,15 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
     <div className="w-full max-w-3xl mx-auto px-3 sm:px-6 py-2 pb-24 sm:pb-28 pt-safe pb-safe h-full max-h-full overflow-hidden flex flex-col justify-between text-[#1C1917]">
       
       {/* ========================================================================= */}
-      {/* HEADER DISCRET & SÉLECTEUR AU MÊME ENDROIT QUE 1 2 3 DE PROPOSER         */}
+      {/* HEADER DISCRET : TITRE COPRODUCTION EN ITALIQUE NOIR AVEC TRAIT TERRACOTTA */}
       {/* ========================================================================= */}
-      <div className="flex items-center justify-between h-9 sm:h-10 shrink-0 gap-2 mb-1">
+      <div className="relative flex items-center justify-between h-9 sm:h-10 shrink-0 gap-2 mb-1">
         <div className="relative flex items-center h-full">
-          <h1 className="font-editorial text-base sm:text-lg font-bold text-[#1C1917] tracking-tight leading-none">
-            Production
+          <h1 className="font-editorial italic text-xs sm:text-sm md:text-base font-bold text-[#1C1917] tracking-tight leading-none whitespace-nowrap">
+            Coproduction
           </h1>
           {/* Petit trait terracotta officiel */}
           <div className="absolute left-0 -bottom-1.5 w-8 h-0.5 bg-[#A2482B] rounded-full" />
-        </div>
-
-        {/* Côté droit : Boutons d'onglets Coproduire / Marché */}
-        <div className="flex items-center gap-1 sm:gap-1.5 shrink-0 h-full">
-          <button
-            onClick={() => setActiveTab('coproduire')}
-              id="tab-coproduire"
-              className={`px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-bold transition-all cursor-pointer ${
-                activeTab === 'coproduire'
-                  ? 'bg-[#A2482B] text-white shadow-sm shadow-[#A2482B]/30 ring-1 ring-[#C89B3C]/40'
-                  : 'bg-[#E7E5E4] text-[#7A756B] hover:text-[#1C1917]'
-              }`}
-            >
-              À l'affiche
-            </button>
-
-            <button
-              onClick={() => setActiveTab('marche')}
-              id="tab-marche"
-              title="Pour l'échange et le rachat de parts entre membres de la communauté"
-              className={`px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-bold transition-all cursor-pointer ${
-                activeTab === 'marche'
-                  ? 'bg-[#A2482B] text-white shadow-sm shadow-[#A2482B]/30 ring-1 ring-[#C89B3C]/40'
-                  : 'bg-[#E7E5E4] text-[#7A756B] hover:text-[#1C1917]'
-              }`}
-            >
-              Marché
-            </button>
         </div>
       </div>
 

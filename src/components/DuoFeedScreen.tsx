@@ -316,32 +316,33 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
       {/* ========================================================================= */}
       <div className="w-full max-w-3xl mx-auto px-4 py-3 pb-2 shrink-0">
         <header className="relative flex items-center justify-between h-9 sm:h-10 shrink-0 gap-2">
+          {/* Titre officiel de la page en noir, écrit en italique avec trait terracotta */}
           <div className="relative flex items-center h-full">
-            <h1 className="font-editorial text-base sm:text-lg font-bold text-[#1C1917] tracking-tight leading-none">
-              Duo
+            <h1 className="font-editorial italic text-xs sm:text-sm md:text-base font-bold text-[#1C1917] tracking-tight leading-none whitespace-nowrap">
+              Deux univers, une même question
             </h1>
             {/* Petit trait terracotta officiel */}
             <div className="absolute left-0 -bottom-1.5 w-8 h-0.5 bg-[#A2482B] rounded-full" />
           </div>
 
-          {/* Centre absolu : Le nom officiel de la série centré avec le symbole < > au centre mort, parfaitement aligné verticalement avec le titre et le bouton */}
-          <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-none max-w-[44vw] sm:max-w-[48vw]">
+          {/* Centre : Le nom officiel de la série centré (affiché sur écrans plus larges pour dégager l'espace mobile) */}
+          <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 items-center justify-center pointer-events-none max-w-[44vw]">
             <div 
               key={`duo-series-header-${currentDuo.id}-${headerPartA}-${headerPartB}`}
               className="inline-flex items-center gap-1 sm:gap-2 h-7 sm:h-8 px-2.5 sm:px-3.5 rounded-full bg-[#A2482B] border border-[#8A3B22] shadow-xs text-[10.5px] sm:text-xs text-white pointer-events-auto select-none"
               title={`${headerPartA} < > ${headerPartB}`}
             >
-              <span className="font-sans font-bold text-white tracking-tight truncate max-w-[65px] sm:max-w-[130px] text-right">
+              <span className="font-sans font-bold text-white tracking-tight truncate max-w-[130px] text-right">
                 {headerPartA}
               </span>
               <span 
-                className="font-mono text-[9px] sm:text-[11px] font-black text-white/95 px-0.5 select-none shrink-0 tracking-wider flex items-center gap-0.5"
+                className="font-mono text-[10px] sm:text-[11px] font-black text-white/95 px-0.5 select-none shrink-0 tracking-wider flex items-center gap-0.5"
                 title="Face à face"
               >
                 <span>&lt;</span>
                 <span>&gt;</span>
               </span>
-              <span className="font-sans font-bold text-white tracking-tight truncate max-w-[65px] sm:max-w-[130px] text-left">
+              <span className="font-sans font-bold text-white tracking-tight truncate max-w-[130px] text-left">
                 {headerPartB}
               </span>
             </div>
