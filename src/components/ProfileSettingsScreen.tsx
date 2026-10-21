@@ -1764,7 +1764,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                 if ((e.target as HTMLElement).closest('button, a, input, textarea, select')) return;
                 toggleVideoPlayback();
               }}
-              className="h-[min(480px,calc(100dvh-230px))] sm:h-[min(520px,calc(100dvh-210px))] lg:h-[min(550px,calc(100dvh-200px))] aspect-[9/16] w-auto mx-auto rounded-3xl overflow-hidden bg-stone-950 text-white shadow-2xl border border-stone-200/40 relative flex flex-col justify-between p-3.5 sm:p-4.5 cursor-pointer group select-none shrink-0"
+              className="h-[min(480px,calc(100dvh-230px))] sm:h-[min(520px,calc(100dvh-210px))] lg:h-[min(550px,calc(100dvh-200px))] aspect-[9/16] w-auto mx-auto rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl border border-stone-200/40 relative flex flex-col justify-between cursor-pointer group select-none shrink-0"
               style={{ transform: `translateX(${swipeOffsetX}px)` }}
             >
             {/* ================================================================= */}
@@ -1772,7 +1772,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
             {/* ================================================================= */}
             {activeCategory === 'recit' && currentRecitUnified && (
               <div 
-                className="group relative w-full h-full flex flex-col justify-between p-4 sm:p-5 text-white"
+                className="group relative w-full h-full flex flex-col justify-between text-white"
                 id={`card-recit-${currentRecitUnified.item.id}`}
               >
                 <img
@@ -1800,7 +1800,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                       ? (currentRecitUnified.item.subtitle || currentRecitUnified.item.chapter || 'Origines & Mémoire')
                       : (currentRecitUnified.item.seriesTitle || currentRecitUnified.item.title || 'Origines & Mémoire')
                   }
-                  displayName="Pascal"
+                  displayName={profileDisplayName || 'Pascal'}
                   isPlaying={isPlaying}
                   onTogglePlay={toggleVideoPlayback}
                   isMuted={isMuted}

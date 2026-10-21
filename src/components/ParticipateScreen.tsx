@@ -329,16 +329,28 @@ export const ParticipateScreen: React.FC<ParticipateScreenProps> = ({
                   ✕
                 </button>
               </div>
-              <p className="text-xs sm:text-[13px] text-stone-100 leading-relaxed font-sans">
+              <p className="text-xs sm:text-[13px] text-stone-100 leading-relaxed font-sans mb-2.5">
                 {currentCard.detailDescription}
               </p>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowDetails(false);
+                  setIsFormOpen(true);
+                  setIsSubmitted(false);
+                }}
+                className="w-full py-2 px-3.5 rounded-xl bg-[#A2482B] hover:bg-[#8A3B22] text-white text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-1.5 cursor-pointer active:scale-95"
+              >
+                <span>Rejoindre {currentCard.title}</span>
+                <ArrowRight className="w-3.5 h-3.5 text-white" />
+              </button>
             </div>
           )}
 
           {/* =========================================================== */}
-          {/* BAS DE LA CARTE : DÉTAILS/SON À GAUCHE & BOUTON À DROITE   */}
+          {/* BAS DE LA CARTE : DÉTAILS/SON À GAUCHE                      */}
           {/* =========================================================== */}
-          <div className="relative z-20 flex items-center justify-between w-full pt-1 pointer-events-auto gap-2">
+          <div className="relative z-20 flex items-center justify-start w-full pt-1 pointer-events-auto gap-2">
             
             {/* CÔTÉ GAUCHE : Bouton Détails & Bouton Son (si lecture) */}
             <div className="flex items-center gap-1.5 shrink-0">
@@ -372,21 +384,6 @@ export const ParticipateScreen: React.FC<ParticipateScreenProps> = ({
                 </button>
               )}
             </div>
-
-            {/* CÔTÉ DROIT : BOUTON PRINCIPAL D'ACTION TOUJOURS À DROITE */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setIsFormOpen(true);
-                setIsSubmitted(false);
-              }}
-              id={`btn-participate-${currentCard.id}`}
-              className="h-7.5 sm:h-8.5 px-3.5 sm:px-4 rounded-full bg-[#A2482B] hover:bg-[#8A3B22] active:bg-[#6E2E19] text-white text-[11px] sm:text-xs font-bold backdrop-blur-md transition-all flex items-center gap-1.5 shadow-md border border-[#A2482B]/60 hover:border-white/30 cursor-pointer active:scale-95 group/btn shrink-0 ml-auto"
-              title="Participer et ouvrir le formulaire"
-            >
-              <span>Participer</span>
-              <ArrowRight className="w-3.5 h-3.5 text-white/90 group-hover/btn:translate-x-0.5 transition-transform shrink-0" />
-            </button>
           </div>
         </div>
 

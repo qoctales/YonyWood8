@@ -88,16 +88,15 @@ export const Navbar: React.FC<NavbarProps> = ({ currentScreen, onNavigate, onOpe
         {/* Droite : Bouton d'action phare Co-construire Yonywood */}
         <div className="flex items-center gap-1.5 sm:gap-2.5 z-20 shrink-0">
           
-          {/* Bouton Co-construire Yonywood (masqué sur la page de coproduction) */}
-          {currentScreen.type !== 'marketplace' && (
+          {/* Bouton Co-construire Yonywood (masqué sur les pages de co-construction, coproduction et studio) */}
+          {currentScreen.type !== 'marketplace' && 
+           currentScreen.type !== 'participate' && 
+           currentScreen.type !== 'submit_story' && 
+           currentScreen.type !== 'request_videographer' && (
             <button
               onClick={() => onNavigate({ type: 'participate' })}
               id="nav-participate-btn"
-              className={`px-2.5 sm:px-4.5 py-1.5 sm:py-2 rounded-full font-bold text-[11px] sm:text-xs md:text-sm shadow-xs transition-all cursor-pointer flex items-center justify-center whitespace-nowrap active:scale-95 ${
-                currentScreen.type === 'participate'
-                  ? 'bg-[#8A3B22] text-white ring-2 ring-[#A2482B]/40 shadow-sm'
-                  : 'bg-[#A2482B] hover:bg-[#8A3B22] text-white hover:scale-102 hover:shadow-sm'
-              }`}
+              className="px-2.5 sm:px-4.5 py-1.5 sm:py-2 rounded-full font-bold text-[11px] sm:text-xs md:text-sm shadow-xs transition-all cursor-pointer flex items-center justify-center whitespace-nowrap active:scale-95 bg-[#A2482B] hover:bg-[#8A3B22] text-white hover:scale-102 hover:shadow-sm"
               title="Co-construire Yonywood : Devenir égérie, coproduction, entreprises"
             >
               <span>Co-construire Yonywood</span>

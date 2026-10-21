@@ -22,6 +22,8 @@ export interface UnifiedVideoCardOverlayProps {
 
   // Bas gauche
   displayName: string;
+  preserveFullName?: boolean;
+  roleSubtitle?: string;
 
   // Lecteur vidéo en haut à droite
   isPlaying: boolean;
@@ -63,6 +65,8 @@ export const UnifiedVideoCardOverlay: React.FC<UnifiedVideoCardOverlayProps> = (
   titleBadge,
   badgeIcon,
   displayName,
+  preserveFullName = false,
+  roleSubtitle,
   isPlaying,
   onTogglePlay,
   isMuted = false,
@@ -223,21 +227,7 @@ export const UnifiedVideoCardOverlay: React.FC<UnifiedVideoCardOverlayProps> = (
           <BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
         </button>
 
-        {/* 3. LE FAIT (Sparkles) */}
-        <button
-          type="button"
-          onClick={handleFactClick}
-          className={`w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-xl border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
-            internalFactOpen
-              ? 'bg-[#FFE7A3] text-stone-900 border-[#FFE7A3] shadow-md'
-              : 'bg-black/45 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white backdrop-blur-md'
-          }`}
-          title="Découvrir le fait marquant"
-        >
-          <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-        </button>
-
-        {/* 4. LE PROFIL (ProfileSoloIcon) */}
+        {/* 3. LE PROFIL (ProfileSoloIcon) */}
         {onOpenProfile && (
           <button
             type="button"
@@ -249,21 +239,6 @@ export const UnifiedVideoCardOverlay: React.FC<UnifiedVideoCardOverlayProps> = (
             title={`Voir le profil`}
           >
             <ProfileSoloIcon className="w-4 h-4 sm:w-4.5 sm:h-4.5 text-white" />
-          </button>
-        )}
-
-        {/* LIGNÉE (Star) */}
-        {onOpenLineage && (
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              onOpenLineage();
-            }}
-            className="w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
-            title="Explorer la lignée"
-          >
-            <Star className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white stroke-[2]" />
           </button>
         )}
 
@@ -336,8 +311,13 @@ export const UnifiedVideoCardOverlay: React.FC<UnifiedVideoCardOverlayProps> = (
       {/* =================================================================== */}
       <div className="absolute bottom-3 sm:bottom-3.5 left-3 sm:left-3.5 z-20 pointer-events-auto pr-12 max-w-[75%]">
         <h3 className="font-editorial text-[15px] sm:text-[17px] md:text-[18px] font-bold text-white tracking-[0.08em] sm:tracking-[0.1em] leading-snug drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] truncate">
-          {cleanDisplayName}
+          {preserveFullName ? displayName : cleanDisplayName}
         </h3>
+        {roleSubtitle && (
+          <p className="text-[11px] sm:text-xs text-stone-300 font-medium tracking-wide drop-shadow-md truncate mt-0.5">
+            {roleSubtitle}
+          </p>
+        )}
       </div>
 
       {/* =================================================================== */}

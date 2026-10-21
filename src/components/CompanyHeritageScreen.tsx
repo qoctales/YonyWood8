@@ -9,9 +9,11 @@ import {
   X,
   Compass,
   Layers,
+  LayoutGrid,
   Check,
   Award,
-  BookOpen
+  BookOpen,
+  ArrowUpDown
 } from 'lucide-react';
 import { ShareIcon } from './ShareIcon';
 import { ResonanceModal } from './ResonanceModal';
@@ -20,6 +22,7 @@ import { ViewScreen } from '../types';
 import { CompanyEntity, CompanyStakeholder, COMPANIES_DATA } from '../data/companyPortraitsData';
 import { PortraitsCircleView } from './PortraitsCircleView';
 import { UnifiedVideoCardOverlay } from './UnifiedVideoCardOverlay';
+import { celestialAudio } from '../utils/celestialAudio';
 
 export type { CompanyStakeholder, CompanyEntity };
 export { COMPANIES_DATA };
@@ -44,7 +47,9 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
   const [isStakeholderPlaying, setIsStakeholderPlaying] = useState(false);
   const [isStakeholderMuted, setIsStakeholderMuted] = useState(false);
 
-  // Modales d'interaction pour les témoins
+  // Modales d'interaction pour les témoins & entreprises
+  const [resonanceTargetCompany, setResonanceTargetCompany] = useState<CompanyEntity | null>(null);
+  const [companyResonances, setCompanyResonances] = useState<Record<string, number>>({});
   const [resonanceTargetStakeholder, setResonanceTargetStakeholder] = useState<CompanyStakeholder | null>(null);
   const [stakeholderResonances, setStakeholderResonances] = useState<Record<string, number>>({});
   const [questionModalStakeholder, setQuestionModalStakeholder] = useState<CompanyStakeholder | null>(null);
@@ -136,39 +141,66 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
     >
       
       {/* =========================================================== */}
-      {/* EN-TÊTE DU MODE CARTES SWIPE (LE MODE CERCLE A SON PROPRE FIL D'ARIANE) */}
+      {/* EN-TÊTE HARMONISÉ : TITRE PORTRAITS & BASCULE CERCLE <-> SWIPE */}
       {/* =========================================================== */}
-      {viewMode === 'cards' && (
-        selectedCompanyForSpace ? (
-          <div className="flex items-center justify-between h-8 sm:h-9 shrink-0 gap-2 mb-1.5 sm:mb-2">
-            <button
-              onClick={() => {
-                setSelectedCompanyForSpace(null);
-                setIsStakeholderPlaying(false);
-              }}
-              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-stone-100 hover:bg-[#A2482B] text-stone-700 hover:text-white border border-stone-200 transition-all text-xs font-semibold cursor-pointer shadow-xs group"
-            >
-              <ChevronLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
-              <span>Entreprises</span>
-            </button>
+      {selectedCompanyForSpace ? (
+        <div className="flex items-center justify-between h-8 sm:h-9 shrink-0 gap-2 mb-1.5 sm:mb-2">
+          <button
+            onClick={() => {
+              setSelectedCompanyForSpace(null);
+              setIsStakeholderPlaying(false);
+            }}
+            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-stone-100 hover:bg-[#A2482B] text-stone-700 hover:text-white border border-stone-200 transition-all text-xs font-semibold cursor-pointer shadow-xs group"
+          >
+            <ChevronLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
+            <span>Entreprises</span>
+          </button>
 
-            <div className="relative flex items-center h-full shrink-0">
-              <h2 className="font-editorial text-sm sm:text-base font-bold text-[#1C1917] tracking-wider">
-                {selectedCompanyForSpace.companyName}
-              </h2>
-              <div className="absolute left-0 -bottom-2 w-8 h-0.5 bg-[#A2482B] rounded-full" />
-            </div>
+          <div className="relative flex items-center h-full shrink-0">
+            <h2 className="font-editorial text-sm sm:text-base font-bold text-[#1C1917] tracking-wider">
+              {selectedCompanyForSpace.companyName}
+            </h2>
           </div>
-        ) : (
-          <div className="flex items-center justify-between h-8 sm:h-9 shrink-0 gap-2 mb-1.5 sm:mb-2">
-            <div className="relative flex items-center h-full shrink-0">
-              <h1 className="font-editorial text-base sm:text-[18px] font-bold text-[#1C1917] tracking-tight leading-none">
-                Portraits
-              </h1>
-              <div className="absolute left-0 -bottom-2 w-8 h-0.5 bg-[#A2482B] rounded-full" />
-            </div>
+        </div>
+      ) : (
+        <div className="flex items-center justify-between h-8 sm:h-9 shrink-0 gap-2 mb-1.5 sm:mb-2">
+          <div className="relative flex items-center h-full shrink-0">
+            <h1 className="font-editorial text-base sm:text-[18px] font-bold text-[#1C1917] tracking-tight leading-none">
+              Portraits
+            </h1>
           </div>
-        )
+
+          {/* Bascule Mode Cercle <-> Mode Swipe avec son noble celestialAudio */}
+          <div className="flex items-center gap-1.5 shrink-0">
+            {viewMode === 'circle' ? (
+              <button
+                id="btn-toggle-portraits-swipe"
+                onClick={() => {
+                  setViewMode('swipe');
+                  celestialAudio.playOrbSelect();
+                }}
+                className="flex items-center gap-1.5 h-6.5 sm:h-7 px-3 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-700 hover:text-stone-900 border border-stone-200/90 text-[10.5px] sm:text-[11px] font-semibold transition-all cursor-pointer shadow-2xs shrink-0 active:scale-95"
+                title="Passer en mode Swipe"
+              >
+                <Layers className="w-3 h-3 text-[#A2482B]" />
+                <span>Swipe</span>
+              </button>
+            ) : (
+              <button
+                id="btn-toggle-portraits-circle"
+                onClick={() => {
+                  setViewMode('circle');
+                  celestialAudio.playOrbSelect();
+                }}
+                className="flex items-center gap-1.5 h-6.5 sm:h-7 px-3 rounded-full bg-[#A2482B] hover:bg-[#8A3B22] text-white text-[10.5px] sm:text-[11px] font-semibold transition-all cursor-pointer shadow-2xs shrink-0 active:scale-95"
+                title="Revenir au mode Cercle"
+              >
+                <LayoutGrid className="w-3 h-3 text-white" />
+                <span>Cercle</span>
+              </button>
+            )}
+          </div>
+        </div>
       )}
 
       {/* =========================================================== */}
@@ -200,7 +232,7 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
               <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
 
-            {/* CARTE VIDÉO ENTREPRISE 9:16 (Même gabarit que Studio) */}
+            {/* CARTE VIDÉO ENTREPRISE 9:16 (Même gabarit standardisé) */}
             <div 
               onClick={() => {
                 setIsPlaying(!isPlaying);
@@ -227,92 +259,35 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
               )}
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/45 pointer-events-none" />
 
-              {/* =========================================================== */}
-              {/* HAUT DE CARTE : DOMAINE EN TITRE À GAUCHE & LECTEUR VIDÉO EN HAUT À DROITE */}
-              {/* =========================================================== */}
-              <div className="relative z-20 flex items-center justify-between w-full pointer-events-auto">
-                <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-[10.5px] sm:text-xs font-bold text-white tracking-wider uppercase drop-shadow-sm truncate inline-block">
-                  {currentCompany.category}
-                </span>
-
-                {/* Lecteur vidéo vintage officiel TvPlayerIcon en haut à droite */}
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsPlaying(prev => !prev);
-                  }}
-                  className="w-8.5 h-8.5 sm:w-9.5 sm:h-9.5 rounded-xl bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center text-white transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0"
-                  title={isPlaying ? "Mettre en pause" : `Regarder la vidéo de ${currentCompany.companyName}`}
-                >
-                  {isPlaying ? (
-                    <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
-                  ) : (
-                    <TvPlayerIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white transition-transform" strokeWidth={1.6} />
-                  )}
-                </button>
-              </div>
-
-              {/* =========================================================== */}
-              {/* FLANC DROIT : EXPLORER L'UNIVERS & PARTAGER                 */}
-              {/* =========================================================== */}
-              <div 
-                onClick={(e) => e.stopPropagation()}
-                className="absolute right-3 sm:right-3.5 top-1/2 -translate-y-1/2 z-20 flex flex-col gap-3 pointer-events-auto"
-              >
-                {/* 1. Découvrir l'univers de l'entreprise */}
-                <button
-                  onClick={() => {
-                    setSelectedCompanyForSpace(currentCompany);
-                    setStakeholderIdx(0);
-                    setIsStakeholderPlaying(false);
-                  }}
-                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-black/45 hover:bg-[#A2482B] border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all cursor-pointer shadow-md hover:scale-105 active:scale-95"
-                  title={`Découvrir l'univers et les témoignages de ${currentCompany.companyName}`}
-                >
-                  <Compass className="w-4 h-4 text-white" />
-                </button>
-
-                {/* 2. Partager cette entreprise */}
-                <button
-                  onClick={handleShare}
-                  className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl border flex items-center justify-center transition-all cursor-pointer shadow-md hover:scale-105 active:scale-95 ${
-                    copied
-                      ? 'bg-emerald-700/85 border-emerald-600 text-white'
-                      : 'bg-black/45 hover:bg-[#A2482B] border-white/20 text-white'
-                  }`}
-                  title="Partager cette entreprise"
-                >
-                  {copied ? (
-                    <Check className="w-4 h-4 text-white" />
-                  ) : (
-                    <ShareIcon className="w-4 h-4 text-white" />
-                  )}
-                </button>
-              </div>
-
-              {/* =========================================================== */}
-              {/* BAS DE LA CARTE : NOM DE L'ENTREPRISE SEUL À GAUCHE         */}
-              {/* ET SYMBOLE MUTE EN BAS À DROITE                             */}
-              {/* =========================================================== */}
-              <div className="relative z-20 pt-2 mt-auto flex items-end justify-between gap-2 pointer-events-auto">
-                <div className="min-w-0 pr-2">
-                  <h4 className="font-editorial text-base sm:text-lg font-bold text-white drop-shadow-md tracking-wider leading-tight">
-                    {currentCompany.companyName}
-                  </h4>
-                </div>
-
-                {/* Symbole Muet en bas à droite */}
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsMuted(prev => !prev);
-                  }}
-                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center cursor-pointer transition-all shadow-md hover:scale-105 active:scale-95 shrink-0"
-                  title={isMuted ? "Activer le son" : "Couper le son"}
-                >
-                  {isMuted ? <VolumeX className="w-3.5 h-3.5 text-white" /> : <Volume2 className="w-3.5 h-3.5 text-white" />}
-                </button>
-              </div>
+              {/* Overlay standardisé : domaine d'activité en haut à gauche, nom d'entreprise en bas à gauche, 5 boutons harmonisés */}
+              <UnifiedVideoCardOverlay
+                titleBadge={currentCompany.category}
+                displayName={currentCompany.companyName}
+                preserveFullName={true}
+                isPlaying={isPlaying}
+                onTogglePlay={() => setIsPlaying(prev => !prev)}
+                isMuted={isMuted}
+                onToggleMute={() => setIsMuted(prev => !prev)}
+                resonanceScore={companyResonances[currentCompany.id]}
+                onOpenResonance={() => setResonanceTargetCompany(currentCompany)}
+                questionText={currentCompany.manifestoQuestion}
+                factText={`${currentCompany.tagline} — ${currentCompany.description}`}
+                onOpenProfile={() => {
+                  setSelectedCompanyForSpace(currentCompany);
+                  setStakeholderIdx(0);
+                  setIsStakeholderPlaying(false);
+                }}
+                onShare={handleShare}
+                isShareCopied={copied}
+                onReportVideo={() => {
+                  setToastMessage('Vidéo signalée à la modération.');
+                  setTimeout(() => setToastMessage(null), 2500);
+                }}
+                onBlockVideo={() => {
+                  setToastMessage('Cette entreprise a été masquée.');
+                  setTimeout(() => setToastMessage(null), 2500);
+                }}
+              />
             </div>
 
             {/* Flèche droite */}

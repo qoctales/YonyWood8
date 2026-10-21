@@ -472,18 +472,6 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
 
         <div className="pt-4 flex flex-wrap justify-center gap-3">
           <button
-            onClick={() => {
-              setSubmittedSuccess(false);
-              setStep(1);
-              setChosenFlow(null);
-              setActiveStudioTab('my_videos');
-            }}
-            className="px-6 py-2.5 rounded-full bg-[#1C1917] hover:bg-stone-800 text-white text-xs font-semibold shadow-sm transition-colors cursor-pointer flex items-center gap-1.5"
-          >
-            <Film className="w-3.5 h-3.5 text-[#D9AF52]" />
-            <span>Voir dans mes publications</span>
-          </button>
-          <button
             onClick={() => onNavigate({ type: 'matrix_view' })}
             className="px-6 py-2.5 rounded-full bg-[#A2482B] hover:bg-[#8B3B20] text-white text-xs font-semibold shadow-sm transition-colors cursor-pointer"
           >
