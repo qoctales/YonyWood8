@@ -60,8 +60,6 @@ import { useAuth } from '../services/authContext';
 import { AuthModal } from './AuthModal';
 import { ShareIcon } from './ShareIcon';
 import { ProfileSoloIcon, TvPlayerIcon } from './YonywoodBrandIcons';
-import { ProfilePhotoTvFrame } from './ProfilePhotoTvFrame';
-import { ProfileAvatarRing } from './ProfileAvatarRing';
 import { OrdersAndContributionsModal } from './OrdersAndContributionsModal';
 import { transactionService } from '../utils/transactionService';
 import { ProfileLineageFrise } from './ProfileLineageFrise';
@@ -1665,11 +1663,13 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
       {showLineageFrise ? (
         <div className="flex items-center justify-between shrink-0 h-9 sm:h-10 mb-1">
           <div className="flex items-center gap-2.5 sm:gap-3 h-full shrink-0">
-            <ProfileAvatarRing 
-              photoUrl={userPhoto || '/assets/duos/codjo-blind.jpg'}
-              alt={profileDisplayName}
-              className="w-8 h-8 sm:w-9 sm:h-9 shadow-sm"
-            />
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl overflow-hidden border border-stone-200 shadow-xs bg-stone-100 shrink-0">
+              <img
+                src={userPhoto || '/assets/duos/codjo-blind.jpg'}
+                alt={profileDisplayName}
+                className="w-full h-full object-cover"
+              />
+            </div>
             <div className="relative flex items-center h-full">
               <h1 className="font-editorial text-base sm:text-lg font-bold text-[#1C1917] tracking-tight leading-none">
                 Lignée de {profileDisplayName}
@@ -1740,26 +1740,38 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
               </button>
             )}
 
-            {/* Messagerie visiteur (si profil tiers) */}
-            {!isOwner && (
-              <button
-                onClick={handleContactProtagonist}
-                id="btn-visitor-message"
-                className="group h-8 sm:h-8.5 px-3 sm:px-3.5 rounded-full bg-white hover:bg-[#A2482B] border border-stone-200 hover:border-[#A2482B] text-xs font-semibold text-[#1C1917] hover:text-white flex items-center gap-1.5 transition-all shadow-xs cursor-pointer whitespace-nowrap active:scale-95"
-                title={`Envoyer un message à ${profileDisplayName}`}
-              >
-                <MessageSquare className="w-3.5 h-3.5 text-stone-700 group-hover:text-white transition-colors" />
-                <span>Messagerie</span>
-              </button>
-            )}
+            {/* Espace Messagerie : icône seule sans texte */}
+            <button
+              onClick={() => {
+                if (isOwner) {
+                  onNavigate({ type: 'messaging' });
+                } else {
+                  handleContactProtagonist();
+                }
+              }}
+              id="btn-profile-messaging"
+              className="w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-xl bg-white hover:bg-[#A2482B] border border-stone-200 hover:border-[#A2482B] text-stone-700 hover:text-white flex items-center justify-center transition-all shadow-xs cursor-pointer active:scale-95 shrink-0"
+              title={isOwner ? "Espace messagerie" : `Envoyer un message à ${profileDisplayName || 'Pascal'}`}
+            >
+              <MessageSquare className="w-4 h-4 stroke-[1.8] transition-colors" />
+            </button>
 
-            {/* Photo de profil de Pascal dans son anneau circulaire précieux terracotta (#A2482B) et doré (#D9A441) */}
-            <ProfileAvatarRing
-              photoUrl={userPhoto || '/assets/duos/codjo-blind.jpg'}
-              alt={`Photo de profil de ${profileDisplayName || 'Pascal'}`}
-              className="w-10 h-10 sm:w-11 sm:h-11 shadow-xs"
-              onClick={() => setIsEditingProfile(true)}
-            />
+            {/* Petite diapositive carrée épurée avec la photo de la personne (sans icône) */}
+            <div 
+              onClick={() => {
+                if (isOwner) setIsEditingProfile(true);
+              }}
+              className={`w-9 h-9 sm:w-10 sm:h-10 p-0.5 sm:p-1 bg-white border border-stone-200/90 rounded-sm sm:rounded shadow-xs shrink-0 flex items-center justify-center ${isOwner ? 'cursor-pointer hover:scale-105 active:scale-95' : ''} transition-transform`}
+              title={isOwner ? "Modifier mon profil" : `Profil de ${profileDisplayName || 'Pascal'}`}
+            >
+              <div className="w-full h-full overflow-hidden bg-stone-100 rounded-[1px] aspect-square">
+                <img
+                  src={userPhoto || '/assets/duos/codjo-blind.jpg'}
+                  alt={profileDisplayName || 'Pascal'}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
           </div>
         </div>
       )}
@@ -3935,11 +3947,13 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
           <div className="bg-white max-w-md w-full rounded-3xl p-5 sm:p-6 shadow-2xl border border-stone-200 space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-stone-200">
               <div className="flex items-center gap-3">
-                <ProfileAvatarRing
-                  photoUrl={userPhoto || '/assets/duos/codjo-blind.jpg'}
-                  alt={profileDisplayName}
-                  className="w-12 h-12 shadow-sm"
-                />
+                <div className="w-12 h-12 rounded-xl overflow-hidden border border-stone-200 shadow-xs bg-stone-100 shrink-0">
+                  <img
+                    src={userPhoto || '/assets/duos/codjo-blind.jpg'}
+                    alt={profileDisplayName}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
                 <div>
                   <h3 className="font-editorial text-base sm:text-lg font-bold text-[#1C1917]">
                     Inviter {profileDisplayName} à échanger
@@ -4037,11 +4051,13 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
           <div className="bg-white max-w-sm w-full rounded-3xl p-6 shadow-2xl border border-stone-200 space-y-4">
             <div className="flex items-center justify-between pb-2 border-b border-stone-200">
               <div className="flex items-center gap-3">
-                <ProfileAvatarRing
-                  photoUrl={profileEditPhoto || userPhoto || '/assets/duos/codjo-blind.jpg'}
-                  alt={profileEditName || profileDisplayName}
-                  className="w-12 h-12 shadow-sm"
-                />
+                <div className="w-12 h-12 rounded-xl overflow-hidden border border-stone-200 shadow-xs bg-stone-100 shrink-0">
+                  <img
+                    src={profileEditPhoto || userPhoto || '/assets/duos/codjo-blind.jpg'}
+                    alt={profileEditName || profileDisplayName}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
                 <h3 className="font-editorial text-base font-bold text-[#1C1917]">Modifier mon profil</h3>
               </div>
               <button 

@@ -17,6 +17,7 @@ export const ResonanceModal: React.FC<ResonanceModalProps> = ({
   onClose,
   storyId,
   topicId = 'exploration',
+  personName,
   initialPercentage,
   onRatingSubmitted
 }) => {
@@ -115,33 +116,37 @@ export const ResonanceModal: React.FC<ResonanceModalProps> = ({
 
   return (
     <div 
-      className="absolute inset-0 z-40 bg-black/50 flex flex-col justify-end items-center pointer-events-auto transition-opacity duration-300"
+      className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 pointer-events-auto transition-opacity duration-200"
       onClick={(e) => {
         e.stopPropagation();
         onClose();
       }}
     >
-      {/* Volet inférieur coulissant cantonné à la largeur de la vidéo (max-w-[420px] w-full mx-auto) */}
+      {/* Modale élégante, fine et calibrée strictement sur la largeur d'une vidéo 9:16 */}
       <div 
-        className="w-full max-w-[420px] mx-auto bg-[#FAF8F5] border-t border-x border-[#E7E2D6] rounded-t-3xl p-4 sm:p-5 shadow-2xl space-y-3.5 max-h-[82%] overflow-y-auto text-[#1C1917] transform transition-transform duration-300 ease-out animate-in slide-in-from-bottom"
+        className="relative w-[min(290px,calc(100vw-36px))] sm:w-[min(310px,calc(100vw-40px))] mx-auto bg-white/95 backdrop-blur-md rounded-2xl sm:rounded-3xl p-4 sm:p-4.5 shadow-2xl border border-stone-200/90 text-[#1C1917] space-y-3 animate-in zoom-in-95 duration-200 select-none shrink-0"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Tirette / indicateur de glissement */}
-        <div className="w-10 h-1 bg-[#D8D2C4] rounded-full mx-auto -mt-1 mb-2" />
-
-        {/* En-tête simplifié avec l'icône Évaluation (Award) en Terre Cuite */}
-        <div className="flex items-center justify-between pb-1 border-b border-[#ECE7DC]">
+        {/* En-tête épuré et raffiné */}
+        <div className="flex items-center justify-between pb-2 border-b border-stone-100">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-full bg-[#A2482B]/15 border border-[#A2482B]/30 flex items-center justify-center text-[#A2482B]">
+            <div className="w-6.5 h-6.5 rounded-lg bg-[#A2482B]/10 border border-[#A2482B]/20 flex items-center justify-center text-[#A2482B] shrink-0">
               <Award className="w-3.5 h-3.5" />
             </div>
-            <span className="text-xs font-bold text-[#1C1917] uppercase tracking-wider">
-              Évaluation
-            </span>
+            <div className="min-w-0">
+              <span className="text-[11px] font-bold text-[#1C1917] uppercase tracking-wider block leading-tight">
+                Évaluation
+              </span>
+              {personName && (
+                <span className="text-[10px] text-stone-500 font-medium block truncate max-w-[170px] leading-tight mt-0.5">
+                  {personName}
+                </span>
+              )}
+            </div>
           </div>
           <button
             onClick={onClose}
-            className="w-7 h-7 rounded-full bg-stone-200/80 hover:bg-stone-300 text-stone-600 hover:text-stone-900 flex items-center justify-center transition-colors cursor-pointer"
+            className="w-7 h-7 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-500 hover:text-stone-800 flex items-center justify-center transition-colors cursor-pointer shrink-0"
             title="Fermer"
           >
             <X className="w-3.5 h-3.5" />
@@ -150,31 +155,36 @@ export const ResonanceModal: React.FC<ResonanceModalProps> = ({
 
         {/* État après validation */}
         {isSubmitted ? (
-          <div className="py-6 text-center space-y-1.5 animate-in zoom-in duration-150">
-            <div className="w-10 h-10 rounded-full bg-emerald-100 border border-emerald-300 text-emerald-700 mx-auto flex items-center justify-center">
-              <Check className="w-5 h-5" />
+          <div className="py-5 text-center space-y-1.5 animate-in zoom-in duration-150">
+            <div className="w-9 h-9 rounded-full bg-emerald-100 border border-emerald-300 text-emerald-700 mx-auto flex items-center justify-center">
+              <Check className="w-4.5 h-4.5" />
             </div>
-            <p className="text-sm font-bold text-[#1C1917]">Résonance enregistrée</p>
+            <p className="text-xs font-bold text-[#1C1917]">Résonance enregistrée</p>
             <p className="text-xs text-[#A2482B] font-mono font-bold">{overallPercentage}%</p>
           </div>
         ) : (
           <>
-            {/* Moyenne centrée, claire et épurée en Terre Cuite */}
-            <div className="text-center py-2 px-3 bg-white rounded-xl border border-[#E7E2D6] shadow-2xs">
-              <div className="text-3xl sm:text-4xl font-extrabold text-[#A2482B] font-mono tracking-tight flex items-baseline justify-center gap-0.5">
-                <span>{overallPercentage}</span>
-                <span className="text-lg text-[#A2482B]/80 font-sans font-bold">%</span>
+            {/* Score global fin et discret */}
+            <div className="flex items-center justify-center py-1.5 px-3 bg-stone-50 rounded-xl border border-stone-200/70">
+              <div className="text-center">
+                <div className="text-2xl sm:text-3xl font-extrabold text-[#A2482B] font-mono tracking-tight flex items-baseline justify-center gap-0.5">
+                  <span>{overallPercentage}</span>
+                  <span className="text-xs text-[#A2482B]/80 font-sans font-bold">%</span>
+                </div>
+                <span className="text-[9.5px] uppercase font-semibold text-stone-400 tracking-wider">
+                  Résonance globale
+                </span>
               </div>
             </div>
 
-            {/* Les 3 évaluations : Authenticité, Pertinence, Impact (curseurs 0 à 100%, par défaut à 50%) */}
-            <div className="space-y-2.5 py-0.5">
+            {/* Les 3 évaluations : Authenticité, Pertinence, Impact (curseurs fins de 0 à 100%) */}
+            <div className="space-y-2 py-0.5">
               
               {/* 1. Authenticité */}
-              <div className="space-y-1 bg-white p-2.5 rounded-xl border border-[#EAE6DE] shadow-2xs">
-                <div className="flex justify-between items-center text-xs">
-                  <span className="font-semibold text-[#1C1917] text-[11px]">Authenticité</span>
-                  <span className="font-mono text-[#A2482B] font-bold bg-[#A2482B]/10 border border-[#A2482B]/20 px-1.5 py-0.5 rounded text-[10px]">
+              <div className="space-y-1">
+                <div className="flex justify-between items-center text-[10.5px]">
+                  <span className="font-semibold text-stone-700">Authenticité</span>
+                  <span className="font-mono text-[#A2482B] font-bold text-[10.5px]">
                     {authenticity}%
                   </span>
                 </div>
@@ -185,19 +195,15 @@ export const ResonanceModal: React.FC<ResonanceModalProps> = ({
                   step="1"
                   value={authenticity}
                   onChange={(e) => setAuthenticity(Number(e.target.value))}
-                  className="w-full h-1.5 bg-[#E7E2D6] rounded-lg appearance-none cursor-pointer accent-[#A2482B]"
+                  className="w-full h-1 bg-stone-200 rounded-lg appearance-none cursor-pointer accent-[#A2482B]"
                 />
-                <div className="flex justify-between text-[9px] text-stone-400 font-mono">
-                  <span>0%</span>
-                  <span>100%</span>
-                </div>
               </div>
 
               {/* 2. Pertinence */}
-              <div className="space-y-1 bg-white p-2.5 rounded-xl border border-[#EAE6DE] shadow-2xs">
-                <div className="flex justify-between items-center text-xs">
-                  <span className="font-semibold text-[#1C1917] text-[11px]">Pertinence</span>
-                  <span className="font-mono text-[#A2482B] font-bold bg-[#A2482B]/10 border border-[#A2482B]/20 px-1.5 py-0.5 rounded text-[10px]">
+              <div className="space-y-1">
+                <div className="flex justify-between items-center text-[10.5px]">
+                  <span className="font-semibold text-stone-700">Pertinence</span>
+                  <span className="font-mono text-[#A2482B] font-bold text-[10.5px]">
                     {relevance}%
                   </span>
                 </div>
@@ -208,19 +214,15 @@ export const ResonanceModal: React.FC<ResonanceModalProps> = ({
                   step="1"
                   value={relevance}
                   onChange={(e) => setRelevance(Number(e.target.value))}
-                  className="w-full h-1.5 bg-[#E7E2D6] rounded-lg appearance-none cursor-pointer accent-[#A2482B]"
+                  className="w-full h-1 bg-stone-200 rounded-lg appearance-none cursor-pointer accent-[#A2482B]"
                 />
-                <div className="flex justify-between text-[9px] text-stone-400 font-mono">
-                  <span>0%</span>
-                  <span>100%</span>
-                </div>
               </div>
 
               {/* 3. Impact émotionnel */}
-              <div className="space-y-1 bg-white p-2.5 rounded-xl border border-[#EAE6DE] shadow-2xs">
-                <div className="flex justify-between items-center text-xs">
-                  <span className="font-semibold text-[#1C1917] text-[11px]">Impact</span>
-                  <span className="font-mono text-[#A2482B] font-bold bg-[#A2482B]/10 border border-[#A2482B]/20 px-1.5 py-0.5 rounded text-[10px]">
+              <div className="space-y-1">
+                <div className="flex justify-between items-center text-[10.5px]">
+                  <span className="font-semibold text-stone-700">Impact</span>
+                  <span className="font-mono text-[#A2482B] font-bold text-[10.5px]">
                     {impact}%
                   </span>
                 </div>
@@ -231,21 +233,17 @@ export const ResonanceModal: React.FC<ResonanceModalProps> = ({
                   step="1"
                   value={impact}
                   onChange={(e) => setImpact(Number(e.target.value))}
-                  className="w-full h-1.5 bg-[#E7E2D6] rounded-lg appearance-none cursor-pointer accent-[#A2482B]"
+                  className="w-full h-1 bg-stone-200 rounded-lg appearance-none cursor-pointer accent-[#A2482B]"
                 />
-                <div className="flex justify-between text-[9px] text-stone-400 font-mono">
-                  <span>0%</span>
-                  <span>100%</span>
-                </div>
               </div>
 
             </div>
 
             {/* Bouton de validation Terre Cuite (#A2482B) */}
-            <div className="pt-1 flex justify-center">
+            <div className="pt-0.5">
               <button
                 onClick={handleSubmit}
-                className="w-full max-w-xs h-9 px-4 rounded-xl bg-[#A2482B] hover:bg-[#8A3B22] text-white text-xs font-bold uppercase tracking-wider transition-all shadow-sm flex items-center justify-center cursor-pointer active:scale-[0.98]"
+                className="w-full h-8 px-4 rounded-xl bg-[#A2482B] hover:bg-[#8A3B22] text-white text-[11px] font-bold uppercase tracking-wider transition-all shadow-xs flex items-center justify-center cursor-pointer active:scale-[0.98]"
               >
                 Valider
               </button>

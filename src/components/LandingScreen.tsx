@@ -47,7 +47,7 @@ export const LandingScreen: React.FC<LandingScreenProps> = ({ onNavigate }) => {
     { id: 'studio', label: 'Studio', icon: DirectorChairIcon, screenId: 'menu-demo-studio' },
     { id: 'heritages', label: 'Héritage', icon: Film, screenId: 'menu-demo-heritage' },
     { id: 'duos', label: 'Duo', icon: DuocumentairesTvIcon, screenId: 'menu-demo-duo' },
-    { id: 'entreprise', label: 'Lumière', icon: PortraitsViseurIcon, screenId: 'menu-demo-lumiere' },
+    { id: 'entreprise', label: 'Portrait', icon: PortraitsViseurIcon, screenId: 'menu-demo-portrait' },
     { id: 'productions', label: 'Production', icon: Clapperboard, screenId: 'menu-demo-production' },
     { id: 'profil', label: 'Profil', icon: ProfileSoloIcon, screenId: 'menu-demo-profil' },
   ];
@@ -163,7 +163,7 @@ export const LandingScreen: React.FC<LandingScreenProps> = ({ onNavigate }) => {
                       : 'bg-transparent text-stone-600 group-hover:bg-stone-100/80'
                   }`}
                 >
-                  <Icon className="w-5 h-5 transition-transform duration-200" />
+                  <Icon className="w-5 h-5 transition-transform duration-200" strokeWidth={1.6} />
                 </div>
 
                 {/* Libellé textuel */}

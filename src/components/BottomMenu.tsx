@@ -11,6 +11,8 @@ import {
   PortraitsViseurIcon,
   ProfileSoloIcon
 } from './YonywoodBrandIcons';
+import { PROTAGONISTS } from '../data/mockData';
+import { useAuth } from '../services/authContext';
 
 interface BottomMenuProps {
   currentScreen: ViewScreen;
@@ -18,6 +20,8 @@ interface BottomMenuProps {
 }
 
 export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigate }) => {
+  const { currentUser } = useAuth();
+
   // Déterminer l'élément actif selon l'écran en cours
   const isStudioActive = currentScreen.type === 'submit_story' || currentScreen.type === 'request_videographer';
   const isHeritageActive = currentScreen.type === 'home' || currentScreen.type === 'matrix_view' || currentScreen.type === 'documentaries' || currentScreen.type === 'documentary_detail';
@@ -34,12 +38,23 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
     currentScreen.type === 'messaging' ||
     currentScreen.type === 'editorial_backoffice';
 
+  // Identité du profil affiché (Pascal par défaut)
+  const profileFirstName = React.useMemo(() => {
+    if (currentScreen.type === 'protagonist_profile' && currentScreen.protagonistId) {
+      const p = PROTAGONISTS.find(prot => prot.id === currentScreen.protagonistId);
+      if (p) {
+        return p.name.split(' ')[0];
+      }
+    }
+    return currentUser?.name?.split(' ')[0] || 'Pascal';
+  }, [currentScreen, currentUser]);
+
   // Ne pas afficher le menu pendant le lecteur vidéo plein écran
   if (currentScreen.type === 'video_player') {
     return null;
   }
 
-  // Exactement six rubriques : Studio · Héritage · Duo · Lumière · Production · Profil
+  // Exactement six rubriques : Studio · Héritage · Duo · Portrait · Production · Profil (Pascal)
   const menuItems = [
     {
       id: 'studio',
@@ -58,7 +73,7 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
       isActive: isHeritageActive,
       onClick: () => onNavigate({ type: 'home' }),
       screenId: 'menu-item-heritage',
-      iconClassName: 'w-[16px] h-[16px] sm:w-[17px] sm:h-[17px]', // Taille calibrée pour éviter toute disharmonie
+      iconClassName: 'w-[16px] h-[16px] sm:w-[17px] sm:h-[17px]',
       strokeWidth: 1.5
     },
     {
@@ -72,12 +87,12 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
       strokeWidth: 1.5
     },
     {
-      id: 'lumiere',
-      label: 'Lumière',
-      icon: LumiereSunDotsIcon, // Disque central + 8 petits points
+      id: 'portrait',
+      label: 'Portrait',
+      icon: PortraitsViseurIcon, // Visée caméra / soleil portraits
       isActive: isLumiereActive,
       onClick: () => onNavigate({ type: 'enterprise' }),
-      screenId: 'menu-item-lumiere',
+      screenId: 'menu-item-portrait',
       iconClassName: 'w-[18.5px] h-[18.5px] sm:w-[19.5px] sm:h-[19.5px]',
       strokeWidth: 1.5
     },
@@ -94,7 +109,7 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
     {
       id: 'profil',
       label: 'Profil',
-      icon: ProfileSoloIcon, // petite télé
+      icon: ProfileSoloIcon, // petite télé (icône de lecture tournée à 180°, sans photo)
       isActive: isProfilActive,
       onClick: () => onNavigate({ type: 'profile' }),
       screenId: 'menu-item-profil',
@@ -125,7 +140,7 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
                   : 'text-stone-500 hover:text-stone-800'
               }`}
             >
-              {/* Capsule changeante uniquement sur l'icône en Terre Cuite signature (#A2482B) pour TOUTES les rubriques actives */}
+              {/* Capsule changeante : icône en Terre Cuite (#A2482B) pour rubriques actives */}
               <div 
                 className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-all duration-200 ${
                   item.isActive 
@@ -133,7 +148,7 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
                     : 'bg-transparent text-stone-600 group-hover:bg-stone-100/80'
                 }`}
               >
-                {item.id === 'lumiere' || item.id === 'portraits' ? (
+                {item.id === 'portrait' || item.id === 'lumiere' || item.id === 'portraits' ? (
                   <PortraitsViseurIcon 
                     className={`${item.iconClassName} transition-transform duration-200`} 
                     strokeWidth={item.strokeWidth} 

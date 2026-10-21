@@ -93,11 +93,14 @@ export const DemoProfilPascalSection: React.FC = () => {
       className="w-full max-w-4xl mx-auto py-4 flex flex-col items-center select-none"
     >
 
-      {/* En-tête Profil : titre exactement au même endroit que Studio */}
+      {/* En-tête : Pascal avec tiret terracotta officiel */}
       <div className="w-full flex items-center justify-between mb-4 sm:mb-6 px-3 sm:px-6">
-        <h3 className="font-editorial text-3xl font-bold text-stone-900">
-          Profil
-        </h3>
+        <div className="relative flex items-center">
+          <h1 className="font-editorial italic text-xs sm:text-sm md:text-base font-bold text-[#1C1917] tracking-tight leading-none whitespace-nowrap">
+            Pascal
+          </h1>
+          <div className="absolute left-0 -bottom-1.5 w-8 h-0.5 bg-[#A2482B] rounded-full" />
+        </div>
       </div>
 
       {/* CARTE 9:16 AVEC FLÈCHES LATÉRALES : TÊTE DE PASCAL EN HAUT, CARRÉ BLANC VARIABLE EN BAS */}
