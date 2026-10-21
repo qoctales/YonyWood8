@@ -41,6 +41,9 @@ const getHeaderTagline = (screen: ViewScreen): string => {
     case 'my_forest':
     case 'protagonist_profile':
     case 'lineage':
+    case 'transactions':
+    case 'messaging':
+    case 'editorial_backoffice':
       return "Gestion des préférences et récits partagés";
 
     case 'participate':
@@ -78,9 +81,9 @@ export const Navbar: React.FC<NavbarProps> = ({ currentScreen, onNavigate, onOpe
           />
         </div>
 
-        {/* Centre : Tagline courte officielle en gras */}
-        <div className="hidden md:flex absolute inset-0 items-center justify-center text-center select-none pointer-events-none z-10 px-28 lg:px-36">
-          <span className="font-editorial text-xs sm:text-[13px] md:text-[14px] font-bold text-stone-900 tracking-tight leading-snug truncate max-w-xl">
+        {/* Centre : Tagline courte officielle en gras sur toutes les pages */}
+        <div className="flex absolute inset-0 items-center justify-center text-center select-none pointer-events-none z-10 px-16 sm:px-24 md:px-28 lg:px-36">
+          <span className="font-editorial text-[10.5px] sm:text-xs md:text-[13.5px] lg:text-[14px] font-bold text-stone-900 tracking-tight leading-snug truncate max-w-[170px] sm:max-w-sm md:max-w-xl">
             {tagline}
           </span>
         </div>

@@ -137,3 +137,25 @@
   transform-box: view-box;
   animation: breatheSvgInner 4s ease-in-out infinite;
 }
+
+/* Halos de respiration céleste discrète pour la Matrice */
+@keyframes matrixAuraDrift {
+  0% {
+    transform: translate(-5%, -5%) scale(0.98);
+    opacity: 0.18;
+  }
+  50% {
+    transform: translate(8%, 8%) scale(1.05);
+    opacity: 0.32;
+  }
+  100% {
+    transform: translate(-5%, -5%) scale(0.98);
+    opacity: 0.18;
+  }
+}
+
+.animate-matrix-aura {
+  animation: matrixAuraDrift 20s ease-in-out infinite;
+}
+
+

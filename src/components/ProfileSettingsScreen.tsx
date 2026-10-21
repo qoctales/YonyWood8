@@ -1663,18 +1663,19 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
       {/* 1. EN-TÊTE HARMONISÉ EXACTEMENT AU MÊME FORMAT QUE TOUTES LES AUTRES PAGES */}
       {/* ========================================================================= */}
       {showLineageFrise ? (
-        <div className="pb-1.5 pt-1 mb-1.5 flex items-center justify-between shrink-0 h-10 sm:h-12">
+        <div className="flex items-center justify-between shrink-0 h-9 sm:h-10 mb-1">
           <div className="flex items-center gap-2.5 sm:gap-3 h-full shrink-0">
             <ProfileAvatarRing 
               photoUrl={userPhoto || '/assets/duos/codjo-blind.jpg'}
               alt={profileDisplayName}
-              className="w-10 h-10 sm:w-11 sm:h-11 shadow-sm"
+              className="w-8 h-8 sm:w-9 sm:h-9 shadow-sm"
             />
-            <div className="relative flex items-center h-full shrink-0">
-              <h1 className="font-editorial text-base sm:text-[18px] font-bold text-[#1C1917] tracking-tight leading-none">
+            <div className="relative flex items-center h-full">
+              <h1 className="font-editorial text-base sm:text-lg font-bold text-[#1C1917] tracking-tight leading-none">
                 Lignée de {profileDisplayName}
               </h1>
-              <div className="absolute left-0 -bottom-2 w-8 h-0.5 bg-[#A2482B] rounded-full" />
+              {/* Petit trait terracotta officiel */}
+              <div className="absolute left-0 -bottom-1.5 w-8 h-0.5 bg-[#A2482B] rounded-full" />
             </div>
           </div>
 
@@ -1686,16 +1687,15 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
           </button>
         </div>
       ) : (
-        <div className="flex items-center justify-between h-10 sm:h-12 shrink-0 gap-2 mb-1.5 sm:mb-2">
+        <div className="flex items-center justify-between h-9 sm:h-10 shrink-0 gap-2 mb-1">
           {/* GAUCHE : Prénom de la personne (ex: Pascal) avec tiret terracotta signature */}
           <div className="flex items-center gap-2 sm:gap-2.5 h-full shrink-0">
-            <div className="relative flex items-center h-full shrink-0">
-              <div className="relative inline-flex items-center">
-                <h1 className="font-editorial text-base sm:text-[18px] font-bold text-[#1C1917] tracking-tight leading-none">
-                  {profileDisplayName || 'Pascal'}
-                </h1>
-                <div className="absolute left-0 -bottom-1.5 sm:-bottom-2 w-8 h-0.5 bg-[#A2482B] rounded-full" />
-              </div>
+            <div className="relative flex items-center h-full">
+              <h1 className="font-editorial text-base sm:text-lg font-bold text-[#1C1917] tracking-tight leading-none">
+                {profileDisplayName || 'Pascal'}
+              </h1>
+              {/* Petit trait terracotta officiel */}
+              <div className="absolute left-0 -bottom-1.5 w-8 h-0.5 bg-[#A2482B] rounded-full" />
             </div>
           </div>
 

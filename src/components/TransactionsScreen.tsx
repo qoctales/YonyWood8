@@ -151,10 +151,11 @@ export const TransactionsScreen: React.FC<TransactionsScreenProps> = ({
             <ChevronLeft className="w-4 h-4 stroke-[2.2]" />
           </button>
           <div className="relative flex items-center h-full">
-            <h1 className="font-editorial text-2xl sm:text-3xl font-bold text-[#1C1917] leading-none">
+            <h1 className="font-editorial text-base sm:text-lg font-bold text-[#1C1917] tracking-tight leading-none">
               Transactions
             </h1>
-            <div className="absolute left-0 -bottom-2 w-8 h-0.5 bg-[#A2482B] rounded-full" />
+            {/* Petit trait terracotta officiel */}
+            <div className="absolute left-0 -bottom-1.5 w-8 h-0.5 bg-[#A2482B] rounded-full" />
           </div>
         </div>
       </div>

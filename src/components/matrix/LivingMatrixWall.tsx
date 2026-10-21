@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
-import { ZoomIn, ZoomOut } from 'lucide-react';
 import { MatrixProfile } from '../../utils/matrixGridService';
 
 interface LivingMatrixWallProps {
@@ -9,13 +8,169 @@ interface LivingMatrixWallProps {
   onSelectPerson: (person: MatrixProfile) => void;
 }
 
+// Les 4 tempos ralentis et apaisés pour une contemplation poétique (en millisecondes : 8s, 14s, 20s, 28s)
+const RHYTHMS = [8000, 14000, 20000, 28000];
+
+interface MatrixCellProps {
+  initialProfile: MatrixProfile;
+  idx: number;
+  highlightedPersonId?: string | null;
+  activeCounterpointId?: string | null;
+  isPaused: boolean;
+  onSelectPerson: (person: MatrixProfile) => void;
+  onHoverProfile: (profile: MatrixProfile | null, e?: React.MouseEvent) => void;
+  onRequestNewProfile: (currentId: string, cellIdx: number) => MatrixProfile;
+}
+
+/**
+ * MatrixCell:
+ * Case autonome de la matrice possédant son propre tempo ralenti et désynchronisé (8s, 14s, 20s, 28s).
+ * Elle commence à son propre moment décalé, s'éteint en fondu au noir très lent (1400ms),
+ * change de visage, réapparaît en douceur puis choisit un nouveau rythme parmi les 4 tempos.
+ * Mémoïsée pour garantir 60 FPS constants sans re-render de la grille globale.
+ */
+const MatrixCell: React.FC<MatrixCellProps> = React.memo(({
+  initialProfile,
+  idx,
+  highlightedPersonId,
+  activeCounterpointId,
+  isPaused,
+  onSelectPerson,
+  onHoverProfile,
+  onRequestNewProfile
+}) => {
+  const [profile, setProfile] = useState<MatrixProfile>(initialProfile);
+  const [fadePhase, setFadePhase] = useState<'idle' | 'fadeOut' | 'fadeIn'>('idle');
+  const [isEmerging, setIsEmerging] = useState<boolean>(false);
+
+  // Synchronisation si le profil initial change depuis le parent
+  useEffect(() => {
+    setProfile(initialProfile);
+  }, [initialProfile]);
+
+  useEffect(() => {
+    const isReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (isReduced) return;
+
+    let isMounted = true;
+    let timerOut: NodeJS.Timeout | null = null;
+    let timerIn: NodeJS.Timeout | null = null;
+    let nextTimer: NodeJS.Timeout | null = null;
+
+    // 1. Décalage de départ unique et désynchronisé pour chaque case (étalé doucement jusqu'à 24s)
+    const initialDelay = ((idx * 137.5) % 24000) + 800;
+
+    const executeCycle = () => {
+      if (!isMounted) return;
+
+      // Si l'utilisateur est en train d'explorer (survol, pan ou zoom), repousser doucement de 2s
+      if (isPaused) {
+        nextTimer = setTimeout(executeCycle, 2000);
+        return;
+      }
+
+      // Phase 1 : Fondu au noir très doux et ralenti (1400ms)
+      setFadePhase('fadeOut');
+
+      timerOut = setTimeout(() => {
+        if (!isMounted) return;
+
+        // Phase 2 : Remplacement ou échange de visage dans l'obscurité totale
+        const nextProfile = onRequestNewProfile(profile.id, idx);
+        setProfile(nextProfile);
+        setFadePhase('fadeIn');
+        setIsEmerging(true);
+
+        timerIn = setTimeout(() => {
+          if (!isMounted) return;
+          setFadePhase('idle');
+          setIsEmerging(false);
+
+          // Phase 3 : Changement de rythme pour le cycle suivant (ex: 8s -> 20s -> 14s -> 28s)
+          const nextInterval = RHYTHMS[Math.floor(Math.random() * RHYTHMS.length)];
+          nextTimer = setTimeout(executeCycle, nextInterval);
+        }, 1400);
+      }, 1400);
+    };
+
+    // Programmation du premier cycle décalé
+    nextTimer = setTimeout(executeCycle, initialDelay);
+
+    return () => {
+      isMounted = false;
+      if (nextTimer) clearTimeout(nextTimer);
+      if (timerOut) clearTimeout(timerOut);
+      if (timerIn) clearTimeout(timerIn);
+    };
+  }, [idx, isPaused, onRequestNewProfile, profile.id]);
+
+  const isHighlighted = highlightedPersonId === profile.id;
+  const isCounterpoint = activeCounterpointId === profile.id;
+  const displayName = profile.firstName || profile.name.split(' ')[0];
+
+  return (
+    <div
+      onClick={() => onSelectPerson(profile)}
+      onMouseEnter={(e) => onHoverProfile(profile, e)}
+      className={`group/cell relative aspect-square rounded-[2px] sm:rounded-[3px] overflow-hidden cursor-pointer transition-all duration-300 ${
+        isCounterpoint 
+          ? 'ring-2 ring-[#A2482B] scale-110 z-30 shadow-md' 
+          : isHighlighted
+            ? 'ring-2 ring-amber-400 scale-105 z-20'
+            : isEmerging
+              ? 'ring-1 ring-[#C89B3C] z-20 shadow-xs'
+              : 'hover:scale-120 hover:z-30 hover:shadow-lg hover:ring-2 hover:ring-[#A2482B]'
+      }`}
+      style={{ backgroundColor: '#0E0D0B' }}
+      title={displayName}
+    >
+      {/* Photo : fondu au noir très lent (1400ms) et réémergence douce selon le tempo dynamique de cette case */}
+      <img
+        src={profile.photoUrl}
+        alt={displayName}
+        loading="lazy"
+        className={`w-full h-full object-cover pointer-events-none ${
+          fadePhase === 'fadeOut'
+            ? 'opacity-0 scale-95 transition-all duration-[1400ms] ease-in-out'
+            : fadePhase === 'fadeIn'
+              ? 'opacity-100 scale-100 transition-all duration-[1400ms] ease-in-out'
+              : isCounterpoint || isHighlighted || isEmerging
+                ? 'opacity-100 filter-none transition-all duration-300'
+                : 'opacity-100 grayscale-[35%] sepia-[15%] contrast-[1.05] group-hover/cell:filter-none transition-all duration-300'
+        }`}
+      />
+
+      {/* Voile doré au survol */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover/cell:opacity-100 transition-opacity duration-150 pointer-events-none" />
+
+      {/* Halo terracotta si contrepoint */}
+      {isCounterpoint && (
+        <div className="absolute inset-0 bg-[#A2482B]/25 animate-pulse pointer-events-none" />
+      )}
+
+      {/* Subtil éclat doré lors de l'émergence d'un nouveau visage */}
+      {isEmerging && (
+        <div className="absolute inset-0 bg-[#C89B3C]/15 pointer-events-none animate-in fade-in duration-500" />
+      )}
+    </div>
+  );
+});
+
 export const LivingMatrixWall: React.FC<LivingMatrixWallProps> = ({
   grid,
+  allProfiles = [],
   highlightedPersonId,
   onSelectPerson
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  
+
+  // Registre des 256 profils actifs dans la matrice pour organiser les échanges et renouvellements
+  const currentGridProfilesRef = useRef<MatrixProfile[]>(grid.slice(0, 256));
+
+  useEffect(() => {
+    currentGridProfilesRef.current = grid.slice(0, 256);
+  }, [grid]);
+
   // Sur mobile, pré-zoomer à ~1.55 pour afficher ~10x10 visages nets, faciles à toucher et à explorer
   const isMobileInitial = typeof window !== 'undefined' && window.innerWidth < 640;
   const [zoomLevel, setZoomLevel] = useState<number>(isMobileInitial ? 1.55 : 1);
@@ -66,20 +221,38 @@ export const LivingMatrixWall: React.FC<LivingMatrixWallProps> = ({
     };
   }, [isHovered, isDragging, zoomLevel]);
 
-  // Micro-fondu aléatoire délicat (une case pulse doucement toutes les 2.8s)
-  const [pulsingIndex, setPulsingIndex] = useState<number | null>(null);
-  useEffect(() => {
-    const isReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (isReduced) return;
+  // Fournisseur de nouveaux profils : alterne entre permutation de cases et arrivée de nouveaux visages de la forêt
+  const handleRequestNewProfile = useCallback((currentId: string, cellIdx: number): MatrixProfile => {
+    const totalCells = currentGridProfilesRef.current.length;
+    if (totalCells === 0) return grid[0] || ({} as MatrixProfile);
 
-    const interval = setInterval(() => {
-      const randIdx = Math.floor(Math.random() * 256);
-      setPulsingIndex(randIdx);
-      setTimeout(() => setPulsingIndex(null), 1200);
-    }, 2800);
+    const canEmergeNew = allProfiles && allProfiles.length > 0;
+    // 50% de probabilité d'échange de places avec une autre case, 50% d'apparition d'un nouveau profil
+    const isSwap = !canEmergeNew || Math.random() < 0.5;
 
-    return () => clearInterval(interval);
-  }, []);
+    if (isSwap && totalCells > 1) {
+      // Échange avec une autre case de la matrice
+      let otherIdx = Math.floor(Math.random() * totalCells);
+      if (otherIdx === cellIdx) otherIdx = (cellIdx + 23) % totalCells;
+      
+      const targetProfile = currentGridProfilesRef.current[otherIdx];
+      currentGridProfilesRef.current[cellIdx] = targetProfile;
+      return targetProfile;
+    } else {
+      // Sélection d'un profil de la forêt qui n'est pas encore visible dans la grille
+      const visibleIds = new Set(currentGridProfilesRef.current.map(p => p.id));
+      const unseen = allProfiles.filter(p => !visibleIds.has(p.id));
+      const chosen = unseen.length > 0
+        ? unseen[Math.floor(Math.random() * unseen.length)]
+        : allProfiles[Math.floor(Math.random() * allProfiles.length)];
+
+      if (chosen) {
+        currentGridProfilesRef.current[cellIdx] = chosen;
+        return chosen;
+      }
+      return currentGridProfilesRef.current[cellIdx];
+    }
+  }, [allProfiles, grid]);
 
   // Calcul des limites de pan strictes
   const clampPan = useCallback((x: number, y: number, zoom: number) => {
@@ -166,14 +339,27 @@ export const LivingMatrixWall: React.FC<LivingMatrixWallProps> = ({
     initialPinchDistRef.current = null;
   };
 
-  // Clic sur une case -> Déclenche l'histoire vidéo
-  const handleCellClick = (profile: MatrixProfile) => {
+  const handleHoverProfile = useCallback((profile: MatrixProfile | null, e?: React.MouseEvent) => {
+    setHoveredProfile(profile);
+    if (profile && e && containerRef.current) {
+      const rect = containerRef.current.getBoundingClientRect();
+      setTooltipPos({
+        x: Math.min(Math.max(e.clientX - rect.left, 50), rect.width - 50),
+        y: Math.max(e.clientY - rect.top - 38, 10)
+      });
+    } else if (!profile) {
+      setTooltipPos(null);
+    }
+  }, []);
+
+  const handleCellClick = useCallback((profile: MatrixProfile) => {
     if (hasDraggedRef.current) return;
     onSelectPerson(profile);
-  };
+  }, [onSelectPerson]);
 
   const currentTotalX = panOffset.x + (zoomLevel <= 1.1 ? driftOffset.x : 0);
   const currentTotalY = panOffset.y + (zoomLevel <= 1.1 ? driftOffset.y : 0);
+  const isInteractionActive = isHovered || isDragging || zoomLevel > 1.15;
 
   return (
     <div 
@@ -184,7 +370,7 @@ export const LivingMatrixWall: React.FC<LivingMatrixWallProps> = ({
         setHoveredProfile(null);
       }}
     >
-      {/* LA MATRICE : PARFAITEMENT ÉQUILIBRÉE ET CENTRÉE VERTICALEMENT À ÉQUIDISTANCE STRICTE */}
+      {/* LA MATRICE : PARFAITEMENT ÉQUILIBRÉE ET CENTRÉE VERTICALEMENT */}
       <div 
         ref={containerRef}
         onWheel={handleWheel}
@@ -206,68 +392,39 @@ export const LivingMatrixWall: React.FC<LivingMatrixWallProps> = ({
         style={{ touchAction: 'none' }}
       >
         
-        {/* GRILLE 16×16 = 256 CARRÉS DIRECTEMENT SUR LE FOND BLANC */}
+        {/* GRILLE 16×16 = 256 CASES VIVANTES AVEC RYTHMES INDIVIDUELS (4s, 8s, 12s, 16s) */}
         <div 
-          className="w-full h-full grid grid-cols-16 grid-rows-16 gap-[1.5px] sm:gap-[2px] transition-transform duration-75 ease-out will-change-transform"
+          className="w-full h-full grid grid-cols-16 grid-rows-16 gap-[1.5px] sm:gap-[2px] transition-transform duration-75 ease-out will-change-transform relative"
           style={{
             transform: `translate3d(${currentTotalX}px, ${currentTotalY}px, 0) scale(${zoomLevel})`,
             transformOrigin: 'center center'
           }}
         >
-          {grid.slice(0, 256).map((profile, idx) => {
-            const isHighlighted = highlightedPersonId === profile.id;
-            const isCounterpoint = activeCounterpointId === profile.id;
-            const isPulsing = pulsingIndex === idx;
-            const displayName = profile.firstName || profile.name.split(' ')[0];
+          {/* Onde de respiration céleste discrète en arrière-plan reliant les nœuds */}
+          <div className="absolute -inset-6 animate-matrix-aura pointer-events-none z-10 select-none">
+            <div 
+              className="w-full h-full"
+              style={{
+                background: 'radial-gradient(circle 160px at 50% 50%, rgba(200, 155, 60, 0.08) 0%, rgba(162, 72, 43, 0.05) 50%, transparent 75%)',
+                filter: 'blur(12px)'
+              }}
+            />
+          </div>
 
-            return (
-              <div
-                key={`${profile.id}-${idx}`}
-                onClick={() => handleCellClick(profile)}
-                onMouseEnter={(e) => {
-                  setHoveredProfile(profile);
-                  if (containerRef.current) {
-                    const rect = containerRef.current.getBoundingClientRect();
-                    setTooltipPos({
-                      x: Math.min(Math.max(e.clientX - rect.left, 50), rect.width - 50),
-                      y: Math.max(e.clientY - rect.top - 38, 10)
-                    });
-                  }
-                }}
-                className={`group/cell relative aspect-square rounded-[2px] sm:rounded-[3px] overflow-hidden cursor-pointer transition-all duration-200 ${
-                  isCounterpoint 
-                    ? 'ring-2 ring-[#A2482B] scale-110 z-20 shadow-md' 
-                    : isHighlighted
-                      ? 'ring-2 ring-amber-400 scale-105 z-10'
-                      : isPulsing
-                        ? 'brightness-115 ring-1 ring-amber-300 z-10'
-                        : 'hover:scale-120 hover:z-20 hover:shadow-lg hover:ring-2 hover:ring-[#A2482B]'
-                }`}
-                style={{ backgroundColor: '#ECE7DF' }}
-                title={displayName}
-              >
-                {/* Photo en carré : sépia/monochrome doux au repos, couleurs franches au survol */}
-                <img
-                  src={profile.photoUrl}
-                  alt={displayName}
-                  loading="lazy"
-                  className={`w-full h-full object-cover pointer-events-none transition-all duration-200 ${
-                    isCounterpoint || isHighlighted || isPulsing
-                      ? 'filter-none'
-                      : 'grayscale-[35%] sepia-[15%] contrast-[1.05] group-hover/cell:filter-none'
-                  }`}
-                />
-
-                {/* Voile doré au survol */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover/cell:opacity-100 transition-opacity duration-150 pointer-events-none" />
-
-                {/* Halo terracotta si contrepoint */}
-                {isCounterpoint && (
-                  <div className="absolute inset-0 bg-[#A2482B]/25 animate-pulse pointer-events-none" />
-                )}
-              </div>
-            );
-          })}
+          {/* Les 256 cases vivantes avec leurs tempos asynchrones */}
+          {grid.slice(0, 256).map((initialProfile, idx) => (
+            <MatrixCell
+              key={`cell-slot-${idx}`}
+              idx={idx}
+              initialProfile={initialProfile}
+              highlightedPersonId={highlightedPersonId}
+              activeCounterpointId={activeCounterpointId}
+              isPaused={isInteractionActive}
+              onSelectPerson={handleCellClick}
+              onHoverProfile={handleHoverProfile}
+              onRequestNewProfile={handleRequestNewProfile}
+            />
+          ))}
         </div>
 
         {/* INFOBULLE ÉPURÉE AU SURVOL : STRICTEMENT LE PRÉNOM SEUL SANS ENCOMBREMENT */}

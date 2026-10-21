@@ -742,66 +742,38 @@ export const YonyWoodLogo: React.FC<YonyWoodLogoProps> = ({
 };
 
 /**
- * PortraitsViseurIcon:
- * Symbole officiel « Lumière » (icône actuelle viseur, conservée pour l'Étape 1) :
- * Viseur de caméra formé de quatre angles géométriques (stroke="currentColor")
- * et d'un petit soleil lumineux avec ses rayons en son centre.
+ * LumiereSunDotsIcon:
+ * Symbole officiel « Lumière » (nouvelle icône transmise par l'utilisateur) :
+ * Disque central entouré d'une couronne de huit petits points équidistants.
+ * À l'état inactif, reprend la couleur courante (#6E6254 / text-stone-600).
+ * À l'état actif, s'affiche en blanc pur (#FFFFFF) au cœur de la capsule terracotta (#A2482B / #9B4F36).
  */
-export const PortraitsViseurIcon: React.FC<IconProps & { isActive?: boolean }> = ({ 
+export const LumiereSunDotsIcon: React.FC<IconProps & { isActive?: boolean }> = ({ 
   className = 'w-5 h-5',
-  strokeWidth = 2.5,
-  isActive
+  isActive = false
 }) => {
-  // Couleur adaptée : blanc en actif sur la capsule terracotta, couleur courante sinon
-  const sunColor = isActive === true ? '#FFFFFF' : 'currentColor';
-
   return (
     <svg 
-      viewBox="0 0 48 48" 
-      fill="none" 
+      viewBox="0 0 24 24" 
+      fill="currentColor" 
       className={className}
       aria-hidden="true"
     >
-      {/* Cadre de viseur de caméra : 4 angles géométriques */}
-      <g 
-        stroke="currentColor" 
-        strokeWidth={typeof strokeWidth === 'number' ? strokeWidth : 2.5} 
-        strokeLinecap="round" 
-        strokeLinejoin="round"
-      >
-        <path d="M8 17V11a3 3 0 0 1 3-3h6" />
-        <path d="M31 8h6a3 3 0 0 1 3 3v6" />
-        <path d="M40 31v6a3 3 0 0 1-3 3h-6" />
-        <path d="M17 40h-6a3 3 0 0 1-3-3v-6" />
-      </g>
-
-      {/* Petit soleil en son centre */}
-      {/* Disque solaire central */}
-      <circle 
-        cx="24" 
-        cy="24" 
-        r="3.8" 
-        fill={sunColor} 
-      />
-
-      {/* Rayons solaires (8 rayons équidistants et calibrés) */}
-      <g 
-        stroke={sunColor} 
-        strokeWidth="2" 
-        strokeLinecap="round"
-      >
-        {/* Rayons cardinaux */}
-        <line x1="24" y1="15.8" x2="24" y2="18.6" />
-        <line x1="24" y1="29.4" x2="24" y2="32.2" />
-        <line x1="15.8" y1="24" x2="18.6" y2="24" />
-        <line x1="29.4" y1="24" x2="32.2" y2="24" />
-
-        {/* Rayons diagonaux orientés vers les coins du viseur */}
-        <line x1="18.2" y1="18.2" x2="20.2" y2="20.2" />
-        <line x1="27.8" y1="20.2" x2="29.8" y2="18.2" />
-        <line x1="18.2" y1="29.8" x2="20.2" y2="27.8" />
-        <line x1="27.8" y1="27.8" x2="29.8" y2="29.8" />
-      </g>
+      <title>Lumière</title>
+      {/* Disque central */}
+      <circle cx="12" cy="12" r="4.4" />
+      {/* Couronne de 8 petits points */}
+      <circle cx="12" cy="3.2" r="1.15" />
+      <circle cx="18.22" cy="5.78" r="1.15" />
+      <circle cx="20.8" cy="12" r="1.15" />
+      <circle cx="18.22" cy="18.22" r="1.15" />
+      <circle cx="12" cy="20.8" r="1.15" />
+      <circle cx="5.78" cy="18.22" r="1.15" />
+      <circle cx="3.2" cy="12" r="1.15" />
+      <circle cx="5.78" cy="5.78" r="1.15" />
     </svg>
   );
 };
+
+// Rétrocompatibilité pour tous les imports existants
+export const PortraitsViseurIcon = LumiereSunDotsIcon;

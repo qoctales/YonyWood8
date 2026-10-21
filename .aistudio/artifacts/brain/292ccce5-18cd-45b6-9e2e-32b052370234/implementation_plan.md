@@ -1,137 +1,103 @@
-# Harmonisation universelle du déclencheur « Petite Télé » et de l'icône Profil sur les cartes vidéo
+# Matrice Vivante — Page Héritage
 
-Ce plan définit le déploiement cohérent et universel du déclencheur de lecture vidéo « Petite Télé » en haut à droite et la standardisation de l'icône Profil officielle sur l'ensemble des cartes vidéo de l'application YonyWood.
+Plan d'implémentation pour donner vie à la matrice 16×16 de la page Héritage de YonyWood grâce à un flux lumineux ambré/terracotta circulant entre les lignes et un ballet contemplatif de fondus au noir renouvelant les visages de la forêt.
 
 ---
 
-## Synthèse des décisions validées
+## Retours utilisateur & Décisions confirmées
 
 > [!IMPORTANT]
-> **Décisions confirmées avec l'utilisateur :**
-> 1. **Icône Profil immuable** : L'icône profil officielle est celle qui figure déjà dans la barre de navigation principale (`ProfileSoloIcon`). Elle reste strictement celle-ci et doit apparaître sur toutes les cartes vidéo pour ouvrir le profil de la personne (aucune création d'icône profil alternative).
-> 2. **Déploiement universel du déclencheur Télé de lecture** : La « petite télé » en haut à droite devient le déclencheur de lecture standardisé sur **toutes les pages** (Héritages, Studio, Productions, Entreprises, Duos, et démos de l'accueil).
-> 3. **Composant natif `TvPlayerIcon`** : Création d'un composant vectoriel dédié dans `YonywoodBrandIcons.tsx` dessinant nativement la petite télé vintage avec ses antennes orientées vers le haut et son écran caractéristique, évitant les inversions CSS et assurant un rendu géométrique net sur tous les formats d'écrans.
+> Les trois choix directeurs ont été confirmés par l'utilisateur lors du cadrage interactif :
+> - **Rythme** : Très lent et contemplatif — transition douce espacée de 8 à 10 secondes.
+> - **Flux de lumière** : Rayon ambré et terracotta balayant avec fluidité les interlignes et nœuds de la grille.
+> - **Renouvellement des visages** : Combinaison d'échanges de cases entre visages affichés et apparition progressive de nouveaux profils issus de la forêt YonyWood par de subtils fondus au noir.
 
 ---
 
-## 1. Vue d'ensemble & Ergonomie des cartes vidéo
+## 1. Vue d'ensemble & Concept
 
-Chaque carte vidéo au ratio 9:16 (verticale) respecte désormais une anatomie stricte et uniforme à travers toute la plateforme :
-
-```
-┌────────────────────────────────────────────────────────┐
-│  [Badge Catégorie / Série]             [Petite Télé 📺] │ <- Déclencheur lecture (Haut droit)
-│                                                        │
-│                                                        │
-│                                            [Médaille]  │ <- Évaluation Résonance
-│                                            [Livre]     │ <- Question existentielle
-│                                            [Profil 👤] │ <- Profil officiel (ProfileSoloIcon)
-│                                            [Partager]  │ <- Partage lien direct
-│                                                        │
-│  [Prénom du Protagoniste / Entreprise]                 │ <- Typographie signature
-└────────────────────────────────────────────────────────┘
-```
-
-- **Déclencheur de lecture (Haut à droite)** :
-  - **État au repos** : Icône vectorielle « Petite Télé » (`TvPlayerIcon`), boîtier vintage avec ses antennes orientées vers le haut et ses points de mire.
-  - **État en cours de lecture** : Icône `<Pause />` épurée pour suspendre la vidéo d'un clic.
-  - **Style du conteneur** : Bouton rond ou squircle sombre en verre dépoli (`bg-black/45 border border-white/20 hover:bg-[#A2482B] text-white backdrop-blur-md`).
-- **Flanc droit (Actions contextuelles)** :
-  - Dès lors qu'une carte vidéo correspond à une voix ou un protagoniste, le 3ᵉ bouton d'action affiche **systématiquement l'icône Profil officielle** (`ProfileSoloIcon`), identique à celle de la barre de navigation du bas, menant à sa page profil complète.
+La matrice de la page Héritage rassemble les visages des passeurs, héritiers et témoins de la forêt documentaire. Actuellement statique au repos (avec une simple pulsation ponctuelle), elle doit devenir **un organisme vivant et contemplatif** :
+1. **Flux de lumière subtil** : Un éclat doux, ambré et terracotta, qui glisse lentement le long des canaux et interlignes de la grille comme une sève lumineuse reliant les êtres.
+2. **Respiration et transmigration des visages** : Toutes les 8 à 10 secondes, une ou deux cases s'éteignent délicatement dans un fondu au noir progressif (1,2s), avant de faire émerger à nouveau un visage — soit un échange poétique de position entre deux protagonistes, soit l'entrée en scène d'un nouveau membre de la communauté issu du vivier complet des profils.
+3. **Respect absolu de l'interaction** : Dès que l'utilisateur survole une case, commence à faire un pan ou à zoomer, les permutations se suspendent instantanément pour garantir une exploration stable et sans surprise.
 
 ---
 
-## 2. Déploiement page par page
+## 2. Expérience Utilisateur & Design Visuel
 
-### A. Page Héritages (`SwipeModeHeritage.tsx` & modales)
-- **Étape 3 (Protagonistes — ex: Mahougnon)** :
-  - Déclencheur en haut à droite : Utilisation de `TvPlayerIcon` native (remplaçant la rotation inversée).
-  - Flanc droit : Confirmation de `ProfileSoloIcon` pour le profil de la personne, avec ses compagnons (Résonance, Question, Partager).
-- **Étapes 1 et 2 (Portes et Directions)** :
-  - Remplacement de tout bouton play disparate par le même bouton en haut à droite avec `TvPlayerIcon`.
+### A. Le flux lumineux inter-lignes (*Light Stream*)
+- **Positionnement** : Situé exactement dans les interstices (`gap-[1.5px] sm:gap-[2px]`) entre les 256 cases, sans jamais recouvrir ni altérer les photos elles-mêmes.
+- **Teintes & Dégradé** : Dégradé doux partant de l'or ambré signature YonyWood (`#C89B3C`), passant par la Terre Cuite (`#A2482B`) avec une retombée transparente.
+- **Mouvement** : Balayage horizontal puis vertical sur un cycle sinusoïdal long (14 à 18 secondes), créant une sensation de fluide continu et de circulation organique, sans saccade ni effet clignotant agressif.
+- **Filtres & Rendu** : Masque SVG / CSS avec `mix-blend-mode: multiply` ou `screen` selon le contraste, préservant la netteté chirurgicale du fond blanc.
 
-### B. Page Duos / Duocumentaires (`DuoFeedScreen.tsx`)
-- Cartes Duo A et B (vue côte à côte) : Déclencheur en haut à droite avec `TvPlayerIcon` et `<Pause />` dynamique.
-- Cartes plein écran A et B : Déclencheur en haut à droite avec `TvPlayerIcon`.
-- Flanc droit des deux cartes : Maintien strict de l'icône Profil officielle `ProfileSoloIcon` pour ouvrir l'univers de chaque protagoniste.
-
-### C. Page Entreprises (`CompanyHeritageScreen.tsx`)
-- **Carte principale de l'entreprise** : Remplacement du déclencheur par le bouton en haut à droite avec `TvPlayerIcon`.
-- **Espace Entreprise Dédié (Carrousel des voix : fondateur, collaborateurs, clients)** :
-  - Chaque carte individuelle de membre bénéficie en haut à droite de `TvPlayerIcon` pour lancer sa capsule vidéo.
-  - Ajout sur le flanc droit de l'icône Profil `ProfileSoloIcon` permettant de consulter le profil individuel du protagoniste / fondateur.
-
-### D. Page Productions (`DocumentariesListScreen.tsx` & `DocumentaryDetailScreen.tsx`)
-- Remplacement des icônes play triangulaires génériques sur les fiches et teasers vidéo par le bouton signature `TvPlayerIcon` en haut à droite.
-- Présence de `ProfileSoloIcon` sur les fiches protagonistes liées à la série.
-
-### E. Page Studio (`SubmitStoryScreen.tsx`, `RequestVideographerScreen.tsx`, `CreatorVideoHistory.tsx`)
-- Harmonisation des cartes vidéo de démonstration de cadreurs, des formats d'histoires et des aperçus vidéos avec le déclencheur `TvPlayerIcon` en haut à droite.
-
-### F. Sections Landing / Démo d'accueil (`DemoDuocumentairesSection`, `DemoEntrepriseSection`, `DemoProductionsSection`, `DemoStudioSection`)
-- Harmonisation identique pour garantir une fidélité absolue entre les sections de démonstration et les pages interactives de l'application.
+### B. Le fondu au noir des visages (*Chassé-croisé poétique*)
+- **Déroulement d'un cycle (toutes les 8 à 10 secondes)** :
+  1. *Sélection aléatoire douce* : Le système choisit 1 ou 2 cellules cibles non adjacentes pour éviter les surcharges visuelles.
+  2. *Extinction en fondu au noir (1,2s)* : La photo de la case passe doucement de `opacity: 1` à `opacity: 0` sur un fond sombre (`#1C1917`), comme si le regard se retirait dans la nuit.
+  3. *Transition en coulisse (0,2s)* : Durant l'obscurité totale de la case, l'identité du profil est mise à jour (soit un échange avec une autre case, soit un profil issu de la réserve `allProfiles` non présent dans la grille actuelle).
+  4. *Révélation lumineuse (1,2s)* : Le nouveau visage émerge de l'ombre (`opacity: 0` vers `opacity: 1`), accompagné d'un très discret liséré ambré fugace qui s'estompe.
+- **Effet ressenti** : Une mosaïque infinie et vivante où l'on a l'impression que la forêt bouge et que les récits circulent en permanence sous nos yeux, dans une lenteur apaisante.
 
 ---
 
-## 3. Architecture technique & Composants
+## 3. Décisions Clés & Arbitrages
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    YonywoodBrandIcons.tsx                       │
-│  ├─ ProfileSoloIcon (Icône Profil officielle - Menu & Flanc)    │
-│  ├─ TvPlayerIcon (Icône Déclencheur Lecture « Petite Télé »)    │
-│  └─ DuocumentairesTvIcon (Icône Double TV - Menu Navigation)    │
-└────────────────┬────────────────────────────────────────────────┘
-                 │
-                 ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                    Cartes Vidéo 9:16                            │
-│  ├─ SwipeModeHeritage.tsx (Étape 3 Protagonistes)               │
-│  ├─ DuoFeedScreen.tsx (Cartes A & B)                            │
-│  ├─ CompanyHeritageScreen.tsx (Entreprise & Voix membres)       │
-│  ├─ DocumentaryDetailScreen.tsx (Capsules Productions)          │
-│  └─ SubmitStoryScreen.tsx (Aperçus Vidéo Studio)                │
-└─────────────────────────────────────────────────────────────────┘
-```
-
-- **Définition de `TvPlayerIcon`** :
-  ```tsx
-  export const TvPlayerIcon: React.FC<IconProps> = ({ 
-    className = 'w-5 h-5',
-    strokeWidth = 1.55 
-  }) => {
-    return (
-      <svg 
-        viewBox="0 0 24 24" 
-        fill="none" 
-        stroke="currentColor" 
-        strokeWidth={strokeWidth} 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
-        className={className}
-        aria-hidden="true"
-      >
-        {/* Boîtier télévision vintage avec angles adoucis */}
-        <rect x="5.5" y="7.5" width="13" height="11" rx="2.5" />
-        {/* Deux antennes rétro pointant vers le haut et l'extérieur */}
-        <path d="M 9 7.5 L 6.8 4" />
-        <path d="M 15 7.5 L 17.2 4" />
-        {/* Double point de mire / écran expressif */}
-        <circle cx="9.5" cy="13" r="0.9" fill="currentColor" stroke="none" />
-        <circle cx="14.5" cy="13" r="0.9" fill="currentColor" stroke="none" />
-      </svg>
-    );
-  };
-  ```
+1. **Gestion ciblée du DOM plutôt que re-render complet** :
+   - *Choix* : Animer uniquement les indices actifs de transition via des clés ou classes CSS locales (`isFadingOut`, `isFadingIn`), sans forcer le recalcul ou le rerender des 256 cases simultanément.
+   - *Bénéfice* : 60 images par seconde constantes, même sur téléphones mobiles et tablettes, avec zéro surchauffe CPU/GPU.
+2. **Suspension réactive aux gestes utilisateur** :
+   - *Choix* : Si l'utilisateur clique, survole, zoome ou commence à naviguer, les transitions se mettent immédiatement en pause.
+   - *Bénéfice* : Évite toute frustration où une carte disparaîtrait au moment où l'utilisateur s'apprête à cliquer dessus.
+3. **Réserve dynamique de profils** :
+   - *Choix* : Utiliser `allProfiles` déjà extrait de `getAllMatrixProfiles()` dans `MatrixExplorer.tsx` pour alimenter le vivier de visages dormants qui apparaissent au fil de l'eau.
+   - *Bénéfice* : Valorise l'ensemble des protagonistes et donne une impression d'abondance communautaire.
 
 ---
 
-## 4. Plan de vérification
+## 4. Architecture Technique & Flux de Données
 
-1. **Vérification visuelle sur Héritages** :
-   - Constater que la carte de Mahougnon (et des autres protagonistes) affiche la petite télé en haut à droite et l'icône profil officielle sur le flanc droit.
-2. **Vérification croisée multi-écrans** :
-   - Parcourir Duocumentaires, Entreprises, Productions et Studio pour vérifier la présence constante de la petite télé en haut à droite avec bascule en Pause lors de la lecture.
-   - S'assurer que le clic sur l'icône Profil ouvre fidèlement la vue profil / univers du protagoniste.
-3. **Compilation et non-régression** :
-   - Exécution de `compile_applet` et `lint_applet` pour certifier l'absence de toute erreur TypeScript.
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    MatrixExplorer.tsx                       │
+│  - allMatrixProfiles (vivier complet des profils)           │
+│  - initialMatrixGrid (256 profils initiaux)                 │
+└──────────────────────────────┬──────────────────────────────┘
+                               │
+                               ▼
+┌─────────────────────────────────────────────────────────────┐
+│                   LivingMatrixWall.tsx                      │
+│                                                             │
+│  ┌───────────────────────────────────────────────────────┐  │
+│  │ 1. État local de la grille vivante (currentGrid)      │  │
+│  │ 2. Hook de cycle contemplatif (8s - 10s)              │  │
+│  │    - Choix d'1 ou 2 indices cibles                    │  │
+│  │    - Set fadingIndices (fade out -> swap -> fade in)  │  │
+│  │    - Pause automatique sur isHovered / isDragging     │  │
+│  └───────────────────────────────────────────────────────┘  │
+│                                                             │
+│  ┌───────────────────────────────────────────────────────┐  │
+│  │ 3. Calque de Flux Lumineux (Inter-lignes CSS / SVG)   │  │
+│  │    - Rayon ambré / terracotta en translation lente    │  │
+│  │    - Aligné rigoureusement sur les gap-[1.5px/2px]    │  │
+│  └───────────────────────────────────────────────────────┘  │
+│                                                             │
+│  ┌───────────────────────────────────────────────────────┐  │
+│  │ 4. Cellules 16×16 avec micro-transitions              │  │
+│  │    - bg-stone-900 en fond de cellule                  │  │
+│  │    - Img transition-opacity duration-1200             │  │
+│  │    - Infobulle et clic intacts                        │  │
+│  └───────────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Plan d'exécution par étapes
+1. **Composant de flux lumineux (`MatrixLightFlowOverlay`)** : Création d'une surcouche fine et performante calquée sur la grille 16×16 simulant le flux ambré/terracotta dans les interlignes.
+2. **Moteur de rotation lente dans `LivingMatrixWall`** :
+   - Ajout d'un état `currentGrid` initialisé avec la grille passée en props.
+   - Système de timer récurrent (intervalle 8-10s) sélectionnant 1 à 2 indices.
+   - Gestion des 3 phases : extinction progressive (`1200ms`), permutation/remplacement par un visage du vivier `allProfiles`, et réapparition douce (`1200ms`).
+3. **Contrôle d'interaction & Accessibilité** :
+   - Désactivation immédiate des transitions pendant le drag, le pinch-zoom ou le survol actif.
+   - Prise en compte de `prefers-reduced-motion` pour figer l'animation si l'utilisateur l'exige.
+4. **Validation finale** : Test de fluidité et compilation via `compile_applet`.

@@ -53,14 +53,13 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigate }) => {
     <div className="min-h-screen text-[#1C1917] pb-36 pt-3 px-3 sm:px-6 lg:px-8 max-w-6xl mx-auto space-y-6">
       
       {/* En-tête standardisé Héritage avec trait terracotta */}
-      <div className="flex items-center justify-between h-8 sm:h-9 shrink-0 gap-2">
-        <div className="relative flex items-center h-full shrink-0">
-          <div className="relative inline-flex items-center">
-            <h1 className="font-editorial text-base sm:text-[18px] font-bold text-[#1C1917] tracking-tight leading-none">
-              Héritage
-            </h1>
-            <div className="absolute left-0 -bottom-1.5 sm:-bottom-2 w-8 h-0.5 bg-[#A2482B] rounded-full" />
-          </div>
+      <div className="flex items-center justify-between h-9 sm:h-10 shrink-0 gap-2 mb-1">
+        <div className="relative flex items-center h-full">
+          <h1 className="font-editorial text-base sm:text-lg font-bold text-[#1C1917] tracking-tight leading-none">
+            Héritage
+          </h1>
+          {/* Petit trait terracotta officiel */}
+          <div className="absolute left-0 -bottom-1.5 w-8 h-0.5 bg-[#A2482B] rounded-full" />
         </div>
       </div>
 

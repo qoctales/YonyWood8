@@ -7,6 +7,7 @@ import { ViewScreen } from '../types';
 import { 
   DirectorChairIcon,
   DuocumentairesTvIcon,
+  LumiereSunDotsIcon,
   PortraitsViseurIcon,
   ProfileSoloIcon
 } from './YonywoodBrandIcons';
@@ -47,8 +48,8 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
       isActive: isStudioActive,
       onClick: () => onNavigate({ type: 'submit_story' }),
       screenId: 'menu-item-studio',
-      iconClassName: 'w-[21px] h-[21px] sm:w-[22px] sm:h-[22px]',
-      strokeWidth: 1.6
+      iconClassName: 'w-[19.5px] h-[19.5px] sm:w-[20.5px] sm:h-[20.5px]',
+      strokeWidth: 1.5
     },
     {
       id: 'heritage',
@@ -57,8 +58,8 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
       isActive: isHeritageActive,
       onClick: () => onNavigate({ type: 'home' }),
       screenId: 'menu-item-heritage',
-      iconClassName: 'w-[20px] h-[20px] sm:w-[21px] sm:h-[21px]',
-      strokeWidth: 1.65
+      iconClassName: 'w-[16px] h-[16px] sm:w-[17px] sm:h-[17px]', // Taille calibrée pour éviter toute disharmonie
+      strokeWidth: 1.5
     },
     {
       id: 'duo',
@@ -67,18 +68,18 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
       isActive: isDuoActive,
       onClick: () => onNavigate({ type: 'duo_feed' }),
       screenId: 'menu-item-duo',
-      iconClassName: 'w-[20.5px] h-[20.5px] sm:w-[21.5px] sm:h-[21.5px]',
-      strokeWidth: 1.55
+      iconClassName: 'w-[19.5px] h-[19.5px] sm:w-[20.5px] sm:h-[20.5px]',
+      strokeWidth: 1.5
     },
     {
       id: 'lumiere',
       label: 'Lumière',
-      icon: PortraitsViseurIcon, // icône actuelle (viseur), qui sera remplacée à l'étape 2
+      icon: LumiereSunDotsIcon, // Disque central + 8 petits points
       isActive: isLumiereActive,
       onClick: () => onNavigate({ type: 'enterprise' }),
       screenId: 'menu-item-lumiere',
-      iconClassName: 'w-[21px] h-[21px] sm:w-[22px] sm:h-[22px]',
-      strokeWidth: 2.5
+      iconClassName: 'w-[18.5px] h-[18.5px] sm:w-[19.5px] sm:h-[19.5px]',
+      strokeWidth: 1.5
     },
     {
       id: 'production',
