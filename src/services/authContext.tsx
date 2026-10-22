@@ -6,9 +6,9 @@ export const DEFAULT_ADMIN_USER: UserAccount = {
   email: 'qoctales@gmail.com',
   name: 'Romeo Nonvide',
   role: 'ADMIN',
-  avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
-  bio: 'Fondateur & Directeur éditorial de YonyWood. Passionné par les récits du réel et le cinéma documentaire immersif.',
-  territory: 'Cotonou & Paris',
+  avatarUrl: '/src/assets/images/romeo_avatar_1792698425983.jpg',
+  bio: 'Béninois de retour d’expatriation après 8 années passées à l’étranger. Réalisateur & Fondateur YonyWood à Cotonou.',
+  territory: 'Cotonou',
   country: 'Bénin',
   sharesCount: 125,
   createdAt: '2026-01-15'

@@ -777,12 +777,12 @@ export const PortraitsViseurIcon = LumiereSunDotsIcon;
 
 /**
  * LineageGenerationsIcon:
- * Symbole officiel « Lignée » : Arbre de filiation généalogique et transmission intergénérationnelle.
- * Nœud racine/ancêtre au sommet relié par une tige verticale à une frise de descendance (trois nœuds de générations).
+ * Symbole officiel « Lignée » (arbre généalogique & racines ancestrales).
+ * Arbre stylisé avec houppier en nuage protecteur et tronc à ramifications profondes.
  */
 export const LineageGenerationsIcon: React.FC<IconProps> = ({ 
   className = 'w-5 h-5',
-  strokeWidth = 1.6 
+  strokeWidth = 1.75 
 }) => {
   return (
     <svg 
@@ -795,34 +795,21 @@ export const LineageGenerationsIcon: React.FC<IconProps> = ({
       className={className}
       aria-hidden="true"
     >
-      {/* Nœud ancestral / origine supérieure */}
-      <circle cx="12" cy="4.5" r="2.2" />
-      {/* Ligne de filiation verticale */}
-      <line x1="12" y1="6.7" x2="12" y2="10.5" />
-      {/* Barre transversale de filiation familiale */}
-      <path d="M 6.5 10.5 L 17.5 10.5" />
-      {/* Filiations descendantes vers les générations */}
-      <line x1="6.5" y1="10.5" x2="6.5" y2="14.5" />
-      <line x1="12" y1="10.5" x2="12" y2="14.5" />
-      <line x1="17.5" y1="10.5" x2="17.5" y2="14.5" />
-      {/* Nœuds de transmission générationnelle */}
-      <circle cx="6.5" cy="17" r="2" />
-      <circle cx="12" cy="17" r="2" />
-      <circle cx="17.5" cy="17" r="2" />
-      {/* Racines de filiation sous la génération centrale */}
-      <line x1="12" y1="19" x2="12" y2="21.5" />
+      <path d="M12 3C9.5 3 8 4.5 7.75 6C5.5 6.25 4 8 4 10C4 12.2 5.8 14 8 14H16C18.2 14 20 12.2 20 10C20 8 18.5 6.25 16.25 6C16 4.5 14.5 3 12 3Z" />
+      <path d="M12 21V10.5M12 12L9.5 9.5M12 10.5L14.5 8M8 21H16" />
     </svg>
   );
 };
+export const LineageIcon = LineageGenerationsIcon;
 
 /**
  * ParcoursDeVieIcon:
- * Symbole officiel « Parcours de vie » : Cheminement sinueux balisé avec 3 étapes de vie charnières.
- * Évoque immédiatement l'itinéraire, les choix, les expériences et l'évolution de la personne.
+ * Symbole officiel « Parcours de vie » (cheminement & trajectoire).
+ * Ligne sinueuse en S reliant le point de départ au point d'arrivée plein.
  */
 export const ParcoursDeVieIcon: React.FC<IconProps> = ({ 
   className = 'w-5 h-5',
-  strokeWidth = 1.6 
+  strokeWidth = 1.75 
 }) => {
   return (
     <svg 
@@ -835,26 +822,22 @@ export const ParcoursDeVieIcon: React.FC<IconProps> = ({
       className={className}
       aria-hidden="true"
     >
-      {/* Cheminement sinueux fluide */}
-      <path d="M 5 19 C 7.5 14, 10.5 15, 12 12 C 13.5 9, 16.5 10, 19 5" />
-      {/* 3 jalons d'étapes de vie le long du tracé */}
-      <circle cx="5" cy="19" r="2" />
-      <circle cx="12" cy="12" r="2" />
-      <circle cx="19" cy="5" r="2" />
-      {/* Point intérieur contrasté au jalon central */}
-      <circle cx="12" cy="12" r="0.75" fill="currentColor" stroke="none" />
+      <circle cx="5" cy="19" r="1.75" />
+      <path d="M6.75 19H14.5a3.25 3.25 0 0 0 0-6.5H9.5a3.25 3.25 0 0 1 0-6.5H17.25" />
+      <circle cx="19" cy="6" r="1.75" fill="currentColor" />
     </svg>
   );
 };
+export const ParcoursIcon = ParcoursDeVieIcon;
 
 /**
- * BesoinsHandsIcon:
- * Symbole officiel « Besoins » : Deux mains ouvertes en coupe et accueil de ressources,
- * symbolisant l'appel, la main tendue, le soutien mutuel et les besoins exprimés par le protagoniste.
+ * ProduitsServicesIcon:
+ * Symbole officiel « Produits et services » (artisanat d'art, œuvres & consultations).
+ * Sac cabas artisanal aux anses arrondies et contours nets.
  */
-export const BesoinsHandsIcon: React.FC<IconProps> = ({ 
+export const ProduitsServicesIcon: React.FC<IconProps> = ({ 
   className = 'w-5 h-5',
-  strokeWidth = 1.6 
+  strokeWidth = 1.75 
 }) => {
   return (
     <svg 
@@ -867,12 +850,67 @@ export const BesoinsHandsIcon: React.FC<IconProps> = ({
       className={className}
       aria-hidden="true"
     >
-      {/* Main tendue ouverte accueillant une ressource */}
-      <path d="M 3 13 C 5 11.5, 7.5 11, 10 12.5 L 13.5 14.5 C 15 15.2, 17 14.5, 18 13.2 L 20.5 10.5 C 21.2 9.7, 21 8.5, 20 8 C 19.2 7.6, 18.2 8, 17.6 8.8 L 15.5 11" />
-      <path d="M 7 11.5 L 9 8 C 9.5 7.2, 10.5 7, 11.2 7.5 C 11.8 8, 12 9, 11.5 9.8 L 10 12" />
-      {/* Cœur / étincelle d'entraide symbolisant le besoin exprimé */}
-      <path d="M 17 3.5 C 16 2.5, 14.5 3, 14.5 4.2 C 14.5 5.5, 17 7.5, 17 7.5 C 17 7.5, 19.5 5.5, 19.5 4.2 C 19.5 3, 18 2.5, 17 3.5 Z" fill="currentColor" stroke="none" />
+      <path d="M8.5 9V6.5a3.5 3.5 0 0 1 7 0V9" />
+      <path d="M4.5 9H19.5L18.6 19.5a1.5 1.5 0 0 1-1.5 1.5H6.9a1.5 1.5 0 0 1-1.5-1.5Z" />
     </svg>
   );
 };
+export const ProduitServiceIcon = ProduitsServicesIcon;
+export const ProduitsServicesBagIcon = ProduitsServicesIcon;
+
+/**
+ * ProjetsIcon:
+ * Symbole officiel « Projets » (initiatives, bâtisseurs & sommets à atteindre).
+ * Deux sommets montagneux stylisés surmontés d'un drapeau au sommet.
+ */
+export const ProjetsIcon: React.FC<IconProps> = ({ 
+  className = 'w-5 h-5',
+  strokeWidth = 1.75 
+}) => {
+  return (
+    <svg 
+      viewBox="0 0 24 24" 
+      fill="none" 
+      stroke="currentColor" 
+      strokeWidth={strokeWidth} 
+      strokeLinecap="round" 
+      strokeLinejoin="round" 
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M3 20.5L9.5 9.5L13.25 15.5L15.5 12.25L21 20.5Z" />
+      <path d="M9.5 9.5V3.5M9.5 3.5L15 5.75L9.5 8" />
+    </svg>
+  );
+};
+export const ProjetIcon = ProjetsIcon;
+export const ProjetsMountainFlagIcon = ProjetsIcon;
+
+/**
+ * BesoinsIcon:
+ * Symbole officiel « Besoins » (besoins exprimés, appels & complémentarités).
+ * Pièce de puzzle avec encoche et tenon symbolisant l'entraide et l'ajustement mutuel.
+ */
+export const BesoinsIcon: React.FC<IconProps> = ({ 
+  className = 'w-5 h-5',
+  strokeWidth = 1.75 
+}) => {
+  return (
+    <svg 
+      viewBox="0 0 24 24" 
+      fill="none" 
+      stroke="currentColor" 
+      strokeWidth={strokeWidth} 
+      strokeLinecap="round" 
+      strokeLinejoin="round" 
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M4 8H9.5a2.2 2.2 0 1 1 3 0H18v4.5a2.2 2.2 0 1 1 0 3V20H4Z" />
+    </svg>
+  );
+};
+export const BesoinsHandsIcon = BesoinsIcon;
+export const BesoinsPuzzleIcon = BesoinsIcon;
+
 

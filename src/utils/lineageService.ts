@@ -368,7 +368,30 @@ export function resolveLineageMember(input: string | AffiliationPerson | Protago
       };
     }
 
-    // 4. Cas spécial Camille ou utilisateur par défaut
+    // 4. Cas spécial Roméo ou utilisateur connecté par défaut
+    if (input.toLowerCase().includes('romeo') || input === 'usr-admin-romeo' || input === 'usr-admin-1' || input === 'default-user') {
+      return {
+        id: 'usr-admin-romeo',
+        name: 'Roméo Nonvide',
+        firstName: 'Roméo',
+        age: 29,
+        role: 'Retour au pays & Créateur de récits',
+        territory: 'Cotonou & Diaspora',
+        country: 'Bénin',
+        flag: '🇧🇯',
+        photoUrl: '/src/assets/images/romeo_avatar_1792698425983.jpg',
+        universeTag: 'Bénin & Retour',
+        quote: '« Revenir n’est pas recommencer à zéro, c’est apporter ce que le monde nous a appris pour faire grandir la terre de nos ancêtres. »',
+        questionAnswered: {
+          question: 'Pourquoi avoir choisi de rentrer et de vous installer au Bénin ?',
+          answer: 'Pour bâtir ici avec notre génération et transmettre des récits vivants qui résonnent bien au-delà de nos frontières.'
+        },
+        invitationStory: 'Jeune Béninois à lunettes de retour d’Europe, installant son studio de production de récits à Cotonou.',
+        acceptanceDate: 'Retour d’expérience scellé'
+      };
+    }
+
+    // 4b. Cas spécial Camille
     if (input.toLowerCase().includes('camille')) {
       return {
         id: 'camille-artisan',

@@ -38,7 +38,7 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
     currentScreen.type === 'messaging' ||
     currentScreen.type === 'editorial_backoffice';
 
-  // Identité du profil affiché (Pascal par défaut)
+  // Identité du profil affiché (Roméo par défaut)
   const profileFirstName = React.useMemo(() => {
     if (currentScreen.type === 'protagonist_profile' && currentScreen.protagonistId) {
       const p = PROTAGONISTS.find(prot => prot.id === currentScreen.protagonistId);
@@ -46,7 +46,7 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
         return p.name.split(' ')[0];
       }
     }
-    return currentUser?.name?.split(' ')[0] || 'Pascal';
+    return currentUser?.name?.split(' ')[0] || 'Roméo';
   }, [currentScreen, currentUser]);
 
   // Ne pas afficher le menu pendant le lecteur vidéo plein écran

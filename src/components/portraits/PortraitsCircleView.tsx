@@ -410,8 +410,6 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
               onTogglePlay={() => setIsManifestoPlaying(prev => !prev)}
               isMuted={isManifestoMuted}
               onToggleMute={() => setIsManifestoMuted(prev => !prev)}
-              resonanceScore={companyResonancePct}
-              onOpenResonance={() => setIsCompanyResonanceOpen(true)}
               questionText={selectedCompany.manifestoQuestion || selectedCompany.tagline}
               factText={selectedCompany.manifestoDescription || selectedCompany.description}
               onOpenProfile={() => {
@@ -497,8 +495,6 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
               onTogglePlay={() => setIsStakeholderPlaying(prev => !prev)}
               isMuted={isStakeholderMuted}
               onToggleMute={() => setIsStakeholderMuted(prev => !prev)}
-              resonanceScore={stakeholderResonances[activeStakeholder.id]}
-              onOpenResonance={() => setResonanceTargetStakeholder(activeStakeholder)}
               questionText={activeStakeholder.question}
               factText={`${activeStakeholder.roleCategory} : ${activeStakeholder.roleDetail || 'partenaire engagé dans la transmission locale'}`}
               onOpenProfile={() => {

@@ -54,7 +54,7 @@ import { CentralAstrolabeJoystick } from './CentralAstrolabeJoystick';
 import { VerticalZoomSlider } from './VerticalZoomSlider';
 import { ProtagonistTeaserModal } from './ProtagonistTeaserModal';
 import { ResonanceModal } from './ResonanceModal';
-import { ProfileSoloIcon, TvPlayerIcon } from './YonywoodBrandIcons';
+import { ProfileSoloIcon, TvPlayerIcon, ProduitsServicesIcon, ProjetsIcon } from './YonywoodBrandIcons';
 import { ShareIcon } from './ShareIcon';
 import { 
   ExplorerCategoryType, 
@@ -118,17 +118,17 @@ const CATEGORY_ICONS: Record<string, React.FC<{ className?: string }>> = {
   territoires: Mountain,
   expertises: GraduationCap,
   personnalites: Star,
-  'produits-services': ShoppingBag,
+  'produits-services': ProduitsServicesIcon,
   marques: Gem,
-  projets: Sprout,
+  projets: ProjetsIcon,
   // Alias de rétrocompatibilité
   countries: Mountain,
   questions: Atom,
   thematics: GraduationCap,
   personalities: Star,
   brands: Gem,
-  projects: Sprout,
-  offers: ShoppingBag
+  projects: ProjetsIcon,
+  offers: ProduitsServicesIcon
 };
 
 export const EXPERTISE_ICONS: Record<string, React.FC<{ className?: string }>> = {

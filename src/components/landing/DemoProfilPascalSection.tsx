@@ -17,6 +17,8 @@ import {
   TvPlayerIcon,
   LineageGenerationsIcon,
   ParcoursDeVieIcon,
+  ProduitsServicesIcon,
+  ProjetsIcon,
   BesoinsHandsIcon
 } from '../YonywoodBrandIcons';
 
@@ -34,180 +36,183 @@ export interface VideoSimulationItem {
   extraInfo?: string;
 }
 
-export const PASCAL_SIMULATION_DATA: Record<DemoProfileCategory, VideoSimulationItem[]> = {
+export const ROMEO_SIMULATION_DATA: Record<DemoProfileCategory, VideoSimulationItem[]> = {
   parcours: [
     {
       id: 'parcours-1',
-      title: 'L’aube sur la lagune de Ganvié',
-      subtitle: 'Éveil sensoriel & origines',
-      description: 'Pascal raconte son enfance sur l’eau, sa cécité précoce et l’éveil de son écoute vibratoire au fil des vagues de la lagune.',
-      posterUrl: '/assets/protagonists/pascal-parcours-pirogue.jpg',
+      title: 'Le retour au pays natal',
+      subtitle: 'Arrivée à Cotonou & retrouvailles',
+      description: 'Après 8 années d’expatriation, Roméo pose ses valises à Cotonou. Émotion des retrouvailles avec sa terre natale, la lumière tropicale et l’évidence de revenir bâtir au pays.',
+      posterUrl: '/src/assets/images/romeo_arriving_cotonou_1792698426939.jpg',
       videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
       duration: '06:15',
-      tag: 'Origines & Mémoire'
+      tag: 'Retour au pays'
     },
     {
       id: 'parcours-2',
-      title: 'L’initiation aux oracles du Fâ',
-      subtitle: 'Sagesse ancestrale',
-      description: 'Sous le grand baobab centenaire, Pascal révèle les signes sacrés et comment la divination traditionnelle guide son chemin de vie.',
-      posterUrl: '/assets/protagonists/pascal-parcours-fa.jpg',
+      title: 'Mémoires d’exil & traversées',
+      subtitle: 'Itinéraire & Récit intime',
+      description: 'Ce que la distance lui a appris : aiguiser son regard de cinéaste, comprendre l’exil et forger la conviction que les récits d’Afrique méritent une tribune universelle.',
+      posterUrl: '/src/assets/images/romeo_lagoon_sunset_1792698428025.jpg',
       videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-      duration: '08:40',
-      tag: 'Spiritualité & Fâ'
+      duration: '07:40',
+      tag: 'Diaspora & Racines'
     },
     {
       id: 'parcours-3',
-      title: 'Le chemin des passerelles',
-      subtitle: 'Confiance & ancrage',
-      description: 'Arpentant le village sur pilotis avec sa canne sculptée, Pascal partage comment le toucher et l’ouïe tracent son itinéraire quotidien.',
-      posterUrl: '/assets/protagonists/pascal-parcours-marche.jpg',
+      title: 'La redécouverte de Cotonou',
+      subtitle: 'Ancrage urbain & renouveau',
+      description: 'Caméra à l’épaule, Roméo explore les carrefours, les ateliers d’artisans et les ruelles animées pour capturer l’énergie créative de la jeunesse béninoise.',
+      posterUrl: '/src/assets/images/romeo_settling_studio_1792698427492.jpg',
       videoUrl: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',
       duration: '05:20',
-      tag: 'Cheminement'
+      tag: 'Ancrage natal'
     },
     {
       id: 'parcours-4',
-      title: 'Mémoire & crépuscule sur l’eau',
-      subtitle: 'Transmission & regard intérieur',
-      description: 'Méditation intime au coucher de soleil sur les pontons : voir avec le cœur, au-delà du visible, et transmettre aux générations futures.',
-      posterUrl: '/assets/protagonists/pascal-parcours-crepuscule.jpg',
+      title: 'Le souffle de la lagune',
+      subtitle: 'Horizon & Transmission',
+      description: 'Méditation face aux pirogues au crépuscule sur le lac Nokoué : poser les fondations d’un espace documentaire où chaque voix trouve son écho.',
+      posterUrl: '/src/assets/images/romeo_lagoon_sunset_1792698428025.jpg',
       videoUrl: 'https://media.w3.org/2010/05/sintel/trailer.mp4',
-      duration: '07:10',
+      duration: '08:10',
       tag: 'Transmission'
     }
   ],
   produits: [
     {
       id: 'produits-1',
-      title: 'Étoffes rituelles',
-      subtitle: 'Artisanat d’art traditionnel',
-      description: 'Pièce d’exception confectionnée sur métier à tisser en fil de coton biologique cultivé localement et teinté à l’indigo naturel.',
-      posterUrl: '/assets/protagonists/pascal-produits-artisanat.jpg',
+      title: 'Cercles d’écoute avec les Anciens',
+      subtitle: 'Rencontres intergénérationnelles',
+      description: 'Partage du thé et recueil de récits avec les maîtres artisans et les sages pour archiver et célébrer leurs précieux savoir-faire.',
+      posterUrl: '/src/assets/images/romeo_dialogue_elders_1792698428934.jpg',
       videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-      duration: '04:30',
-      tag: '120 € • Pièce unique'
+      duration: '05:30',
+      tag: 'Transmission orale'
     },
     {
       id: 'produits-2',
-      title: 'Atelier de tissage',
-      subtitle: 'Atelier immersif de tissage',
-      description: 'Initiation tactile au tissage : apprendre à ressentir la tension du fil, la navette et le souffle régulier de l’étoffe.',
-      posterUrl: '/assets/protagonists/pascal-produits-tissage.jpg',
+      title: 'Ateliers de cinéma documentaire',
+      subtitle: 'Masterclass image & son de terrain',
+      description: 'Formation pratique pour jeunes créateurs aux techniques de l’interview intime, du recueil mémoriel et du montage sensible.',
+      posterUrl: '/src/assets/images/romeo_settling_studio_1792698427492.jpg',
       videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-      duration: '05:45',
-      tag: '45 € / pers. • 3h00'
+      duration: '04:45',
+      tag: '45 € / pers. • Atelier'
     },
     {
       id: 'produits-3',
-      title: 'Consultation du Fâ',
-      subtitle: 'Guidance spirituelle personnalisée',
-      description: 'Lecture bienveillante des oracles sacrés du Fâ pour éclairer les carrefours de décision familiale, personnelle ou professionnelle.',
-      posterUrl: '/assets/protagonists/pascal-produits-consultation.jpg',
+      title: 'Consultation scénario & récits',
+      subtitle: 'Accompagnement de projets de films',
+      description: 'Séance individuelle de conseil dramaturgique pour donner force et résonance à votre projet documentaire avant le tournage.',
+      posterUrl: '/src/assets/images/romeo_avatar_1792698425983.jpg',
       videoUrl: 'https://media.w3.org/2010/05/sintel/trailer.mp4',
       duration: '06:00',
-      tag: '35 € / séance'
+      tag: '60 € / séance'
     },
     {
       id: 'produits-4',
-      title: 'Paniers & sacs',
-      subtitle: 'Créations de la coopérative',
-      description: 'Articles de vannerie et sacs en perles et fibres végétales confectionnés par les artisans malvoyants de l’association à Ganvié.',
-      posterUrl: '/assets/protagonists/pascal-produits-paniers.jpg',
+      title: 'Tirages d’art & photographies',
+      subtitle: 'Série argentique « Retour au pays »',
+      description: 'Tirages d’art limités et numérotés documentant la lumière et les visages du Bénin contemporain.',
+      posterUrl: '/src/assets/images/romeo_arriving_cotonou_1792698426939.jpg',
       videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
       duration: '03:50',
-      tag: '55 € • Vannerie solidaire'
+      tag: '75 € • Tirage numéroté'
     }
   ],
   projets: [
     {
       id: 'projets-1',
-      title: 'Atelier flottant',
-      subtitle: 'Chantier d’insertion & formation',
-      description: 'Construction d’un centre d’accueil et d’apprentissage adapté aux artisans non-voyants pour produire et commercialiser leurs œuvres.',
-      posterUrl: '/assets/protagonists/pascal-projets-transmission.jpg',
+      title: 'L’Atelier Créatif YonyWood Cotonou',
+      subtitle: 'Studio documentaire & archivage',
+      description: 'Aménagement d’un espace indépendant à Cotonou dédié à la réalisation documentaire, à l’archivage numérique et à l’accueil de résidences créatives.',
+      posterUrl: '/src/assets/images/romeo_settling_studio_1792698427492.jpg',
       videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
       duration: '05:15',
-      tag: '65% financé',
-      extraInfo: '9 750 € récoltés • 48 contributeurs'
+      tag: '80% financé',
+      extraInfo: '8 000 € récoltés • 42 contributeurs'
     },
     {
       id: 'projets-2',
-      title: 'Charpente en iroko',
-      subtitle: 'Éco-construction lacustre',
-      description: 'Élévation de l’ossature en bois noble avec les charpentiers traditionnels de Porto-Novo pour résister durablement à l’eau.',
-      posterUrl: '/assets/protagonists/pascal-projets-charpente.jpg',
+      title: 'Résidence des voix de la lagune',
+      subtitle: 'Création collective en bordure d’eau',
+      description: 'Tournage documentaire itinérant entre Ganvié et Porto-Novo pour capter la poésie et la vie des communautés lacustres.',
+      posterUrl: '/src/assets/images/romeo_lagoon_sunset_1792698428025.jpg',
       videoUrl: 'https://media.w3.org/2010/05/sintel/trailer.mp4',
       duration: '04:10',
-      tag: '50% financé',
-      extraInfo: '4 200 € récoltés • 32 contributeurs'
+      tag: '65% financé',
+      extraInfo: '5 200 € récoltés • 28 contributeurs'
     },
     {
       id: 'projets-3',
-      title: 'Classes d’apprentissage',
-      subtitle: 'Transmission jeunesse',
-      description: 'Programme de formation de 20 jeunes apprentis aux métiers du tissage, de la vannerie et de la poterie tactile.',
-      posterUrl: '/assets/protagonists/pascal-projets-classe.jpg',
+      title: 'Programme Passeurs d’Avenir',
+      subtitle: 'Éducation à l’image en milieu scolaire',
+      description: 'Ateliers d’initiation au documentaire dans les lycées et collèges du Sud-Bénin pour apprendre aux jeunes à raconter leurs mémoires.',
+      posterUrl: '/src/assets/images/romeo_dialogue_elders_1792698428934.jpg',
       videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
       duration: '06:20',
-      tag: '80% financé',
-      extraInfo: '4 800 € récoltés • 36 contributeurs'
+      tag: '90% financé',
+      extraInfo: '6 500 € récoltés • 35 contributeurs'
     },
     {
       id: 'projets-4',
-      title: 'Ponton de l’inclusion',
-      subtitle: 'Inauguration & accès solidaire',
-      description: 'Mise en service de la passerelle d’embarquement sécurisée et accessible reliant les ateliers à l’embarcadère principal.',
-      posterUrl: '/assets/protagonists/pascal-projets-inauguration.jpg',
+      title: 'Plateforme des mémoires vivantes',
+      subtitle: 'Numérisation des savoirs oraux',
+      description: 'Création d’une archive numérique ouverte connectant les diasporas aux savoir-faire et récits ancestraux du Bénin.',
+      posterUrl: '/src/assets/images/romeo_arriving_cotonou_1792698426939.jpg',
       videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
       duration: '04:45',
       tag: '100% financé',
-      extraInfo: '15 000 € récoltés • 112 contributeurs'
+      extraInfo: '12 000 € récoltés • 60 contributeurs'
     }
   ],
   besoins: [
     {
       id: 'besoins-1',
-      title: 'Enregistreurs audio',
-      subtitle: 'Matériel d’archivage sonore',
-      description: 'Appel de Pascal pour acquérir 4 enregistreurs stéréo haute fidélité afin de sauvegarder les mémoires orales et les chants des anciens.',
-      posterUrl: '/assets/protagonists/pascal-besoins-appel.jpg',
+      title: 'Jeunes cadreurs & monteurs béninois',
+      subtitle: 'Appel à compétences locales',
+      description: 'Recherche de 3 jeunes talents en tournage et montage résidant à Cotonou ou Porto-Novo pour renforcer l’équipe de création documentaire.',
+      posterUrl: '/src/assets/images/romeo_settling_studio_1792698427492.jpg',
       videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
       duration: '04:00',
       tag: 'Prioritaire'
     },
     {
       id: 'besoins-2',
-      title: 'Fil de coton bio & indigo',
-      subtitle: 'Matières premières naturelles',
-      description: 'Recherche de coopératives agricoles pour un approvisionnement régulier en fil écru sans intrants chimiques et en feuilles d’indigo.',
-      posterUrl: '/assets/protagonists/pascal-besoins-coton.jpg',
+      title: 'Partenariats avec lieux culturels',
+      subtitle: 'Espaces de projection & débats',
+      description: 'Recherche de galeries, cours d’artisans et centres culturels pour organiser des projections et cercles d’échanges citoyens.',
+      posterUrl: '/src/assets/images/romeo_dialogue_elders_1792698428934.jpg',
       videoUrl: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',
       duration: '03:30',
-      tag: 'D’ici mai'
-    },
-    {
-      id: 'besoins-3',
-      title: 'Outillage de menuiserie',
-      subtitle: 'Équipement d’atelier sécurisé',
-      description: 'Appel pour gouges, rabots et scies sécurisées dotées de guides tactiles pour sculpter les navettes et tabourets sans danger.',
-      posterUrl: '/assets/protagonists/pascal-besoins-outils.jpg',
-      videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-      duration: '04:15',
       tag: 'En cours'
     },
     {
+      id: 'besoins-3',
+      title: 'Matériel de numérisation audio',
+      subtitle: 'Sauvegarde des mémoires sonores',
+      description: 'Appel aux dons et prêts de magnétophones et numériseurs pour traiter des archives orales enregistrées sur bandes et cassettes.',
+      posterUrl: '/src/assets/images/romeo_arriving_cotonou_1792698426939.jpg',
+      videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+      duration: '04:15',
+      tag: 'D’ici juin'
+    },
+    {
       id: 'besoins-4',
-      title: 'Mentors & ergothérapeutes',
-      subtitle: 'Compétences & Bénévolat',
-      description: 'Appel à spécialistes de la basse vision, ergothérapeutes et formateurs bénévoles pour accompagner l’ergonomie de nos postes de travail.',
-      posterUrl: '/assets/protagonists/pascal-besoins-partenaires.jpg',
+      title: 'Coproducteurs & mécènes de la diaspora',
+      subtitle: 'Soutien au cinéma indépendant',
+      description: 'Recherche de coproducteurs et passionnés de culture pour abonder le fonds de production de la première saison documentaire YonyWood.',
+      posterUrl: '/src/assets/images/romeo_lagoon_sunset_1792698428025.jpg',
       videoUrl: 'https://media.w3.org/2010/05/sintel/trailer.mp4',
       duration: '05:00',
       tag: 'Permanente'
     }
   ]
 };
+
+// Alias pour compatibilité
+export const PASCAL_SIMULATION_DATA = ROMEO_SIMULATION_DATA;
 
 export const DemoProfilPascalSection: React.FC = () => {
   // Catégorie active
@@ -294,11 +299,11 @@ export const DemoProfilPascalSection: React.FC = () => {
   return (
     <div className="w-full max-w-4xl mx-auto py-2 sm:py-4 flex flex-col items-center select-none">
 
-      {/* En-tête : Pascal avec tiret terracotta officiel */}
+      {/* En-tête : Roméo avec tiret terracotta officiel */}
       <div className="w-full flex items-center justify-between mb-2 sm:mb-4 px-3 sm:px-6">
         <div className="relative flex items-center">
           <h1 className="font-editorial text-xs sm:text-sm md:text-base font-semibold text-[#1C1917] tracking-normal leading-none whitespace-nowrap">
-            Pascal Cossi
+            Roméo Nonvide
           </h1>
           <div className="absolute left-0 -bottom-1.5 w-8 h-0.5 bg-[#A2482B] rounded-full" />
         </div>
@@ -344,7 +349,7 @@ export const DemoProfilPascalSection: React.FC = () => {
                     </div>
                     <div>
                       <h3 className="font-editorial text-sm font-bold text-stone-900 leading-tight">
-                        La Lignée de Pascal
+                        La Lignée de Roméo
                       </h3>
                       <p className="text-[10px] text-stone-500">Transmission & parrainages</p>
                     </div>
@@ -547,7 +552,7 @@ export const DemoProfilPascalSection: React.FC = () => {
                   title="3. Produits et services"
                   aria-label="Produits et services"
                 >
-                  <ShoppingBag className="w-4 h-4 text-white" />
+                  <ProduitsServicesIcon className="w-4 h-4 text-white" />
                 </button>
 
                 {/* 4. LES PROJETS : conserver le bouton et l'icône déjà existants */}
@@ -566,7 +571,7 @@ export const DemoProfilPascalSection: React.FC = () => {
                   title="4. Projets"
                   aria-label="Projets"
                 >
-                  <Sprout className="w-4 h-4 text-white" />
+                  <ProjetsIcon className="w-4 h-4 text-white" />
                 </button>
 
                 {/* 5. LES BESOINS : ajouter un nouveau bouton pour représenter les besoins exprimés */}

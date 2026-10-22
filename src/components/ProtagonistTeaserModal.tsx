@@ -119,8 +119,6 @@ export const ProtagonistTeaserModal: React.FC<ProtagonistTeaserModalProps> = ({
           onTogglePlay={togglePlay}
           isMuted={isMuted}
           onToggleMute={toggleMute}
-          resonanceScore={resonancePct}
-          onOpenResonance={() => setIsResonanceModalOpen(true)}
           questionText={protagonist.stories?.[0]?.question || "Quelle vision singulière ce parcours apporte-t-il au monde ?"}
           factText={protagonist.teaserPitch || protagonist.bio || "Passeur d'un savoir vivant transmis à sa communauté."}
           onOpenProfile={() => {

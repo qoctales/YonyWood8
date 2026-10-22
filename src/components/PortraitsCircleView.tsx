@@ -2,7 +2,10 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { 
   ChevronLeft, 
   RotateCw, 
-  X
+  X,
+  MessageSquare,
+  Share2,
+  Send
 } from 'lucide-react';
 import { CompanyEntity, CompanyStakeholder } from '../data/companyPortraitsData';
 import { ResonanceModal } from './ResonanceModal';
@@ -85,14 +88,29 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
   const [companyResonancePct, setCompanyResonancePct] = useState<number | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-  // Partage de l'entreprise
+  // Modale de prise de contact avec l'organisation
+  const [isContactCompanyModalOpen, setIsContactCompanyModalOpen] = useState<boolean>(false);
+  const [companyContactSubject, setCompanyContactSubject] = useState<'partenariat' | 'mécénat' | 'projet' | 'presse' | 'autre'>('partenariat');
+  const [companyContactName, setCompanyContactName] = useState<string>('');
+  const [companyContactEmail, setCompanyContactEmail] = useState<string>('');
+  const [companyContactMessage, setCompanyContactMessage] = useState<string>('');
+
+  // Partage de l'espace Lumière de l'organisation
   const handleShareCompany = (company: CompanyEntity) => {
+    const url = `${window.location.origin}?company=${company.id}`;
     if (navigator.clipboard) {
-      const url = `${window.location.origin}?company=${company.id}`;
       navigator.clipboard.writeText(url);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
     }
+    setToastMessage(`Lien de l'espace Lumière « ${company.companyName} » copié !`);
+    setTimeout(() => setToastMessage(null), 3000);
+  };
+
+  const handleSendCompanyMessage = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsContactCompanyModalOpen(false);
+    setToastMessage(`Votre message a été transmis à l'équipe de ${curOrg?.companyName || 'l’organisation'} !`);
+    setTimeout(() => setToastMessage(null), 3500);
+    setCompanyContactMessage('');
   };
 
   // Données de l'organisation active
@@ -333,13 +351,43 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
           )}
         </nav>
 
-        {/* Droite : Texte d'aide discret & Bascule externe */}
-        <div className="flex items-center gap-3">
-          <span className="text-xs text-stone-400 font-normal hidden sm:inline select-none">
+        {/* Droite : Texte d'aide discret, actions organisation (contact + partage) & Bascule externe (Swipe) */}
+        <div className="flex items-center gap-2 sm:gap-3">
+          <span className="text-xs text-stone-400 font-normal hidden md:inline select-none">
             {level === 0 
               ? "Touchez le centre pour d'autres choix" 
               : "Touchez le centre pour d'autres voix"}
           </span>
+
+          {/* Actions spécifiques au niveau organisation (niveau 1) : Contacter & Partager l'espace Lumière */}
+          {level === 1 && curOrg && (
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              {/* Contacter l'organisation */}
+              <button
+                type="button"
+                onClick={() => setIsContactCompanyModalOpen(true)}
+                id="btn-contact-organisation"
+                className="w-7.5 h-7.5 sm:w-8 sm:h-8 rounded-xl bg-white hover:bg-[#A2482B] border border-stone-200 hover:border-[#A2482B] text-stone-700 hover:text-white flex items-center justify-center transition-all shadow-xs cursor-pointer active:scale-95 shrink-0"
+                title={`Contacter ${curOrg.companyName}`}
+                aria-label={`Contacter ${curOrg.companyName}`}
+              >
+                <MessageSquare className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[1.8] transition-colors" />
+              </button>
+
+              {/* Partager l'espace Lumière de l'organisation */}
+              <button
+                type="button"
+                onClick={() => handleShareCompany(curOrg)}
+                id="btn-share-organisation-space"
+                className="w-7.5 h-7.5 sm:w-8 sm:h-8 rounded-xl bg-white hover:bg-[#A2482B] border border-stone-200 hover:border-[#A2482B] text-stone-700 hover:text-white flex items-center justify-center transition-all shadow-xs cursor-pointer active:scale-95 shrink-0"
+                title={`Partager l'espace Lumière de ${curOrg.companyName}`}
+                aria-label={`Partager l'espace Lumière de ${curOrg.companyName}`}
+              >
+                <Share2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[1.8] transition-colors" />
+              </button>
+            </div>
+          )}
+
           {topRightAction}
         </div>
       </header>
@@ -826,8 +874,6 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
               onTogglePlay={() => setIsStakeholderPlaying((prev) => !prev)}
               isMuted={isStakeholderMuted}
               onToggleMute={() => setIsStakeholderMuted((prev) => !prev)}
-              resonanceScore={resonancePct}
-              onOpenResonance={() => setIsResonanceOpen(true)}
               questionText={activeStakeholderModal.question}
               factText={`${activeStakeholderModal.roleCategory} : ${
                 activeStakeholderModal.roleDetail || 'partenaire engagé dans la transmission locale'
@@ -911,8 +957,6 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
               onTogglePlay={() => setIsCompanyPlaying((prev) => !prev)}
               isMuted={isCompanyMuted}
               onToggleMute={() => setIsCompanyMuted((prev) => !prev)}
-              resonanceScore={companyResonancePct}
-              onOpenResonance={() => setIsCompanyResonanceOpen(true)}
               questionText={activeCompanyModal.manifestoQuestion || activeCompanyModal.tagline}
               factText={activeCompanyModal.manifestoDescription || activeCompanyModal.description}
               onOpenProfile={() => {
@@ -944,6 +988,135 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
               initialPercentage={companyResonancePct}
               onRatingSubmitted={(pct) => setCompanyResonancePct(pct)}
             />
+          </div>
+        </div>
+      )}
+
+      {/* ========================================================================= */}
+      {/* MODALE DE PRISE DE CONTACT AVEC L'ORGANISATION                           */}
+      {/* ========================================================================= */}
+      {isContactCompanyModalOpen && curOrg && (
+        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in">
+          <div className="bg-white max-w-md w-full rounded-3xl p-5 sm:p-6 shadow-2xl border border-stone-200 space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-stone-200">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-xl overflow-hidden border border-stone-200 shadow-xs bg-stone-100 shrink-0 p-1 flex items-center justify-center">
+                  <img
+                    src={curOrg.logoUrl}
+                    alt={curOrg.companyName}
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+                <div>
+                  <h3 className="font-editorial text-base sm:text-lg font-bold text-[#1C1917]">
+                    Contacter {curOrg.companyName}
+                  </h3>
+                  <p className="text-[11px] text-stone-500">
+                    Espace Lumière & Partenariats
+                  </p>
+                </div>
+              </div>
+              <button 
+                type="button"
+                onClick={() => setIsContactCompanyModalOpen(false)} 
+                className="p-1.5 text-stone-400 hover:text-stone-700 rounded-full hover:bg-stone-100 cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <p className="text-xs text-stone-600 leading-relaxed bg-amber-50/60 p-3 rounded-xl border border-amber-200/60">
+              Envoyez un message direct à la direction ou au pôle partenariats de <span className="font-semibold text-stone-900">{curOrg.companyName}</span>.
+            </p>
+
+            <form onSubmit={handleSendCompanyMessage} className="space-y-3.5 text-xs">
+              <div>
+                <label className="text-stone-800 font-semibold block mb-1.5">
+                  Objet de votre prise de contact :
+                </label>
+                <div className="grid grid-cols-2 gap-2">
+                  {[
+                    { id: 'partenariat', label: 'Partenariat stratégique', icon: '🤝' },
+                    { id: 'mécénat', label: 'Mécénat & Impact', icon: '🌿' },
+                    { id: 'projet', label: 'Projet de coproduction', icon: '🎬' },
+                    { id: 'presse', label: 'Presse & Médias', icon: '📰' }
+                  ].map((m) => {
+                    const isSel = companyContactSubject === m.id;
+                    return (
+                      <button
+                        key={m.id}
+                        type="button"
+                        onClick={() => setCompanyContactSubject(m.id as any)}
+                        className={`p-2.5 rounded-xl border text-left cursor-pointer transition-all flex items-center gap-2 ${
+                          isSel
+                            ? 'bg-[#A2482B] text-white border-[#A2482B] shadow-2xs'
+                            : 'bg-stone-50 hover:bg-stone-100 text-stone-700 border-stone-200'
+                        }`}
+                      >
+                        <span className="text-sm">{m.icon}</span>
+                        <span className="font-semibold text-[11px] leading-tight">{m.label}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <label className="text-stone-800 font-semibold block mb-1">Votre nom :</label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="Ex: Roméo Nonvide"
+                    value={companyContactName}
+                    onChange={(e) => setCompanyContactName(e.target.value)}
+                    className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs bg-stone-50 focus:bg-white focus:outline-none focus:border-[#A2482B]"
+                  />
+                </div>
+                <div>
+                  <label className="text-stone-800 font-semibold block mb-1">Votre email :</label>
+                  <input
+                    type="email"
+                    required
+                    placeholder="contact@exemple.com"
+                    value={companyContactEmail}
+                    onChange={(e) => setCompanyContactEmail(e.target.value)}
+                    className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs bg-stone-50 focus:bg-white focus:outline-none focus:border-[#A2482B]"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="text-stone-800 font-semibold block mb-1">
+                  Votre message :
+                </label>
+                <textarea
+                  rows={3}
+                  required
+                  placeholder={`Présentez brièvement votre démarche à ${curOrg.companyName}...`}
+                  value={companyContactMessage}
+                  onChange={(e) => setCompanyContactMessage(e.target.value)}
+                  className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs bg-stone-50 focus:bg-white focus:outline-none focus:border-[#A2482B] resize-none"
+                />
+              </div>
+
+              <div className="flex gap-2 pt-1">
+                <button
+                  type="submit"
+                  className="flex-1 h-11 bg-[#A2482B] hover:bg-[#8A3B22] text-white font-bold text-xs rounded-xl transition-all shadow-md active:scale-[0.98] cursor-pointer flex items-center justify-center gap-2"
+                >
+                  <Send className="w-3.5 h-3.5" />
+                  <span>Envoyer à {curOrg.companyName}</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIsContactCompanyModalOpen(false)}
+                  className="px-4 h-11 bg-stone-100 hover:bg-stone-200 text-stone-700 font-semibold text-xs rounded-xl border border-stone-200/60 transition-all active:scale-[0.98] cursor-pointer"
+                >
+                  Annuler
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}

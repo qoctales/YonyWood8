@@ -20,6 +20,7 @@ import { PROTAGONISTS, DUOS, DOCUMENTARIES } from '../data/mockData';
 import { ViewScreen } from '../types';
 import { UniverseDimensionPage, DimensionKey } from './UniverseDimensionPage';
 import { ProfilePhotoTvFrame } from './ProfilePhotoTvFrame';
+import { ParcoursDeVieIcon, ProjetsIcon, ProduitsServicesIcon, BesoinsIcon } from './YonywoodBrandIcons';
 
 interface ProtagonistProfileScreenProps {
   protagonistId: string;
@@ -73,7 +74,7 @@ export const ProtagonistProfileScreen: React.FC<ProtagonistProfileScreenProps> =
       key: 'parcours', 
       label: 'Parcours', 
       shortDescription: 'Itinéraire & étapes de vie',
-      icon: Compass, 
+      icon: ParcoursDeVieIcon, 
       angle: 330 // Top Right
     },
     { 
@@ -87,21 +88,21 @@ export const ProtagonistProfileScreen: React.FC<ProtagonistProfileScreenProps> =
       key: 'projects', 
       label: 'Projet', 
       shortDescription: 'Chantiers vivants en cours',
-      icon: FolderKanban, 
+      icon: ProjetsIcon, 
       angle: 90 // Bottom
     },
     { 
       key: 'offers', 
       label: 'Offre', 
       shortDescription: 'Créations, ateliers & pièces',
-      icon: ShoppingBag, 
+      icon: ProduitsServicesIcon, 
       angle: 150 // Bottom Left
     },
     { 
       key: 'needs', 
       label: 'Besoin', 
       shortDescription: 'Appels au réseau & matières',
-      icon: HeartHandshake, 
+      icon: BesoinsIcon, 
       angle: 210 // Top Left
     }
   ];

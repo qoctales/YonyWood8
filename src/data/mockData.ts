@@ -868,6 +868,86 @@ export const saveCustomDocumentaries = (newDocs: Documentary[]) => {
 
 export const PROTAGONISTS: Protagonist[] = [
   {
+    id: 'usr-admin-romeo',
+    slug: 'romeo-nonvide',
+    name: 'Roméo Nonvide',
+    firstName: 'Roméo',
+    age: 29,
+    role: 'Retour au pays & Créateur de récits',
+    territory: 'Cotonou & Diaspora',
+    country: 'Bénin',
+    flag: '🇧🇯',
+    bio: 'Jeune Béninois à lunettes de retour d’Europe, Roméo s’installe à Cotonou pour fonder son studio de création de récits, valoriser les savoirs ancestraux et connecter la diaspora à la jeunesse locale.',
+    photoUrl: '/src/assets/images/romeo_avatar_1792698425983.jpg',
+    universeTag: 'Bénin & Diaspora',
+    quote: '« Revenir n’est pas recommencer à zéro, c’est apporter ce que le monde nous a appris pour faire grandir la terre de nos ancêtres. »',
+    storiesCount: 4,
+    transmissionsCount: 4,
+    projectsCount: 2,
+    tree: {
+      passeurs: [
+        {
+          id: 'anc-dah-zounon',
+          name: 'Mahougnon Zounon',
+          role: 'Gardien du sanctuaire d’Èṣù & Passeur d’arcanes',
+          country: 'Bénin',
+          photo: '/assets/duos/dah-zounon.jpg'
+        },
+        {
+          id: 'anc-cheikh-amadou',
+          name: 'Cheikh Amadou Kane',
+          role: 'Passeur de mémoire fluviale',
+          country: 'Sénégal',
+          photo: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80'
+        }
+      ],
+      heritiers: [
+        {
+          id: 'coopt-camille-desc-2',
+          name: 'Koffi Mensah',
+          role: 'Tisserand de motifs sacrés',
+          country: 'Bénin',
+          photo: '/assets/protagonists/koffi-tisserand.jpg'
+        },
+        {
+          id: 'coopt-camille-desc-3',
+          name: 'Aïssatou Ba',
+          role: 'Cinéaste du réel',
+          country: 'Sénégal',
+          photo: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=600&q=80'
+        }
+      ],
+      transmissions: [
+        {
+          id: 't-romeo-1',
+          title: 'Le retour des mémoires vivantes',
+          ancestorOrMentor: 'Les anciens de la communauté de Ganvié',
+          description: 'Documenter avec discrétion et respect la transmission des contes et de la pirogue sacrée.'
+        }
+      ],
+      duos: [],
+      opportunities: [],
+      creations: [],
+      projects: [],
+      needs: []
+    },
+    stories: [
+      {
+        id: 'story-romeo-01',
+        title: 'Le grand retour à Cotonou',
+        questionNumber: '01',
+        questionTitle: 'Le Retour',
+        duration: '06:40',
+        videoDurationSeconds: 400,
+        summary: 'Roméo foule à nouveau le sol béninois, valises en main sous le soleil de Cadjehoun, prêt à s’installer.',
+        videoCoverUrl: '/src/assets/images/romeo_arriving_cotonou_1792698426939.jpg',
+        credits: [
+          { role: 'story_owner', label: 'Propriétaire du récit', name: 'Roméo Nonvide' }
+        ]
+      }
+    ]
+  },
+  {
     id: 'sika-dossou',
     slug: 'sika-dossou',
     name: 'Sika Dossou',

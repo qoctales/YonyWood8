@@ -54,7 +54,12 @@ import {
   Star,
   Award,
   ReceiptText,
-  GitBranch
+  GitBranch,
+  Share2,
+  MoreVertical,
+  MoreHorizontal,
+  Flag,
+  Ban
 } from 'lucide-react';
 import { useAuth } from '../services/authContext';
 import { AuthModal } from './AuthModal';
@@ -64,10 +69,13 @@ import {
   TvPlayerIcon,
   LineageGenerationsIcon,
   ParcoursDeVieIcon,
+  ProduitsServicesIcon,
+  ProjetsIcon,
   BesoinsHandsIcon
 } from './YonywoodBrandIcons';
 import { 
   PASCAL_SIMULATION_DATA, 
+  ROMEO_SIMULATION_DATA,
   VideoSimulationItem, 
   DemoProfileCategory 
 } from './landing/DemoProfilPascalSection';
@@ -506,40 +514,40 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
   const [isResonanceModalOpen, setIsResonanceModalOpen] = useState(false);
   const [profileResonancePct, setProfileResonancePct] = useState<number | null>(null);
 
-  // Identité du profil affiché (Pascal Cossi par défaut)
+  // Identité du profil affiché (Roméo Nonvide par défaut)
   const [userName, setUserName] = useState<string>(() => {
     if (targetProtagonist) return targetProtagonist.name;
     if (currentUser) return currentUser.name.split(' ')[0];
-    return 'Pascal';
+    return 'Roméo';
   });
   const [userFullName, setUserFullName] = useState<string>(() => {
     if (targetProtagonist) return targetProtagonist.name;
     if (currentUser) return currentUser.name;
-    return 'Pascal Cossi';
+    return 'Roméo Nonvide';
   });
   const [userRole, setUserRole] = useState<string>(() => {
     if (targetProtagonist) return targetProtagonist.role;
     if (currentUser) {
       return currentUser.role === 'ADMIN' 
-        ? 'Fondateur YonyWood' 
+        ? 'Réalisateur & Fondateur YonyWood — De retour au Bénin' 
         : 'Coproducteur & Spectateur engagé';
     }
-    return 'Président de « Voir Autrement » & Prêtre du Fâ';
+    return 'Réalisateur & Fondateur YonyWood — De retour au Bénin';
   });
   const [userTerritory, setUserTerritory] = useState<string>(() => {
     if (targetProtagonist) return `${targetProtagonist.territory}, ${targetProtagonist.country}`;
-    if (currentUser && currentUser.territory) return `${currentUser.territory}, ${currentUser.country || 'International'}`;
-    return 'Ganvié, Bénin';
+    if (currentUser && currentUser.territory) return `${currentUser.territory}, ${currentUser.country || 'Bénin'}`;
+    return 'Cotonou, Bénin';
   });
   const [userBio, setUserBio] = useState<string>(() => {
     if (targetProtagonist) return targetProtagonist.bio;
     if (currentUser && currentUser.bio) return currentUser.bio;
-    return 'Président de l’association « Voir Autrement » et Prêtre initié du Fâ à Ganvié. Mes oreilles et mon cœur captent le souffle de l’air et la résonance des ondes. La sagesse du Fâ nous apprend à voir la trame invisible du destin.';
+    return 'Béninois de retour d’expatriation après 8 années passées à l’étranger. Passionné par la transmission des mémoires vivantes et le cinéma documentaire immersif, j’installe mon atelier créatif à Cotonou pour reconnecter les générations et raconter les trajectoires d’initiatives.';
   });
   const [userPhoto, setUserPhoto] = useState<string>(() => {
     if (targetProtagonist) return targetProtagonist.photoUrl;
     if (currentUser && currentUser.avatarUrl) return currentUser.avatarUrl;
-    return '/assets/duos/codjo-blind.jpg';
+    return '/src/assets/images/romeo_avatar_1792698425983.jpg';
   });
 
   // Mise à jour de l'identité si currentUser change en mode propriétaire
@@ -547,8 +555,8 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
     if (isOwner && currentUser) {
       setUserName(currentUser.name.split(' ')[0]);
       setUserFullName(currentUser.name);
-      setUserRole(currentUser.role === 'ADMIN' ? 'Fondateur YonyWood' : 'Coproducteur & Spectateur');
-      if (currentUser.territory) setUserTerritory(`${currentUser.territory}, ${currentUser.country || 'International'}`);
+      setUserRole(currentUser.role === 'ADMIN' ? 'Réalisateur & Fondateur YonyWood — De retour au Bénin' : 'Coproducteur & Spectateur');
+      if (currentUser.territory) setUserTerritory(`${currentUser.territory}, ${currentUser.country || 'Bénin'}`);
       if (currentUser.bio) setUserBio(currentUser.bio);
       if (currentUser.avatarUrl) setUserPhoto(currentUser.avatarUrl);
     }
@@ -746,27 +754,27 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
     return [
       {
         id: 'recit-1',
-        title: 'La clairvoyance du Fâ',
+        title: 'Le retour au pays natal',
         chapter: 'Récit personnel',
-        subtitle: 'Origines & Mémoire',
-        description: 'Pascal Cossy raconte sa cécité précoce à Ganvié, son initiation au Fâ et la façon dont il a appris à écouter la vibration du monde.',
-        quote: '« Vos yeux s’arrêtent aux formes. Mes oreilles, mon cœur et la sagesse du Fâ pénètrent l’épaisseur vivante de l’air et la cadence secrète du destin. »',
-        duration: '06:30',
-        viewsCount: 2450,
+        subtitle: 'Origines & Ancrage',
+        description: 'Roméo raconte ses huit années passées à l’étranger, le sentiment de l’éloignement et l’évidence intérieure de revenir à Cotonou pour fonder YonyWood.',
+        quote: '« Partir permet de voir le monde, mais revenir permet de se reconnaître soi-même dans la terre de ses ancêtres. »',
+        duration: '06:15',
+        viewsCount: 2840,
         videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        posterUrl: '/assets/duos/codjo-blind.jpg'
+        posterUrl: '/src/assets/images/romeo_arriving_cotonou_1792698426939.jpg'
       },
       {
         id: 'recit-2',
-        title: 'Les métiers du fil & Voir Autrement',
-        chapter: 'Parcours de formation',
-        subtitle: 'Transmission & Métier',
-        description: 'Après ma formation en sociologie, j’ai choisi de réapprendre le geste du tissage auprès des aînées d’Allada pour en faire un pont entre générations.',
-        quote: '« Savoir d’où l’on vient donne à la navette son équilibre parfait. »',
-        duration: '07:15',
-        viewsCount: 920,
+        title: 'L’installation de l’atelier créatif',
+        chapter: 'Parcours d’action',
+        subtitle: 'Création & Transmission',
+        description: 'L’ouverture du studio à Cotonou : installer le matériel, rencontrer les artisans et bâtir un pont documentaire entre les générations.',
+        quote: '« Chaque caméra posée avec respect devient le témoin vivant d’un savoir qu’on refusait d’oublier. »',
+        duration: '07:40',
+        viewsCount: 1950,
         videoUrl: 'https://media.w3.org/2010/05/sintel/trailer.mp4',
-        posterUrl: '/assets/duos/codjo-blind.jpg'
+        posterUrl: '/src/assets/images/romeo_settling_studio_1792698427492.jpg'
       }
     ];
   });
@@ -1147,8 +1155,9 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
   const [appelFormImpact, setAppelFormImpact] = useState<string>('');
   const [isDeletingAppel, setIsDeletingAppel] = useState<boolean>(false);
 
-  // Modale de Partage Réseaux Sociaux
+  // Modale de Partage Réseaux Sociaux (profil entier ou vidéo spécifique)
   const [isShareModalOpen, setIsShareModalOpen] = useState<boolean>(false);
+  const [shareContentType, setShareContentType] = useState<'profile' | 'video'>('profile');
 
   // Modales d'actions interactives pour le Visiteur
   const [isBuyingSharesModalOpen, setIsBuyingSharesModalOpen] = useState<boolean>(false);
@@ -1235,7 +1244,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
     return list;
   }, [initiatives, appels]);
 
-  const isPascalProfile = !targetProtagonist || targetProtagonist.name.toLowerCase().includes('pascal');
+  const isRomeoProfile = !targetProtagonist || targetProtagonist.name.toLowerCase().includes('roméo') || targetProtagonist.name.toLowerCase().includes('romeo') || targetProtagonist.id === 'usr-admin-romeo';
 
   const normalizedCategory: DemoProfileCategory = useMemo(() => {
     if (activeCategory === 'parcours' || activeCategory === 'recit') return 'parcours';
@@ -1246,8 +1255,8 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
   }, [activeCategory]);
 
   const activeCategoryItems: VideoSimulationItem[] = useMemo(() => {
-    if (isPascalProfile) {
-      return PASCAL_SIMULATION_DATA[normalizedCategory] || [];
+    if (isRomeoProfile) {
+      return ROMEO_SIMULATION_DATA[normalizedCategory] || [];
     }
 
     const pPhoto = targetProtagonist?.photoUrl || '/assets/protagonists/amara-tisserande.jpg';
@@ -1433,14 +1442,14 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
         tag: 'Urgence : Permanente'
       }
     ];
-  }, [normalizedCategory, isPascalProfile, targetProtagonist]);
+  }, [normalizedCategory, isRomeoProfile, targetProtagonist]);
 
   const CATEGORY_KEYS: ProfileCategory[] = ['parcours', 'produits', 'projets', 'besoins'];
 
   const CATEGORIES: { key: ProfileCategory; label: string; tooltip: string; icon: React.FC<{ className?: string }> }[] = [
     { key: 'parcours', label: 'Parcours', tooltip: 'Parcours de vie', icon: ParcoursDeVieIcon },
-    { key: 'produits', label: 'Produits', tooltip: 'Produits et services', icon: ShoppingBag },
-    { key: 'projets', label: 'Projets', tooltip: 'Projets', icon: Sprout },
+    { key: 'produits', label: 'Produits', tooltip: 'Produits et services', icon: ProduitsServicesIcon },
+    { key: 'projets', label: 'Projets', tooltip: 'Projets', icon: ProjetsIcon },
     { key: 'besoins', label: 'Besoins', tooltip: 'Besoins exprimés', icon: BesoinsHandsIcon },
   ];
 
@@ -1646,7 +1655,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
         title="La lignée (transmission & origines)"
         aria-label="La lignée"
       >
-        <LineageGenerationsIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" strokeWidth={1.8} />
+        <LineageGenerationsIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" strokeWidth={1.75} />
       </button>
 
       {/* 2. Le parcours de vie (cheminement personnel & professionnel) */}
@@ -1665,7 +1674,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
         title="Parcours de vie"
         aria-label="Parcours de vie"
       >
-        <ParcoursDeVieIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" strokeWidth={1.8} />
+        <ParcoursDeVieIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" strokeWidth={1.75} />
       </button>
 
       {/* 3. Les produits et services (artisanat, créations & consultations) */}
@@ -1684,7 +1693,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
         title="Produits et services"
         aria-label="Produits et services"
       >
-        <ShoppingBag className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white stroke-[1.8]" />
+        <ProduitsServicesIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" strokeWidth={1.75} />
       </button>
 
       {/* 4. Les projets (initiatives, constructions & transmissions) */}
@@ -1703,7 +1712,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
         title="Projets & initiatives"
         aria-label="Projets & initiatives"
       >
-        <Sprout className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white stroke-[1.8]" />
+        <ProjetsIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" strokeWidth={1.75} />
       </button>
 
       {/* 5. Les besoins (besoins exprimés, appels d'entraide & partenariats) */}
@@ -1722,13 +1731,34 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
         title="Besoins exprimés"
         aria-label="Besoins exprimés"
       >
-        <BesoinsHandsIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" strokeWidth={1.8} />
+        <BesoinsHandsIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" strokeWidth={1.75} />
+      </button>
+
+      {/* 6. Partager la vidéo spécifique (juste en dessous des besoins) */}
+      <button
+        type="button"
+        onClick={(e) => {
+          e.stopPropagation();
+          handleShareVideo();
+        }}
+        className="w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-xl border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 bg-black/50 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white/90 backdrop-blur-md"
+        title="Partager cette vidéo"
+        aria-label="Partager cette vidéo"
+      >
+        <Share2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
       </button>
     </div>
   ), [activeCategory, showLineageFrise]);
 
-  // Partager le profil (ouvre la modale des réseaux sociaux + copie de lien)
+  // Partager la page entière du portrait (ouvre la modale des réseaux sociaux + copie de lien)
   const handleShareProfile = () => {
+    setShareContentType('profile');
+    setIsShareModalOpen(true);
+  };
+
+  // Partager la vidéo spécifique actuellement affichée
+  const handleShareVideo = () => {
+    setShareContentType('video');
     setIsShareModalOpen(true);
   };
 
@@ -1988,9 +2018,19 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
               }}
               id="btn-profile-messaging"
               className="w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-xl bg-white hover:bg-[#A2482B] border border-stone-200 hover:border-[#A2482B] text-stone-700 hover:text-white flex items-center justify-center transition-all shadow-xs cursor-pointer active:scale-95 shrink-0"
-              title={isOwner ? "Espace messagerie" : `Envoyer un message à ${profileDisplayName || 'Pascal'}`}
+              title={isOwner ? "Espace messagerie" : `Envoyer un message à ${profileDisplayName || 'Roméo'}`}
             >
               <MessageSquare className="w-4 h-4 stroke-[1.8] transition-colors" />
+            </button>
+
+            {/* Partage de la page portrait : juste à côté de l'icône messagerie */}
+            <button
+              onClick={handleShareProfile}
+              id="btn-profile-share-page"
+              className="w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-xl bg-white hover:bg-[#A2482B] border border-stone-200 hover:border-[#A2482B] text-stone-700 hover:text-white flex items-center justify-center transition-all shadow-xs cursor-pointer active:scale-95 shrink-0"
+              title={`Partager la page de ${profileDisplayName || 'Roméo'}`}
+            >
+              <Share2 className="w-4 h-4 stroke-[1.8] transition-colors" />
             </button>
 
             {/* Petite diapositive carrée épurée avec la photo de la personne (sans icône) */}
@@ -1999,12 +2039,12 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                 if (isOwner) setIsEditingProfile(true);
               }}
               className={`w-9 h-9 sm:w-10 sm:h-10 p-0.5 sm:p-1 bg-white border border-stone-200/90 rounded-sm sm:rounded shadow-xs shrink-0 flex items-center justify-center ${isOwner ? 'cursor-pointer hover:scale-105 active:scale-95' : ''} transition-transform`}
-              title={isOwner ? "Modifier mon profil" : `Profil de ${profileDisplayName || 'Pascal'}`}
+              title={isOwner ? "Modifier mon profil" : `Profil de ${profileDisplayName || 'Roméo'}`}
             >
               <div className="w-full h-full overflow-hidden bg-stone-100 rounded-[1px] aspect-square">
                 <img
-                  src={userPhoto || '/assets/duos/codjo-blind.jpg'}
-                  alt={profileDisplayName || 'Pascal'}
+                  src={userPhoto || '/src/assets/images/romeo_avatar_1792698425983.jpg'}
+                  alt={profileDisplayName || 'Roméo'}
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -2074,6 +2114,32 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
               }}
               onClose={() => setShowLineageFrise(false)}
             />
+          ) : totalItemsInActiveCategory === 0 || !currentSimulationItem ? (
+            /* ÉTAT VIDE : INVITATION À PUBLIER UNE VIDÉO DANS LE STUDIO */
+            <div className="aspect-[9/16] w-[min(calc(100vw-72px),calc((100dvh-240px)*9/16))] max-w-[218px] sm:max-w-[260px] md:max-w-[280px] h-[min(388px,calc(100dvh-240px))] sm:h-[min(460px,calc(100dvh-210px))] md:h-[min(500px,calc(100dvh-190px))] mx-auto rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl border border-stone-200/40 relative flex flex-col justify-between p-4 sm:p-5 text-center my-auto">
+              <div className="my-auto flex flex-col items-center justify-center space-y-3 px-2">
+                <div className="w-12 h-12 rounded-full bg-[#A2482B]/20 text-[#A2482B] flex items-center justify-center border border-[#A2482B]/40">
+                  <Video className="w-6 h-6 text-[#A2482B]" />
+                </div>
+                <h3 className="font-editorial text-sm sm:text-base font-bold text-white">
+                  Aucune vidéo pour le moment
+                </h3>
+                <p className="text-[11px] sm:text-xs text-stone-300 leading-relaxed max-w-[210px]">
+                  {isOwner 
+                    ? "Racontez votre parcours et faites résonner votre histoire dans la communauté en publiant votre première vidéo."
+                    : `Ce profil n'a pas encore publié de vidéo dans cette catégorie.`}
+                </p>
+                {isOwner && (
+                  <button
+                    onClick={() => onNavigate({ type: 'submit_story' })}
+                    className="mt-2 px-4 py-2 rounded-full bg-[#A2482B] hover:bg-[#8A3B22] text-white text-xs font-semibold shadow-md transition-all active:scale-95 cursor-pointer flex items-center gap-1.5"
+                  >
+                    <Plus className="w-3.5 h-3.5" />
+                    <span>Poster une vidéo</span>
+                  </button>
+                )}
+              </div>
+            </div>
           ) : (
             <>
               {/* FLÈCHE GAUCHE (Strictement identique et alignée sur la page Studio) */}
@@ -2167,13 +2233,11 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                 {/* Overlay standardisé unique : alignement vertical strict, badge catégorie en haut à gauche, TvPlayerIcon en haut à droite, prénom en bas à gauche (uniquement parcours), et les 5 boutons verticaux au milieu à droite */}
                 <UnifiedVideoCardOverlay
                   titleBadge={currentSimulationItem.tag || currentSimulationItem.subtitle || 'Origines & Mémoire'}
-                  displayName={normalizedCategory === 'parcours' ? (profileDisplayName || 'Pascal') : ''}
+                  displayName={normalizedCategory === 'parcours' ? (profileDisplayName || 'Roméo') : ''}
                   isPlaying={isPlaying}
                   onTogglePlay={toggleVideoPlayback}
                   isMuted={isMuted}
                   onToggleMute={toggleMute}
-                  resonanceScore={profileResonancePct}
-                  onOpenResonance={() => setIsResonanceModalOpen(true)}
                   onOpenLineage={() => setShowLineageFrise(true)}
                   questionText={getQuestionText()}
                   factText={currentSimulationItem.description}
@@ -3662,7 +3726,9 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
             <div className="flex items-center justify-between pb-2 border-b border-stone-200">
               <div className="flex items-center gap-2">
                 <ShareIcon className="w-5 h-5 text-[#C89B3C]" />
-                <h3 className="font-editorial text-base font-bold text-[#1C1917]">Partager le profil</h3>
+                <h3 className="font-editorial text-base font-bold text-[#1C1917]">
+                  {shareContentType === 'video' ? 'Partager la vidéo' : 'Partager le profil'}
+                </h3>
               </div>
               <button onClick={() => setIsShareModalOpen(false)} className="p-1 text-stone-400 hover:text-stone-700">
                 <X className="w-4 h-4" />
@@ -3670,14 +3736,26 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
             </div>
 
             <p className="text-xs text-stone-600">
-              Faites rayonner le profil de <span className="font-bold text-[#1C1917]">{profileDisplayName}</span> sur vos réseaux :
+              {shareContentType === 'video' ? (
+                <>
+                  Partagez la vidéo <span className="font-bold text-[#1C1917]">« {currentSimulationItem?.title || 'Extrait'} »</span> de <span className="font-bold text-[#1C1917]">{profileDisplayName}</span> :
+                </>
+              ) : (
+                <>
+                  Faites rayonner le profil de <span className="font-bold text-[#1C1917]">{profileDisplayName}</span> sur vos réseaux :
+                </>
+              )}
             </p>
 
             {/* Réseaux sociaux */}
             <div className="grid grid-cols-2 gap-2.5">
               {/* WhatsApp */}
               <a
-                href={`https://api.whatsapp.com/send?text=${encodeURIComponent(`Découvrez le profil de ${profileDisplayName} sur Racines & Horizons : ${window.location.href}`)}`}
+                href={`https://api.whatsapp.com/send?text=${encodeURIComponent(
+                  shareContentType === 'video'
+                    ? `Regardez la vidéo « ${currentSimulationItem?.title || ''} » de ${profileDisplayName} sur Yonywood : ${window.location.origin}?protagonist=${protagonistId || 'romeo'}&category=${normalizedCategory}&video=${currentSimulationItem?.id || ''}`
+                    : `Découvrez le profil de ${profileDisplayName} sur Yonywood : ${window.location.origin}?protagonist=${protagonistId || 'romeo'}`
+                )}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2.5 p-3 rounded-2xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-800 text-xs font-bold transition-all"
@@ -3688,7 +3766,15 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
 
               {/* Twitter / X */}
               <a
-                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`Découvrez le profil de ${profileDisplayName} sur Racines & Horizons`)}&url=${encodeURIComponent(window.location.href)}`}
+                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                  shareContentType === 'video'
+                    ? `Regardez la vidéo « ${currentSimulationItem?.title || ''} » de ${profileDisplayName}`
+                    : `Découvrez le profil de ${profileDisplayName}`
+                )}&url=${encodeURIComponent(
+                  shareContentType === 'video'
+                    ? `${window.location.origin}?protagonist=${protagonistId || 'romeo'}&category=${normalizedCategory}&video=${currentSimulationItem?.id || ''}`
+                    : `${window.location.origin}?protagonist=${protagonistId || 'romeo'}`
+                )}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2.5 p-3 rounded-2xl bg-stone-100 hover:bg-stone-200 border border-stone-300 text-stone-900 text-xs font-bold transition-all"
@@ -3699,7 +3785,11 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
 
               {/* Facebook */}
               <a
-                href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`}
+                href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+                  shareContentType === 'video'
+                    ? `${window.location.origin}?protagonist=${protagonistId || 'romeo'}&category=${normalizedCategory}&video=${currentSimulationItem?.id || ''}`
+                    : `${window.location.origin}?protagonist=${protagonistId || 'romeo'}`
+                )}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2.5 p-3 rounded-2xl bg-blue-50 hover:bg-blue-100 border border-blue-200 text-blue-800 text-xs font-bold transition-all"
@@ -3710,7 +3800,15 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
 
               {/* Telegram */}
               <a
-                href={`https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(`Découvrez le profil de ${profileDisplayName}`)}`}
+                href={`https://t.me/share/url?url=${encodeURIComponent(
+                  shareContentType === 'video'
+                    ? `${window.location.origin}?protagonist=${protagonistId || 'romeo'}&category=${normalizedCategory}&video=${currentSimulationItem?.id || ''}`
+                    : `${window.location.origin}?protagonist=${protagonistId || 'romeo'}`
+                )}&text=${encodeURIComponent(
+                  shareContentType === 'video'
+                    ? `Regardez la vidéo « ${currentSimulationItem?.title || ''} » de ${profileDisplayName}`
+                    : `Découvrez le profil de ${profileDisplayName}`
+                )}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2.5 p-3 rounded-2xl bg-sky-50 hover:bg-sky-100 border border-sky-200 text-sky-800 text-xs font-bold transition-all"
@@ -3721,7 +3819,11 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
 
               {/* LinkedIn */}
               <a
-                href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`}
+                href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
+                  shareContentType === 'video'
+                    ? `${window.location.origin}?protagonist=${protagonistId || 'romeo'}&category=${normalizedCategory}&video=${currentSimulationItem?.id || ''}`
+                    : `${window.location.origin}?protagonist=${protagonistId || 'romeo'}`
+                )}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="col-span-2 flex items-center justify-center gap-2.5 p-3 rounded-2xl bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 text-indigo-900 text-xs font-bold transition-all"
@@ -3735,15 +3837,24 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
             <div className="pt-1">
               <button
                 onClick={() => {
-                  navigator.clipboard?.writeText(window.location.href);
+                  const targetUrl = shareContentType === 'video'
+                    ? `${window.location.origin}?protagonist=${protagonistId || 'romeo'}&category=${normalizedCategory}&video=${currentSimulationItem?.id || ''}`
+                    : `${window.location.origin}?protagonist=${protagonistId || 'romeo'}`;
+                  navigator.clipboard?.writeText(targetUrl);
                   setIsShareModalOpen(false);
-                  setShareToast("Lien du profil copié dans le presse-papiers !");
+                  setShareToast(
+                    shareContentType === 'video'
+                      ? "Lien direct de la vidéo copié dans le presse-papiers !"
+                      : "Lien de la page copié dans le presse-papiers !"
+                  );
                   setTimeout(() => setShareToast(null), 3000);
                 }}
                 className="w-full h-11 px-4 rounded-xl bg-[#1C1917] hover:bg-stone-800 text-white font-bold text-xs flex items-center justify-center gap-2 transition-all shadow-md cursor-pointer active:scale-[0.98]"
               >
                 <Copy className="w-4 h-4 text-[#C89B3C]" />
-                <span>Copier le lien direct</span>
+                <span>
+                  {shareContentType === 'video' ? 'Copier le lien direct de la vidéo' : 'Copier le lien de la page'}
+                </span>
               </button>
             </div>
           </div>
