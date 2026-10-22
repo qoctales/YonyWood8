@@ -12,7 +12,8 @@ import {
   DirectorChairIcon,
   DuocumentairesTvIcon,
   PortraitsViseurIcon,
-  ProfileSoloIcon
+  ProfileSoloIcon,
+  LumiereSunDotsIcon
 } from './YonywoodBrandIcons';
 import { DemoStudioSection } from './landing/DemoStudioSection';
 import { DemoHeritagesSection } from './landing/DemoHeritagesSection';
@@ -45,11 +46,11 @@ export const LandingScreen: React.FC<LandingScreenProps> = ({ onNavigate }) => {
 
   const navItems: { id: DemoTabId; label: string; icon: any; screenId: string }[] = [
     { id: 'studio', label: 'Studio', icon: DirectorChairIcon, screenId: 'menu-demo-studio' },
-    { id: 'heritages', label: 'Héritage', icon: Film, screenId: 'menu-demo-heritage' },
     { id: 'duos', label: 'Duo', icon: DuocumentairesTvIcon, screenId: 'menu-demo-duo' },
-    { id: 'entreprise', label: 'Portrait', icon: PortraitsViseurIcon, screenId: 'menu-demo-portrait' },
-    { id: 'productions', label: 'Production', icon: Clapperboard, screenId: 'menu-demo-production' },
-    { id: 'profil', label: 'Profil', icon: ProfileSoloIcon, screenId: 'menu-demo-profil' },
+    { id: 'heritages', label: 'Héritage', icon: Film, screenId: 'menu-demo-heritage' },
+    { id: 'entreprise', label: 'Lumière', icon: LumiereSunDotsIcon, screenId: 'menu-demo-lumiere' },
+    { id: 'profil', label: 'Portrait', icon: ProfileSoloIcon, screenId: 'menu-demo-portrait' },
+    { id: 'productions', label: 'Action', icon: Clapperboard, screenId: 'menu-demo-production' },
   ];
 
   return (
@@ -72,7 +73,7 @@ export const LandingScreen: React.FC<LandingScreenProps> = ({ onNavigate }) => {
           {/* Gauche : Logo officiel YonyWood */}
           <div className="flex items-center gap-3">
             <img 
-              src="/yonywood-logo-gras.svg" 
+              src="/yonywood-logo-espaces-70.svg" 
               alt="YonyWood" 
               className="h-11 sm:h-14 w-auto object-contain cursor-pointer hover:opacity-90 transition-all"
               onClick={() => setActiveDemoTab('studio')}
@@ -133,10 +134,10 @@ export const LandingScreen: React.FC<LandingScreenProps> = ({ onNavigate }) => {
       {/* ========================================================================= */}
       {/* 3. BARRE DE NAVIGATION EN BAS, FIXE (Identique au BottomMenu de l'app)    */}
       {/* ========================================================================= */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 pointer-events-none pb-3 sm:pb-4 px-3 sm:px-6">
+      <div className="fixed bottom-0 left-0 right-0 z-50 pointer-events-none pb-3 sm:pb-4 px-2 sm:px-6">
         <nav 
           aria-label="Navigation principale démo"
-          className="pointer-events-auto max-w-md sm:max-w-xl mx-auto bg-white/95 backdrop-blur-xl border border-stone-200/90 rounded-full shadow-2xl shadow-stone-900/10 px-2 sm:px-4 py-1.5 flex items-center justify-between gap-1 sm:gap-2"
+          className="pointer-events-auto max-w-[420px] sm:max-w-[450px] mx-auto bg-white/95 backdrop-blur-xl border border-stone-200/90 rounded-full shadow-2xl shadow-stone-900/10 px-1.5 sm:px-3 py-1.5 flex items-center justify-between gap-0.5"
         >
           {navItems.map((item) => {
             const Icon = item.icon;
@@ -151,13 +152,13 @@ export const LandingScreen: React.FC<LandingScreenProps> = ({ onNavigate }) => {
                 }}
                 id={item.screenId}
                 title={item.label}
-                className={`relative flex-1 min-w-0 flex flex-col items-center justify-center px-1 sm:px-2 py-1 rounded-full transition-colors duration-200 group cursor-pointer ${
+                className={`relative flex-1 min-w-0 flex flex-col items-center justify-center px-0.5 sm:px-1.5 py-1 rounded-full transition-colors duration-200 group cursor-pointer ${
                   isActive ? 'text-stone-900' : 'text-stone-500 hover:text-stone-800'
                 }`}
               >
                 {/* Capsule changeante Terre Cuite (#A2482B) uniquement sur l'icône */}
                 <div 
-                  className={`w-9 h-9 sm:w-10 sm:h-10 aspect-square shrink-0 rounded-full flex items-center justify-center transition-all duration-200 ${
+                  className={`w-8 h-8 sm:w-10 sm:h-10 aspect-square shrink-0 rounded-full flex items-center justify-center transition-all duration-200 ${
                     isActive 
                       ? 'bg-[#A2482B] text-white shadow-sm' 
                       : 'bg-transparent text-stone-600 group-hover:bg-stone-100/80'
@@ -167,8 +168,8 @@ export const LandingScreen: React.FC<LandingScreenProps> = ({ onNavigate }) => {
                 </div>
 
                 {/* Libellé textuel */}
-                <span className={`text-[9px] sm:text-[10px] leading-tight tracking-tight mt-0.5 sm:mt-1 font-normal truncate max-w-full text-center ${
-                  isActive ? 'text-[#A2482B] font-semibold' : 'text-stone-500'
+                <span className={`text-[8.5px] min-[380px]:text-[9.5px] sm:text-[10.5px] leading-tight tracking-tight mt-0.5 sm:mt-1 whitespace-nowrap text-center ${
+                  isActive ? 'text-[#A2482B] font-semibold' : 'text-stone-500 font-normal'
                 }`}>
                   {item.label}
                 </span>

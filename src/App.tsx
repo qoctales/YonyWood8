@@ -66,7 +66,7 @@ const resolveScreenFromPath = (): { screen: ViewScreen | null; redirectFrom?: st
   if (path === '/studio') {
     return { screen: { type: 'submit_story' } };
   }
-  if (path === '/productions') {
+  if (path === '/productions' || path === '/action' || path === '/actions') {
     return { screen: { type: 'marketplace' } };
   }
   if (path === '/portrait') {
@@ -85,18 +85,18 @@ const getScreenRouteInfo = (screen: ViewScreen): { path: string; title: string }
     case 'matrix_view':
     case 'documentaries':
     case 'documentary_detail':
-      return { path: '/heritages', title: 'Héritages — YonyWood' };
+      return { path: '/heritages', title: 'Héritage — YonyWood' };
     case 'duo_feed':
     case 'duo_detail':
     case 'landing':
-      return { path: '/duos', title: 'Duos — YonyWood' };
+      return { path: '/duos', title: 'Duo — YonyWood' };
     case 'enterprise':
-      return { path: '/lumieres', title: 'Lumières — YonyWood' };
+      return { path: '/lumieres', title: 'Lumière — YonyWood' };
     case 'submit_story':
     case 'request_videographer':
       return { path: '/studio', title: 'Studio — YonyWood' };
     case 'marketplace':
-      return { path: '/productions', title: 'Productions — YonyWood' };
+      return { path: '/productions', title: 'Production — YonyWood' };
     case 'profile':
     case 'settings':
     case 'portfolio':

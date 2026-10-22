@@ -54,7 +54,7 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
     return null;
   }
 
-  // Exactement six rubriques : Studio · Héritages · Duos · Lumières · Productions · Portrait
+  // Exactement six rubriques au singulier : Studio · Duo · Héritage · Lumière · Portrait · Production
   const menuItems = [
     {
       id: 'studio',
@@ -67,18 +67,8 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
       strokeWidth: 1.5
     },
     {
-      id: 'heritage',
-      label: 'Héritages',
-      icon: Film, // bande de pellicule
-      isActive: isHeritageActive,
-      onClick: () => onNavigate({ type: 'home' }),
-      screenId: 'menu-item-heritage',
-      iconClassName: 'w-[17px] h-[17px] sm:w-[17px] sm:h-[17px] shrink-0',
-      strokeWidth: 1.5
-    },
-    {
       id: 'duo',
-      label: 'Duos',
+      label: 'Duo',
       icon: DuocumentairesTvIcon, // deux écrans (télé divisée en deux)
       isActive: isDuoActive,
       onClick: () => onNavigate({ type: 'duo_feed' }),
@@ -87,23 +77,23 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
       strokeWidth: 1.75
     },
     {
+      id: 'heritage',
+      label: 'Héritage',
+      icon: Film, // bande de pellicule
+      isActive: isHeritageActive,
+      onClick: () => onNavigate({ type: 'home' }),
+      screenId: 'menu-item-heritage',
+      iconClassName: 'w-[17px] h-[17px] sm:w-[17px] sm:h-[17px] shrink-0',
+      strokeWidth: 1.5
+    },
+    {
       id: 'lumiere',
-      label: 'Lumières',
+      label: 'Lumière',
       icon: LumiereSunDotsIcon, // Soleil et constellations
       isActive: isLumiereActive,
       onClick: () => onNavigate({ type: 'enterprise' }),
       screenId: 'menu-item-lumiere',
       iconClassName: 'w-[19px] h-[19px] sm:w-[20px] sm:h-[20px] shrink-0',
-      strokeWidth: 1.5
-    },
-    {
-      id: 'production',
-      label: 'Productions',
-      icon: Clapperboard, // claquette
-      isActive: isProductionActive,
-      onClick: () => onNavigate({ type: 'marketplace' }),
-      screenId: 'menu-item-production',
-      iconClassName: 'w-5 h-5 sm:w-5 sm:h-5 shrink-0',
       strokeWidth: 1.5
     },
     {
@@ -115,15 +105,25 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
       screenId: 'menu-item-portrait',
       iconClassName: 'w-5 h-5 sm:w-5 sm:h-5 shrink-0',
       strokeWidth: 1.6
+    },
+    {
+      id: 'production',
+      label: 'Action',
+      icon: Clapperboard, // claquette
+      isActive: isProductionActive,
+      onClick: () => onNavigate({ type: 'marketplace' }),
+      screenId: 'menu-item-production',
+      iconClassName: 'w-5 h-5 sm:w-5 sm:h-5 shrink-0',
+      strokeWidth: 1.5
     }
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 pointer-events-none pb-3 sm:pb-5 px-3 sm:px-6">
+    <div className="fixed bottom-0 left-0 right-0 z-50 pointer-events-none pb-3 sm:pb-5 px-2 sm:px-6">
       <nav 
         id="yonywood-main-menu"
         aria-label="Navigation principale"
-        className="pointer-events-auto max-w-md sm:max-w-lg mx-auto bg-white/95 backdrop-blur-xl border border-stone-200/90 rounded-full shadow-2xl shadow-stone-900/10 px-1.5 sm:px-4 py-1 sm:py-1.5 flex items-center justify-between gap-0.5 sm:gap-2"
+        className="pointer-events-auto max-w-[420px] sm:max-w-[450px] mx-auto bg-white/95 backdrop-blur-xl border border-stone-200/90 rounded-full shadow-2xl shadow-stone-900/10 px-1.5 sm:px-3 py-1 sm:py-1.5 flex items-center justify-between gap-0.5"
       >
         {menuItems.map((item) => {
           const Icon = item.icon as any;
@@ -134,7 +134,7 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
               onClick={item.onClick}
               id={item.screenId}
               title={item.label}
-              className={`relative flex-1 min-w-0 flex flex-col items-center justify-center px-0.5 sm:px-2 py-0.5 sm:py-1 rounded-full transition-colors duration-200 group cursor-pointer ${
+              className={`relative flex-1 min-w-0 flex flex-col items-center justify-center px-0.5 sm:px-1.5 py-0.5 sm:py-1 rounded-full transition-colors duration-200 group cursor-pointer ${
                 item.isActive
                   ? 'text-stone-900'
                   : 'text-stone-500 hover:text-stone-800'
@@ -174,11 +174,11 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
                 )}
               </div>
 
-              {/* Libellé textuel en noms communs uniformes, taille optimisée sur mobile pour éviter toute coupure */}
-              <span className={`text-[9px] sm:text-[10.5px] leading-tight tracking-tight mt-0.5 sm:mt-1 transition-colors duration-200 font-normal truncate max-w-full text-center ${
+              {/* Libellé textuel en noms communs uniformes, toujours affiché en entier sans troncature */}
+              <span className={`text-[8.5px] min-[380px]:text-[9.5px] sm:text-[10.5px] leading-tight tracking-tight mt-0.5 sm:mt-1 transition-colors duration-200 whitespace-nowrap text-center ${
                 item.isActive 
                   ? 'text-[#A2482B] font-semibold' 
-                  : 'text-stone-500'
+                  : 'text-stone-500 font-normal'
               }`}>
                 {item.label}
               </span>

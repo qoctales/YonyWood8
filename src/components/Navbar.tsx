@@ -32,7 +32,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentScreen, onNavigate, onOpe
           title="YonyWood — Accueil"
         >
           <img 
-            src="/yonywood-logo-gras.svg" 
+            src="/yonywood-logo-espaces-70.svg" 
             alt="YonyWood" 
             className="h-8 sm:h-10 md:h-12 w-auto object-contain select-none group-hover:opacity-90 transition-all"
           />
