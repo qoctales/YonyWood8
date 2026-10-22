@@ -107,7 +107,7 @@ const seriesList: ExplorerCatalogItem[] = [
     "title": "Roots < > Routes",
     "subtitle": "L’ancrage ancestral face à la traversée des frontières et des horizons.",
     "question": "L’ancrage dans ses racines ou l’envol sur les routes : où se forge votre véritable identité ?",
-    "photoUrl": "/assets/posters/Roots < > Routes.jpg",
+    "photoUrl": "/roots-routes.jpg",
     "badge": "16 pionniers cooptés",
     "accentColor": "#0284C7",
     "iconName": "16-series/roots-routes"

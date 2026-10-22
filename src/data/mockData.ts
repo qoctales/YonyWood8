@@ -445,8 +445,8 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
     centralQuestion: 'L’ancrage dans ses racines ou l’envol sur les routes : où se forge votre véritable identité ?',
     shortSynopsis: 'Une rencontre sensible entre l’ancrage profond dans les racines mémorielles et le souffle d’exploration qui pousse à traverser les frontières.',
     description: 'D’un côté, la transmission fidèle des racines, la mémoire des terroirs et la préservation des ancrages ancestraux (Roots). De l’autre, l’itinérance, le passage des frontières et la construction d’horizons nouveaux au fil des routes (Routes). Roots <> Routes explore la tension féconde entre appartenance et liberté nomade.',
-    coverImage: '/assets/posters/Roots < > Routes.jpg',
-    posterUrl: '/assets/posters/Roots < > Routes.jpg',
+    coverImage: '/roots-routes.jpg',
+    posterUrl: '/roots-routes.jpg',
     teaserVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
     teaserDuration: '1:35',
     universes: [
@@ -2635,7 +2635,7 @@ export const DUOS: Duo[] = [
     centralQuestion: 'Racontez le moment où un lieu a changé votre façon de construire vos rêves.',
     quoteA: '« Le jour où j’ai signé ce premier financement pour l’atelier sans garantie bancaire, j’ai compris que ma responsabilité n’était pas de me protéger, mais de faire confiance. »',
     quoteB: '« Quand la voûte en terre crue a résisté à la première tornade, j’ai su que nos mains portaient une force que nulle machine ne peut remplacer. »',
-    coverImage: '/assets/posters/Roots < > Routes.jpg',
+    coverImage: '/roots-routes.jpg',
     storyA: (PROTAGONISTS.find(p => p.id === 'fatou-diallo') || PROTAGONISTS[0]).stories[0],
     storyB: (PROTAGONISTS.find(p => p.id === 'kwame-mensah') || PROTAGONISTS[1]).stories[0],
     editorialReflection: 'Entre l’encre des contrats et la poussière des chantiers, la véritable valeur ne naît pas dans le calcul du profit, mais dans l’engagement réciproque de bâtir ce qui perdure.'

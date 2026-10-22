@@ -777,3 +777,105 @@ export const LumiereSunDotsIcon: React.FC<IconProps & { isActive?: boolean }> = 
 
 // Rétrocompatibilité pour tous les imports existants
 export const PortraitsViseurIcon = LumiereSunDotsIcon;
+
+/**
+ * LineageGenerationsIcon:
+ * Symbole officiel « Lignée » : Arbre de filiation généalogique et transmission intergénérationnelle.
+ * Nœud racine/ancêtre au sommet relié par une tige verticale à une frise de descendance (trois nœuds de générations).
+ */
+export const LineageGenerationsIcon: React.FC<IconProps> = ({ 
+  className = 'w-5 h-5',
+  strokeWidth = 1.6 
+}) => {
+  return (
+    <svg 
+      viewBox="0 0 24 24" 
+      fill="none" 
+      stroke="currentColor" 
+      strokeWidth={strokeWidth} 
+      strokeLinecap="round" 
+      strokeLinejoin="round" 
+      className={className}
+      aria-hidden="true"
+    >
+      {/* Nœud ancestral / origine supérieure */}
+      <circle cx="12" cy="4.5" r="2.2" />
+      {/* Ligne de filiation verticale */}
+      <line x1="12" y1="6.7" x2="12" y2="10.5" />
+      {/* Barre transversale de filiation familiale */}
+      <path d="M 6.5 10.5 L 17.5 10.5" />
+      {/* Filiations descendantes vers les générations */}
+      <line x1="6.5" y1="10.5" x2="6.5" y2="14.5" />
+      <line x1="12" y1="10.5" x2="12" y2="14.5" />
+      <line x1="17.5" y1="10.5" x2="17.5" y2="14.5" />
+      {/* Nœuds de transmission générationnelle */}
+      <circle cx="6.5" cy="17" r="2" />
+      <circle cx="12" cy="17" r="2" />
+      <circle cx="17.5" cy="17" r="2" />
+      {/* Racines de filiation sous la génération centrale */}
+      <line x1="12" y1="19" x2="12" y2="21.5" />
+    </svg>
+  );
+};
+
+/**
+ * ParcoursDeVieIcon:
+ * Symbole officiel « Parcours de vie » : Cheminement sinueux balisé avec 3 étapes de vie charnières.
+ * Évoque immédiatement l'itinéraire, les choix, les expériences et l'évolution de la personne.
+ */
+export const ParcoursDeVieIcon: React.FC<IconProps> = ({ 
+  className = 'w-5 h-5',
+  strokeWidth = 1.6 
+}) => {
+  return (
+    <svg 
+      viewBox="0 0 24 24" 
+      fill="none" 
+      stroke="currentColor" 
+      strokeWidth={strokeWidth} 
+      strokeLinecap="round" 
+      strokeLinejoin="round" 
+      className={className}
+      aria-hidden="true"
+    >
+      {/* Cheminement sinueux fluide */}
+      <path d="M 5 19 C 7.5 14, 10.5 15, 12 12 C 13.5 9, 16.5 10, 19 5" />
+      {/* 3 jalons d'étapes de vie le long du tracé */}
+      <circle cx="5" cy="19" r="2" />
+      <circle cx="12" cy="12" r="2" />
+      <circle cx="19" cy="5" r="2" />
+      {/* Point intérieur contrasté au jalon central */}
+      <circle cx="12" cy="12" r="0.75" fill="currentColor" stroke="none" />
+    </svg>
+  );
+};
+
+/**
+ * BesoinsHandsIcon:
+ * Symbole officiel « Besoins » : Deux mains ouvertes en coupe et accueil de ressources,
+ * symbolisant l'appel, la main tendue, le soutien mutuel et les besoins exprimés par le protagoniste.
+ */
+export const BesoinsHandsIcon: React.FC<IconProps> = ({ 
+  className = 'w-5 h-5',
+  strokeWidth = 1.6 
+}) => {
+  return (
+    <svg 
+      viewBox="0 0 24 24" 
+      fill="none" 
+      stroke="currentColor" 
+      strokeWidth={strokeWidth} 
+      strokeLinecap="round" 
+      strokeLinejoin="round" 
+      className={className}
+      aria-hidden="true"
+    >
+      {/* Main tendue ouverte accueillant une ressource */}
+      <path d="M 3 13 C 5 11.5, 7.5 11, 10 12.5 L 13.5 14.5 C 15 15.2, 17 14.5, 18 13.2 L 20.5 10.5 C 21.2 9.7, 21 8.5, 20 8 C 19.2 7.6, 18.2 8, 17.6 8.8 L 15.5 11" />
+      <path d="M 7 11.5 L 9 8 C 9.5 7.2, 10.5 7, 11.2 7.5 C 11.8 8, 12 9, 11.5 9.8 L 10 12" />
+      {/* Cœur / étincelle d'entraide symbolisant le besoin exprimé */}
+      <path d="M 17 3.5 C 16 2.5, 14.5 3, 14.5 4.2 C 14.5 5.5, 17 7.5, 17 7.5 C 17 7.5, 19.5 5.5, 19.5 4.2 C 19.5 3, 18 2.5, 17 3.5 Z" fill="currentColor" stroke="none" />
+    </svg>
+  );
+};
+

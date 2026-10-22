@@ -249,7 +249,7 @@ export const SOUS_CATEGORIES: SousCategorie[] = [
     tagline: 'L’enracinement ancestral face aux horizons du monde',
     description: 'Une rencontre sensible entre l’ancrage profond dans les racines mémorielles et le souffle d’exploration qui pousse à traverser les frontières.',
     badge: 'Série mémoires & horizons',
-    photoUrl: '/assets/posters/Roots < > Routes.jpg',
+    photoUrl: '/roots-routes.jpg',
     accentColor: '#3B82F6',
     glowColor: 'rgba(59, 130, 246, 0.6)',
     bgGradient: 'from-blue-600 via-indigo-700 to-stone-900'

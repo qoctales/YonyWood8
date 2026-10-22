@@ -49,7 +49,7 @@ const ALL_8_PRODUCTIONS: ProductionItem[] = [
   {
     id: 'roots-routes',
     title: 'Roots <> Routes',
-    posterImage: '/assets/posters/Roots < > Routes.jpg',
+    posterImage: '/roots-routes.jpg',
     sharePrice: 50,
     totalShares: 200,
     remainingShares: 90,

@@ -59,7 +59,18 @@ import {
 import { useAuth } from '../services/authContext';
 import { AuthModal } from './AuthModal';
 import { ShareIcon } from './ShareIcon';
-import { ProfileSoloIcon, TvPlayerIcon } from './YonywoodBrandIcons';
+import { 
+  ProfileSoloIcon, 
+  TvPlayerIcon,
+  LineageGenerationsIcon,
+  ParcoursDeVieIcon,
+  BesoinsHandsIcon
+} from './YonywoodBrandIcons';
+import { 
+  PASCAL_SIMULATION_DATA, 
+  VideoSimulationItem, 
+  DemoProfileCategory 
+} from './landing/DemoProfilPascalSection';
 import { OrdersAndContributionsModal } from './OrdersAndContributionsModal';
 import { transactionService } from '../utils/transactionService';
 import { ProfileLineageFrise } from './ProfileLineageFrise';
@@ -69,7 +80,7 @@ import { ViewScreen, AffiliationPerson, Protagonist } from '../types';
 import { PROTAGONISTS, DOCUMENTARIES, DUOS } from '../data/mockData';
 import { MATRIX_SERIES_DATA } from '../data/matrixData';
 
-export type ProfileCategory = 'recit' | 'production' | 'offre' | 'appel';
+export type ProfileCategory = 'parcours' | 'produits' | 'projets' | 'besoins' | 'recit' | 'production' | 'offre' | 'appel';
 export type DimensionTab = ProfileCategory | 'episodes' | 'productions' | 'creations' | 'initiatives' | 'appels';
 
 export interface ProfileSettingsScreenProps {
@@ -458,15 +469,15 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
   }, [protagonistId, isOwner]);
 
   const mapInitialCategory = (tab?: string): ProfileCategory => {
-    if (!tab) return 'recit';
-    if (tab === 'episodes' || tab === 'recit') return 'recit';
-    if (tab === 'productions' || tab === 'production') return 'production';
-    if (tab === 'creations' || tab === 'offre') return 'offre';
-    if (tab === 'initiatives' || tab === 'appels' || tab === 'appel') return 'appel';
-    return 'recit';
+    if (!tab) return 'parcours';
+    if (tab === 'parcours' || tab === 'episodes' || tab === 'recit') return 'parcours';
+    if (tab === 'produits' || tab === 'productions' || tab === 'production' || tab === 'creations' || tab === 'offre') return 'produits';
+    if (tab === 'projets' || tab === 'initiatives') return 'projets';
+    if (tab === 'besoins' || tab === 'appels' || tab === 'appel') return 'besoins';
+    return 'parcours';
   };
 
-  // 4 catégories : Récit (récits + épisodes), Production, Offre, Appel (initiatives + appels)
+  // 4 catégories : Parcours de vie, Produits et services, Projets, Besoins
   const [activeCategory, setActiveCategory] = useState<ProfileCategory>(() => mapInitialCategory(initialTab));
   const activeTab = activeCategory;
   const setActiveTab = (tab: DimensionTab) => setActiveCategory(mapInitialCategory(tab));
@@ -504,7 +515,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
   const [userFullName, setUserFullName] = useState<string>(() => {
     if (targetProtagonist) return targetProtagonist.name;
     if (currentUser) return currentUser.name;
-    return 'Pascal Cossy';
+    return 'Pascal Cossi';
   });
   const [userRole, setUserRole] = useState<string>(() => {
     if (targetProtagonist) return targetProtagonist.role;
@@ -646,7 +657,11 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
   ]);
 
   // Indices de navigation par catégorie (chariot horizontal)
-  const [categoryIndices, setCategoryIndices] = useState<Record<ProfileCategory, number>>({
+  const [categoryIndices, setCategoryIndices] = useState<Record<string, number>>({
+    parcours: 0,
+    produits: 0,
+    projets: 0,
+    besoins: 0,
     recit: 0,
     production: 0,
     offre: 0,
@@ -1220,33 +1235,224 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
     return list;
   }, [initiatives, appels]);
 
-  const CATEGORY_KEYS: ProfileCategory[] = ['recit', 'production', 'offre', 'appel'];
+  const isPascalProfile = !targetProtagonist || targetProtagonist.name.toLowerCase().includes('pascal');
+
+  const normalizedCategory: DemoProfileCategory = useMemo(() => {
+    if (activeCategory === 'parcours' || activeCategory === 'recit') return 'parcours';
+    if (activeCategory === 'produits' || activeCategory === 'offre' || activeCategory === 'production') return 'produits';
+    if (activeCategory === 'projets') return 'projets';
+    if (activeCategory === 'besoins' || activeCategory === 'appel') return 'besoins';
+    return 'parcours';
+  }, [activeCategory]);
+
+  const activeCategoryItems: VideoSimulationItem[] = useMemo(() => {
+    if (isPascalProfile) {
+      return PASCAL_SIMULATION_DATA[normalizedCategory] || [];
+    }
+
+    const pPhoto = targetProtagonist?.photoUrl || '/assets/protagonists/amara-tisserande.jpg';
+    const pVideo = targetProtagonist?.teaserVideoUrl || 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4';
+    const pName = targetProtagonist?.name || 'Artisan';
+
+    if (normalizedCategory === 'parcours') {
+      return [
+        {
+          id: `parcours-${targetProtagonist?.id}-1`,
+          title: `Mon chemin - ${pName}`,
+          subtitle: 'Éveil sensoriel & origines',
+          description: targetProtagonist?.bio || `Récit personnel de ${pName} sur ses origines et sa vocation.`,
+          posterUrl: pPhoto,
+          videoUrl: pVideo,
+          duration: '06:15',
+          tag: 'Origines & Mémoire'
+        },
+        {
+          id: `parcours-${targetProtagonist?.id}-2`,
+          title: 'L’initiation & l’apprentissage',
+          subtitle: 'Savoirs traditionnels',
+          description: 'Années de formation et secrets transmis de génération en génération.',
+          posterUrl: pPhoto,
+          videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+          duration: '08:40',
+          tag: 'Transmission'
+        },
+        {
+          id: `parcours-${targetProtagonist?.id}-3`,
+          title: 'Le geste & la résilience',
+          subtitle: 'Confiance & ancrage',
+          description: 'Surmonter les carrefours de vie grâce à l’artisanat et à la communauté.',
+          posterUrl: pPhoto,
+          videoUrl: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',
+          duration: '05:20',
+          tag: 'Cheminement'
+        },
+        {
+          id: `parcours-${targetProtagonist?.id}-4`,
+          title: 'Mémoire & regard intérieur',
+          subtitle: 'Transmission aux générations',
+          description: 'Ce que je souhaite léguer aux générations qui viennent après moi.',
+          posterUrl: pPhoto,
+          videoUrl: 'https://media.w3.org/2010/05/sintel/trailer.mp4',
+          duration: '07:10',
+          tag: 'Héritage'
+        }
+      ];
+    }
+    if (normalizedCategory === 'produits') {
+      return [
+        {
+          id: `produits-${targetProtagonist?.id}-1`,
+          title: 'Créations signature faites main',
+          subtitle: 'Artisanat d’art traditionnel',
+          description: 'Pièces uniques confectionnées selon les règles de l’art.',
+          posterUrl: pPhoto,
+          videoUrl: pVideo,
+          duration: '04:30',
+          tag: '85 € • Pièce unique'
+        },
+        {
+          id: `produits-${targetProtagonist?.id}-2`,
+          title: 'Atelier de transmission pratique',
+          subtitle: 'Immersion & Savoir-faire',
+          description: 'Initiation pratique aux techniques et gestes du métier.',
+          posterUrl: pPhoto,
+          videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+          duration: '05:45',
+          tag: '40 € / pers. • 2h30'
+        },
+        {
+          id: `produits-${targetProtagonist?.id}-3`,
+          title: 'Consultations & guidances',
+          subtitle: 'Conseil & écoute bienveillante',
+          description: 'Éclairer vos questionnements par la sagesse transmise.',
+          posterUrl: pPhoto,
+          videoUrl: 'https://media.w3.org/2010/05/sintel/trailer.mp4',
+          duration: '06:00',
+          tag: '35 € / séance'
+        },
+        {
+          id: `produits-${targetProtagonist?.id}-4`,
+          title: 'Objets du quotidien & coopérative',
+          subtitle: 'Production locale solidaire',
+          description: 'Objets décoratifs et utilitaires réalisés par notre collectif.',
+          posterUrl: pPhoto,
+          videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+          duration: '03:50',
+          tag: '45 € • Boutique solidaire'
+        }
+      ];
+    }
+    if (normalizedCategory === 'projets') {
+      return [
+        {
+          id: `projets-${targetProtagonist?.id}-1`,
+          title: 'L’Atelier communautaire',
+          subtitle: 'Insertion & formation',
+          description: 'Création d’un centre d’apprentissage pour les nouveaux arrivants.',
+          posterUrl: pPhoto,
+          videoUrl: pVideo,
+          duration: '05:15',
+          tag: '70% financé',
+          extraInfo: '7 000 € récoltés • 35 contributeurs'
+        },
+        {
+          id: `projets-${targetProtagonist?.id}-2`,
+          title: 'Charpente & matériaux nobles',
+          subtitle: 'Éco-construction durable',
+          description: 'Charpente et structure pensées pour durer des décennies.',
+          posterUrl: pPhoto,
+          videoUrl: 'https://media.w3.org/2010/05/sintel/trailer.mp4',
+          duration: '04:10',
+          tag: '55% financé',
+          extraInfo: '4 400 € récoltés • 22 contributeurs'
+        },
+        {
+          id: `projets-${targetProtagonist?.id}-3`,
+          title: 'Classes de transmission',
+          subtitle: 'Transmission aux écoles',
+          description: 'Ateliers découvertes dans les écoles de la région.',
+          posterUrl: pPhoto,
+          videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+          duration: '06:20',
+          tag: '85% financé',
+          extraInfo: '5 100 € récoltés • 30 contributeurs'
+        },
+        {
+          id: `projets-${targetProtagonist?.id}-4`,
+          title: 'Passerelle d’accès solidaire',
+          subtitle: 'Projet partagé concrétisé',
+          description: 'Ouverture de nos espaces à tous les visiteurs et partenaires.',
+          posterUrl: pPhoto,
+          videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+          duration: '04:45',
+          tag: '100% financé',
+          extraInfo: '8 000 € récoltés • 45 contributeurs'
+        }
+      ];
+    }
+    // besoins
+    return [
+      {
+        id: `besoins-${targetProtagonist?.id}-1`,
+        title: 'Équipement d’enregistrement et d’archivage',
+        subtitle: 'Matériel d’archives sonores',
+        description: 'Sauvegarde des chants et mémoires orales de notre communauté.',
+        posterUrl: pPhoto,
+        videoUrl: pVideo,
+        duration: '04:00',
+        tag: 'Urgence : Prioritaire'
+      },
+      {
+        id: `besoins-${targetProtagonist?.id}-2`,
+        title: 'Matières premières naturelles locales',
+        subtitle: 'Filière éco-responsable',
+        description: 'Approvisionnement régulier en fil écru et teintures végétales.',
+        posterUrl: pPhoto,
+        videoUrl: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',
+        duration: '03:30',
+        tag: 'Urgence : D’ici mai'
+      },
+      {
+        id: `besoins-${targetProtagonist?.id}-3`,
+        title: 'Outillage adapté pour nos ateliers',
+        subtitle: 'Sécurité & Ergonomie',
+        description: 'Matériel sécurisé adapté aux artisans en formation.',
+        posterUrl: pPhoto,
+        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+        duration: '04:15',
+        tag: 'Urgence : En cours'
+      },
+      {
+        id: `besoins-${targetProtagonist?.id}-4`,
+        title: 'Mentors & partenaires bénévoles',
+        subtitle: 'Accompagnement humain',
+        description: 'Formateurs et spécialistes pour renforcer l’inclusion.',
+        posterUrl: pPhoto,
+        videoUrl: 'https://media.w3.org/2010/05/sintel/trailer.mp4',
+        duration: '05:00',
+        tag: 'Urgence : Permanente'
+      }
+    ];
+  }, [normalizedCategory, isPascalProfile, targetProtagonist]);
+
+  const CATEGORY_KEYS: ProfileCategory[] = ['parcours', 'produits', 'projets', 'besoins'];
 
   const CATEGORIES: { key: ProfileCategory; label: string; tooltip: string; icon: React.FC<{ className?: string }> }[] = [
-    { key: 'recit', label: 'Séries', tooltip: 'Séries', icon: Film },
-    { key: 'production', label: 'Productions', tooltip: 'Productions', icon: Clapperboard },
-    { key: 'offre', label: 'Offre', tooltip: 'Produits et services', icon: ShoppingBag },
-    { key: 'appel', label: 'Projets', tooltip: 'Projets', icon: Sprout },
+    { key: 'parcours', label: 'Parcours', tooltip: 'Parcours de vie', icon: ParcoursDeVieIcon },
+    { key: 'produits', label: 'Produits', tooltip: 'Produits et services', icon: ShoppingBag },
+    { key: 'projets', label: 'Projets', tooltip: 'Projets', icon: Sprout },
+    { key: 'besoins', label: 'Besoins', tooltip: 'Besoins exprimés', icon: BesoinsHandsIcon },
   ];
 
-  // Catégories affichées sur le flanc droit de la carte vidéo (Série supprimée, Lignée avec l'étoile placée en premier)
-  const OTHER_CATEGORIES: { key: ProfileCategory; label: string; tooltip: string; icon: React.FC<{ className?: string }> }[] = [
-    { key: 'production', label: 'Productions', tooltip: 'Productions', icon: Clapperboard },
-    { key: 'offre', label: 'Offres', tooltip: 'Produits et services', icon: ShoppingBag },
-    { key: 'appel', label: 'Projets', tooltip: 'Projets', icon: Sprout },
-  ];
+  // Calcul du nombre de vidéos de la catégorie active (jusqu'à 4 vidéos)
+  const totalItemsInActiveCategory = activeCategoryItems.length;
 
-  // Calcul du nombre de vidéos de la catégorie active
-  const totalItemsInActiveCategory = 
-    activeCategory === 'recit' ? recitUnifiedItems.length :
-    activeCategory === 'production' ? productionItems.length :
-    activeCategory === 'offre' ? offreItems.length :
-    appelUnifiedItems.length;
-
-  const currentCategoryRawIndex = categoryIndices[activeCategory] || 0;
+  const currentCategoryRawIndex = categoryIndices[activeCategory] ?? categoryIndices[normalizedCategory] ?? 0;
   const currentCategorySafeIndex = totalItemsInActiveCategory > 0
     ? ((currentCategoryRawIndex % totalItemsInActiveCategory) + totalItemsInActiveCategory) % totalItemsInActiveCategory
     : 0;
+
+  const currentSimulationItem = activeCategoryItems[currentCategorySafeIndex] || activeCategoryItems[0];
 
   // Synchroniser la vidéo lors du changement de catégorie ou d'index vidéo
   useEffect(() => {
@@ -1401,38 +1607,31 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
     }
   };
 
-  // Prénom affiché uniquement
+  // Prénom affiché uniquement (ex: Pascal)
   const profileDisplayName = useMemo(() => {
     const raw = targetProtagonist 
       ? targetProtagonist.name 
       : (userFullName || userName || 'Pascal');
-    // On extrait uniquement le prénom (premier mot, sans tirets complexes si nom composé)
     return raw.trim().split(' ')[0] || raw;
   }, [targetProtagonist, userFullName, userName]);
 
-  // Boutons de navigation verticale du profil (Récits, Lignée, Produits & Services, Projets)
+  // Prénom et nom complets affichés dans l'en-tête de la page portrait (ex: Pascal Cossi)
+  const profileFullDisplayName = useMemo(() => {
+    if (targetProtagonist?.name) return targetProtagonist.name;
+    if (userFullName) return userFullName;
+    if (currentUser?.name) return currentUser.name;
+    return 'Pascal Cossi';
+  }, [targetProtagonist, userFullName, currentUser]);
+
+  // Boutons de navigation verticale du profil dans l'ordre strict requis :
+  // 1. La lignée (LineageGenerationsIcon)
+  // 2. Le parcours de vie (ParcoursDeVieIcon)
+  // 3. Les produits et services (ShoppingBag)
+  // 4. Les projets (Sprout)
+  // 5. Les besoins (BesoinsHandsIcon)
   const profileCategoryActionButtons = useMemo(() => (
     <div className="flex flex-col items-center gap-1.5 sm:gap-2">
-      {/* 1. Récits & vidéos partagés (par défaut) */}
-      <button
-        type="button"
-        onClick={(e) => {
-          e.stopPropagation();
-          setShowLineageFrise(false);
-          setActiveCategory('recit');
-        }}
-        className={`w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-xl border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
-          activeCategory === 'recit' && !showLineageFrise
-            ? 'bg-[#A2482B] border-[#A2482B] text-white shadow-[0_0_12px_rgba(162,72,43,0.6)]'
-            : 'bg-black/50 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white/90 backdrop-blur-md'
-        }`}
-        title="Récits & vidéos partagés"
-        aria-label="Récits & vidéos partagés"
-      >
-        <BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
-      </button>
-
-      {/* 2. Lignée de transmission */}
+      {/* 1. La lignée (accès direct à la page / frise dédiée) */}
       <button
         type="button"
         onClick={(e) => {
@@ -1444,48 +1643,86 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
             ? 'bg-[#A2482B] border-[#A2482B] text-white shadow-[0_0_12px_rgba(162,72,43,0.6)]'
             : 'bg-black/50 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white/90 backdrop-blur-md'
         }`}
-        title="Sa lignée"
-        aria-label="Sa lignée"
+        title="La lignée (transmission & origines)"
+        aria-label="La lignée"
       >
-        <GitBranch className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
+        <LineageGenerationsIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" strokeWidth={1.8} />
       </button>
 
-      {/* 3. Produits et services */}
+      {/* 2. Le parcours de vie (cheminement personnel & professionnel) */}
       <button
         type="button"
         onClick={(e) => {
           e.stopPropagation();
           setShowLineageFrise(false);
-          setActiveCategory('offre');
+          setActiveCategory('parcours');
         }}
         className={`w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-xl border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
-          activeCategory === 'offre' && !showLineageFrise
+          (activeCategory === 'parcours' || activeCategory === 'recit') && !showLineageFrise
             ? 'bg-[#A2482B] border-[#A2482B] text-white shadow-[0_0_12px_rgba(162,72,43,0.6)]'
             : 'bg-black/50 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white/90 backdrop-blur-md'
         }`}
-        title="Produits & services"
-        aria-label="Produits & services"
+        title="Parcours de vie"
+        aria-label="Parcours de vie"
       >
-        <ShoppingBag className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
+        <ParcoursDeVieIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" strokeWidth={1.8} />
       </button>
 
-      {/* 4. Projets & initiatives partagés */}
+      {/* 3. Les produits et services (artisanat, créations & consultations) */}
       <button
         type="button"
         onClick={(e) => {
           e.stopPropagation();
           setShowLineageFrise(false);
-          setActiveCategory('appel');
+          setActiveCategory('produits');
         }}
         className={`w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-xl border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
-          activeCategory === 'appel' && !showLineageFrise
+          (activeCategory === 'produits' || activeCategory === 'offre' || activeCategory === 'production') && !showLineageFrise
+            ? 'bg-[#A2482B] border-[#A2482B] text-white shadow-[0_0_12px_rgba(162,72,43,0.6)]'
+            : 'bg-black/50 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white/90 backdrop-blur-md'
+        }`}
+        title="Produits et services"
+        aria-label="Produits et services"
+      >
+        <ShoppingBag className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white stroke-[1.8]" />
+      </button>
+
+      {/* 4. Les projets (initiatives, constructions & transmissions) */}
+      <button
+        type="button"
+        onClick={(e) => {
+          e.stopPropagation();
+          setShowLineageFrise(false);
+          setActiveCategory('projets');
+        }}
+        className={`w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-xl border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
+          activeCategory === 'projets' && !showLineageFrise
             ? 'bg-[#A2482B] border-[#A2482B] text-white shadow-[0_0_12px_rgba(162,72,43,0.6)]'
             : 'bg-black/50 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white/90 backdrop-blur-md'
         }`}
         title="Projets & initiatives"
         aria-label="Projets & initiatives"
       >
-        <Sprout className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
+        <Sprout className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white stroke-[1.8]" />
+      </button>
+
+      {/* 5. Les besoins (besoins exprimés, appels d'entraide & partenariats) */}
+      <button
+        type="button"
+        onClick={(e) => {
+          e.stopPropagation();
+          setShowLineageFrise(false);
+          setActiveCategory('besoins');
+        }}
+        className={`w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-xl border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
+          (activeCategory === 'besoins' || activeCategory === 'appel') && !showLineageFrise
+            ? 'bg-[#A2482B] border-[#A2482B] text-white shadow-[0_0_12px_rgba(162,72,43,0.6)]'
+            : 'bg-black/50 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white/90 backdrop-blur-md'
+        }`}
+        title="Besoins exprimés"
+        aria-label="Besoins exprimés"
+      >
+        <BesoinsHandsIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" strokeWidth={1.8} />
       </button>
     </div>
   ), [activeCategory, showLineageFrise]);
@@ -1688,11 +1925,11 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
         </div>
       ) : (
         <div className="relative flex items-center justify-between h-9 sm:h-10 shrink-0 gap-2 mb-1">
-          {/* GAUCHE : Nom de la page 'Chaque parcours compte' avec tiret terracotta signature */}
+          {/* GAUCHE : Prénom et nom de la personne de la page portrait avec tiret terracotta signature */}
           <div className="flex items-center gap-2 sm:gap-2.5 h-full shrink-0">
             <div className="relative flex items-center h-full overflow-visible">
               <h1 className="font-editorial italic text-xs sm:text-sm md:text-base font-bold text-[#1C1917] tracking-tight leading-none whitespace-nowrap pr-2">
-                Chaque parcours compte
+                {profileFullDisplayName}
               </h1>
               {/* Petit trait terracotta officiel */}
               <div className="absolute left-0 -bottom-1.5 w-8 h-0.5 bg-[#A2482B] rounded-full" />
@@ -1874,19 +2111,21 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
             {/* ================================================================= */}
             {/* CATÉGORIE 1 : RÉCIT (Récits personnels & Épisodes réunis)         */}
             {/* ================================================================= */}
-            {activeCategory === 'recit' && currentRecitUnified && (
               <div 
                 className="group relative w-full h-full flex flex-col justify-between text-white"
-                id={`card-recit-${currentRecitUnified.item.id}`}
+                id={`card-video-${currentSimulationItem.id}`}
               >
+                {/* Image de fond réaliste du protagoniste (Pascal dans 16 situations différentes) */}
                 <img
-                  src={currentRecitUnified.item.posterUrl}
-                  alt=""
+                  src={currentSimulationItem.posterUrl}
+                  alt={currentSimulationItem.title}
                   className="absolute inset-0 w-full h-full object-cover pointer-events-none"
                 />
+                
+                {/* Vidéo superposée lors de la lecture */}
                 <video
                   ref={videoRef}
-                  src={currentRecitUnified.item.videoUrl}
+                  src={currentSimulationItem.videoUrl}
                   loop
                   muted={isMuted}
                   playsInline
@@ -1895,16 +2134,40 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                     isPlaying ? 'opacity-100' : 'opacity-0'
                   }`}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/35 pointer-events-none" />
 
-                {/* Overlay standardisé unique : alignement vertical strict, pas de dédoublement, titre en haut à gauche et prénom épuré en bas à gauche */}
+                {/* Dégradés pour lisibilité des badges, de la pagination et du texte */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/40 pointer-events-none" />
+
+                {/* Textes contextuels épurés selon la catégorie */}
+                {normalizedCategory === 'parcours' ? (
+                  <div className="absolute bottom-9 sm:bottom-10.5 left-2.5 sm:left-3.5 right-14 z-20 pointer-events-none drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
+                    <p className="text-[11px] sm:text-xs text-white/90 font-medium line-clamp-1">
+                      {currentSimulationItem.title}
+                    </p>
+                  </div>
+                ) : normalizedCategory === 'projets' ? (
+                  <div className="absolute bottom-2.5 sm:bottom-3.5 left-2.5 sm:left-3.5 right-14 z-20 pointer-events-none drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
+                    <h3 className="font-editorial text-[13px] min-[380px]:text-[14px] sm:text-[16px] md:text-[18px] font-bold text-white tracking-tight sm:tracking-normal leading-tight line-clamp-1">
+                      {currentSimulationItem.title}
+                    </h3>
+                    {currentSimulationItem.extraInfo && (
+                      <p className="text-[10px] sm:text-[11px] font-semibold text-[#FFE7A3] mt-0.5 drop-shadow-md line-clamp-1">
+                        {currentSimulationItem.extraInfo}
+                      </p>
+                    )}
+                  </div>
+                ) : (
+                  <div className="absolute bottom-2.5 sm:bottom-3.5 left-2.5 sm:left-3.5 right-14 z-20 pointer-events-none drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
+                    <h3 className="font-editorial text-[13px] min-[380px]:text-[14px] sm:text-[16px] md:text-[18px] font-bold text-white tracking-tight sm:tracking-normal leading-tight line-clamp-1">
+                      {currentSimulationItem.title}
+                    </h3>
+                  </div>
+                )}
+
+                {/* Overlay standardisé unique : alignement vertical strict, badge catégorie en haut à gauche, TvPlayerIcon en haut à droite, prénom en bas à gauche (uniquement parcours), et les 5 boutons verticaux au milieu à droite */}
                 <UnifiedVideoCardOverlay
-                  titleBadge={
-                    currentRecitUnified.kind === 'recit'
-                      ? (currentRecitUnified.item.subtitle || currentRecitUnified.item.chapter || 'Origines & Mémoire')
-                      : (currentRecitUnified.item.seriesTitle || currentRecitUnified.item.title || 'Origines & Mémoire')
-                  }
-                  displayName={profileDisplayName || 'Pascal'}
+                  titleBadge={currentSimulationItem.tag || currentSimulationItem.subtitle || 'Origines & Mémoire'}
+                  displayName={normalizedCategory === 'parcours' ? (profileDisplayName || 'Pascal') : ''}
                   isPlaying={isPlaying}
                   onTogglePlay={toggleVideoPlayback}
                   isMuted={isMuted}
@@ -1913,11 +2176,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                   onOpenResonance={() => setIsResonanceModalOpen(true)}
                   onOpenLineage={() => setShowLineageFrise(true)}
                   questionText={getQuestionText()}
-                  factText={
-                    currentRecitUnified.kind === 'recit'
-                      ? (currentRecitUnified.item.description || currentRecitUnified.item.quote || "Récit d'apprentissage, transmission et mémoire partagée.")
-                      : (currentRecitUnified.item.title || "Épisode documentaire de transmission.")
-                  }
+                  factText={currentSimulationItem.description}
                   onShare={handleShareProfile}
                   onReportVideo={() => {
                     setShareToast("Vidéo signalée à la modération.");
@@ -1930,463 +2189,11 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                   customActionButtons={profileCategoryActionButtons}
                 />
               </div>
-            )}
 
-            {/* ================================================================= */}
-            {/* CATÉGORIE 2 : PRODUCTION (Parts de coproduction)                  */}
-            {/* ================================================================= */}
-            {activeCategory === 'production' && currentProduction && (
-              <div 
-                className="group relative w-full h-full flex flex-col justify-between p-5 text-white"
-                id={`card-production-${currentProduction.id}`}
-              >
-                <img
-                  src={currentProduction.posterUrl}
-                  alt=""
-                  className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-                />
-                <video
-                  ref={videoRef}
-                  src={currentProduction.videoUrl}
-                  loop
-                  muted={isMuted}
-                  playsInline
-                  onTimeUpdate={(e) => {
-                    const v = e.currentTarget;
-                    if (!isScrubbing) {
-                      setVideoCurrentTime(v.currentTime);
-                    }
-                  }}
-                  onLoadedMetadata={(e) => {
-                    const v = e.currentTarget;
-                    if (v.duration && !isNaN(v.duration) && isFinite(v.duration)) {
-                      setVideoDuration(v.duration);
-                    }
-                  }}
-                  onEnded={() => setIsPlaying(false)}
-                  className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 pointer-events-none ${
-                    isPlaying ? 'opacity-100' : 'opacity-0'
-                  }`}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/35 pointer-events-none" />
 
-                {/* HAUT : Nom de la série & Déclencheur lecteur en haut à droite */}
-                <VideoTopHeader 
-                  seriesOrTitle={getSeriesBadgeTitle()}
-                  isPlaying={isPlaying}
-                  onTogglePlay={toggleVideoPlayback}
-                />
 
-                <div className="my-auto" />
 
-                {/* BAS : Détails coproduction, actions & lecteur moderne (Style Image 2) */}
-                <div className="relative z-10 space-y-2 sm:space-y-2.5 pr-12 sm:pr-14 pb-0.5">
-                  <div>
-                    <h3 className="font-editorial text-[15px] sm:text-[17px] font-bold text-white tracking-[0.08em] leading-snug drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] truncate">
-                      {profileDisplayName || 'Pascal'}
-                    </h3>
-                    <div className="flex items-center gap-2 text-[10.5px] sm:text-[11px] text-white/90 mt-0.5 font-medium drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)]">
-                      <span>{currentProduction.sharesCount} parts</span>
-                      <span>•</span>
-                      <span>Valeur : {currentProduction.sharesCount * (currentProduction.salePrice || currentProduction.startPrice || 50)} €</span>
-                    </div>
-                  </div>
 
-                  {isOwner ? (
-                    <div className="space-y-1.5 pt-0.5">
-                      <div className="grid grid-cols-2 gap-1.5 sm:gap-2">
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setEditingProduction(currentProduction);
-                            setProdFormStartPrice(currentProduction.startPrice);
-                            setProdFormSalePrice(currentProduction.salePrice || currentProduction.startPrice);
-                            setProdFormRsi(currentProduction.rsiPercent);
-                            setProdFormSharesCount(currentProduction.sharesCount);
-                            setProdFormSharesOnSale(currentProduction.sharesOnSale);
-                          }}
-                          className="h-7.5 sm:h-8 px-2.5 sm:px-3 rounded-lg sm:rounded-xl bg-stone-100 hover:bg-[#A2482B] text-stone-800 hover:text-white text-[11px] sm:text-xs font-bold transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer active:scale-[0.98] border border-stone-200/80 hover:border-[#A2482B] group/editcard"
-                          id="btn-edit-production"
-                        >
-                          <Edit3 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-stone-600 group-hover/editcard:text-white transition-colors" />
-                          <span>Modifier</span>
-                        </button>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSellCountInput(currentProduction.sharesOnSale || 1);
-                            setSellPriceInput(currentProduction.salePrice || currentProduction.recommendedPrice);
-                            setIsSellingShares(true);
-                          }}
-                          className="h-7.5 sm:h-8 px-2.5 sm:px-3 rounded-lg sm:rounded-xl bg-black/65 hover:bg-[#A2482B] border border-white/20 hover:border-[#A2482B] text-white text-[11px] sm:text-xs font-bold transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer active:scale-[0.98] backdrop-blur-sm group/sellcard"
-                          id="btn-sell-production"
-                        >
-                          <Coins className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-stone-300 group-hover/sellcard:text-white transition-colors" />
-                          <span>Vendre</span>
-                        </button>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="pt-0.5">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setIsBuyingSharesModalOpen(true);
-                        }}
-                        className="w-full h-7.5 sm:h-8 px-3.5 rounded-lg sm:rounded-xl bg-stone-100 hover:bg-[#A2482B] text-stone-900 hover:text-white border border-stone-200/80 hover:border-[#A2482B] font-bold text-[11px] sm:text-xs uppercase tracking-wider shadow-md flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-[0.98] group/buyshares"
-                        id="btn-buy-shares"
-                      >
-                        <Coins className="w-3.5 h-3.5 text-stone-700 group-hover/buyshares:text-white transition-colors" />
-                        <span>Acheter des parts</span>
-                      </button>
-                    </div>
-                  )}
-
-                  {/* Lecteur moderne épuré sans onde sonore */}
-                  <VideoModernPlayerBar 
-                    videoCurrentTime={videoCurrentTime}
-                    activeDuration={activeDuration}
-                    progressPercent={progressPercent}
-                    onSeek={handleTimelineSeek}
-                    formatTime={formatVideoTime}
-                    isPlaying={isPlaying}
-                  />
-                </div>
-
-                {/* Colonne d'actions verticale du profil à droite */}
-                <div 
-                  className="absolute right-2.5 sm:right-3.5 top-[56%] sm:top-[58%] -translate-y-1/2 z-30 pointer-events-auto"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  {profileCategoryActionButtons}
-                </div>
-              </div>
-            )}
-
-            {/* ================================================================= */}
-            {/* CATÉGORIE 3 : OFFRE (Artisanat, Pièces, Ateliers)                 */}
-            {/* ================================================================= */}
-            {activeCategory === 'offre' && currentCreation && (
-              <div 
-                className="group relative w-full h-full flex flex-col justify-between p-5 text-white"
-                id={`card-creation-${currentCreation.id}`}
-              >
-                <img
-                  src={currentCreation.posterUrl}
-                  alt=""
-                  className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-                />
-                <video
-                  ref={videoRef}
-                  src={currentCreation.videoUrl}
-                  loop
-                  muted={isMuted}
-                  playsInline
-                  onTimeUpdate={(e) => {
-                    const v = e.currentTarget;
-                    if (!isScrubbing) {
-                      setVideoCurrentTime(v.currentTime);
-                    }
-                  }}
-                  onLoadedMetadata={(e) => {
-                    const v = e.currentTarget;
-                    if (v.duration && !isNaN(v.duration) && isFinite(v.duration)) {
-                      setVideoDuration(v.duration);
-                    }
-                  }}
-                  onEnded={() => setIsPlaying(false)}
-                  className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 pointer-events-none ${
-                    isPlaying ? 'opacity-100' : 'opacity-0'
-                  }`}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/35 pointer-events-none" />
-
-                {/* HAUT : Catégorie & Déclencheur lecteur en haut à droite */}
-                <VideoTopHeader 
-                  seriesOrTitle={getSeriesBadgeTitle()}
-                  isPlaying={isPlaying}
-                  onTogglePlay={toggleVideoPlayback}
-                />
-
-                <div className="my-auto" />
-
-                {/* BAS : Titre court, prix, actions & lecteur moderne */}
-                <div className="relative z-10 space-y-2 sm:space-y-2.5 pr-12 sm:pr-14 pb-0.5">
-                  <div>
-                    <h3 className="font-editorial text-xs sm:text-base font-bold text-white leading-tight line-clamp-2 drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]" title={currentCreation.title}>
-                      {currentCreation.title}
-                    </h3>
-                    <p className="font-mono text-sm sm:text-base font-bold text-[#E5C16C] pt-0.5 drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)]">
-                      {currentCreation.price}
-                    </p>
-                  </div>
-
-                  {isOwner ? (
-                    <div className="grid grid-cols-2 gap-1.5 sm:gap-2 pt-0.5">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setEditingCreation(currentCreation);
-                          setCreationFormTitle(currentCreation.title);
-                          setCreationFormPrice(currentCreation.price);
-                          setCreationFormCategory(currentCreation.categoryLabel);
-                          setCreationFormDescription(currentCreation.description);
-                          setCreationFormPoster(currentCreation.posterUrl);
-                          setCreationFormVideo(currentCreation.videoUrl);
-                        }}
-                        className="h-7.5 sm:h-8.5 px-2.5 sm:px-3 rounded-lg sm:rounded-xl bg-stone-100 hover:bg-[#A2482B] text-stone-800 hover:text-white text-[11px] sm:text-xs font-bold transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer active:scale-[0.98] border border-stone-200/80 hover:border-[#A2482B] group/editcard"
-                        id="btn-edit-creation"
-                      >
-                        <Edit3 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-stone-600 group-hover/editcard:text-white transition-colors" />
-                        <span>Modifier</span>
-                      </button>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setIsDeletingCreation(true);
-                        }}
-                        className="h-7.5 sm:h-8.5 px-2.5 sm:px-3 rounded-lg sm:rounded-xl bg-black/65 hover:bg-red-600/90 border border-white/20 hover:border-red-500 text-white text-[11px] sm:text-xs font-bold transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer active:scale-[0.98] backdrop-blur-sm"
-                        id="btn-delete-creation"
-                      >
-                        <Trash2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-red-400" />
-                        <span>Supprimer</span>
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="pt-0.5">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setOrderActionType('commander');
-                          setIsOrderingCreationModalOpen(true);
-                        }}
-                        className="w-full h-7.5 sm:h-8 px-3.5 rounded-lg sm:rounded-xl bg-stone-100 hover:bg-[#A2482B] text-stone-900 hover:text-white border border-stone-200/80 hover:border-[#A2482B] font-bold text-[11px] sm:text-xs uppercase tracking-wider shadow-md flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-[0.98] group/orderbtn"
-                        id="btn-order-creation"
-                      >
-                        <ShoppingBag className="w-3.5 h-3.5 text-stone-700 group-hover/orderbtn:text-white transition-colors" />
-                        <span>Commander</span>
-                      </button>
-                    </div>
-                  )}
-
-                  {/* Lecteur moderne épuré sans onde sonore */}
-                  <VideoModernPlayerBar 
-                    videoCurrentTime={videoCurrentTime}
-                    activeDuration={activeDuration}
-                    progressPercent={progressPercent}
-                    onSeek={handleTimelineSeek}
-                    formatTime={formatVideoTime}
-                    isPlaying={isPlaying}
-                  />
-                </div>
-
-                {/* Colonne d'actions verticale du profil à droite */}
-                <div 
-                  className="absolute right-2.5 sm:right-3.5 top-[56%] sm:top-[58%] -translate-y-1/2 z-30 pointer-events-auto"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  {profileCategoryActionButtons}
-                </div>
-              </div>
-            )}
-
-            {/* ================================================================= */}
-            {/* CATÉGORIE 4 : APPEL (Initiatives & Appels réunis)                 */}
-            {/* ================================================================= */}
-            {activeCategory === 'appel' && currentAppelUnified && (
-              <div 
-                className="group relative w-full h-full flex flex-col justify-between p-5 text-white"
-                id={`card-appel-${currentAppelUnified.item.id}`}
-              >
-                <img
-                  src={currentAppelUnified.item.posterUrl}
-                  alt=""
-                  className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-                />
-                <video
-                  ref={videoRef}
-                  src={currentAppelUnified.item.videoUrl}
-                  loop
-                  muted={isMuted}
-                  playsInline
-                  onTimeUpdate={(e) => {
-                    const v = e.currentTarget;
-                    if (!isScrubbing) {
-                      setVideoCurrentTime(v.currentTime);
-                    }
-                  }}
-                  onLoadedMetadata={(e) => {
-                    const v = e.currentTarget;
-                    if (v.duration && !isNaN(v.duration) && isFinite(v.duration)) {
-                      setVideoDuration(v.duration);
-                    }
-                  }}
-                  onEnded={() => setIsPlaying(false)}
-                  className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 pointer-events-none ${
-                    isPlaying ? 'opacity-100' : 'opacity-0'
-                  }`}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/35 pointer-events-none" />
-
-                {/* HAUT : Titre ou type avec badge & Déclencheur lecteur en haut à droite */}
-                <VideoTopHeader
-                  seriesOrTitle={getSeriesBadgeTitle()}
-                  badge={currentAppelUnified.kind === 'initiative' 
-                    ? `${Math.round((currentAppelUnified.item.collectedAmount / currentAppelUnified.item.targetAmount) * 100)}%`
-                    : (currentAppelUnified.item.urgency || 'Urgent')}
-                  isPlaying={isPlaying}
-                  onTogglePlay={toggleVideoPlayback}
-                />
-
-                <div className="my-auto" />
-
-                {/* BAS : Détails & Actions selon Initiative ou Appel */}
-                <div className="relative z-10 space-y-2 sm:space-y-2.5 pr-12 sm:pr-14 pb-0.5">
-                  {currentAppelUnified.kind === 'initiative' ? (
-                    <>
-                      <div>
-                        <h3 className="font-editorial text-xs sm:text-base font-bold text-white leading-tight line-clamp-2" title={currentAppelUnified.item.title}>
-                          {currentAppelUnified.item.title}
-                        </h3>
-                      </div>
-
-                      <div className="space-y-1 p-2 rounded-lg sm:rounded-xl bg-black/60 backdrop-blur-md border border-white/20">
-                        <div className="flex items-center justify-between text-[10.5px] sm:text-[11px]">
-                          <span className="text-white/80">Obj : {currentAppelUnified.item.targetAmount.toLocaleString()} €</span>
-                          <span className="font-mono text-[#FACC15] font-bold">{currentAppelUnified.item.collectedAmount.toLocaleString()} € récoltés</span>
-                        </div>
-                        <div className="w-full h-1.5 rounded-full bg-white/20 overflow-hidden">
-                          <div 
-                            className="h-full bg-gradient-to-r from-[#FACC15] to-emerald-400 rounded-full"
-                            style={{ width: `${Math.min(100, (currentAppelUnified.item.collectedAmount / currentAppelUnified.item.targetAmount) * 100)}%` }}
-                          />
-                        </div>
-                      </div>
-
-                      {isOwner ? (
-                        <div className="grid grid-cols-2 gap-1.5 sm:gap-2 pt-0.5">
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setEditingInitiative(currentAppelUnified.item);
-                              setInitiativeFormTitle(currentAppelUnified.item.title);
-                              setInitiativeFormTarget(currentAppelUnified.item.targetAmount);
-                              setInitiativeFormDescription(currentAppelUnified.item.description);
-                              setInitiativeFormPoster(currentAppelUnified.item.posterUrl);
-                              setInitiativeFormVideo(currentAppelUnified.item.videoUrl);
-                            }}
-                            className="h-7.5 sm:h-8.5 px-2.5 sm:px-3 rounded-lg sm:rounded-xl bg-stone-100 hover:bg-[#A2482B] text-stone-800 hover:text-white text-[11px] sm:text-xs font-bold transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer active:scale-[0.98] border border-stone-200/80 hover:border-[#A2482B] group/editcard"
-                            id="btn-edit-initiative"
-                          >
-                            <Edit3 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-stone-600 group-hover/editcard:text-white transition-colors" />
-                            <span>Modifier</span>
-                          </button>
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setEditingInitiative(currentAppelUnified.item);
-                              setIsDeletingInitiative(true);
-                            }}
-                            className="h-7.5 sm:h-8.5 px-2.5 sm:px-3 rounded-lg sm:rounded-xl bg-black/65 hover:bg-red-600/90 border border-white/20 hover:border-red-500 text-white text-[11px] sm:text-xs font-bold transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer active:scale-[0.98] backdrop-blur-sm"
-                            id="btn-delete-initiative"
-                          >
-                            <Trash2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-red-400" />
-                            <span>Supprimer</span>
-                          </button>
-                        </div>
-                      ) : (
-                        <div className="pt-0.5">
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setInitiativeActionType('contribuer');
-                              setIsContributingModalOpen(true);
-                            }}
-                            className="w-full h-7.5 sm:h-8 px-3.5 rounded-lg sm:rounded-xl bg-stone-100 hover:bg-[#A2482B] text-stone-900 hover:text-white border border-stone-200/80 hover:border-[#A2482B] font-bold text-[11px] sm:text-xs uppercase tracking-wider shadow-md flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-[0.98] group/contribbtn"
-                            id="btn-contribute-initiative"
-                          >
-                            <Users className="w-3.5 h-3.5 text-stone-700 group-hover/contribbtn:text-white transition-colors" />
-                            <span>Contribuer</span>
-                          </button>
-                        </div>
-                      )}
-                    </>
-                  ) : (
-                    <>
-                      <div>
-                        <h3 className="font-editorial text-xs sm:text-base font-bold text-white leading-tight line-clamp-2" title={currentAppelUnified.item.title}>
-                          {currentAppelUnified.item.title}
-                        </h3>
-                      </div>
-
-                      {isOwner ? (
-                        <div className="grid grid-cols-2 gap-1.5 sm:gap-2 pt-0.5">
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setEditingAppel(currentAppelUnified.item);
-                              setAppelFormTitle(currentAppelUnified.item.title);
-                              setAppelFormUrgency(currentAppelUnified.item.urgency);
-                              setAppelFormDescription(currentAppelUnified.item.description);
-                              setAppelFormImpact(currentAppelUnified.item.impact || '');
-                            }}
-                            className="h-7.5 sm:h-8.5 px-2.5 sm:px-3 rounded-lg sm:rounded-xl bg-stone-100 hover:bg-[#A2482B] text-stone-800 hover:text-white text-[11px] sm:text-xs font-bold transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer active:scale-[0.98] border border-stone-200/80 hover:border-[#A2482B] group/editcard"
-                            id="btn-edit-appel"
-                          >
-                            <Edit3 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-stone-600 group-hover/editcard:text-white transition-colors" />
-                            <span>Modifier</span>
-                          </button>
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setEditingAppel(currentAppelUnified.item);
-                              setIsDeletingAppel(true);
-                            }}
-                            className="h-7.5 sm:h-8.5 px-2.5 sm:px-3 rounded-lg sm:rounded-xl bg-black/65 hover:bg-red-600/90 border border-white/20 hover:border-red-500 text-white text-[11px] sm:text-xs font-bold transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer active:scale-[0.98] backdrop-blur-sm"
-                            id="btn-delete-appel"
-                          >
-                            <Trash2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-red-400" />
-                            <span>Supprimer</span>
-                          </button>
-                        </div>
-                      ) : (
-                        <div className="pt-0.5">
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setIsOfferingHelpModalOpen(true);
-                            }}
-                            className="w-full h-7.5 sm:h-8 px-3.5 rounded-lg sm:rounded-xl bg-stone-100 hover:bg-[#A2482B] text-stone-900 hover:text-white border border-stone-200/80 hover:border-[#A2482B] font-bold text-[11px] sm:text-xs uppercase tracking-wider shadow-md flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-[0.98] group/supportbtn"
-                            id="btn-reply-appel"
-                          >
-                            <Sprout className="w-3.5 h-3.5 text-stone-700 group-hover/supportbtn:text-white transition-colors" />
-                            <span>Soutenir ce projet</span>
-                          </button>
-                        </div>
-                      )}
-                    </>
-                  )}
-
-                  {/* Lecteur moderne épuré sans onde sonore */}
-                  <VideoModernPlayerBar 
-                    videoCurrentTime={videoCurrentTime}
-                    activeDuration={activeDuration}
-                    progressPercent={progressPercent}
-                    onSeek={handleTimelineSeek}
-                    formatTime={formatVideoTime}
-                    isPlaying={isPlaying}
-                  />
-                </div>
-
-                {/* Colonne d'actions verticale du profil à droite */}
-                <div 
-                  className="absolute right-2.5 sm:right-3.5 top-[56%] sm:top-[58%] -translate-y-1/2 z-30 pointer-events-auto"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  {profileCategoryActionButtons}
-                </div>
-              </div>
-            )}
 
           </div>
 

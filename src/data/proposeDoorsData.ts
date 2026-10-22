@@ -109,7 +109,7 @@ const SERIES_SUBJECTS: ProposeSubject[] = [
     synopsis: 'La confrontation sensible entre l’enracinement profond dans la mémoire des terroirs et l’élan d’aller à la rencontre du vaste monde.',
     question: 'L’ancrage dans ses racines ou l’envol sur les routes : où se forge votre véritable identité ?',
     videoUrl: STOCK_VIDEOS[0],
-    posterUrl: '/assets/posters/Roots < > Routes.jpg',
+    posterUrl: '/roots-routes.jpg',
     actionLabel: 'Choisir cette série',
     doorId: 'series',
     iconName: '16-series/roots-routes',

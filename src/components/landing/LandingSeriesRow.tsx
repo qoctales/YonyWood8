@@ -27,7 +27,7 @@ const OFFICIAL_SERIES: SeriesItem[] = [
   {
     id: 'roots-routes',
     title: 'Roots < > Routes',
-    posterUrl: '/assets/posters/Roots < > Routes.jpg',
+    posterUrl: '/roots-routes.jpg',
     universes: ['Roots', 'Routes'],
     territories: 'Paris, Dakar & Cotonou',
     tagline: 'L’enracinement ancestral face aux horizons du monde.',

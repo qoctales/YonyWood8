@@ -85,7 +85,7 @@ const PRODUCTIONS: ProductionPoster[] = [
   {
     id: 'roots-routes',
     title: 'Roots < > Routes',
-    posterImage: '/assets/posters/Roots < > Routes.jpg',
+    posterImage: '/roots-routes.jpg',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
     sharePrice: 50
   },
@@ -163,7 +163,7 @@ const INITIAL_PEER_OFFERS: PeerOffer[] = [
     sellerName: 'Benoît',
     sellerPhoto: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80',
     seriesTitle: 'Roots < > Routes',
-    posterImage: '/assets/posters/Roots < > Routes.jpg',
+    posterImage: '/roots-routes.jpg',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
     sharesCount: 3,
     unitPrice: 68
