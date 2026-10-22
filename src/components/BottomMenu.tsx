@@ -63,7 +63,7 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
       isActive: isStudioActive,
       onClick: () => onNavigate({ type: 'submit_story' }),
       screenId: 'menu-item-studio',
-      iconClassName: 'w-[19.5px] h-[19.5px] sm:w-[20.5px] sm:h-[20.5px]',
+      iconClassName: 'w-5 h-5 sm:w-5 sm:h-5 shrink-0',
       strokeWidth: 1.5
     },
     {
@@ -73,7 +73,7 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
       isActive: isHeritageActive,
       onClick: () => onNavigate({ type: 'home' }),
       screenId: 'menu-item-heritage',
-      iconClassName: 'w-[16px] h-[16px] sm:w-[17px] sm:h-[17px]',
+      iconClassName: 'w-[17px] h-[17px] sm:w-[17px] sm:h-[17px] shrink-0',
       strokeWidth: 1.5
     },
     {
@@ -83,8 +83,8 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
       isActive: isDuoActive,
       onClick: () => onNavigate({ type: 'duo_feed' }),
       screenId: 'menu-item-duo',
-      iconClassName: 'w-[19.5px] h-[19.5px] sm:w-[20.5px] sm:h-[20.5px]',
-      strokeWidth: 1.5
+      iconClassName: 'w-5 h-5 sm:w-5 sm:h-5 shrink-0',
+      strokeWidth: 1.75
     },
     {
       id: 'lumiere',
@@ -93,7 +93,7 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
       isActive: isLumiereActive,
       onClick: () => onNavigate({ type: 'enterprise' }),
       screenId: 'menu-item-lumiere',
-      iconClassName: 'w-[19px] h-[19px] sm:w-[20px] sm:h-[20px]',
+      iconClassName: 'w-[19px] h-[19px] sm:w-[20px] sm:h-[20px] shrink-0',
       strokeWidth: 1.5
     },
     {
@@ -103,7 +103,7 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
       isActive: isProductionActive,
       onClick: () => onNavigate({ type: 'marketplace' }),
       screenId: 'menu-item-production',
-      iconClassName: 'w-[19.5px] h-[19.5px] sm:w-[20px] sm:h-[20px]',
+      iconClassName: 'w-5 h-5 sm:w-5 sm:h-5 shrink-0',
       strokeWidth: 1.5
     },
     {
@@ -113,7 +113,7 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
       isActive: isProfilActive,
       onClick: () => onNavigate({ type: 'profile' }),
       screenId: 'menu-item-portrait',
-      iconClassName: 'w-[20.5px] h-[20.5px] sm:w-[21.5px] sm:h-[21.5px]',
+      iconClassName: 'w-5 h-5 sm:w-5 sm:h-5 shrink-0',
       strokeWidth: 1.6
     }
   ];
@@ -134,7 +134,7 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
               onClick={item.onClick}
               id={item.screenId}
               title={item.label}
-              className={`relative flex-1 flex flex-col items-center justify-center px-0.5 sm:px-2 py-0.5 sm:py-1 rounded-full transition-colors duration-200 group cursor-pointer ${
+              className={`relative flex-1 min-w-0 flex flex-col items-center justify-center px-0.5 sm:px-2 py-0.5 sm:py-1 rounded-full transition-colors duration-200 group cursor-pointer ${
                 item.isActive
                   ? 'text-stone-900'
                   : 'text-stone-500 hover:text-stone-800'
@@ -142,7 +142,7 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
             >
               {/* Capsule changeante : icône en Terre Cuite (#A2482B) pour rubriques actives */}
               <div 
-                className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-all duration-200 ${
+                className={`w-8 h-8 sm:w-10 sm:h-10 aspect-square shrink-0 rounded-full flex items-center justify-center transition-all duration-200 ${
                   item.isActive 
                     ? 'bg-[#A2482B] text-white shadow-sm' 
                     : 'bg-transparent text-stone-600 group-hover:bg-stone-100/80'

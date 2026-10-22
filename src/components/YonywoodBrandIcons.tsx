@@ -390,12 +390,12 @@ export const CoproduireRingsIcon: React.FC<IconProps> = ({
 };
 
 /**
- * DuocumentairesTvIcon (DuoIcon / robot-final):
+ * DuocumentairesTvIcon (DuoIcon / duos-pieds-logo-un-peu-plus-inclines):
  * Symbole officiel « Duo » de la barre de navigation :
  * Écran double rétro avec ses deux compartiments, la séparation centrale,
- * les deux points-yeux intérieurs et les deux pieds vintage inclinés.
+ * les deux points-yeux intérieurs et les deux pieds inclinés (5.7,14 -> 3.7,17.15 & 18.3,14 -> 20.3,17.15).
  * En mode actif : blanc pur (#FFFFFF) au cœur de la capsule terracotta (#A2482B).
- * En mode inactif : gris (#6E6254 / text-stone-600).
+ * En mode inactif : gris discret (#6E6254 / text-stone-600).
  */
 export interface DuoIconProps extends IconProps {
   isActive?: boolean;
@@ -418,11 +418,11 @@ export const DuocumentairesTvIcon: React.FC<DuoIconProps> = ({
       aria-hidden="true"
     >
       <title>Duo</title>
-      <rect x="3" y="5" width="18" height="9" rx="2" />
-      <path d="M 12 5 L 12 14" />
-      <circle cx="7.5" cy="9.5" r="1" fill="currentColor" stroke="none" />
-      <circle cx="16.5" cy="9.5" r="1" fill="currentColor" stroke="none" />
-      <path d="M 7 14 L 5.5 20 M 17 14 L 18.5 20" />
+      <rect x="3" y="5.925" width="18" height="9" rx="2" />
+      <path d="M 12 5.925 L 12 14.925" />
+      <circle cx="7.5" cy="10.425" r="1" fill="currentColor" stroke="none" />
+      <circle cx="16.5" cy="10.425" r="1" fill="currentColor" stroke="none" />
+      <path d="M 5.7 14.925 L 3.7 18.075 M 18.3 14.925 L 20.3 18.075" />
     </svg>
   );
 };

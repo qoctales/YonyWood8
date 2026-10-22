@@ -180,8 +180,10 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
   // Proportions géométriques
   const W = stageWidth || 380;
   const R = W * 0.38; // Rayon orbital (38% de la largeur, distance du centre au milieu d'une vignette)
-  const orgPx = Math.max(42, W * 0.088); // Taille des vignettes organisations
-  const colPx = Math.max(38, W * 0.078); // Taille des vignettes collaborateurs
+  // Taille des 16 vignettes rigoureusement identique entre le Niveau 1 et le Niveau 2 (gabarit officiel Niveau 2)
+  const bubblePx = Math.max(38, W * 0.078);
+  const orgPx = bubblePx;
+  const colPx = bubblePx;
 
   // Niveau 1 : dimensionnement précis lumieres-halo-centre.svg (≈ 1,6 × R)
   const lumieresSvgWidth = 1.6 * R;
@@ -374,7 +376,7 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
               const cosA = Math.cos(a);
               const sinA = Math.sin(a);
               const rStart = discRadius;
-              const rEnd = Math.max(rStart, R - orgPx / 2);
+              const rEnd = Math.max(rStart, R - (bubblePx + 2) / 2);
               const x1 = W / 2 + cosA * rStart;
               const y1 = W / 2 + sinA * rStart;
               const x2 = W / 2 + cosA * rEnd;
@@ -657,8 +659,8 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
                 key={`org-${org.id}`}
                 className="absolute left-1/2 top-1/2 flex items-center justify-center"
                 style={{
-                  width: `${orgPx + 14}px`,
-                  height: `${orgPx + 14}px`,
+                  width: `${bubblePx + 10}px`,
+                  height: `${bubblePx + 10}px`,
                   transform,
                   opacity,
                   zIndex,
@@ -672,7 +674,7 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
                   onClick={() => enter(k)}
                   aria-label={org.companyName}
                   title={org.companyName}
-                  className="w-full h-full rounded-full flex items-center justify-center min-w-[44px] min-h-[44px] cursor-pointer group focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold,#c9962b)] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                  className="w-full h-full rounded-full flex items-center justify-center p-1 min-w-[44px] min-h-[44px] cursor-pointer group focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold,#c9962b)] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                 >
                   <div 
                     className="relative w-full h-full rounded-full overflow-hidden border-2 border-white shadow-md group-hover:scale-105 group-hover:shadow-lg group-active:scale-95 transition-all duration-300 ease-out transform-gpu"

@@ -151,19 +151,19 @@ export const LandingScreen: React.FC<LandingScreenProps> = ({ onNavigate }) => {
                 }}
                 id={item.screenId}
                 title={item.label}
-                className={`relative flex-1 flex flex-col items-center justify-center px-1 sm:px-2 py-1 rounded-full transition-colors duration-200 group cursor-pointer ${
+                className={`relative flex-1 min-w-0 flex flex-col items-center justify-center px-1 sm:px-2 py-1 rounded-full transition-colors duration-200 group cursor-pointer ${
                   isActive ? 'text-stone-900' : 'text-stone-500 hover:text-stone-800'
                 }`}
               >
                 {/* Capsule changeante Terre Cuite (#A2482B) uniquement sur l'icône */}
                 <div 
-                  className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-all duration-200 ${
+                  className={`w-9 h-9 sm:w-10 sm:h-10 aspect-square shrink-0 rounded-full flex items-center justify-center transition-all duration-200 ${
                     isActive 
                       ? 'bg-[#A2482B] text-white shadow-sm' 
                       : 'bg-transparent text-stone-600 group-hover:bg-stone-100/80'
                   }`}
                 >
-                  <Icon className="w-5 h-5 transition-transform duration-200" strokeWidth={1.75} isActive={isActive} />
+                  <Icon className="w-5 h-5 shrink-0 transition-transform duration-200" strokeWidth={1.75} isActive={isActive} />
                 </div>
 
                 {/* Libellé textuel */}
