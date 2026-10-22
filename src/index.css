@@ -22,6 +22,12 @@
     --color-terracotta: #A2482B;
     --color-terracotta-hover: #8A3B22;
 
+    /* Design tokens Lumières & Organisation */
+    --gold: #c9962b;
+    --terracotta: #944f32;
+    --gold-spoke: #d4a93f;
+    --muted: #9a948d;
+
     /* Variables de style des icônes de dimensions */
     --icon-stroke-width: 1.75;
     --icon-color-idle: #4A3F38; /* gris-brun foncé au repos */
@@ -156,6 +162,53 @@
 
 .animate-matrix-aura {
   animation: matrixAuraDrift 20s ease-in-out infinite;
+}
+
+/* Animation de pulsation douce pour le halo fin du niveau 1 Lumières */
+@keyframes pulseHaloLumiere {
+  0%, 100% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+.animate-pulse-halo {
+  animation: pulseHaloLumiere 3.2s ease-in-out infinite;
+}
+
+@keyframes fadeInFineRing {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in-ring-1 {
+  animation: fadeInFineRing 500ms ease-out 0ms both;
+}
+
+.animate-fade-in-ring-2 {
+  animation: fadeInFineRing 500ms ease-out 80ms both;
+}
+
+.animate-fade-in-ring-3 {
+  animation: fadeInFineRing 500ms ease-out 160ms both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-pulse-halo,
+  .animate-fade-in-ring-1,
+  .animate-fade-in-ring-2,
+  .animate-fade-in-ring-3,
+  .animate-breathe-svg,
+  .animate-breathe-svg-inner {
+    animation: none !important;
+    transition: none !important;
+  }
 }
 
 

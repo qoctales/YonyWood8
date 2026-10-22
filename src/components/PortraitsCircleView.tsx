@@ -179,11 +179,19 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
 
   // Proportions géométriques
   const W = stageWidth || 380;
-  const R = W * 0.38; // Rayon orbital (38% de la largeur)
+  const R = W * 0.38; // Rayon orbital (38% de la largeur, distance du centre au milieu d'une vignette)
   const orgPx = Math.max(42, W * 0.088); // Taille des vignettes organisations
   const colPx = Math.max(38, W * 0.078); // Taille des vignettes collaborateurs
-  const sunPx = W * 0.30; // Taille du centre / soleil (30% de la largeur)
-  const zoom = sunPx / orgPx; // Facteur pour que l'organisation au centre remplace exactement le soleil
+
+  // Niveau 1 : dimensionnement précis lumieres-halo-centre.svg (≈ 1,6 × R)
+  const lumieresSvgWidth = 1.6 * R;
+  const discRadius = (100 / 760) * lumieresSvgWidth;
+  const discDiameter = 2 * discRadius;
+
+  // Niveau 2 : dimensionnement précis medaillon-organisation.svg (≈ 1,7 × R)
+  const medaillonWidth = 1.7 * R;
+  const medaillonDiscRadius = (185 / 640) * medaillonWidth;
+  const medaillonDiscDiameter = 2 * medaillonDiscRadius;
 
   // Calcul trigonométrique d'un angle régulier démarrant au sommet (-90°)
   const pos = (k: number, total: number = 16) => {
@@ -347,112 +355,284 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
           {/* SVG UNIFIÉ : LE SOLEIL, SES HALOS ET SES 16 RAYONS EXACTEMENT CENTRÉS */}
           {/*    -> cx="50", cy="50" et (x1="50", y1="50") : ALIGNEMENT MATHÉMATIQUE */}
           {/* ===================================================================== */}
+          {/* ===================================================================== */}
+          {/* NIVEAU 1 : 16 RAYONS FINS ENTRE DISQUE CENTRAL ET BORD DES VIGNETTES  */}
+          {/*    -> 1,2 px, couleur --gold-spoke (#d4a93f), opacité 0,45            */}
+          {/* ===================================================================== */}
           <svg
             id="rays"
-            className={`absolute inset-0 w-full h-full pointer-events-none select-none z-0 transition-transform duration-500 ease-out ${
-              isSunRotating ? 'scale-105 rotate-45' : ''
-            }`}
-            viewBox="0 0 100 100"
+            className="absolute inset-0 w-full h-full pointer-events-none select-none z-0"
+            viewBox={`0 0 ${W} ${W}`}
             aria-hidden="true"
             style={{
               opacity: level === 0 ? 1 : 0,
-              transition: 'opacity 0.45s ease, transform 0.5s ease',
+              transition: 'opacity 0.45s ease',
             }}
           >
-            <defs>
-              <radialGradient id="sunAuraGlow" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stopColor="#F5B921" stopOpacity="0.45" />
-                <stop offset="55%" stopColor="#F5B921" stopOpacity="0.18" />
-                <stop offset="100%" stopColor="#FAF8F5" stopOpacity="0" />
-              </radialGradient>
-            </defs>
-
-            {/* 1. Halo externe respirant (r=30, exactement centré sur le soleil et les rayons) */}
-            <circle
-              cx="50"
-              cy="50"
-              r="30"
-              fill="#F5B921"
-              className="animate-breathe-svg"
-            />
-
-            {/* 2. Halo interne respirant (r=22, exactement centré) */}
-            <circle
-              cx="50"
-              cy="50"
-              r="22"
-              fill="#F5B921"
-              className="animate-breathe-svg-inner"
-            />
-
-            {/* 3. Lueur diffuse d'ambiance */}
-            <circle cx="50" cy="50" r="26" fill="url(#sunAuraGlow)" />
-
-            {/* 4. Les 16 rayons dorés partant exactement du centre (50, 50) */}
             {Array.from({ length: 16 }).map((_, i) => {
               const a = (-90 + (i * 360) / 16) * (Math.PI / 180);
-              const r = 0.38 * 100 * 0.92;
+              const cosA = Math.cos(a);
+              const sinA = Math.sin(a);
+              const rStart = discRadius;
+              const rEnd = Math.max(rStart, R - orgPx / 2);
+              const x1 = W / 2 + cosA * rStart;
+              const y1 = W / 2 + sinA * rStart;
+              const x2 = W / 2 + cosA * rEnd;
+              const y2 = W / 2 + sinA * rEnd;
               return (
                 <line
                   key={`ray-${i}`}
-                  x1="50"
-                  y1="50"
-                  x2={50 + Math.cos(a) * r}
-                  y2={50 + Math.sin(a) * r}
-                  stroke="#F0CF73"
-                  strokeWidth="0.22"
-                  opacity="0.85"
+                  x1={x1}
+                  y1={y1}
+                  x2={x2}
+                  y2={y2}
+                  stroke="var(--gold-spoke,#d4a93f)"
+                  strokeWidth="1.2"
+                  opacity="0.45"
+                  vectorEffect="non-scaling-stroke"
                 />
               );
             })}
-
-            {/* 5. Le disque solaire doré pur (r=15 = sunPx/2) posé au centre sur les rayons */}
-            <circle
-              cx="50"
-              cy="50"
-              r="15"
-              fill="#F5B921"
-            />
           </svg>
 
           {/* ===================================================================== */}
-          {/* BOUTON SOLEIL CENTRAL INTERACTIF (NIVEAU 1)                           */}
-          {/*    -> Clic sur le soleil actualise et propose 16 autres sociétés      */}
+          {/* NIVEAU 1 : HALO & SOLEIL LUMIÈRES (lumieres-halo-centre.svg)          */}
+          {/*    -> Largeur ≈ 1,6 × R, cercles fins, vector-effect non-scaling     */}
+          {/* ===================================================================== */}
+          <div
+            className="absolute left-1/2 top-1/2 pointer-events-none select-none z-0"
+            style={{
+              width: `${lumieresSvgWidth}px`,
+              height: `${lumieresSvgWidth}px`,
+              opacity: level === 0 ? 1 : 0,
+              pointerEvents: 'none',
+              transform: `translate(-50%, -50%) scale(${level === 0 ? (isSunRotating ? 1.05 : 1) : 0.75}) ${
+                isSunRotating ? 'rotate(45deg)' : 'rotate(0deg)'
+              }`,
+              transition: 'opacity 0.45s ease, transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+            }}
+          >
+            <svg
+              viewBox="0 0 760 760"
+              className="w-full h-full"
+              aria-hidden="true"
+            >
+              {/* Cercles fins extérieurs */}
+              <circle
+                cx="380"
+                cy="380"
+                r="350"
+                fill="none"
+                stroke="var(--gold,#c9962b)"
+                strokeOpacity="0.18"
+                strokeWidth="1.5"
+                vectorEffect="non-scaling-stroke"
+              />
+              <circle
+                cx="380"
+                cy="380"
+                r="280"
+                fill="none"
+                stroke="var(--gold,#c9962b)"
+                strokeOpacity="0.28"
+                strokeWidth="1.5"
+                vectorEffect="non-scaling-stroke"
+              />
+              {/* Cercle fin qui pulse doucement (opacité 0.25 -> 0.6, 3.2s) */}
+              <circle
+                cx="380"
+                cy="380"
+                r="205"
+                fill="none"
+                stroke="var(--gold,#c9962b)"
+                strokeWidth="1.5"
+                vectorEffect="non-scaling-stroke"
+                className="animate-pulse-halo"
+              />
+              <circle
+                cx="380"
+                cy="380"
+                r="130"
+                fill="none"
+                stroke="var(--gold,#c9962b)"
+                strokeOpacity="0.55"
+                strokeWidth="1.5"
+                vectorEffect="non-scaling-stroke"
+              />
+              {/* Disque blanc central avec contour or */}
+              <circle
+                cx="380"
+                cy="380"
+                r="100"
+                fill="#ffffff"
+                stroke="var(--gold,#c9962b)"
+                strokeWidth="2"
+                vectorEffect="non-scaling-stroke"
+              />
+              {/* Point or solaire au centre exact du disque */}
+              <circle
+                cx="380"
+                cy="380"
+                r="9"
+                fill="var(--gold,#c9962b)"
+              />
+            </svg>
+          </div>
+
+          {/* ===================================================================== */}
+          {/* BOUTON CLIC CENTRE NIVEAU 1 : DISQUE CENTRAL (INTERACTIF SANS TEXTE)  */}
+          {/*    -> Au survol : scale 1.04, 350ms ; focus-visible anneau or         */}
           {/* ===================================================================== */}
           {level === 0 && (
             <button
               type="button"
               onClick={handleShuffleCompanies}
-              title="Cliquer pour proposer d'autres sociétés"
-              aria-label="Cliquer sur le soleil pour proposer d'autres sociétés"
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full cursor-pointer z-10 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#A2482B]/60"
+              aria-label="Choisir une organisation"
+              title="Choisir une organisation"
+              className="absolute left-1/2 top-1/2 rounded-full cursor-pointer z-10 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold,#c9962b)] focus-visible:ring-offset-3 focus-visible:ring-offset-white transition-all duration-[350ms] ease-out hover:scale-[1.04] active:scale-95"
               style={{
-                width: `${sunPx}px`,
-                height: `${sunPx}px`,
+                width: `${discDiameter}px`,
+                height: `${discDiameter}px`,
+                transform: 'translate(-50%, -50%)',
               }}
+            />
+          )}
+
+          {/* ===================================================================== */}
+          {/* NIVEAU 2 : MÉDAILLON ORGANISATION (medaillon-organisation.svg)        */}
+          {/*    -> Largeur ≈ 1,7 × R, disque blanc, contour or 3px, filet 1px     */}
+          {/*    -> Logo en cercle (diamètre ≈ 92%), 3 cercles fins fondu 500ms     */}
+          {/* ===================================================================== */}
+          <div
+            className="absolute left-1/2 top-1/2 pointer-events-none select-none z-10"
+            style={{
+              width: `${medaillonWidth}px`,
+              height: `${medaillonWidth}px`,
+              opacity: level === 1 ? 1 : 0,
+              pointerEvents: 'none',
+              transform: `translate(-50%, -50%) scale(${level === 1 ? 1 : 0.8})`,
+              transition: 'opacity 0.45s ease, transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+            }}
+          >
+            <svg
+              viewBox="0 0 640 640"
+              className="w-full h-full"
+              aria-hidden="true"
             >
-              <div 
-                className={`w-full h-full rounded-full flex items-center justify-center transition-all duration-300 ${
-                  isSunRotating ? 'scale-90 rotate-90' : 'group-hover:scale-105 active:scale-95'
-                }`}
-              >
-                {/* Repère discret de rotation au survol */}
-                <div className="w-10 h-10 rounded-full bg-white/0 group-hover:bg-[#FFF8E7]/30 transition-all duration-300 flex items-center justify-center pointer-events-none">
-                  <RotateCw className="w-4 h-4 text-stone-900/40 opacity-0 group-hover:opacity-75 transition-opacity duration-200" />
-                </div>
-              </div>
-            </button>
+              <defs>
+                <clipPath id="medaillonOrgLogoClip">
+                  <circle cx="320" cy="320" r="170" />
+                </clipPath>
+                <filter id="medaillonGoldShadow" x="-20%" y="-20%" width="140%" height="150%">
+                  <feDropShadow dx="0" dy="8" stdDeviation="12" floodColor="#a8791a" floodOpacity=".22" />
+                </filter>
+              </defs>
+
+              {/* 3 cercles fins autour avec apparition en fondu de 500 ms décalés de 80 ms */}
+              <circle
+                cx="320"
+                cy="320"
+                r="290"
+                fill="none"
+                stroke="var(--gold,#c9962b)"
+                strokeOpacity="0.18"
+                strokeWidth="1.5"
+                vectorEffect="non-scaling-stroke"
+                className={level === 1 ? 'animate-fade-in-ring-1' : ''}
+              />
+              <circle
+                cx="320"
+                cy="320"
+                r="250"
+                fill="none"
+                stroke="var(--gold,#c9962b)"
+                strokeOpacity="0.28"
+                strokeWidth="1.5"
+                vectorEffect="non-scaling-stroke"
+                className={level === 1 ? 'animate-fade-in-ring-2' : ''}
+              />
+              <circle
+                cx="320"
+                cy="320"
+                r="215"
+                fill="none"
+                stroke="var(--gold,#c9962b)"
+                strokeOpacity="0.42"
+                strokeWidth="1.5"
+                vectorEffect="non-scaling-stroke"
+                className={level === 1 ? 'animate-fade-in-ring-3' : ''}
+              />
+
+              {/* Disque blanc, contour or 3 px, ombre dorée douce */}
+              <circle
+                cx="320"
+                cy="320"
+                r="185"
+                fill="#ffffff"
+                stroke="var(--gold,#c9962b)"
+                strokeWidth="3"
+                filter="url(#medaillonGoldShadow)"
+                vectorEffect="non-scaling-stroke"
+              />
+
+              {/* Filet intérieur */}
+              <circle
+                cx="320"
+                cy="320"
+                r="177"
+                fill="none"
+                stroke="var(--gold,#c9962b)"
+                strokeOpacity="0.5"
+                strokeWidth="1"
+                vectorEffect="non-scaling-stroke"
+              />
+
+              {/* Logo de l'organisation dans un cercle (diamètre ≈ 92 % du disque doré) */}
+              <g clipPath="url(#medaillonOrgLogoClip)">
+                <circle cx="320" cy="320" r="170" fill="#f7f1e4" />
+                {curOrg?.photoUrl && (
+                  <image
+                    href={curOrg.photoUrl}
+                    x="150"
+                    y="150"
+                    width="340"
+                    height="340"
+                    preserveAspectRatio="xMidYMid slice"
+                  />
+                )}
+              </g>
+            </svg>
+          </div>
+
+          {/* ===================================================================== */}
+          {/* BOUTON CLIC CENTRE NIVEAU 2 : MÉDAILLON INTERACTIF                    */}
+          {/* ===================================================================== */}
+          {level === 1 && (
+            <button
+              type="button"
+              onClick={() => {
+                if (totalBatches > 1) {
+                  handleNextBatch();
+                }
+                celestialAudio.playOrbSelect();
+              }}
+              aria-label={`Organisation ${curOrg?.companyName} — Toucher pour d'autres regards`}
+              title={`Organisation ${curOrg?.companyName}`}
+              className="absolute left-1/2 top-1/2 rounded-full cursor-pointer z-10 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold,#c9962b)] focus-visible:ring-offset-3 focus-visible:ring-offset-white transition-all duration-[350ms] ease-out hover:scale-[1.03] active:scale-95"
+              style={{
+                width: `${medaillonDiscDiameter}px`,
+                height: `${medaillonDiscDiameter}px`,
+                transform: 'translate(-50%, -50%)',
+              }}
+            />
           )}
 
           {/* ===================================================================== */}
           {/* COURONNE DES 16 ORGANISATIONS (NIVEAU 1)                              */}
-          {/*    -> Conteneur stable à position fixe                                */}
-          {/*    -> Au clic, glisse vers le centre et remplace le soleil            */}
-          {/*    -> Au centre (isCur) : clic permet de revenir au soleil central    */}
+          {/*    -> Habillage préservé : bord blanc et ombre                        */}
           {/* ===================================================================== */}
           {displayedCompanies.map((org, k) => {
             const p = pos(k, 16);
-            const isCur = k === curIndex;
 
             let transform = '';
             let opacity = 1;
@@ -464,15 +644,9 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
               opacity = 1;
               zIndex = 2;
               pointerEvents = 'auto';
-            } else if (isCur) {
-              // L'organisation sélectionnée prend la place du soleil au centre
-              transform = `translate(-50%, -50%) translate(0px, 0px) scale(${zoom})`;
-              opacity = 1;
-              zIndex = 10;
-              pointerEvents = 'auto';
             } else {
-              // Les 15 autres organisations se replient vers le centre en s'estompant
-              transform = `translate(-50%, -50%) translate(${p.x * 0.6}px, ${p.y * 0.6}px) scale(0)`;
+              // Au passage au niveau 2, repli fluide vers le centre
+              transform = `translate(-50%, -50%) translate(${p.x * 0.4}px, ${p.y * 0.4}px) scale(0)`;
               opacity = 0;
               zIndex = 0;
               pointerEvents = 'none';
@@ -495,33 +669,13 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
               >
                 <button
                   type="button"
-                  onClick={() => {
-                    if (level === 0) {
-                      enter(k);
-                    } else if (isCur) {
-                      // Au centre : un clic actualise les 16 collaborateurs qui sont autour
-                      setIsRotatingBatch(true);
-                      celestialAudio.playOrbSelect();
-                      setTimeout(() => {
-                        setActiveBatchIndex((prev) => (prev + 1) % totalBatches);
-                        setIsRotatingBatch(false);
-                      }, 220);
-                    }
-                  }}
-                  aria-label={level === 0 ? org.companyName : (isCur ? `Actualiser les 16 regards autour de ${org.companyName}` : org.companyName)}
-                  title={level === 0 ? org.companyName : (isCur ? `Actualiser les 16 regards autour de ${org.companyName}` : '')}
-                  className="w-full h-full rounded-full flex items-center justify-center min-w-[44px] min-h-[44px] cursor-pointer group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F5B921]"
+                  onClick={() => enter(k)}
+                  aria-label={org.companyName}
+                  title={org.companyName}
+                  className="w-full h-full rounded-full flex items-center justify-center min-w-[44px] min-h-[44px] cursor-pointer group focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold,#c9962b)] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                 >
                   <div 
-                    className={`relative w-full h-full rounded-full overflow-hidden border-2 shadow-md transition-all duration-300 ease-out transform-gpu ${
-                      isCur 
-                        ? `border-white/90 shadow-2xl ring-2 group-hover:scale-102 group-active:scale-95 ${isRotatingBatch ? 'scale-95 opacity-80' : ''}` 
-                        : 'border-white/95 group-hover:border-[#F5B921] group-hover:scale-105 group-hover:shadow-lg group-active:scale-95'
-                    }`}
-                    style={isCur && curOrg?.brandColor ? {
-                      borderColor: curOrg.brandColor,
-                      boxShadow: `0 0 25px ${curOrg.brandColor}50, 0 8px 24px rgba(0,0,0,0.18)`
-                    } : undefined}
+                    className="relative w-full h-full rounded-full overflow-hidden border-2 border-white shadow-md group-hover:scale-105 group-hover:shadow-lg group-active:scale-95 transition-all duration-300 ease-out transform-gpu"
                   >
                     <img
                       src={org.photoUrl}
@@ -549,10 +703,9 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
           })}
 
           {/* ===================================================================== */}
-          {/* COURONNE DES COLLABORATEURS (NIVEAU 2)                                */}
-          {/*    -> Conteneur stable anti-tremblement : dimensions fixes             */}
-          {/*    -> Transition conforme au CFG : 600ms cubic-bezier(0.4, 0, 0.2, 1) */}
-          {/*    -> Décalage progressif de 40ms par élément                         */}
+          {/* COURONNE DES COLLABORATEURS / REGARDS (NIVEAU 2)                      */}
+          {/*    -> Filet or de 2 px (--gold) et ombre 0 2px 8px rgba(168,121,26,.18) */}
+          {/*    -> Déploiement progressif de 40ms par élément                      */}
           {/* ===================================================================== */}
           {displayedCollabs.map((collab, k) => {
             const p = pos(k, 16);
@@ -564,7 +717,6 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
             const opacity = isShown ? 1 : 0;
             const pointerEvents: 'auto' | 'none' = isShown ? 'auto' : 'none';
 
-            // Respect rigoureux du timing CFG : 40ms par étape à l'entrée, 0s au repli fluide
             const transitionDelay = isShown ? `${k * 40}ms` : '0ms';
             const transitionDuration = isShown ? '600ms' : '320ms';
 
@@ -591,13 +743,14 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
                   }}
                   aria-label={`${collab.name} — ${collab.roleDetail || collab.roleCategory}`}
                   title={`${collab.name} · ${collab.roleDetail || collab.roleCategory}`}
-                  className="w-full h-full rounded-full flex items-center justify-center p-1 cursor-pointer group min-w-[44px] min-h-[44px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F5B921]"
+                  className="w-full h-full rounded-full flex items-center justify-center p-1 cursor-pointer group min-w-[44px] min-h-[44px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold,#c9962b)] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                 >
                   <div 
-                    className="w-full h-full rounded-full overflow-hidden border-2 border-white/95 shadow-md group-hover:shadow-lg group-hover:scale-105 group-active:scale-95 transition-transform duration-200 ease-out transform-gpu"
-                    style={curOrg?.brandColor ? {
-                      borderColor: `${curOrg.brandColor}99`
-                    } : undefined}
+                    className="w-full h-full rounded-full overflow-hidden transition-all duration-200 ease-out transform-gpu group-hover:scale-105 group-active:scale-95"
+                    style={{
+                      border: '2px solid var(--gold, #c9962b)',
+                      boxShadow: '0 2px 8px rgba(168, 121, 26, 0.18)'
+                    }}
                   >
                     <img
                       src={collab.photoUrl}
