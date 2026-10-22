@@ -299,7 +299,7 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
         <nav aria-label="Fil d’Ariane" className="flex items-center gap-2 text-sm sm:text-base h-full">
           {level === 0 ? (
             <div className="relative flex items-center h-full">
-              <h1 className="font-editorial italic text-xs sm:text-sm md:text-base font-bold text-[#1C1917] tracking-tight leading-none whitespace-nowrap">
+              <h1 className="font-editorial text-xs sm:text-sm md:text-base font-semibold text-[#1C1917] tracking-normal leading-none whitespace-nowrap">
                 Une histoire commune, plusieurs regards
               </h1>
               {/* Petit trait terracotta officiel */}
@@ -321,7 +321,7 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
               </span>
               <div className="relative flex items-center h-full">
                 <span
-                  className="font-editorial text-base sm:text-lg font-bold text-[#1C1917] tracking-tight truncate max-w-[150px] sm:max-w-[260px]"
+                  className="font-editorial text-base sm:text-lg font-semibold text-[#1C1917] tracking-normal truncate max-w-[150px] sm:max-w-[260px]"
                   aria-current="page"
                 >
                   {curOrg?.companyName}

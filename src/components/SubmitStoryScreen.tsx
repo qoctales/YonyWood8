@@ -160,9 +160,9 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
       <div className="relative flex items-center justify-between h-8 sm:h-10 shrink-0 gap-2 mb-0.5 sm:mb-1">
         <div className="flex items-center gap-1.5 sm:gap-2.5 min-w-0 flex-1 h-full">
           {!activePillar ? (
-            /* Accueil Studio : 4 façons de partager son histoire en italique noir avec tiret terracotta */
+            /* Accueil Studio : 4 façons de partager son histoire en Nunito non-italique avec tiret terracotta */
             <div className="relative flex items-center h-full overflow-visible">
-              <h1 className="font-editorial italic text-xs sm:text-sm md:text-base font-bold text-[#1C1917] tracking-tight leading-none whitespace-nowrap pr-2">
+              <h1 className="font-editorial text-xs sm:text-sm md:text-base font-semibold text-[#1C1917] tracking-normal leading-none whitespace-nowrap pr-2">
                 4 façons de partager son histoire
               </h1>
               {/* Petit trait terracotta officiel */}
@@ -189,7 +189,7 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
 
               <div className="relative flex items-center h-full overflow-visible">
                 <span
-                  className="font-editorial italic text-xs sm:text-sm md:text-base font-bold text-[#1C1917] tracking-tight leading-none whitespace-nowrap pr-2 select-none"
+                  className="font-editorial text-xs sm:text-sm md:text-base font-semibold text-[#1C1917] tracking-normal leading-none whitespace-nowrap pr-2 select-none"
                   aria-current="page"
                 >
                   {activePillar.title}

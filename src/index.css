@@ -2,8 +2,9 @@
 
 @layer base {
   :root {
-    --font-editorial: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-    --font-ui: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-heading: 'Nunito', system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-editorial: 'Nunito', system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-ui: 'Plus Jakarta Sans', system-ui, -apple-system, "Segoe UI", sans-serif;
     
     --color-bg: #FFFFFF;
     --color-surface: #FFFFFF;
@@ -74,21 +75,35 @@
     padding-right: env(safe-area-inset-right, 0px);
   }
 
-  h1, h2, h3, .font-editorial {
-    font-family: var(--font-editorial);
+  h1, h2, h3, h4, .font-editorial, .font-heading {
+    font-family: var(--font-heading);
+    font-style: normal;
+    letter-spacing: 0.005em;
+  }
+
+  h1, h2 {
+    font-weight: 600;
+  }
+
+  h3, h4 {
+    font-weight: 500;
   }
 }
 
 .font-editorial {
-  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Nunito', system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-style: normal;
+  letter-spacing: 0.005em;
 }
 
-.font-serif-editorial {
-  font-family: 'Fraunces', Georgia, serif;
+.font-heading {
+  font-family: 'Nunito', system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-style: normal;
+  letter-spacing: 0.005em;
 }
 
 .font-ui {
-  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
 /* Custom organic mask for protagonist universe portraits */

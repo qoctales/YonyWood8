@@ -164,7 +164,7 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
               </span>
               <div className="relative flex items-center h-full">
                 <span
-                  className="font-editorial text-base sm:text-lg font-bold text-[#1C1917] tracking-tight truncate max-w-[150px] sm:max-w-[260px]"
+                  className="font-editorial text-base sm:text-lg font-semibold text-[#1C1917] tracking-normal truncate max-w-[150px] sm:max-w-[260px]"
                   aria-current="page"
                 >
                   {selectedCompanyForSpace.companyName}
@@ -175,7 +175,7 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
             </div>
           ) : (
             <div className="relative flex items-center h-full overflow-visible">
-              <h1 className="font-editorial italic text-xs sm:text-sm md:text-base font-bold text-[#1C1917] tracking-tight leading-none whitespace-nowrap pr-2">
+              <h1 className="font-editorial text-xs sm:text-sm md:text-base font-semibold text-[#1C1917] tracking-normal leading-none whitespace-nowrap pr-2">
                 Une histoire commune, plusieurs regards
               </h1>
               {/* Petit trait terracotta officiel */}

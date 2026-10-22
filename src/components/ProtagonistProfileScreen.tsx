@@ -237,7 +237,7 @@ export const ProtagonistProfileScreen: React.FC<ProtagonistProfileScreenProps> =
 
             {/* Prénom harmonisé avec les cartes vidéo, sans coupure de lettre */}
             <div className="mt-2 text-center flex flex-col items-center">
-              <h2 className="font-editorial text-xl sm:text-2xl font-bold text-[#1C1917] tracking-tight leading-tight pb-0.5">
+              <h2 className="font-editorial text-xl sm:text-2xl font-semibold text-[#1C1917] tracking-normal leading-tight pb-0.5">
                 {protagonist.name.split(' ')[0]}
               </h2>
 
@@ -302,7 +302,7 @@ export const ProtagonistProfileScreen: React.FC<ProtagonistProfileScreenProps> =
               className="w-20 h-20 sm:w-24 sm:h-24"
               strokeColor="#1C1917"
             />
-            <h2 className="font-editorial text-xl sm:text-2xl font-bold text-[#1C1917] tracking-tight leading-tight pb-0.5 mt-2">
+            <h2 className="font-editorial text-xl sm:text-2xl font-semibold text-[#1C1917] tracking-normal leading-tight pb-0.5 mt-2">
               {protagonist.name.split(' ')[0]}
             </h2>
             <button

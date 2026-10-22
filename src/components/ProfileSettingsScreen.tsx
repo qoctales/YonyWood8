@@ -1928,7 +1928,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
           {/* GAUCHE : Prénom et nom de la personne de la page portrait avec tiret terracotta signature */}
           <div className="flex items-center gap-2 sm:gap-2.5 h-full shrink-0">
             <div className="relative flex items-center h-full overflow-visible">
-              <h1 className="font-editorial italic text-xs sm:text-sm md:text-base font-bold text-[#1C1917] tracking-tight leading-none whitespace-nowrap pr-2">
+              <h1 className="font-editorial text-xs sm:text-sm md:text-base font-semibold text-[#1C1917] tracking-normal leading-none whitespace-nowrap pr-2">
                 {profileFullDisplayName}
               </h1>
               {/* Petit trait terracotta officiel */}

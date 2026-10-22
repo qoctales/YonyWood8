@@ -236,7 +236,7 @@ export const ParticipateScreen: React.FC<ParticipateScreenProps> = ({
       {/* ========================================================= */}
       <div className="relative flex items-center justify-between h-9 sm:h-10 shrink-0 mb-1">
         <div className="relative flex items-center h-full">
-          <h1 className="font-editorial italic text-xs sm:text-sm md:text-base font-bold text-[#1C1917] tracking-tight leading-none whitespace-nowrap">
+          <h1 className="font-editorial text-xs sm:text-sm md:text-base font-semibold text-[#1C1917] tracking-normal leading-none whitespace-nowrap">
             {currentCard.title}
           </h1>
           {/* Petit trait terracotta officiel */}

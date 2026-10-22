@@ -58,11 +58,11 @@ const STOCK_VIDEOS = [
 
 export const STUDIO_PILLARS: StudioPillar[] = [
   // =========================================================================
-  // 1. DUOS EN MIROIR (8 séries documentaires diptyques)
+  // 1. MIROIR (8 séries documentaires diptyques)
   // =========================================================================
   {
     id: 'duos',
-    title: 'Duos en miroir',
+    title: 'Miroir',
     subtitle: 'Deux univers face à face, une même question humaine universelle',
     question: 'Face à quel alter ego d’un autre monde souhaitez-vous confronter votre propre vécu ?',
     posterUrl: pillarDuosImg,
@@ -136,14 +136,14 @@ export const STUDIO_PILLARS: StudioPillar[] = [
   },
 
   // =========================================================================
-  // 2. SUR LES ROUTES (Héritages : 8 grandes catégories patrimoniales)
+  // 2. CASTING (8 grandes catégories de transmission et de partage de point de vue)
   // =========================================================================
   {
     id: 'itinerant',
-    title: 'Sur les routes',
-    subtitle: 'Le documentaire itinérant à la rencontre des 8 catégories d’héritage',
+    title: 'Casting',
+    subtitle: 'La voix des témoins et passeurs : plusieurs regards partagent leur point de vue',
     question: 'Quel savoir, quel rite ou quelle sagesse locale votre voix doit-elle transmettre ?',
-    posterUrl: pillarRoutesImg,
+    posterUrl: '/assets/images/pillar_casting_phoenix.png',
     videoUrl: STOCK_VIDEOS[1],
     items: [
       {
@@ -214,11 +214,11 @@ export const STUDIO_PILLARS: StudioPillar[] = [
   },
 
   // =========================================================================
-  // 3. ORGANISATION (Lumières : 8 thématiques pures)
+  // 3. LUMIÈRE (8 thématiques vivantes au cœur des collectifs et entreprises)
   // =========================================================================
   {
     id: 'organisations',
-    title: 'Organisations',
+    title: 'Lumière',
     subtitle: 'Les 8 thématiques vivantes au cœur des collectifs et entreprises',
     question: 'Quel défi collectif et quelle fierté humaine soudent votre organisation de l’intérieur ?',
     posterUrl: pillarOrgImg,
@@ -292,11 +292,11 @@ export const STUDIO_PILLARS: StudioPillar[] = [
   },
 
   // =========================================================================
-  // 4. RÉCIT DE SOI (Portrait : 4 directions fondamentales)
+  // 4. PORTRAIT (4 directions d’expression et d’affirmation de soi)
   // =========================================================================
   {
     id: 'soi',
-    title: 'Récit de soi',
+    title: 'Portrait',
     subtitle: 'Les 4 directions d’expression et d’affirmation de soi',
     question: 'Quelle dimension intime de votre histoire humaine souhaitez-vous offrir au monde ?',
     posterUrl: pillarSoiImg,

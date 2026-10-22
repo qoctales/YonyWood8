@@ -343,7 +343,7 @@ export const UnifiedVideoCardOverlay: React.FC<UnifiedVideoCardOverlayProps> = (
       {/* BAS GAUCHE : PRÉNOM EN ENTIER (SANS TRONCATURE PAR POINTS DE SUSPENSION) */}
       {/* =================================================================== */}
       <div className={`absolute bottom-2.5 sm:bottom-3.5 left-2.5 sm:left-3.5 ${showCastingScore || castingScore !== undefined ? 'right-20 sm:right-24' : 'right-10 sm:right-12'} z-20 pointer-events-auto`}>
-        <h3 className="font-editorial text-[13px] min-[380px]:text-[14px] sm:text-[16px] md:text-[18px] font-bold text-white tracking-tight sm:tracking-normal leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] whitespace-normal break-words">
+        <h3 className="font-editorial text-[13px] min-[380px]:text-[14px] sm:text-[16px] md:text-[18px] font-semibold text-white tracking-normal leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] whitespace-normal break-words">
           {preserveFullName ? displayName : cleanDisplayName}
         </h3>
         {roleSubtitle && (

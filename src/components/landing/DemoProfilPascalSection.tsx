@@ -297,7 +297,7 @@ export const DemoProfilPascalSection: React.FC = () => {
       {/* En-tête : Pascal avec tiret terracotta officiel */}
       <div className="w-full flex items-center justify-between mb-2 sm:mb-4 px-3 sm:px-6">
         <div className="relative flex items-center">
-          <h1 className="font-editorial italic text-xs sm:text-sm md:text-base font-bold text-[#1C1917] tracking-tight leading-none whitespace-nowrap">
+          <h1 className="font-editorial text-xs sm:text-sm md:text-base font-semibold text-[#1C1917] tracking-normal leading-none whitespace-nowrap">
             Pascal Cossi
           </h1>
           <div className="absolute left-0 -bottom-1.5 w-8 h-0.5 bg-[#A2482B] rounded-full" />
