@@ -2034,21 +2034,33 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
                 </h3>
               </div>
 
-              {/* Bouton Muet / Son baissé en bas à droite */}
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  toggleMute();
-                }}
-                className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center cursor-pointer transition-all shadow-md hover:scale-105 active:scale-95 shrink-0"
-                title={isMuted ? 'Activer le son' : 'Couper le son'}
-              >
-                {isMuted ? (
-                  <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
-                ) : (
-                  <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
-                )}
-              </button>
+              {/* Bas droite : Note globale en pourcentage (Casting) + Bouton Muet */}
+              <div className="flex items-center gap-2">
+                <div 
+                  className="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 shadow-md flex items-center gap-1 text-white"
+                  title="Note moyenne d'évaluation du public"
+                >
+                  <Star className="w-3.5 h-3.5 text-[#FFE7A3] fill-[#FFE7A3]" />
+                  <span className="text-xs font-bold text-white tracking-tight">
+                    {personResonancePct !== null ? `${personResonancePct}%` : `${88 + ((modalPerson.id.charCodeAt(0) || 0) % 9)}%`}
+                  </span>
+                </div>
+
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleMute();
+                  }}
+                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center cursor-pointer transition-all shadow-md hover:scale-105 active:scale-95 shrink-0"
+                  title={isMuted ? 'Activer le son' : 'Couper le son'}
+                >
+                  {isMuted ? (
+                    <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
+                  ) : (
+                    <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
+                  )}
+                </button>
+              </div>
             </div>
 
             {/* Volet coulissant d'évaluation de la résonance sur la vidéo */}

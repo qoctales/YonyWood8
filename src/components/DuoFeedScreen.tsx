@@ -527,8 +527,6 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       onTogglePlay={togglePlayA}
                       isMuted={isMutedA}
                       onToggleMute={() => setIsMutedA(prev => !prev)}
-                      resonanceScore={personResonances[pA.id]}
-                      onOpenResonance={() => setResonanceTargetPerson(pA)}
                       questionText={(pA as any).question || (currentDuo as any).theme || "Quelle vision singulière ce parcours apporte-t-il au monde ?"}
                       factText={(pA as any).teaserPitch || pA.bio || "Passeur d'un savoir vivant et acteur du dialogue d'héritage."}
                       onOpenProfile={() => {
@@ -592,8 +590,6 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       onTogglePlay={togglePlayB}
                       isMuted={isMutedB}
                       onToggleMute={() => setIsMutedB(prev => !prev)}
-                      resonanceScore={personResonances[pB.id]}
-                      onOpenResonance={() => setResonanceTargetPerson(pB)}
                       questionText={(pB as any).question || (currentDuo as any).theme || "Quelle vision singulière ce parcours apporte-t-il au monde ?"}
                       factText={(pB as any).teaserPitch || pB.bio || "Passeur d'un savoir vivant et acteur du dialogue d'héritage."}
                       onOpenProfile={() => {
@@ -717,23 +713,6 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       className="absolute right-3.5 sm:right-5 top-[64%] -translate-y-1/2 z-30 flex flex-col items-center gap-2.5 sm:gap-3 pointer-events-auto"
                       onClick={(e) => e.stopPropagation()}
                     >
-                      {/* 1. Évaluation résonance */}
-                      <button
-                        id={`deck-btn-resonance-a-${pA.id}`}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setResonanceTargetPerson(pA);
-                        }}
-                        className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl backdrop-blur-md border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
-                          personResonances[pA.id] !== undefined
-                            ? 'bg-[#A2482B] border-[#A2482B] text-white shadow-[0_0_14px_rgba(162,72,43,0.5)]'
-                            : 'bg-black/45 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white'
-                        }`}
-                        title={personResonances[pA.id] !== undefined ? `Résonance : ${personResonances[pA.id]}%` : "Évaluer la résonance"}
-                      >
-                        <Award className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-                      </button>
-
                       {/* 2. Question */}
                       <button
                         id={`deck-btn-question-a-${pA.id}`}
@@ -950,23 +929,6 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       className="absolute right-3.5 sm:right-5 top-[64%] -translate-y-1/2 z-30 flex flex-col items-center gap-2.5 sm:gap-3 pointer-events-auto"
                       onClick={(e) => e.stopPropagation()}
                     >
-                      {/* 1. Évaluation résonance */}
-                      <button
-                        id={`deck-btn-resonance-b-${pB.id}`}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setResonanceTargetPerson(pB);
-                        }}
-                        className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl backdrop-blur-md border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
-                          personResonances[pB.id] !== undefined
-                            ? 'bg-[#A2482B] border-[#A2482B] text-white shadow-[0_0_14px_rgba(162,72,43,0.5)]'
-                            : 'bg-black/45 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white'
-                        }`}
-                        title={personResonances[pB.id] !== undefined ? `Résonance : ${personResonances[pB.id]}%` : "Évaluer la résonance"}
-                      >
-                        <Award className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-                      </button>
-
                       {/* 2. Question */}
                       <button
                         id={`deck-btn-question-b-${pB.id}`}

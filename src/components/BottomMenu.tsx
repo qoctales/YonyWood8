@@ -24,7 +24,7 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
 
   // Déterminer l'élément actif selon l'écran en cours
   const isStudioActive = currentScreen.type === 'submit_story' || currentScreen.type === 'request_videographer';
-  const isHeritageActive = currentScreen.type === 'home' || currentScreen.type === 'matrix_view' || currentScreen.type === 'documentaries' || currentScreen.type === 'documentary_detail';
+  const isCastingActive = currentScreen.type === 'home' || currentScreen.type === 'matrix_view' || currentScreen.type === 'documentaries' || currentScreen.type === 'documentary_detail';
   const isDuoActive = currentScreen.type === 'duo_feed' || currentScreen.type === 'duo_detail' || currentScreen.type === 'landing';
   const isLumiereActive = currentScreen.type === 'enterprise';
   const isProductionActive = currentScreen.type === 'marketplace';
@@ -54,7 +54,7 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
     return null;
   }
 
-  // Exactement six rubriques au singulier : Studio · Duo · Héritage · Lumière · Portrait · Production
+  // Exactement six rubriques au singulier : Studio · Miroir · Casting · Lumière · Portrait · Action
   const menuItems = [
     {
       id: 'studio',
@@ -77,12 +77,12 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
       strokeWidth: 1.75
     },
     {
-      id: 'heritage',
-      label: 'Héritage',
+      id: 'casting',
+      label: 'Casting',
       icon: Film, // bande de pellicule
-      isActive: isHeritageActive,
+      isActive: isCastingActive,
       onClick: () => onNavigate({ type: 'home' }),
-      screenId: 'menu-item-heritage',
+      screenId: 'menu-item-casting',
       iconClassName: 'w-[17px] h-[17px] sm:w-[17px] sm:h-[17px] shrink-0',
       strokeWidth: 1.5
     },

@@ -60,7 +60,7 @@ const resolveScreenFromPath = (): { screen: ViewScreen | null; redirectFrom?: st
   if (path === '/duos' || path === '/miroir' || path === '/miroirs') {
     return { screen: { type: 'duo_feed' } };
   }
-  if (path === '/heritages') {
+  if (path === '/heritages' || path === '/casting' || path === '/castings') {
     return { screen: { type: 'home' } };
   }
   if (path === '/studio') {

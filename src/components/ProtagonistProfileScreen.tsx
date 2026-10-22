@@ -12,7 +12,8 @@ import {
   Video,
   Link2, 
   ChevronRight, 
-  Film 
+  Film,
+  Star
 } from 'lucide-react';
 import { ShareIcon } from './ShareIcon';
 import { PROTAGONISTS, DUOS, DOCUMENTARIES } from '../data/mockData';
@@ -41,6 +42,22 @@ export const ProtagonistProfileScreen: React.FC<ProtagonistProfileScreenProps> =
   const [activeDimension, setActiveDimension] = useState<DimensionKey | null>('histoire');
   const [showDuosModal, setShowDuosModal] = useState<boolean>(false);
   const [copied, setCopied] = useState(false);
+  const [showCastingDetails, setShowCastingDetails] = useState(false);
+
+  // Note globale Casting : moyenne des 3 pourcentages d'évaluation du jury
+  const castingScores = React.useMemo(() => {
+    const charCodeSum = (protagonist.id || 'p').split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
+    const auth = 88 + (charCodeSum % 10);
+    const reso = 85 + ((charCodeSum * 3) % 12);
+    const cine = 84 + ((charCodeSum * 7) % 13);
+    const avg = Math.round((auth + reso + cine) / 3);
+    return {
+      authenticity: auth,
+      resonance: reso,
+      cinematography: cine,
+      globalAverage: avg
+    };
+  }, [protagonist.id]);
 
   // 6 Directions strictly matching user order:
   // Transmission, Parcours, Histoire, Projet, Offre, Besoin
@@ -219,10 +236,22 @@ export const ProtagonistProfileScreen: React.FC<ProtagonistProfileScreenProps> =
             />
 
             {/* Prénom harmonisé avec les cartes vidéo, sans coupure de lettre */}
-            <div className="mt-2 text-center">
+            <div className="mt-2 text-center flex flex-col items-center">
               <h2 className="font-editorial text-xl sm:text-2xl font-bold text-[#1C1917] tracking-tight leading-tight pb-0.5">
                 {protagonist.name.split(' ')[0]}
               </h2>
+
+              {/* Note globale Casting : moyenne des 3 critères */}
+              <button
+                type="button"
+                onClick={() => setShowCastingDetails(prev => !prev)}
+                className="mt-1 inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#A2482B]/10 hover:bg-[#A2482B]/20 border border-[#A2482B]/25 text-[#A2482B] text-[11px] font-semibold transition-all cursor-pointer shadow-2xs hover:scale-102"
+                title="Moyenne des 3 critères d'évaluation du Casting"
+              >
+                <Star className="w-3 h-3 fill-[#A2482B]" />
+                <span>{castingScores.globalAverage}%</span>
+                <span className="text-[9.5px] font-normal text-stone-500">Casting</span>
+              </button>
             </div>
           </div>
 
@@ -276,6 +305,15 @@ export const ProtagonistProfileScreen: React.FC<ProtagonistProfileScreenProps> =
             <h2 className="font-editorial text-xl sm:text-2xl font-bold text-[#1C1917] tracking-tight leading-tight pb-0.5 mt-2">
               {protagonist.name.split(' ')[0]}
             </h2>
+            <button
+              type="button"
+              onClick={() => setShowCastingDetails(prev => !prev)}
+              className="mt-1 inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#A2482B]/10 hover:bg-[#A2482B]/20 border border-[#A2482B]/25 text-[#A2482B] text-[11px] font-semibold transition-all cursor-pointer shadow-2xs"
+            >
+              <Star className="w-3 h-3 fill-[#A2482B]" />
+              <span>{castingScores.globalAverage}%</span>
+              <span className="text-[9.5px] font-normal text-stone-500">Casting</span>
+            </button>
           </div>
 
           {/* 6 Grid Directions */}
@@ -424,6 +462,92 @@ export const ProtagonistProfileScreen: React.FC<ProtagonistProfileScreenProps> =
               </div>
             </div>
 
+          </div>
+        </div>
+      )}
+
+      {/* MODALE DÉTAIL DES 3 CRITÈRES DU CASTING */}
+      {showCastingDetails && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200"
+          onClick={() => setShowCastingDetails(false)}
+        >
+          <div 
+            className="relative w-full max-w-sm bg-white rounded-3xl p-6 shadow-2xl border border-stone-200 text-left animate-in zoom-in-95 duration-200 pointer-events-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setShowCastingDetails(false)}
+              className="absolute top-4 right-4 w-7 h-7 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-600 flex items-center justify-center cursor-pointer transition-colors"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+
+            <div className="space-y-1">
+              <span className="text-[10px] font-bold text-[#A2482B] uppercase tracking-wider">
+                Note Casting du Jury
+              </span>
+              <h3 className="font-editorial text-xl font-bold text-stone-900">
+                {protagonist.name}
+              </h3>
+              <p className="text-xs text-stone-500">
+                Moyenne des trois critères d'évaluation du public
+              </p>
+            </div>
+
+            <div className="mt-4 p-3.5 rounded-2xl bg-stone-900 text-white flex items-center justify-between">
+              <div>
+                <p className="text-[10px] text-stone-400 uppercase font-semibold">Note Globale</p>
+                <p className="text-xs text-stone-300">Éligible Matrice</p>
+              </div>
+              <div className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white/10 border border-white/20">
+                <Star className="w-3.5 h-3.5 text-[#FFE7A3] fill-[#FFE7A3]" />
+                <span className="text-lg font-bold text-[#FFE7A3]">
+                  {castingScores.globalAverage}%
+                </span>
+              </div>
+            </div>
+
+            <div className="mt-4 space-y-3">
+              <div className="space-y-1">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-stone-600">1. Authenticité du récit</span>
+                  <span className="font-bold text-stone-900">{castingScores.authenticity}%</span>
+                </div>
+                <div className="w-full bg-stone-100 h-1.5 rounded-full overflow-hidden">
+                  <div className="bg-[#A2482B] h-full rounded-full" style={{ width: `${castingScores.authenticity}%` }} />
+                </div>
+              </div>
+
+              <div className="space-y-1">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-stone-600">2. Résonance humaine</span>
+                  <span className="font-bold text-stone-900">{castingScores.resonance}%</span>
+                </div>
+                <div className="w-full bg-stone-100 h-1.5 rounded-full overflow-hidden">
+                  <div className="bg-amber-600 h-full rounded-full" style={{ width: `${castingScores.resonance}%` }} />
+                </div>
+              </div>
+
+              <div className="space-y-1">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-stone-600">3. Puissance cinématographique</span>
+                  <span className="font-bold text-stone-900">{castingScores.cinematography}%</span>
+                </div>
+                <div className="w-full bg-stone-100 h-1.5 rounded-full overflow-hidden">
+                  <div className="bg-stone-800 h-full rounded-full" style={{ width: `${castingScores.cinematography}%` }} />
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-5 pt-3 border-t border-stone-100 flex items-center justify-end">
+              <button
+                onClick={() => setShowCastingDetails(false)}
+                className="w-full py-2 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-800 text-xs font-semibold transition-colors cursor-pointer text-center"
+              >
+                Fermer
+              </button>
+            </div>
           </div>
         </div>
       )}

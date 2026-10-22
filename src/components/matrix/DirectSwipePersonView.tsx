@@ -235,6 +235,8 @@ export const DirectSwipePersonView: React.FC<DirectSwipePersonViewProps> = ({
             onToggleMute={toggleMute}
             resonanceScore={resonancePct}
             onOpenResonance={() => setIsResonanceModalOpen(true)}
+            showCastingScore={true}
+            castingScore={resonancePct || 91}
             questionText={currentPerson.question || currentPerson.centralQuestion || currentPerson.invitationStory || "Quelle mémoire choisissons-nous de transmettre aux générations qui viennent ?"}
             factText={currentPerson.quote || currentPerson.teaserPitch || "Passeur d'un savoir vivant transmis à sa communauté."}
             onOpenProfile={() => {

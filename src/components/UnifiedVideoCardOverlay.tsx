@@ -38,6 +38,8 @@ export interface UnifiedVideoCardOverlayProps {
   // 1. Évaluation (Award)
   resonanceScore?: number | null;
   onOpenResonance?: () => void;
+  castingScore?: number | null;
+  showCastingScore?: boolean;
 
   // 2. Question (BookOpen)
   questionText?: string;
@@ -81,6 +83,8 @@ export const UnifiedVideoCardOverlay: React.FC<UnifiedVideoCardOverlayProps> = (
   onToggleMute,
   resonanceScore,
   onOpenResonance,
+  castingScore,
+  showCastingScore = false,
   questionText,
   onOpenQuestionModal,
   factText,
@@ -338,7 +342,7 @@ export const UnifiedVideoCardOverlay: React.FC<UnifiedVideoCardOverlayProps> = (
       {/* =================================================================== */}
       {/* BAS GAUCHE : PRÉNOM EN ENTIER (SANS TRONCATURE PAR POINTS DE SUSPENSION) */}
       {/* =================================================================== */}
-      <div className="absolute bottom-2.5 sm:bottom-3.5 left-2.5 sm:left-3.5 right-10 sm:right-12 z-20 pointer-events-auto">
+      <div className={`absolute bottom-2.5 sm:bottom-3.5 left-2.5 sm:left-3.5 ${showCastingScore || castingScore !== undefined ? 'right-20 sm:right-24' : 'right-10 sm:right-12'} z-20 pointer-events-auto`}>
         <h3 className="font-editorial text-[13px] min-[380px]:text-[14px] sm:text-[16px] md:text-[18px] font-bold text-white tracking-tight sm:tracking-normal leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] whitespace-normal break-words">
           {preserveFullName ? displayName : cleanDisplayName}
         </h3>
@@ -348,6 +352,23 @@ export const UnifiedVideoCardOverlay: React.FC<UnifiedVideoCardOverlayProps> = (
           </p>
         )}
       </div>
+
+      {/* =================================================================== */}
+      {/* BAS DROITE : NOTE MOYENNE EN POURCENTAGE (PAGE CASTING)             */}
+      {/* =================================================================== */}
+      {(showCastingScore || castingScore !== undefined) && (
+        <div className="absolute bottom-2.5 sm:bottom-3.5 right-2.5 sm:right-3.5 z-20 pointer-events-auto">
+          <div 
+            className="px-2 sm:px-2.5 py-1 rounded-full bg-black/65 backdrop-blur-md border border-white/20 shadow-md flex items-center gap-1 text-white"
+            title="Note moyenne d'évaluation du public"
+          >
+            <Star className="w-3 h-3 text-[#FFE7A3] fill-[#FFE7A3]" />
+            <span className="text-[11px] sm:text-xs font-bold text-white tracking-tight">
+              {castingScore ?? resonanceScore ?? 91}%
+            </span>
+          </div>
+        </div>
+      )}
 
       {/* =================================================================== */}
       {/* VOLETS DÉPLIANTS INTERNES : LA QUESTION OU LE FAIT                  */}

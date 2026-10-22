@@ -280,8 +280,6 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
                 onTogglePlay={() => setIsPlaying(prev => !prev)}
                 isMuted={isMuted}
                 onToggleMute={() => setIsMuted(prev => !prev)}
-                resonanceScore={companyResonances[currentCompany.id]}
-                onOpenResonance={() => setResonanceTargetCompany(currentCompany)}
                 questionText={currentCompany.manifestoQuestion}
                 factText={`${currentCompany.tagline} — ${currentCompany.description}`}
                 onOpenProfile={() => {
@@ -367,8 +365,6 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
                 onTogglePlay={() => setIsStakeholderPlaying(prev => !prev)}
                 isMuted={isStakeholderMuted}
                 onToggleMute={() => setIsStakeholderMuted(prev => !prev)}
-                resonanceScore={stakeholderResonances[currentStakeholder.id]}
-                onOpenResonance={() => setResonanceTargetStakeholder(currentStakeholder)}
                 questionText={currentStakeholder.question}
                 factText={`${currentStakeholder.roleCategory} : ${currentStakeholder.roleDetail || 'partenaire de transmission et d’action territoriale'}`}
                 onOpenProfile={() => {

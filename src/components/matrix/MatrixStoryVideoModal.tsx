@@ -158,6 +158,8 @@ export const MatrixStoryVideoModal: React.FC<MatrixStoryVideoModalProps> = ({
           onToggleMute={toggleMute}
           resonanceScore={resonancePct}
           onOpenResonance={() => setIsResonanceModalOpen(true)}
+          showCastingScore={true}
+          castingScore={resonancePct || 91}
           questionText={storyQuestion || person.invitationStory || "Quelle mémoire choisissons-nous de transmettre aux générations qui viennent ?"}
           factText={person.quote || person.teaserPitch || "Passeur d'un savoir vivant transmis à sa communauté."}
           onOpenProfile={() => {
