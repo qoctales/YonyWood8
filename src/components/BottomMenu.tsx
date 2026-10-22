@@ -68,7 +68,7 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
     },
     {
       id: 'duo',
-      label: 'Duo',
+      label: 'Miroir',
       icon: DuocumentairesTvIcon, // deux écrans (télé divisée en deux)
       isActive: isDuoActive,
       onClick: () => onNavigate({ type: 'duo_feed' }),
