@@ -163,7 +163,7 @@ export const LandingScreen: React.FC<LandingScreenProps> = ({ onNavigate }) => {
                       : 'bg-transparent text-stone-600 group-hover:bg-stone-100/80'
                   }`}
                 >
-                  <Icon className="w-5 h-5 transition-transform duration-200" strokeWidth={1.6} />
+                  <Icon className="w-5 h-5 transition-transform duration-200" strokeWidth={1.75} isActive={isActive} />
                 </div>
 
                 {/* Libellé textuel */}

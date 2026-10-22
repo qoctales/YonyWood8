@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" role="img" aria-label="Duos">
+  <title>Duos</title>
+  <circle cx="24" cy="24" r="24" fill="#A2482B"/>
+  <g transform="translate(12 12)" fill="none" stroke="#FFFFFF" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="5" width="18" height="9" rx="2"/>
+    <path d="M12 5v9"/>
+    <circle cx="7.500" cy="9.500" r="1" fill="#FFFFFF" stroke="none"/>
+    <circle cx="16.500" cy="9.500" r="1" fill="#FFFFFF" stroke="none"/>
+    <path d="M7 14l-1.500 6M17 14l1.500 6"/>
+  </g>
+</svg>

@@ -154,6 +154,12 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
                     strokeWidth={item.strokeWidth} 
                     isActive={item.isActive}
                   />
+                ) : item.id === 'duo' ? (
+                  <DuocumentairesTvIcon 
+                    className={`${item.iconClassName} transition-transform duration-200`} 
+                    strokeWidth={item.strokeWidth || 1.75} 
+                    isActive={item.isActive}
+                  />
                 ) : (
                   <Icon 
                     className={`${item.iconClassName} transition-transform duration-200`} 
