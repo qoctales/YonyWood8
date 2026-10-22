@@ -47,9 +47,9 @@ const ALL_8_PRODUCTIONS: ProductionItem[] = [
     goalAmount: 10000
   },
   {
-    id: 'investors-builders',
-    title: 'Diasporas <> Makers',
-    posterImage: '/assets/posters/Diasporas < > Makers.jpg',
+    id: 'roots-routes',
+    title: 'Roots <> Routes',
+    posterImage: '/assets/posters/Roots < > Routes.jpg',
     sharePrice: 50,
     totalShares: 200,
     remainingShares: 90,
@@ -91,9 +91,9 @@ const ALL_8_PRODUCTIONS: ProductionItem[] = [
     goalAmount: 10000
   },
   {
-    id: 'coaching-unlimited',
-    title: 'Coach Me <> If You Can',
-    posterImage: '/assets/posters/Coaching < > Unlimited.jpg',
+    id: 'builders-seekers',
+    title: 'Builders <> Seekers',
+    posterImage: '/assets/posters/Builders < > Seekers.png',
     sharePrice: 50,
     totalShares: 200,
     remainingShares: 95,
@@ -267,7 +267,7 @@ export const DemoProductionsSection: React.FC = () => {
           {[
             { id: 'off-1', seller: 'Pascal Cossi', shares: 10, series: 'Other Sights <> Third Eye', price: 50, photo: '/assets/duos/codjo-blind.jpg' },
             { id: 'off-2', seller: 'Koffi', shares: 5, series: 'Fiat Luxe <> Sweet Street', price: 52, photo: '/assets/duos/chef-koffi.jpg' },
-            { id: 'off-3', seller: 'Fatou Diallo', shares: 8, series: 'Diasporas <> Makers', price: 50, photo: '/assets/duos/fatou-diallo.jpg' },
+            { id: 'off-3', seller: 'Fatou Diallo', shares: 8, series: 'Roots <> Routes', price: 50, photo: '/assets/duos/fatou-diallo.jpg' },
           ].map((offer) => (
             <div
               key={offer.id}

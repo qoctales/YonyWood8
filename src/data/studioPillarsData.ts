@@ -89,7 +89,7 @@ export const STUDIO_PILLARS: StudioPillar[] = [
         title: 'Roots ‹ › Routes',
         subtitle: 'L’ancrage ancestral face à la traversée des frontières et des horizons.',
         question: 'L’ancrage dans ses racines ou l’envol sur les routes : où se forge votre véritable identité ?',
-        posterUrl: '/assets/posters/Diasporas < > Makers.jpg',
+        posterUrl: '/assets/posters/Roots < > Routes.jpg',
         videoUrl: STOCK_VIDEOS[2]
       },
       {
@@ -97,7 +97,7 @@ export const STUDIO_PILLARS: StudioPillar[] = [
         title: 'Builders ‹ › Seekers',
         subtitle: 'La rigueur de ceux qui bâtissent face à la quête de ceux qui cherchent le sens.',
         question: 'Bâtir pierre par pierre ou chercher sans cesse l’horizon : quelle trace laissez-vous au monde ?',
-        posterUrl: '/assets/posters/Investors < > Builders.png',
+        posterUrl: '/assets/posters/Builders < > Seekers.png',
         videoUrl: STOCK_VIDEOS[3]
       },
       {

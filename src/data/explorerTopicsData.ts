@@ -102,15 +102,15 @@ const seriesList: ExplorerCatalogItem[] = [
     "iconName": "16-series/dixeat-fiat-luxe"
   },
   {
-    "id": "investors-builders",
+    "id": "roots-routes",
     "category": "series",
-    "title": "Diasporas < > Makers",
-    "subtitle": "Le capital visionnaire face aux bâtisseurs de terrain.",
-    "question": "Comment conciliez-vous la souveraineté économique, la rentabilité et l’impact écologique durable ?",
-    "photoUrl": "/assets/posters/Diasporas < > Makers.jpg",
+    "title": "Roots < > Routes",
+    "subtitle": "L’ancrage ancestral face à la traversée des frontières et des horizons.",
+    "question": "L’ancrage dans ses racines ou l’envol sur les routes : où se forge votre véritable identité ?",
+    "photoUrl": "/assets/posters/Roots < > Routes.jpg",
     "badge": "16 pionniers cooptés",
     "accentColor": "#0284C7",
-    "iconName": "16-series/investors-builders"
+    "iconName": "16-series/roots-routes"
   },
   {
     "id": "other-eyes-sixth-sense",
@@ -124,15 +124,15 @@ const seriesList: ExplorerCatalogItem[] = [
     "iconName": "16-series/other-eyes-sixth-sense"
   },
   {
-    "id": "coaching-unlimited",
+    "id": "builders-seekers",
     "category": "series",
-    "title": "Coach Me < > If You Can",
-    "subtitle": "L’exigence du mentor dans son bureau < > l’envol d’un athlète sur les haies.",
-    "question": "Racontez-nous un moment où vous avez cru que l’obstacle devant vous était trop haut pour être franchi. Qu’avez-vous trouvé en vous ?",
-    "photoUrl": "/assets/posters/Coaching < > Sans Limites.png",
+    "title": "Builders < > Seekers",
+    "subtitle": "La rigueur de ceux qui bâtissent face à la quête de ceux qui cherchent le sens.",
+    "question": "Bâtir pierre par pierre ou chercher sans cesse l’horizon : quelle trace laissez-vous au monde ?",
+    "photoUrl": "/assets/posters/Builders < > Seekers.png",
     "badge": "16 pionniers cooptés",
-    "accentColor": "#EA580C",
-    "iconName": "16-series/coaching-unlimited"
+    "accentColor": "#D97706",
+    "iconName": "16-series/builders-seekers"
   },
   {
     "id": "focus-phd",

@@ -2381,11 +2381,11 @@ export const MATRIX_SERIES_DATA: MatrixSeriesConfig[] = [
     ]
   },
   {
-    seriesId: 'coaching-unlimited',
-    seriesTitle: 'Coaching < > Sans Limites',
-    subtitle: 'L’exigence du mentor dans son bureau < > l’envol d’un athlète sur les haies.',
-    description: 'Entre la forge mentale d’un mentor d’élite au regard perçant et l’explosion physique d’une athlète sur la piste rouge : briser les plafonds de verre.',
-    centralQuestion: 'Le Dépassement',
+    seriesId: 'builders-seekers',
+    seriesTitle: 'Builders < > Seekers',
+    subtitle: 'La rigueur des bâtisseurs dans la matière < > la quête des chercheurs de sens.',
+    description: 'Entre la force bâtisseuse ancrée dans la matière concrète et la quête de sens qui explore sans cesse de nouveaux horizons.',
+    centralQuestion: 'Bâtir & Chercher',
     accentColor: '#D97706',
     pioneers: [
       {

@@ -83,9 +83,9 @@ const PRODUCTIONS: ProductionPoster[] = [
     sharePrice: 50
   },
   {
-    id: 'investors-builders',
-    title: 'Diasporas < > Makers',
-    posterImage: '/assets/posters/Diasporas < > Makers.jpg',
+    id: 'roots-routes',
+    title: 'Roots < > Routes',
+    posterImage: '/assets/posters/Roots < > Routes.jpg',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
     sharePrice: 50
   },
@@ -97,9 +97,9 @@ const PRODUCTIONS: ProductionPoster[] = [
     sharePrice: 50
   },
   {
-    id: 'coaching-unlimited',
-    title: 'Coach Me < > If You Can',
-    posterImage: '/assets/posters/Coaching < > Sans Limites.png',
+    id: 'builders-seekers',
+    title: 'Builders < > Seekers',
+    posterImage: '/assets/posters/Builders < > Seekers.png',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
     sharePrice: 50
   },
@@ -162,8 +162,8 @@ const INITIAL_PEER_OFFERS: PeerOffer[] = [
     sellerId: 'benoit-builder',
     sellerName: 'Benoît',
     sellerPhoto: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80',
-    seriesTitle: 'Diasporas < > Makers',
-    posterImage: '/assets/posters/Diasporas < > Makers.jpg',
+    seriesTitle: 'Roots < > Routes',
+    posterImage: '/assets/posters/Roots < > Routes.jpg',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
     sharesCount: 3,
     unitPrice: 68
@@ -181,11 +181,11 @@ const INITIAL_PEER_OFFERS: PeerOffer[] = [
   },
   {
     id: 'peer-7',
-    sellerId: 'coach-marc-seller',
-    sellerName: 'Marc',
-    sellerPhoto: '/assets/duos/coach-office.jpg',
-    seriesTitle: 'Coach Me < > If You Can',
-    posterImage: '/assets/posters/Coaching < > Sans Limites.png',
+    sellerId: 'builder-kwame-seller',
+    sellerName: 'Kwame',
+    sellerPhoto: '/assets/duos/kwame-mensah.jpg',
+    seriesTitle: 'Builders < > Seekers',
+    posterImage: '/assets/posters/Builders < > Seekers.png',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
     sharesCount: 6,
     unitPrice: 65
@@ -245,9 +245,11 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
     'finagnon-qosqorico': 74, // 182 souscrites (71%)
     'blacks-one-beyond-eve': 80, // 176 souscrites (69%)
     'dixeat-fiat-luxe': 72, // 184 souscrites (72%)
-    'investors-builders': 75, // 181 souscrites (71%)
+    'roots-routes': 75, // 181 souscrites (71%)
+    'investors-builders': 75, // compatibilité
     'other-eyes-sixth-sense': 77, // 179 souscrites (70%)
-    'coaching-unlimited': 79, // 177 souscrites (69%)
+    'builders-seekers': 79, // 177 souscrites (69%)
+    'coaching-unlimited': 79, // compatibilité
     'focus-phd': 76 // 180 souscrites (70%)
   });
 

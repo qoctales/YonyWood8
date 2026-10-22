@@ -25,13 +25,13 @@ const OFFICIAL_SERIES: SeriesItem[] = [
     partsAvailable: 84
   },
   {
-    id: 'investors-builders',
-    title: 'Diasporas <> Makers',
-    posterUrl: '/assets/posters/Diasporas < > Makers.jpg',
-    universes: ['Diasporas', 'Makers'],
+    id: 'roots-routes',
+    title: 'Roots < > Routes',
+    posterUrl: '/assets/posters/Roots < > Routes.jpg',
+    universes: ['Roots', 'Routes'],
     territories: 'Paris, Dakar & Cotonou',
-    tagline: 'L’alliance féconde du capital patient et de la rigueur du terrain.',
-    description: 'Une rencontre sans filtre entre investisseurs d’impact allouant des capitaux sur le temps long et bâtisseurs d’infrastructures ancrés dans le réel de la matière.',
+    tagline: 'L’enracinement ancestral face aux horizons du monde.',
+    description: 'Une rencontre sensible entre l’ancrage profond dans les racines mémorielles et le souffle d’exploration qui pousse à traverser les frontières.',
     partsAvailable: 56
   },
   {
@@ -75,13 +75,13 @@ const OFFICIAL_SERIES: SeriesItem[] = [
     partsAvailable: 48
   },
   {
-    id: 'coaching-unlimited',
-    title: 'Coach Me <> If You Can',
-    posterUrl: '/assets/posters/Coaching < > Unlimited.jpg',
-    universes: ['Coach Me', 'If You Can'],
-    territories: 'Nairobi, Lomé & Genève',
-    tagline: 'L’exigence du dépassement et la discipline du geste.',
-    description: 'De la piste d’athlétisme aux coulisses de décisions complexes, le dialogue intime entre préparation mentale, résilience et quête d’excellence.',
+    id: 'builders-seekers',
+    title: 'Builders < > Seekers',
+    posterUrl: '/assets/posters/Builders < > Seekers.png',
+    universes: ['Builders', 'Seekers'],
+    territories: 'Cotonou, Kigali & Paris',
+    tagline: 'La rigueur des bâtisseurs et la quête de ceux qui cherchent le sens.',
+    description: 'La rencontre sans filtre entre la force bâtisseuse ancrée dans la matière concrète et la quête de sens qui repousse sans cesse les horizons.',
     partsAvailable: 92
   },
   {

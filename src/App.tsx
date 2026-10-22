@@ -149,7 +149,11 @@ export default function App() {
       if (saved) {
         let parsed = JSON.parse(saved);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          parsed = parsed.map((id: string) => id === 'safer-healer' ? 'focus-phd' : id);
+          parsed = parsed.map((id: string) => {
+            if (id === 'safer-healer') return 'focus-phd';
+            if (id === 'coaching-unlimited') return 'builders-seekers';
+            return id;
+          });
           return parsed;
         }
       }

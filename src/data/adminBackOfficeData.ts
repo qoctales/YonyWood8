@@ -531,9 +531,9 @@ export const INITIAL_SERIES_ENVELOPES: SeriesEconomicEnvelope[] = [
     configHistory: []
   },
   {
-    seriesId: 'coaching-unlimited',
-    seriesTitle: 'Coaching < > Sans Limites',
-    coverImage: '/assets/posters/Coaching < > Sans Limites.png',
+    seriesId: 'builders-seekers',
+    seriesTitle: 'Builders < > Seekers',
+    coverImage: '/assets/posters/Builders < > Seekers.png',
     totalRaised: 11500,
     distributableEnvelope: 6900,
     distributedAmount: 1450,
@@ -793,8 +793,8 @@ export const INITIAL_COOPTATIONS: CooptationItem[] = [
   },
   {
     id: 'coopt-5',
-    seriesId: 'coaching-unlimited',
-    seriesTitle: 'Coaching < > Sans Limites',
+    seriesId: 'builders-seekers',
+    seriesTitle: 'Builders < > Seekers',
     referentId: 'usr-admin-romeo',
     referentName: 'Romeo Nonvide',
     referentRole: 'Référent de Cooptation',

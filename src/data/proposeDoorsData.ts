@@ -103,16 +103,16 @@ const SERIES_SUBJECTS: ProposeSubject[] = [
     bgGradient: 'from-amber-500 via-yellow-700 to-stone-900'
   },
   {
-    id: 'investors-builders',
-    title: 'Diasporas < > Makers',
-    subtitle: 'Le capital visionnaire des diasporas face aux bâtisseurs de terrain.',
-    synopsis: 'La confrontation constructive entre visionnaires du capital et bâtisseurs de terrain. Comment aligner la souveraineté économique, le courage d’entreprendre et l’impact écologique concret.',
-    question: 'Comment concilier la vision économique d’avenir et l’impact réel sur le terrain ?',
+    id: 'roots-routes',
+    title: 'Roots < > Routes',
+    subtitle: 'L’ancrage ancestral face à la traversée des frontières et des horizons.',
+    synopsis: 'La confrontation sensible entre l’enracinement profond dans la mémoire des terroirs et l’élan d’aller à la rencontre du vaste monde.',
+    question: 'L’ancrage dans ses racines ou l’envol sur les routes : où se forge votre véritable identité ?',
     videoUrl: STOCK_VIDEOS[0],
-    posterUrl: '/assets/posters/Diasporas < > Makers.jpg',
+    posterUrl: '/assets/posters/Roots < > Routes.jpg',
     actionLabel: 'Choisir cette série',
     doorId: 'series',
-    iconName: '16-series/investors-builders',
+    iconName: '16-series/roots-routes',
     accentColor: '#0284C7',
     glowColor: 'rgba(2, 132, 199, 0.65)',
     bgGradient: 'from-sky-600 via-blue-800 to-stone-900'
@@ -133,19 +133,19 @@ const SERIES_SUBJECTS: ProposeSubject[] = [
     bgGradient: 'from-purple-600 via-indigo-800 to-stone-900'
   },
   {
-    id: 'coaching-unlimited',
-    title: 'Coach Me < > If You Can',
-    subtitle: 'L’exigence du mentor dans son bureau < > l’envol d’un athlète sur les haies.',
-    synopsis: 'Dans le silence stratégique d’un bureau où s’élabore la transformation intérieure et sur la piste rouge où une athlète franchit la haie : briser les limites de l’impossible.',
-    question: 'Quelle limite que vous croyiez infranchissable avez-vous réussi à briser grâce à l’exigence intérieure ?',
+    id: 'builders-seekers',
+    title: 'Builders < > Seekers',
+    subtitle: 'La rigueur de ceux qui bâtissent face à la quête de ceux qui cherchent le sens.',
+    synopsis: 'La confrontation féconde entre ceux qui bâtissent pierre par pierre dans la matière et ceux qui cherchent sans cesse l’horizon et le sens profond.',
+    question: 'Bâtir pierre par pierre ou chercher sans cesse l’horizon : quelle trace laissez-vous au monde ?',
     videoUrl: STOCK_VIDEOS[2],
-    posterUrl: '/assets/posters/Coaching < > Sans Limites.png',
+    posterUrl: '/assets/posters/Builders < > Seekers.png',
     actionLabel: 'Choisir cette série',
     doorId: 'series',
-    iconName: '16-series/coaching-unlimited',
-    accentColor: '#EA580C',
-    glowColor: 'rgba(234, 88, 12, 0.65)',
-    bgGradient: 'from-orange-600 via-red-700 to-stone-900'
+    iconName: '16-series/builders-seekers',
+    accentColor: '#D97706',
+    glowColor: 'rgba(217, 119, 6, 0.65)',
+    bgGradient: 'from-amber-600 via-orange-700 to-stone-900'
   },
   {
     id: 'focus-phd',

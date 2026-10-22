@@ -543,6 +543,9 @@ export const ALL_SERIES_TEAMS: Record<string, SeriesTeamBundle> = {
   }
 };
 
+ALL_SERIES_TEAMS['builders-seekers'] = ALL_SERIES_TEAMS['coaching-unlimited'];
+ALL_SERIES_TEAMS['roots-routes'] = ALL_SERIES_TEAMS['investors-builders'];
+
 export const getSeriesCredits = (seriesId: string, duoTitle?: string): SequenceCredits => {
   const team = ALL_SERIES_TEAMS[seriesId] || ALL_SERIES_TEAMS['jesus-legba'];
 

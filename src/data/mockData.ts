@@ -440,13 +440,13 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
   {
     id: 'investors-builders',
     slug: 'investors-builders',
-    title: 'Diasporas <> Makers',
-    subtitle: 'Racontez le moment où un lieu a changé votre façon de construire vos rêves.',
-    centralQuestion: 'Racontez le moment où un lieu a changé votre façon de construire vos rêves.',
-    shortSynopsis: 'Entre l’audace du capital patient et la rigueur du terrain, une rencontre sans filtre entre investisseurs d’impact et bâtisseurs d’infrastructures.',
-    description: 'D’un côté, ceux qui allouent des capitaux, évaluent les risques et parient sur des visions à long terme à travers les diasporas. De l’autre, ceux qui conçoivent, bâtissent et transforment la matière au quotidien (Makers). Diasporas <> Makers explore l’alliance féconde et la confiance nécessaire entre investisseurs d’impact et bâtisseurs de terrain. Comment accorder le temps long du capital avec l’urgence de la matière ? Une réflexion profonde sur la création de valeur partagée et la souveraineté économique.',
-    coverImage: '/assets/posters/Diasporas < > Makers.jpg',
-    posterUrl: '/assets/posters/Diasporas < > Makers.jpg',
+    title: 'Roots <> Routes',
+    subtitle: 'L’ancrage ancestral face à la traversée des frontières et des horizons.',
+    centralQuestion: 'L’ancrage dans ses racines ou l’envol sur les routes : où se forge votre véritable identité ?',
+    shortSynopsis: 'Une rencontre sensible entre l’ancrage profond dans les racines mémorielles et le souffle d’exploration qui pousse à traverser les frontières.',
+    description: 'D’un côté, la transmission fidèle des racines, la mémoire des terroirs et la préservation des ancrages ancestraux (Roots). De l’autre, l’itinérance, le passage des frontières et la construction d’horizons nouveaux au fil des routes (Routes). Roots <> Routes explore la tension féconde entre appartenance et liberté nomade.',
+    coverImage: '/assets/posters/Roots < > Routes.jpg',
+    posterUrl: '/assets/posters/Roots < > Routes.jpg',
     teaserVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
     teaserDuration: '1:35',
     universes: [
@@ -616,29 +616,29 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
     territories: ['Ganvié', 'Cotonou', 'Ouidah', 'Abomey']
   },
   {
-    id: 'coaching-unlimited',
-    slug: 'coaching-unlimited',
-    title: 'Coach Me <> If You Can',
-    subtitle: 'Racontez un moment où quelqu’un vous a permis d’entrevoir un autre possible.',
-    centralQuestion: 'Racontez un moment où quelqu’un vous a permis d’entrevoir un autre possible.',
-    shortSynopsis: 'Dans le silence stratégique d’un bureau où s’élabore la transformation intérieure et sur la piste rouge où une athlète saute une haie vers l’infini : briser les limites de l’impossible.',
-    description: 'D’un côté, Coach Marc, mentor d’élite au regard affûté dans son bureau tapissé de livres, qui déverrouille le potentiel mental et psychologique des bâtisseurs (Coach Me). De l’autre côté, Aïcha Lagat, athlète en pleine course franchissant une haie avec une puissance féline et un dépassement total de soi (If You Can). Deux énergies complémentaires qui prouvent que chaque obstacle franchi sur le terrain a d’abord été apprivoisé dans la forge de l’esprit.',
-    coverImage: '/assets/posters/Coaching < > Sans Limites.png',
-    posterUrl: '/assets/posters/Coaching < > Sans Limites.png',
+    id: 'builders-seekers',
+    slug: 'builders-seekers',
+    title: 'Builders <> Seekers',
+    subtitle: 'Bâtir pierre par pierre ou chercher sans cesse l’horizon : quelle trace laissez-vous au monde ?',
+    centralQuestion: 'Bâtir pierre par pierre ou chercher sans cesse l’horizon : quelle trace laissez-vous au monde ?',
+    shortSynopsis: 'La rigueur de ceux qui bâtissent dans le réel et la matière face à la quête de ceux qui cherchent le sens et l’horizon.',
+    description: 'D’un côté, ceux qui conçoivent, structurent et assemblent pierre par pierre les piliers du monde concret (Builders). De l’autre, ceux qui explorent l’inconnu, interrogent les limites et cherchent le sens profond de chaque entreprise humaine (Seekers). Une traversée captivante entre la solidité de la construction et la flamme de la recherche.',
+    coverImage: '/assets/posters/Builders < > Seekers.png',
+    posterUrl: '/assets/posters/Builders < > Seekers.png',
     teaserVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
     teaserDuration: '1:24',
     universes: [
       {
-        name: 'Coach Me',
-        tagline: 'La clarté stratégique, l’écoute exigeante et l’éveil des géants',
-        description: 'L’intimité du cabinet où l’on déconstruit les peurs, où l’on aligne la volonté et où naît la discipline des champions.',
-        territory: 'Paris, Cotonou & Montréal'
+        name: 'Builders',
+        tagline: 'L’ancrage dans la matière, la structure et la force bâtisseuse',
+        description: 'Bâtisseurs, ingénieurs et architectes qui transforment le monde concret avec rigueur.',
+        territory: 'Cotonou, Kigali & Paris'
       },
       {
-        name: 'If You Can',
-        tagline: 'L’effort brut, le franchissement d’obstacles et la transcendance du corps',
-        description: 'La piste de course, le cœur qui bat à 180 pulsations, le saut au-dessus de la haie et le refus viscéral d’abandonner.',
-        territory: 'Nairobi, Dakar & Lausanne'
+        name: 'Seekers',
+        tagline: 'La quête de sens, l’exploration de l’horizon et la soif de transcendance',
+        description: 'Chercheurs, philosophes et explorateurs guidés par la soif de relier le visible à l’invisible.',
+        territory: 'Paris, Dakar & Monde'
       }
     ],
     effigies: [
@@ -2625,8 +2625,8 @@ export const DUOS: Duo[] = [
   {
     id: 'duo-investors-builders-01',
     slug: 'duo-investors-builders-01',
-    documentaryId: 'investors-builders',
-    documentaryTitle: 'Diasporas <> Makers',
+    documentaryId: 'roots-routes',
+    documentaryTitle: 'Roots <> Routes',
     episodeNumber: 'ÉPISODE 01',
     protagonistA: PROTAGONISTS.find(p => p.id === 'fatou-diallo') || PROTAGONISTS[0],
     protagonistB: PROTAGONISTS.find(p => p.id === 'kwame-mensah') || PROTAGONISTS[1],
@@ -2635,7 +2635,7 @@ export const DUOS: Duo[] = [
     centralQuestion: 'Racontez le moment où un lieu a changé votre façon de construire vos rêves.',
     quoteA: '« Le jour où j’ai signé ce premier financement pour l’atelier sans garantie bancaire, j’ai compris que ma responsabilité n’était pas de me protéger, mais de faire confiance. »',
     quoteB: '« Quand la voûte en terre crue a résisté à la première tornade, j’ai su que nos mains portaient une force que nulle machine ne peut remplacer. »',
-    coverImage: '/assets/posters/Diasporas < > Makers.jpg',
+    coverImage: '/assets/posters/Roots < > Routes.jpg',
     storyA: (PROTAGONISTS.find(p => p.id === 'fatou-diallo') || PROTAGONISTS[0]).stories[0],
     storyB: (PROTAGONISTS.find(p => p.id === 'kwame-mensah') || PROTAGONISTS[1]).stories[0],
     editorialReflection: 'Entre l’encre des contrats et la poussière des chantiers, la véritable valeur ne naît pas dans le calcul du profit, mais dans l’engagement réciproque de bâtir ce qui perdure.'
@@ -2661,8 +2661,8 @@ export const DUOS: Duo[] = [
   {
     id: 'duo-coaching-unlimited-01',
     slug: 'duo-coaching-unlimited-01',
-    documentaryId: 'coaching-unlimited',
-    documentaryTitle: 'Coach Me <> If You Can',
+    documentaryId: 'builders-seekers',
+    documentaryTitle: 'Builders <> Seekers',
     episodeNumber: 'ÉPISODE 01',
     protagonistA: {
       id: 'coach-marc',
@@ -2678,8 +2678,8 @@ export const DUOS: Duo[] = [
       videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
       quote: '« Chaque barrière mentale que l’on fait tomber dans le calme d’un bureau déverrouille dix victoires sur le terrain. »',
       bio: 'Stratège de la haute performance humaine dans son bureau feutré.',
-      universeTag: 'Coach Me',
-      centralQuestion: 'Comment forger une volonté inébranlable sans détruire la vulnérabilité ?',
+      universeTag: 'Builders',
+      centralQuestion: 'Comment bâtir des œuvres durables sans perdre de vue la quête de sens ?',
       storiesCount: 4,
       transmissionsCount: 3,
       projectsCount: 2,
@@ -2711,7 +2711,7 @@ export const DUOS: Duo[] = [
       videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
       quote: '« La haie n’est pas un mur : c’est une invitation à voler une fraction de seconde de plus. »',
       bio: 'Athlète olympique en plein envol au-dessus des haies.',
-      universeTag: 'If You Can',
+      universeTag: 'Seekers',
       centralQuestion: 'Jusqu’où le corps peut-il obéir à la soif infinie de transcendance ?',
       storiesCount: 5,
       transmissionsCount: 2,
@@ -2735,7 +2735,7 @@ export const DUOS: Duo[] = [
     centralQuestion: 'Racontez un moment où quelqu’un vous a permis d’entrevoir un autre possible.',
     quoteA: '« Ce n’est jamais la hauteur de l’objectif qui paralyse, c’est le bruit de nos propres doutes. Dans ce bureau, on fait taire le vacarme pour entendre sa vraie puissance. »',
     quoteB: '« Quand tu es lancée à pleine vitesse et que la haie se dresse, tu ne peux plus hésiter. Tu dois faire confiance à ton impulsion et bondir. »',
-    coverImage: '/assets/posters/Coaching < > Sans Limites.png',
+    coverImage: '/assets/posters/Builders < > Seekers.png',
     storyA: {
       id: 'story-coach-marc-01',
       title: 'Le silence avant la décision',
