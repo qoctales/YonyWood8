@@ -560,15 +560,21 @@ export const YonywoodDefinitiveLogo: React.FC<{ className?: string }> = ({
 };
 
 /**
- * DirectorChairIcon:
- * Symbole « Studio » : Fauteuil de réalisateur officiel YonyWood,
- * directement calibré sur la planche d'exploration (Variante 2/6 et exemple barre de nav) :
- * montants verticaux fins, dossier en toile tendue AVEC COULEUR/REMPLISSAGE PLEIN,
- * accoudoirs extérieurs dégagés, assise nette et piétement ciseau en X.
+ * DirectorChairIcon (StudioIcon / studio-contour):
+ * Symbole officiel « Studio » de la barre de navigation :
+ * Fauteuil de réalisateur épuré en contour fin (toile rectangulaire incurvée,
+ * montants verticaux, traverse d'assise et piétement ciseau en X).
+ * En mode actif : blanc pur (#FFFFFF) au cœur de la capsule terracotta (#A2482B).
+ * En mode inactif : gris discret (#6E6254 / text-stone-600).
  */
-export const DirectorChairIcon: React.FC<IconProps> = ({ 
+export interface StudioChairIconProps extends IconProps {
+  isActive?: boolean;
+}
+
+export const DirectorChairIcon: React.FC<StudioChairIconProps> = ({ 
   className = 'w-5 h-5',
-  strokeWidth = 1.75 
+  strokeWidth = 1.75,
+  isActive
 }) => {
   return (
     <svg 
@@ -578,29 +584,18 @@ export const DirectorChairIcon: React.FC<IconProps> = ({
       strokeWidth={strokeWidth} 
       strokeLinecap="round" 
       strokeLinejoin="round" 
-      className={className}
+      className={`${isActive === true ? 'text-white' : isActive === false ? 'text-[#6E6254]' : ''} ${className}`.trim()}
       aria-hidden="true"
     >
-      {/* Montants verticaux arrière (dépassent légèrement en haut avec petits embouts) */}
-      <line x1="7" y1="3" x2="7" y2="13.5" />
-      <line x1="17" y1="3" x2="17" y2="13.5" />
-
-      {/* Dossier en toile tendue - AVEC COULEUR PLEINE (fill="currentColor") comme demandé */}
-      <rect x="7" y="4.5" width="10" height="4.5" rx="0.5" fill="currentColor" />
-
-      {/* Accoudoirs extérieurs gauche et droite (espace central bien dégagé) */}
-      <line x1="3.5" y1="10" x2="7" y2="10" />
-      <line x1="17" y1="10" x2="20.5" y2="10" />
-
-      {/* Barre d'assise horizontale */}
-      <line x1="5" y1="13.5" x2="19" y2="13.5" />
-
-      {/* Piétement en X (ciseaux de chaise de réalisateur) */}
-      <line x1="7" y1="13.5" x2="17" y2="21.5" />
-      <line x1="17" y1="13.5" x2="7" y2="21.5" />
+      <title>Studio</title>
+      <rect x="5" y="3.5" width="14" height="4.5" rx="1" />
+      <path d="M 6.5 8 L 6.5 14 M 17.5 8 L 17.5 14 M 4.5 14 L 19.5 14 M 7 14 L 17.5 21 M 17 14 L 6.5 21" />
     </svg>
   );
 };
+
+export const StudioChairIcon = DirectorChairIcon;
+export const StudioIcon = DirectorChairIcon;
 
 /**
  * FilmReelIcon:

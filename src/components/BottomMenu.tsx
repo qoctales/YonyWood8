@@ -160,6 +160,12 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
                     strokeWidth={item.strokeWidth || 1.75} 
                     isActive={item.isActive}
                   />
+                ) : item.id === 'studio' ? (
+                  <DirectorChairIcon 
+                    className={`${item.iconClassName} transition-transform duration-200`} 
+                    strokeWidth={item.strokeWidth || 1.75} 
+                    isActive={item.isActive}
+                  />
                 ) : (
                   <Icon 
                     className={`${item.iconClassName} transition-transform duration-200`} 

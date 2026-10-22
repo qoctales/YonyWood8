@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" role="img" aria-label="Studio">
+  <title>Studio</title>
+  <circle cx="24" cy="24" r="24" fill="#A2482B"/>
+  <g transform="translate(12 12)" fill="none" stroke="#FFFFFF" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="5" y="3.500" width="14" height="4.500" rx="1"/>
+    <path d="M6.500 8v6M17.500 8v6M4.500 14h15M7 14l10.500 7M17 14L6.500 21"/>
+  </g>
+</svg>
