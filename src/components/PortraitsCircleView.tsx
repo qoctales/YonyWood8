@@ -4,9 +4,9 @@ import {
   RotateCw, 
   X,
   MessageSquare,
-  Share2,
   Send
 } from 'lucide-react';
+import { ShareIcon } from './ShareIcon';
 import { CompanyEntity, CompanyStakeholder } from '../data/companyPortraitsData';
 import { ResonanceModal } from './ResonanceModal';
 import { UnifiedVideoCardOverlay } from './UnifiedVideoCardOverlay';
@@ -383,7 +383,7 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
                 title={`Partager l'espace Lumière de ${curOrg.companyName}`}
                 aria-label={`Partager l'espace Lumière de ${curOrg.companyName}`}
               >
-                <Share2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[1.8] transition-colors" />
+                <ShareIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-colors" />
               </button>
             </div>
           )}

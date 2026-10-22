@@ -54,16 +54,12 @@ import {
   Star,
   Award,
   ReceiptText,
-  GitBranch,
-  Share2,
-  MoreVertical,
-  MoreHorizontal,
-  Flag,
-  Ban
+  GitBranch
 } from 'lucide-react';
 import { useAuth } from '../services/authContext';
 import { AuthModal } from './AuthModal';
 import { ShareIcon } from './ShareIcon';
+import { VideoCardShareModal } from './VideoCardShareModal';
 import { 
   ProfileSoloIcon, 
   TvPlayerIcon,
@@ -1158,6 +1154,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
   // Modale de Partage Réseaux Sociaux (profil entier ou vidéo spécifique)
   const [isShareModalOpen, setIsShareModalOpen] = useState<boolean>(false);
   const [shareContentType, setShareContentType] = useState<'profile' | 'video'>('profile');
+  const [isVideoCardShareModalOpen, setIsVideoCardShareModalOpen] = useState<boolean>(false);
 
   // Modales d'actions interactives pour le Visiteur
   const [isBuyingSharesModalOpen, setIsBuyingSharesModalOpen] = useState<boolean>(false);
@@ -1632,33 +1629,15 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
     return 'Pascal Cossi';
   }, [targetProtagonist, userFullName, currentUser]);
 
-  // Boutons de navigation verticale du profil dans l'ordre strict requis :
-  // 1. La lignée (LineageGenerationsIcon)
-  // 2. Le parcours de vie (ParcoursDeVieIcon)
-  // 3. Les produits et services (ShoppingBag)
-  // 4. Les projets (Sprout)
-  // 5. Les besoins (BesoinsHandsIcon)
+  // Boutons de navigation verticale du profil dans l'ordre strict requis (la lignée est désormais dans l'en-tête de page) :
+  // 1. Le parcours de vie (ParcoursDeVieIcon)
+  // 2. Les produits et services (ProduitsServicesIcon)
+  // 3. Les projets & initiatives (ProjetsIcon)
+  // 4. Les besoins (BesoinsHandsIcon)
+  // 5. Partager la vidéo spécifique (ShareIcon)
   const profileCategoryActionButtons = useMemo(() => (
     <div className="flex flex-col items-center gap-1.5 sm:gap-2">
-      {/* 1. La lignée (accès direct à la page / frise dédiée) */}
-      <button
-        type="button"
-        onClick={(e) => {
-          e.stopPropagation();
-          setShowLineageFrise(true);
-        }}
-        className={`w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-xl border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
-          showLineageFrise
-            ? 'bg-[#A2482B] border-[#A2482B] text-white shadow-[0_0_12px_rgba(162,72,43,0.6)]'
-            : 'bg-black/50 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white/90 backdrop-blur-md'
-        }`}
-        title="La lignée (transmission & origines)"
-        aria-label="La lignée"
-      >
-        <LineageGenerationsIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" strokeWidth={1.75} />
-      </button>
-
-      {/* 2. Le parcours de vie (cheminement personnel & professionnel) */}
+      {/* 1. Le parcours de vie (cheminement personnel & professionnel) */}
       <button
         type="button"
         onClick={(e) => {
@@ -1677,7 +1656,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
         <ParcoursDeVieIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" strokeWidth={1.75} />
       </button>
 
-      {/* 3. Les produits et services (artisanat, créations & consultations) */}
+      {/* 2. Les produits et services (artisanat, créations & consultations) */}
       <button
         type="button"
         onClick={(e) => {
@@ -1696,7 +1675,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
         <ProduitsServicesIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" strokeWidth={1.75} />
       </button>
 
-      {/* 4. Les projets (initiatives, constructions & transmissions) */}
+      {/* 3. Les projets (initiatives, constructions & transmissions) */}
       <button
         type="button"
         onClick={(e) => {
@@ -1715,7 +1694,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
         <ProjetsIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" strokeWidth={1.75} />
       </button>
 
-      {/* 5. Les besoins (besoins exprimés, appels d'entraide & partenariats) */}
+      {/* 4. Les besoins (besoins exprimés, appels d'entraide & partenariats) */}
       <button
         type="button"
         onClick={(e) => {
@@ -1734,7 +1713,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
         <BesoinsHandsIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" strokeWidth={1.75} />
       </button>
 
-      {/* 6. Partager la vidéo spécifique (juste en dessous des besoins) */}
+      {/* 5. Partager la vidéo spécifique (ouvre la modale style YouTube : sauvegarder, partager, pas intéressé, signaler) */}
       <button
         type="button"
         onClick={(e) => {
@@ -1745,7 +1724,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
         title="Partager cette vidéo"
         aria-label="Partager cette vidéo"
       >
-        <Share2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
+        <ShareIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
       </button>
     </div>
   ), [activeCategory, showLineageFrise]);
@@ -1756,10 +1735,9 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
     setIsShareModalOpen(true);
   };
 
-  // Partager la vidéo spécifique actuellement affichée
+  // Partager la vidéo spécifique actuellement affichée (ouvre le menu YouTube avec sauvegarde, partage, masquage et signalement)
   const handleShareVideo = () => {
-    setShareContentType('video');
-    setIsShareModalOpen(true);
+    setIsVideoCardShareModalOpen(true);
   };
 
   // Items actifs dans les 4 catégories
@@ -2023,14 +2001,29 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
               <MessageSquare className="w-4 h-4 stroke-[1.8] transition-colors" />
             </button>
 
-            {/* Partage de la page portrait : juste à côté de l'icône messagerie */}
+            {/* La lignée (transmission & origines) : à côté du contact, petit carré arrondi assorti */}
+            <button
+              onClick={() => setShowLineageFrise(prev => !prev)}
+              id="btn-profile-lineage"
+              className={`w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-xl border flex items-center justify-center transition-all shadow-xs cursor-pointer active:scale-95 shrink-0 ${
+                showLineageFrise
+                  ? 'bg-[#A2482B] border-[#A2482B] text-white shadow-xs'
+                  : 'bg-white hover:bg-[#A2482B] border-stone-200 hover:border-[#A2482B] text-stone-700 hover:text-white'
+              }`}
+              title={showLineageFrise ? "Masquer la lignée" : "Voir la lignée (transmission & origines)"}
+              aria-label="La lignée"
+            >
+              <LineageGenerationsIcon className="w-4 h-4 transition-colors" strokeWidth={1.75} />
+            </button>
+
+            {/* Partage de la page portrait : juste à côté de l'icône lignée et messagerie */}
             <button
               onClick={handleShareProfile}
               id="btn-profile-share-page"
               className="w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-xl bg-white hover:bg-[#A2482B] border border-stone-200 hover:border-[#A2482B] text-stone-700 hover:text-white flex items-center justify-center transition-all shadow-xs cursor-pointer active:scale-95 shrink-0"
               title={`Partager la page de ${profileDisplayName || 'Roméo'}`}
             >
-              <Share2 className="w-4 h-4 stroke-[1.8] transition-colors" />
+              <ShareIcon className="w-4 h-4 transition-colors" />
             </button>
 
             {/* Petite diapositive carrée épurée avec la photo de la personne (sans icône) */}
@@ -4529,6 +4522,31 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
         initialPercentage={profileResonancePct}
         onRatingSubmitted={(pct) => {
           setProfileResonancePct(pct);
+        }}
+      />
+
+      {/* Modale de partage vidéo style YouTube (enregistrer dans une liste, partager, pas intéressé, signaler) */}
+      <VideoCardShareModal
+        isOpen={isVideoCardShareModalOpen}
+        onClose={() => setIsVideoCardShareModalOpen(false)}
+        videoTitle={currentSimulationItem?.title || profileDisplayName || 'cette vidéo'}
+        videoId={currentSimulationItem?.id || `portrait-video-${activeCategory}-${currentCategorySafeIndex}`}
+        shareUrl={
+          typeof window !== 'undefined'
+            ? `${window.location.origin}?protagonist=${protagonistId || 'romeo'}&category=${normalizedCategory}&video=${currentSimulationItem?.id || ''}`
+            : undefined
+        }
+        onSaveToList={(saved) => {
+          setShareToast(saved ? "Vidéo ajoutée à Ma Forêt !" : "Vidéo retirée de votre sélection.");
+          setTimeout(() => setShareToast(null), 3000);
+        }}
+        onNotInterested={() => {
+          setShareToast("Nous recommanderons moins de vidéos similaires.");
+          setTimeout(() => setShareToast(null), 3000);
+        }}
+        onReport={() => {
+          setShareToast("Signalement transmis à l'équipe de modération.");
+          setTimeout(() => setShareToast(null), 3000);
         }}
       />
 

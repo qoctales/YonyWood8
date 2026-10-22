@@ -1937,7 +1937,25 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
             <div 
               className="absolute right-4 sm:right-5 top-[64%] -translate-y-1/2 z-30 flex flex-col items-center gap-2.5 sm:gap-3 pointer-events-auto"
             >
-              {/* 1. Évaluation résonance (Award en Terre Cuite) */}
+              {/* 1. Question (icône livre ouvert) */}
+              <div className="relative group/modalbtn flex items-center">
+                <div className="absolute right-12 top-1/2 -translate-y-1/2 z-40 pointer-events-none opacity-0 group-hover/modalbtn:opacity-100 transition-opacity duration-200 whitespace-nowrap bg-black/90 text-white text-[11px] font-semibold px-2.5 py-1 rounded-lg border border-white/15 shadow-xl">
+                  Découvrir la question
+                </div>
+                <button
+                  id={`modal-btn-question-${modalPerson.id}`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsPersonQuestionModalOpen(true);
+                  }}
+                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0"
+                  title="Découvrir la question"
+                >
+                  <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                </button>
+              </div>
+
+              {/* 2. Évaluation résonance (Award en Terre Cuite) */}
               <div className="relative group/modalbtn flex items-center">
                 <div className="absolute right-12 top-1/2 -translate-y-1/2 z-40 pointer-events-none opacity-0 group-hover/modalbtn:opacity-100 transition-opacity duration-200 whitespace-nowrap bg-black/90 text-white text-[11px] font-semibold px-2.5 py-1 rounded-lg border border-white/15 shadow-xl">
                   {personResonancePct !== null ? `Résonance : ${personResonancePct}%` : "Évaluer la résonance"}
@@ -1956,24 +1974,6 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
                   title={personResonancePct !== null ? `Résonance : ${personResonancePct}%` : "Évaluer la résonance"}
                 >
                   <Award className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-                </button>
-              </div>
-
-              {/* 2. Question (icône livre ouvert) */}
-              <div className="relative group/modalbtn flex items-center">
-                <div className="absolute right-12 top-1/2 -translate-y-1/2 z-40 pointer-events-none opacity-0 group-hover/modalbtn:opacity-100 transition-opacity duration-200 whitespace-nowrap bg-black/90 text-white text-[11px] font-semibold px-2.5 py-1 rounded-lg border border-white/15 shadow-xl">
-                  Découvrir la question
-                </div>
-                <button
-                  id={`modal-btn-question-${modalPerson.id}`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsPersonQuestionModalOpen(true);
-                  }}
-                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0"
-                  title="Découvrir la question"
-                >
-                  <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                 </button>
               </div>
 

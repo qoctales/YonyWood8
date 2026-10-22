@@ -22,10 +22,10 @@ export const ShareIcon: React.FC<ShareIconProps> = ({ className = 'w-4 h-4' }) =
       aria-hidden="true"
     >
       {/* Flèche d'envol ascendante */}
-      <path d="M12 3v11" />
-      <path d="m7.5 7.5 4.5-4.5 4.5 4.5" />
-      {/* Arche d'offrande incurvée et douce */}
-      <path d="M4 14.5c0 3 2.5 5.5 5.5 5.5h5c3 0 5.5-2.5 5.5-5.5" />
+      <path d="M12 4.5v10" />
+      <path d="m8 8.5 4-4 4 4" />
+      {/* Arche d'offrande / Ancre incurvée douce */}
+      <path d="M6.5 14a5.5 5.5 0 0 0 11 0" />
     </svg>
   );
 };

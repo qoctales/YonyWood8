@@ -520,6 +520,9 @@ export const SwipeModeHeritage: React.FC<SwipeModeHeritageProps> = ({
                 onTogglePlay={() => togglePlay3()}
                 isMuted={isMuted}
                 onToggleMute={toggleMute}
+                isCastingPage={true}
+                showCastingScore={true}
+                castingScore={personResonancePct || 91}
                 resonanceScore={personResonancePct}
                 onOpenResonance={() => onOpenResonanceModal(effectivePerson)}
                 questionText={

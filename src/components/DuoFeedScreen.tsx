@@ -16,8 +16,6 @@ import {
   LayoutGrid,
   ArrowRightLeft,
   Flag,
-  MoreVertical,
-  MoreHorizontal,
   Ban
 } from 'lucide-react';
 import { celestialAudio } from '../utils/celestialAudio';
@@ -30,6 +28,7 @@ import { ProfileSoloIcon, TvPlayerIcon } from './YonywoodBrandIcons';
 import { ShareIcon } from './ShareIcon';
 import { ResonanceModal } from './ResonanceModal';
 import { UnifiedVideoCardOverlay } from './UnifiedVideoCardOverlay';
+import { VideoCardShareModal } from './VideoCardShareModal';
 import { blockVideo, getBlockedVideoIds } from '../utils/blockedContent';
 
 interface DuoFeedScreenProps {
@@ -67,18 +66,13 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
 
   // Résonance et Partage harmonisés (identiques à la modale protagoniste)
   const [resonanceTargetPerson, setResonanceTargetPerson] = useState<Protagonist | null>(null);
+  const [shareModalPerson, setShareModalPerson] = useState<Protagonist | null>(null);
   const [personResonances, setPersonResonances] = useState<Record<string, number>>({});
   const [copiedPersonId, setCopiedPersonId] = useState<string | null>(null);
 
   const handleSharePerson = (person: Protagonist, e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
-    const shareUrl = `${window.location.origin}?protagonist=${person.id}`;
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(shareUrl).then(() => {
-        setCopiedPersonId(person.id);
-        setTimeout(() => setCopiedPersonId(null), 2000);
-      }).catch(() => {});
-    }
+    setShareModalPerson(person);
   };
 
   useEffect(() => {
@@ -763,58 +757,6 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                         )}
                       </button>
 
-                      {/* 5. Options (...) Signaler / Bloquer */}
-                      <div className="relative">
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setDeckMoreMenuA(prev => !prev);
-                          }}
-                          className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
-                            deckMoreMenuA
-                              ? 'bg-white text-stone-900 border-white'
-                              : 'bg-black/45 hover:bg-stone-800 border-white/20 text-white backdrop-blur-md'
-                          }`}
-                          title="Options : Signaler ou Bloquer"
-                        >
-                          <MoreHorizontal className="w-4 h-4 sm:w-5 sm:h-5" />
-                        </button>
-
-                        {deckMoreMenuA && (
-                          <div 
-                            onClick={(e) => e.stopPropagation()}
-                            className="absolute right-12 bottom-0 z-40 bg-stone-900/95 backdrop-blur-md border border-white/20 rounded-xl p-1.5 shadow-2xl min-w-[160px] space-y-1 animate-in fade-in zoom-in-95 duration-150"
-                          >
-                            <button
-                              type="button"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setDeckMoreMenuA(false);
-                                setCustomReportTarget({ id: pA.id, title: pA.name, type: 'video' });
-                                setIsReportModalOpen(true);
-                              }}
-                              className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs text-stone-200 hover:text-white hover:bg-white/10 transition-colors text-left cursor-pointer"
-                            >
-                              <Flag className="w-3.5 h-3.5 text-amber-400" />
-                              <span>Signaler la vidéo</span>
-                            </button>
-                            <button
-                              type="button"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setDeckMoreMenuA(false);
-                                blockVideo(pA.id);
-                                handleNext();
-                              }}
-                              className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs text-red-300 hover:text-red-200 hover:bg-red-500/20 transition-colors text-left cursor-pointer"
-                            >
-                              <Ban className="w-3.5 h-3.5 text-red-400" />
-                              <span>Bloquer cette vidéo</span>
-                            </button>
-                          </div>
-                        )}
-                      </div>
                     </div>
 
                     {/* BAS : Prénom uniquement */}
@@ -979,58 +921,6 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                         )}
                       </button>
 
-                      {/* 5. Options (...) Signaler / Bloquer */}
-                      <div className="relative">
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setDeckMoreMenuB(prev => !prev);
-                          }}
-                          className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
-                            deckMoreMenuB
-                              ? 'bg-white text-stone-900 border-white'
-                              : 'bg-black/45 hover:bg-stone-800 border-white/20 text-white backdrop-blur-md'
-                          }`}
-                          title="Options : Signaler ou Bloquer"
-                        >
-                          <MoreHorizontal className="w-4 h-4 sm:w-5 sm:h-5" />
-                        </button>
-
-                        {deckMoreMenuB && (
-                          <div 
-                            onClick={(e) => e.stopPropagation()}
-                            className="absolute right-12 bottom-0 z-40 bg-stone-900/95 backdrop-blur-md border border-white/20 rounded-xl p-1.5 shadow-2xl min-w-[160px] space-y-1 animate-in fade-in zoom-in-95 duration-150"
-                          >
-                            <button
-                              type="button"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setDeckMoreMenuB(false);
-                                setCustomReportTarget({ id: pB.id, title: pB.name, type: 'video' });
-                                setIsReportModalOpen(true);
-                              }}
-                              className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs text-stone-200 hover:text-white hover:bg-white/10 transition-colors text-left cursor-pointer"
-                            >
-                              <Flag className="w-3.5 h-3.5 text-amber-400" />
-                              <span>Signaler la vidéo</span>
-                            </button>
-                            <button
-                              type="button"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setDeckMoreMenuB(false);
-                                blockVideo(pB.id);
-                                handleNext();
-                              }}
-                              className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs text-red-300 hover:text-red-200 hover:bg-red-500/20 transition-colors text-left cursor-pointer"
-                            >
-                              <Ban className="w-3.5 h-3.5 text-red-400" />
-                              <span>Bloquer cette vidéo</span>
-                            </button>
-                          </div>
-                        )}
-                      </div>
                     </div>
 
                     {/* BAS : Prénom uniquement */}
@@ -1132,6 +1022,24 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
               ...prev,
               [resonanceTargetPerson.id]: pct
             }));
+          }}
+        />
+      )}
+
+      {/* Modale de partage & signalement pour vue deck */}
+      {shareModalPerson && (
+        <VideoCardShareModal
+          isOpen={Boolean(shareModalPerson)}
+          onClose={() => setShareModalPerson(null)}
+          videoTitle={shareModalPerson.name.split(' ')[0]}
+          videoId={shareModalPerson.id}
+          onReport={() => {
+            setCustomReportTarget({ id: shareModalPerson.id, title: shareModalPerson.name, type: 'video' });
+            setIsReportModalOpen(true);
+          }}
+          onNotInterested={() => {
+            blockVideo(shareModalPerson.id);
+            handleNext();
           }}
         />
       )}

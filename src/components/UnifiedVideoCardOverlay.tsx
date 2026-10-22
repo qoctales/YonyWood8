@@ -1,12 +1,9 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { 
   Award, 
   BookOpen, 
   Sparkles, 
   Star,
-  MoreHorizontal, 
-  Flag, 
-  Ban, 
   Check, 
   Pause, 
   Volume2, 
@@ -14,6 +11,7 @@ import {
 } from 'lucide-react';
 import { TvPlayerIcon, ProfileSoloIcon } from './YonywoodBrandIcons';
 import { ShareIcon } from './ShareIcon';
+import { VideoCardShareModal } from './VideoCardShareModal';
 import { blockVideo } from '../utils/blockedContent';
 
 export interface UnifiedVideoCardOverlayProps {
@@ -35,7 +33,8 @@ export interface UnifiedVideoCardOverlayProps {
   isMuted?: boolean;
   onToggleMute?: () => void;
 
-  // 1. Évaluation (Award)
+  // 1. Évaluation (Award - uniquement sur page casting)
+  isCastingPage?: boolean;
   resonanceScore?: number | null;
   onOpenResonance?: () => void;
   castingScore?: number | null;
@@ -81,6 +80,7 @@ export const UnifiedVideoCardOverlay: React.FC<UnifiedVideoCardOverlayProps> = (
   onTogglePlay,
   isMuted = false,
   onToggleMute,
+  isCastingPage = false,
   resonanceScore,
   onOpenResonance,
   castingScore,
@@ -100,21 +100,8 @@ export const UnifiedVideoCardOverlay: React.FC<UnifiedVideoCardOverlayProps> = (
 }) => {
   const [internalQuestionOpen, setInternalQuestionOpen] = useState(false);
   const [internalFactOpen, setInternalFactOpen] = useState(false);
-  const [showMoreMenu, setShowMoreMenu] = useState(false);
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [feedbackToast, setFeedbackToast] = useState<string | null>(null);
-  const moreMenuRef = useRef<HTMLDivElement>(null);
-
-  // Fermeture automatique du menu 3-points au clic extérieur
-  useEffect(() => {
-    if (!showMoreMenu) return;
-    const handleOutsideClick = (e: MouseEvent) => {
-      if (moreMenuRef.current && !moreMenuRef.current.contains(e.target as Node)) {
-        setShowMoreMenu(false);
-      }
-    };
-    document.addEventListener('mousedown', handleOutsideClick);
-    return () => document.removeEventListener('mousedown', handleOutsideClick);
-  }, [showMoreMenu]);
 
   // Gestion du clic sur Question
   const handleQuestionClick = (e: React.MouseEvent) => {
@@ -138,27 +125,13 @@ export const UnifiedVideoCardOverlay: React.FC<UnifiedVideoCardOverlayProps> = (
     }
   };
 
-  const handleReport = (e: React.MouseEvent) => {
+  // Clic sur l'icône Partager : ouvre la boîte complète Partager / Réseaux / Signaler / Enregistrer
+  const handleShareButtonClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setShowMoreMenu(false);
-    if (onReportVideo) {
-      onReportVideo();
+    if (onShare) {
+      onShare();
     }
-    setFeedbackToast('Vidéo signalée à la modération.');
-    setTimeout(() => setFeedbackToast(null), 2500);
-  };
-
-  const handleBlock = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setShowMoreMenu(false);
-    if (videoId) {
-      blockVideo(videoId);
-    }
-    if (onBlockVideo) {
-      onBlockVideo();
-    }
-    setFeedbackToast('Cette vidéo a été masquée pour votre compte.');
-    setTimeout(() => setFeedbackToast(null), 2500);
+    setIsShareModalOpen(true);
   };
 
   // Prénom ou nom épuré
@@ -177,8 +150,7 @@ export const UnifiedVideoCardOverlay: React.FC<UnifiedVideoCardOverlayProps> = (
       </div>
 
       {/* =================================================================== */}
-      {/* =================================================================== */}
-      {/* HAUT DROITE : LECTEUR VIDÉO (BOUTON ÉLÉGANT LÉGÈREMENT AGRANDI)     */}
+      {/* HAUT DROITE : LECTEUR VIDÉO TÉLÉ VINTAGE & MUET (SANS AUCUN 3-POINTS) */}
       {/* =================================================================== */}
       <div className="absolute top-3 sm:top-3.5 right-3 sm:right-3.5 z-20 pointer-events-auto flex items-center gap-1.5">
         {/* Bouton Muet discret (uniquement si en lecture et fonction fournie) */}
@@ -196,7 +168,7 @@ export const UnifiedVideoCardOverlay: React.FC<UnifiedVideoCardOverlayProps> = (
           </button>
         )}
 
-        {/* Déclencheur lecteur vidéo officiel TvPlayerIcon légèrement augmenté */}
+        {/* Déclencheur lecteur vidéo officiel TvPlayerIcon en haut à droite */}
         <button
           type="button"
           onClick={(e) => {
@@ -212,56 +184,10 @@ export const UnifiedVideoCardOverlay: React.FC<UnifiedVideoCardOverlayProps> = (
             <TvPlayerIcon className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-white transition-transform" strokeWidth={1.7} />
           )}
         </button>
-
-        {/* Menu Options / Modération 3-points discret en haut à droite (...) */}
-        {(onReportVideo || onBlockVideo) && (
-          <div className="relative" ref={moreMenuRef}>
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                setShowMoreMenu(prev => !prev);
-              }}
-              className={`w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-xl border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
-                showMoreMenu
-                  ? 'bg-white text-stone-900 border-white'
-                  : 'bg-black/45 hover:bg-stone-800 border-white/20 text-white backdrop-blur-md'
-              }`}
-              title="Options : Signaler ou Bloquer"
-            >
-              <MoreHorizontal className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-            </button>
-
-            {/* Menu flottant Signaler / Bloquer */}
-            {showMoreMenu && (
-              <div 
-                onClick={(e) => e.stopPropagation()}
-                className="absolute right-0 top-10 z-50 bg-stone-900/95 backdrop-blur-md border border-white/20 rounded-xl p-1.5 shadow-2xl min-w-[160px] space-y-1 animate-in fade-in zoom-in-95 duration-150"
-              >
-                <button
-                  type="button"
-                  onClick={handleReport}
-                  className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs text-stone-200 hover:text-white hover:bg-white/10 transition-colors text-left cursor-pointer"
-                >
-                  <Flag className="w-3 h-3 text-amber-400" />
-                  <span>Signaler la vidéo</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={handleBlock}
-                  className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs text-red-300 hover:text-red-200 hover:bg-red-500/20 transition-colors text-left cursor-pointer"
-                >
-                  <Ban className="w-3 h-3 text-red-400" />
-                  <span>Bloquer cette vidéo</span>
-                </button>
-              </div>
-            )}
-          </div>
-        )}
       </div>
 
       {/* =================================================================== */}
-      {/* COLONNE D'ACTIONS VERTICALE (BOUTONS LÉGÈREMENT AGRANDIS ET SOBRES) */}
+      {/* COLONNE D'ACTIONS VERTICALE : Question, Évaluation (Casting), Profil, Partage */}
       {/* =================================================================== */}
       <div 
         className="absolute right-2.5 sm:right-3.5 top-[56%] sm:top-[58%] -translate-y-1/2 z-30 flex flex-col items-center gap-1.5 sm:gap-2 pointer-events-auto"
@@ -271,116 +197,67 @@ export const UnifiedVideoCardOverlay: React.FC<UnifiedVideoCardOverlayProps> = (
           customActionButtons
         ) : (
           <>
-            {/* 1. ÉVALUATION (Award) */}
-        {onOpenResonance && (
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              onOpenResonance();
-            }}
-            className={`w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-xl border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
-              resonanceScore !== null && resonanceScore !== undefined
-                ? 'bg-[#A2482B] border-[#A2482B] text-white shadow-[0_0_10px_rgba(162,72,43,0.5)]'
-                : 'bg-black/45 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white backdrop-blur-md'
-            }`}
-            title={resonanceScore !== null && resonanceScore !== undefined ? `Résonance : ${resonanceScore}%` : 'Évaluer la vidéo'}
-          >
-            <Award className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
-          </button>
-        )}
-
-        {/* 2. LA QUESTION (BookOpen) */}
-        <button
-          type="button"
-          onClick={handleQuestionClick}
-          className={`w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-xl border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
-            internalQuestionOpen
-              ? 'bg-[#FFE7A3] text-stone-900 border-[#FFE7A3] shadow-md'
-              : 'bg-black/45 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white backdrop-blur-md'
-          }`}
-          title="Découvrir la question"
-        >
-          <BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-        </button>
-
-        {/* 3. LE PROFIL (ProfileSoloIcon) */}
-        {onOpenProfile && (
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              onOpenProfile();
-            }}
-            className="w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
-            title={`Voir le profil`}
-          >
-            <ProfileSoloIcon className="w-4 h-4 sm:w-4.5 sm:h-4.5 text-white" />
-          </button>
-        )}
-
-        {/* 5. PARTAGER (ShareIcon) */}
-        {onShare && (
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              onShare();
-            }}
-            className={`w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-xl border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
-              isShareCopied
-                ? 'bg-emerald-600 border-emerald-500 text-white'
-                : 'bg-black/45 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white backdrop-blur-md'
-            }`}
-            title={isShareCopied ? 'Lien copié !' : 'Partager'}
-          >
-            {isShareCopied ? <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" /> : <ShareIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />}
-          </button>
-        )}
-
-        {/* 6. OPTIONS (...) SIGNALER / BLOQUER */}
-        <div className="relative" ref={moreMenuRef}>
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              setShowMoreMenu(prev => !prev);
-            }}
-            className={`w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-xl border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
-              showMoreMenu
-                ? 'bg-white text-stone-900 border-white'
-                : 'bg-black/45 hover:bg-stone-800 border-white/20 text-white backdrop-blur-md'
-            }`}
-            title="Options : Signaler ou Bloquer"
-          >
-            <MoreHorizontal className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-          </button>
-
-          {/* Menu Signaler / Bloquer */}
-          {showMoreMenu && (
-            <div 
-              onClick={(e) => e.stopPropagation()}
-              className="absolute right-10 bottom-0 z-40 bg-stone-900/95 backdrop-blur-md border border-white/20 rounded-xl p-1.5 shadow-2xl min-w-[160px] space-y-1 animate-in fade-in zoom-in-95 duration-150"
+            {/* 1. LA QUESTION (BookOpen) */}
+            <button
+              type="button"
+              onClick={handleQuestionClick}
+              className={`w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-xl border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
+                internalQuestionOpen
+                  ? 'bg-[#FFE7A3] text-stone-900 border-[#FFE7A3] shadow-md'
+                  : 'bg-black/45 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white backdrop-blur-md'
+              }`}
+              title="Découvrir la question"
             >
+              <BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            </button>
+
+            {/* 2. ÉVALUATION (Award) - UNIQUEMENT SUR LES CARTES VIDÉO DE LA PAGE CASTING */}
+            {(isCastingPage || showCastingScore) && onOpenResonance && (
               <button
                 type="button"
-                onClick={handleReport}
-                className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs text-stone-200 hover:text-white hover:bg-white/10 transition-colors text-left cursor-pointer"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onOpenResonance();
+                }}
+                className={`w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-xl border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
+                  resonanceScore !== null && resonanceScore !== undefined
+                    ? 'bg-[#A2482B] border-[#A2482B] text-white shadow-[0_0_10px_rgba(162,72,43,0.5)]'
+                    : 'bg-black/45 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white backdrop-blur-md'
+                }`}
+                title={resonanceScore !== null && resonanceScore !== undefined ? `Résonance : ${resonanceScore}%` : 'Évaluer la vidéo'}
               >
-                <Flag className="w-3 h-3 text-amber-400" />
-                <span>Signaler la vidéo</span>
+                <Award className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
               </button>
+            )}
+
+            {/* 3. LE PROFIL (ProfileSoloIcon) */}
+            {onOpenProfile && (
               <button
                 type="button"
-                onClick={handleBlock}
-                className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs text-red-300 hover:text-red-200 hover:bg-red-500/20 transition-colors text-left cursor-pointer"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onOpenProfile();
+                }}
+                className="w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
+                title={`Voir le profil`}
               >
-                <Ban className="w-3 h-3 text-red-400" />
-                <span>Bloquer cette vidéo</span>
+                <ProfileSoloIcon className="w-4 h-4 sm:w-4.5 sm:h-4.5 text-white" />
               </button>
-            </div>
-          )}
-        </div>
+            )}
+
+            {/* 4. PARTAGER (ShareIcon) - Ouvre la modale complète de partage & signalement */}
+            <button
+              type="button"
+              onClick={handleShareButtonClick}
+              className={`w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-xl border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
+                isShareCopied
+                  ? 'bg-emerald-600 border-emerald-500 text-white'
+                  : 'bg-black/45 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white backdrop-blur-md'
+              }`}
+              title="Partager ou signaler la vidéo"
+            >
+              {isShareCopied ? <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" /> : <ShareIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />}
+            </button>
           </>
         )}
       </div>
@@ -473,6 +350,29 @@ export const UnifiedVideoCardOverlay: React.FC<UnifiedVideoCardOverlayProps> = (
           {feedbackToast}
         </div>
       )}
+
+      {/* Modale de partage & signalement façon YouTube */}
+      <VideoCardShareModal
+        isOpen={isShareModalOpen}
+        onClose={() => setIsShareModalOpen(false)}
+        videoTitle={preserveFullName ? displayName : cleanDisplayName}
+        videoId={videoId}
+        onReport={() => {
+          if (onReportVideo) onReportVideo();
+          setFeedbackToast('Vidéo signalée à notre équipe de modération.');
+          setTimeout(() => setFeedbackToast(null), 2500);
+        }}
+        onNotInterested={() => {
+          if (videoId) blockVideo(videoId);
+          if (onBlockVideo) onBlockVideo();
+          setFeedbackToast('Préférence enregistrée : moins de contenus de ce genre.');
+          setTimeout(() => setFeedbackToast(null), 2500);
+        }}
+        onSaveToList={(saved) => {
+          setFeedbackToast(saved ? 'Enregistré dans votre liste Ma Forêt.' : 'Retiré de votre liste.');
+          setTimeout(() => setFeedbackToast(null), 2500);
+        }}
+      />
 
       {/* Enfants supplémentaires */}
       {children}

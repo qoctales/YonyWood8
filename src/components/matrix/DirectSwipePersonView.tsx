@@ -233,6 +233,7 @@ export const DirectSwipePersonView: React.FC<DirectSwipePersonViewProps> = ({
             onTogglePlay={togglePlay}
             isMuted={isMuted}
             onToggleMute={toggleMute}
+            isCastingPage={true}
             resonanceScore={resonancePct}
             onOpenResonance={() => setIsResonanceModalOpen(true)}
             showCastingScore={true}
