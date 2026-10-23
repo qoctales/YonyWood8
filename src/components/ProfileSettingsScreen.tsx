@@ -1470,16 +1470,33 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
     }
   }, [activeCategory, categoryIndices]);
 
-  // Gérer la lecture vidéo
+  // Synchronisation continue du son avec l'élément vidéo
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = isMuted;
+    }
+  }, [isMuted]);
+
+  // Gérer la lecture vidéo (bascule garantie et immédiate pour un comportement standardisé sur toute l'app)
   const toggleVideoPlayback = (e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
-    if (!videoRef.current) return;
-    if (isPlaying) {
-      videoRef.current.pause();
-      setIsPlaying(false);
-    } else {
-      videoRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
-    }
+    setIsPlaying((prev) => {
+      const next = !prev;
+      if (videoRef.current) {
+        if (next) {
+          videoRef.current.currentTime = 0;
+          const playPromise = videoRef.current.play();
+          if (playPromise !== undefined) {
+            playPromise.catch((err) => {
+              console.warn("Lecture vidéo prévenue par le navigateur :", err);
+            });
+          }
+        } else {
+          videoRef.current.pause();
+        }
+      }
+      return next;
+    });
   };
 
   // Basculer l'état du son (Mute / Unmute)
@@ -2174,25 +2191,25 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                 className="group relative w-full h-full flex flex-col justify-between text-white"
                 id={`card-video-${currentSimulationItem.id}`}
               >
-                {/* Image de fond réaliste du protagoniste (Pascal dans 16 situations différentes) */}
-                <img
-                  src={currentSimulationItem.posterUrl}
-                  alt={currentSimulationItem.title}
-                  className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-                />
-                
-                {/* Vidéo superposée lors de la lecture */}
-                <video
-                  ref={videoRef}
-                  src={currentSimulationItem.videoUrl}
-                  loop
-                  muted={isMuted}
-                  playsInline
-                  onEnded={() => setIsPlaying(false)}
-                  className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 pointer-events-none ${
-                    isPlaying ? 'opacity-100' : 'opacity-0'
-                  }`}
-                />
+                {/* Media de fond : Vidéo en lecture ou Photo HD */}
+                {isPlaying ? (
+                  <video
+                    ref={videoRef}
+                    src={currentSimulationItem.videoUrl}
+                    autoPlay
+                    loop
+                    muted={isMuted}
+                    playsInline
+                    onEnded={() => setIsPlaying(false)}
+                    className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+                  />
+                ) : (
+                  <img
+                    src={currentSimulationItem.posterUrl}
+                    alt={currentSimulationItem.title}
+                    className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+                  />
+                )}
 
                 {/* Dégradés pour lisibilité des badges, de la pagination et du texte */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/40 pointer-events-none" />
