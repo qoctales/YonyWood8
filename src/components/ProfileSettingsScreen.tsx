@@ -1477,30 +1477,39 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
     }
   }, [isMuted]);
 
-  // Gérer la lecture vidéo (bascule garantie et immédiate pour un comportement standardisé sur toute l'app)
-  const toggleVideoPlayback = (e?: React.MouseEvent) => {
-    if (e) e.stopPropagation();
-    setIsPlaying((prev) => {
-      const next = !prev;
-      if (videoRef.current) {
-        if (next) {
-          videoRef.current.currentTime = 0;
-          const playPromise = videoRef.current.play();
-          if (playPromise !== undefined) {
-            playPromise.catch((err) => {
-              console.warn("Lecture vidéo prévenue par le navigateur :", err);
-            });
-          }
-        } else {
-          videoRef.current.pause();
+  // Contrôle direct de l'élément vidéo lors des bascules play/pause
+  useEffect(() => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.currentTime = 0;
+        videoRef.current.muted = isMuted;
+        const playPromise = videoRef.current.play();
+        if (playPromise !== undefined) {
+          playPromise.catch((err) => {
+            console.warn("Lecture vidéo prévenue par le navigateur :", err);
+          });
         }
+      } else {
+        videoRef.current.pause();
       }
-      return next;
-    });
+    }
+  }, [isPlaying]);
+
+  // Gérer la lecture vidéo (bascule garantie et immédiate pour un comportement standardisé sur toute l'app)
+  const toggleVideoPlayback = (e?: React.MouseEvent | React.TouchEvent) => {
+    if (e) {
+      e.preventDefault?.();
+      e.stopPropagation?.();
+    }
+    setIsPlaying((prev) => !prev);
   };
 
   // Basculer l'état du son (Mute / Unmute)
-  const toggleMute = () => {
+  const toggleMute = (e?: React.MouseEvent | React.TouchEvent) => {
+    if (e) {
+      e.preventDefault?.();
+      e.stopPropagation?.();
+    }
     setIsMuted((prev) => {
       const next = !prev;
       if (videoRef.current) {
@@ -1553,6 +1562,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
 
   // Touch Swipe Handlers (2D : Vertical = catégorie, Horizontal = vidéo)
   const onTouchStart = (e: React.TouchEvent) => {
+    if ((e.target as HTMLElement).closest('button, a, input, textarea, select')) return;
     setTouchStartX(e.touches[0].clientX);
     setTouchStartY(e.touches[0].clientY);
     setSwipeOffsetX(0);
@@ -1585,6 +1595,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
 
   // Mouse Drag Handlers (Horizontal only - no vertical shifting)
   const onMouseDown = (e: React.MouseEvent) => {
+    if ((e.target as HTMLElement).closest('button, a, input, textarea, select')) return;
     setIsMouseDown(true);
     setTouchStartX(e.clientX);
     setSwipeOffsetX(0);
@@ -2195,12 +2206,12 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                 {isPlaying ? (
                   <video
                     ref={videoRef}
+                    key={`profile-video-${currentSimulationItem.id}`}
                     src={currentSimulationItem.videoUrl}
                     autoPlay
                     loop
                     muted={isMuted}
                     playsInline
-                    onEnded={() => setIsPlaying(false)}
                     className="absolute inset-0 w-full h-full object-cover pointer-events-none"
                   />
                 ) : (

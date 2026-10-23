@@ -333,16 +333,40 @@ export const ProfileLineageFrise: React.FC<ProfileLineageFriseProps> = ({
             <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/65 pointer-events-none" />
 
             {/* =========================================================== */}
-            {/* HAUT DE CARTE : LECTEUR VINTAGE EN HAUT À DROITE ET C'EST TOUT */}
-            {/* (AUCUN TITRE, EXACTEMENT COMME DEMANDÉ)                     */}
+            {/* HAUT DE CARTE : LECTEUR VINTAGE ET BOUTON DU SON EN HAUT À DROITE */}
             {/* =========================================================== */}
-            <div className="relative z-20 flex items-center justify-end w-full pointer-events-auto">
+            <div 
+              className="relative z-20 flex items-center justify-end gap-1.5 w-full pointer-events-auto"
+              onMouseDown={(e) => e.stopPropagation()}
+              onTouchStart={(e) => e.stopPropagation()}
+            >
+              {/* Bouton Muet discret (uniquement si en lecture) */}
+              {isPlaying && (
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setIsMuted((prev) => !prev);
+                  }}
+                  onMouseDown={(e) => e.stopPropagation()}
+                  onTouchStart={(e) => e.stopPropagation()}
+                  className="w-7.5 h-7.5 sm:w-8 sm:h-8 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all cursor-pointer shadow-md hover:scale-105 active:scale-95"
+                  title={isMuted ? 'Activer le son' : 'Couper le son'}
+                >
+                  {isMuted ? <VolumeX className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white" /> : <Volume2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white" />}
+                </button>
+              )}
+
               <button
                 type="button"
                 onClick={(e) => {
+                  e.preventDefault();
                   e.stopPropagation();
                   togglePlayback();
                 }}
+                onMouseDown={(e) => e.stopPropagation()}
+                onTouchStart={(e) => e.stopPropagation()}
                 className="w-8.5 h-8.5 sm:w-9.5 sm:h-9.5 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center text-white transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0"
                 title={isPlaying ? "Mettre en pause" : `Regarder la vidéo de ${videoModalMember.firstName || videoModalMember.name.split(' ')[0]}`}
               >
@@ -435,21 +459,6 @@ export const ProfileLineageFrise: React.FC<ProfileLineageFriseProps> = ({
                   {videoModalMember.firstName || videoModalMember.name.split(' ')[0]}
                 </h3>
               </div>
-
-              {/* Symbole Muet / Son en bas à droite (visible lorsque la vidéo est en lecture) */}
-              {isPlaying && (
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsMuted(prev => !prev);
-                  }}
-                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center cursor-pointer transition-all shadow-md hover:scale-105 active:scale-95 shrink-0"
-                  title={isMuted ? 'Activer le son' : 'Couper le son'}
-                >
-                  {isMuted ? <VolumeX className="w-3.5 h-3.5 text-white" /> : <Volume2 className="w-3.5 h-3.5 text-white" />}
-                </button>
-              )}
             </div>
           </div>
 

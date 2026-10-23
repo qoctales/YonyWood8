@@ -2,7 +2,9 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { 
   ChevronLeft, 
   ChevronRight, 
-  Pause 
+  Pause,
+  Volume2,
+  VolumeX
 } from 'lucide-react';
 import { ViewScreen } from '../types';
 import { STUDIO_PILLARS, StudioPillar, StudioPillarItem } from '../data/studioPillarsData';
@@ -27,6 +29,7 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
 
   // 3. Média vidéo en arrière-plan
   const [playingCardId, setPlayingCardId] = useState<string | null>(null);
+  const [isMuted, setIsMuted] = useState(true);
 
   // 4. Gestures tactiles rapides et précises
   const touchStartXRef = useRef<number>(0);
@@ -348,6 +351,7 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                       autoPlay
                       loop
                       playsInline
+                      muted={isMuted}
                       className="absolute inset-0 w-full h-full object-cover"
                     />
                   ) : (
@@ -372,25 +376,52 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                     </span>
 
                     {/* Déclencheur lecteur vidéo « Petite Télé » standardisé en haut à droite */}
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        if (!isCenter) {
-                          setCurrentIndex(idx);
-                        } else {
-                          setPlayingCardId(isPlaying ? null : item.id);
-                        }
-                      }}
-                      className="w-7.5 h-7.5 sm:w-8 sm:h-8 rounded-xl bg-black/55 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
-                      title={isPlaying ? 'Mettre en pause' : `Visionner ${item.title}`}
+                    <div 
+                      className="flex items-center gap-1.5 shrink-0"
+                      onMouseDown={(e) => e.stopPropagation()}
+                      onTouchStart={(e) => e.stopPropagation()}
                     >
-                      {isPlaying ? (
-                        <Pause className="w-3.5 h-3.5 fill-white text-white" />
-                      ) : (
-                        <TvPlayerIcon className="w-4 h-4 sm:w-4.5 sm:h-4.5 text-white transition-transform" strokeWidth={1.7} />
+                      {/* Bouton Muet discret (uniquement si en lecture) */}
+                      {isPlaying && (
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            setIsMuted((prev) => !prev);
+                          }}
+                          onMouseDown={(e) => e.stopPropagation()}
+                          onTouchStart={(e) => e.stopPropagation()}
+                          className="w-7.5 h-7.5 sm:w-8 sm:h-8 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all cursor-pointer shadow-md hover:scale-105 active:scale-95"
+                          title={isMuted ? 'Activer le son' : 'Couper le son'}
+                        >
+                          {isMuted ? <VolumeX className="w-3.5 h-3.5 text-white" /> : <Volume2 className="w-3.5 h-3.5 text-white" />}
+                        </button>
                       )}
-                    </button>
+
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          if (!isCenter) {
+                            setCurrentIndex(idx);
+                          } else {
+                            setPlayingCardId(isPlaying ? null : item.id);
+                          }
+                        }}
+                        onMouseDown={(e) => e.stopPropagation()}
+                        onTouchStart={(e) => e.stopPropagation()}
+                        className="w-7.5 h-7.5 sm:w-8 sm:h-8 rounded-xl bg-black/55 hover:bg-[#A2482B] text-white backdrop-blur-md border border-white/20 hover:border-[#A2482B] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
+                        title={isPlaying ? 'Mettre en pause' : `Visionner ${item.title}`}
+                      >
+                        {isPlaying ? (
+                          <Pause className="w-3.5 h-3.5 fill-white text-white" />
+                        ) : (
+                          <TvPlayerIcon className="w-4 h-4 sm:w-4.5 sm:h-4.5 text-white transition-transform" strokeWidth={1.7} />
+                        )}
+                      </button>
+                    </div>
                   </div>
                 </div>
               );

@@ -152,15 +152,22 @@ export const UnifiedVideoCardOverlay: React.FC<UnifiedVideoCardOverlayProps> = (
       {/* =================================================================== */}
       {/* HAUT DROITE : LECTEUR VIDÉO TÉLÉ VINTAGE & MUET (SANS AUCUN 3-POINTS) */}
       {/* =================================================================== */}
-      <div className="absolute top-3 sm:top-3.5 right-3 sm:right-3.5 z-20 pointer-events-auto flex items-center gap-1.5">
+      <div 
+        className="absolute top-3 sm:top-3.5 right-3 sm:right-3.5 z-20 pointer-events-auto flex items-center gap-1.5"
+        onMouseDown={(e) => e.stopPropagation()}
+        onTouchStart={(e) => e.stopPropagation()}
+      >
         {/* Bouton Muet discret (uniquement si en lecture et fonction fournie) */}
         {isPlaying && onToggleMute && (
           <button
             type="button"
             onClick={(e) => {
+              e.preventDefault();
               e.stopPropagation();
               onToggleMute();
             }}
+            onMouseDown={(e) => e.stopPropagation()}
+            onTouchStart={(e) => e.stopPropagation()}
             className="w-7.5 h-7.5 sm:w-8 sm:h-8 rounded-full bg-black/50 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all cursor-pointer shadow-md hover:scale-105 active:scale-95"
             title={isMuted ? 'Activer le son' : 'Couper le son'}
           >
@@ -172,9 +179,12 @@ export const UnifiedVideoCardOverlay: React.FC<UnifiedVideoCardOverlayProps> = (
         <button
           type="button"
           onClick={(e) => {
+            e.preventDefault();
             e.stopPropagation();
             onTogglePlay(e);
           }}
+          onMouseDown={(e) => e.stopPropagation()}
+          onTouchStart={(e) => e.stopPropagation()}
           className="w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 shrink-0"
           title={isPlaying ? 'Mettre en pause' : 'Lire la vidéo'}
         >
@@ -192,6 +202,8 @@ export const UnifiedVideoCardOverlay: React.FC<UnifiedVideoCardOverlayProps> = (
       <div 
         className="absolute right-2.5 sm:right-3.5 top-[56%] sm:top-[58%] -translate-y-1/2 z-30 flex flex-col items-center gap-1.5 sm:gap-2 pointer-events-auto"
         onClick={(e) => e.stopPropagation()}
+        onMouseDown={(e) => e.stopPropagation()}
+        onTouchStart={(e) => e.stopPropagation()}
       >
         {customActionButtons ? (
           customActionButtons
