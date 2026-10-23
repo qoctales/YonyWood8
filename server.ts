@@ -1,17 +1,5 @@
-import { spawn } from 'child_process';
-
-if (process.env.__TSX_BOOTSTRAP !== '1' && !process.execArgv.some((a) => a.includes('tsx'))) {
-  const child = spawn(process.execPath, ['--import', 'tsx', ...process.argv.slice(1)], {
-    stdio: 'inherit',
-    env: { ...process.env, __TSX_BOOTSTRAP: '1' },
-  });
-  child.on('exit', (code) => process.exit(code ?? 0));
-  await new Promise(() => {});
-}
-
 import 'dotenv/config';
-import express from 'express';
-import type { Request, Response } from 'express';
+import express, { Request, Response } from 'express';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import cors from 'cors';
@@ -20,11 +8,8 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { createServer as createViteServer } from 'vite';
 
-let DOCUMENTARIES: any[] = [];
-let DUOS: any[] = [];
-let PROTAGONISTS: any[] = [];
-let EXPLORER_CATEGORIES: any[] = [];
-let EXPLORER_CATALOG: any = {};
+import { DOCUMENTARIES, DUOS, PROTAGONISTS } from './src/data/mockData';
+import { EXPLORER_CATEGORIES, EXPLORER_CATALOG } from './src/data/explorerTopicsData';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -172,7 +157,7 @@ app.get('/api/explorer/categories', (_req: Request, res: Response) => {
   res.json(EXPLORER_CATEGORIES);
 });
 
-// Redirection de l'ancienne route /memoires vers /sagesses
+// Redirection permanente /memoires -> /sagesses
 app.get('/memoires', (_req: Request, res: Response) => {
   res.redirect(301, '/sagesses');
 });
@@ -258,7 +243,7 @@ app.get('/api/coproduction/simulation', (req: Request, res: Response) => {
   });
 });
 
-// Messaging (and alias /api/messages)
+// Messaging
 const handleGetThreads = (_req: Request, res: Response) => {
   res.json(inMemoryThreads);
 };
@@ -279,26 +264,15 @@ const handlePostMessage = (req: Request, res: Response) => {
   res.status(201).json(message);
 };
 
-app.get('/api/messaging/threads', handleGetThreads);
-app.get('/api/messages/threads', handleGetThreads);
+app.get(['/api/messaging/threads', '/api/messages/threads'], handleGetThreads);
+app.get(['/api/messaging/invitations', '/api/messages/invitations'], handleGetInvitations);
+app.post(['/api/messaging/threads/:id/messages', '/api/messages/threads/:id/messages'], handlePostMessage);
 
-app.get('/api/messaging/invitations', handleGetInvitations);
-app.get('/api/messages/invitations', handleGetInvitations);
-
-app.post('/api/messaging/threads/:id/messages', handlePostMessage);
-app.post('/api/messages/threads/:id/messages', handlePostMessage);
-
-app.post('/api/messaging/invitations/:id/accept', (req: Request, res: Response) => {
-  res.json({ success: true, invitationId: req.params.id, status: 'accepted' });
-});
-app.post('/api/messages/invitations/:id/accept', (req: Request, res: Response) => {
+app.post(['/api/messaging/invitations/:id/accept', '/api/messages/invitations/:id/accept'], (req: Request, res: Response) => {
   res.json({ success: true, invitationId: req.params.id, status: 'accepted' });
 });
 
-app.post('/api/messaging/invitations/:id/decline', (req: Request, res: Response) => {
-  res.json({ success: true, invitationId: req.params.id, status: 'declined' });
-});
-app.post('/api/messages/invitations/:id/decline', (req: Request, res: Response) => {
+app.post(['/api/messaging/invitations/:id/decline', '/api/messages/invitations/:id/decline'], (req: Request, res: Response) => {
   res.json({ success: true, invitationId: req.params.id, status: 'declined' });
 });
 
@@ -371,11 +345,9 @@ app.post('/api/auth/login', (req: Request, res: Response) => {
 app.get('/api/auth/me', (req: Request, res: Response) => {
   const authHeader = req.headers.authorization;
   if (!authHeader) {
-    // Default to admin or guest
     res.json(inMemoryUsers.get('qoctales@gmail.com') || null);
     return;
   }
-  // Try to find user from token
   for (const user of inMemoryUsers.values()) {
     if (authHeader.includes(user.id)) {
       res.json(user);
@@ -389,46 +361,9 @@ app.put('/api/auth/preferences', (req: Request, res: Response) => {
   res.json({ success: true, preferences: req.body });
 });
 
-// Start server helper
+// Vite & Static Server
 async function startServer() {
-  try {
-    const [mockModule, topicsModule] = await Promise.all([
-      import('./src/data/mockData'),
-      import('./src/data/explorerTopicsData'),
-    ]);
-    DOCUMENTARIES = mockModule.DOCUMENTARIES || [];
-    DUOS = mockModule.DUOS || [];
-    PROTAGONISTS = mockModule.PROTAGONISTS || [];
-    EXPLORER_CATEGORIES = topicsModule.EXPLORER_CATEGORIES || [];
-    EXPLORER_CATALOG = topicsModule.EXPLORER_CATALOG || {};
-  } catch (err) {
-    console.warn('[server] Warning loading data modules:', err);
-  }
-
   if (!isProd) {
-    try {
-      const clientMjs = path.resolve(__dirname, 'node_modules/vite/dist/client/client.mjs');
-      if (fs.existsSync(clientMjs)) {
-        let content = fs.readFileSync(clientMjs, 'utf-8');
-        const errStr = 'reject(new Error("WebSocket closed without opened."));';
-        const connStr = 'async connect({ onMessage, onDisconnection }) {\n      const socket = options.createConnection();';
-        let changed = false;
-        if (content.includes(errStr)) {
-          content = content.replace(errStr, 'resolve();');
-          changed = true;
-        }
-        if (content.includes(connStr)) {
-          content = content.replace(connStr, 'async connect({ onMessage, onDisconnection }) {\n      return;\n      const socket = options.createConnection();');
-          changed = true;
-        }
-        if (changed) fs.writeFileSync(clientMjs, content, 'utf-8');
-      }
-    } catch {
-      // ignore
-    }
-
-    // Servir directement les médias et assets publics avec le bon type MIME
-    app.use('/assets', express.static(path.resolve(__dirname, 'public/assets'), { maxAge: '1h' }));
     app.use(express.static(path.resolve(__dirname, 'public'), { maxAge: '1h' }));
 
     const vite = await createViteServer({
@@ -444,7 +379,6 @@ async function startServer() {
       if (req.originalUrl.startsWith('/api') || req.originalUrl.startsWith('/socket.io')) {
         return next();
       }
-      // Ne jamais renvoyer de page HTML si une ressource média/image est demandée
       if (req.originalUrl.match(/\.(jpg|jpeg|png|gif|svg|webp|avif|ico|mp4|webm|woff|woff2|ttf|eot)$/i)) {
         res.status(404).end();
         return;
