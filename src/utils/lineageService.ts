@@ -2,6 +2,7 @@ import { AffiliationPerson, Protagonist } from '../types';
 import { PROTAGONISTS } from '../data/mockData';
 import { MATRIX_SERIES_DATA } from '../data/matrixData';
 import { BENIN_STORIES } from '../data/explorerTopicsData';
+import { COMPANIES_DATA, CompanyEntity } from '../data/companyPortraitsData';
 
 export interface LineageMember {
   id: string;
@@ -25,13 +26,16 @@ export interface LineageMember {
   isPioneer?: boolean;
   isFounder?: boolean;
   sharesCount?: number;
+  entityType?: 'person' | 'organization';
+  organizationId?: string;
+  sector?: string;
 }
 
 export interface LineageTree {
   current: LineageMember;
   ascendants: LineageMember[]; // Au moins 4 ascendants quand disponible, jusqu'au fondateur
-  descendants: LineageMember[]; // 0 à 4 enfants cooptés maximum
-  maxChildren: number;
+  descendants: LineageMember[]; // Exactement 3 voix (personnes & organisations) cooptées sur la branche
+  maxChildren: number; // 3
   sharePercentage: number; // 4%
   ruleSummary: string;
 }
@@ -171,8 +175,8 @@ export const ANCESTOR_POOL: LineageMember[] = [
   }
 ];
 
-// Pool de cooptés inspirants pour compléter jusqu'à 4 enfants maximum
-const DESCENDANT_POOL: LineageMember[] = [
+// Pool de collaborateurs / créateurs humains (100% individus pour les profils)
+export const PERSON_DESCENDANT_POOL: LineageMember[] = [
   {
     id: 'coopt-camille-desc-1',
     name: 'Sœur Blandine Dossou',
@@ -184,6 +188,7 @@ const DESCENDANT_POOL: LineageMember[] = [
     flag: '🇧🇯',
     photoUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80',
     universeTag: 'Jésus',
+    entityType: 'person',
     quote: '« Le silence de la prière et celui de la forêt ne font qu’un quand on écoute avec le cœur. »',
     questionAnswered: {
       question: 'Quelle plante guérit l’inquiétude de l’avenir ?',
@@ -203,6 +208,7 @@ const DESCENDANT_POOL: LineageMember[] = [
     flag: '🇧🇯',
     photoUrl: '/assets/protagonists/koffi-tisserand.jpg',
     universeTag: 'Finagnon',
+    entityType: 'person',
     quote: '« Le métier à tisser répare ce que les mots d’orgueil ont déchiré. »',
     questionAnswered: {
       question: 'Que raconte le motif à quatre étoiles ?',
@@ -222,6 +228,7 @@ const DESCENDANT_POOL: LineageMember[] = [
     flag: '🇸🇳',
     photoUrl: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=600&q=80',
     universeTag: 'Regard Vivant',
+    entityType: 'person',
     quote: '« Filmer quelqu’un avec ferveur, c’est lui rendre la souveraineté de son regard. »',
     questionAnswered: {
       question: 'Quand la caméra devient-elle invisible ?',
@@ -241,29 +248,146 @@ const DESCENDANT_POOL: LineageMember[] = [
     flag: '🇧🇯',
     photoUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&q=80',
     universeTag: 'Jésus',
+    entityType: 'person',
     quote: '« Les abeilles fabriquent la cire des cierges sans savoir qu’elles éclairent le divin. »',
     questionAnswered: {
       question: 'Que murmurent les abeilles au crépuscule ?',
       answer: 'Que la patience collective fabrique le miel le plus doux de la terre.'
     },
-    invitationStory: 'Quatrième âme accueillie sous ses ailes pour perpétuer le miel des carrefours.',
+    invitationStory: 'Accueilli sous ses ailes pour perpétuer le miel des carrefours.',
     acceptanceDate: 'Été 2024 · Acceptation mutuelle'
+  },
+  {
+    id: 'coopt-camille-desc-5',
+    name: 'Senan Agossa',
+    firstName: 'Senan',
+    age: 27,
+    role: 'Styliste & Créatrice de textiles solaires',
+    territory: 'Ouidah',
+    country: 'Bénin',
+    flag: '🇧🇯',
+    photoUrl: '/assets/protagonists/senan-agossa.jpg',
+    universeTag: 'Mode & Racines',
+    entityType: 'person',
+    quote: '« Le vêtement est la première demeure de la dignité. »',
+    questionAnswered: {
+      question: 'D’où puisez-vous vos teintes naturelles ?',
+      answer: 'Des écorces d’acajou et des terres ocres recueillies au crépuscule.'
+    },
+    invitationStory: 'Cooptée pour sa recherche audacieuse sur les teintures vivantes.',
+    acceptanceDate: 'Automne 2024 · Acceptation mutuelle'
+  },
+  {
+    id: 'coopt-camille-desc-6',
+    name: 'Armel Hounkpatin',
+    firstName: 'Armel',
+    age: 38,
+    role: 'Écrivain & Chroniqueur des marchés côtiers',
+    territory: 'Grand-Popo',
+    country: 'Bénin',
+    flag: '🇧🇯',
+    photoUrl: '/assets/protagonists/armel-hounkpatin.jpg',
+    universeTag: 'Littérature',
+    entityType: 'person',
+    quote: '« Rien de ce qui est dit au marché n’est jamais tout à fait profane. »',
+    questionAnswered: {
+      question: 'Quel mot béninois porte la promesse de demain ?',
+      answer: 'Finagnon : l’aurore qui réconcilie.'
+    },
+    invitationStory: 'Passeur de mémoire littéraire ayant scellé l’alliance des mots libres.',
+    acceptanceDate: 'Printemps 2023 · Acceptation mutuelle'
+  },
+  {
+    id: 'coopt-camille-desc-7',
+    name: 'Fatou Diallo',
+    firstName: 'Fatou',
+    age: 33,
+    role: 'Performeuse vocale & Gardienne des polyphonies',
+    territory: 'Saint-Louis',
+    country: 'Sénégal',
+    flag: '🇸🇳',
+    photoUrl: '/assets/protagonists/fatou-diallo.jpg',
+    universeTag: 'Chant & Souffle',
+    entityType: 'person',
+    quote: '« La voix porte plus loin que le vent quand le cœur est en paix. »',
+    questionAnswered: {
+      question: 'Pourquoi chanter ensemble à l’aube ?',
+      answer: 'Pour accorder le souffle de l’homme avec la pulsation de la terre.'
+    },
+    invitationStory: 'Initiée aux chants du fleuve pour enrichir les résonances chorales.',
+    acceptanceDate: 'Hiver 2023 · Acceptation mutuelle'
+  },
+  {
+    id: 'coopt-camille-desc-8',
+    name: 'Codjo Noumon',
+    firstName: 'Codjo',
+    age: 44,
+    role: 'Sculpteur de bronze sacré & Fondeur à cire perdue',
+    territory: 'Abomey',
+    country: 'Bénin',
+    flag: '🇧🇯',
+    photoUrl: '/assets/protagonists/codjo-blind.jpg',
+    universeTag: 'Bronze & Feu',
+    entityType: 'person',
+    quote: '« Le feu ne brûle que ce qui n’est pas digne de subsister. »',
+    questionAnswered: {
+      question: 'Combien de temps faut-il pour écouter le bronze ?',
+      answer: 'Le temps nécessaire pour que la cire s’efface en laissant la trace éternelle.'
+    },
+    invitationStory: 'Maître fondeur accueilli pour transmettre le secret de l’alliage royal.',
+    acceptanceDate: 'Été 2023 · Acceptation mutuelle'
   }
 ];
 
+// Pool rétrocompatible
+export const DESCENDANT_POOL = PERSON_DESCENDANT_POOL;
+
 /**
- * Normalise n'importe quelle entrée (string ID, Protagonist, AffiliationPerson)
+ * Normalise n'importe quelle entrée (string ID, Protagonist, AffiliationPerson, CompanyEntity)
  * en un LineageMember complet.
  */
-export function resolveLineageMember(input: string | AffiliationPerson | Protagonist): LineageMember {
+export function resolveLineageMember(input: string | AffiliationPerson | Protagonist | CompanyEntity): LineageMember {
   if (typeof input === 'string') {
     // 0. Chercher d'abord dans ANCESTOR_POOL
     const ancFound = ANCESTOR_POOL.find(a => a.id === input);
-    if (ancFound) return { ...ancFound };
+    if (ancFound) return { ...ancFound, entityType: 'person' };
 
     // 0b. Chercher dans DESCENDANT_POOL
     const descFound = DESCENDANT_POOL.find(d => d.id === input || input.startsWith(d.id));
     if (descFound) return { ...descFound };
+
+    // 0c. Chercher dans COMPANIES_DATA (Organisations sur Lumières)
+    const cleanInputId = input.toLowerCase().replace(/^company-/, '').replace(/-co$/, '');
+    const compFound = COMPANIES_DATA.find(c => 
+      c.id.toLowerCase() === input.toLowerCase() ||
+      c.id.toLowerCase() === cleanInputId ||
+      c.companyName.toLowerCase() === input.toLowerCase() ||
+      c.id.includes(input.toLowerCase()) ||
+      input.toLowerCase().includes(c.id.toLowerCase())
+    );
+    if (compFound) {
+      return {
+        id: compFound.id,
+        name: compFound.companyName,
+        firstName: compFound.companyName,
+        role: `${compFound.category} · ${compFound.tagline}`,
+        territory: compFound.location || 'Bénin',
+        country: 'Bénin',
+        flag: '🇧🇯',
+        photoUrl: compFound.photoUrl,
+        teaserVideoUrl: compFound.videoUrl,
+        universeTag: compFound.category,
+        quote: compFound.tagline,
+        questionAnswered: {
+          question: compFound.manifestoQuestion || 'Quelle mémoire choisissons-nous de léguer à travers notre entreprise ?',
+          answer: compFound.tagline || 'Créer de la valeur ancrée dans le terroir et la transmission.'
+        },
+        invitationStory: compFound.description || `Organisation ${compFound.companyName} parrainée et mise en lumière sur YonyWood.`,
+        entityType: 'organization',
+        organizationId: compFound.id,
+        sector: compFound.category
+      };
+    }
 
     // 1. Chercher dans PROTAGONISTS
     const pFound = PROTAGONISTS.find(p => p.id === input || p.slug === input);
@@ -281,6 +405,7 @@ export function resolveLineageMember(input: string | AffiliationPerson | Protago
         teaserVideoUrl: pFound.teaserVideoUrl,
         universeTag: pFound.universeTag,
         quote: pFound.quote,
+        entityType: 'person',
         questionAnswered: {
           question: (pFound as any).question || 'Quelle vision singulière ce parcours apporte-t-il au monde ?',
           answer: pFound.quote || 'Transmettre la sève du récit partagé au-delà des frontières.'
@@ -436,27 +561,55 @@ export function resolveLineageMember(input: string | AffiliationPerson | Protago
     };
   }
 
-  // Si c'est déjà un objet
+  // Si c'est déjà un objet CompanyEntity
+  if ('companyName' in input) {
+    const comp = input as CompanyEntity;
+    return {
+      id: comp.id,
+      name: comp.companyName,
+      firstName: comp.companyName,
+      role: `${comp.category} · ${comp.tagline}`,
+      territory: comp.location || 'Bénin',
+      country: 'Bénin',
+      flag: '🇧🇯',
+      photoUrl: comp.photoUrl,
+      teaserVideoUrl: comp.videoUrl,
+      universeTag: comp.category,
+      quote: comp.tagline,
+      questionAnswered: {
+        question: comp.manifestoQuestion || 'Quelle mémoire choisissons-nous de léguer à travers notre entreprise ?',
+        answer: comp.tagline || 'Créer de la valeur ancrée dans le terroir et la transmission.'
+      },
+      invitationStory: comp.description || `Organisation ${comp.companyName} parrainée et mise en lumière sur YonyWood.`,
+      entityType: 'organization',
+      organizationId: comp.id,
+      sector: comp.category
+    };
+  }
+
+  // Si c'est un Protagonist ou AffiliationPerson
+  const p = input as (Protagonist | AffiliationPerson);
   return {
-    id: input.id,
-    name: input.name,
-    firstName: (input as any).firstName || input.name.split(' ')[0],
-    age: (input as any).age || 38,
-    role: input.role,
-    territory: input.territory,
-    country: input.country,
-    flag: input.flag,
-    photoUrl: (input as any).photoUrl || (input as any).photo || '',
-    teaserVideoUrl: (input as any).teaserVideoUrl,
-    universeTag: (input as any).universeTag,
-    quote: (input as any).quote || (input as any).teaserPitch,
-    questionAnswered: (input as any).questionAnswered || {
-      question: (input as any).question || 'Quelle est votre aspiration profonde pour la lignée ?',
-      answer: (input as any).quote || (input as any).teaserPitch || 'Marcher ensemble dans la confiance.'
+    id: p.id,
+    name: p.name,
+    firstName: (p as any).firstName || (p.name ? p.name.split(' ')[0] : 'Inconnu'),
+    age: (p as any).age || 38,
+    role: p.role || 'Membre de la lignée',
+    territory: p.territory || 'Bénin',
+    country: p.country || 'Bénin',
+    flag: p.flag || '🇧🇯',
+    photoUrl: (p as any).photoUrl || (p as any).photo || '',
+    teaserVideoUrl: (p as any).teaserVideoUrl,
+    universeTag: (p as any).universeTag,
+    quote: (p as any).quote || (p as any).teaserPitch,
+    questionAnswered: (p as any).questionAnswered || {
+      question: (p as any).question || 'Quelle est votre aspiration profonde pour la lignée ?',
+      answer: (p as any).quote || (p as any).teaserPitch || 'Marcher ensemble dans la confiance.'
     },
-    invitationStory: (input as any).invitationStory || (input as any).bio,
-    isPioneer: (input as any).isPioneer,
-    isFounder: (input as any).isFounder || (input as any).isPioneer
+    invitationStory: (p as any).invitationStory || (p as any).bio,
+    isPioneer: (p as any).isPioneer,
+    isFounder: (p as any).isFounder || (p as any).isPioneer,
+    entityType: 'person'
   };
 }
 
@@ -482,114 +635,139 @@ function findInDescendants(list: AffiliationPerson[], targetId: string): Affilia
  */
 export function getLineageTree(personOrId: string | AffiliationPerson | Protagonist): LineageTree {
   const current = resolveLineageMember(personOrId);
+  const isOrg = current.entityType === 'organization';
 
-  // 1. Déterminer les ascendants
+  // 1. Déterminer les ascendants (100% homogènes : soit humains, soit organisations)
   const ascendants: LineageMember[] = [];
 
-  // Si c'est un membre fondateur racine (les "premiers de la lignée")
-  const isDirectFounder = current.isFounder === true || 
-    current.id === 'anc-dah-zounon' || 
-    current.id === 'anc-kpodan-yeyinou';
-
-  if (isDirectFounder) {
-    // Les premiers n'ont aucun ascendant au-dessus d'eux !
-    current.isFounder = true;
-  } else {
-    // Il doit avoir au moins 4 ascendants au-dessus, remontant jusqu'à un fondateur racine
-    // On génère une chaîne ascendante cohérente de 4 générations :
-    // [Fondateur Racine (ex: Mahougnon Zounon)] -> [Arrière-Grand-Parent] -> [Grand-Parent] -> [Parent Direct]
+  if (isOrg) {
+    // Lignée ascendante d'organisations partenaires & fondatrices
+    const otherOrgs = COMPANIES_DATA.filter(c => c.id !== current.id && c.companyName.toLowerCase() !== current.name.toLowerCase());
     const hash = Math.abs(hashString(current.id));
-    
-    // Le fondateur racine au sommet
-    const rootFounder = { ...ANCESTOR_POOL[0], isFounder: true };
-    
-    // Sélection déterministe de 3 aïeux intermédiaires
-    const intermediate1 = ANCESTOR_POOL[1 + (hash % 2)]; // Yéyinou ou Mensah
-    const intermediate2 = ANCESTOR_POOL[3 + (hash % 2)]; // Cheikh Amadou ou Dieudonné
-    const directSponsor = ANCESTOR_POOL[4 + (hash % 2)]; // Dieudonné ou Anani
-
-    const chainCandidates = [rootFounder, intermediate1, intermediate2, directSponsor];
-    
-    // Filtrer pour éviter les doublons avec current
-    for (const candidate of chainCandidates) {
-      if (candidate.id !== current.id && !ascendants.some(a => a.id === candidate.id)) {
-        ascendants.push(candidate);
-      }
+    for (let i = 0; i < Math.min(3, otherOrgs.length); i++) {
+      const comp = otherOrgs[(hash + i) % otherOrgs.length];
+      ascendants.push(resolveLineageMember(comp));
     }
+  } else {
+    // Lignée ascendante humaine (Mentors & Sages fondateurs)
+    const isDirectFounder = current.isFounder === true || 
+      current.id === 'anc-dah-zounon' || 
+      current.id === 'anc-kpodan-yeyinou';
 
-    // S'assurer d'avoir au moins 4 ascendants en complétant si besoin
-    if (ascendants.length < 4) {
-      for (const poolItem of ANCESTOR_POOL) {
-        if (poolItem.id !== current.id && !ascendants.some(a => a.id === poolItem.id)) {
-          ascendants.unshift(poolItem);
-          if (ascendants.length >= 4) break;
+    if (isDirectFounder) {
+      current.isFounder = true;
+    } else {
+      const hash = Math.abs(hashString(current.id));
+      const rootFounder = { ...ANCESTOR_POOL[0], isFounder: true };
+      const intermediate1 = ANCESTOR_POOL[1 + (hash % 2)];
+      const intermediate2 = ANCESTOR_POOL[3 + (hash % 2)];
+      const directSponsor = ANCESTOR_POOL[4 + (hash % 2)];
+
+      const chainCandidates = [rootFounder, intermediate1, intermediate2, directSponsor];
+      for (const candidate of chainCandidates) {
+        if (candidate.id !== current.id && !ascendants.some(a => a.id === candidate.id)) {
+          ascendants.push(candidate);
+        }
+      }
+
+      if (ascendants.length < 4) {
+        for (const poolItem of ANCESTOR_POOL) {
+          if (poolItem.id !== current.id && !ascendants.some(a => a.id === poolItem.id)) {
+            ascendants.unshift(poolItem);
+            if (ascendants.length >= 4) break;
+          }
         }
       }
     }
   }
 
-  // 2. Déterminer les descendants (Lignée descendante · fil Terre cuite · MAXIMUM 4)
+  // 2. Déterminer les descendants (100% personnes OU 100% organisations)
   const descendants: LineageMember[] = [];
 
-  // Si c'est une personne de MATRIX_SERIES_DATA avec invitedPeople réels
-  const rawMatrixPerson = findPersonInMatrix(current.id);
-  if (rawMatrixPerson && rawMatrixPerson.invitedPeople && rawMatrixPerson.invitedPeople.length > 0) {
-    for (const child of rawMatrixPerson.invitedPeople.slice(0, 4)) {
-      descendants.push(resolveLineageMember(child));
-    }
-  }
-
-  // Si c'est un PROTAGONIST avec des héritiers
-  const rawProtagonist = PROTAGONISTS.find(p => p.id === current.id);
-  if (rawProtagonist && rawProtagonist.tree?.heritiers && rawProtagonist.tree.heritiers.length > 0) {
-    for (const h of rawProtagonist.tree.heritiers.slice(0, 4)) {
-      if (!descendants.some(d => d.id === h.id)) {
-        descendants.push({
-          id: h.id,
-          name: h.name,
-          role: h.role,
-          territory: h.country,
-          country: h.country,
-          flag: '🌍',
-          photoUrl: h.photo,
-          quote: '« Disciple coopté par transmission directe du maître. »',
-          invitationStory: `Accueilli par ${current.name} pour perpétuer son atelier et son savoir.`,
-          acceptanceDate: 'Alliance validée bilatéralement'
-        });
+  if (isOrg) {
+    // Descendance d'alliances entre organisations
+    const otherOrgs = COMPANIES_DATA.filter(c => c.id !== current.id && !ascendants.some(a => a.id === c.id));
+    const hash = Math.abs(hashString(current.id));
+    for (let i = 0; i < otherOrgs.length; i++) {
+      const comp = otherOrgs[(hash + 3 + i) % otherOrgs.length];
+      if (!descendants.some(d => d.id === comp.id)) {
+        descendants.push(resolveLineageMember(comp));
       }
     }
-  }
+  } else {
+    // Descendance humaine de collaborateurs, disciples et créateurs
+    const rawMatrixPerson = findPersonInMatrix(current.id);
+    if (rawMatrixPerson && rawMatrixPerson.invitedPeople && rawMatrixPerson.invitedPeople.length > 0) {
+      for (const child of rawMatrixPerson.invitedPeople.slice(0, 16)) {
+        const resolved = resolveLineageMember(child);
+        if (resolved.entityType !== 'organization') {
+          descendants.push(resolved);
+        }
+      }
+    }
 
-  // Compléter de manière déterministe pour toujours avoir entre 2 et 4 personnes
-  // ou un échantillon vivant fidèle à l'esprit "Camille et ses 4 enfants"
-  if (descendants.length < 4) {
+    const rawProtagonist = PROTAGONISTS.find(p => p.id === current.id);
+    if (rawProtagonist && rawProtagonist.tree?.heritiers && rawProtagonist.tree.heritiers.length > 0) {
+      for (const h of rawProtagonist.tree.heritiers.slice(0, 16)) {
+        if (!descendants.some(d => d.id === h.id)) {
+          descendants.push({
+            id: h.id,
+            name: h.name,
+            firstName: h.name.split(' ')[0],
+            role: h.role,
+            territory: h.country,
+            country: h.country,
+            flag: '🌍',
+            photoUrl: h.photo,
+            entityType: 'person',
+            quote: '« Disciple coopté par transmission directe du maître. »',
+            invitationStory: `Accueilli par ${current.name} pour perpétuer son atelier et son savoir.`,
+            acceptanceDate: 'Alliance validée bilatéralement'
+          });
+        }
+      }
+    }
+
+    // Compléter avec PERSON_DESCENDANT_POOL
     const hash = Math.abs(hashString(current.id));
-    const countTarget = Math.min(4, Math.max(2, (hash % 3) + 2)); // 2, 3 ou 4
-    
-    let poolIndex = hash % DESCENDANT_POOL.length;
-    while (descendants.length < countTarget) {
-      const candidate = DESCENDANT_POOL[poolIndex % DESCENDANT_POOL.length];
+    let poolIndex = hash % PERSON_DESCENDANT_POOL.length;
+
+    while (descendants.length < 9) {
+      const candidate = PERSON_DESCENDANT_POOL[poolIndex % PERSON_DESCENDANT_POOL.length];
       const uniqueChildId = `${candidate.id}-${Math.abs(hashString(`${current.id}-${poolIndex}`)).toString(36).slice(0, 5)}`;
       if (candidate.id !== current.id && !descendants.some(d => d.id === candidate.id || d.id === uniqueChildId)) {
         descendants.push({
           ...candidate,
           id: uniqueChildId,
           invitationStory: `Pris(e) sous ses ailes par ${current.name} suite à une résonance de cœur.`,
-          acceptanceDate: 'Acceptation mutuelle des deux âmes'
+          acceptanceDate: 'Acceptation mutuelle scellée'
         });
       }
       poolIndex++;
+      if (poolIndex > 50) break;
     }
   }
 
   return {
     current,
     ascendants,
-    descendants: descendants.slice(0, 4), // GARANTIE STRICTE : MAXIMUM 4
-    maxChildren: 4,
+    descendants: descendants.slice(0, 16),
+    maxChildren: 16,
     sharePercentage: 4,
-    ruleSummary: "Alliance mutuelle indéfectible · Jusqu'à 4 êtres cooptés sous ses ailes · 4 % de transmission d'abondance"
+    ruleSummary: isOrg 
+      ? "Alliance des Lumières · Réseau d'organisations & studios cooptés" 
+      : "Alliance de transmission directe · Collaborateurs & créateurs cooptés"
   };
+}
+
+/**
+ * Retourne les enfants cooptés d'un membre pour afficher sa descendance immédiate
+ * sur la ligne inférieure de l'arbre généalogique.
+ */
+export function getChildrenForMember(memberOrId: string | LineageMember): LineageMember[] {
+  const member = typeof memberOrId === 'string' ? resolveLineageMember(memberOrId) : memberOrId;
+  const tree = getLineageTree(member.id);
+  return tree.descendants;
 }
 
 function findPersonInMatrix(id: string): AffiliationPerson | null {

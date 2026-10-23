@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { 
   ChevronLeft, 
   ChevronRight, 
@@ -13,28 +13,38 @@ import {
   Check,
   Award,
   BookOpen,
-  ArrowUpDown
+  ArrowUpDown,
+  MessageSquare
 } from 'lucide-react';
 import { ShareIcon } from './ShareIcon';
 import { ResonanceModal } from './ResonanceModal';
-import { ProfileSoloIcon, TvPlayerIcon } from './YonywoodBrandIcons';
+import { ProfileSoloIcon, TvPlayerIcon, LineageGenerationsIcon } from './YonywoodBrandIcons';
 import { ViewScreen } from '../types';
 import { CompanyEntity, CompanyStakeholder, COMPANIES_DATA } from '../data/companyPortraitsData';
 import { PortraitsCircleView } from './PortraitsCircleView';
 import { UnifiedVideoCardOverlay } from './UnifiedVideoCardOverlay';
 import { celestialAudio } from '../utils/celestialAudio';
+import { ProfileLineageFrise } from './ProfileLineageFrise';
 
 export type { CompanyStakeholder, CompanyEntity };
 export { COMPANIES_DATA };
 
-
 interface CompanyHeritageScreenProps {
   onNavigate?: (screen: ViewScreen) => void;
+  initialCompanyId?: string;
+  initialShowLineage?: boolean;
 }
 
-export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ onNavigate }) => {
+export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ 
+  onNavigate,
+  initialCompanyId,
+  initialShowLineage 
+}) => {
   // Mode de navigation : 'circle' (par défaut) ou 'swipe'
   const [viewMode, setViewMode] = useState<'circle' | 'swipe'>('circle');
+
+  // Affichage de la frise de lignée verticale
+  const [showLineageFrise, setShowLineageFrise] = useState<boolean>(Boolean(initialShowLineage));
 
   // Navigation Niveau 1 (Entreprises globales)
   const [currentIdx, setCurrentIdx] = useState(0);
@@ -46,6 +56,21 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
   const [stakeholderIdx, setStakeholderIdx] = useState(0);
   const [isStakeholderPlaying, setIsStakeholderPlaying] = useState(false);
   const [isStakeholderMuted, setIsStakeholderMuted] = useState(false);
+
+  // Synchronisation avec initialCompanyId et initialShowLineage
+  useEffect(() => {
+    if (initialCompanyId) {
+      const found = COMPANIES_DATA.find((c) => c.id === initialCompanyId);
+      if (found) {
+        setSelectedCompanyForSpace(found);
+        const idx = COMPANIES_DATA.findIndex((c) => c.id === initialCompanyId);
+        if (idx >= 0) setCurrentIdx(idx);
+      }
+    }
+    if (initialShowLineage) {
+      setShowLineageFrise(true);
+    }
+  }, [initialCompanyId, initialShowLineage]);
 
   // Modales d'interaction pour les témoins & entreprises
   const [resonanceTargetCompany, setResonanceTargetCompany] = useState<CompanyEntity | null>(null);
@@ -66,6 +91,7 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
   const stakeholderVideoRef = useRef<HTMLVideoElement | null>(null);
 
   const currentCompany = COMPANIES_DATA[currentIdx];
+  const activeCompany = selectedCompanyForSpace || currentCompany;
   const activeStakeholders = selectedCompanyForSpace ? selectedCompanyForSpace.stakeholders : [];
   const currentStakeholder = activeStakeholders[stakeholderIdx] || activeStakeholders[0];
 
@@ -96,11 +122,15 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
   const handleShare = (e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
     const url = selectedCompanyForSpace 
-      ? `${window.location.origin}?company=${selectedCompanyForSpace.id}&speaker=${currentStakeholder.id}`
+      ? `${window.location.origin}?company=${selectedCompanyForSpace.id}&speaker=${currentStakeholder?.id || ''}`
       : `${window.location.origin}?company=${currentCompany.id}`;
     navigator.clipboard?.writeText(url);
     setCopied(true);
-    setTimeout(() => setCopied(false), 2200);
+    setToastMessage('Lien copié dans le presse-papiers');
+    setTimeout(() => {
+      setCopied(false);
+      setToastMessage(null);
+    }, 2200);
   };
 
   const onTouchStart = (e: React.TouchEvent) => {
@@ -141,10 +171,44 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
     >
       
       {/* =========================================================== */}
-      {/* EN-TÊTE HARMONISÉ : TITRE LUMIÈRE & BASCULE (MODE SWIPE UNIQUEMENT) */}
-      {/* (En mode Cercle, PortraitsCircleView intègre son propre en-tête unique pour éviter tout dédoublement) */}
+      {/* EN-TÊTE HARMONISÉ                                          */}
       {/* =========================================================== */}
-      {viewMode === 'swipe' && (
+      {showLineageFrise ? (
+        <div className="relative flex items-center justify-between h-9 sm:h-10 shrink-0 gap-2 mb-1 px-1">
+          <div className="flex items-center gap-1.5 sm:gap-2 h-full">
+            <button
+              onClick={() => setShowLineageFrise(false)}
+              className="font-normal text-stone-500 hover:text-stone-900 transition-colors cursor-pointer flex items-center gap-1 group py-1"
+              title="Revenir à l'organisation"
+            >
+              <ChevronLeft className="w-4 h-4 text-stone-400 group-hover:text-stone-700 group-hover:-translate-x-0.5 transition-transform" />
+              <span>Retour</span>
+            </button>
+            <span className="text-stone-300 font-light text-xs" aria-hidden="true">
+              ›
+            </span>
+            <div className="relative flex items-center h-full">
+              <span
+                className="font-editorial text-base sm:text-lg font-semibold text-[#1C1917] tracking-normal truncate max-w-[150px] sm:max-w-[280px]"
+                aria-current="page"
+              >
+                Lignée · {activeCompany.companyName}
+              </span>
+              <div className="absolute left-0 -bottom-1.5 w-8 h-0.5 bg-[#A2482B] rounded-full" />
+            </div>
+          </div>
+
+          <div className="flex items-center gap-1.5 shrink-0">
+            <button
+              onClick={() => setShowLineageFrise(false)}
+              className="flex items-center gap-1 px-3 py-1 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-semibold transition-all cursor-pointer shadow-2xs active:scale-95"
+            >
+              <X className="w-3.5 h-3.5" />
+              <span>Fermer</span>
+            </button>
+          </div>
+        </div>
+      ) : viewMode === 'swipe' ? (
         <div className="relative flex items-center justify-between h-9 sm:h-10 shrink-0 gap-2 mb-1">
           {selectedCompanyForSpace ? (
             <div className="flex items-center gap-1.5 sm:gap-2 h-full">
@@ -164,7 +228,7 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
               </span>
               <div className="relative flex items-center h-full">
                 <span
-                  className="font-editorial text-base sm:text-lg font-semibold text-[#1C1917] tracking-normal truncate max-w-[150px] sm:max-w-[260px]"
+                  className="font-editorial text-base sm:text-lg font-semibold text-[#1C1917] tracking-normal truncate max-w-[120px] sm:max-w-[220px]"
                   aria-current="page"
                 >
                   {selectedCompanyForSpace.companyName}
@@ -183,33 +247,116 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
             </div>
           )}
 
-          {/* Bascule vers Mode Cercle avec son noble celestialAudio */}
-          <div className="flex items-center gap-1.5 shrink-0">
+          {/* Actions Droite : Exactement [Lignée] -> [Messagerie] -> [Partage] -> [Photo / Logo] + Bascule Cercle */}
+          <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
+            {/* 1. Lignée (transmission & origines) */}
+            <button
+              type="button"
+              onClick={() => setShowLineageFrise(prev => !prev)}
+              id="btn-company-lineage"
+              className={`w-7.5 h-7.5 sm:w-8.5 sm:h-8.5 rounded-xl border flex items-center justify-center transition-all shadow-xs cursor-pointer active:scale-95 shrink-0 ${
+                showLineageFrise
+                  ? 'bg-[#A2482B] border-[#A2482B] text-white shadow-xs'
+                  : 'bg-white hover:bg-[#A2482B] border-stone-200 hover:border-[#A2482B] text-stone-700 hover:text-white'
+              }`}
+              title={showLineageFrise ? "Masquer la lignée" : `Voir la lignée de ${activeCompany.companyName} (transmission & origines)`}
+              aria-label={`Lignée de ${activeCompany.companyName}`}
+            >
+              <LineageGenerationsIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-colors" strokeWidth={1.75} />
+            </button>
+
+            {/* 2. Espace Messagerie */}
+            <button
+              type="button"
+              onClick={() => {
+                if (onNavigate) {
+                  onNavigate({ type: 'messaging' });
+                }
+              }}
+              id="btn-company-messaging"
+              className="w-7.5 h-7.5 sm:w-8.5 sm:h-8.5 rounded-xl bg-white hover:bg-[#A2482B] border border-stone-200 hover:border-[#A2482B] text-stone-700 hover:text-white flex items-center justify-center transition-all shadow-xs cursor-pointer active:scale-95 shrink-0"
+              title={`Envoyer un message à ${activeCompany.companyName}`}
+              aria-label={`Contacter ${activeCompany.companyName}`}
+            >
+              <MessageSquare className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[1.8] transition-colors" />
+            </button>
+
+            {/* 3. Partage */}
+            <button
+              type="button"
+              onClick={handleShare}
+              id="btn-company-share"
+              className="w-7.5 h-7.5 sm:w-8.5 sm:h-8.5 rounded-xl bg-white hover:bg-[#A2482B] border border-stone-200 hover:border-[#A2482B] text-stone-700 hover:text-white flex items-center justify-center transition-all shadow-xs cursor-pointer active:scale-95 shrink-0"
+              title={`Partager la page de ${activeCompany.companyName}`}
+              aria-label={`Partager ${activeCompany.companyName}`}
+            >
+              <ShareIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-colors" />
+            </button>
+
+            {/* 4. Petite diapositive carrée épurée avec le logo de l'organisation */}
+            <div 
+              onClick={() => {
+                if (!selectedCompanyForSpace) {
+                  setSelectedCompanyForSpace(activeCompany);
+                  setStakeholderIdx(0);
+                }
+              }}
+              className="w-8 h-8 sm:w-8.5 sm:h-8.5 p-0.5 bg-white border border-stone-200/90 rounded-sm sm:rounded shadow-xs shrink-0 flex items-center justify-center cursor-pointer hover:scale-105 active:scale-95 transition-transform"
+              title={`Organisation ${activeCompany.companyName}`}
+            >
+              <div className="w-full h-full overflow-hidden bg-stone-100 rounded-[1px] aspect-square">
+                <img
+                  src={activeCompany.photoUrl}
+                  alt={activeCompany.companyName}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+
+            {/* Bascule vers Mode Cercle avec son noble celestialAudio */}
             <button
               id="btn-toggle-portraits-circle"
               onClick={() => {
                 setViewMode('circle');
+                setShowLineageFrise(false);
                 celestialAudio.playOrbSelect();
               }}
-              className="flex items-center gap-1.5 h-6.5 sm:h-7 px-3 rounded-full bg-[#A2482B] hover:bg-[#8A3B22] text-white text-[10.5px] sm:text-[11px] font-semibold transition-all cursor-pointer shadow-2xs shrink-0 active:scale-95"
+              className="ml-1 flex items-center gap-1 sm:gap-1.5 h-6.5 sm:h-7 px-2.5 sm:px-3 rounded-full bg-[#A2482B] hover:bg-[#8A3B22] text-white text-[10.5px] sm:text-[11px] font-semibold transition-all cursor-pointer shadow-2xs shrink-0 active:scale-95"
               title="Revenir au mode Cercle"
             >
               <LayoutGrid className="w-3 h-3 text-white" />
-              <span>Cercle</span>
+              <span className="hidden sm:inline">Cercle</span>
             </button>
           </div>
         </div>
-      )}
+      ) : null}
 
       {/* =========================================================== */}
-      {/* VUE PRINCIPALE : MODE CERCLE OU CARTE VIDÉO 9:16           */}
+      {/* VUE PRINCIPALE : FRISE DE LIGNÉE, MODE CERCLE OU SWIPE     */}
       {/* =========================================================== */}
-      {viewMode === 'circle' ? (
+      {showLineageFrise ? (
+        <div className="relative w-full flex-1 flex flex-col min-h-0 overflow-hidden animate-in fade-in duration-200">
+          <ProfileLineageFrise
+            personIdOrName={activeCompany.id}
+            onNavigateToPerson={(id) => {
+              if (onNavigate) {
+                onNavigate({ type: 'protagonist_profile', protagonistId: id });
+              }
+            }}
+            onNavigate={onNavigate}
+            onClose={() => setShowLineageFrise(false)}
+          />
+        </div>
+      ) : viewMode === 'circle' ? (
         <div className="relative w-full flex-1 flex flex-col min-h-0">
           <PortraitsCircleView 
             companies={COMPANIES_DATA} 
             selectedCompanyId={selectedCompanyForSpace?.id}
             onSelectCompany={(org) => setSelectedCompanyForSpace(org)}
+            onOpenLineage={(org) => {
+              setSelectedCompanyForSpace(org);
+              setShowLineageFrise(true);
+            }}
             onNavigate={onNavigate}
             topRightAction={
               <button
@@ -446,6 +593,14 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ on
               « {questionModalStakeholder.question || "Quelle vision singulière ce parcours apporte-t-il au monde ?"} »
             </p>
           </div>
+        </div>
+      )}
+
+      {/* Toast message / confirmation partage */}
+      {(toastMessage || copied) && (
+        <div className="fixed top-14 left-1/2 -translate-x-1/2 z-50 max-w-sm w-full px-4 py-2.5 rounded-2xl bg-[#1C1917] text-white text-xs font-semibold flex items-center gap-2 shadow-xl animate-in fade-in">
+          <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+          <span>{toastMessage || 'Lien copié dans le presse-papiers'}</span>
         </div>
       )}
 

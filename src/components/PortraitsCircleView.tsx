@@ -7,6 +7,7 @@ import {
   Send
 } from 'lucide-react';
 import { ShareIcon } from './ShareIcon';
+import { LineageGenerationsIcon } from './YonywoodBrandIcons';
 import { CompanyEntity, CompanyStakeholder } from '../data/companyPortraitsData';
 import { ResonanceModal } from './ResonanceModal';
 import { UnifiedVideoCardOverlay } from './UnifiedVideoCardOverlay';
@@ -17,6 +18,7 @@ interface PortraitsCircleViewProps {
   companies: CompanyEntity[];
   selectedCompanyId?: string | null;
   onSelectCompany?: (company: CompanyEntity | null) => void;
+  onOpenLineage?: (company: CompanyEntity) => void;
   onNavigate?: (screen: ViewScreen) => void;
   topRightAction?: React.ReactNode;
 }
@@ -25,6 +27,7 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
   companies,
   selectedCompanyId,
   onSelectCompany,
+  onOpenLineage,
   onNavigate,
   topRightAction,
 }) => {
@@ -359,10 +362,22 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
               : "Touchez le centre pour d'autres voix"}
           </span>
 
-          {/* Actions spécifiques au niveau organisation (niveau 1) : Contacter & Partager l'espace Lumière */}
+          {/* Actions spécifiques au niveau organisation (niveau 1) : [Lignée] -> [Messagerie] -> [Partage] -> [Logo] */}
           {level === 1 && curOrg && (
             <div className="flex items-center gap-1.5 sm:gap-2">
-              {/* Contacter l'organisation */}
+              {/* 1. Lignée (transmission & origines) */}
+              <button
+                type="button"
+                onClick={() => onOpenLineage && onOpenLineage(curOrg)}
+                id="btn-lineage-organisation"
+                className="w-7.5 h-7.5 sm:w-8 sm:h-8 rounded-xl bg-white hover:bg-[#A2482B] border border-stone-200 hover:border-[#A2482B] text-stone-700 hover:text-white flex items-center justify-center transition-all shadow-xs cursor-pointer active:scale-95 shrink-0"
+                title={`Voir la lignée de ${curOrg.companyName} (transmission & origines)`}
+                aria-label={`Lignée de ${curOrg.companyName}`}
+              >
+                <LineageGenerationsIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-colors" strokeWidth={1.75} />
+              </button>
+
+              {/* 2. Contacter l'organisation */}
               <button
                 type="button"
                 onClick={() => setIsContactCompanyModalOpen(true)}
@@ -374,7 +389,7 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
                 <MessageSquare className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[1.8] transition-colors" />
               </button>
 
-              {/* Partager l'espace Lumière de l'organisation */}
+              {/* 3. Partager l'espace Lumière de l'organisation */}
               <button
                 type="button"
                 onClick={() => handleShareCompany(curOrg)}
@@ -385,6 +400,20 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
               >
                 <ShareIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-colors" />
               </button>
+
+              {/* 4. Petite diapositive carrée épurée avec le logo de l'organisation */}
+              <div 
+                className="w-7.5 h-7.5 sm:w-8 sm:h-8 p-0.5 bg-white border border-stone-200/90 rounded-sm sm:rounded shadow-xs shrink-0 flex items-center justify-center"
+                title={`Organisation ${curOrg.companyName}`}
+              >
+                <div className="w-full h-full overflow-hidden bg-stone-100 rounded-[1px] aspect-square">
+                  <img
+                    src={curOrg.photoUrl}
+                    alt={curOrg.companyName}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </div>
             </div>
           )}
 

@@ -2013,7 +2013,22 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
               </button>
             )}
 
-            {/* Espace Messagerie : icône seule sans texte */}
+            {/* 1. La lignée (transmission & origines) : arrive avant l'icône messagerie */}
+            <button
+              onClick={() => setShowLineageFrise(prev => !prev)}
+              id="btn-profile-lineage"
+              className={`w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-xl border flex items-center justify-center transition-all shadow-xs cursor-pointer active:scale-95 shrink-0 ${
+                showLineageFrise
+                  ? 'bg-[#A2482B] border-[#A2482B] text-white shadow-xs'
+                  : 'bg-white hover:bg-[#A2482B] border-stone-200 hover:border-[#A2482B] text-stone-700 hover:text-white'
+              }`}
+              title={showLineageFrise ? "Masquer la lignée" : "Voir la lignée (transmission & origines)"}
+              aria-label="La lignée"
+            >
+              <LineageGenerationsIcon className="w-4 h-4 transition-colors" strokeWidth={1.75} />
+            </button>
+
+            {/* 2. Espace Messagerie : après la lignée */}
             <button
               onClick={() => {
                 if (isOwner) {
@@ -2029,22 +2044,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
               <MessageSquare className="w-4 h-4 stroke-[1.8] transition-colors" />
             </button>
 
-            {/* La lignée (transmission & origines) : à côté du contact, petit carré arrondi assorti */}
-            <button
-              onClick={() => setShowLineageFrise(prev => !prev)}
-              id="btn-profile-lineage"
-              className={`w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-xl border flex items-center justify-center transition-all shadow-xs cursor-pointer active:scale-95 shrink-0 ${
-                showLineageFrise
-                  ? 'bg-[#A2482B] border-[#A2482B] text-white shadow-xs'
-                  : 'bg-white hover:bg-[#A2482B] border-stone-200 hover:border-[#A2482B] text-stone-700 hover:text-white'
-              }`}
-              title={showLineageFrise ? "Masquer la lignée" : "Voir la lignée (transmission & origines)"}
-              aria-label="La lignée"
-            >
-              <LineageGenerationsIcon className="w-4 h-4 transition-colors" strokeWidth={1.75} />
-            </button>
-
-            {/* Partage de la page portrait : juste à côté de l'icône lignée et messagerie */}
+            {/* 3. Partage de la page portrait : après la messagerie */}
             <button
               onClick={handleShareProfile}
               id="btn-profile-share-page"
@@ -2122,6 +2122,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
           {showLineageFrise ? (
             <ProfileLineageFrise
               personIdOrName={protagonistId || userFullName || 'current-user'}
+              onNavigate={onNavigate}
               onNavigateToPerson={(id) => {
                 setShowLineageFrise(false);
                 onNavigate({ 

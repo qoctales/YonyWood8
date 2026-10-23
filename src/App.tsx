@@ -55,7 +55,10 @@ const resolveScreenFromPath = (): { screen: ViewScreen | null; redirectFrom?: st
 
   // Nouvelles adresses officielles
   if (path === '/lumieres') {
-    return { screen: { type: 'enterprise' } };
+    const params = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
+    const company = params?.get('company') || undefined;
+    const showLineage = params?.get('lignee') === 'true' || params?.get('lineage') === 'true' || undefined;
+    return { screen: { type: 'enterprise', selectedCompanyId: company, showLineage } };
   }
   if (path === '/duos' || path === '/miroir' || path === '/miroirs') {
     return { screen: { type: 'duo_feed' } };
@@ -284,7 +287,11 @@ export default function App() {
         )}
 
         {currentScreen.type === 'enterprise' && (
-          <CompanyHeritageScreen onNavigate={setCurrentScreen} />
+          <CompanyHeritageScreen 
+            onNavigate={setCurrentScreen} 
+            initialCompanyId={currentScreen.selectedCompanyId}
+            initialShowLineage={currentScreen.showLineage}
+          />
         )}
 
         {currentScreen.type === 'marketplace' && (

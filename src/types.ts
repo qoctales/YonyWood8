@@ -608,7 +608,7 @@ export type ViewScreen =
   | { type: 'home' }
   | { type: 'matrix_view' }
   | { type: 'duo_feed'; selectedDocId?: string; currentDuoIndex?: number }
-  | { type: 'enterprise' }
+  | { type: 'enterprise'; selectedCompanyId?: string; showLineage?: boolean }
   | { 
       type: 'marketplace'; 
       initialPeerOfferId?: string; 
