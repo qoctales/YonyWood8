@@ -60,7 +60,7 @@ const seriesList: ExplorerCatalogItem[] = [
   {
     "id": "jesus-legba",
     "category": "series",
-    "title": "Vodun Rays ‹ › Amen",
+    "title": "Vodun Rays ‹ › Autre Foi",
     "subtitle": "Deux traditions. Une même question de foi.",
     "question": "Qu’est-ce qui dans votre foi la plus intime vous relie à ce qui vous dépasse et vous rapproche des autres ?",
     "photoUrl": "/assets/posters/Esu < > Jesus.png",

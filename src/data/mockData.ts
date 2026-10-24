@@ -15,7 +15,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
   {
     id: 'jesus-legba',
     slug: 'jesus-legba',
-    title: 'Vodun Rays ‹ › Amen',
+    title: 'Vodun Rays ‹ › Autre Foi',
     subtitle: 'Deux traditions spirituelles. Une même question de transcendance face au mystère.',
     centralQuestion: 'Qu’est-ce qui, un jour, vous a fait sentir que quelque chose de plus grand que vous était présent ?',
     shortSynopsis: 'Quand la tradition ancestrale et la foi révélée dialoguent d’égal à égal face aux grands mystères humains : l’épreuve, le pardon et la transcendance.',
@@ -32,7 +32,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         territory: 'Bénin (Allada, Abomey, Ouidah)'
       },
       {
-        name: 'Amen',
+        name: 'Autre Foi',
         tagline: 'L’espérance spirituelle et le don de soi',
         description: 'Parcours de foi révélée, d’oraison silencieuse, d’accueil du prochain et d’engagement au cœur des communautés contemporaines.',
         territory: 'Bénin (Littoral) & Diaspora'
@@ -1411,7 +1411,7 @@ export const PROTAGONISTS: Protagonist[] = [
     bio: 'Né au bord de la lagune de Cotonou, ordonné à Ouidah, Dieudonné conjugue l’étude de saint Augustin avec une écoute attentive des traditions de son terroir. Il enseigne la philosophie aux jeunes lycéens et partage son temps entre l’oratoire et la rue.',
     photoUrl: '/assets/duos/duo_pere_matthieu_1791655226601.jpg',
     documentaryId: 'jesus-legba',
-    universeTag: 'Amen',
+    universeTag: 'Autre Foi',
     quote: '« La foi n’est pas une citadelle contre l’autre, c’est une table basse dressée en plein vent où l’on attend celui qui a soif. »',
     tree: {
       transmissions: [
@@ -2634,7 +2634,7 @@ export const DUOS: Duo[] = [
     id: 'duo-jesus-legba-01',
     slug: 'duo-jesus-legba-01',
     documentaryId: 'jesus-legba',
-    documentaryTitle: 'Vodun Rays ‹ › Amen',
+    documentaryTitle: 'Vodun Rays ‹ › Autre Foi',
     episodeNumber: 'ÉPISODE 01',
     protagonistA: PROTAGONISTS.find(p => p.id === 'dah-zounon') || PROTAGONISTS[2],
     protagonistB: PROTAGONISTS.find(p => p.id === 'pere-matthieu') || PROTAGONISTS[3],
@@ -3166,7 +3166,7 @@ export const BACKOFFICE_APPLICATIONS: BackOfficeApplication[] = [
     candidatePhoto: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
     territory: 'Bénin (Porto-Novo)',
     documentaryId: 'jesus-legba',
-    documentaryTitle: 'Vodun Rays ‹ › Amen',
+    documentaryTitle: 'Vodun Rays ‹ › Autre Foi',
     universeGroup: 'Vodun Rays',
     status: 'CONTROLE_TECHNIQUE',
     submittedDate: '13 Septembre 2026',
@@ -3208,8 +3208,8 @@ export const BACKOFFICE_APPLICATIONS: BackOfficeApplication[] = [
     candidatePhoto: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
     territory: 'Bénin (Abomey)',
     documentaryId: 'jesus-legba',
-    documentaryTitle: 'Vodun Rays ‹ › Amen',
-    universeGroup: 'Amen',
+    documentaryTitle: 'Vodun Rays ‹ › Autre Foi',
+    universeGroup: 'Autre Foi',
     status: 'APPROUVEES',
     submittedDate: '28 Août 2026',
     assignedReviewer: 'Direction Éditoriale',
@@ -3221,7 +3221,7 @@ export const BACKOFFICE_APPLICATIONS: BackOfficeApplication[] = [
 export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
   {
     seriesId: 'jesus-legba',
-    seriesTitle: 'Vodun Rays ‹ › Amen',
+    seriesTitle: 'Vodun Rays ‹ › Autre Foi',
     subtitle: 'Deux traditions. Une même question de foi.',
     description: 'Comment la rencontre de deux géants de la spiritualité béninoise a ouvert une chaîne vivante d\'initiations, tissant des liens inattendus entre couvents vodoun et monastères chrétiens.',
     centralQuestion: 'La foi',
@@ -3335,7 +3335,7 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
             territory: 'Porto-Novo',
             country: 'Bénin',
             flag: '🇧🇯',
-            universeTag: 'Amen',
+            universeTag: 'Autre Foi',
             photoUrl: '/assets/protagonists/tobi-houndegla.jpg',
             badge: 'Invité(e)',
             invitedById: 'pere-matthieu',
@@ -3375,7 +3375,7 @@ export const SERIES_AFFILIATION_TREES: SeriesAffiliationTree[] = [
             territory: 'Cotonou',
             country: 'Bénin',
             flag: '🇧🇯',
-            universeTag: 'Amen',
+            universeTag: 'Autre Foi',
             photoUrl: '/assets/protagonists/amara-tisserande.jpg',
             badge: 'Invité(e)',
             invitedById: 'pere-matthieu',

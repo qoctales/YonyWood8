@@ -280,12 +280,12 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
     return [pA.universeTag || 'Pôle A', pB.universeTag || 'Pôle B'];
   };
 
-  // Normalisation spécifique pour Vodun Rays et Amen selon les directives officielles
+  // Normalisation spécifique pour Vodun Rays et Autre Foi selon les directives officielles
   const normalizeUniverseName = (raw?: string) => {
     if (!raw) return '';
     const trimmed = raw.trim();
-    if (trimmed.toLowerCase().includes('amen') || trimmed.toLowerCase().includes('amîn') || trimmed.toLowerCase().includes('jésus')) {
-      return 'Amen';
+    if (trimmed.toLowerCase().includes('amen') || trimmed.toLowerCase().includes('amîn') || trimmed.toLowerCase().includes('autre foi') || trimmed.toLowerCase().includes('jésus')) {
+      return 'Autre Foi';
     }
     if (trimmed.toLowerCase().includes('vodun') || trimmed.toLowerCase().includes('èṣù')) {
       return 'Vodun Rays';
@@ -301,7 +301,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
   const headerPartA = isBeninSeries ? 'Bénin' : seriesNameA;
   const headerPartB = isBeninSeries ? 'Le Monde' : seriesNameB;
 
-  // Badges de pays / univers sur les cartes vidéo individuelles (ex: Bénin vs Pérou, Vodun Rays vs Amen)
+  // Badges de pays / univers sur les cartes vidéo individuelles (ex: Bénin vs Pérou, Vodun Rays vs Autre Foi)
   const cardTagA = isBeninSeries ? (pA.country || 'Bénin') : normalizeUniverseName(pA.universeTag || rawPartA);
   const cardTagB = isBeninSeries ? (pB.country || 'Pérou') : normalizeUniverseName(pB.universeTag || rawPartB);
 

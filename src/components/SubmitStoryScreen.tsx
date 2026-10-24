@@ -319,11 +319,9 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                         setPlayingCardId(null);
                         celestialAudio?.playOrbSelect?.();
                       } else {
-                        // Au clic sur une thématique centrale : lancer la proposition d'histoire
-                        onNavigate({ 
-                          type: 'participate', 
-                          preselectedSeriesId: item.id 
-                        });
+                        // Au clic sur une sous-catégorie centrale : lancer ou mettre en pause la vidéo sans quitter le studio
+                        setPlayingCardId((prev) => (prev === item.id ? null : item.id));
+                        celestialAudio?.playOrbSelect?.();
                       }
                     } else {
                       // Clic direct sur une carte latérale : la faire pivoter immédiatement au centre

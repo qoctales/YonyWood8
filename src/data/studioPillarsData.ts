@@ -69,7 +69,7 @@ export const STUDIO_PILLARS: StudioPillar[] = [
     videoUrl: STOCK_VIDEOS[0],
     items: [
       {
-        id: 'vodun-rays-autre-foi',
+        id: 'jesus-legba',
         title: 'Vodun Rays ‹ › Autre Foi',
         subtitle: 'Deux traditions spirituelles face aux épreuves de la foi et au mystère.',
         question: 'Comment votre rapport au sacré ou à la foi vous aide-t-il à traverser le mystère et les épreuves ?',

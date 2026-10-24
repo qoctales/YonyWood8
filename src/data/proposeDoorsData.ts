@@ -44,7 +44,7 @@ const STOCK_VIDEOS = [
 const SERIES_SUBJECTS: ProposeSubject[] = [
   {
     id: 'jesus-legba',
-    title: 'Vodun Rays ‹ › Amen',
+    title: 'Vodun Rays ‹ › Autre Foi',
     subtitle: 'Deux traditions spirituelles face aux épreuves de la foi et au mystère.',
     synopsis: 'Mise en miroir des deux spiritualités chrétienne et vodun face aux tourments du destin. Deux protagonistes sur deux continents explorent la transcendance, la mort, le pardon et la rédemption au-delà des dogmes.',
     question: 'Comment votre foi ou votre rapport au sacré vous aide-t-il à traverser le deuil ou l’épreuve ?',

@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 import { ViewScreen } from '../types';
 import { useAuth } from '../services/authContext';
-import { recordSharePurchase, getSeriesRemainingShares } from '../services/firestoreService';
+import { recordSharePurchase, getSeriesRemainingShares, getAllSeriesRemainingShares } from '../services/firestoreService';
 import { TvPlayerIcon } from './YonywoodBrandIcons';
 
 interface MarketplaceScreenProps {
@@ -58,7 +58,7 @@ interface PeerOffer {
 const PRODUCTIONS: ProductionPoster[] = [
   {
     id: 'jesus-legba',
-    title: 'Vodun Rays ‹ › Amen',
+    title: 'Vodun Rays ‹ › Autre Foi',
     posterImage: '/assets/posters/Esu < > Jesus.png',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
     sharePrice: 50
@@ -120,7 +120,7 @@ const INITIAL_PEER_OFFERS: PeerOffer[] = [
     sellerId: 'koffi-tisserand',
     sellerName: 'Koffi',
     sellerPhoto: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
-    seriesTitle: 'Vodun Rays ‹ › Amen',
+    seriesTitle: 'Vodun Rays ‹ › Autre Foi',
     posterImage: '/assets/posters/Esu < > Jesus.png',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
     sharesCount: 3,
@@ -256,21 +256,22 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
     'focus-phd': 76 // 180 souscrites (70%)
   });
 
-  // Chargement en temps réel des parts restantes depuis Firestore
+  // Chargement en temps réel des parts restantes depuis Firestore (requête unique optimisée)
   useEffect(() => {
     let isMounted = true;
     const loadRemainingShares = async () => {
-      const updated: Record<string, number> = {};
-      for (const prod of PRODUCTIONS) {
-        try {
-          const rem = await getSeriesRemainingShares(prod.id, 179);
-          updated[prod.id] = rem;
-        } catch {
-          // garder la valeur de repli
+      try {
+        const baseMap: Record<string, number> = {};
+        PRODUCTIONS.forEach(p => {
+          const currentRemaining = remainingSharesMap[p.id] ?? 77;
+          baseMap[p.id] = 256 - currentRemaining;
+        });
+        const updated = await getAllSeriesRemainingShares(baseMap);
+        if (isMounted && Object.keys(updated).length > 0) {
+          setRemainingSharesMap(prev => ({ ...prev, ...updated }));
         }
-      }
-      if (isMounted && Object.keys(updated).length > 0) {
-        setRemainingSharesMap(prev => ({ ...prev, ...updated }));
+      } catch {
+        // repli silencieux sur les valeurs par défaut
       }
     };
     loadRemainingShares();

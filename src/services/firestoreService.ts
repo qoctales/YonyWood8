@@ -84,23 +84,84 @@ export async function recordSharePurchase(data: Omit<SharePurchaseRecord, 'id' |
   }
 }
 
+// Helper pour borner le temps d'attente d'une requête Firestore en cas de latence
+const NETWORK_TIMEOUT_MS = 3000;
+
+function withTimeout<T>(promise: Promise<T>, timeoutMs = NETWORK_TIMEOUT_MS): Promise<T> {
+  return Promise.race([
+    promise,
+    new Promise<T>((_, reject) => 
+      setTimeout(() => reject(new Error('Firestore operation timed out')), timeoutMs)
+    )
+  ]);
+}
+
 // 2. Calcul du nombre de parts restantes sur 256 par série
 export async function getSeriesRemainingShares(seriesId: string, initialTaken: number = 179): Promise<number> {
   const maxShares = 256;
   try {
     const q = query(collection(db, 'share_purchases'), where('seriesId', '==', seriesId));
-    const snapshot = await getDocs(q);
+    const snapshot = await withTimeout(getDocs(q));
     let bought = initialTaken;
     snapshot.forEach(doc => {
       bought += Number(doc.data().sharesCount || 0);
     });
     return Math.max(0, maxShares - bought);
-  } catch (err) {
-    // Calcul local de secours
+  } catch {
+    // Calcul local de secours immédiat
     const localPurchases = JSON.parse(localStorage.getItem('yonywood_local_share_purchases') || '[]');
     const seriesPurchases = localPurchases.filter((p: any) => p.seriesId === seriesId);
     const bought = initialTaken + seriesPurchases.reduce((acc: number, p: any) => acc + (p.sharesCount || 0), 0);
     return Math.max(0, maxShares - bought);
+  }
+}
+
+// 2b. Récupération groupée des parts restantes pour toutes les séries (1 seule requête réseau)
+export async function getAllSeriesRemainingShares(defaultTakenMap: Record<string, number> = {}): Promise<Record<string, number>> {
+  const maxShares = 256;
+  const result: Record<string, number> = {};
+
+  try {
+    const snapshot = await withTimeout(getDocs(collection(db, 'share_purchases')));
+    const purchasesBySeries: Record<string, number> = {};
+    snapshot.forEach(doc => {
+      const data = doc.data();
+      const sId = data.seriesId;
+      if (sId) {
+        purchasesBySeries[sId] = (purchasesBySeries[sId] || 0) + Number(data.sharesCount || 0);
+      }
+    });
+
+    const localPurchases = JSON.parse(localStorage.getItem('yonywood_local_share_purchases') || '[]');
+    localPurchases.forEach((p: any) => {
+      if (p.seriesId) {
+        purchasesBySeries[p.seriesId] = (purchasesBySeries[p.seriesId] || 0) + Number(p.sharesCount || 0);
+      }
+    });
+
+    Object.keys(defaultTakenMap).forEach(seriesId => {
+      const baseTaken = defaultTakenMap[seriesId] ?? 179;
+      const bought = purchasesBySeries[seriesId] || 0;
+      result[seriesId] = Math.max(0, maxShares - (baseTaken + bought));
+    });
+
+    return result;
+  } catch {
+    const localPurchases = JSON.parse(localStorage.getItem('yonywood_local_share_purchases') || '[]');
+    const purchasesBySeries: Record<string, number> = {};
+    localPurchases.forEach((p: any) => {
+      if (p.seriesId) {
+        purchasesBySeries[p.seriesId] = (purchasesBySeries[p.seriesId] || 0) + Number(p.sharesCount || 0);
+      }
+    });
+
+    Object.keys(defaultTakenMap).forEach(seriesId => {
+      const baseTaken = defaultTakenMap[seriesId] ?? 179;
+      const bought = purchasesBySeries[seriesId] || 0;
+      result[seriesId] = Math.max(0, maxShares - (baseTaken + bought));
+    });
+
+    return result;
   }
 }
 
@@ -133,7 +194,7 @@ export async function submitVideoToForest(data: Omit<VideoSubmission, 'id' | 'st
 export async function fetchSubmittedVideos(): Promise<VideoSubmission[]> {
   try {
     const q = query(collection(db, 'submitted_videos'), orderBy('createdAt', 'desc'));
-    const snapshot = await getDocs(q);
+    const snapshot = await withTimeout(getDocs(q));
     const results: VideoSubmission[] = [];
     snapshot.forEach(d => {
       results.push({ id: d.id, ...d.data() } as VideoSubmission);
@@ -158,7 +219,7 @@ export async function fetchUserSubmittedVideos(userId?: string, userEmail?: stri
       userName: 'Sika Dossou',
       userEmail: userEmail || 'createur@yonywood.com',
       seriesId: 'ancestral-revealed',
-      seriesTitle: 'Vodun Rays ‹ › Amen',
+      seriesTitle: 'Vodun Rays ‹ › Autre Foi',
       question: 'Ce qui vous a fait ressentir quelque chose de plus grand que vous',
       videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
       thumbnail: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80',
@@ -178,7 +239,7 @@ export async function fetchUserSubmittedVideos(userId?: string, userEmail?: stri
       userName: 'Mahougnon Zounon',
       userEmail: userEmail || 'createur@yonywood.com',
       seriesId: 'jesus-legba',
-      seriesTitle: 'Vodun Rays ‹ › Amen',
+      seriesTitle: 'Vodun Rays ‹ › Autre Foi',
       question: 'La première fois que vous avez compris que le monde ne pensait pas comme vous',
       videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
       thumbnail: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80',
@@ -208,7 +269,7 @@ export async function fetchUserSubmittedVideos(userId?: string, userEmail?: stri
 
   try {
     const q = query(collection(db, 'submitted_videos'), orderBy('createdAt', 'desc'));
-    const snapshot = await getDocs(q);
+    const snapshot = await withTimeout(getDocs(q));
     const remoteList: VideoSubmission[] = [];
     snapshot.forEach(d => {
       const data = d.data() as VideoSubmission;
