@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <radialGradient id="bgGradAlim" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#14532d"/>
+      <stop offset="60%" stop-color="#052e16"/>
+      <stop offset="100%" stop-color="#021a0d"/>
+    </radialGradient>
+    <linearGradient id="goldGrain" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fde047"/>
+      <stop offset="45%" stop-color="#eab308"/>
+      <stop offset="100%" stop-color="#ca8a04"/>
+    </linearGradient>
+    <linearGradient id="emeraldLeaf" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#16a34a"/>
+      <stop offset="50%" stop-color="#22c55e"/>
+      <stop offset="100%" stop-color="#86efac"/>
+    </linearGradient>
+    <filter id="glowAlim" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#ca8a04" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <!-- Fond circulaire de prestige -->
+  <circle cx="256" cy="256" r="248" fill="url(#bgGradAlim)" stroke="#ca8a04" stroke-width="6" stroke-opacity="0.8"/>
+  <circle cx="256" cy="256" r="236" fill="none" stroke="#22c55e" stroke-width="1.5" stroke-opacity="0.35"/>
+
+  <!-- Emblème agroalimentaire & terroir : épi sacré et feuilles en vortex d'abondance -->
+  <g filter="url(#glowAlim)">
+    <!-- Arc nourricier extérieur gauche -->
+    <path d="M256,96 C290,140 310,190 310,256 C310,320 280,380 230,412 C290,400 340,340 340,256 C340,175 305,120 256,96 Z" fill="url(#goldGrain)"/>
+    
+    <!-- Arc nourricier extérieur droit (symétrie inversée organique) -->
+    <path d="M256,96 C222,140 202,190 202,256 C202,320 232,380 282,412 C222,400 172,340 172,256 C172,175 207,120 256,96 Z" fill="url(#emeraldLeaf)"/>
+
+    <!-- Grains d'or centraux étagés en épi royal -->
+    <path d="M256,120 C274,142 274,166 256,186 C238,166 238,142 256,120 Z" fill="url(#goldGrain)"/>
+    <path d="M256,176 C282,204 282,234 256,258 C230,234 230,204 256,176 Z" fill="url(#goldGrain)"/>
+    <path d="M256,246 C290,278 290,314 256,342 C222,314 222,278 256,246 Z" fill="url(#goldGrain)"/>
+    <path d="M256,330 C280,358 280,386 256,408 C232,386 232,358 256,330 Z" fill="url(#goldGrain)"/>
+
+    <!-- Point de graine originelle -->
+    <circle cx="256" cy="428" r="8" fill="#fde047"/>
+  </g>
+</svg>

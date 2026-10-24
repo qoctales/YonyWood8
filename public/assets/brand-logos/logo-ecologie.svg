@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <radialGradient id="bgGradEco" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#064e3b"/>
+      <stop offset="60%" stop-color="#022c22"/>
+      <stop offset="100%" stop-color="#01140f"/>
+    </radialGradient>
+    <linearGradient id="ecoEmerald" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34d399"/>
+      <stop offset="50%" stop-color="#059669"/>
+      <stop offset="100%" stop-color="#065f46"/>
+    </linearGradient>
+    <linearGradient id="springLime" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#a7f3d0"/>
+      <stop offset="60%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#047857"/>
+    </linearGradient>
+    <filter id="glowEco" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="#10b981" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <circle cx="256" cy="256" r="248" fill="url(#bgGradEco)" stroke="#10b981" stroke-width="6" stroke-opacity="0.8"/>
+  <circle cx="256" cy="256" r="236" fill="none" stroke="#34d399" stroke-width="1.5" stroke-opacity="0.35"/>
+
+  <!-- Emblème écologie, économie circulaire & régénération : triquetra organique en 3 feuilles infinies -->
+  <g filter="url(#glowEco)">
+    <!-- Branche 1 (supérieure nord) -->
+    <path d="M256,110 C290,170 300,210 270,240 C240,270 200,260 180,210 C170,160 210,120 256,110 Z" fill="url(#springLime)"/>
+    
+    <!-- Branche 2 (sud-est) -->
+    <path d="M370,310 C320,330 280,330 260,290 C240,250 260,210 310,210 C360,210 390,260 370,310 Z" fill="url(#ecoEmerald)"/>
+
+    <!-- Branche 3 (sud-ouest) -->
+    <path d="M142,310 C162,260 192,210 242,210 C292,210 312,250 292,290 C272,330 232,330 182,310 Z" fill="url(#springLime)" opacity="0.85"/>
+
+    <!-- Anneau de flux perpétuel reliant les 3 nœuds -->
+    <circle cx="256" cy="256" r="140" fill="none" stroke="url(#springLime)" stroke-width="5" stroke-dasharray="16 12"/>
+
+    <!-- Graine de vie centrale en orbe émeraude -->
+    <circle cx="256" cy="256" r="18" fill="#a7f3d0"/>
+    <circle cx="256" cy="256" r="9" fill="#064e3b"/>
+  </g>
+</svg>

@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <radialGradient id="bgGradCinema" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#451a03"/>
+      <stop offset="60%" stop-color="#1f0a01"/>
+      <stop offset="100%" stop-color="#0d0400"/>
+    </radialGradient>
+    <linearGradient id="cinemaAmber" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fde68a"/>
+      <stop offset="40%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#b45309"/>
+    </linearGradient>
+    <linearGradient id="lensGleam" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#ffffff"/>
+    </linearGradient>
+    <filter id="glowCinema" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="#f59e0b" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <circle cx="256" cy="256" r="248" fill="url(#bgGradCinema)" stroke="#f59e0b" stroke-width="6" stroke-opacity="0.8"/>
+  <circle cx="256" cy="256" r="236" fill="none" stroke="#fde68a" stroke-width="1.5" stroke-opacity="0.35"/>
+
+  <!-- Emblème média, cinéma & audiovisuel : diaphragme optique hexagonal & faisceau projecteur -->
+  <g filter="url(#glowCinema)">
+    <!-- Anneau de monture d'objectif extérieur cranté -->
+    <circle cx="256" cy="256" r="160" fill="none" stroke="url(#cinemaAmber)" stroke-width="10"/>
+    <circle cx="256" cy="256" r="144" fill="none" stroke="#fde68a" stroke-width="2" stroke-dasharray="8 8"/>
+
+    <!-- 6 lames d'obturateur en spirale cinétique formant l'ouverture focale -->
+    <path d="M256,120 L330,195 L275,230 L220,155 Z" fill="url(#cinemaAmber)"/>
+    <path d="M374,188 L374,290 L310,270 L310,188 Z" fill="url(#cinemaAmber)" opacity="0.9"/>
+    <path d="M374,324 L300,398 L275,325 L345,285 Z" fill="url(#cinemaAmber)" opacity="0.85"/>
+    <path d="M256,392 L182,317 L237,282 L292,357 Z" fill="url(#cinemaAmber)"/>
+    <path d="M138,324 L138,222 L202,242 L202,324 Z" fill="url(#cinemaAmber)" opacity="0.9"/>
+    <path d="M138,188 L212,114 L237,187 L167,227 Z" fill="url(#cinemaAmber)" opacity="0.85"/>
+
+    <!-- Ouverture focale centrale lumineuse -->
+    <circle cx="256" cy="256" r="42" fill="url(#lensGleam)"/>
+    <circle cx="256" cy="256" r="24" fill="#0d0400"/>
+    <circle cx="256" cy="256" r="10" fill="#f59e0b"/>
+  </g>
+</svg>

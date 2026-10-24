@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <radialGradient id="bgGradDrink" cx="50%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#083344"/>
+      <stop offset="60%" stop-color="#041f2a"/>
+      <stop offset="100%" stop-color="#020e14"/>
+    </radialGradient>
+    <linearGradient id="azureFlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#67e8f9"/>
+      <stop offset="40%" stop-color="#06b6d4"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+    <linearGradient id="crystalGleam" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#ffffff"/>
+    </linearGradient>
+    <filter id="glowDrink" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#06b6d4" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <circle cx="256" cy="256" r="248" fill="url(#bgGradDrink)" stroke="#06b6d4" stroke-width="6" stroke-opacity="0.8"/>
+  <circle cx="256" cy="256" r="236" fill="none" stroke="#38bdf8" stroke-width="1.5" stroke-opacity="0.35"/>
+
+  <!-- Emblème boisson, eau de source & nectars : goutte de vie pure et ondulations concentriques -->
+  <g filter="url(#glowDrink)">
+    <!-- Ondulations extérieures fluides -->
+    <path d="M120,320 C160,380 352,380 392,320 C360,400 152,400 120,320 Z" fill="url(#azureFlow)" opacity="0.6"/>
+    <path d="M150,340 C180,390 332,390 362,340 C340,410 172,410 150,340 Z" fill="url(#azureFlow)" opacity="0.4"/>
+
+    <!-- Goutte principale sculpturale -->
+    <path d="M256,90 C256,90 360,240 360,310 C360,370 313,415 256,415 C199,415 152,370 152,310 C152,240 256,90 256,90 Z" fill="url(#azureFlow)"/>
+
+    <!-- Goutte intérieure avec reflets cristallins (volume liquide) -->
+    <path d="M256,140 C256,140 330,250 330,305 C330,350 297,385 256,385 C215,385 182,350 182,305 C182,250 256,140 256,140 Z" fill="#042f40"/>
+
+    <!-- Éclat de lumière fluide sur la courbe gauche -->
+    <path d="M256,165 C256,165 210,245 210,295 C210,330 228,355 250,365 C232,350 224,325 224,295 C224,250 256,165 256,165 Z" fill="url(#crystalGleam)" opacity="0.9"/>
+
+    <!-- Perle d'eau en suspension au sommet -->
+    <circle cx="256" cy="115" r="9" fill="#ffffff"/>
+  </g>
+</svg>

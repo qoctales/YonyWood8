@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <radialGradient id="bgGradSport" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#450a0a"/>
+      <stop offset="60%" stop-color="#1f0303"/>
+      <stop offset="100%" stop-color="#0a0101"/>
+    </radialGradient>
+    <linearGradient id="speedRed" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f87171"/>
+      <stop offset="40%" stop-color="#ef4444"/>
+      <stop offset="100%" stop-color="#b91c1c"/>
+    </linearGradient>
+    <linearGradient id="kineticWhite" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="60%" stop-color="#fee2e2"/>
+      <stop offset="100%" stop-color="#fca5a5"/>
+    </linearGradient>
+    <filter id="glowSport" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#ef4444" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <circle cx="256" cy="256" r="248" fill="url(#bgGradSport)" stroke="#ef4444" stroke-width="6" stroke-opacity="0.8"/>
+  <circle cx="256" cy="256" r="236" fill="none" stroke="#f87171" stroke-width="1.5" stroke-opacity="0.35"/>
+
+  <!-- Emblème sport & athlétisme : aile cinétique supersonique & chevron de propulsion dynamique -->
+  <g filter="url(#glowSport)">
+    <!-- Flèche cinétique de tête (aileron supérieur rapide) -->
+    <path d="M110,210 L350,150 C390,140 420,165 390,195 L220,330 C190,355 160,340 180,310 L250,230 L130,230 C100,230 90,215 110,210 Z" fill="url(#kineticWhite)"/>
+    
+    <!-- Lame dynamique de propulsion inférieure (forme agressive style Nike/Jordan) -->
+    <path d="M140,265 L320,225 C360,215 380,240 350,265 L190,385 C160,408 135,395 150,365 L210,305 L155,305 C130,305 125,290 140,265 Z" fill="url(#speedRed)"/>
+
+    <!-- Trait d'impulsion de départ / sillage aérodynamique -->
+    <polygon points="120,340 170,340 135,385 85,385" fill="url(#speedRed)" opacity="0.65"/>
+    <polygon points="90,365 130,365 105,400 65,400" fill="url(#speedRed)" opacity="0.4"/>
+  </g>
+</svg>

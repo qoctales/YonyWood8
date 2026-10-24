@@ -653,7 +653,7 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
 
               {/* Logo de l'organisation dans un cercle (diamètre ≈ 92 % du disque doré) */}
               <g clipPath="url(#medaillonOrgLogoClip)">
-                <circle cx="320" cy="320" r="170" fill="#f7f1e4" />
+                <circle cx="320" cy="320" r="170" fill="#09090b" />
                 {curOrg?.photoUrl && (
                   <image
                     href={curOrg.photoUrl}
@@ -661,7 +661,7 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
                     y="150"
                     width="340"
                     height="340"
-                    preserveAspectRatio="xMidYMid slice"
+                    preserveAspectRatio="xMidYMid meet"
                   />
                 )}
               </g>
@@ -734,28 +734,20 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
                 <button
                   type="button"
                   onClick={() => enter(k)}
-                  aria-label={org.companyName}
-                  title={org.companyName}
+                  aria-label={`Marque ${org.companyName} (${org.category})`}
+                  title={`${org.companyName} · ${org.category}`}
                   className="w-full h-full rounded-full flex items-center justify-center p-1 min-w-[44px] min-h-[44px] cursor-pointer group focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold,#c9962b)] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                 >
                   <div 
-                    className="relative w-full h-full rounded-full overflow-hidden border-2 border-white shadow-md group-hover:scale-105 group-hover:shadow-lg group-active:scale-95 transition-all duration-300 ease-out transform-gpu"
+                    className="relative w-full h-full rounded-full overflow-hidden border-2 border-white shadow-md group-hover:scale-110 group-hover:shadow-xl group-active:scale-95 transition-all duration-300 ease-out transform-gpu bg-[#09090b]"
                   >
                     <img
                       src={org.photoUrl}
-                      alt={org.companyName}
+                      alt={`Logo ${org.companyName}`}
                       onError={(e) => {
                         const target = e.currentTarget;
                         target.onerror = null;
-                        const fallbackOrgPhotos = [
-                          '/assets/doors/door-marques.jpg',
-                          '/assets/doors/door-memoires.jpg',
-                          '/assets/doors/door-projets.jpg',
-                          '/assets/doors/door-competences.jpg',
-                          '/assets/doors/door-territoires.jpg',
-                          '/assets/doors/door-sagesses.jpg'
-                        ];
-                        target.src = fallbackOrgPhotos[k % fallbackOrgPhotos.length];
+                        target.src = '/assets/brand-logos/logo-alimentation.svg';
                       }}
                       className="w-full h-full object-cover pointer-events-none select-none"
                       style={{ backfaceVisibility: 'hidden' }}

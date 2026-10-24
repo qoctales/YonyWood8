@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <radialGradient id="bgGradJewel" cx="50%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#451a03"/>
+      <stop offset="55%" stop-color="#1c0a02"/>
+      <stop offset="100%" stop-color="#080300"/>
+    </radialGradient>
+    <linearGradient id="imperialGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a"/>
+      <stop offset="35%" stop-color="#facc15"/>
+      <stop offset="70%" stop-color="#ca8a04"/>
+      <stop offset="100%" stop-color="#854d0e"/>
+    </linearGradient>
+    <linearGradient id="diamondWhite" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#fef9c3"/>
+      <stop offset="50%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#fef08a"/>
+    </linearGradient>
+    <filter id="glowJewel" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="#facc15" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <circle cx="256" cy="256" r="248" fill="url(#bgGradJewel)" stroke="#facc15" stroke-width="6" stroke-opacity="0.8"/>
+  <circle cx="256" cy="256" r="236" fill="none" stroke="#fef08a" stroke-width="1.5" stroke-opacity="0.35"/>
+
+  <!-- Emblème joaillerie, orfèvrerie & métaux précieux : diamant octogonal brillant & couronne d'or -->
+  <g filter="url(#glowJewel)">
+    <!-- Pierre précieuse octogonale à facettes royales -->
+    <!-- Table centrale -->
+    <polygon points="210,180 302,180 350,228 350,284 302,332 210,332 162,284 162,228" fill="url(#imperialGold)"/>
+    <polygon points="224,196 288,196 328,236 328,276 288,316 224,316 184,276 184,236" fill="#1c0a02" stroke="url(#imperialGold)" stroke-width="3"/>
+
+    <!-- Facettes de taille princesse / brillant avec réfraction lumineuse -->
+    <polygon points="210,180 256,120 302,180" fill="url(#diamondWhite)"/>
+    <polygon points="302,180 392,200 350,228" fill="url(#imperialGold)"/>
+    <polygon points="350,228 412,256 350,284" fill="url(#diamondWhite)"/>
+    <polygon points="350,284 392,312 302,332" fill="url(#imperialGold)"/>
+    <polygon points="302,332 256,392 210,332" fill="url(#diamondWhite)"/>
+    <polygon points="210,332 120,312 162,284" fill="url(#imperialGold)"/>
+    <polygon points="162,284 100,256 162,228" fill="url(#diamondWhite)"/>
+    <polygon points="162,228 120,200 210,180" fill="url(#imperialGold)"/>
+
+    <!-- Étoile à 4 branches d'éclat pur au centre exact -->
+    <polygon points="256,236 262,250 276,256 262,262 256,276 250,262 236,256 250,250" fill="#ffffff"/>
+    <circle cx="256" cy="256" r="4" fill="#facc15"/>
+  </g>
+</svg>

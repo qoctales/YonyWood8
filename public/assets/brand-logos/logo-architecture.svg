@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <radialGradient id="bgGradArch" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#451a03"/>
+      <stop offset="60%" stop-color="#1e0a02"/>
+      <stop offset="100%" stop-color="#080300"/>
+    </radialGradient>
+    <linearGradient id="terracottaClay" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fdba74"/>
+      <stop offset="50%" stop-color="#ea580c"/>
+      <stop offset="100%" stop-color="#9a3412"/>
+    </linearGradient>
+    <linearGradient id="bambooGold" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ca8a04"/>
+      <stop offset="50%" stop-color="#eab308"/>
+      <stop offset="100%" stop-color="#fef08a"/>
+    </linearGradient>
+    <filter id="glowArch" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="#ea580c" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <circle cx="256" cy="256" r="248" fill="url(#bgGradArch)" stroke="#ea580c" stroke-width="6" stroke-opacity="0.8"/>
+  <circle cx="256" cy="256" r="236" fill="none" stroke="#fdba74" stroke-width="1.5" stroke-opacity="0.35"/>
+
+  <!-- Emblème architecture & design durable : voûte parabolique monumentale & arches entrecroisées -->
+  <g filter="url(#glowArch)">
+    <!-- Grande voûte parabolique extérieure (forme d'arche royale) -->
+    <path d="M120,380 C120,200 180,110 256,110 C332,110 392,200 392,380 L346,380 C346,230 306,160 256,160 C206,160 166,230 166,380 Z" fill="url(#terracottaClay)"/>
+    
+    <!-- Voûte secondaire intérieure (croisée d'ogive élégante) -->
+    <path d="M176,380 C176,260 212,200 256,200 C300,200 336,260 336,380 L302,380 C302,280 282,238 256,238 C230,238 210,280 210,380 Z" fill="url(#bambooGold)"/>
+
+    <!-- Pylône axial de lumière et linteau d'équilibre -->
+    <path d="M256,110 L256,380" stroke="url(#bambooGold)" stroke-width="5" stroke-linecap="round"/>
+    <line x1="130" y1="380" x2="382" y2="380" stroke="url(#terracottaClay)" stroke-width="8" stroke-linecap="round"/>
+
+    <!-- Clef de voûte géométrique triangulaire -->
+    <polygon points="256,110 274,146 238,146" fill="#fef08a"/>
+    <circle cx="256" cy="180" r="7" fill="#ea580c"/>
+  </g>
+</svg>
