@@ -608,7 +608,7 @@ export type ViewScreen =
   | { type: 'home' }
   | { type: 'matrix_view' }
   | { type: 'duo_feed'; selectedDocId?: string; currentDuoIndex?: number }
-  | { type: 'enterprise'; selectedCompanyId?: string; showLineage?: boolean }
+  | { type: 'enterprise'; selectedCompanyId?: string }
   | { 
       type: 'marketplace'; 
       initialPeerOfferId?: string; 
@@ -635,7 +635,6 @@ export type ViewScreen =
       returnToDuoIndex?: number; 
       returnToDocId?: string; 
       returnToProtagonistId?: string; 
-      initialShowLineage?: boolean;
       returnToMarketplace?: boolean;
       marketplaceContext?: {
         offerId: string;
@@ -655,14 +654,12 @@ export type ViewScreen =
       returnToDuoIndex?: number; 
       returnToDocId?: string; 
       returnToProtagonistId?: string; 
-      initialShowLineage?: boolean;
       initialModal?: 'orders' | 'contributions';
     }
   | { type: 'settings'; returnTo?: 'profile' | 'duo_feed' }
   | { type: 'portfolio'; returnToDuoId?: string; returnToDuoIndex?: number; returnToDocId?: string }
   | { type: 'transactions'; initialTab?: 'achats' | 'projets' | 'parts'; returnToDuoId?: string; returnToDuoIndex?: number; returnToDocId?: string }
   | { type: 'messaging' }
-  | { type: 'lineage'; protagonistId?: string; returnToDuoId?: string; returnToDuoIndex?: number; returnToDocId?: string; returnToProtagonistId?: string }
   | { type: 'submit_story'; preselectedDocumentaryId?: string }
   | { type: 'request_videographer' }
   | { type: 'review_system' }

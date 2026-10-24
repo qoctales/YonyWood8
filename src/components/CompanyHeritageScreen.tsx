@@ -18,13 +18,12 @@ import {
 } from 'lucide-react';
 import { ShareIcon } from './ShareIcon';
 import { ResonanceModal } from './ResonanceModal';
-import { ProfileSoloIcon, TvPlayerIcon, LineageGenerationsIcon } from './YonywoodBrandIcons';
+import { ProfileSoloIcon, TvPlayerIcon } from './YonywoodBrandIcons';
 import { ViewScreen } from '../types';
 import { CompanyEntity, CompanyStakeholder, COMPANIES_DATA } from '../data/companyPortraitsData';
 import { PortraitsCircleView } from './PortraitsCircleView';
 import { UnifiedVideoCardOverlay } from './UnifiedVideoCardOverlay';
 import { celestialAudio } from '../utils/celestialAudio';
-import { ProfileLineageFrise } from './ProfileLineageFrise';
 
 export type { CompanyStakeholder, CompanyEntity };
 export { COMPANIES_DATA };
@@ -32,19 +31,14 @@ export { COMPANIES_DATA };
 interface CompanyHeritageScreenProps {
   onNavigate?: (screen: ViewScreen) => void;
   initialCompanyId?: string;
-  initialShowLineage?: boolean;
 }
 
 export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ 
   onNavigate,
-  initialCompanyId,
-  initialShowLineage 
+  initialCompanyId
 }) => {
   // Mode de navigation : 'circle' (par défaut) ou 'swipe'
   const [viewMode, setViewMode] = useState<'circle' | 'swipe'>('circle');
-
-  // Affichage de la frise de lignée verticale
-  const [showLineageFrise, setShowLineageFrise] = useState<boolean>(Boolean(initialShowLineage));
 
   // Navigation Niveau 1 (Entreprises globales)
   const [currentIdx, setCurrentIdx] = useState(0);
@@ -57,7 +51,7 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({
   const [isStakeholderPlaying, setIsStakeholderPlaying] = useState(false);
   const [isStakeholderMuted, setIsStakeholderMuted] = useState(false);
 
-  // Synchronisation avec initialCompanyId et initialShowLineage
+  // Synchronisation avec initialCompanyId
   useEffect(() => {
     if (initialCompanyId) {
       const found = COMPANIES_DATA.find((c) => c.id === initialCompanyId);
@@ -67,10 +61,7 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({
         if (idx >= 0) setCurrentIdx(idx);
       }
     }
-    if (initialShowLineage) {
-      setShowLineageFrise(true);
-    }
-  }, [initialCompanyId, initialShowLineage]);
+  }, [initialCompanyId]);
 
   // Modales d'interaction pour les témoins & entreprises
   const [resonanceTargetCompany, setResonanceTargetCompany] = useState<CompanyEntity | null>(null);
@@ -173,42 +164,10 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({
       {/* =========================================================== */}
       {/* EN-TÊTE HARMONISÉ                                          */}
       {/* =========================================================== */}
-      {showLineageFrise ? (
-        <div className="relative flex items-center justify-between h-9 sm:h-10 shrink-0 gap-2 mb-1 px-1">
-          <div className="flex items-center gap-1.5 sm:gap-2 h-full">
-            <button
-              onClick={() => setShowLineageFrise(false)}
-              className="font-normal text-stone-500 hover:text-stone-900 transition-colors cursor-pointer flex items-center gap-1 group py-1"
-              title="Revenir à l'organisation"
-            >
-              <ChevronLeft className="w-4 h-4 text-stone-400 group-hover:text-stone-700 group-hover:-translate-x-0.5 transition-transform" />
-              <span>Retour</span>
-            </button>
-            <span className="text-stone-300 font-light text-xs" aria-hidden="true">
-              ›
-            </span>
-            <div className="relative flex items-center h-full">
-              <span
-                className="font-editorial text-base sm:text-lg font-semibold text-[#1C1917] tracking-normal truncate max-w-[150px] sm:max-w-[280px]"
-                aria-current="page"
-              >
-                Lignée · {activeCompany.companyName}
-              </span>
-              <div className="absolute left-0 -bottom-1.5 w-8 h-0.5 bg-[#A2482B] rounded-full" />
-            </div>
-          </div>
-
-          <div className="flex items-center gap-1.5 shrink-0">
-            <button
-              onClick={() => setShowLineageFrise(false)}
-              className="flex items-center gap-1 px-3 py-1 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-semibold transition-all cursor-pointer shadow-2xs active:scale-95"
-            >
-              <X className="w-3.5 h-3.5" />
-              <span>Fermer</span>
-            </button>
-          </div>
-        </div>
-      ) : viewMode === 'swipe' ? (
+      {/* =========================================================== */}
+      {/* EN-TÊTE HARMONISÉ                                          */}
+      {/* =========================================================== */}
+      {viewMode === 'swipe' ? (
         <div className="relative flex items-center justify-between h-9 sm:h-10 shrink-0 gap-2 mb-1">
           {selectedCompanyForSpace ? (
             <div className="flex items-center gap-1.5 sm:gap-2 h-full">
@@ -247,25 +206,9 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({
             </div>
           )}
 
-          {/* Actions Droite : Exactement [Lignée] -> [Messagerie] -> [Partage] -> [Photo / Logo] + Bascule Cercle */}
+          {/* Actions Droite : [Messagerie] -> [Partage] -> [Photo / Logo] + Bascule Cercle */}
           <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
-            {/* 1. Lignée (transmission & origines) */}
-            <button
-              type="button"
-              onClick={() => setShowLineageFrise(prev => !prev)}
-              id="btn-company-lineage"
-              className={`w-7.5 h-7.5 sm:w-8.5 sm:h-8.5 rounded-xl border flex items-center justify-center transition-all shadow-xs cursor-pointer active:scale-95 shrink-0 ${
-                showLineageFrise
-                  ? 'bg-[#A2482B] border-[#A2482B] text-white shadow-xs'
-                  : 'bg-white hover:bg-[#A2482B] border-stone-200 hover:border-[#A2482B] text-stone-700 hover:text-white'
-              }`}
-              title={showLineageFrise ? "Masquer la lignée" : `Voir la lignée de ${activeCompany.companyName} (transmission & origines)`}
-              aria-label={`Lignée de ${activeCompany.companyName}`}
-            >
-              <LineageGenerationsIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-colors" strokeWidth={1.75} />
-            </button>
-
-            {/* 2. Espace Messagerie */}
+            {/* 1. Espace Messagerie */}
             <button
               type="button"
               onClick={() => {
@@ -281,7 +224,7 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({
               <MessageSquare className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[1.8] transition-colors" />
             </button>
 
-            {/* 3. Partage */}
+            {/* 2. Partage */}
             <button
               type="button"
               onClick={handleShare}
@@ -293,7 +236,7 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({
               <ShareIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-colors" />
             </button>
 
-            {/* 4. Petite diapositive carrée épurée avec le logo de l'organisation */}
+            {/* 3. Petite diapositive carrée épurée avec le logo de l'organisation */}
             <div 
               onClick={() => {
                 if (!selectedCompanyForSpace) {
@@ -318,7 +261,6 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({
               id="btn-toggle-portraits-circle"
               onClick={() => {
                 setViewMode('circle');
-                setShowLineageFrise(false);
                 celestialAudio.playOrbSelect();
               }}
               className="ml-1 flex items-center gap-1 sm:gap-1.5 h-6.5 sm:h-7 px-2.5 sm:px-3 rounded-full bg-[#A2482B] hover:bg-[#8A3B22] text-white text-[10.5px] sm:text-[11px] font-semibold transition-all cursor-pointer shadow-2xs shrink-0 active:scale-95"
@@ -332,31 +274,14 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({
       ) : null}
 
       {/* =========================================================== */}
-      {/* VUE PRINCIPALE : FRISE DE LIGNÉE, MODE CERCLE OU SWIPE     */}
+      {/* VUE PRINCIPALE : MODE CERCLE OU SWIPE                       */}
       {/* =========================================================== */}
-      {showLineageFrise ? (
-        <div className="relative w-full flex-1 flex flex-col min-h-0 overflow-hidden animate-in fade-in duration-200">
-          <ProfileLineageFrise
-            personIdOrName={activeCompany.id}
-            onNavigateToPerson={(id) => {
-              if (onNavigate) {
-                onNavigate({ type: 'protagonist_profile', protagonistId: id });
-              }
-            }}
-            onNavigate={onNavigate}
-            onClose={() => setShowLineageFrise(false)}
-          />
-        </div>
-      ) : viewMode === 'circle' ? (
+      {viewMode === 'circle' ? (
         <div className="relative w-full flex-1 flex flex-col min-h-0">
           <PortraitsCircleView 
             companies={COMPANIES_DATA} 
             selectedCompanyId={selectedCompanyForSpace?.id}
             onSelectCompany={(org) => setSelectedCompanyForSpace(org)}
-            onOpenLineage={(org) => {
-              setSelectedCompanyForSpace(org);
-              setShowLineageFrise(true);
-            }}
             onNavigate={onNavigate}
             topRightAction={
               <button

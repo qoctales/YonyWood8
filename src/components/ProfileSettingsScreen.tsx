@@ -63,7 +63,6 @@ import { VideoCardShareModal } from './VideoCardShareModal';
 import { 
   ProfileSoloIcon, 
   TvPlayerIcon,
-  LineageGenerationsIcon,
   ParcoursDeVieIcon,
   ProduitsServicesIcon,
   ProjetsIcon,
@@ -77,7 +76,6 @@ import {
 } from './landing/DemoProfilPascalSection';
 import { OrdersAndContributionsModal } from './OrdersAndContributionsModal';
 import { transactionService } from '../utils/transactionService';
-import { ProfileLineageFrise } from './ProfileLineageFrise';
 import { ResonanceModal } from './ResonanceModal';
 import { UnifiedVideoCardOverlay } from './UnifiedVideoCardOverlay';
 import { ViewScreen, AffiliationPerson, Protagonist } from '../types';
@@ -101,7 +99,6 @@ export interface ProfileSettingsScreenProps {
   returnToDuoIndex?: number;
   returnToDocId?: string;
   returnToProtagonistId?: string;
-  initialShowLineage?: boolean;
   returnToMarketplace?: boolean;
   marketplaceContext?: {
     offerId: string;
@@ -361,7 +358,6 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
   returnToDuoIndex,
   returnToDocId,
   returnToProtagonistId,
-  initialShowLineage = false,
   returnToMarketplace = false,
   marketplaceContext,
   initialModal
@@ -506,7 +502,6 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
 
   const { currentUser, isAdmin, isAuthenticated, login, logout } = useAuth();
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
-  const [showLineageFrise, setShowLineageFrise] = useState(initialShowLineage);
   const [isResonanceModalOpen, setIsResonanceModalOpen] = useState(false);
   const [profileResonancePct, setProfileResonancePct] = useState<number | null>(null);
 
@@ -1670,11 +1665,10 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
         type="button"
         onClick={(e) => {
           e.stopPropagation();
-          setShowLineageFrise(false);
           setActiveCategory('parcours');
         }}
         className={`w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-xl border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
-          (activeCategory === 'parcours' || activeCategory === 'recit') && !showLineageFrise
+          activeCategory === 'parcours' || activeCategory === 'recit'
             ? 'bg-[#A2482B] border-[#A2482B] text-white shadow-[0_0_12px_rgba(162,72,43,0.6)]'
             : 'bg-black/50 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white/90 backdrop-blur-md'
         }`}
@@ -1689,11 +1683,10 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
         type="button"
         onClick={(e) => {
           e.stopPropagation();
-          setShowLineageFrise(false);
           setActiveCategory('produits');
         }}
         className={`w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-xl border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
-          (activeCategory === 'produits' || activeCategory === 'offre' || activeCategory === 'production') && !showLineageFrise
+          activeCategory === 'produits' || activeCategory === 'offre' || activeCategory === 'production'
             ? 'bg-[#A2482B] border-[#A2482B] text-white shadow-[0_0_12px_rgba(162,72,43,0.6)]'
             : 'bg-black/50 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white/90 backdrop-blur-md'
         }`}
@@ -1708,11 +1701,10 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
         type="button"
         onClick={(e) => {
           e.stopPropagation();
-          setShowLineageFrise(false);
           setActiveCategory('projets');
         }}
         className={`w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-xl border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
-          activeCategory === 'projets' && !showLineageFrise
+          activeCategory === 'projets'
             ? 'bg-[#A2482B] border-[#A2482B] text-white shadow-[0_0_12px_rgba(162,72,43,0.6)]'
             : 'bg-black/50 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white/90 backdrop-blur-md'
         }`}
@@ -1727,11 +1719,10 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
         type="button"
         onClick={(e) => {
           e.stopPropagation();
-          setShowLineageFrise(false);
           setActiveCategory('besoins');
         }}
         className={`w-8 h-8 sm:w-8.5 sm:h-8.5 rounded-xl border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
-          (activeCategory === 'besoins' || activeCategory === 'appel') && !showLineageFrise
+          activeCategory === 'besoins' || activeCategory === 'appel'
             ? 'bg-[#A2482B] border-[#A2482B] text-white shadow-[0_0_12px_rgba(162,72,43,0.6)]'
             : 'bg-black/50 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white/90 backdrop-blur-md'
         }`}
@@ -1755,7 +1746,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
         <ShareIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
       </button>
     </div>
-  ), [activeCategory, showLineageFrise]);
+  ), [activeCategory]);
 
   // Partager la page entière du portrait (ouvre la modale des réseaux sociaux + copie de lien)
   const handleShareProfile = () => {
@@ -1933,102 +1924,60 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
       {/* ========================================================================= */}
       {/* 1. EN-TÊTE HARMONISÉ EXACTEMENT AU MÊME FORMAT QUE TOUTES LES AUTRES PAGES */}
       {/* ========================================================================= */}
-      {showLineageFrise ? (
-        <div className="flex items-center justify-between shrink-0 h-9 sm:h-10 mb-1">
-          <div className="flex items-center gap-2.5 sm:gap-3 h-full shrink-0">
-            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl overflow-hidden border border-stone-200 shadow-xs bg-stone-100 shrink-0">
-              <img
-                src={userPhoto || '/assets/duos/codjo-blind.jpg'}
-                alt={profileDisplayName}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="relative flex items-center h-full">
-              <h1 className="font-editorial text-base sm:text-lg font-bold text-[#1C1917] tracking-tight leading-none">
-                Lignée de {profileDisplayName}
-              </h1>
-              {/* Petit trait terracotta officiel */}
-              <div className="absolute left-0 -bottom-1.5 w-8 h-0.5 bg-[#A2482B] rounded-full" />
-            </div>
+      <div className="relative flex items-center justify-between h-9 sm:h-10 shrink-0 gap-2 mb-1">
+        {/* GAUCHE : Prénom et nom de la personne de la page portrait avec tiret terracotta signature */}
+        <div className="flex items-center gap-2 sm:gap-2.5 h-full shrink-0">
+          <div className="relative flex items-center h-full overflow-visible">
+            <h1 className="font-editorial text-xs sm:text-sm md:text-base font-semibold text-[#1C1917] tracking-normal leading-none whitespace-nowrap pr-2">
+              {profileFullDisplayName}
+            </h1>
+            {/* Petit trait terracotta officiel */}
+            <div className="absolute left-0 -bottom-1.5 w-8 h-0.5 bg-[#A2482B] rounded-full" />
           </div>
-
-          <button
-            onClick={() => setShowLineageFrise(false)}
-            className="text-xs font-semibold px-3 py-1.5 rounded-full bg-white hover:bg-stone-100 border border-stone-200 text-stone-700 transition-all cursor-pointer active:scale-95"
-          >
-            Fermer
-          </button>
         </div>
-      ) : (
-        <div className="relative flex items-center justify-between h-9 sm:h-10 shrink-0 gap-2 mb-1">
-          {/* GAUCHE : Prénom et nom de la personne de la page portrait avec tiret terracotta signature */}
-          <div className="flex items-center gap-2 sm:gap-2.5 h-full shrink-0">
-            <div className="relative flex items-center h-full overflow-visible">
-              <h1 className="font-editorial text-xs sm:text-sm md:text-base font-semibold text-[#1C1917] tracking-normal leading-none whitespace-nowrap pr-2">
-                {profileFullDisplayName}
-              </h1>
-              {/* Petit trait terracotta officiel */}
-              <div className="absolute left-0 -bottom-1.5 w-8 h-0.5 bg-[#A2482B] rounded-full" />
-            </div>
-          </div>
 
-          {/* DROITE : Photo de profil dans son cadre télé rétro aux deux pieds (Pascal) & Bouton Partager */}
-          <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
-            {/* Bouton Retour au Marché (si navigation contextuelle depuis le marché) */}
-            {returnToMarketplace && (
-              <button
-                type="button"
-                onClick={() => onNavigate({
-                  type: 'marketplace',
-                  initialTab: 'marche',
-                  initialPeerOfferId: marketplaceContext?.offerId,
-                  initialPeerIndex: marketplaceContext?.offerIndex,
-                  restoreContext: marketplaceContext
-                })}
-                className="group flex h-8 sm:h-8.5 px-3 rounded-full bg-[#A2482B] text-white hover:bg-[#8A3B22] border border-[#8A3B22] text-xs font-semibold transition-all shadow-xs items-center gap-1.5 cursor-pointer whitespace-nowrap active:scale-95"
-                title="Retourner à l'annonce sur le Marché"
-                id="btn-return-to-market-header"
-              >
-                <ChevronLeft className="w-3.5 h-3.5 text-white stroke-[2.2]" />
-                <span className="hidden sm:inline">Retour au Marché</span>
-                <span className="sm:hidden">Marché</span>
-              </button>
-            )}
-
-            {/* Bouton Revenir au Duo (si navigation contextuelle depuis un duo) */}
-            {returnToDuoId && (
-              <button
-                type="button"
-                onClick={() => onNavigate({
-                  type: 'duo_feed',
-                  currentDuoIndex: returnToDuoIndex ?? 0,
-                  selectedDocId: returnToDocId
-                })}
-                className="group flex h-8 sm:h-8.5 px-2.5 sm:px-3 rounded-full bg-white hover:bg-[#A2482B] border border-stone-200 hover:border-[#A2482B] text-[#1C1917] hover:text-white text-xs font-semibold transition-all shadow-xs items-center gap-1 sm:gap-1.5 cursor-pointer whitespace-nowrap active:scale-95"
-                title="Revenir au visionnage du Duo"
-                id="btn-return-to-duo-actions"
-              >
-                <ChevronLeft className="w-3.5 h-3.5 text-stone-700 group-hover:text-white stroke-[2.2] transition-colors" />
-                <span className="hidden sm:inline">Duo</span>
-              </button>
-            )}
-
-            {/* 1. La lignée (transmission & origines) : arrive avant l'icône messagerie */}
+        {/* DROITE : Photo de profil dans son cadre télé rétro aux deux pieds (Pascal) & Bouton Partager */}
+        <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
+          {/* Bouton Retour au Marché (si navigation contextuelle depuis le marché) */}
+          {returnToMarketplace && (
             <button
-              onClick={() => setShowLineageFrise(prev => !prev)}
-              id="btn-profile-lineage"
-              className={`w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-xl border flex items-center justify-center transition-all shadow-xs cursor-pointer active:scale-95 shrink-0 ${
-                showLineageFrise
-                  ? 'bg-[#A2482B] border-[#A2482B] text-white shadow-xs'
-                  : 'bg-white hover:bg-[#A2482B] border-stone-200 hover:border-[#A2482B] text-stone-700 hover:text-white'
-              }`}
-              title={showLineageFrise ? "Masquer la lignée" : "Voir la lignée (transmission & origines)"}
-              aria-label="La lignée"
+              type="button"
+              onClick={() => onNavigate({
+                type: 'marketplace',
+                initialTab: 'marche',
+                initialPeerOfferId: marketplaceContext?.offerId,
+                initialPeerIndex: marketplaceContext?.offerIndex,
+                restoreContext: marketplaceContext
+              })}
+              className="group flex h-8 sm:h-8.5 px-3 rounded-full bg-[#A2482B] text-white hover:bg-[#8A3B22] border border-[#8A3B22] text-xs font-semibold transition-all shadow-xs items-center gap-1.5 cursor-pointer whitespace-nowrap active:scale-95"
+              title="Retourner à l'annonce sur le Marché"
+              id="btn-return-to-market-header"
             >
-              <LineageGenerationsIcon className="w-4 h-4 transition-colors" strokeWidth={1.75} />
+              <ChevronLeft className="w-3.5 h-3.5 text-white stroke-[2.2]" />
+              <span className="hidden sm:inline">Retour au Marché</span>
+              <span className="sm:hidden">Marché</span>
             </button>
+          )}
 
-            {/* 2. Espace Messagerie : après la lignée */}
+          {/* Bouton Revenir au Duo (si navigation contextuelle depuis un duo) */}
+          {returnToDuoId && (
+            <button
+              type="button"
+              onClick={() => onNavigate({
+                type: 'duo_feed',
+                currentDuoIndex: returnToDuoIndex ?? 0,
+                selectedDocId: returnToDocId
+              })}
+              className="group flex h-8 sm:h-8.5 px-2.5 sm:px-3 rounded-full bg-white hover:bg-[#A2482B] border border-stone-200 hover:border-[#A2482B] text-[#1C1917] hover:text-white text-xs font-semibold transition-all shadow-xs items-center gap-1 sm:gap-1.5 cursor-pointer whitespace-nowrap active:scale-95"
+              title="Revenir au visionnage du Duo"
+              id="btn-return-to-duo-actions"
+            >
+              <ChevronLeft className="w-3.5 h-3.5 text-stone-700 group-hover:text-white stroke-[2.2] transition-colors" />
+              <span className="hidden sm:inline">Duo</span>
+            </button>
+          )}
+
+          {/* 1. Espace Messagerie */}
             <button
               onClick={() => {
                 if (isOwner) {
@@ -2072,7 +2021,6 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
             </div>
           </div>
         </div>
-      )}
 
       {/* BANNIÈRE CONTEXTUELLE DE REPRISE D'ACHAT DEPUIS LE MARCHÉ */}
       {returnToMarketplace && marketplaceContext && (
@@ -2114,29 +2062,12 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
       {/* ========================================================================= */}
       {/* 2. VISIONNEUSE VERTICALE 9:16 (STRICTEMENT ALIGNÉE SUR COPRODUCTION)       */}
       {/* ========================================================================= */}
-      <div className={`flex-1 flex flex-col items-center justify-center py-1 sm:py-2 min-h-0 ${showLineageFrise ? 'overflow-hidden' : 'overflow-visible'} px-2 sm:px-6 md:px-10 animate-in fade-in duration-200 relative`}>
+      <div className="flex-1 flex flex-col items-center justify-center py-1 sm:py-2 min-h-0 overflow-visible px-2 sm:px-6 md:px-10 animate-in fade-in duration-200 relative">
 
-        {/* Conteneur principal avec vidéo 9:16 épurée OU Frise de Lignée épurée */}
-        <div className={`relative w-full h-full flex items-center justify-center ${showLineageFrise ? 'overflow-hidden' : ''}`}>
+        {/* Conteneur principal avec vidéo 9:16 épurée */}
+        <div className="relative w-full h-full flex items-center justify-center">
           
-          {showLineageFrise ? (
-            <ProfileLineageFrise
-              personIdOrName={protagonistId || userFullName || 'current-user'}
-              onNavigate={onNavigate}
-              onNavigateToPerson={(id) => {
-                setShowLineageFrise(false);
-                onNavigate({ 
-                  type: 'protagonist_profile', 
-                  protagonistId: id,
-                  returnToProtagonistId: protagonistId || (currentUser ? currentUser.id : undefined),
-                  returnToDuoId,
-                  returnToDuoIndex,
-                  returnToDocId
-                });
-              }}
-              onClose={() => setShowLineageFrise(false)}
-            />
-          ) : totalItemsInActiveCategory === 0 || !currentSimulationItem ? (
+          {totalItemsInActiveCategory === 0 || !currentSimulationItem ? (
             /* ÉTAT VIDE : INVITATION À PUBLIER UNE VIDÉO DANS LE STUDIO */
             <div className="aspect-[9/16] w-[min(calc(100vw-72px),calc((100dvh-240px)*9/16))] max-w-[218px] sm:max-w-[260px] md:max-w-[280px] h-[min(388px,calc(100dvh-240px))] sm:h-[min(460px,calc(100dvh-210px))] md:h-[min(500px,calc(100dvh-190px))] mx-auto rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl border border-stone-200/40 relative flex flex-col justify-between p-4 sm:p-5 text-center my-auto">
               <div className="my-auto flex flex-col items-center justify-center space-y-3 px-2">
@@ -2260,7 +2191,6 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                   onTogglePlay={toggleVideoPlayback}
                   isMuted={isMuted}
                   onToggleMute={toggleMute}
-                  onOpenLineage={() => setShowLineageFrise(true)}
                   questionText={getQuestionText()}
                   factText={currentSimulationItem.description}
                   onShare={handleShareProfile}
@@ -2304,8 +2234,8 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
 
         </div>
 
-        {/* Bouton d'action contextuel propriétaire (Ajouter une offre ou Créer un projet) - Masqué quand la frise est ouverte */}
-        {isOwner && !showLineageFrise && (activeCategory === 'offre' || activeCategory === 'appel') && (
+        {/* Bouton d'action contextuel propriétaire (Ajouter une offre ou Créer un projet) */}
+        {isOwner && (activeCategory === 'offre' || activeCategory === 'appel') && (
           <div className="absolute -bottom-1.5 sm:bottom-0 left-1/2 -translate-x-1/2 z-30 pointer-events-auto">
             <button
               type="button"

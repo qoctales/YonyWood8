@@ -83,7 +83,7 @@ export const TransmissionScreen: React.FC<TransmissionScreenProps> = ({
                 <TreePine className="w-6 h-6" />
               </div>
               <span className="text-[11px] font-bold uppercase tracking-wider text-[#C89B3C] block">
-                Lignée & Transmission
+                Transmission vivante
               </span>
               <p className="font-editorial italic text-sm text-[#1C1917]">
                 « {transmission.title} »

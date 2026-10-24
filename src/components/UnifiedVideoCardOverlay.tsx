@@ -51,9 +51,6 @@ export interface UnifiedVideoCardOverlayProps {
   // 4. Profil (ProfileSoloIcon)
   onOpenProfile?: () => void;
 
-  // Lignée (Star)
-  onOpenLineage?: () => void;
-
   // 5. Partager (ShareIcon)
   onShare?: () => void;
   isShareCopied?: boolean;
@@ -90,7 +87,6 @@ export const UnifiedVideoCardOverlay: React.FC<UnifiedVideoCardOverlayProps> = (
   factText,
   onOpenFactModal,
   onOpenProfile,
-  onOpenLineage,
   onShare,
   isShareCopied = false,
   onReportVideo,

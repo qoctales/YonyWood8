@@ -17,7 +17,33 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const httpServer = createServer(app);
 
-const PORT = parseInt(process.env.PORT || '3000', 10);
+// Parse CLI arguments (--port 3000 --host 0.0.0.0) passed by AI Studio runner
+const args = process.argv.slice(2);
+function resolvePort(): number {
+  const portIdx = args.indexOf('--port');
+  if (portIdx !== -1 && args[portIdx + 1]) {
+    const parsed = parseInt(args[portIdx + 1], 10);
+    if (!isNaN(parsed) && parsed !== 8080) return parsed;
+  }
+  // Port 8080 is reserved for nginx reverse proxy in AI Studio.
+  // The app dev server must always listen on port 3000.
+  if (process.env.PORT && process.env.PORT !== '8080') {
+    const parsed = parseInt(process.env.PORT, 10);
+    if (!isNaN(parsed)) return parsed;
+  }
+  return 3000;
+}
+
+function resolveHost(): string {
+  const hostIdx = args.indexOf('--host');
+  if (hostIdx !== -1 && args[hostIdx + 1]) {
+    return args[hostIdx + 1];
+  }
+  return process.env.HOST || '0.0.0.0';
+}
+
+const PORT = resolvePort();
+const HOST = resolveHost();
 const isProd = process.env.NODE_ENV === 'production';
 
 // In-memory data store for live collaboration and state
@@ -370,6 +396,8 @@ async function startServer() {
       server: { 
         middlewareMode: true,
         hmr: false,
+        ws: false,
+        watch: null,
       },
       appType: 'spa',
     });
@@ -400,10 +428,27 @@ async function startServer() {
     });
   }
 
-  httpServer.listen(PORT, '0.0.0.0', () => {
-    console.log(`🚀 YonyWood server running at http://0.0.0.0:${PORT}`);
+  httpServer.on('error', (err: any) => {
+    if (err.code === 'EADDRINUSE') {
+      console.error(`Port ${PORT} is already in use. Exiting cleanly.`);
+    } else {
+      console.error('HTTP Server error:', err);
+    }
+    process.exit(1);
+  });
+
+  httpServer.listen(PORT, HOST, () => {
+    console.log(`🚀 YonyWood server running at http://${HOST}:${PORT}`);
   });
 }
+
+process.on('SIGTERM', () => {
+  httpServer.close(() => process.exit(0));
+});
+
+process.on('SIGINT', () => {
+  httpServer.close(() => process.exit(0));
+});
 
 startServer().catch((err) => {
   console.error('Failed to start server:', err);

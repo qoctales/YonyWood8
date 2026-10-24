@@ -174,7 +174,7 @@ export const SunCrownView: React.FC<SunCrownViewProps> = ({
                     onMouseEnter={() => setHoveredSatellite({ 
                       kind: 'person', 
                       title: person.name, 
-                      subtitle: isContrepoint ? 'Contrepoint en duo' : isFiliation ? 'Lignée d’entrée' : 'Voix en résonance' 
+                      subtitle: isContrepoint ? 'Contrepoint en duo' : isFiliation ? 'Témoin relié' : 'Voix en résonance' 
                     })}
                     onMouseLeave={() => setHoveredSatellite(null)}
                     className={`absolute -translate-x-1/2 -translate-y-1/2 cursor-pointer transition-all duration-300 group ${

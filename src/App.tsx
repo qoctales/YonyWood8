@@ -57,8 +57,7 @@ const resolveScreenFromPath = (): { screen: ViewScreen | null; redirectFrom?: st
   if (path === '/lumieres') {
     const params = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
     const company = params?.get('company') || undefined;
-    const showLineage = params?.get('lignee') === 'true' || params?.get('lineage') === 'true' || undefined;
-    return { screen: { type: 'enterprise', selectedCompanyId: company, showLineage } };
+    return { screen: { type: 'enterprise', selectedCompanyId: company } };
   }
   if (path === '/duos' || path === '/miroir' || path === '/miroirs') {
     return { screen: { type: 'duo_feed' } };
@@ -106,7 +105,6 @@ const getScreenRouteInfo = (screen: ViewScreen): { path: string; title: string }
     case 'transactions':
     case 'protagonist_profile':
     case 'my_forest':
-    case 'lineage':
     case 'messaging':
     case 'editorial_backoffice':
       return { path: '/portrait', title: 'Portrait — YonyWood' };
@@ -290,7 +288,6 @@ export default function App() {
           <CompanyHeritageScreen 
             onNavigate={setCurrentScreen} 
             initialCompanyId={currentScreen.selectedCompanyId}
-            initialShowLineage={currentScreen.showLineage}
           />
         )}
 
@@ -317,27 +314,7 @@ export default function App() {
             returnToDuoIndex={currentScreen.returnToDuoIndex}
             returnToDocId={currentScreen.returnToDocId}
             returnToProtagonistId={currentScreen.returnToProtagonistId}
-            initialShowLineage={currentScreen.initialShowLineage}
             initialModal={currentScreen.initialModal}
-          />
-        )}
-
-        {currentScreen.type === 'lineage' && (
-          <ProfileSettingsScreen 
-            key={currentScreen.protagonistId || 'default-lineage'}
-            protagonistId={currentScreen.protagonistId} 
-            onNavigate={setCurrentScreen} 
-            selectedDocFilter={selectedSeriesFilter}
-            onUpdateDocFilter={handleUpdateDocFilter}
-            language={language}
-            onUpdateLanguage={setLanguage}
-            hideQuestionByDefault={hideQuestionByDefault}
-            onToggleHideQuestion={setHideQuestionByDefault}
-            returnToDuoId={currentScreen.returnToDuoId}
-            returnToDuoIndex={currentScreen.returnToDuoIndex}
-            returnToDocId={currentScreen.returnToDocId}
-            returnToProtagonistId={currentScreen.returnToProtagonistId}
-            initialShowLineage={true}
           />
         )}
 
@@ -419,7 +396,6 @@ export default function App() {
             returnToDuoIndex={currentScreen.returnToDuoIndex}
             returnToDocId={currentScreen.returnToDocId}
             returnToProtagonistId={currentScreen.returnToProtagonistId}
-            initialShowLineage={currentScreen.initialShowLineage}
             returnToMarketplace={currentScreen.returnToMarketplace}
             marketplaceContext={currentScreen.marketplaceContext}
           />

@@ -156,7 +156,7 @@ export const MyForestScreen: React.FC<MyForestScreenProps> = ({ onNavigate }) =>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-[#FFFFFF] rounded-3xl border border-[#E7E5E4] p-6 shadow-card space-y-3">
               <span className="text-[10px] uppercase font-bold text-[#8B6845]">
-                Lignée ancestrale reçue
+                Transmission reçue
               </span>
               <h3 className="font-editorial text-lg font-bold text-[#1C1917]">
                 L'onction des carrefours
@@ -168,7 +168,7 @@ export const MyForestScreen: React.FC<MyForestScreenProps> = ({ onNavigate }) =>
                 onClick={() => onNavigate({ type: 'transmission_detail', protagonistId: 'dah-zounon', transmissionId: 't-1' })}
                 className="text-xs font-semibold text-[#C89B3C] hover:underline"
               >
-                Explorer la lignée →
+                Explorer la transmission →
               </button>
             </div>
 
