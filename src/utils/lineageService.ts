@@ -504,7 +504,7 @@ export function resolveLineageMember(input: string | AffiliationPerson | Protago
         territory: 'Cotonou & Diaspora',
         country: 'Bénin',
         flag: '🇧🇯',
-        photoUrl: '/src/assets/images/romeo_avatar_1792698425983.jpg',
+        photoUrl: '/assets/images/romeo_avatar_1792698425983.jpg',
         universeTag: 'Bénin & Retour',
         quote: '« Revenir n’est pas recommencer à zéro, c’est apporter ce que le monde nous a appris pour faire grandir la terre de nos ancêtres. »',
         questionAnswered: {

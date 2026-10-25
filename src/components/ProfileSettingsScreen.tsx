@@ -538,7 +538,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
   const [userPhoto, setUserPhoto] = useState<string>(() => {
     if (targetProtagonist) return targetProtagonist.photoUrl;
     if (currentUser && currentUser.avatarUrl) return currentUser.avatarUrl;
-    return '/src/assets/images/romeo_avatar_1792698425983.jpg';
+    return '/assets/images/romeo_avatar_1792698425983.jpg';
   });
 
   // Mise à jour de l'identité si currentUser change en mode propriétaire
@@ -745,7 +745,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
     return [
       {
         id: 'recit-1',
-        title: 'Le retour au pays natal',
+        title: 'Origines & Ancrage',
         chapter: 'Récit personnel',
         subtitle: 'Origines & Ancrage',
         description: 'Roméo raconte ses huit années passées à l’étranger, le sentiment de l’éloignement et l’évidence intérieure de revenir à Cotonou pour fonder YonyWood.',
@@ -753,7 +753,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
         duration: '06:15',
         viewsCount: 2840,
         videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-        posterUrl: '/src/assets/images/romeo_arriving_cotonou_1792698426939.jpg'
+        posterUrl: '/assets/images/romeo_arriving_cotonou_1792698426939.jpg'
       },
       {
         id: 'recit-2',
@@ -765,7 +765,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
         duration: '07:40',
         viewsCount: 1950,
         videoUrl: 'https://media.w3.org/2010/05/sintel/trailer.mp4',
-        posterUrl: '/src/assets/images/romeo_settling_studio_1792698427492.jpg'
+        posterUrl: '/assets/images/romeo_settling_studio_1792698427492.jpg'
       }
     ];
   });
@@ -2013,8 +2013,13 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
             >
               <div className="w-full h-full overflow-hidden bg-stone-100 rounded-[1px] aspect-square">
                 <img
-                  src={userPhoto || '/src/assets/images/romeo_avatar_1792698425983.jpg'}
+                  src={userPhoto || '/assets/images/romeo_avatar_1792698425983.jpg'}
                   alt={profileDisplayName || 'Roméo'}
+                  onError={(e) => {
+                    const target = e.currentTarget;
+                    target.onerror = null;
+                    target.src = '/assets/protagonists/coach-office.jpg';
+                  }}
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -4496,11 +4501,15 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
             : undefined
         }
         onSaveToList={(saved) => {
-          setShareToast(saved ? "Vidéo ajoutée à Ma Forêt !" : "Vidéo retirée de votre sélection.");
+          setShareToast(saved ? "Vidéo ajoutée à vos mémoires sauvegardées !" : "Vidéo retirée de votre sélection.");
+          setTimeout(() => setShareToast(null), 3000);
+        }}
+        onBlockPerson={() => {
+          setShareToast("Cette personne a été bloquée. Ses vidéos ne vous seront plus proposées.");
           setTimeout(() => setShareToast(null), 3000);
         }}
         onNotInterested={() => {
-          setShareToast("Nous recommanderons moins de vidéos similaires.");
+          setShareToast("Cette personne a été bloquée. Ses vidéos ne vous seront plus proposées.");
           setTimeout(() => setShareToast(null), 3000);
         }}
         onReport={() => {

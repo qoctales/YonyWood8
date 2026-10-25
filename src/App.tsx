@@ -415,13 +415,21 @@ export default function App() {
 
         {currentScreen.type === 'submit_story' && (
           <SubmitStoryScreen 
-            preselectedDocumentaryId={currentScreen.preselectedDocumentaryId} 
+            preselectedDocumentaryId={currentScreen.preselectedDocumentaryId}
+            initialPillarId={currentScreen.initialPillarId}
+            initialCastingCategoryId={currentScreen.initialCastingCategoryId}
+            initialFinalChoiceId={currentScreen.initialFinalChoiceId}
             onNavigate={setCurrentScreen} 
           />
         )}
 
         {currentScreen.type === 'request_videographer' && (
-          <RequestVideographerScreen onNavigate={setCurrentScreen} />
+          <RequestVideographerScreen 
+            returnPillarId={currentScreen.returnPillarId}
+            returnCastingCategoryId={currentScreen.returnCastingCategoryId}
+            returnFinalChoiceId={currentScreen.returnFinalChoiceId}
+            onNavigate={setCurrentScreen} 
+          />
         )}
 
         {(currentScreen.type === 'review_system' || currentScreen.type === 'forest_reviews') && (

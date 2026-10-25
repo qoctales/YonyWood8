@@ -1621,10 +1621,10 @@ const PEOPLE_PHOTOS = [
   '/assets/duos/mawuna-medium.jpg',
   '/assets/duos/codjo-blind.jpg',
   '/assets/duos/duo_pere_matthieu_1791655226601.jpg',
-  '/src/assets/images/beninoise_femme_sika_1792164985263.jpg',
-  '/src/assets/images/beninois_sage_dossou_1792165004493.jpg',
-  '/src/assets/images/beninoise_jeune_senan_1792165025309.jpg',
-  '/src/assets/images/beninois_pecheur_tobi_1792165042006.jpg'
+  '/assets/images/beninoise_femme_sika_1792164985263.jpg',
+  '/assets/images/beninois_sage_dossou_1792165004493.jpg',
+  '/assets/images/beninoise_jeune_senan_1792165025309.jpg',
+  '/assets/images/beninois_pecheur_tobi_1792165042006.jpg'
 ];
 
 const FIRST_NAMES = [

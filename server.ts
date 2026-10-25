@@ -391,6 +391,7 @@ app.put('/api/auth/preferences', (req: Request, res: Response) => {
 async function startServer() {
   if (!isProd) {
     app.use(express.static(path.resolve(__dirname, 'public'), { maxAge: '1h' }));
+    app.use('/src/assets', express.static(path.resolve(__dirname, 'src/assets'), { maxAge: '1h' }));
 
     const vite = await createViteServer({
       server: { 

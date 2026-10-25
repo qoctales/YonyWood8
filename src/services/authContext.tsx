@@ -6,7 +6,7 @@ export const DEFAULT_ADMIN_USER: UserAccount = {
   email: 'qoctales@gmail.com',
   name: 'Romeo Nonvide',
   role: 'ADMIN',
-  avatarUrl: '/src/assets/images/romeo_avatar_1792698425983.jpg',
+  avatarUrl: '/assets/images/romeo_avatar_1792698425983.jpg',
   bio: 'Béninois de retour d’expatriation après 8 années passées à l’étranger. Réalisateur & Fondateur YonyWood à Cotonou.',
   territory: 'Cotonou',
   country: 'Bénin',

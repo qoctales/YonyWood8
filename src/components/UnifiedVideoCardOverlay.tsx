@@ -370,14 +370,20 @@ export const UnifiedVideoCardOverlay: React.FC<UnifiedVideoCardOverlayProps> = (
           setFeedbackToast('Vidéo signalée à notre équipe de modération.');
           setTimeout(() => setFeedbackToast(null), 2500);
         }}
+        onBlockPerson={() => {
+          if (videoId) blockVideo(videoId);
+          if (onBlockVideo) onBlockVideo();
+          setFeedbackToast('Cette personne a été bloquée. Ses contenus ne vous seront plus proposés.');
+          setTimeout(() => setFeedbackToast(null), 2500);
+        }}
         onNotInterested={() => {
           if (videoId) blockVideo(videoId);
           if (onBlockVideo) onBlockVideo();
-          setFeedbackToast('Préférence enregistrée : moins de contenus de ce genre.');
+          setFeedbackToast('Cette personne a été bloquée. Ses contenus ne vous seront plus proposés.');
           setTimeout(() => setFeedbackToast(null), 2500);
         }}
         onSaveToList={(saved) => {
-          setFeedbackToast(saved ? 'Enregistré dans votre liste Ma Forêt.' : 'Retiré de votre liste.');
+          setFeedbackToast(saved ? 'Ajouté à vos mémoires sauvegardées.' : 'Retiré de vos mémoires.');
           setTimeout(() => setFeedbackToast(null), 2500);
         }}
       />

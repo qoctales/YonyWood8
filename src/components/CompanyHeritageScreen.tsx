@@ -335,11 +335,15 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({
                   className="absolute inset-0 w-full h-full object-cover pointer-events-none"
                 />
               ) : (
-                <img
-                  src={currentCompany.photoUrl}
-                  alt={currentCompany.companyName}
-                  className="absolute inset-0 w-full h-full object-cover pointer-events-none group-hover:scale-103 transition-transform duration-500 ease-out"
-                />
+                <div className="absolute inset-0 flex items-center justify-center p-6 bg-gradient-to-b from-stone-900 via-stone-950 to-black">
+                  <div className="w-40 h-40 rounded-full p-2 bg-white/95 shadow-2xl border-2 border-[var(--gold,#c9962b)]/40 flex items-center justify-center overflow-hidden">
+                    <img
+                      src={currentCompany.photoUrl}
+                      alt={currentCompany.companyName}
+                      className="w-full h-full object-contain rounded-full pointer-events-none group-hover:scale-105 transition-transform duration-500 ease-out"
+                    />
+                  </div>
+                </div>
               )}
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/45 pointer-events-none" />
 

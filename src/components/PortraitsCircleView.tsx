@@ -653,7 +653,7 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
 
               {/* Logo de l'organisation dans un cercle (diamètre ≈ 92 % du disque doré) */}
               <g clipPath="url(#medaillonOrgLogoClip)">
-                <circle cx="320" cy="320" r="170" fill="#09090b" />
+                <circle cx="320" cy="320" r="170" fill="#ffffff" />
                 {curOrg?.photoUrl && (
                   <image
                     href={curOrg.photoUrl}
@@ -739,7 +739,7 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
                   className="w-full h-full rounded-full flex items-center justify-center p-1 min-w-[44px] min-h-[44px] cursor-pointer group focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold,#c9962b)] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                 >
                   <div 
-                    className="relative w-full h-full rounded-full overflow-hidden border-2 border-white shadow-md group-hover:scale-110 group-hover:shadow-xl group-active:scale-95 transition-all duration-300 ease-out transform-gpu bg-[#09090b]"
+                    className="relative w-full h-full rounded-full overflow-hidden border-2 border-white shadow-md group-hover:scale-110 group-hover:shadow-xl group-active:scale-95 transition-all duration-300 ease-out transform-gpu bg-white flex items-center justify-center"
                   >
                     <img
                       src={org.photoUrl}
@@ -747,7 +747,7 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
                       onError={(e) => {
                         const target = e.currentTarget;
                         target.onerror = null;
-                        target.src = '/assets/brand-logos/logo-alimentation.svg';
+                        target.src = '/assets/brand-logos/logo-bouclier-terroir.png';
                       }}
                       className="w-full h-full object-cover pointer-events-none select-none"
                       style={{ backfaceVisibility: 'hidden' }}
@@ -1006,9 +1006,9 @@ export const PortraitsCircleView: React.FC<PortraitsCircleViewProps> = ({
           <div className="bg-white max-w-md w-full rounded-3xl p-5 sm:p-6 shadow-2xl border border-stone-200 space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-stone-200">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-xl overflow-hidden border border-stone-200 shadow-xs bg-stone-100 shrink-0 p-1 flex items-center justify-center">
+                <div className="w-12 h-12 rounded-xl overflow-hidden border border-stone-200 shadow-xs bg-white shrink-0 p-1 flex items-center justify-center">
                   <img
-                    src={curOrg.logoUrl}
+                    src={curOrg.photoUrl}
                     alt={curOrg.companyName}
                     className="w-full h-full object-contain"
                   />

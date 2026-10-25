@@ -311,6 +311,7 @@ export interface Duo {
 export interface Videographer {
   id: string;
   name: string;
+  firstName?: string;
   age?: number;
   photo?: string;
   photoUrl?: string;
@@ -323,11 +324,14 @@ export interface Videographer {
   languages?: string[];
   rateInfo?: string;
   rate?: string;
+  estimatedRateEuros?: number;
+  videoUrl?: string;
   availability?: string;
   verified?: boolean;
   completedShoots?: number;
   rating?: number;
   storiesShot?: number;
+  protagonistId?: string;
 }
 
 export interface ReviewCandidate {
@@ -660,8 +664,19 @@ export type ViewScreen =
   | { type: 'portfolio'; returnToDuoId?: string; returnToDuoIndex?: number; returnToDocId?: string }
   | { type: 'transactions'; initialTab?: 'achats' | 'projets' | 'parts'; returnToDuoId?: string; returnToDuoIndex?: number; returnToDocId?: string }
   | { type: 'messaging' }
-  | { type: 'submit_story'; preselectedDocumentaryId?: string }
-  | { type: 'request_videographer' }
+  | { 
+      type: 'submit_story'; 
+      preselectedDocumentaryId?: string;
+      initialPillarId?: string;
+      initialCastingCategoryId?: string;
+      initialFinalChoiceId?: string;
+    }
+  | { 
+      type: 'request_videographer';
+      returnPillarId?: string;
+      returnCastingCategoryId?: string;
+      returnFinalChoiceId?: string;
+    }
   | { type: 'review_system' }
   | { type: 'forest_reviews' }
   | { type: 'site_map' }
