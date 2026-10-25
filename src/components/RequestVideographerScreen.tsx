@@ -288,18 +288,7 @@ export const RequestVideographerScreen: React.FC<RequestVideographerScreenProps>
             className="absolute right-2.5 sm:right-3 top-[56%] -translate-y-1/2 z-30 flex flex-col items-center gap-2 pointer-events-auto"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* 1. Bouton Profil officiel : ProfileSoloIcon (tête télé vintage avec jambes) */}
-            <button
-              type="button"
-              onClick={handleOpenProfile}
-              className="w-7.5 h-7.5 sm:w-8.5 sm:h-8.5 rounded-xl bg-black/50 hover:bg-[#A2482B] border border-white/20 hover:border-[#A2482B] text-white backdrop-blur-md flex items-center justify-center shadow-md transition-all cursor-pointer hover:scale-105 active:scale-95"
-              title={`Voir le portrait de ${firstName}`}
-              aria-label={`Profil de ${firstName}`}
-            >
-              <ProfileSoloIcon className="w-4 h-4 text-white" />
-            </button>
-
-            {/* 2. Bouton Viseur d'objectif : Fiche technique (matériel, conditions, références, ville et pays) */}
+            {/* 1. Bouton Viseur d'objectif : Fiche technique (matériel, conditions, références, ville et pays) */}
             <button
               type="button"
               onClick={(e) => {
@@ -311,6 +300,17 @@ export const RequestVideographerScreen: React.FC<RequestVideographerScreenProps>
               aria-label={`Matériel et conditions de ${firstName}`}
             >
               <Focus className="w-4 h-4 text-white" />
+            </button>
+
+            {/* 2. Bouton Profil officiel : ProfileSoloIcon (tête télé vintage avec jambes) */}
+            <button
+              type="button"
+              onClick={handleOpenProfile}
+              className="w-7.5 h-7.5 sm:w-8.5 sm:h-8.5 rounded-xl bg-black/50 hover:bg-[#A2482B] border border-white/20 hover:border-[#A2482B] text-white backdrop-blur-md flex items-center justify-center shadow-md transition-all cursor-pointer hover:scale-105 active:scale-95"
+              title={`Voir le portrait de ${firstName}`}
+              aria-label={`Profil de ${firstName}`}
+            >
+              <ProfileSoloIcon className="w-4 h-4 text-white" />
             </button>
 
             {/* 3. Bouton Partager officiel : ShareIcon */}
@@ -411,7 +411,7 @@ export const RequestVideographerScreen: React.FC<RequestVideographerScreenProps>
                   <span className="font-semibold text-stone-900 block text-[11px]">Conditions & Disponibilité</span>
                   <span className="text-stone-600 text-[11px] leading-relaxed block">
                     {currentVideographer.availability || 'Disponible sous 48h'} • {rateText}
-                    {currentVideographer.rateInfo && ` • ${currentVideographer.rateInfo}`}
+                    {currentVideographer.rateInfo && !currentVideographer.rateInfo.toLowerCase().includes('subventionn') && ` • ${currentVideographer.rateInfo}`}
                   </span>
                 </div>
               </div>

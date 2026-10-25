@@ -2966,7 +2966,6 @@ export const VIDEOGRAPHERS: Videographer[] = [
     equipment: 'Sony FX3, optiques fixes cinéma 35mm & 50mm, micros HF Sennheiser',
     specialties: ['Spiritualités traditionnelles', 'Artisanat d’art', 'Entretiens intimes'],
     languages: ['Français', 'Fòn', 'Yorùbá'],
-    rateInfo: 'Accompagnement subventionné par la forêt YonyWood',
     rate: 'À partir de 180 €',
     estimatedRateEuros: 180,
     videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',

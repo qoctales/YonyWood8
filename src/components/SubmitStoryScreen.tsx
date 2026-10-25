@@ -10,12 +10,322 @@ import {
   X,
   UploadCloud,
   CheckCircle2,
-  ArrowLeft
+  ArrowLeft,
+  Check,
+  AtSign
 } from 'lucide-react';
 import { ViewScreen } from '../types';
 import { STUDIO_PILLARS, StudioPillar, StudioPillarItem } from '../data/studioPillarsData';
+import { DOCUMENTARIES } from '../data/mockData';
 import { TvPlayerIcon } from './YonywoodBrandIcons';
 import { celestialAudio } from '../utils/celestialAudio';
+
+export interface TaggedCollaborator {
+  id: string;
+  name: string;
+  handle: string;
+  role: string;
+  avatarUrl?: string;
+}
+
+export interface PlatformMember {
+  id: string;
+  name: string;
+  handle: string;
+  role: string;
+  avatarUrl?: string;
+  category: 'realisation' | 'protagoniste' | 'post_production' | 'tous';
+}
+
+export const PLATFORM_MEMBERS: PlatformMember[] = [
+  // Équipe et créateurs
+  { id: 'usr-romeo', name: 'Romeo Nonvide', handle: '@romeo', role: 'Fondateur & Réalisateur', avatarUrl: '/assets/images/romeo_avatar_1792698425983.jpg', category: 'realisation' },
+  { id: 'v-armel', name: 'Armel Hounkpatin', handle: '@armel_h', role: 'Cadreur & Réalisateur documentaire', avatarUrl: '/assets/protagonists/armel-hounkpatin.jpg', category: 'realisation' },
+  { id: 'v-amara', name: 'Amara Traoré', handle: '@amara_t', role: 'Cadreuse & Documentariste', avatarUrl: '/assets/protagonists/amara-tisserande.jpg', category: 'realisation' },
+  { id: 'v-kwame', name: 'Kwame Mensah', handle: '@kwame_m', role: 'Réalisateur & Chef opérateur', avatarUrl: '/assets/duos/kwame-mensah.jpg', category: 'realisation' },
+  { id: 'v-koffi', name: 'Koffi Badou', handle: '@koffi_b', role: 'Chef opérateur & Cadreur', avatarUrl: '/assets/duos/chef-koffi.jpg', category: 'realisation' },
+  { id: 'v-sarah', name: 'Sarah Lawson', handle: '@sarah_l', role: 'Cadreuse & Documentariste nomade', avatarUrl: '/assets/protagonists/eleonore-vance.jpg', category: 'realisation' },
+  { id: 'v-helene', name: 'Hélène Saint-Amand', handle: '@helene_sa', role: 'Réalisatrice de création', avatarUrl: '/assets/protagonists/helene-saint-amand.jpg', category: 'realisation' },
+
+  // Protagonistes inscrits
+  { id: 'p-mahougnon', name: 'Mahougnon Zounon', handle: '@mahougnon_z', role: 'Gardien Vodun Rays', avatarUrl: '/assets/duos/mahougnon_esu_portrait_1791701582891.jpg', category: 'protagoniste' },
+  { id: 'p-dieudonne', name: 'Dieudonné Dossou', handle: '@dieudonne_d', role: 'Prêtre & Théologien Autre Foi', avatarUrl: '/assets/duos/duo_pere_matthieu_1791655226601.jpg', category: 'protagoniste' },
+  { id: 'p-tobi', name: 'Tobi Houndégla', handle: '@tobi_h', role: 'Pêcheur Toffinou (Ganvié)', avatarUrl: '/assets/duos/tobi-houndegla.jpg', category: 'protagoniste' },
+  { id: 'p-sika', name: 'Sika Dossou', handle: '@sika_d', role: 'Commerçante & Sage de Dantokpa', avatarUrl: '/assets/images/beninoise_femme_sika_1792164985263.jpg', category: 'protagoniste' },
+  { id: 'p-senan', name: 'Sénan Agossa', handle: '@senan_a', role: 'Entrepreneure & Innovatrice', avatarUrl: '/assets/images/beninoise_jeune_senan_1792165025309.jpg', category: 'protagoniste' },
+  { id: 'p-codjo', name: 'Codjo Dah-Zounon', handle: '@codjo_dz', role: 'Témoin de la lumière intérieure', avatarUrl: '/assets/duos/codjo-blind.jpg', category: 'protagoniste' },
+  { id: 'p-malik', name: 'Malik Diop', handle: '@malik_d', role: 'Orateur & Leader d’émancipation', avatarUrl: '/assets/duos/malik-diop.jpg', category: 'protagoniste' },
+  { id: 'p-eleonore', name: 'Éléonore Vance', handle: '@eleonore_v', role: 'Oratrice & Souveraineté des femmes', avatarUrl: '/assets/duos/eleonore-vance.jpg', category: 'protagoniste' },
+  { id: 'p-mawuna', name: 'Mawuna Houénou', handle: '@mawuna_h', role: 'Passeuse de mémoire & Clairvoyante', avatarUrl: '/assets/duos/mawuna-medium.jpg', category: 'protagoniste' },
+  { id: 'p-sayri', name: 'Sayri Quispe', handle: '@sayri_q', role: 'Tisseur des Andes (Pérou)', avatarUrl: '/assets/duos/sayri-quispe.jpg', category: 'protagoniste' },
+  { id: 'p-pascal', name: 'Pascal Tisserand', handle: '@pascal_t', role: 'Maître tisseur & Bâtisseur', avatarUrl: '/assets/protagonists/koffi-tisserand.jpg', category: 'protagoniste' },
+  { id: 'p-adjovi', name: 'Adjovi Blandine', handle: '@adjovi_b', role: 'Guérisseuse aux herbes sacrées', avatarUrl: '/assets/protagonists/adjovi-blandine.jpg', category: 'protagoniste' },
+
+  // Post-production
+  { id: 'post-malik-sy', name: 'Malik Sy', handle: '@malik_s', role: 'Monteur & Étalonneur', avatarUrl: '/assets/duos/photographer-focus.jpg', category: 'post_production' },
+  { id: 'post-christian', name: 'Christian Dossou', handle: '@christian_d', role: 'Ingénieur du son & Mixeur', avatarUrl: '/assets/duos/athlete-hurdle.jpg', category: 'post_production' },
+  { id: 'post-fatou', name: 'Fatou Diallo', handle: '@fatou_d', role: 'Monteuse & Story Editor', avatarUrl: '/assets/duos/fatou-diallo.jpg', category: 'post_production' },
+  { id: 'post-dossou', name: 'Dossou Gbaguidi', handle: '@dossou_g', role: 'Sound designer & Compositeur', avatarUrl: '/assets/images/beninois_sage_dossou_1792165004493.jpg', category: 'post_production' },
+  { id: 'post-senou', name: 'Ayaba Senou', handle: '@ayaba_s', role: 'Monteuse chef & Mixeuse', avatarUrl: '/assets/protagonists/amara-tisserande.jpg', category: 'post_production' }
+];
+
+export const getSeriesParts = (choice: StudioPillarItem | null): { 
+  partA: { id: 'part-a'; name: string; description?: string; number: string }; 
+  partB: { id: 'part-b'; name: string; description?: string; number: string };
+} => {
+  if (!choice) {
+    return {
+      partA: { id: 'part-a', name: 'Partie 1', description: 'Premier volet de la série', number: 'Partie 1' },
+      partB: { id: 'part-b', name: 'Partie 2', description: 'Deuxième volet de la série', number: 'Partie 2' }
+    };
+  }
+
+  // 1. Chercher dans les documentaires officiels
+  const doc = DOCUMENTARIES.find((d) => d.id === choice.id || d.slug === choice.id);
+  if (doc && doc.universes && doc.universes.length >= 2) {
+    return {
+      partA: {
+        id: 'part-a',
+        name: doc.universes[0].name,
+        description: doc.universes[0].tagline || doc.universes[0].description,
+        number: 'Partie 1'
+      },
+      partB: {
+        id: 'part-b',
+        name: doc.universes[1].name,
+        description: doc.universes[1].tagline || doc.universes[1].description,
+        number: 'Partie 2'
+      }
+    };
+  }
+
+  // 2. Découpage du titre s'il contient un séparateur de diptyque (‹ › ou < >)
+  const title = choice.title;
+  if (title.includes('‹ ›') || title.includes('< >')) {
+    const rawParts = title.split(/‹ ›|< >/).map((s) => s.trim()).filter(Boolean);
+    if (rawParts.length >= 2) {
+      return {
+        partA: {
+          id: 'part-a',
+          name: rawParts[0],
+          description: 'Premier univers du diptyque',
+          number: 'Partie 1'
+        },
+        partB: {
+          id: 'part-b',
+          name: rawParts[1],
+          description: 'Deuxième univers en miroir',
+          number: 'Partie 2'
+        }
+      };
+    }
+  }
+
+  return {
+    partA: {
+      id: 'part-a',
+      name: `${title} (Volet 1)`,
+      description: 'Volet initial de la thématique',
+      number: 'Partie 1'
+    },
+    partB: {
+      id: 'part-b',
+      name: `${title} (Volet 2)`,
+      description: 'Volet miroir et dialogue',
+      number: 'Partie 2'
+    }
+  };
+};
+
+interface CollaboratorMentionInputProps {
+  label: string;
+  sublabel: string;
+  category: 'realisation' | 'protagoniste' | 'post_production';
+  tagged: TaggedCollaborator[];
+  onAdd: (collaborator: TaggedCollaborator) => void;
+  onRemove: (id: string) => void;
+  placeholder: string;
+}
+
+const CollaboratorMentionInput: React.FC<CollaboratorMentionInputProps> = ({
+  label,
+  sublabel,
+  category,
+  tagged,
+  onAdd,
+  onRemove,
+  placeholder,
+}) => {
+  const [inputValue, setInputValue] = useState('');
+  const [isFocused, setIsFocused] = useState(false);
+  const [warningMessage, setWarningMessage] = useState<string | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setIsFocused(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const query = inputValue.replace(/^@/, '').toLowerCase().trim();
+
+  const suggestions = PLATFORM_MEMBERS.filter((member) => {
+    if (tagged.some((t) => t.id === member.id)) return false;
+    if (!query) {
+      return member.category === category || member.category === 'tous';
+    }
+    return (
+      member.name.toLowerCase().includes(query) ||
+      member.handle.toLowerCase().includes(query) ||
+      member.role.toLowerCase().includes(query)
+    );
+  }).slice(0, 5);
+
+  const handleSelect = (member: PlatformMember) => {
+    onAdd({
+      id: member.id,
+      name: member.name,
+      handle: member.handle,
+      role: member.role,
+      avatarUrl: member.avatarUrl,
+    });
+    setInputValue('');
+    setWarningMessage(null);
+    setIsFocused(false);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      if (suggestions.length > 0) {
+        handleSelect(suggestions[0]);
+      } else if (inputValue.trim()) {
+        setWarningMessage('Seules les personnes inscrites sur la plateforme peuvent être identifiées avec le @.');
+        setTimeout(() => setWarningMessage(null), 3500);
+      }
+    }
+  };
+
+  return (
+    <div ref={containerRef} className="space-y-1.5 relative">
+      <div className="flex items-center justify-between">
+        <label className="text-xs font-semibold text-stone-800">
+          {label}
+        </label>
+        <span className="text-[11px] text-stone-400 font-normal">
+          {sublabel}
+        </span>
+      </div>
+
+      {tagged.length > 0 && (
+        <div className="flex flex-wrap gap-1.5 mb-1">
+          {tagged.map((item) => (
+            <span
+              key={item.id}
+              className="inline-flex items-center gap-1.5 pl-2 pr-2.5 py-1 rounded-xl bg-stone-100 border border-stone-200 text-xs text-stone-800 shadow-xs"
+            >
+              {item.avatarUrl ? (
+                <img
+                  src={item.avatarUrl}
+                  alt={item.name}
+                  className="w-4 h-4 rounded-full object-cover shrink-0"
+                />
+              ) : (
+                <span className="w-4 h-4 rounded-full bg-[#A2482B]/15 text-[#A2482B] flex items-center justify-center text-[9px] font-bold shrink-0">
+                  {item.name.charAt(0)}
+                </span>
+              )}
+              <span className="font-semibold text-[#A2482B]">{item.handle}</span>
+              <span className="text-stone-600 text-[11px] truncate max-w-[110px]">
+                {item.name}
+              </span>
+              <button
+                type="button"
+                onClick={() => onRemove(item.id)}
+                className="w-3.5 h-3.5 rounded-full hover:bg-stone-200 text-stone-400 hover:text-stone-700 flex items-center justify-center transition-colors cursor-pointer ml-0.5"
+                title="Retirer"
+              >
+                <X className="w-2.5 h-2.5" />
+              </button>
+            </span>
+          ))}
+        </div>
+      )}
+
+      <div className="relative">
+        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-stone-400">
+          <AtSign className="w-4 h-4 text-stone-400" />
+        </div>
+        <input
+          type="text"
+          value={inputValue}
+          onChange={(e) => {
+            setInputValue(e.target.value);
+            if (warningMessage) setWarningMessage(null);
+          }}
+          onFocus={() => setIsFocused(true)}
+          onKeyDown={handleKeyDown}
+          placeholder={placeholder}
+          className="w-full pl-9 pr-3 py-2 sm:py-2.5 rounded-xl bg-white border border-stone-300 text-xs sm:text-sm text-stone-900 placeholder:text-stone-400 focus:outline-none focus:ring-1.5 focus:ring-[#A2482B] focus:border-[#A2482B] transition-all shadow-xs"
+        />
+      </div>
+
+      {warningMessage && (
+        <p className="text-[11px] text-amber-700 bg-amber-50 border border-amber-200/70 px-2.5 py-1 rounded-lg">
+          ⚠️ {warningMessage}
+        </p>
+      )}
+
+      {isFocused && suggestions.length > 0 && (
+        <div className="absolute top-full left-0 right-0 z-50 mt-1 bg-white rounded-xl shadow-xl border border-stone-200 py-1 max-h-52 overflow-y-auto">
+          <div className="px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-stone-400 border-b border-stone-100">
+            Membres inscrits sur la plateforme
+          </div>
+          {suggestions.map((member) => (
+            <button
+              key={member.id}
+              type="button"
+              onMouseDown={(e) => {
+                e.preventDefault();
+                handleSelect(member);
+              }}
+              className="w-full px-2.5 py-1.5 text-left flex items-center gap-2.5 hover:bg-stone-50 cursor-pointer transition-colors"
+            >
+              {member.avatarUrl ? (
+                <img
+                  src={member.avatarUrl}
+                  alt={member.name}
+                  className="w-6 h-6 rounded-full object-cover shrink-0"
+                />
+              ) : (
+                <span className="w-6 h-6 rounded-full bg-[#A2482B]/15 text-[#A2482B] flex items-center justify-center text-xs font-bold shrink-0">
+                  {member.name.charAt(0)}
+                </span>
+              )}
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-1.5">
+                  <span className="font-semibold text-xs text-stone-900 truncate">
+                    {member.name}
+                  </span>
+                  <span className="text-[11px] font-medium text-[#A2482B]">
+                    {member.handle}
+                  </span>
+                </div>
+                <div className="text-[10px] text-stone-500 truncate">
+                  {member.role}
+                </div>
+              </div>
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
 
 interface SubmitStoryScreenProps {
   preselectedDocumentaryId?: string;
@@ -53,12 +363,14 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
   // 6. Modale Synopsis (Papyrus) - largeur ajustée à la carte vidéo
   const [synopsisModalItem, setSynopsisModalItem] = useState<StudioPillar | StudioPillarItem | null>(null);
 
-  // 7. Modale de téléversement vidéo
-  const [uploadModalOpen, setUploadModalOpen] = useState(false);
+  // 7. Écran direct sur la plateforme : Télécharger sa vidéo (NON MODAL)
+  const [isUploadScreenActive, setIsUploadScreenActive] = useState(false);
   const [uploadSuccessToast, setUploadSuccessToast] = useState(false);
-  const [uploadedStoryTitle, setUploadedStoryTitle] = useState('');
-  const [uploadedStoryAuthor, setUploadedStoryAuthor] = useState('');
   const [selectedFileName, setSelectedFileName] = useState<string | null>(null);
+  const [selectedPartId, setSelectedPartId] = useState<'part-a' | 'part-b'>('part-a');
+  const [creditsRealisation, setCreditsRealisation] = useState<TaggedCollaborator[]>([]);
+  const [creditsProtagonistes, setCreditsProtagonistes] = useState<TaggedCollaborator[]>([]);
+  const [creditsPostProd, setCreditsPostProd] = useState<TaggedCollaborator[]>([]);
   const [duoPreviewVideo, setDuoPreviewVideo] = useState<'upload' | 'expert' | null>(null);
 
   // 8. Toast d'information
@@ -196,10 +508,16 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
   // Navigation clavier flèches gauche / droite / Escape
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (synopsisModalItem || uploadModalOpen) {
+      if (synopsisModalItem) {
         if (e.key === 'Escape') {
           setSynopsisModalItem(null);
-          setUploadModalOpen(false);
+        }
+        return;
+      }
+
+      if (isUploadScreenActive) {
+        if (e.key === 'Escape') {
+          setIsUploadScreenActive(false);
         }
         return;
       }
@@ -223,7 +541,7 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [goToNext, goToPrev, activePillar, activeCastingCategory, selectedFinalChoice, synopsisModalItem, uploadModalOpen]);
+  }, [goToNext, goToPrev, activePillar, activeCastingCategory, selectedFinalChoice, synopsisModalItem, isUploadScreenActive]);
 
   // Gestion des événements tactiles
   const onTouchStart = (e: React.TouchEvent) => {
@@ -292,6 +610,267 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
     }
     setDragOffset(0);
   };
+
+  const handleSubmitVideo = () => {
+    if (!selectedFileName) {
+      showToast('Veuillez sélectionner un fichier vidéo avant d’envoyer.');
+      return;
+    }
+    const isMirrorTheme = activePillar?.id === 'duos' || (!activePillar && Boolean(selectedFinalChoice?.title.includes('‹ ›') || selectedFinalChoice?.title.includes('< >')));
+    if (isMirrorTheme && !selectedPartId) {
+      showToast('Veuillez choisir la partie de la série.');
+      return;
+    }
+
+    // Remise à zéro et notification
+    setSelectedFileName(null);
+    setCreditsRealisation([]);
+    setCreditsProtagonistes([]);
+    setCreditsPostProd([]);
+    setIsUploadScreenActive(false);
+    setUploadSuccessToast(true);
+    setTimeout(() => {
+      setUploadSuccessToast(false);
+    }, 4500);
+  };
+
+  // =========================================================================
+  // ÉCRAN DIRECT SUR LA PLATEFORME : TÉLÉCHARGER SA VIDÉO (AUCUNE MODALE)
+  // =========================================================================
+  if (isUploadScreenActive && selectedFinalChoice) {
+    const isMirrorTheme = activePillar?.id === 'duos' || (!activePillar && Boolean(selectedFinalChoice.title.includes('‹ ›') || selectedFinalChoice.title.includes('< >')));
+    const parts = isMirrorTheme ? getSeriesParts(selectedFinalChoice) : null;
+
+    return (
+      <div className="w-full max-w-3xl mx-auto px-3 sm:px-6 pt-2 pb-24 sm:pb-28 pt-safe pb-safe h-full max-h-full overflow-hidden flex flex-col justify-between text-[#1C1917] select-none bg-white">
+        {/* EN-TÊTE HARMONISÉ AVEC RETOUR VERS LE DUO DE CHOIX */}
+        <div className="relative flex items-center justify-between h-9 sm:h-11 shrink-0 gap-2 mb-1.5 sm:mb-2">
+          <div className="flex items-center gap-1.5 sm:gap-2 h-full min-w-0">
+            <button
+              onClick={() => setIsUploadScreenActive(false)}
+              className="font-normal text-stone-500 hover:text-stone-900 transition-colors cursor-pointer flex items-center gap-1 group py-1 shrink-0"
+              title="Revenir au choix précédent"
+            >
+              <ArrowLeft className="w-4 h-4 text-stone-400 group-hover:text-stone-700 group-hover:-translate-x-0.5 transition-transform" />
+              <span className="text-xs sm:text-sm font-medium">Retour</span>
+            </button>
+
+            {/* Titre intermédiaire : affiché sur grand écran uniquement pour éviter toute troncature sur mobile */}
+            <span className="text-stone-300 font-light text-xs hidden sm:inline" aria-hidden="true">›</span>
+
+            <span className="text-xs sm:text-sm text-stone-500 truncate max-w-[180px] hidden sm:inline" title={selectedFinalChoice.title}>
+              {selectedFinalChoice.title}
+            </span>
+
+            <span className="text-stone-300 font-light text-xs" aria-hidden="true">›</span>
+
+            <div className="relative flex items-center h-full overflow-visible">
+              <span className="font-editorial text-xs sm:text-sm md:text-base font-semibold text-[#1C1917] tracking-normal leading-none whitespace-nowrap pr-2 select-none">
+                Télécharger sa vidéo
+              </span>
+              <div className="absolute left-0 -bottom-1.5 w-8 h-0.5 bg-[#A2482B] rounded-full" />
+            </div>
+          </div>
+        </div>
+
+        {/* CORPS DU FORMULAIRE : DIRECTEMENT SUR LA PLATEFORME (NON MODAL) */}
+        <div className="flex-1 min-h-0 overflow-y-auto pr-1 sm:pr-2 py-1 sm:py-2 flex flex-col">
+          <div className="space-y-3 sm:space-y-3.5">
+            {/* 1A. CHOIX DE LA PARTIE DE LA SÉRIE (UNIQUEMENT LORSQU'ON PASSE PAR LA CASE MIROIR) */}
+            {isMirrorTheme && parts && (
+              <div className="space-y-2">
+                <p className="text-xs sm:text-sm font-semibold text-stone-700">
+                  À quelle partie de la série se rattache votre vidéo ?
+                </p>
+
+                <div className="grid grid-cols-2 gap-2.5 sm:gap-3.5">
+                  {/* Bouton Partie A */}
+                  <button
+                    type="button"
+                    onClick={() => setSelectedPartId('part-a')}
+                    className={`px-4 py-3 sm:py-3.5 rounded-2xl border transition-all cursor-pointer flex items-center justify-between gap-3 text-left shadow-xs hover:shadow-sm ${
+                      selectedPartId === 'part-a'
+                        ? 'bg-[#A2482B]/10 border-[#A2482B] text-stone-900 ring-1 ring-[#A2482B]'
+                        : 'bg-white border-stone-200 hover:border-stone-300 text-stone-800'
+                    }`}
+                  >
+                    <span className="font-editorial text-xs sm:text-sm font-semibold truncate">
+                      {parts.partA.name}
+                    </span>
+                    <div className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 transition-colors ${
+                      selectedPartId === 'part-a' ? 'border-[#A2482B] bg-[#A2482B] text-white' : 'border-stone-300 bg-white'
+                    }`}>
+                      {selectedPartId === 'part-a' && <Check className="w-3 h-3 stroke-[3]" />}
+                    </div>
+                  </button>
+
+                  {/* Bouton Partie B */}
+                  <button
+                    type="button"
+                    onClick={() => setSelectedPartId('part-b')}
+                    className={`px-4 py-3 sm:py-3.5 rounded-2xl border transition-all cursor-pointer flex items-center justify-between gap-3 text-left shadow-xs hover:shadow-sm ${
+                      selectedPartId === 'part-b'
+                        ? 'bg-[#A2482B]/10 border-[#A2482B] text-stone-900 ring-1 ring-[#A2482B]'
+                        : 'bg-white border-stone-200 hover:border-stone-300 text-stone-800'
+                    }`}
+                  >
+                    <span className="font-editorial text-xs sm:text-sm font-semibold truncate">
+                      {parts.partB.name}
+                    </span>
+                    <div className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 transition-colors ${
+                      selectedPartId === 'part-b' ? 'border-[#A2482B] bg-[#A2482B] text-white' : 'border-stone-300 bg-white'
+                    }`}>
+                      {selectedPartId === 'part-b' && <Check className="w-3 h-3 stroke-[3]" />}
+                    </div>
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* 1B. RAPPEL DE LA DIRECTION POUR LES THÉMATIQUES HORS MIROIR (CASTING, LUMIÈRE, PORTRAIT) */}
+            {!isMirrorTheme && (
+              <div className="rounded-2xl border border-stone-200/90 bg-stone-50/70 p-3 sm:p-3.5 shadow-xs">
+                <div className="mb-1.5">
+                  <span className="text-[11px] font-semibold uppercase tracking-wider text-stone-400">
+                    Rappel de la direction
+                  </span>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                  {/* Direction principale (ex: Casting, Lumière, Portrait) */}
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-stone-200 text-xs sm:text-[13px] font-semibold text-stone-800 shadow-2xs">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#A2482B]" />
+                    {activePillar?.title || 'Studio'}
+                  </span>
+
+                  {/* Catégorie intermédiaire (ex: Sagesses) si applicable */}
+                  {activeCastingCategory && (
+                    <>
+                      <span className="text-stone-300 font-light text-xs" aria-hidden="true">›</span>
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-stone-200 text-xs sm:text-[13px] font-semibold text-stone-800 shadow-2xs">
+                        <span className="w-1.5 h-1.5 rounded-full bg-stone-400" />
+                        {activeCastingCategory.title}
+                      </span>
+                    </>
+                  )}
+
+                  {/* Thématique ou sujet sélectionné (ex: Sens de la vie) */}
+                  <span className="text-stone-300 font-light text-xs" aria-hidden="true">›</span>
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#A2482B]/10 border border-[#A2482B]/30 text-xs sm:text-[13px] font-semibold text-[#A2482B] shadow-2xs">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#A2482B]" />
+                    {selectedFinalChoice.title}
+                  </span>
+                </div>
+              </div>
+            )}
+
+            {/* 2. SÉLECTION DU FICHIER VIDÉO (BARRE HORIZONTALE PLEINE LARGEUR HARMONIEUSE) */}
+            <div className="relative border border-dashed border-stone-300 hover:border-[#A2482B] rounded-2xl px-4 sm:px-5 py-3 sm:py-3.5 bg-stone-50/70 hover:bg-stone-50 transition-all cursor-pointer group flex items-center justify-between gap-3.5 shadow-xs">
+              <input 
+                type="file" 
+                accept="video/mp4,video/quicktime,video/webm"
+                onChange={(e) => {
+                  if (e.target.files && e.target.files[0]) {
+                    setSelectedFileName(e.target.files[0].name);
+                  }
+                }}
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+              />
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-[#A2482B]/10 text-[#A2482B] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                  <UploadCloud className="w-4.5 h-4.5" />
+                </div>
+                {selectedFileName ? (
+                  <div className="min-w-0">
+                    <p className="text-xs sm:text-sm font-semibold text-stone-900 truncate">{selectedFileName}</p>
+                    <p className="text-[11px] text-emerald-600 font-medium flex items-center gap-1 mt-0.5">
+                      <Check className="w-3 h-3 stroke-[3]" />
+                      Fichier prêt à être envoyé
+                    </p>
+                  </div>
+                ) : (
+                  <div className="min-w-0">
+                    <p className="text-xs sm:text-sm text-stone-700 font-medium truncate">
+                      Glissez votre vidéo ici ou <span className="text-[#A2482B] underline font-semibold">parcourez vos fichiers</span>
+                    </p>
+                    <p className="text-[11px] text-stone-400 mt-0.5">
+                      MP4, MOV (9:16 recommandé jusqu'à 500 Mo)
+                    </p>
+                  </div>
+                )}
+              </div>
+              <span className="text-xs font-semibold text-[#A2482B] bg-[#A2482B]/10 hover:bg-[#A2482B]/15 px-3.5 py-1.5 rounded-xl shrink-0 transition-colors">
+                {selectedFileName ? 'Changer' : 'Sélectionner'}
+              </span>
+            </div>
+
+            {/* 3. CRÉDITS D'ÉQUIPE ÉPURÉS (RÉALISATION, PROTAGONISTES, POST-PRODUCTION VIA @) */}
+            <div className="space-y-2.5 sm:space-y-3 pt-1 sm:pt-2 border-t border-stone-200/80">
+
+              {/* A. Réalisation */}
+              <CollaboratorMentionInput
+                label="Réalisation"
+                sublabel="Cadreur, réalisateur, prise de vue"
+                category="realisation"
+                tagged={creditsRealisation}
+                onAdd={(collab) => setCreditsRealisation((prev) => [...prev, collab])}
+                onRemove={(id) => setCreditsRealisation((prev) => prev.filter((c) => c.id !== id))}
+                placeholder="Tapez @ pour mentionner cadreur, réalisateur..."
+              />
+
+              {/* B. Protagonistes de la vidéo */}
+              <CollaboratorMentionInput
+                label="Protagonistes de la vidéo"
+                sublabel="Témoins, intervenants face caméra"
+                category="protagoniste"
+                tagged={creditsProtagonistes}
+                onAdd={(collab) => setCreditsProtagonistes((prev) => [...prev, collab])}
+                onRemove={(id) => setCreditsProtagonistes((prev) => prev.filter((c) => c.id !== id))}
+                placeholder="Tapez @ pour mentionner les protagonistes..."
+              />
+
+              {/* C. Post-production */}
+              <CollaboratorMentionInput
+                label="Post-production"
+                sublabel="Monteur, mixage son, étalonnage"
+                category="post_production"
+                tagged={creditsPostProd}
+                onAdd={(collab) => setCreditsPostProd((prev) => [...prev, collab])}
+                onRemove={(id) => setCreditsPostProd((prev) => prev.filter((c) => c.id !== id))}
+                placeholder="Tapez @ pour mentionner monteur, ingénieur son..."
+              />
+            </div>
+          </div>
+
+          {/* 4. ACTIONS EN BAS */}
+          <div className="pt-2.5 sm:pt-3 flex items-center justify-between gap-3 border-t border-stone-200/80 mt-3 sm:mt-4 pb-1">
+            <button
+              type="button"
+              onClick={() => setIsUploadScreenActive(false)}
+              className="px-4.5 sm:px-5 py-2 sm:py-2.5 rounded-xl sm:rounded-2xl bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs sm:text-sm font-semibold cursor-pointer transition-colors"
+            >
+              Retour
+            </button>
+            <button
+              type="button"
+              onClick={handleSubmitVideo}
+              className="px-5 sm:px-6 py-2 sm:py-2.5 rounded-xl sm:rounded-2xl bg-[#A2482B] hover:bg-[#8A3B22] text-white text-xs sm:text-sm font-semibold cursor-pointer transition-all shadow-md hover:shadow-lg flex items-center gap-2"
+            >
+              <CheckCircle2 className="w-4 h-4" />
+              <span>Envoyer ma vidéo</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Toast d'information temporaire */}
+        {toastMessage && (
+          <div className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 bg-[#A2482B] text-white text-xs font-semibold py-2 px-4 rounded-xl shadow-xl animate-in fade-in duration-150">
+            {toastMessage}
+          </div>
+        )}
+      </div>
+    );
+  }
 
   return (
     <div className="w-full max-w-3xl mx-auto px-3 sm:px-6 pt-1 sm:pt-2 pb-20 sm:pb-24 pt-safe pb-safe h-full max-h-full overflow-hidden flex flex-col justify-between text-[#1C1917] select-none">
@@ -393,13 +972,16 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                 title="Changer de thématique"
               >
                 <ArrowLeft className="w-4 h-4 text-stone-400 group-hover:text-stone-700 group-hover:-translate-x-0.5 transition-transform" />
-                <span className="text-xs sm:text-sm font-medium">Changer de thématique</span>
+                <span className="text-xs sm:text-sm font-medium">
+                  <span className="hidden sm:inline">Changer de thématique</span>
+                  <span className="sm:hidden">Retour</span>
+                </span>
               </button>
 
               <span className="text-stone-300 font-light text-xs" aria-hidden="true">›</span>
 
-              <div className="relative flex items-center h-full overflow-visible">
-                <span className="font-editorial text-xs sm:text-sm md:text-base font-semibold text-[#1C1917] tracking-normal leading-none whitespace-nowrap pr-2 select-none">
+              <div className="relative flex items-center h-full overflow-visible min-w-0">
+                <span className="font-editorial text-xs sm:text-sm md:text-base font-semibold text-[#1C1917] tracking-normal leading-none whitespace-nowrap pr-2 select-none truncate max-w-[130px] sm:max-w-[280px]">
                   {selectedFinalChoice.title}
                 </span>
                 <div className="absolute left-0 -bottom-1.5 w-8 h-0.5 bg-[#A2482B] rounded-full" />
@@ -423,17 +1005,17 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
       </div>
 
       {/* ========================================================================= */}
-      {/* 2. ZONE CENTRALE : DUO DE VIDÉOS CENTRÉ (AUCUN TEXTE ENCOMBRANT)          */}
+      {/* 2. ZONE CENTRALE : DUO DE VIDÉOS CENTRÉ (TOUJOURS CÔTE À CÔTE MÊME SUR MOBILE) */}
       {/* ========================================================================= */}
       {selectedFinalChoice ? (
-        <div className="relative flex-1 flex flex-col justify-center items-center w-full min-h-0 py-2 sm:py-3 animate-in fade-in duration-200">
-          <div className="w-full max-w-2xl flex items-center justify-center h-full max-h-[540px]">
-            {/* DUO DE VIDÉOS FACE-À-FACE CENTRÉ */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 w-full max-w-[620px] justify-items-center">
+        <div className="relative flex-1 flex flex-col justify-center items-center w-full min-h-0 py-1 sm:py-3 animate-in fade-in duration-200">
+          <div className="w-full max-w-4xl flex items-center justify-center h-full max-h-[560px]">
+            {/* DUO DE VIDÉOS FACE-À-FACE CENTRÉ (STRICTEMENT CÔTE À CÔTE COMME SUR LE FEED MIROIR) */}
+            <div className="flex items-center justify-center gap-2 sm:gap-5 md:gap-8 relative w-full px-1">
               
               {/* CARTE 1 : TÉLÉCHARGER SA VIDÉO */}
               <div 
-                className="relative aspect-[9/16] w-[min(calc(100vw-64px),calc((100dvh-230px)*9/16))] max-w-[228px] sm:max-w-[270px] md:max-w-[290px] h-[min(410px,calc(100dvh-230px))] sm:h-[min(480px,calc(100dvh-200px))] md:h-[min(520px,calc(100dvh-180px))] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl flex flex-col justify-between p-3 sm:p-4 bg-[#151513] text-white border border-stone-200/90 group"
+                className="relative aspect-[9/16] w-[min(calc((100vw-28px)/2),calc((100dvh-230px)*9/16))] max-w-[185px] max-h-[min(480px,calc(100dvh-230px))] sm:max-w-none sm:max-h-none sm:w-[min(280px,calc((100dvh-210px)*9/16))] sm:h-[min(520px,calc(100dvh-210px))] lg:w-[min(310px,calc((100dvh-200px)*9/16))] lg:h-[min(550px,calc(100dvh-200px))] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl flex flex-col justify-between p-2.5 sm:p-4 bg-[#151513] text-white border border-stone-200/90 group shrink-0"
               >
                 {/* Image selfie vidéo afro-futuriste OU Vidéo si lecture */}
                 {duoPreviewVideo === 'upload' ? (
@@ -462,11 +1044,12 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
 
                 {/* Haut de carte : Titre à gauche + Lecteur & Mute à droite */}
                 <div className="relative z-10 flex items-center justify-between w-full min-w-0">
-                  <span className="inline-flex items-center px-2.5 sm:px-3 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-[10px] sm:text-[11px] font-semibold text-white tracking-wide shadow-sm shrink-0 whitespace-nowrap leading-none select-none max-w-[calc(100%-80px)] truncate">
-                    Télécharger sa vidéo
+                  <span className="inline-flex items-center px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-[9px] sm:text-[11px] font-semibold text-white tracking-wide shadow-sm shrink-0 whitespace-nowrap leading-none select-none max-w-[calc(100%-60px)] truncate">
+                    <span className="hidden sm:inline">Télécharger sa vidéo</span>
+                    <span className="sm:hidden">Télécharger</span>
                   </span>
                   
-                  <div className="flex items-center gap-1.5 shrink-0">
+                  <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
                     {/* Icône mute si vidéo active */}
                     {duoPreviewVideo === 'upload' && (
                       <button
@@ -475,36 +1058,39 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                           e.stopPropagation();
                           setIsMuted(prev => !prev);
                         }}
-                        className="w-7.5 h-7.5 sm:w-8 sm:h-8 rounded-full bg-black/50 hover:bg-[#A2482B] active:bg-[#8A3B22] backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all cursor-pointer shadow-md hover:scale-105 active:scale-95"
+                        className="w-6.5 h-6.5 sm:w-8 sm:h-8 rounded-full bg-black/50 hover:bg-[#A2482B] active:bg-[#8A3B22] backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all cursor-pointer shadow-md hover:scale-105 active:scale-95"
                         title={isMuted ? 'Activer le son' : 'Couper le son'}
                       >
-                        {isMuted ? <VolumeX className="w-3.5 h-3.5 text-white" /> : <Volume2 className="w-3.5 h-3.5 text-white" />}
+                        {isMuted ? <VolumeX className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white" /> : <Volume2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white" />}
                       </button>
                     )}
 
                     <button
                       type="button"
                       onClick={() => setDuoPreviewVideo(prev => prev === 'upload' ? null : 'upload')}
-                      className="w-7.5 h-7.5 sm:w-8 sm:h-8 rounded-xl bg-black/55 hover:bg-[#A2482B] active:bg-[#8A3B22] text-white backdrop-blur-md border border-white/20 flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95"
+                      className="w-6.5 h-6.5 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-black/55 hover:bg-[#A2482B] active:bg-[#8A3B22] text-white backdrop-blur-md border border-white/20 flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95"
                       title={duoPreviewVideo === 'upload' ? "Arrêter la vidéo" : "Visionner l'exemple"}
                     >
                       {duoPreviewVideo === 'upload' ? (
-                        <Pause className="w-3.5 h-3.5 fill-white text-white" />
+                        <Pause className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-white text-white" />
                       ) : (
-                        <TvPlayerIcon className="w-4 h-4 text-white" strokeWidth={1.7} />
+                        <TvPlayerIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" strokeWidth={1.7} />
                       )}
                     </button>
                   </div>
                 </div>
 
                 {/* Bas de carte : Uniquement le bouton Choisir en bas à droite */}
-                <div className="relative z-10 w-full flex items-center justify-end pointer-events-auto pt-2">
+                <div className="relative z-10 w-full flex items-center justify-end pointer-events-auto pt-1 sm:pt-2">
                   <button
                     type="button"
-                    onClick={() => setUploadModalOpen(true)}
-                    className="px-3 py-1.5 sm:py-2 rounded-xl bg-black/50 hover:bg-[#A2482B] active:bg-[#8A3B22] text-white font-medium text-xs sm:text-[12px] shadow-md flex items-center gap-1.5 transition-all duration-200 cursor-pointer border border-white/20 hover:border-[#A2482B] backdrop-blur-md hover:scale-105 active:scale-95"
+                    onClick={() => {
+                      setIsUploadScreenActive(true);
+                      setDuoPreviewVideo(null);
+                    }}
+                    className="px-2.5 sm:px-3 py-1 sm:py-1.5 sm:py-2 rounded-lg sm:rounded-xl bg-black/50 hover:bg-[#A2482B] active:bg-[#8A3B22] text-white font-medium text-[10.5px] sm:text-[12px] shadow-md flex items-center gap-1 sm:gap-1.5 transition-all duration-200 cursor-pointer border border-white/20 hover:border-[#A2482B] backdrop-blur-md hover:scale-105 active:scale-95"
                   >
-                    <DoorOpen className="w-3.5 h-3.5 text-white/90" />
+                    <DoorOpen className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white/90" />
                     <span>Choisir</span>
                   </button>
                 </div>
@@ -512,7 +1098,7 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
 
               {/* CARTE 2 : CHOISIR UN EXPERT */}
               <div 
-                className="relative aspect-[9/16] w-[min(calc(100vw-64px),calc((100dvh-230px)*9/16))] max-w-[228px] sm:max-w-[270px] md:max-w-[290px] h-[min(410px,calc(100dvh-230px))] sm:h-[min(480px,calc(100dvh-200px))] md:h-[min(520px,calc(100dvh-180px))] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl flex flex-col justify-between p-3 sm:p-4 bg-[#151513] text-white border border-stone-200/90 group"
+                className="relative aspect-[9/16] w-[min(calc((100vw-28px)/2),calc((100dvh-230px)*9/16))] max-w-[185px] max-h-[min(480px,calc(100dvh-230px))] sm:max-w-none sm:max-h-none sm:w-[min(280px,calc((100dvh-210px)*9/16))] sm:h-[min(520px,calc(100dvh-210px))] lg:w-[min(310px,calc((100dvh-200px)*9/16))] lg:h-[min(550px,calc(100dvh-200px))] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl flex flex-col justify-between p-2.5 sm:p-4 bg-[#151513] text-white border border-stone-200/90 group shrink-0"
               >
                 {/* Image personne filmée par un pro OU Vidéo si lecture */}
                 {duoPreviewVideo === 'expert' ? (
@@ -541,11 +1127,12 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
 
                 {/* Haut de carte : Titre à gauche + Lecteur & Mute à droite */}
                 <div className="relative z-10 flex items-center justify-between w-full min-w-0">
-                  <span className="inline-flex items-center px-2.5 sm:px-3 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-[10px] sm:text-[11px] font-semibold text-white tracking-wide shadow-sm shrink-0 whitespace-nowrap leading-none select-none max-w-[calc(100%-80px)] truncate">
-                    Choisir un expert
+                  <span className="inline-flex items-center px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-[9px] sm:text-[11px] font-semibold text-white tracking-wide shadow-sm shrink-0 whitespace-nowrap leading-none select-none max-w-[calc(100%-60px)] truncate">
+                    <span className="hidden sm:inline">Choisir un expert</span>
+                    <span className="sm:hidden">Un expert</span>
                   </span>
                   
-                  <div className="flex items-center gap-1.5 shrink-0">
+                  <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
                     {/* Icône mute si vidéo active */}
                     {duoPreviewVideo === 'expert' && (
                       <button
@@ -554,30 +1141,30 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                           e.stopPropagation();
                           setIsMuted(prev => !prev);
                         }}
-                        className="w-7.5 h-7.5 sm:w-8 sm:h-8 rounded-full bg-black/50 hover:bg-[#A2482B] active:bg-[#8A3B22] backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all cursor-pointer shadow-md hover:scale-105 active:scale-95"
+                        className="w-6.5 h-6.5 sm:w-8 sm:h-8 rounded-full bg-black/50 hover:bg-[#A2482B] active:bg-[#8A3B22] backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all cursor-pointer shadow-md hover:scale-105 active:scale-95"
                         title={isMuted ? 'Activer le son' : 'Couper le son'}
                       >
-                        {isMuted ? <VolumeX className="w-3.5 h-3.5 text-white" /> : <Volume2 className="w-3.5 h-3.5 text-white" />}
+                        {isMuted ? <VolumeX className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white" /> : <Volume2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white" />}
                       </button>
                     )}
 
                     <button
                       type="button"
                       onClick={() => setDuoPreviewVideo(prev => prev === 'expert' ? null : 'expert')}
-                      className="w-7.5 h-7.5 sm:w-8 sm:h-8 rounded-xl bg-black/55 hover:bg-[#A2482B] active:bg-[#8A3B22] text-white backdrop-blur-md border border-white/20 flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95"
+                      className="w-6.5 h-6.5 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-black/55 hover:bg-[#A2482B] active:bg-[#8A3B22] text-white backdrop-blur-md border border-white/20 flex items-center justify-center transition-all duration-200 cursor-pointer shadow-md hover:scale-105 active:scale-95"
                       title={duoPreviewVideo === 'expert' ? "Arrêter la vidéo" : "Visionner l'exemple"}
                     >
                       {duoPreviewVideo === 'expert' ? (
-                        <Pause className="w-3.5 h-3.5 fill-white text-white" />
+                        <Pause className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-white text-white" />
                       ) : (
-                        <TvPlayerIcon className="w-4 h-4 text-white" strokeWidth={1.7} />
+                        <TvPlayerIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" strokeWidth={1.7} />
                       )}
                     </button>
                   </div>
                 </div>
 
                 {/* Bas de carte : Uniquement le bouton Choisir en bas à droite */}
-                <div className="relative z-10 w-full flex items-center justify-end pointer-events-auto pt-2">
+                <div className="relative z-10 w-full flex items-center justify-end pointer-events-auto pt-1 sm:pt-2">
                   <button
                     type="button"
                     onClick={() => onNavigate({ 
@@ -586,9 +1173,9 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                       returnCastingCategoryId: activeCastingCategory?.id,
                       returnFinalChoiceId: selectedFinalChoice?.id
                     })}
-                    className="px-3 py-1.5 sm:py-2 rounded-xl bg-black/50 hover:bg-[#A2482B] active:bg-[#8A3B22] text-white font-medium text-xs sm:text-[12px] shadow-md flex items-center gap-1.5 transition-all duration-200 cursor-pointer border border-white/20 hover:border-[#A2482B] backdrop-blur-md hover:scale-105 active:scale-95"
+                    className="px-2.5 sm:px-3 py-1 sm:py-1.5 sm:py-2 rounded-lg sm:rounded-xl bg-black/50 hover:bg-[#A2482B] active:bg-[#8A3B22] text-white font-medium text-[10.5px] sm:text-[12px] shadow-md flex items-center gap-1 sm:gap-1.5 transition-all duration-200 cursor-pointer border border-white/20 hover:border-[#A2482B] backdrop-blur-md hover:scale-105 active:scale-95"
                   >
-                    <DoorOpen className="w-3.5 h-3.5 text-white/90" />
+                    <DoorOpen className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white/90" />
                     <span>Choisir</span>
                   </button>
                 </div>
@@ -957,142 +1544,11 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
         </div>
       )}
 
-      {/* ========================================================================= */}
-      {/* 5. MODALE DE TÉLÉVERSEMENT VIDÉO (TÉLÉCHARGER SA VIDÉO)                  */}
-      {/* ========================================================================= */}
-      {uploadModalOpen && (
-        <div 
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200"
-          onClick={() => setUploadModalOpen(false)}
-        >
-          <div 
-            className="w-full max-w-lg bg-[#FAF7F2] rounded-3xl p-5 sm:p-6 shadow-2xl border border-stone-200 space-y-4 animate-in zoom-in-95 duration-200 max-h-[90vh] overflow-y-auto"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Header */}
-            <div className="flex items-start justify-between gap-3 border-b border-stone-200 pb-3">
-              <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-2xl bg-[#A2482B]/10 text-[#A2482B] flex items-center justify-center shrink-0">
-                  <UploadCloud className="w-4.5 h-4.5" />
-                </div>
-                <div>
-                  <span className="text-[10.5px] font-semibold uppercase tracking-wider text-[#A2482B]">
-                    Studio de contribution
-                  </span>
-                  <h3 className="font-editorial text-base sm:text-lg font-semibold text-stone-900 leading-tight">
-                    Téléverser votre vidéo • {selectedFinalChoice?.title}
-                  </h3>
-                </div>
-              </div>
-              <button
-                type="button"
-                onClick={() => setUploadModalOpen(false)}
-                className="w-8 h-8 rounded-full bg-stone-200/70 hover:bg-stone-300 text-stone-700 flex items-center justify-center transition-colors cursor-pointer shrink-0"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-
-            {/* Zone de drop du fichier */}
-            <div className="border-2 border-dashed border-stone-300 hover:border-[#A2482B] rounded-2xl p-6 text-center bg-white cursor-pointer transition-colors relative">
-              <input 
-                type="file" 
-                accept="video/mp4,video/quicktime,video/webm"
-                onChange={(e) => {
-                  if (e.target.files && e.target.files[0]) {
-                    setSelectedFileName(e.target.files[0].name);
-                  }
-                }}
-                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-              />
-              <UploadCloud className="w-8 h-8 text-[#A2482B] mx-auto mb-2" />
-              {selectedFileName ? (
-                <div className="space-y-1">
-                  <p className="text-xs font-semibold text-stone-900">{selectedFileName}</p>
-                  <p className="text-[11px] text-green-600 font-medium">Fichier vidéo sélectionné avec succès</p>
-                </div>
-              ) : (
-                <div className="space-y-1">
-                  <p className="text-xs font-medium text-stone-700">
-                    Glissez votre fichier vidéo ici ou <span className="text-[#A2482B] underline">parcourez vos fichiers</span>
-                  </p>
-                  <p className="text-[10.5px] text-stone-400">
-                    Format vertical 9:16 recommandé (MP4, MOV jusqu’à 500 Mo)
-                  </p>
-                </div>
-              )}
-            </div>
-
-            {/* Formulaire complémentaire */}
-            <div className="space-y-3">
-              <div>
-                <label className="block text-[11px] font-semibold text-stone-700 mb-1">
-                  Titre ou sujet de votre vidéo
-                </label>
-                <input
-                  type="text"
-                  value={uploadedStoryTitle}
-                  onChange={(e) => setUploadedStoryTitle(e.target.value)}
-                  placeholder={`Ex: Mon témoignage sur ${selectedFinalChoice?.title || 'mon parcours'}`}
-                  className="w-full px-3 py-2 rounded-xl bg-white border border-stone-300 text-xs text-stone-900 focus:outline-none focus:ring-1 focus:ring-[#A2482B]"
-                />
-              </div>
-
-              <div>
-                <label className="block text-[11px] font-semibold text-stone-700 mb-1">
-                  Votre nom / prénom ou pseudonyme
-                </label>
-                <input
-                  type="text"
-                  value={uploadedStoryAuthor}
-                  onChange={(e) => setUploadedStoryAuthor(e.target.value)}
-                  placeholder="Ex: Kwame D., Cotonou"
-                  className="w-full px-3 py-2 rounded-xl bg-white border border-stone-300 text-xs text-stone-900 focus:outline-none focus:ring-1 focus:ring-[#A2482B]"
-                />
-              </div>
-            </div>
-
-            {/* Rappel bienveillant */}
-            <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-[11px] text-amber-900 leading-snug">
-              Votre vidéo sera vérifiée par le comité de la forêt avant sa publication officielle dans les duos et miroirs.
-            </div>
-
-            {/* Actions */}
-            <div className="pt-2 flex items-center justify-end gap-2 border-t border-stone-200">
-              <button
-                type="button"
-                onClick={() => setUploadModalOpen(false)}
-                className="px-4 py-2 rounded-xl bg-stone-200 hover:bg-stone-300 text-stone-700 text-xs font-semibold cursor-pointer transition-colors"
-              >
-                Annuler
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setUploadModalOpen(false);
-                  setUploadSuccessToast(true);
-                  setSelectedFileName(null);
-                  setUploadedStoryTitle('');
-                  setUploadedStoryAuthor('');
-                  setTimeout(() => {
-                    setUploadSuccessToast(false);
-                  }, 3500);
-                }}
-                className="px-5 py-2 rounded-xl bg-[#A2482B] hover:bg-[#8A3B22] text-white text-xs font-semibold cursor-pointer transition-colors shadow-md flex items-center gap-1.5"
-              >
-                <CheckCircle2 className="w-3.5 h-3.5" />
-                <span>Envoyer ma vidéo</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
       {/* Toast de succès téléversement */}
       {uploadSuccessToast && (
         <div className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 bg-[#1C1917] text-white text-xs font-semibold py-2.5 px-4 rounded-xl shadow-2xl border border-stone-700 flex items-center gap-2 animate-in fade-in duration-200">
           <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-          <span>Vidéo envoyée avec succès au comité de révision !</span>
+          <span>Votre vidéo sera vérifiée par le comité de validation avant sa publication officielle.</span>
         </div>
       )}
 
