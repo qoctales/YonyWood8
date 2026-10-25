@@ -878,7 +878,7 @@ export const PROTAGONISTS: Protagonist[] = [
     country: 'Bénin',
     flag: '🇧🇯',
     bio: 'Jeune Béninois à lunettes de retour d’Europe, Roméo s’installe à Cotonou pour fonder son studio de création de récits, valoriser les savoirs ancestraux et connecter la diaspora à la jeunesse locale.',
-    photoUrl: '/assets/images/romeo_avatar_1792698425983.jpg',
+    photoUrl: '/assets/images/romeo_storyteller_1792933587573.jpg',
     universeTag: 'Bénin & Diaspora',
     quote: '« Revenir n’est pas recommencer à zéro, c’est apporter ce que le monde nous a appris pour faire grandir la terre de nos ancêtres. »',
     storiesCount: 4,
@@ -887,34 +887,34 @@ export const PROTAGONISTS: Protagonist[] = [
     tree: {
       passeurs: [
         {
-          id: 'anc-dah-zounon',
-          name: 'Mahougnon Zounon',
-          role: 'Gardien du sanctuaire d’Èṣù & Passeur d’arcanes',
+          id: 'anc-kiki-alapini',
+          name: 'Kiki Alapini',
+          role: 'Doyen des récits lacustres & Gardien de mémoire',
           country: 'Bénin',
-          photo: '/assets/duos/dah-zounon.jpg'
+          photo: '/assets/images/kiki_passeur_1792933820505.jpg'
         },
         {
           id: 'anc-cheikh-amadou',
           name: 'Cheikh Amadou Kane',
           role: 'Passeur de mémoire fluviale',
           country: 'Sénégal',
-          photo: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80'
+          photo: '/assets/duos/malik-diop.jpg'
         }
       ],
       heritiers: [
         {
-          id: 'coopt-camille-desc-2',
-          name: 'Koffi Mensah',
-          role: 'Tisserand de motifs sacrés',
+          id: 'coopt-fagnon-bio',
+          name: 'Fagnon Bio',
+          role: 'Innovateur agroécologique & bâtisseur de terre',
           country: 'Bénin',
-          photo: '/assets/protagonists/koffi-tisserand.jpg'
+          photo: '/assets/images/fagnon_agronome_1792933698985.jpg'
         },
         {
-          id: 'coopt-camille-desc-3',
-          name: 'Aïssatou Ba',
-          role: 'Cinéaste du réel',
-          country: 'Sénégal',
-          photo: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=600&q=80'
+          id: 'coopt-senan-agossa',
+          name: 'Sénan Agossa',
+          role: 'Pionnière de l’ingénierie et de l’image',
+          country: 'Bénin',
+          photo: '/assets/images/senan_innovatrice_1792933679487.jpg'
         }
       ],
       transmissions: [
@@ -940,7 +940,7 @@ export const PROTAGONISTS: Protagonist[] = [
         duration: '06:40',
         videoDurationSeconds: 400,
         summary: 'Roméo foule à nouveau le sol béninois, valises en main sous le soleil de Cadjehoun, prêt à s’installer.',
-        videoCoverUrl: '/assets/images/romeo_arriving_cotonou_1792698426939.jpg',
+        videoCoverUrl: '/assets/images/romeo_storyteller_1792933587573.jpg',
         credits: [
           { role: 'story_owner', label: 'Propriétaire du récit', name: 'Roméo Nonvide' }
         ]
@@ -957,27 +957,27 @@ export const PROTAGONISTS: Protagonist[] = [
     country: 'Bénin',
     flag: '🇧🇯',
     bio: 'Héritière de cinq générations de femmes tisserandes de la cour royale d’Abomey, Sika crée des tentures aux motifs symboliques de courage et de dignité béninoise.',
-    photoUrl: '/assets/protagonists/sika-dossou.jpg',
+    photoUrl: '/assets/images/sika_tisserande_1792933605542.jpg',
     documentaryId: 'finagnon-qosqorico',
     universeTag: 'Benin',
     quote: '« Chaque fil tendu sur le métier est une prière pour que la mémoire de nos reines ne s’efface jamais. »',
     tree: {
       passeurs: [
         {
-          id: 'p-mama-adjovi',
-          name: 'Maman Adjovi Dossou',
-          role: 'Doyenne tisserande',
+          id: 'p-mama-ayaba',
+          name: 'Maman Ayaba Houénou',
+          role: 'Doyenne herboriste et teinturière',
           country: 'Bénin',
-          photo: '/assets/protagonists/adjovi-blandine.jpg'
+          photo: '/assets/images/ayaba_nectar_1792933764727.jpg'
         }
       ],
       heritiers: [
         {
-          id: 'h-senan-agossa',
-          name: 'Sènan Agossa',
-          role: 'Apprentie dessinatrice',
+          id: 'h-senami-houndete',
+          name: 'Sènami Houndété',
+          role: 'Architecte et dessinatrice textile',
           country: 'Bénin',
-          photo: '/assets/protagonists/senan-agossa.jpg'
+          photo: '/assets/images/senami_architecte_1792933801804.jpg'
         }
       ],
       transmissions: [
@@ -993,7 +993,7 @@ export const PROTAGONISTS: Protagonist[] = [
           id: 'duo-sika-amara-ref',
           partnerName: 'Amara',
           partnerRole: 'Tisserande andine',
-          partnerPhoto: '/assets/protagonists/amara-tisserande.jpg',
+          partnerPhoto: '/assets/images/amara_andine_1792933642777.jpg',
           duoId: 'duo-finagnon-qosqorico-01',
           question: '« Racontez un moment où vous avez compris ce qui rend votre pays unique. »'
         }
@@ -1040,7 +1040,7 @@ export const PROTAGONISTS: Protagonist[] = [
         duration: '08:15',
         videoDurationSeconds: 495,
         summary: 'Sika raconte le matin où elle a compris que tisser à Abomey n’était pas un métier ordinaire, mais la garde d’une souveraineté spirituelle que nul conquérant n’a pu éteindre.',
-        videoCoverUrl: '/assets/protagonists/sika-dossou.jpg',
+        videoCoverUrl: '/assets/images/sika_tisserande_1792933605542.jpg',
         credits: [
           { role: 'story_owner', label: 'Propriétaire de l’histoire', name: 'Sika Dossou' },
           { role: 'director', label: 'Réalisateur', name: 'Ayaba Senou' }
@@ -1051,55 +1051,48 @@ export const PROTAGONISTS: Protagonist[] = [
   {
     id: 'koffi-tisserand',
     slug: 'koffi-tisserand',
-    name: 'Koffi',
+    name: 'Koffi Mensah',
     age: 54,
     role: 'Tisserand traditionnel',
     territory: 'Porto-Novo',
     country: 'Bénin',
     flag: '🇧🇯',
     bio: 'Tisserand à Porto-Novo, Koffi perpétue un savoir transmis de père en fils. Ses étoffes racontent les marchés et les rites de la côte.',
-    photoUrl: '/assets/protagonists/koffi-tisserand.jpg',
+    photoUrl: '/assets/images/koffi_portonovo_1792933660999.jpg',
     documentaryId: 'finagnon-qosqorico',
     universeTag: 'Finagnon',
     quote: '« Le tissage est une langue qu’on apprend sans parler. »',
     tree: {
       passeurs: [
         {
-          id: 'p-tanaka',
-          name: 'Maître Tanaka',
-          role: 'Maître ébéniste',
-          country: 'Japon',
-          photo: '/assets/protagonists/adjovi-blandine.jpg'
+          id: 'p-dossou-zounon',
+          name: 'Dossou Zounon',
+          role: 'Maître charpentier de métiers',
+          country: 'Bénin',
+          photo: '/assets/images/dossou_logistique_1792933781153.jpg'
         },
         {
-          id: 'p-sayuri',
-          name: 'Sayuri',
-          role: 'Laqueuse',
-          country: 'Japon',
-          photo: '/assets/protagonists/amara-tisserande.jpg'
-        },
-        {
-          id: 'p-goro',
-          name: 'Goro',
-          role: 'Bûcheron',
-          country: 'Japon',
-          photo: '/assets/protagonists/armel-hounkpatin.jpg'
+          id: 'p-ayaba-houenou',
+          name: 'Ayaba Houénou',
+          role: 'Herboriste des pigments',
+          country: 'Bénin',
+          photo: '/assets/images/ayaba_nectar_1792933764727.jpg'
         }
       ],
       heritiers: [
         {
-          id: 'h-yuki',
-          name: 'Yuki',
-          role: 'Apprentie tissage',
-          country: 'Japon',
-          photo: '/assets/protagonists/athlete-hurdle.jpg'
+          id: 'h-senan-agossa',
+          name: 'Sénan Agossa',
+          role: 'Apprentie dessinatrice textile',
+          country: 'Bénin',
+          photo: '/assets/images/senan_innovatrice_1792933679487.jpg'
         },
         {
-          id: 'h-awa',
-          name: 'Awa',
-          role: 'Luthière',
-          country: 'Sénégal',
-          photo: '/assets/protagonists/chef-koffi.jpg'
+          id: 'h-kpedetin',
+          name: 'Kpèdétin Houndégla',
+          role: 'Créatrice de parures',
+          country: 'Bénin',
+          photo: '/assets/images/kpedetin_joailliere_1792933718361.jpg'
         }
       ],
       transmissions: [
@@ -1122,7 +1115,7 @@ export const PROTAGONISTS: Protagonist[] = [
           id: 'duo-koffi-amara-ref',
           partnerName: 'Amara',
           partnerRole: 'Tisserande andine',
-          partnerPhoto: '/assets/protagonists/amara-tisserande.jpg',
+          partnerPhoto: '/assets/images/amara_andine_1792933642777.jpg',
           duoId: 'duo-finagnon-qosqorico-01',
           question: '« Que transmet une main qui tisse depuis toujours ? »'
         }
@@ -1176,9 +1169,9 @@ export const PROTAGONISTS: Protagonist[] = [
         duration: '08:40',
         videoDurationSeconds: 520,
         summary: 'Koffi raconte ce matin brumeux où son père l’a réveillé à 4 heures pour écouter la cadence de la navette sans allumer de lampe : comprendre que le tissu n’est pas fait par les yeux, mais par la pulsation du corps.',
-        videoCoverUrl: '/assets/protagonists/koffi-tisserand.jpg',
+        videoCoverUrl: '/assets/images/koffi_portonovo_1792933660999.jpg',
         credits: [
-          { role: 'story_owner', label: 'Propriétaire de l’histoire', name: 'Koffi' },
+          { role: 'story_owner', label: 'Propriétaire de l’histoire', name: 'Koffi Mensah' },
           { role: 'director', label: 'Réalisateur', name: 'Ayaba Senou' }
         ]
       }
@@ -1194,7 +1187,7 @@ export const PROTAGONISTS: Protagonist[] = [
     country: 'Pérou',
     flag: '🇵🇪',
     bio: 'Tisserande des hauteurs de Cusco, Amara travaille la laine et les teintes végétales. Ses tissus portent les symboles de sa communauté.',
-    photoUrl: '/assets/protagonists/amara-tisserande.jpg',
+    photoUrl: '/assets/images/amara_andine_1792933642777.jpg',
     documentaryId: 'finagnon-qosqorico',
     universeTag: 'Qosqorico',
     quote: '« Chaque fil garde la mémoire de la montagne. »',
@@ -1205,14 +1198,14 @@ export const PROTAGONISTS: Protagonist[] = [
           name: 'Mama Asunta',
           role: 'Grand-mère tisseuse',
           country: 'Pérou',
-          photo: '/assets/protagonists/coach-office.jpg'
+          photo: '/assets/images/kpedetin_joailliere_1792933718361.jpg'
         },
         {
           id: 'p-huaman',
           name: 'Don Huamán',
           role: 'Teinturier d’altitude',
           country: 'Pérou',
-          photo: '/assets/protagonists/codjo-blind.jpg'
+          photo: '/assets/images/kiki_passeur_1792933820505.jpg'
         }
       ],
       heritiers: [
@@ -1221,7 +1214,7 @@ export const PROTAGONISTS: Protagonist[] = [
           name: 'Nayra',
           role: 'Apprentie fileuse',
           country: 'Pérou',
-          photo: '/assets/protagonists/dah-zounon.jpg'
+          photo: '/assets/images/senami_architecte_1792933801804.jpg'
         }
       ],
       transmissions: [
@@ -1236,9 +1229,9 @@ export const PROTAGONISTS: Protagonist[] = [
       duos: [
         {
           id: 'duo-amara-koffi-ref',
-          partnerName: 'Koffi',
+          partnerName: 'Koffi Mensah',
           partnerRole: 'Tisserand de Porto-Novo',
-          partnerPhoto: '/assets/protagonists/koffi-tisserand.jpg',
+          partnerPhoto: '/assets/images/koffi_portonovo_1792933660999.jpg',
           duoId: 'duo-finagnon-qosqorico-01',
           question: '« Que transmet une main qui tisse depuis toujours ? »'
         }
@@ -1286,7 +1279,7 @@ export const PROTAGONISTS: Protagonist[] = [
         duration: '09:15',
         videoDurationSeconds: 555,
         summary: 'Amara raconte comment sa grand-mère lui a attaché les mains au métier à l’âge de huit ans non pour la contraindre, mais pour qu’elle sente la tension invisible entre le cœur de la femme et les crêtes de la montagne.',
-        videoCoverUrl: '/assets/protagonists/amara-tisserande.jpg',
+        videoCoverUrl: '/assets/images/amara_andine_1792933642777.jpg',
         credits: [
           { role: 'story_owner', label: 'Propriétaire de l’histoire', name: 'Amara' },
           { role: 'director', label: 'Réalisateur', name: 'Mateo Quispe Flores' }
@@ -2210,17 +2203,17 @@ export const PROTAGONISTS: Protagonist[] = [
       heritiers: [
         {
           id: 'h-cecile',
-          name: 'Cécile',
+          name: 'Cécile Kpadonou',
           role: 'Artisane maroquinière & créatrice de sacs en perles',
           country: 'Bénin',
-          photo: '/assets/protagonists/adjovi-blandine.jpg'
+          photo: '/assets/images/kpedetin_joailliere_1792933718361.jpg'
         },
         {
           id: 'h-norbert',
-          name: 'Norbert',
+          name: 'Norbert Houessou',
           role: 'Maître menuisier & sculpteur de tabourets traditionnels',
           country: 'Bénin',
-          photo: '/assets/duos/kwame-mensah.jpg'
+          photo: '/assets/images/dossou_logistique_1792933781153.jpg'
         }
       ],
       transmissions: [
@@ -2317,16 +2310,16 @@ export const PROTAGONISTS: Protagonist[] = [
           name: 'Prêtresse Na Agbessi',
           role: 'Matriarche guérisseuse de Ouidah',
           country: 'Bénin',
-          photo: '/assets/duos/mahougnon_esu_portrait_1791701582891.jpg'
+          photo: '/assets/images/ayaba_nectar_1792933764727.jpg'
         }
       ],
       heritiers: [
         {
           id: 'h-kessi',
-          name: 'Kessi',
+          name: 'Kessi Houndété',
           role: 'Apprentie herboriste et voyante',
           country: 'Bénin',
-          photo: '/assets/duos/eleonore-vance.jpg'
+          photo: '/assets/images/senan_innovatrice_1792933679487.jpg'
         }
       ],
       transmissions: [

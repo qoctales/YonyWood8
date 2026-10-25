@@ -39,34 +39,34 @@ export interface PlatformMember {
 
 export const PLATFORM_MEMBERS: PlatformMember[] = [
   // Équipe et créateurs
-  { id: 'usr-romeo', name: 'Romeo Nonvide', handle: '@romeo', role: 'Fondateur & Réalisateur', avatarUrl: '/assets/images/romeo_avatar_1792698425983.jpg', category: 'realisation' },
-  { id: 'v-armel', name: 'Armel Hounkpatin', handle: '@armel_h', role: 'Cadreur & Réalisateur documentaire', avatarUrl: '/assets/protagonists/armel-hounkpatin.jpg', category: 'realisation' },
-  { id: 'v-amara', name: 'Amara Traoré', handle: '@amara_t', role: 'Cadreuse & Documentariste', avatarUrl: '/assets/protagonists/amara-tisserande.jpg', category: 'realisation' },
+  { id: 'usr-romeo', name: 'Romeo Nonvide', handle: '@romeo', role: 'Fondateur & Réalisateur', avatarUrl: '/assets/images/romeo_storyteller_1792933587573.jpg', category: 'realisation' },
+  { id: 'v-armel', name: 'Armel Hounkpatin', handle: '@armel_h', role: 'Cadreur & Réalisateur documentaire', avatarUrl: '/assets/images/fagnon_agronome_1792933698985.jpg', category: 'realisation' },
+  { id: 'v-amara', name: 'Amara Traoré', handle: '@amara_t', role: 'Cadreuse & Documentariste', avatarUrl: '/assets/images/amara_andine_1792933642777.jpg', category: 'realisation' },
   { id: 'v-kwame', name: 'Kwame Mensah', handle: '@kwame_m', role: 'Réalisateur & Chef opérateur', avatarUrl: '/assets/duos/kwame-mensah.jpg', category: 'realisation' },
   { id: 'v-koffi', name: 'Koffi Badou', handle: '@koffi_b', role: 'Chef opérateur & Cadreur', avatarUrl: '/assets/duos/chef-koffi.jpg', category: 'realisation' },
-  { id: 'v-sarah', name: 'Sarah Lawson', handle: '@sarah_l', role: 'Cadreuse & Documentariste nomade', avatarUrl: '/assets/protagonists/eleonore-vance.jpg', category: 'realisation' },
+  { id: 'v-sarah', name: 'Sarah Lawson', handle: '@sarah_l', role: 'Cadreuse & Documentariste nomade', avatarUrl: '/assets/images/senami_architecte_1792933801804.jpg', category: 'realisation' },
   { id: 'v-helene', name: 'Hélène Saint-Amand', handle: '@helene_sa', role: 'Réalisatrice de création', avatarUrl: '/assets/protagonists/helene-saint-amand.jpg', category: 'realisation' },
 
   // Protagonistes inscrits
   { id: 'p-mahougnon', name: 'Mahougnon Zounon', handle: '@mahougnon_z', role: 'Gardien Vodun Rays', avatarUrl: '/assets/duos/mahougnon_esu_portrait_1791701582891.jpg', category: 'protagoniste' },
   { id: 'p-dieudonne', name: 'Dieudonné Dossou', handle: '@dieudonne_d', role: 'Prêtre & Théologien Autre Foi', avatarUrl: '/assets/duos/duo_pere_matthieu_1791655226601.jpg', category: 'protagoniste' },
   { id: 'p-tobi', name: 'Tobi Houndégla', handle: '@tobi_h', role: 'Pêcheur Toffinou (Ganvié)', avatarUrl: '/assets/duos/tobi-houndegla.jpg', category: 'protagoniste' },
-  { id: 'p-sika', name: 'Sika Dossou', handle: '@sika_d', role: 'Commerçante & Sage de Dantokpa', avatarUrl: '/assets/images/beninoise_femme_sika_1792164985263.jpg', category: 'protagoniste' },
-  { id: 'p-senan', name: 'Sénan Agossa', handle: '@senan_a', role: 'Entrepreneure & Innovatrice', avatarUrl: '/assets/images/beninoise_jeune_senan_1792165025309.jpg', category: 'protagoniste' },
-  { id: 'p-codjo', name: 'Codjo Dah-Zounon', handle: '@codjo_dz', role: 'Témoin de la lumière intérieure', avatarUrl: '/assets/duos/codjo-blind.jpg', category: 'protagoniste' },
+  { id: 'p-sika', name: 'Sika Dossou', handle: '@sika_d', role: 'Maître tisserande d’Abomey', avatarUrl: '/assets/images/sika_tisserande_1792933605542.jpg', category: 'protagoniste' },
+  { id: 'p-senan', name: 'Sénan Agossa', handle: '@senan_a', role: 'Entrepreneure & Innovatrice Aura Tech', avatarUrl: '/assets/images/senan_innovatrice_1792933679487.jpg', category: 'protagoniste' },
+  { id: 'p-codjo', name: 'Pascal Cossy', handle: '@pascal_c', role: 'Président de « Voir Autrement » & Prêtre Fâ', avatarUrl: '/assets/duos/codjo-blind.jpg', category: 'protagoniste' },
   { id: 'p-malik', name: 'Malik Diop', handle: '@malik_d', role: 'Orateur & Leader d’émancipation', avatarUrl: '/assets/duos/malik-diop.jpg', category: 'protagoniste' },
   { id: 'p-eleonore', name: 'Éléonore Vance', handle: '@eleonore_v', role: 'Oratrice & Souveraineté des femmes', avatarUrl: '/assets/duos/eleonore-vance.jpg', category: 'protagoniste' },
   { id: 'p-mawuna', name: 'Mawuna Houénou', handle: '@mawuna_h', role: 'Passeuse de mémoire & Clairvoyante', avatarUrl: '/assets/duos/mawuna-medium.jpg', category: 'protagoniste' },
   { id: 'p-sayri', name: 'Sayri Quispe', handle: '@sayri_q', role: 'Tisseur des Andes (Pérou)', avatarUrl: '/assets/duos/sayri-quispe.jpg', category: 'protagoniste' },
-  { id: 'p-pascal', name: 'Pascal Tisserand', handle: '@pascal_t', role: 'Maître tisseur & Bâtisseur', avatarUrl: '/assets/protagonists/koffi-tisserand.jpg', category: 'protagoniste' },
-  { id: 'p-adjovi', name: 'Adjovi Blandine', handle: '@adjovi_b', role: 'Guérisseuse aux herbes sacrées', avatarUrl: '/assets/protagonists/adjovi-blandine.jpg', category: 'protagoniste' },
+  { id: 'p-koffi-m', name: 'Koffi Mensah', handle: '@koffi_m', role: 'Maître tisseur traditionnel de Porto-Novo', avatarUrl: '/assets/images/koffi_portonovo_1792933660999.jpg', category: 'protagoniste' },
+  { id: 'p-kpedetin', name: 'Kpèdétin Houndégla', handle: '@kpedetin_h', role: 'Maître joaillière d’art', avatarUrl: '/assets/images/kpedetin_joailliere_1792933718361.jpg', category: 'protagoniste' },
 
   // Post-production
   { id: 'post-malik-sy', name: 'Malik Sy', handle: '@malik_s', role: 'Monteur & Étalonneur', avatarUrl: '/assets/duos/photographer-focus.jpg', category: 'post_production' },
   { id: 'post-christian', name: 'Christian Dossou', handle: '@christian_d', role: 'Ingénieur du son & Mixeur', avatarUrl: '/assets/duos/athlete-hurdle.jpg', category: 'post_production' },
   { id: 'post-fatou', name: 'Fatou Diallo', handle: '@fatou_d', role: 'Monteuse & Story Editor', avatarUrl: '/assets/duos/fatou-diallo.jpg', category: 'post_production' },
-  { id: 'post-dossou', name: 'Dossou Gbaguidi', handle: '@dossou_g', role: 'Sound designer & Compositeur', avatarUrl: '/assets/images/beninois_sage_dossou_1792165004493.jpg', category: 'post_production' },
-  { id: 'post-senou', name: 'Ayaba Senou', handle: '@ayaba_s', role: 'Monteuse chef & Mixeuse', avatarUrl: '/assets/protagonists/amara-tisserande.jpg', category: 'post_production' }
+  { id: 'post-dossou', name: 'Dossou Zounon', handle: '@dossou_z', role: 'Sound designer & Compositeur', avatarUrl: '/assets/images/dossou_logistique_1792933781153.jpg', category: 'post_production' },
+  { id: 'post-senou', name: 'Ayaba Houénou', handle: '@ayaba_h', role: 'Monteuse chef & Mixeuse', avatarUrl: '/assets/images/ayaba_nectar_1792933764727.jpg', category: 'post_production' }
 ];
 
 export const getSeriesParts = (choice: StudioPillarItem | null): { 

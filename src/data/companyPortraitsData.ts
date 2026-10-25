@@ -25,27 +25,15 @@ export interface CompanyEntity {
   initials?: string;
 }
 
-const SAFE_AVATARS = [
-  '/assets/duos/coach-office.jpg',
-  '/assets/protagonists/adjovi-blandine.jpg',
-  '/assets/protagonists/chef-koffi.jpg',
-  '/assets/protagonists/kwame-mensah.jpg',
-  '/assets/protagonists/athlete-hurdle.jpg',
-  '/assets/protagonists/amara-tisserande.jpg',
-  '/assets/protagonists/armel-hounkpatin.jpg',
-  '/assets/protagonists/codjo-blind.jpg',
-  '/assets/protagonists/dah-zounon.jpg',
-  '/assets/protagonists/fatou-diallo.jpg',
-  '/assets/protagonists/helene-saint-amand.jpg',
-  '/assets/protagonists/koffi-tisserand.jpg',
-  '/assets/protagonists/malik-diop.jpg',
-  '/assets/protagonists/mawuna-medium.jpg',
-  '/assets/protagonists/photographer-focus.jpg',
-  '/assets/protagonists/sika-dossou.jpg',
-  '/assets/protagonists/tobi-ganvie.jpg',
-  '/assets/protagonists/eleonore-vance.jpg',
-  '/assets/protagonists/sayri-quispe.jpg',
-  '/assets/protagonists/senan-agossa.jpg'
+const LUMIERE_ILLUSTRATED_AVATARS = [
+  '/assets/images/senan_innovatrice_1792933679487.jpg',  // F (Tech, Innovation & Vision)
+  '/assets/images/fagnon_agronome_1792933698985.jpg',    // H (Terroir, Agriculture & Écologie)
+  '/assets/images/kpedetin_joailliere_1792933718361.jpg',// F (Luxe, Orfèvrerie & Savoir-Faire)
+  '/assets/images/bio_solaire_1792933744556.jpg',        // H (Énergies renouvelables & Systèmes)
+  '/assets/images/ayaba_nectar_1792933764727.jpg',       // F (Botanique, Nectars & Santé)
+  '/assets/images/dossou_logistique_1792933781153.jpg',  // H (Mobilité, Logistique & Fret vert)
+  '/assets/images/senami_architecte_1792933801804.jpg',  // F (Architecture bioclimatique & Espaces)
+  '/assets/images/kiki_passeur_1792933820505.jpg',       // H (Passeur de mémoire, Lacs & Patrimoine)
 ];
 
 const SAMPLE_VIDEOS = [
@@ -57,39 +45,39 @@ const SAMPLE_VIDEOS = [
 ];
 
 const STAKEHOLDER_TEMPLATES: { name: string; roleCategory: CompanyStakeholder['roleCategory']; roleDetail: string; question: string }[] = [
-  { name: 'Pascal Houndé', roleCategory: 'Fondateur', roleDetail: 'Directeur Général & Fondateur', question: 'Quelle mémoire choisissons-nous de léguer à travers notre entreprise ?' },
-  { name: 'Amina Traoré', roleCategory: 'Collaborateur', roleDetail: 'Directrice des Ressources Humaines', question: 'Comment cultiver la fierté et le savoir-faire de nos équipes chaque jour ?' },
-  { name: 'Koffi Mensah', roleCategory: 'Fournisseur', roleDetail: 'Fournisseur principal matières premières', question: 'Comment garantir l’exigence éthique et la durabilité de la filière locale ?' },
-  { name: 'Marc Houndégla', roleCategory: 'Client', roleDetail: 'Client fidèle & Ambassadeur', question: 'Pourquoi la sincérité d’une marque change-t-elle l’attachement de sa communauté ?' },
-  { name: 'Ousmane Sow', roleCategory: 'Partenaire', roleDetail: 'Partenaire stratégique territorial', question: 'Comment mutualiser nos forces pour faire rayonner notre savoir-faire au monde ?' },
-  { name: 'Félicité Zannou', roleCategory: 'Collaborateur', roleDetail: 'Responsable R&D et qualité', question: 'En quoi l’innovation respectueuse des traditions crée-t-elle une valeur pérenne ?' },
-  { name: 'Benoît Sossou', roleCategory: 'Collaborateur', roleDetail: 'Directeur des opérations', question: 'Comment conjuguer performance économique et dignité humaine sur le terrain ?' },
-  { name: 'Diane Dossou', roleCategory: 'Partenaire', roleDetail: 'Coordinatrice logistique & réseaux', question: 'Quel pont construire entre nos ateliers et les grands marchés régionaux ?' },
-  { name: 'Sébastien Kiki', roleCategory: 'Collaborateur', roleDetail: 'Responsable engagement sociétal', question: 'Quel impact réel mesurons-nous auprès des familles de nos collaborateurs ?' },
-  { name: 'Chantal Houessou', roleCategory: 'Collaborateur', roleDetail: 'Cheffe de projet partenariats', question: 'Comment protéger l’intégrité du projet dans un environnement mondialisé ?' },
-  { name: 'Jean-Luc Agbo', roleCategory: 'Client', roleDetail: 'Partenaire distributeur agréé', question: 'Pourquoi choisir des entreprises enracinées plutôt que des marques sans âme ?' },
-  { name: 'Rosine Agossou', roleCategory: 'Collaborateur', roleDetail: 'Maître artisane & formatrice', question: 'Comment transmettre le geste juste aux jeunes générations qui débutent ?' },
-  { name: 'Gilles Alapini', roleCategory: 'Partenaire', roleDetail: 'Conseiller scientifique & culturel', question: 'Comment fonder le développement futur sur la sagesse de notre passé ?' },
-  { name: 'Yvette Ahounou', roleCategory: 'Bénévole', roleDetail: 'Médiatrice solidaire d’ateliers', question: 'Quel épanouissement apporte l’entraide au sein d’un projet d’entreprise ?' },
-  { name: 'Thierry Medegan', roleCategory: 'Fournisseur', roleDetail: 'Facteur d’équipements & ingénierie', question: 'Comment adapter les outils de pointe aux réalités concrètes de notre région ?' },
-  { name: 'Awa Cissé', roleCategory: 'Bienfaiteur', roleDetail: 'Mécène transmission & jeunesse', question: 'Pourquoi soutenir les entreprises qui investissent dans le capital humain ?' },
-  // Volet 2 (16 intervenants supplémentaires pour atteindre 32 regards par organisation)
-  { name: 'Kader Zoumarou', roleCategory: 'Collaborateur', roleDetail: 'Ingénieur systèmes & infrastructure', question: 'Comment adapter les technologies de pointe à nos terroirs ?' },
-  { name: 'Safiétou Diallo', roleCategory: 'Client', roleDetail: 'Partenaire export & distribution', question: 'Comment valoriser les productions d’Afrique sur les marchés mondiaux ?' },
-  { name: 'Gérard Agondokpé', roleCategory: 'Partenaire', roleDetail: 'Consultant en agroécologie', question: 'Pourquoi la régénération des sols est-elle la richesse de demain ?' },
-  { name: 'Nathalie Gbaguidi', roleCategory: 'Collaborateur', roleDetail: 'Responsable design & identité visuelle', question: 'Comment traduire la poésie de notre culture dans un graphisme moderne ?' },
-  { name: 'Éric Hounkpati', roleCategory: 'Fournisseur', roleDetail: 'Fournisseur de packaging recyclable', question: 'Comment concevoir des emballages durables en fibres végétales ?' },
-  { name: 'Clarisse Tossou', roleCategory: 'Collaborateur', roleDetail: 'Responsable relation communauté', question: 'Quel rôle joue la proximité humaine dans la fidélité de nos usagers ?' },
-  { name: 'Innocent Boko', roleCategory: 'Bénévole', roleDetail: 'Animateur d’ateliers d’insertion', question: 'Comment ouvrir des perspectives aux jeunes sans qualification ?' },
-  { name: 'Mariam Kouyaté', roleCategory: 'Bienfaiteur', roleDetail: 'Protectrice des métiers d’art', question: 'Pourquoi sauver les savoir-faire ancestraux du rouleau compresseur industriel ?' },
-  { name: 'Arsène Degila', roleCategory: 'Collaborateur', roleDetail: 'Contrôleur qualité & conformité', question: 'Comment hisser nos standards au plus haut niveau d’excellence ?' },
-  { name: 'Béatrice Houndjo', roleCategory: 'Partenaire', roleDetail: 'Directrice coopérative maraîchère', question: 'Comment bâtir une solidarité économique entre ville et campagne ?' },
-  { name: 'Stanislas Zinsou', roleCategory: 'Client', roleDetail: 'Acheteur institutionnel responsable', question: 'Pourquoi l’achat public éthique doit privilégier les champions locaux ?' },
-  { name: 'Adélaïde Kpadonou', roleCategory: 'Collaborateur', roleDetail: 'Juriste d’entreprise & droits coutumiers', question: 'Comment protéger nos marques et brevets traditionnels au niveau international ?' },
-  { name: 'Romuald Adjanohoun', roleCategory: 'Fournisseur', roleDetail: 'Producteur d’huiles végétales pures', question: 'Comment garantir l’authenticité des extractions végétales ?' },
-  { name: 'Gisèle Ahouandjinou', roleCategory: 'Collaborateur', roleDetail: 'Responsable logistique urbaine', question: 'Comment optimiser le dernier kilomètre dans le respect de l’environnement ?' },
-  { name: 'Faustin Dossou-Yovo', roleCategory: 'Partenaire', roleDetail: 'Sociologue & historien du travail', question: 'Quelle est la place du sens et de la dignité dans le travail africain ?' },
-  { name: 'Pelagie Houngbédji', roleCategory: 'Collaborateur', roleDetail: 'Directrice de la communication', question: 'Comment raconter les histoires vraies de nos entreprises avec fierté ?' }
+  { name: 'Sénan Agossa', roleCategory: 'Fondateur', roleDetail: 'Directrice Générale & Fondatrice', question: 'Quelle mémoire choisissons-nous de léguer à travers notre entreprise ?' },
+  { name: 'Fagnon Bio', roleCategory: 'Collaborateur', roleDetail: 'Directeur des Opérations de Terroir', question: 'Comment conjuguer performance économique et dignité humaine sur le terrain ?' },
+  { name: 'Kpèdétin Houndégla', roleCategory: 'Fournisseur', roleDetail: 'Directrice Création & Matières Nobles', question: 'Comment garantir l’exigence éthique et la durabilité de la filière locale ?' },
+  { name: 'Bio Houndégla', roleCategory: 'Collaborateur', roleDetail: 'Ingénieur Énergies & Infrastructures', question: 'Comment adapter les technologies de pointe à nos terroirs ?' },
+  { name: 'Ayaba Houénou', roleCategory: 'Partenaire', roleDetail: 'Maître Botaniste & Formulation Pure', question: 'Pourquoi la régénération de nos plantes est-elle la vraie richesse de demain ?' },
+  { name: 'Dossou Zounon', roleCategory: 'Collaborateur', roleDetail: 'Directeur Logistique & Supply Chain', question: 'Comment optimiser le dernier kilomètre dans le respect de l’environnement ?' },
+  { name: 'Sènami Houndété', roleCategory: 'Collaborateur', roleDetail: 'Architecte Bioclimatique & Espaces', question: 'En quoi l’innovation respectueuse des traditions crée-t-elle une valeur pérenne ?' },
+  { name: 'Kiki Alapini', roleCategory: 'Partenaire', roleDetail: 'Conseiller Mémoire & Patrimoine Vivant', question: 'Comment fonder le développement futur sur la sagesse de notre passé ?' },
+  { name: 'Félicité Zannou', roleCategory: 'Collaborateur', roleDetail: 'Responsable R&D et Qualité', question: 'Comment hisser nos standards au plus haut niveau d’excellence continentale ?' },
+  { name: 'Benoît Sossou', roleCategory: 'Collaborateur', roleDetail: 'Directeur de Production', question: 'Comment former et élever chaque compagnon d’atelier avec rigueur et bienveillance ?' },
+  { name: 'Diane Degila', roleCategory: 'Partenaire', roleDetail: 'Coordinatrice Réseaux & Alliances', question: 'Quel pont construire entre nos ateliers et les grands marchés régionaux ?' },
+  { name: 'Romuald Adjanohoun', roleCategory: 'Fournisseur', roleDetail: 'Producteur d’Extractions Végétales', question: 'Comment garantir l’authenticité des extractions végétales pures ?' },
+  { name: 'Chantal Houessou', roleCategory: 'Collaborateur', roleDetail: 'Cheffe de Projets Partenariats', question: 'Comment protéger l’intégrité du projet dans un environnement mondialisé ?' },
+  { name: 'Gérard Agondokpé', roleCategory: 'Partenaire', roleDetail: 'Consultant en Agro-écologie', question: 'Pourquoi préserver la fertilité naturelle de notre terre pour les siècles à venir ?' },
+  { name: 'Rosine Agossou', roleCategory: 'Collaborateur', roleDetail: 'Maître Artisane & Formatrice', question: 'Comment transmettre le geste juste aux jeunes générations qui débutent ?' },
+  { name: 'Stanislas Zinsou', roleCategory: 'Client', roleDetail: 'Acheteur Institutionnel Responsable', question: 'Pourquoi choisir des entreprises enracinées plutôt que des marques sans âme ?' },
+  // Volet 2 (16 intervenants supplémentaires rigoureusement alternés femme / homme)
+  { name: 'Nathalie Gbaguidi', roleCategory: 'Collaborateur', roleDetail: 'Directrice Design & Identité Visuelle', question: 'Comment traduire la poésie de notre culture dans un graphisme moderne ?' },
+  { name: 'Arsène Degila', roleCategory: 'Collaborateur', roleDetail: 'Contrôleur Qualité & Conformité', question: 'Quel engagement éthique garantit la confiance absolue de nos usagers ?' },
+  { name: 'Clarisse Tossou', roleCategory: 'Collaborateur', roleDetail: 'Responsable Relations Communauté', question: 'Quel rôle joue la proximité humaine dans la fidélité de nos usagers ?' },
+  { name: 'Innocent Boko', roleCategory: 'Bénévole', roleDetail: 'Animateur d’Ateliers d’Insertion', question: 'Comment ouvrir des perspectives lumineuses aux jeunes sans qualification ?' },
+  { name: 'Béatrice Houndjo', roleCategory: 'Partenaire', roleDetail: 'Directrice Coopérative Solidaire', question: 'Comment bâtir une solidarité économique pérenne entre ville et campagne ?' },
+  { name: 'Thierry Medegan', roleCategory: 'Fournisseur', roleDetail: 'Facteur d’Équipements & Ingénierie', question: 'Comment adapter les outils de pointe aux réalités concrètes de notre région ?' },
+  { name: 'Adélaïde Kpadonou', roleCategory: 'Collaborateur', roleDetail: 'Juriste d’Entreprise & Droits Coutumiers', question: 'Comment protéger nos marques et savoirs traditionnels au niveau international ?' },
+  { name: 'Jean-Luc Agbo', roleCategory: 'Client', roleDetail: 'Partenaire Distributeur Agréé', question: 'Pourquoi l’exigence locale crée-t-elle la fierté de toute une communauté ?' },
+  { name: 'Gisèle Ahouandjinou', roleCategory: 'Collaborateur', roleDetail: 'Responsable Mobilité Propre', question: 'Comment conjuguer rapidité de service et respect du vivant ?' },
+  { name: 'Faustin Dossou-Yovo', roleCategory: 'Partenaire', roleDetail: 'Sociologue & Historien du Travail', question: 'Quelle est la place du sens et de la dignité dans le travail africain ?' },
+  { name: 'Pelagie Houngbédji', roleCategory: 'Collaborateur', roleDetail: 'Directrice de la Communication', question: 'Comment raconter les histoires vraies de nos entreprises avec fierté ?' },
+  { name: 'Sèna Gbaguidi', roleCategory: 'Collaborateur', roleDetail: 'Responsable Impact Environnemental', question: 'Comment mesurer et amplifier la régénération de nos écosystèmes ?' },
+  { name: 'Yvette Ahounou', roleCategory: 'Bénévole', roleDetail: 'Médiatrice Solidaire d’Ateliers', question: 'Quel épanouissement apporte l’entraide au sein d’un projet d’entreprise ?' },
+  { name: 'Kader Zoumarou', roleCategory: 'Collaborateur', roleDetail: 'Ingénieur Systèmes & Cloud Souverain', question: 'Comment garantir la souveraineté numérique de nos données collectives ?' },
+  { name: 'Blandine Zinsou', roleCategory: 'Bienfaiteur', roleDetail: 'Protectrice des Métiers d’Art', question: 'Pourquoi sauver les savoir-faire ancestraux du rouleau compresseur industriel ?' },
+  { name: 'Éric Hounkpati', roleCategory: 'Fournisseur', roleDetail: 'Fournisseur d’Éco-Packaging Végétal', question: 'Comment concevoir des emballages durables en fibres végétales locales ?' }
 ];
 
 function generateStakeholders(companyPrefix: string, offset: number): CompanyStakeholder[] {
@@ -98,7 +86,7 @@ function generateStakeholders(companyPrefix: string, offset: number): CompanySta
     name: tmpl.name,
     roleCategory: tmpl.roleCategory,
     roleDetail: tmpl.roleDetail,
-    photoUrl: SAFE_AVATARS[(idx + offset) % SAFE_AVATARS.length],
+    photoUrl: LUMIERE_ILLUSTRATED_AVATARS[idx % LUMIERE_ILLUSTRATED_AVATARS.length],
     videoUrl: SAMPLE_VIDEOS[(idx + offset) % SAMPLE_VIDEOS.length],
     question: tmpl.question
   }));
