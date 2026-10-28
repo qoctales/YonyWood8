@@ -19,6 +19,8 @@ import { STUDIO_PILLARS, StudioPillar, StudioPillarItem } from '../data/studioPi
 import { DOCUMENTARIES } from '../data/mockData';
 import { TvPlayerIcon } from './YonywoodBrandIcons';
 import { celestialAudio } from '../utils/celestialAudio';
+import { useAuth } from '../services/authContext';
+import { saveUserVideoSubmission } from '../utils/userVideoService';
 
 export interface TaggedCollaborator {
   id: string;
@@ -342,6 +344,8 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
   initialFinalChoiceId,
   onNavigate
 }) => {
+  const { currentUser } = useAuth();
+
   // 1. Niveau 0 : 4 Portes (Miroir, Casting, Lumière, Portrait)
   const [selectedPillarIndex, setSelectedPillarIndex] = useState(0);
   const [activePillar, setActivePillar] = useState<StudioPillar | null>(null);
@@ -621,6 +625,29 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
       showToast('Veuillez choisir la partie de la série.');
       return;
     }
+
+    const titleClean = selectedFileName.replace(/\.[^/.]+$/, "") || selectedFinalChoice?.title || 'Récit YonyWood';
+    const authorName = currentUser?.name || 'Créateur YonyWood';
+    const authorAvatar = currentUser?.avatarUrl || '/assets/images/romeo_avatar_1792698425983.jpg';
+
+    // Enregistrement dans le service des vidéos utilisateur avec statut En examen éditorial
+    saveUserVideoSubmission({
+      userId: currentUser?.id || 'usr-guest',
+      userType: currentUser?.accountType || 'INDIVIDUAL',
+      authorName,
+      authorAvatarUrl: authorAvatar,
+      title: titleClean,
+      synopsis: `Soumission pour ${selectedFinalChoice?.title || 'le Studio'} (${selectedPartId === 'part-a' ? 'Volet 1' : 'Volet 2'}). En attente de validation éditoriale.`,
+      universe: activePillar?.id || 'studio',
+      videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+      thumbnailUrl: selectedFinalChoice?.posterUrl || '/assets/images/selfie_video_story.jpg',
+      partId: selectedPartId,
+      credits: {
+        realisation: creditsRealisation.map(c => c.name),
+        protagonistes: creditsProtagonistes.map(c => c.name),
+        postProduction: creditsPostProd.map(c => c.name)
+      }
+    });
 
     // Remise à zéro et notification
     setSelectedFileName(null);

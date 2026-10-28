@@ -1,0 +1,6 @@
+{
+  "summary":  "Plan d'implémentation pour la refonte ciblée de YonyWood : séparation stricte des comptes Individu et Organisation, intégration de la gestion des parts dans les paramètres, allègement du profil d'identité, retrait du bouton Lignée, mise à jour du Header avec 'Présentation', 'Connexion' et 'Inscription', et distinction fluide entre mode vitrine public et mode membre connecté.",
+  "updatedAt":  "2026-10-28T20:27:14.715170673Z",
+  "requestFeedback":  true,
+  "userFacing":  true
+}

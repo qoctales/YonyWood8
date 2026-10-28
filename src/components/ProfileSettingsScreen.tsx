@@ -53,8 +53,7 @@ import {
   LogIn,
   Star,
   Award,
-  ReceiptText,
-  GitBranch
+  ReceiptText
 } from 'lucide-react';
 import { useAuth } from '../services/authContext';
 import { AuthModal } from './AuthModal';
@@ -1977,40 +1976,52 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
             </button>
           )}
 
-          {/* 1. Espace Messagerie */}
+          {/* 1. Icône Paramètres (Back-Office personnel / organisationnel) : uniquement si propriétaire */}
+          {isOwner && (
             <button
-              onClick={() => {
-                if (isOwner) {
-                  onNavigate({ type: 'messaging' });
-                } else {
-                  handleContactProtagonist();
-                }
-              }}
-              id="btn-profile-messaging"
+              onClick={() => onNavigate({ type: 'settings', returnTo: 'profile' })}
+              id="btn-profile-settings"
               className="w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-xl bg-white hover:bg-[#A2482B] border border-stone-200 hover:border-[#A2482B] text-stone-700 hover:text-white flex items-center justify-center transition-all shadow-xs cursor-pointer active:scale-95 shrink-0"
-              title={isOwner ? "Espace messagerie" : `Envoyer un message à ${profileDisplayName || 'Roméo'}`}
+              title="Paramètres & Gestion de compte (Back-Office)"
             >
-              <MessageSquare className="w-4 h-4 stroke-[1.8] transition-colors" />
+              <Sliders className="w-4 h-4 transition-colors" />
             </button>
+          )}
 
-            {/* 3. Partage de la page portrait : après la messagerie */}
-            <button
-              onClick={handleShareProfile}
-              id="btn-profile-share-page"
-              className="w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-xl bg-white hover:bg-[#A2482B] border border-stone-200 hover:border-[#A2482B] text-stone-700 hover:text-white flex items-center justify-center transition-all shadow-xs cursor-pointer active:scale-95 shrink-0"
-              title={`Partager la page de ${profileDisplayName || 'Roméo'}`}
-            >
-              <ShareIcon className="w-4 h-4 transition-colors" />
-            </button>
+          {/* 2. Espace Messagerie */}
+          <button
+            onClick={() => {
+              if (isOwner) {
+                onNavigate({ type: 'messaging' });
+              } else {
+                handleContactProtagonist();
+              }
+            }}
+            id="btn-profile-messaging"
+            className="w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-xl bg-white hover:bg-[#A2482B] border border-stone-200 hover:border-[#A2482B] text-stone-700 hover:text-white flex items-center justify-center transition-all shadow-xs cursor-pointer active:scale-95 shrink-0"
+            title={isOwner ? "Espace messagerie" : `Envoyer un message à ${profileDisplayName || 'Roméo'}`}
+          >
+            <MessageSquare className="w-4 h-4 stroke-[1.8] transition-colors" />
+          </button>
 
-            {/* Petite diapositive carrée épurée avec la photo de la personne (sans icône) */}
-            <div 
-              onClick={() => {
-                if (isOwner) setIsEditingProfile(true);
-              }}
-              className={`w-9 h-9 sm:w-10 sm:h-10 p-0.5 sm:p-1 bg-white border border-stone-200/90 rounded-sm sm:rounded shadow-xs shrink-0 flex items-center justify-center ${isOwner ? 'cursor-pointer hover:scale-105 active:scale-95' : ''} transition-transform`}
-              title={isOwner ? "Modifier mon profil" : `Profil de ${profileDisplayName || 'Roméo'}`}
-            >
+          {/* 3. Partage de la page portrait */}
+          <button
+            onClick={handleShareProfile}
+            id="btn-profile-share-page"
+            className="w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-xl bg-white hover:bg-[#A2482B] border border-stone-200 hover:border-[#A2482B] text-stone-700 hover:text-white flex items-center justify-center transition-all shadow-xs cursor-pointer active:scale-95 shrink-0"
+            title={`Partager la page de ${profileDisplayName || 'Roméo'}`}
+          >
+            <ShareIcon className="w-4 h-4 transition-colors" />
+          </button>
+
+          {/* Petite diapositive carrée épurée avec la photo de la personne (clic propriétaire = paramètres) */}
+          <div 
+            onClick={() => {
+              if (isOwner) onNavigate({ type: 'settings', returnTo: 'profile' });
+            }}
+            className={`w-9 h-9 sm:w-10 sm:h-10 p-0.5 sm:p-1 bg-white border border-stone-200/90 rounded-sm sm:rounded shadow-xs shrink-0 flex items-center justify-center ${isOwner ? 'cursor-pointer hover:scale-105 active:scale-95' : ''} transition-transform`}
+            title={isOwner ? "Accéder à mes paramètres" : `Profil de ${profileDisplayName || 'Roméo'}`}
+          >
               <div className="w-full h-full overflow-hidden bg-stone-100 rounded-[1px] aspect-square">
                 <img
                   src={userPhoto || '/assets/images/romeo_avatar_1792698425983.jpg'}

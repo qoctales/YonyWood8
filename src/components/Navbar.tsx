@@ -13,7 +13,7 @@ interface NavbarProps {
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ currentScreen, onNavigate, onOpenAuth }) => {
-  const { user, logout } = useAuth();
+  const { currentUser, logout } = useAuth();
 
   // Ne pas afficher pendant le lecteur vidéo plein écran
   if (currentScreen.type === 'video_player') {
@@ -38,30 +38,62 @@ export const Navbar: React.FC<NavbarProps> = ({ currentScreen, onNavigate, onOpe
           />
         </div>
 
-        {/* Droite : Bouton d'action phare Participer */}
+        {/* Droite : Bouton Présentation + Connexion / Inscription ou Profil connecté */}
         <div className="flex items-center gap-1.5 sm:gap-2.5 z-20 shrink-0 ml-auto">
           
-          {/* Bouton Co-construire (affiché sur toutes les pages, masqué uniquement sur la page Co-construire) */}
+          {/* Bouton Présentation (ex Co-construire, présente le projet global) */}
           {currentScreen.type !== 'participate' && (
             <button
               onClick={() => onNavigate({ type: 'participate' })}
-              id="nav-participate-btn"
-              className="px-3 sm:px-4.5 py-1.5 sm:py-2 rounded-full font-bold text-[11px] sm:text-xs md:text-sm shadow-xs transition-all cursor-pointer flex items-center justify-center whitespace-nowrap active:scale-95 bg-[#A2482B] hover:bg-[#8A3B22] text-white hover:scale-102 hover:shadow-sm"
-              title="Co-construire"
+              id="nav-presentation-btn"
+              className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full font-bold text-[11px] sm:text-xs md:text-sm shadow-xs transition-all cursor-pointer flex items-center justify-center whitespace-nowrap active:scale-95 bg-[#A2482B] hover:bg-[#8A3B22] text-white hover:scale-102 hover:shadow-sm"
+              title="Découvrir la présentation du projet"
             >
-              <span>Co-construire</span>
+              <span>Présentation</span>
             </button>
           )}
 
-          {user && (
+          {/* Mode Visiteur non connecté : Inscription et Connexion */}
+          {!currentUser ? (
+            <div className="flex items-center gap-1 sm:gap-1.5">
+              <button
+                type="button"
+                onClick={() => onOpenAuth?.('login')}
+                className="px-2.5 sm:px-3 py-1.5 rounded-full font-semibold text-[11px] sm:text-xs text-stone-700 hover:text-stone-900 hover:bg-stone-100 transition-colors cursor-pointer"
+                title="Se connecter"
+              >
+                Connexion
+              </button>
+              <button
+                type="button"
+                onClick={() => onOpenAuth?.('register')}
+                className="px-3 sm:px-3.5 py-1.5 rounded-full font-bold text-[11px] sm:text-xs bg-stone-900 hover:bg-stone-800 text-white shadow-xs transition-all cursor-pointer hover:scale-102 active:scale-95"
+                title="Créer un compte Individu ou Organisation"
+              >
+                Inscription
+              </button>
+            </div>
+          ) : (
+            /* Mode Membre connecté */
             <div className="flex items-center gap-1 sm:gap-2">
               <button
                 onClick={() => onNavigate({ type: 'profile' })}
-                className="px-2 sm:px-3 py-1.5 rounded-full border border-stone-200 hover:border-stone-300 bg-stone-50 hover:bg-stone-100 text-stone-800 text-[11px] sm:text-xs font-semibold flex items-center gap-1 transition-colors cursor-pointer"
-                title="Accéder à mon profil"
+                className="px-2 sm:px-3 py-1.5 rounded-full border border-stone-200 hover:border-stone-300 bg-stone-50 hover:bg-stone-100 text-stone-800 text-[11px] sm:text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
+                title="Accéder à mon portrait"
               >
-                <User className="w-3.5 h-3.5 text-[#A2482B]" />
-                <span className="max-w-[60px] sm:max-w-[100px] truncate">{user.firstName || user.name}</span>
+                {currentUser.avatarUrl ? (
+                  <img
+                    src={currentUser.avatarUrl}
+                    alt={currentUser.name}
+                    className="w-4 h-4 rounded-full object-cover shrink-0 border border-stone-200"
+                  />
+                ) : (
+                  <User className="w-3.5 h-3.5 text-[#A2482B]" />
+                )}
+                <span className="max-w-[70px] sm:max-w-[120px] truncate">{currentUser.name}</span>
+                {currentUser.accountType === 'ORGANIZATION' && (
+                  <span className="text-[10px] text-amber-700 hidden sm:inline">(Org)</span>
+                )}
               </button>
               <button
                 onClick={logout}

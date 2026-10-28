@@ -6,21 +6,39 @@ import {
   Lock, 
   LogOut, 
   ShieldCheck,
-  KeyRound,
-  Play,
-  Pause,
-  Bell,
   Coins,
   Clapperboard,
   Tv,
   MessageSquare,
   Users,
-  BellRing
+  BellRing,
+  User,
+  Building2,
+  Video,
+  Plus,
+  Trash2,
+  Sparkles,
+  Clock,
+  CheckCircle2,
+  AlertCircle,
+  Sliders,
+  Globe,
+  Save,
+  CheckCheck,
+  ExternalLink,
+  TrendingUp,
+  Wallet,
+  ArrowUpRight
 } from 'lucide-react';
-import { ViewScreen } from '../types';
+import { ViewScreen, AccountType, OrgCategoryType } from '../types';
 import { DOCUMENTARIES } from '../data/mockData';
 import { useAuth } from '../services/authContext';
 import { ProfileSoloIcon, TvPlayerIcon } from './YonywoodBrandIcons';
+import { 
+  getUserVideoSubmissions, 
+  deleteUserVideoSubmission, 
+  UserVideoSubmission 
+} from '../utils/userVideoService';
 
 interface SettingsScreenProps {
   onNavigate: (screen: ViewScreen) => void;
@@ -31,7 +49,7 @@ interface SettingsScreenProps {
   onUpdateLanguage: (lang: string) => void;
 }
 
-type SettingsTab = 'series' | 'messages' | 'lang_sec';
+type SettingsTab = 'identity' | 'videos' | 'shares' | 'series' | 'messages' | 'security';
 
 export const SettingsScreen: React.FC<SettingsScreenProps> = ({
   onNavigate,
@@ -41,19 +59,38 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = ({
   language,
   onUpdateLanguage
 }) => {
-  const { logout } = useAuth();
+  const { currentUser, updateProfile, logout } = useAuth();
 
-  // 3 onglets thématiques : "Choix des séries", "Messages & Alertes", et "Compte & Sécurité"
-  const [activeTab, setActiveTab] = useState<SettingsTab>('series');
+  // Onglet actif : Identité & Compte par défaut
+  const [activeTab, setActiveTab] = useState<SettingsTab>('identity');
+
+  // État du formulaire Identité épuré (pas de formulaire lourd)
+  const isOrg = currentUser?.accountType === 'ORGANIZATION';
+  const [name, setName] = useState<string>(currentUser?.name || 'Romeo Nonvide');
+  const [handle, setHandle] = useState<string>(currentUser?.handle || '@romeo');
+  const [city, setCity] = useState<string>(currentUser?.city || currentUser?.territory || 'Cotonou');
+  const [country, setCountry] = useState<string>(currentUser?.country || 'Bénin');
+  const [catchphrase, setCatchphrase] = useState<string>(
+    currentUser?.catchphrase || currentUser?.bio || 'Réalisateur & Fondateur YonyWood à Cotonou.'
+  );
+  const [avatarUrl, setAvatarUrl] = useState<string>(currentUser?.avatarUrl || '/assets/images/romeo_avatar_1792698425983.jpg');
+
+  // Champs organisationnels légers si compte organisation
+  const [legalName, setLegalName] = useState<string>(currentUser?.orgDetails?.legalName || currentUser?.name || '');
+  const [sector, setSector] = useState<string>(currentUser?.orgDetails?.sector || 'Artisanat, Culture & Énergie');
+  const [legalRepresentative, setLegalRepresentative] = useState<string>(currentUser?.orgDetails?.legalRepresentative || '');
+
+  // État des vidéos de l'utilisateur
+  const [userVideos, setUserVideos] = useState<UserVideoSubmission[]>(() => {
+    return getUserVideoSubmissions(currentUser?.id || 'usr-admin-romeo');
+  });
 
   // État du carrousel des séries
   const [activeSeriesIndex, setActiveSeriesIndex] = useState(0);
-
-  // État du lecteur vidéo sur l'affiche
   const [isPlaying, setIsPlaying] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // Préférences de messagerie & notifications : ouvert à tous les utilisateurs de Yonywood par défaut
+  // Préférences de messagerie & notifications
   const [messagePermission, setMessagePermission] = useState<'none' | 'invitation' | 'all'>(() => {
     return (localStorage.getItem('yonywood_msg_permission') as 'none' | 'invitation' | 'all') || 'all';
   });
@@ -66,808 +103,716 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = ({
     return saved !== null ? saved === 'true' : true;
   });
 
-  // Alertes & Préférences de coproduction
-  const [alertFunding, setAlertFunding] = useState(true);
-  const [alertNewEpisodes, setAlertNewEpisodes] = useState(true);
-  const [alertDuocumentaires, setAlertDuocumentaires] = useState(true);
-  const [autoPlayOnSwipe, setAutoPlayOnSwipe] = useState<boolean>(() => {
-    const saved = localStorage.getItem('yonywood_autoplay');
-    return saved !== null ? saved === 'true' : true;
-  });
-
-  // Configuration du compte
-  const [userEmail, setUserEmail] = useState('finagnonakimnonvide@gmail.com');
-  const [currentPassword, setCurrentPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [feedbackToast, setFeedbackToast] = useState<string | null>(null);
-
-  // Gestion ultra-fluide du swipe (tactile mobile + souris desktop)
-  const dragStartX = useRef<number | null>(null);
-  const dragCurrentX = useRef<number | null>(null);
-  const hasDragged = useRef(false);
-
-  // 4 langues exclusives
-  const SUPPORTED_LANGUAGES = [
-    { code: 'fr', label: 'Français', flag: '🇫🇷' },
-    { code: 'en', label: 'English', flag: '🇬🇧' },
-    { code: 'es', label: 'Español', flag: '🇪🇸' },
-    { code: 'pt', label: 'Português', flag: '🇵🇹' }
-  ];
-
-  // Filtre effectif : toutes les séries sont cochées par défaut
-  const effectiveFilter = (selectedDocFilter && selectedDocFilter.length > 0)
-    ? selectedDocFilter
-    : DOCUMENTARIES.map(d => d.id);
-
-  // Réinitialiser la lecture vidéo lors du changement de série ou d'onglet
-  useEffect(() => {
-    setIsPlaying(false);
-  }, [activeSeriesIndex, activeTab]);
+  // Feedback sauvegarde
+  const [savedToast, setSavedToast] = useState<string | null>(null);
 
   const showToast = (msg: string) => {
-    setFeedbackToast(msg);
-    setTimeout(() => {
-      setFeedbackToast(null);
-    }, 2500);
+    setSavedToast(msg);
+    setTimeout(() => setSavedToast(null), 3000);
   };
 
-  const handleToggleSeries = (docId: string) => {
-    let next: string[];
-    if (effectiveFilter.includes(docId)) {
-      next = effectiveFilter.filter(id => id !== docId);
-    } else {
-      next = [...effectiveFilter, docId];
-    }
-    onUpdateDocFilter(next);
+  const reloadVideos = () => {
+    setUserVideos(getUserVideoSubmissions(currentUser?.id || 'usr-admin-romeo'));
   };
 
-  const handlePrevSeries = () => {
-    setIsPlaying(false);
-    setActiveSeriesIndex(prev => (prev > 0 ? prev - 1 : DOCUMENTARIES.length - 1));
-  };
-
-  const handleNextSeries = () => {
-    setIsPlaying(false);
-    setActiveSeriesIndex(prev => (prev < DOCUMENTARIES.length - 1 ? prev + 1 : 0));
-  };
-
-  const toggleVideoPlayback = () => {
-    if (hasDragged.current) return;
-
-    if (!videoRef.current) {
-      setIsPlaying(!isPlaying);
-      return;
-    }
-
-    if (isPlaying) {
-      videoRef.current.pause();
-      setIsPlaying(false);
-    } else {
-      videoRef.current.play().then(() => {
-        setIsPlaying(true);
-      }).catch(() => {
-        setIsPlaying(false);
-      });
+  const handleDeleteVideo = (id: string) => {
+    if (confirm('Voulez-vous supprimer définitivement cette vidéo de votre espace ?')) {
+      deleteUserVideoSubmission(id);
+      reloadVideos();
+      showToast('Vidéo supprimée.');
     }
   };
 
-  // --- Gestion du SWIPE TACTILE & POINTER (Desktop + Mobile) ---
-  const handlePointerDown = (clientX: number) => {
-    dragStartX.current = clientX;
-    dragCurrentX.current = clientX;
-    hasDragged.current = false;
-  };
-
-  const handlePointerMove = (clientX: number) => {
-    if (dragStartX.current === null) return;
-    dragCurrentX.current = clientX;
-    if (Math.abs(clientX - dragStartX.current) > 10) {
-      hasDragged.current = true;
-    }
-  };
-
-  const handlePointerUp = () => {
-    if (dragStartX.current !== null && dragCurrentX.current !== null) {
-      const diffX = dragCurrentX.current - dragStartX.current;
-      if (Math.abs(diffX) > 35) {
-        if (diffX > 0) {
-          handlePrevSeries();
-        } else {
-          handleNextSeries();
-        }
-      }
-    }
-    dragStartX.current = null;
-    dragCurrentX.current = null;
-    setTimeout(() => {
-      hasDragged.current = false;
-    }, 50);
-  };
-
-  const handleSaveEmail = (e: React.FormEvent) => {
+  const handleSaveProfile = (e: React.FormEvent) => {
     e.preventDefault();
-    showToast('Adresse e-mail mise à jour avec succès.');
+    updateProfile({
+      name: name.trim(),
+      handle: handle.trim(),
+      city: city.trim(),
+      territory: city.trim(),
+      country: country.trim(),
+      catchphrase: catchphrase.trim(),
+      bio: catchphrase.trim(),
+      avatarUrl: avatarUrl.trim(),
+      orgDetails: isOrg ? {
+        ...currentUser?.orgDetails,
+        legalName: legalName.trim(),
+        sector: sector.trim(),
+        legalRepresentative: legalRepresentative.trim(),
+      } : undefined
+    });
+    showToast('Profil mis à jour avec succès.');
   };
 
-  const handleSavePassword = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!currentPassword.trim()) {
-      showToast('Veuillez entrer votre mot de passe actuel.');
-      return;
-    }
-    if (!newPassword.trim() || newPassword.length < 6) {
-      showToast('Le nouveau mot de passe doit comporter au moins 6 caractères.');
-      return;
-    }
-    setCurrentPassword('');
-    setNewPassword('');
-    showToast('Mot de passe mis à jour avec succès.');
-  };
-
-  const handleLogout = () => {
-    logout();
-    try {
-      localStorage.removeItem('yonywood_current_user');
-      localStorage.removeItem('yonywood_auth_token');
-    } catch {
-      // ignore
-    }
-    showToast('Session terminée.');
-    setTimeout(() => {
-      onNavigate({ type: 'landing' });
-    }, 350);
-  };
-
-  const currentSeries = DOCUMENTARIES[activeSeriesIndex] || DOCUMENTARIES[0];
-  const isCurrentSeriesFollowed = effectiveFilter.includes(currentSeries.id);
+  const sharesCount = currentUser?.sharesCount ?? 125;
+  const sharesDate = currentUser?.sharesAcquiredDate || currentUser?.createdAt || '15 Janvier 2026';
+  const sharesValue = currentUser?.sharesInvestedAmount ?? (sharesCount * 10000);
+  const sharesDividends = currentUser?.sharesEstimatedDividends ?? 142500;
 
   return (
-    <div className="w-full h-[100dvh] bg-white text-[#1C1917] flex flex-col overflow-hidden select-none font-sans">
-      {/* ========================================================================= */}
-      {/* 1. EN-TÊTE FIXE BLANC : RETOUR "<" EN NOIR + TITRE + 2 ONGLETS TERRE CUITE */}
-      {/* ========================================================================= */}
-      <header className="relative z-30 flex items-center justify-between px-3.5 sm:px-6 py-2.5 bg-white border-b border-[#E7E5E4] shrink-0">
-        <div className="flex items-center gap-2 sm:gap-3">
-          {/* Bouton retour "<" en noir pur */}
+    <div className="h-[100dvh] max-h-[100dvh] w-full bg-[#FAF7F2] text-[#1C1917] flex flex-col font-sans select-none overflow-hidden">
+      
+      {/* 1. BARRE SUPÉRIEURE ÉPURÉE */}
+      <header className="shrink-0 h-14 sm:h-16 px-4 sm:px-8 border-b border-stone-200/80 bg-white/95 backdrop-blur-md flex items-center justify-between z-30">
+        <div className="flex items-center gap-3">
           <button
-            type="button"
-            onClick={() => onNavigate(returnTo === 'duo_feed' ? { type: 'duo_feed' } : { type: 'profile' })}
-            className="w-8 h-8 rounded-full bg-white hover:bg-stone-100 border border-[#E7E5E4] text-[#1C1917] flex items-center justify-center transition-all cursor-pointer shadow-xs active:scale-95 shrink-0"
-            title="Retour"
-            id="btn-settings-back"
+            onClick={() => {
+              if (returnTo === 'profile') {
+                onNavigate({ type: 'profile' });
+              } else {
+                onNavigate({ type: 'duo_feed' });
+              }
+            }}
+            className="w-9 h-9 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 flex items-center justify-center transition-all cursor-pointer active:scale-95"
+            title="Revenir au portrait"
           >
-            <ChevronLeft className="w-4 h-4 stroke-[2.2]" />
+            <ChevronLeft className="w-5 h-5 text-stone-800" />
           </button>
-
-          <div className="relative flex items-center h-full">
-            <h1 className="font-editorial text-xs sm:text-sm md:text-base font-semibold text-[#1C1917] tracking-normal leading-none whitespace-nowrap">
-              Paramètres
-            </h1>
-            {/* Petit trait terracotta officiel */}
-            <div className="absolute left-0 -bottom-1.5 w-8 h-0.5 bg-[#A2482B] rounded-full" />
+          <div>
+            <div className="flex items-center gap-2">
+              <h1 className="font-editorial text-base sm:text-lg font-bold text-stone-900 leading-none">
+                Paramètres & Gestion de Compte
+              </h1>
+              {isOrg ? (
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-amber-50 text-amber-900 border border-amber-200 flex items-center gap-1">
+                  <Building2 className="w-3 h-3 text-amber-700" /> Organisation
+                </span>
+              ) : (
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-stone-100 text-stone-700 flex items-center gap-1">
+                  <User className="w-3 h-3 text-stone-600" /> Individu
+                </span>
+              )}
+            </div>
+            <p className="text-[11px] text-stone-500 mt-0.5 hidden sm:block">
+              {name} ({handle}) • {isOrg ? 'Vitrine Lumière & récits d’impact' : 'Portrait personnel & parts de coproduction'}
+            </p>
           </div>
         </div>
 
-        {/* 3 Onglets : Séries, Messages & Alertes, Compte & Sécurité */}
-        <div className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto">
-          <button
-            type="button"
-            onClick={() => setActiveTab('series')}
-            className={`px-3 sm:px-4 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
-              activeTab === 'series'
-                ? 'bg-[#A2482B] text-white shadow-xs'
-                : 'bg-[#E7E5E4] hover:bg-[#A2482B] text-[#7A756B] hover:text-white'
-            }`}
-          >
-            Séries
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab('messages')}
-            className={`px-3 sm:px-4 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
-              activeTab === 'messages'
-                ? 'bg-[#A2482B] text-white shadow-xs'
-                : 'bg-[#E7E5E4] hover:bg-[#A2482B] text-[#7A756B] hover:text-white'
-            }`}
-          >
-            Messages & Alertes
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab('lang_sec')}
-            className={`px-3 sm:px-4 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
-              activeTab === 'lang_sec'
-                ? 'bg-[#A2482B] text-white shadow-xs'
-                : 'bg-[#E7E5E4] hover:bg-[#A2482B] text-[#7A756B] hover:text-white'
-            }`}
-          >
-            Compte & Sécurité
-          </button>
-
-
-          {/* Bouton de déconnexion : fond terre cuite et icône blanche au survol */}
-          <button
-            type="button"
-            onClick={handleLogout}
-            className="w-8 h-8 rounded-full bg-[#E7E5E4] hover:bg-[#A2482B] text-[#7A756B] hover:text-white border border-stone-200/80 hover:border-transparent flex items-center justify-center transition-all cursor-pointer active:scale-95 shrink-0 ml-0.5 shadow-xs"
-            title="Se déconnecter"
-            id="btn-settings-header-logout"
-          >
-            <LogOut className="w-3.5 h-3.5" />
-          </button>
-        </div>
+        <button
+          onClick={() => {
+            logout();
+            onNavigate({ type: 'duo_feed' });
+          }}
+          className="px-3 py-1.5 rounded-xl border border-stone-200 hover:border-red-200 text-stone-500 hover:text-red-700 hover:bg-red-50 text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
+          title="Se déconnecter"
+        >
+          <LogOut className="w-3.5 h-3.5" />
+          <span className="hidden sm:inline">Déconnexion</span>
+        </button>
       </header>
 
-      {/* ========================================================================= */}
-      {/* TOAST FLOTTANT                                                            */}
-      {/* ========================================================================= */}
-      {feedbackToast && (
-        <div className="fixed top-14 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-full bg-[#1C1917] text-white text-xs font-medium shadow-2xl border border-white/20 animate-in fade-in duration-200 flex items-center gap-2">
-          <ShieldCheck className="w-4 h-4 text-emerald-400" />
-          <span>{feedbackToast}</span>
-        </div>
-      )}
-
-      {/* ========================================================================= */}
-      {/* CONTENU PRINCIPAL (100% AU-DESSUS DE LA BARRE DE NAVIGATION)              */}
-      {/* ========================================================================= */}
-      <main className="flex-1 w-full bg-white flex flex-col justify-between items-center px-4 sm:px-8 pt-3 pb-24 overflow-hidden relative">
-        
-        {/* ======================================================================= */}
-        {/* VUE 1 : CHOIX DES SÉRIES (SWIPE + CASE DISCRÈTE COCHÉE PAR DÉFAUT)     */}
-        {/* ======================================================================= */}
-        {activeTab === 'series' && (
-          <div className="w-full flex-1 flex flex-col items-center justify-center animate-in fade-in duration-200 my-auto relative">
-            
-            {/* Zone de l'affiche 9:16 avec swipe tactile & flèches latérales */}
-            <div 
-              className="relative flex items-center justify-center w-full my-auto touch-pan-y"
-              onTouchStart={(e) => handlePointerDown(e.touches[0].clientX)}
-              onTouchMove={(e) => handlePointerMove(e.touches[0].clientX)}
-              onTouchEnd={handlePointerUp}
-              onMouseDown={(e) => handlePointerDown(e.clientX)}
-              onMouseMove={(e) => handlePointerMove(e.clientX)}
-              onMouseUp={handlePointerUp}
-              onMouseLeave={handlePointerUp}
+      {/* 2. NAVIGATION D'ONGLETS HORIZONTALE */}
+      <div className="shrink-0 bg-white border-b border-stone-200 px-4 sm:px-8 flex items-center gap-1 sm:gap-2 overflow-x-auto scrollbar-none z-20">
+        {[
+          { id: 'identity', label: 'Identité', icon: User },
+          { id: 'videos', label: 'Mes Vidéos', count: userVideos.length, icon: Video },
+          { id: 'shares', label: 'Mes Parts & Coproduction', count: sharesCount, icon: Coins },
+          { id: 'series', label: 'Séries', count: selectedDocFilter.length, icon: Clapperboard },
+          { id: 'messages', label: 'Messages', icon: MessageSquare },
+          { id: 'security', label: 'Sécurité', icon: Lock },
+        ].map((tab) => {
+          const Icon = tab.icon;
+          const isActive = activeTab === tab.id;
+          return (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id as SettingsTab)}
+              className={`py-3 px-3 sm:px-4 text-xs font-semibold flex items-center gap-2 border-b-2 transition-all cursor-pointer whitespace-nowrap ${
+                isActive
+                  ? 'border-[#A2482B] text-[#A2482B]'
+                  : 'border-transparent text-stone-500 hover:text-stone-800'
+              }`}
             >
-              {/* Flèche gauche grand écran */}
-              <button
-                type="button"
-                onClick={handlePrevSeries}
-                className="hidden sm:flex absolute left-2 sm:left-4 lg:left-12 z-20 w-10 h-10 rounded-full bg-white hover:bg-stone-100 text-[#1C1917] border border-[#E7E5E4] items-center justify-center shadow-md cursor-pointer transition-all active:scale-90 shrink-0"
-                title="Série précédente"
-              >
-                <ChevronLeft className="w-5 h-5 stroke-[2.2]" />
-              </button>
+              <Icon className="w-3.5 h-3.5" />
+              <span>{tab.label}</span>
+              {typeof tab.count === 'number' && (
+                <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
+                  isActive ? 'bg-[#A2482B]/15 text-[#A2482B]' : 'bg-stone-100 text-stone-600'
+                }`}>
+                  {tab.count}
+                </span>
+              )}
+            </button>
+          );
+        })}
+      </div>
 
-              {/* Carte format vertical 9:16 (identique Coproduction) */}
-              <div 
-                onClick={toggleVideoPlayback}
-                className="group aspect-[9/16] w-[min(340px,calc((100dvh-200px)*9/16))] h-[min(604px,calc(100dvh-200px))] max-w-[calc(100vw-28px)] mx-auto rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl border border-stone-200/80 flex flex-col justify-between p-2.5 sm:p-4.5 select-none cursor-pointer shrink-0 relative"
-                id={`card-series-${currentSeries.id}`}
-              >
-                {/* Média de fond : Affiche officielle par défaut OU Vidéo teaser */}
-                {isPlaying ? (
-                  <video
-                    ref={videoRef}
-                    src={currentSeries.teaserVideoUrl || 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4'}
-                    poster={currentSeries.posterUrl}
-                    autoPlay
-                    loop
-                    playsInline
-                    className="absolute inset-0 w-full h-full object-cover"
-                  />
-                ) : (
-                  <img
-                    src={currentSeries.posterUrl}
-                    alt={currentSeries.title}
-                    referrerPolicy="no-referrer"
-                    className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-                  />
-                )}
-
-                {/* Voile cinématographique */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/30 pointer-events-none" />
-
-                {/* HAUT : Badge officiel du titre de la série & Déclencheur vidéo signature YonyWood */}
-                <div className="relative z-10 flex items-center justify-between gap-2">
-                  <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-[10.5px] sm:text-[11px] font-semibold tracking-widest text-white shadow-sm max-w-full leading-relaxed">
-                    {currentSeries.title}
-                  </span>
-
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      toggleVideoPlayback();
-                    }}
-                    className="w-8.5 h-8.5 rounded-xl bg-black/45 hover:bg-[#A2482B] active:scale-95 backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer shrink-0"
-                    title={isPlaying ? "Mettre en pause" : "Regarder la vidéo"}
-                  >
-                    {isPlaying ? (
-                      <Pause className="w-3.5 h-3.5 fill-white text-white" />
-                    ) : (
-                      <TvPlayerIcon className="w-5 h-5 text-white transition-transform" strokeWidth={1.6} />
-                    )}
-                  </button>
-                </div>
-
-                {/* CENTRE LIBÉRÉ */}
-                <div className="my-auto" />
-
-                {/* BAS : Case à cocher discrète et élégante dans le coin bas à droite */}
-                <div className="relative z-10 flex items-end justify-end w-full pt-0.5">
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleToggleSeries(currentSeries.id);
-                    }}
-                    id={`btn-toggle-series-${currentSeries.id}`}
-                    className={`w-6.5 h-6.5 sm:w-7 sm:h-7 rounded-full flex items-center justify-center shadow-md transition-all cursor-pointer active:scale-90 ${
-                      isCurrentSeriesFollowed
-                        ? 'bg-[#A2482B] text-white ring-1.5 ring-white/90 shadow-sm'
-                        : 'bg-black/40 backdrop-blur-xs border border-white/70 text-transparent hover:border-white'
-                    }`}
-                    title={isCurrentSeriesFollowed ? 'Série activée (cliquez pour décocher)' : 'Série décochée (cliquez pour activer)'}
-                  >
-                    {isCurrentSeriesFollowed && (
-                      <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white stroke-[2.6]" />
-                    )}
-                  </button>
-                </div>
-
+      {/* 3. CORPS DU CONTENU */}
+      <main className="flex-1 min-h-0 overflow-y-auto px-4 sm:px-8 py-5 sm:py-7 max-w-5xl mx-auto w-full">
+        
+        {/* ========================================================================= */}
+        {/* ONGLET 1 : IDENTITÉ ÉPURÉE                                                */}
+        {/* ========================================================================= */}
+        {activeTab === 'identity' && (
+          <div className="space-y-6 animate-in fade-in duration-150">
+            <div className="bg-white rounded-3xl p-5 sm:p-7 border border-stone-200/90 shadow-xs space-y-6">
+              <div>
+                <h2 className="text-base font-bold text-stone-900 font-serif">
+                  Identité du Compte
+                </h2>
+                <p className="text-xs text-stone-500 mt-0.5">
+                  Profil synthétique visible par les autres membres du réseau. Les informations sont volontairement courtes et épurées.
+                </p>
               </div>
 
-              {/* Flèche droite grand écran */}
-              <button
-                type="button"
-                onClick={handleNextSeries}
-                className="hidden sm:flex absolute right-2 sm:right-4 lg:left-auto lg:right-12 z-20 w-10 h-10 rounded-full bg-white hover:bg-stone-100 text-[#1C1917] border border-[#E7E5E4] items-center justify-center shadow-md cursor-pointer transition-all active:scale-90 shrink-0"
-                title="Série suivante"
-              >
-                <ChevronRight className="w-5 h-5 stroke-[2.2]" />
-              </button>
-            </div>
-
-            {/* Indicateur mobile discret */}
-            <div className="flex sm:hidden items-center justify-center gap-6 mt-2">
-              <button
-                type="button"
-                onClick={handlePrevSeries}
-                className="w-8 h-8 rounded-full bg-white border border-[#E7E5E4] text-[#1C1917] flex items-center justify-center shadow-xs active:scale-90 cursor-pointer"
-                title="Précédente"
-              >
-                <ChevronLeft className="w-4 h-4 stroke-[2.2]" />
-              </button>
-              <span className="text-[11px] text-stone-500 font-medium">
-                {activeSeriesIndex + 1} / {DOCUMENTARIES.length}
-              </span>
-              <button
-                type="button"
-                onClick={handleNextSeries}
-                className="w-8 h-8 rounded-full bg-white border border-[#E7E5E4] text-[#1C1917] flex items-center justify-center shadow-xs active:scale-90 cursor-pointer"
-                title="Suivante"
-              >
-                <ChevronRight className="w-4 h-4 stroke-[2.2]" />
-              </button>
-            </div>
-
-          </div>
-        )}
-
-        {/* ======================================================================= */}
-        {/* VUE 2 : MESSAGES, NOTIFICATIONS & ALERTES                                */}
-        {/* ======================================================================= */}
-        {activeTab === 'messages' && (
-          <div className="w-full max-w-4xl flex-1 flex flex-col justify-center animate-in fade-in duration-200 my-auto py-2">
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-10 items-start">
-              
-              {/* --- COLONNE 1 : RÉCEPTION DES MESSAGES & NOTIFICATIONS --- */}
-              <div className="space-y-6 sm:space-y-8">
-                
-                {/* 1. Autorisation de réception des messages */}
-                <div>
-                  <h2 className="text-xs sm:text-sm font-bold text-[#1C1917] uppercase tracking-wider mb-3 flex items-center gap-2">
-                    <MessageSquare className="w-3.5 h-3.5 text-[#A2482B]" />
-                    <span>Réception des messages directs</span>
-                  </h2>
-
-                  <div className="space-y-2 bg-stone-50/60 p-3.5 rounded-2xl border border-stone-200/70">
-                    <label className="text-[11px] font-semibold text-stone-600 block">
-                      Qui peut vous contacter sur YonyWood :
-                    </label>
-
-                    <div className="grid grid-cols-1 gap-2">
-                      {[
-                        { 
-                          id: 'all', 
-                          title: 'Tous les utilisateurs de Yonywood', 
-                          desc: 'Ouvert directement à l’ensemble des membres et protagonistes de Yonywood' 
-                        },
-                        { 
-                          id: 'invitation', 
-                          title: 'Sur demande d’échange', 
-                          desc: 'Nécessite une invitation préalable acceptée avant de pouvoir dialoguer' 
-                        },
-                        { 
-                          id: 'none', 
-                          title: 'Désactivé', 
-                          desc: 'Personne ne peut vous envoyer de message direct' 
-                        }
-                      ].map((item) => {
-                        const isSelected = messagePermission === item.id;
-                        return (
-                          <button
-                            key={item.id}
-                            type="button"
-                            onClick={() => {
-                              setMessagePermission(item.id as 'none' | 'invitation' | 'all');
-                              localStorage.setItem('yonywood_msg_permission', item.id);
-                              showToast(`Messagerie : ${item.title}`);
-                            }}
-                            className={`p-2.5 rounded-xl border text-left transition-all cursor-pointer flex items-center justify-between shadow-2xs ${
-                              isSelected
-                                ? 'bg-[#1C1917] text-white border-[#1C1917]'
-                                : 'bg-white hover:bg-stone-50 text-stone-800 border-stone-200/80'
-                            }`}
-                          >
-                            <div>
-                              <span className="block text-xs font-semibold">{item.title}</span>
-                              <span className={`text-[10px] ${isSelected ? 'text-stone-300' : 'text-stone-500'}`}>
-                                {item.desc}
-                              </span>
-                            </div>
-                            {isSelected && <Check className="w-3.5 h-3.5 text-[#E5C16C] shrink-0 ml-2" />}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-                </div>
-
-                {/* 2. Notifications de messages */}
-                <div>
-                  <h2 className="text-xs sm:text-sm font-bold text-[#1C1917] uppercase tracking-wider mb-3 flex items-center gap-2">
-                    <BellRing className="w-3.5 h-3.5 text-[#A2482B]" />
-                    <span>Alertes & Notifications de messages</span>
-                  </h2>
-
-                  <div className="space-y-3 bg-stone-50/60 p-3.5 rounded-2xl border border-stone-200/70">
-                    {/* Push instantané */}
-                    <div className="flex items-center justify-between gap-3">
-                      <div>
-                        <span className="text-xs font-semibold text-stone-800 block">
-                          Notifications push instantanées
-                        </span>
-                        <span className="text-[11px] text-stone-500">
-                          Alerte immédiate à l'arrivée d'un message
-                        </span>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          const next = !pushNewMessage;
-                          setPushNewMessage(next);
-                          localStorage.setItem('yonywood_push_msg', String(next));
-                          showToast(next ? 'Notifications push activées' : 'Notifications push désactivées');
-                        }}
-                        className={`w-9 h-5 rounded-full transition-colors cursor-pointer relative shrink-0 p-0.5 ${
-                          pushNewMessage ? 'bg-[#A2482B]' : 'bg-stone-300'
-                        }`}
-                      >
-                        <div className={`w-4 h-4 rounded-full bg-white shadow-xs transition-transform ${
-                          pushNewMessage ? 'translate-x-4' : 'translate-x-0'
-                        }`} />
-                      </button>
-                    </div>
-
-                    {/* Aperçu du texte */}
-                    <div className="flex items-center justify-between gap-3 pt-2.5 border-t border-stone-200/50">
-                      <div>
-                        <span className="text-xs font-semibold text-stone-800 block">
-                          Aperçu du contenu du message
-                        </span>
-                        <span className="text-[11px] text-stone-500">
-                          Afficher les premières lignes dans l'alerte
-                        </span>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          const next = !messagePreview;
-                          setMessagePreview(next);
-                          localStorage.setItem('yonywood_msg_preview', String(next));
-                          showToast(next ? 'Aperçu activé' : 'Aperçu masqué');
-                        }}
-                        className={`w-9 h-5 rounded-full transition-colors cursor-pointer relative shrink-0 p-0.5 ${
-                          messagePreview ? 'bg-[#A2482B]' : 'bg-stone-300'
-                        }`}
-                      >
-                        <div className={`w-4 h-4 rounded-full bg-white shadow-xs transition-transform ${
-                          messagePreview ? 'translate-x-4' : 'translate-x-0'
-                        }`} />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-
-              {/* --- COLONNE 2 : ALERTES COPRODUCTION & PROJETS --- */}
-              <div className="space-y-6 sm:space-y-8">
-                
-                {/* 3. Alertes Documentaires & Coproduction */}
-                <div>
-                  <h2 className="text-xs sm:text-sm font-bold text-[#1C1917] uppercase tracking-wider mb-3 flex items-center gap-2">
-                    <Bell className="w-3.5 h-3.5 text-[#A2482B]" />
-                    <span>Marché & Projets</span>
-                  </h2>
-
-                  <div className="space-y-3 bg-stone-50/60 p-3.5 rounded-2xl border border-stone-200/70">
-                    {/* Alerte Paliers de financement */}
-                    <div className="flex items-center justify-between gap-3">
-                      <div className="flex items-center gap-2.5">
-                        <Coins className="w-4 h-4 text-stone-600 shrink-0" />
-                        <span className="text-xs font-medium text-stone-800">
-                          Paliers de financement (50%, 80%, 100%)
-                        </span>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setAlertFunding(!alertFunding);
-                          showToast(alertFunding ? 'Alertes financement désactivées' : 'Alertes financement activées');
-                        }}
-                        className={`w-9 h-5 rounded-full transition-colors cursor-pointer relative shrink-0 p-0.5 ${
-                          alertFunding ? 'bg-[#A2482B]' : 'bg-stone-300'
-                        }`}
-                      >
-                        <div className={`w-4 h-4 rounded-full bg-white shadow-xs transition-transform ${
-                          alertFunding ? 'translate-x-4' : 'translate-x-0'
-                        }`} />
-                      </button>
-                    </div>
-
-                    {/* Alerte Nouveaux épisodes */}
-                    <div className="flex items-center justify-between gap-3 pt-2 border-t border-stone-200/50">
-                      <div className="flex items-center gap-2.5">
-                        <Clapperboard className="w-4 h-4 text-stone-600 shrink-0" />
-                        <span className="text-xs font-medium text-stone-800">
-                          Nouveaux épisodes des séries suivies
-                        </span>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setAlertNewEpisodes(!alertNewEpisodes);
-                          showToast(alertNewEpisodes ? 'Alertes épisodes désactivées' : 'Alertes épisodes activées');
-                        }}
-                        className={`w-9 h-5 rounded-full transition-colors cursor-pointer relative shrink-0 p-0.5 ${
-                          alertNewEpisodes ? 'bg-[#A2482B]' : 'bg-stone-300'
-                        }`}
-                      >
-                        <div className={`w-4 h-4 rounded-full bg-white shadow-xs transition-transform ${
-                          alertNewEpisodes ? 'translate-x-4' : 'translate-x-0'
-                        }`} />
-                      </button>
-                    </div>
-
-                    {/* Alerte Invitations aux duocumentaires */}
-                    <div className="flex items-center justify-between gap-3 pt-2 border-t border-stone-200/50">
-                      <div className="flex items-center gap-2.5">
-                        <Tv className="w-4 h-4 text-stone-600 shrink-0" />
-                        <span className="text-xs font-medium text-stone-800">
-                          Invitations aux duocumentaires
-                        </span>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          const next = !alertDuocumentaires;
-                          setAlertDuocumentaires(next);
-                          showToast(next ? 'Invitations aux duocumentaires activées' : 'Invitations aux duocumentaires désactivées');
-                        }}
-                        className={`w-9 h-5 rounded-full transition-colors cursor-pointer relative shrink-0 p-0.5 ${
-                          alertDuocumentaires ? 'bg-[#A2482B]' : 'bg-stone-300'
-                        }`}
-                      >
-                        <div className={`w-4 h-4 rounded-full bg-white shadow-xs transition-transform ${
-                          alertDuocumentaires ? 'translate-x-4' : 'translate-x-0'
-                        }`} />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
-        )}
-
-        {/* ======================================================================= */}
-        {/* VUE 3 : COMPTE, SÉCURITÉ & LANGUE (ALIGNEMENT PARFAIT DES BAS DE BLOCS) */}
-        {/* ======================================================================= */}
-        {activeTab === 'lang_sec' && (
-          <div className="w-full max-w-4xl flex-1 flex flex-col justify-center animate-in fade-in duration-200 my-auto py-2">
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-10 items-stretch">
-              
-              {/* --- COLONNE 1 : LANGUES & EXPÉRIENCE DE LECTURE --- */}
-              <div className="flex flex-col justify-between h-full space-y-6 sm:space-y-0">
-                
-                {/* 1. Langue de l'application */}
-                <div>
-                  <h2 className="text-xs sm:text-sm font-bold text-[#1C1917] uppercase tracking-wider mb-3 flex items-center gap-2">
-                    <span>Langue et sous-titres</span>
-                  </h2>
-
-                  <div className="grid grid-cols-4 gap-2">
-                    {SUPPORTED_LANGUAGES.map((item) => {
-                      const isSelected = language === item.code;
-                      return (
-                        <button
-                          key={item.code}
-                          type="button"
-                          onClick={() => {
-                            onUpdateLanguage(item.code);
-                            showToast(`Langue : ${item.label}`);
-                          }}
-                          className={`py-2.5 px-2 rounded-xl border text-center transition-all cursor-pointer flex flex-col items-center justify-center gap-1 shadow-xs ${
-                            isSelected
-                              ? 'bg-[#A2482B] border-[#A2482B] text-white shadow-xs'
-                              : 'bg-white border-stone-200 hover:bg-stone-50 text-stone-800'
-                          }`}
-                        >
-                          <span className="text-base sm:text-lg leading-none">{item.flag}</span>
-                          <div className="flex items-center gap-1">
-                            <span className="text-[11px] sm:text-xs font-semibold">{item.label}</span>
-                            {isSelected && <Check className="w-2.5 h-2.5 text-white stroke-[3]" />}
-                          </div>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Préférence Lecture automatique au swipe */}
-                <div className="pt-4 sm:pt-6">
-                  <h2 className="text-xs sm:text-sm font-bold text-[#1C1917] uppercase tracking-wider mb-3 flex items-center gap-2">
-                    <span>Expérience de lecture</span>
-                  </h2>
-
-                  <div className="flex items-center justify-between gap-3 bg-stone-50/60 p-3.5 rounded-2xl border border-stone-200/70">
-                    <div>
-                      <span className="text-xs font-semibold text-stone-800 block">
-                        Lecture automatique au swipe
-                      </span>
-                      <span className="text-[11px] text-stone-500">
-                        Lancer le teaser directement lors du défilement
-                      </span>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        const next = !autoPlayOnSwipe;
-                        setAutoPlayOnSwipe(next);
-                        localStorage.setItem('yonywood_autoplay', String(next));
-                        showToast(next ? 'Lecture auto activée' : 'Lecture auto désactivée');
+              <form onSubmit={handleSaveProfile} className="space-y-5">
+                {/* Photo de profil & Type de compte fixe */}
+                <div className="flex flex-col sm:flex-row sm:items-center gap-4 pb-4 border-b border-stone-100">
+                  <div className="relative w-20 h-20 rounded-2xl overflow-hidden bg-stone-100 border-2 border-stone-200 shrink-0">
+                    <img
+                      src={avatarUrl}
+                      alt={name}
+                      onError={(e) => {
+                        const target = e.currentTarget;
+                        target.onerror = null;
+                        target.src = '/assets/images/romeo_avatar_1792698425983.jpg';
                       }}
-                      className={`w-9 h-5 rounded-full transition-colors cursor-pointer relative shrink-0 p-0.5 ${
-                        autoPlayOnSwipe ? 'bg-[#A2482B]' : 'bg-stone-300'
-                      }`}
-                    >
-                      <div className={`w-4 h-4 rounded-full bg-white shadow-xs transition-transform ${
-                        autoPlayOnSwipe ? 'translate-x-4' : 'translate-x-0'
-                      }`} />
-                    </button>
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5 min-w-0 flex-1">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-bold text-stone-800">Type de profil enregistré :</span>
+                      {isOrg ? (
+                        <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-900 border border-amber-200 flex items-center gap-1.5">
+                          <Building2 className="w-3.5 h-3.5 text-amber-700" /> Compte Organisation (Lumière)
+                        </span>
+                      ) : (
+                        <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-stone-100 text-stone-800 flex items-center gap-1.5">
+                          <User className="w-3.5 h-3.5 text-stone-700" /> Compte Individu
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-[11px] text-stone-500">
+                      {isOrg 
+                        ? 'Ce compte représente une structure officielle sur l’onglet Lumière. Les membres individuels peuvent témoigner et documenter vos initiatives.' 
+                        : 'Ce compte est personnel. Il vous permet de publier vos récits, de détenir des parts et de témoigner.'}
+                    </p>
                   </div>
                 </div>
 
-              </div>
-
-              {/* --- COLONNE 2 : SÉCURITÉ ET COMPTE --- */}
-              <div className="flex flex-col justify-between h-full space-y-6 sm:space-y-0">
-                
-                {/* 1. Adresse e-mail */}
-                <div>
-                  <h2 className="text-xs sm:text-sm font-bold text-[#1C1917] uppercase tracking-wider mb-3 flex items-center gap-2">
-                    <ShieldCheck className="w-3.5 h-3.5 text-[#A2482B]" />
-                    <span>Sécurité et compte</span>
-                  </h2>
-
-                  <form onSubmit={handleSaveEmail} className="space-y-1.5">
-                    <label className="text-[11px] font-semibold text-stone-600 block">
-                      Adresse e-mail
+                {/* Champs essentiels légers */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-semibold text-stone-700 mb-1">
+                      {isOrg ? "Nom de l'organisation" : 'Nom et prénom'}
                     </label>
-                    <div className="flex items-center gap-1.5">
-                      <input
-                        type="email"
-                        value={userEmail}
-                        onChange={(e) => setUserEmail(e.target.value)}
-                        className="flex-1 px-3.5 py-2 text-xs bg-white border border-stone-200 rounded-xl text-stone-900 focus:outline-none focus:border-stone-800 transition-colors shadow-2xs"
-                        placeholder="nom@exemple.com"
-                        required
-                      />
-                      <button
-                        type="submit"
-                        className="h-8.5 px-3.5 rounded-xl bg-stone-900 hover:bg-stone-800 text-white text-xs font-semibold transition-all cursor-pointer active:scale-95 shrink-0"
-                      >
-                        Enregistrer
-                      </button>
-                    </div>
-                  </form>
+                    <input
+                      type="text"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      required
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-stone-50 border border-stone-200 text-xs sm:text-sm text-stone-900 focus:bg-white focus:outline-none focus:border-[#A2482B] focus:ring-1 focus:ring-[#A2482B] transition-all"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-stone-700 mb-1">
+                      Identifiant public
+                    </label>
+                    <input
+                      type="text"
+                      value={handle}
+                      onChange={(e) => setHandle(e.target.value)}
+                      required
+                      placeholder="@votreidentifiant"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-stone-50 border border-stone-200 text-xs sm:text-sm text-stone-900 focus:bg-white focus:outline-none focus:border-[#A2482B] focus:ring-1 focus:ring-[#A2482B] transition-all font-mono"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-stone-700 mb-1">
+                      Ville ou Territoire d'ancrage
+                    </label>
+                    <input
+                      type="text"
+                      value={city}
+                      onChange={(e) => setCity(e.target.value)}
+                      placeholder="Ex: Cotonou, Ganvié, Ouidah..."
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-stone-50 border border-stone-200 text-xs sm:text-sm text-stone-900 focus:bg-white focus:outline-none focus:border-[#A2482B] focus:ring-1 focus:ring-[#A2482B] transition-all"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-stone-700 mb-1">
+                      Pays
+                    </label>
+                    <input
+                      type="text"
+                      value={country}
+                      onChange={(e) => setCountry(e.target.value)}
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-stone-50 border border-stone-200 text-xs sm:text-sm text-stone-900 focus:bg-white focus:outline-none focus:border-[#A2482B] focus:ring-1 focus:ring-[#A2482B] transition-all"
+                    />
+                  </div>
                 </div>
 
-                {/* 2. Formulaire Mot de passe : baissé pour que le bas soit au même niveau horizontal que le bas de Lecture automatique */}
-                <div className="pt-4 sm:pt-6">
-                  <form onSubmit={handleSavePassword} className="space-y-2">
-                    <label className="text-[11px] font-semibold text-stone-600 flex items-center gap-1 block">
-                      <Lock className="w-3 h-3 text-stone-400" />
-                      <span>Modifier le mot de passe</span>
+                {/* Phrase d'accroche courte (1-2 phrases maximum) */}
+                <div>
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="block text-xs font-semibold text-stone-700">
+                      Phrase d'accroche ou vocation (quelques mots)
                     </label>
+                    <span className="text-[10px] text-stone-400">120 caractères max conseillés</span>
+                  </div>
+                  <textarea
+                    rows={2}
+                    value={catchphrase}
+                    onChange={(e) => setCatchphrase(e.target.value)}
+                    placeholder="Résumez votre trajectoire en une phrase percutante..."
+                    maxLength={200}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-stone-50 border border-stone-200 text-xs sm:text-sm text-stone-900 focus:bg-white focus:outline-none focus:border-[#A2482B] focus:ring-1 focus:ring-[#A2482B] transition-all resize-none"
+                  />
+                </div>
 
-                    <div className="space-y-2">
-                      <div className="relative">
-                        <KeyRound className="w-3.5 h-3.5 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                {/* URL Photo / Logo */}
+                <div>
+                  <label className="block text-xs font-semibold text-stone-700 mb-1">
+                    {isOrg ? 'Lien du logo ou image officielle' : 'Lien de votre photo portrait'}
+                  </label>
+                  <input
+                    type="url"
+                    value={avatarUrl}
+                    onChange={(e) => setAvatarUrl(e.target.value)}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-stone-50 border border-stone-200 text-xs text-stone-900 focus:bg-white focus:outline-none focus:border-[#A2482B] focus:ring-1 focus:ring-[#A2482B] transition-all font-mono"
+                  />
+                </div>
+
+                {/* Spécificités Organisation si compte Organisation */}
+                {isOrg && (
+                  <div className="p-4 rounded-2xl bg-amber-50/50 border border-amber-200/60 space-y-3">
+                    <span className="text-[11px] font-bold text-amber-900 uppercase tracking-wider block">
+                      Informations Légales & Référencement Lumière
+                    </span>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-[11px] font-semibold text-stone-700 mb-1">Raison sociale officielle</label>
                         <input
-                          type="password"
-                          value={currentPassword}
-                          onChange={(e) => setCurrentPassword(e.target.value)}
-                          className="w-full pl-8 pr-3.5 py-2 text-xs bg-white border border-stone-200 rounded-xl text-stone-900 focus:outline-none focus:border-stone-800 transition-colors shadow-2xs"
-                          placeholder="Mot de passe actuel"
+                          type="text"
+                          value={legalName}
+                          onChange={(e) => setLegalName(e.target.value)}
+                          className="w-full px-3 py-2 rounded-xl bg-white border border-stone-200 text-xs text-stone-900"
                         />
                       </div>
+                      <div>
+                        <label className="block text-[11px] font-semibold text-stone-700 mb-1">Secteur d'activité</label>
+                        <input
+                          type="text"
+                          value={sector}
+                          onChange={(e) => setSector(e.target.value)}
+                          className="w-full px-3 py-2 rounded-xl bg-white border border-stone-200 text-xs text-stone-900"
+                        />
+                      </div>
+                      <div className="sm:col-span-2">
+                        <label className="block text-[11px] font-semibold text-stone-700 mb-1">Représentant légal ou Fondateur</label>
+                        <input
+                          type="text"
+                          value={legalRepresentative}
+                          onChange={(e) => setLegalRepresentative(e.target.value)}
+                          placeholder="Nom de la personne habilitée"
+                          className="w-full px-3 py-2 rounded-xl bg-white border border-stone-200 text-xs text-stone-900"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )}
 
-                      <div className="flex items-center gap-1.5">
-                        <div className="relative flex-1">
-                          <Lock className="w-3.5 h-3.5 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
-                          <input
-                            type="password"
-                            value={newPassword}
-                            onChange={(e) => setNewPassword(e.target.value)}
-                            className="w-full pl-8 pr-3.5 py-2 text-xs bg-white border border-stone-200 rounded-xl text-stone-900 focus:outline-none focus:border-stone-800 transition-colors shadow-2xs"
-                            placeholder="Nouveau mot de passe"
+                <div className="pt-2 flex justify-end">
+                  <button
+                    type="submit"
+                    className="px-6 py-2.5 rounded-xl bg-[#A2482B] hover:bg-[#8A3B22] text-white text-xs sm:text-sm font-bold flex items-center gap-2 shadow-sm transition-all cursor-pointer hover:scale-102 active:scale-98"
+                  >
+                    <Save className="w-4 h-4" />
+                    <span>Enregistrer mon profil</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
+        {/* ========================================================================= */}
+        {/* ONGLET 2 : MES VIDÉOS & VALIDATION ÉDITORIALE                              */}
+        {/* ========================================================================= */}
+        {activeTab === 'videos' && (
+          <div className="space-y-6 animate-in fade-in duration-150">
+            <div className="bg-white rounded-3xl p-5 sm:p-7 border border-stone-200/90 shadow-xs space-y-5">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-stone-100">
+                <div>
+                  <h2 className="text-base font-bold text-stone-900 font-serif">
+                    Mes Publications & Vidéos Déposées
+                  </h2>
+                  <p className="text-xs text-stone-500 mt-0.5">
+                    Toutes les vidéos soumises passent par l'examen éditorial de Roméo Nonvide avant publication publique.
+                  </p>
+                </div>
+
+                <button
+                  onClick={() => onNavigate({ type: 'submit_story' })}
+                  className="px-4 py-2 rounded-xl bg-[#A2482B] hover:bg-[#8A3B22] text-white text-xs font-bold flex items-center gap-1.5 cursor-pointer shadow-xs shrink-0 self-start sm:self-auto"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span>Déposer au Studio</span>
+                </button>
+              </div>
+
+              {userVideos.length === 0 ? (
+                <div className="py-12 text-center space-y-3">
+                  <Video className="w-10 h-10 text-stone-300 mx-auto" />
+                  <p className="text-sm font-semibold text-stone-700">Vous n'avez pas encore soumis de vidéo.</p>
+                  <p className="text-xs text-stone-400 max-w-sm mx-auto">
+                    Partagez votre histoire ou documentez une entreprise pionnière depuis le Studio de création.
+                  </p>
+                  <button
+                    onClick={() => onNavigate({ type: 'submit_story' })}
+                    className="px-4 py-2 rounded-xl bg-stone-900 text-white text-xs font-semibold hover:bg-stone-800 transition-colors cursor-pointer"
+                  >
+                    Ouvrir le Studio
+                  </button>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {userVideos.map((video) => (
+                    <div
+                      key={video.id}
+                      className="p-4 rounded-2xl border border-stone-200 bg-white hover:border-stone-300 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                    >
+                      <div className="flex items-start gap-3.5 min-w-0">
+                        <div className="relative w-16 h-20 rounded-xl overflow-hidden bg-black shrink-0 border border-stone-200">
+                          <img
+                            src={video.thumbnailUrl || '/assets/images/selfie_video_story.jpg'}
+                            alt={video.title}
+                            className="w-full h-full object-cover"
                           />
                         </div>
+
+                        <div className="space-y-1 min-w-0 flex-1">
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <h3 className="text-sm font-bold text-stone-900 truncate">
+                              {video.title}
+                            </h3>
+                            {video.status === 'PENDING' && (
+                              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200 flex items-center gap-1">
+                                <Clock className="w-3 h-3 text-amber-600" /> En examen éditorial
+                              </span>
+                            )}
+                            {video.status === 'APPROVED' && (
+                              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 flex items-center gap-1">
+                                <CheckCircle2 className="w-3 h-3 text-emerald-600" /> En ligne & Validée
+                              </span>
+                            )}
+                            {video.status === 'REJECTED' && (
+                              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-rose-50 text-rose-800 border border-rose-200 flex items-center gap-1">
+                                <AlertCircle className="w-3 h-3 text-rose-600" /> Retouche demandée
+                              </span>
+                            )}
+                          </div>
+
+                          <p className="text-xs text-stone-600 line-clamp-2">
+                            {video.synopsis}
+                          </p>
+
+                          {video.rejectionReason && (
+                            <p className="text-[11px] text-rose-700 bg-rose-50 p-2 rounded-lg border border-rose-100">
+                              <span className="font-semibold">Note éditoriale :</span> {video.rejectionReason}
+                            </p>
+                          )}
+
+                          <div className="text-[10px] text-stone-400 flex items-center gap-2 pt-0.5">
+                            <span>Soumise le {video.createdAt}</span>
+                            <span>•</span>
+                            <span className="uppercase font-mono">{video.universe}</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-2 shrink-0 self-end sm:self-center">
                         <button
-                          type="submit"
-                          className="h-8.5 px-3.5 rounded-xl bg-[#A2482B] hover:bg-[#8A3B22] text-white text-xs font-semibold transition-all cursor-pointer active:scale-95 shrink-0 shadow-xs"
+                          onClick={() => handleDeleteVideo(video.id)}
+                          className="p-2 rounded-xl hover:bg-rose-50 text-stone-400 hover:text-rose-600 transition-colors cursor-pointer"
+                          title="Supprimer cette vidéo"
                         >
-                          Mettre à jour
+                          <Trash2 className="w-4 h-4" />
                         </button>
                       </div>
                     </div>
-                  </form>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* ========================================================================= */}
+        {/* ONGLET 3 : MES PARTS & COPRODUCTION POPULAIRE                             */}
+        {/* ========================================================================= */}
+        {activeTab === 'shares' && (
+          <div className="space-y-6 animate-in fade-in duration-150">
+            <div className="bg-white rounded-3xl p-5 sm:p-7 border border-stone-200/90 shadow-xs space-y-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-stone-100">
+                <div>
+                  <h2 className="text-base font-bold text-stone-900 font-serif flex items-center gap-2">
+                    <Coins className="w-5 h-5 text-[#A2482B]" />
+                    <span>Mon Portefeuille de Parts & Coproduction</span>
+                  </h2>
+                  <p className="text-xs text-stone-500 mt-0.5">
+                    Chaque part détenue soutient la souveraineté culturelle et ouvre droit aux retombées de diffusion.
+                  </p>
                 </div>
 
-                {/* 3. Déconnexion utilisateur */}
-                <div className="pt-4 border-t border-stone-200/80 flex items-center justify-between">
-                  <div>
-                    <span className="text-xs font-semibold text-stone-800 block">Session utilisateur</span>
-                    <span className="text-[11px] text-stone-500">Se déconnecter et revenir à l'accueil</span>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={handleLogout}
-                    className="h-8.5 px-3.5 rounded-xl border border-stone-300 hover:border-red-500 hover:bg-red-50 text-stone-700 hover:text-red-600 text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer active:scale-95 shadow-2xs"
-                  >
-                    <LogOut className="w-3.5 h-3.5" />
-                    <span>Déconnexion</span>
-                  </button>
-                </div>
-
+                <button
+                  onClick={() => onNavigate({ type: 'marketplace', initialTab: 'shares' })}
+                  className="px-4 py-2 rounded-xl bg-[#A2482B] hover:bg-[#8A3B22] text-white text-xs font-bold flex items-center gap-1.5 cursor-pointer shadow-xs self-start sm:self-auto"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span>Acquérir de nouvelles parts</span>
+                </button>
               </div>
 
-            </div>
+              {/* 3 Cartes Métriques Clés */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+                <div className="p-4 rounded-2xl bg-stone-50 border border-stone-200/80 space-y-1">
+                  <span className="text-[11px] font-semibold text-stone-500 uppercase tracking-wider block">
+                    Parts Détenues
+                  </span>
+                  <div className="text-2xl font-bold font-serif text-stone-900 flex items-baseline gap-1.5">
+                    <span>{sharesCount}</span>
+                    <span className="text-xs font-normal text-stone-500 font-sans">parts</span>
+                  </div>
+                  <span className="text-[10px] text-stone-400 block">Entré(e) le {sharesDate}</span>
+                </div>
 
+                <div className="p-4 rounded-2xl bg-stone-50 border border-stone-200/80 space-y-1">
+                  <span className="text-[11px] font-semibold text-stone-500 uppercase tracking-wider block">
+                    Valeur Nominale Estimée
+                  </span>
+                  <div className="text-2xl font-bold font-serif text-[#A2482B] flex items-baseline gap-1.5">
+                    <span>{sharesValue.toLocaleString()}</span>
+                    <span className="text-xs font-normal text-stone-500 font-sans">FCFA</span>
+                  </div>
+                  <span className="text-[10px] text-stone-400 block">≈ {Math.round(sharesValue / 655.957)} €</span>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-stone-50 border border-stone-200/80 space-y-1">
+                  <span className="text-[11px] font-semibold text-stone-500 uppercase tracking-wider block">
+                    Redevances Estimées
+                  </span>
+                  <div className="text-2xl font-bold font-serif text-emerald-700 flex items-baseline gap-1.5">
+                    <span>{sharesDividends.toLocaleString()}</span>
+                    <span className="text-xs font-normal text-stone-500 font-sans">FCFA</span>
+                  </div>
+                  <span className="text-[10px] text-emerald-600 block">Paiements trimestriels réguliers</span>
+                </div>
+              </div>
+
+              {/* Explication pédagogique claire */}
+              <div className="rounded-2xl bg-[#A2482B]/5 border border-[#A2482B]/20 p-4 space-y-2">
+                <h3 className="text-xs font-bold text-[#A2482B] flex items-center gap-1.5">
+                  <ShieldCheck className="w-4 h-4 text-[#A2482B]" />
+                  <span>Actionnariat Populaire & Transparence Généalogique</span>
+                </h3>
+                <p className="text-xs text-stone-700 leading-relaxed">
+                  À partir du Bénin vers le monde entier, les premiers acquéreurs de parts sont les co-bâtisseurs fondateurs.
+                  Vous participez aux décisions lors des assemblées communautaires et suivez en direct l'impact de vos investissements.
+                </p>
+                <div className="pt-2 flex flex-wrap items-center gap-2.5">
+                  <button
+                    onClick={() => onNavigate({ type: 'marketplace' })}
+                    className="px-3 py-1.5 rounded-lg bg-stone-900 text-white text-xs font-semibold hover:bg-stone-800 transition-colors cursor-pointer flex items-center gap-1"
+                  >
+                    <span>Explorer les séries du Marché</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </button>
+                  <button
+                    onClick={() => onNavigate({ type: 'participate' })}
+                    className="px-3 py-1.5 rounded-lg bg-white border border-stone-300 text-stone-700 text-xs font-semibold hover:bg-stone-50 transition-colors cursor-pointer"
+                  >
+                    Lire le manifeste de coproduction
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ========================================================================= */}
+        {/* ONGLET 4 : SÉRIES FAVORITES & FILTRES DU FLUX                             */}
+        {/* ========================================================================= */}
+        {activeTab === 'series' && (
+          <div className="space-y-6 animate-in fade-in duration-150">
+            <div className="bg-white rounded-3xl p-5 sm:p-7 border border-stone-200/90 shadow-xs space-y-5">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-stone-100">
+                <div>
+                  <h2 className="text-base font-bold text-stone-900 font-serif">
+                    Séries Documentaires Favorites
+                  </h2>
+                  <p className="text-xs text-stone-500 mt-0.5">
+                    Sélectionnez les séries qui apparaîtront dans votre fil d'actualité Duo et sur vos écrans d'exploration.
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => onUpdateDocFilter(DOCUMENTARIES.map(d => d.id))}
+                    className="text-xs text-[#A2482B] font-semibold hover:underline cursor-pointer"
+                  >
+                    Tout activer
+                  </button>
+                  <span className="text-stone-300">•</span>
+                  <button
+                    onClick={() => onUpdateDocFilter([])}
+                    className="text-xs text-stone-500 font-semibold hover:underline cursor-pointer"
+                  >
+                    Tout désactiver
+                  </button>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                {DOCUMENTARIES.map((doc) => {
+                  const isChecked = selectedDocFilter.includes(doc.id);
+                  return (
+                    <div
+                      key={doc.id}
+                      onClick={() => {
+                        if (isChecked) {
+                          onUpdateDocFilter(selectedDocFilter.filter(id => id !== doc.id));
+                        } else {
+                          onUpdateDocFilter([...selectedDocFilter, doc.id]);
+                        }
+                      }}
+                      className={`p-3 rounded-2xl border transition-all cursor-pointer flex items-center justify-between gap-2.5 ${
+                        isChecked 
+                          ? 'border-[#A2482B] bg-[#A2482B]/5 ring-1 ring-[#A2482B]' 
+                          : 'border-stone-200 hover:border-stone-300 bg-stone-50/50'
+                      }`}
+                    >
+                      <div className="flex items-center gap-2.5 min-w-0">
+                        <img
+                          src={doc.coverImage}
+                          alt={doc.title}
+                          className="w-10 h-10 rounded-xl object-cover shrink-0 border border-stone-200"
+                        />
+                        <div className="min-w-0">
+                          <p className="text-xs font-bold text-stone-900 truncate">{doc.title}</p>
+                          <p className="text-[10px] text-stone-500 truncate">{doc.subtitle || doc.description}</p>
+                        </div>
+                      </div>
+
+                      <div className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 transition-colors ${
+                        isChecked ? 'border-[#A2482B] bg-[#A2482B] text-white' : 'border-stone-300 bg-white'
+                      }`}>
+                        {isChecked && <Check className="w-3 h-3 stroke-[3]" />}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ========================================================================= */}
+        {/* ONGLET 5 : MESSAGERIE & CONFIDENTIALITÉ                                   */}
+        {/* ========================================================================= */}
+        {activeTab === 'messages' && (
+          <div className="space-y-6 animate-in fade-in duration-150">
+            <div className="bg-white rounded-3xl p-5 sm:p-7 border border-stone-200/90 shadow-xs space-y-5">
+              <div>
+                <h2 className="text-base font-bold text-stone-900 font-serif">
+                  Préférences de Messagerie & Notifications
+                </h2>
+                <p className="text-xs text-stone-500 mt-0.5">
+                  Contrôlez qui peut vous inviter à échanger et vos alertes de contact.
+                </p>
+              </div>
+
+              <div className="space-y-3">
+                {[
+                  { id: 'all', title: 'Tous les membres inscrits', desc: 'Tout utilisateur ou organisation peut vous envoyer une invitation d’échange.' },
+                  { id: 'invitation', title: 'Invitations avec motif validé', desc: 'Seules les sollicitations artistiques ou professionnelles motivées sont transmises.' },
+                  { id: 'none', title: 'Messagerie désactivée', desc: 'Personne ne peut vous contacter en direct via la messagerie.' },
+                ].map((item) => (
+                  <div
+                    key={item.id}
+                    onClick={() => {
+                      setMessagePermission(item.id as any);
+                      localStorage.setItem('yonywood_msg_permission', item.id);
+                      showToast('Préférences de contact mises à jour.');
+                    }}
+                    className={`p-3.5 rounded-2xl border transition-all cursor-pointer flex items-center justify-between ${
+                      messagePermission === item.id
+                        ? 'border-[#A2482B] bg-[#A2482B]/5 ring-1 ring-[#A2482B]'
+                        : 'border-stone-200 hover:border-stone-300 bg-stone-50/50'
+                    }`}
+                  >
+                    <div>
+                      <p className="text-xs font-bold text-stone-900">{item.title}</p>
+                      <p className="text-[11px] text-stone-500 mt-0.5">{item.desc}</p>
+                    </div>
+                    <div className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 ${
+                      messagePermission === item.id ? 'border-[#A2482B] bg-[#A2482B] text-white' : 'border-stone-300 bg-white'
+                    }`}>
+                      {messagePermission === item.id && <Check className="w-3 h-3 stroke-[3]" />}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ========================================================================= */}
+        {/* ONGLET 6 : SÉCURITÉ & COMPTE                                              */}
+        {/* ========================================================================= */}
+        {activeTab === 'security' && (
+          <div className="space-y-6 animate-in fade-in duration-150">
+            <div className="bg-white rounded-3xl p-5 sm:p-7 border border-stone-200/90 shadow-xs space-y-5">
+              <div>
+                <h2 className="text-base font-bold text-stone-900 font-serif">
+                  Sécurité & Paramètres de Connexion
+                </h2>
+                <p className="text-xs text-stone-500 mt-0.5">
+                  Gestion de votre adresse e-mail et de vos identifiants d'accès.
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                <div className="p-4 rounded-2xl bg-stone-50 border border-stone-200/80 space-y-1">
+                  <span className="text-[10px] font-semibold text-stone-400 uppercase tracking-wider block">
+                    Adresse E-mail du Compte
+                  </span>
+                  <p className="text-sm font-semibold text-stone-800 font-mono">{currentUser?.email || 'qoctales@gmail.com'}</p>
+                </div>
+
+                <div className="pt-2">
+                  <button
+                    onClick={() => {
+                      logout();
+                      onNavigate({ type: 'duo_feed' });
+                    }}
+                    className="w-full py-3 rounded-xl border border-red-200 bg-red-50 hover:bg-red-100 text-red-700 text-xs font-bold flex items-center justify-center gap-2 transition-colors cursor-pointer"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    <span>Se déconnecter de YonyWood</span>
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         )}
 
       </main>
+
+      {/* Toast de confirmation temporaire */}
+      {savedToast && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-[#1C1917] text-white text-xs font-semibold py-2.5 px-4 rounded-xl shadow-2xl border border-stone-700 flex items-center gap-2 animate-in fade-in">
+          <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+          <span>{savedToast}</span>
+        </div>
+      )}
+
     </div>
   );
 };

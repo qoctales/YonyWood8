@@ -791,3 +791,185 @@ function hashString(str: string): number {
   }
   return hash;
 }
+
+export interface LineageSearchCandidate {
+  id: string;
+  name: string;
+  handle: string;
+  type: 'INDIVIDUAL' | 'ORGANIZATION';
+  avatarUrl?: string;
+  roleOrSector: string;
+  territory: string;
+}
+
+/**
+ * Recherche des candidats parmi les protagonistes, créateurs et entreprises pour le tagging dans la lignée
+ */
+export function searchLineageCandidates(query: string): LineageSearchCandidate[] {
+  const cleanQ = query.trim().toLowerCase();
+  if (!cleanQ) return [];
+
+  const results: LineageSearchCandidate[] = [];
+
+  // 1. Chercher dans les entreprises (Lumière / Organisations)
+  for (const company of COMPANIES_DATA) {
+    if (
+      company.companyName.toLowerCase().includes(cleanQ) ||
+      (company.category && company.category.toLowerCase().includes(cleanQ)) ||
+      (company.location && company.location.toLowerCase().includes(cleanQ))
+    ) {
+      results.push({
+        id: `org-${company.id}`,
+        name: company.companyName,
+        handle: `@${company.id.replace(/-/g, '_')}`,
+        type: 'ORGANIZATION',
+        avatarUrl: company.photoUrl,
+        roleOrSector: company.category || 'Entreprise Lumière',
+        territory: company.location || 'Bénin'
+      });
+    }
+  }
+
+  // 2. Chercher dans les protagonistes inscrits
+  for (const p of PROTAGONISTS) {
+    if (
+      p.name.toLowerCase().includes(cleanQ) ||
+      (p.role && p.role.toLowerCase().includes(cleanQ)) ||
+      (p.territory && p.territory.toLowerCase().includes(cleanQ))
+    ) {
+      results.push({
+        id: p.id,
+        name: p.name,
+        handle: `@${p.id.replace(/[^a-z0-9]/gi, '_').toLowerCase()}`,
+        type: 'INDIVIDUAL',
+        avatarUrl: p.photoUrl || p.photo,
+        roleOrSector: p.role,
+        territory: `${p.territory}, ${p.country}`
+      });
+    }
+  }
+
+  // 3. Chercher dans les utilisateurs enregistrés dans localStorage
+  try {
+    const savedUsers = localStorage.getItem('yonywood_registered_users');
+    if (savedUsers) {
+      const parsed: any[] = JSON.parse(savedUsers);
+      for (const u of parsed) {
+        if (!results.some(r => r.id === u.id)) {
+          if (
+            u.name?.toLowerCase().includes(cleanQ) ||
+            u.email?.toLowerCase().includes(cleanQ) ||
+            u.handle?.toLowerCase().includes(cleanQ)
+          ) {
+            results.push({
+              id: u.id,
+              name: u.name,
+              handle: u.handle || `@${u.name.toLowerCase().replace(/[^a-z0-9]/g, '_')}`,
+              type: u.accountType || 'INDIVIDUAL',
+              avatarUrl: u.avatarUrl,
+              roleOrSector: u.accountType === 'ORGANIZATION' 
+                ? (u.orgDetails?.sector || 'Organisation') 
+                : (u.individualDetails?.profession || u.role || 'Membre'),
+              territory: `${u.territory || 'Cotonou'}, ${u.country || 'Bénin'}`
+            });
+          }
+        }
+      }
+    }
+  } catch {
+    // ignore
+  }
+
+  return results.slice(0, 10);
+}
+
+const LINEAGE_INVITATIONS_KEY = 'yonywood_lineage_invitations';
+
+export interface StoredLineageInvitation {
+  id: string;
+  fromUserId: string;
+  fromUserName: string;
+  fromUserAvatar?: string;
+  toUserId?: string;
+  toUserName?: string;
+  toUserAvatar?: string;
+  toUserEmail?: string;
+  relationType: 'ASCENDANT' | 'DESCENDANT';
+  relationLabel: string;
+  status: 'PENDING' | 'ACCEPTED' | 'DECLINED';
+  createdAt: string;
+  acceptedAt?: string;
+}
+
+export function getStoredLineageInvitations(): StoredLineageInvitation[] {
+  try {
+    const raw = localStorage.getItem(LINEAGE_INVITATIONS_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch {
+    // ignore
+  }
+  // Démo initiale : Roméo a reçu une invitation de Mahougnon Zounon
+  return [
+    {
+      id: 'inv-demo-1',
+      fromUserId: 'p-mahougnon',
+      fromUserName: 'Mahougnon Zounon',
+      fromUserAvatar: '/assets/duos/mahougnon_esu_portrait_1791701582891.jpg',
+      toUserId: 'usr-admin-romeo',
+      toUserName: 'Romeo Nonvide',
+      relationType: 'ASCENDANT',
+      relationLabel: 'Gardien spirituel & Maître inspirateur',
+      status: 'PENDING',
+      createdAt: '2026-03-24'
+    },
+    {
+      id: 'inv-demo-2',
+      fromUserId: 'usr-org-biosolaire',
+      fromUserName: 'Bio Solaire Bénin',
+      fromUserAvatar: '/assets/images/bio_solaire_1792933744556.jpg',
+      toUserId: 'usr-admin-romeo',
+      toUserName: 'Romeo Nonvide',
+      relationType: 'DESCENDANT',
+      relationLabel: 'Entreprise partenaire mise en Lumière',
+      status: 'ACCEPTED',
+      createdAt: '2026-03-10',
+      acceptedAt: '2026-03-12'
+    }
+  ];
+}
+
+export function saveLineageInvitation(inv: Omit<StoredLineageInvitation, 'id' | 'createdAt' | 'status'>): StoredLineageInvitation {
+  const currentList = getStoredLineageInvitations();
+  const newInv: StoredLineageInvitation = {
+    ...inv,
+    id: `inv-${Date.now()}`,
+    status: 'PENDING',
+    createdAt: new Date().toISOString().split('T')[0]
+  };
+  const updated = [newInv, ...currentList];
+  try {
+    localStorage.setItem(LINEAGE_INVITATIONS_KEY, JSON.stringify(updated));
+  } catch {
+    // ignore
+  }
+  return newInv;
+}
+
+export function respondToLineageInvitation(id: string, accept: boolean): void {
+  const currentList = getStoredLineageInvitations();
+  const updated = currentList.map(inv => {
+    if (inv.id === id) {
+      return {
+        ...inv,
+        status: accept ? ('ACCEPTED' as const) : ('DECLINED' as const),
+        acceptedAt: accept ? new Date().toISOString().split('T')[0] : undefined
+      };
+    }
+    return inv;
+  });
+  try {
+    localStorage.setItem(LINEAGE_INVITATIONS_KEY, JSON.stringify(updated));
+  } catch {
+    // ignore
+  }
+}

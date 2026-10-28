@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   Play, 
   Pause, 
@@ -14,14 +14,21 @@ import {
   ChevronRight,
   ArrowUp,
   CornerDownRight,
-  RotateCcw
+  RotateCcw,
+  UserPlus,
+  Search,
+  AtSign
 } from 'lucide-react';
 import { 
   getLineageTree, 
   getChildrenForMember, 
   LineageMember, 
-  LINEAGE_COLORS 
+  LINEAGE_COLORS,
+  searchLineageCandidates,
+  saveLineageInvitation,
+  LineageSearchCandidate
 } from '../utils/lineageService';
+import { useAuth } from '../services/authContext';
 import { SequenceCreditsModal } from './SequenceCreditsModal';
 import { getSeriesCredits } from '../data/seriesTeamData';
 import { ProfileSoloIcon, TvPlayerIcon } from './YonywoodBrandIcons';
@@ -65,6 +72,48 @@ export const ProfileLineageFrise: React.FC<ProfileLineageFriseProps> = ({
   const [isQuestionModalOpen, setIsQuestionModalOpen] = useState(false);
   const [isCreditsModalOpen, setIsCreditsModalOpen] = useState(false);
   const [copied, setCopied] = useState<boolean>(false);
+
+  const { currentUser } = useAuth();
+  const isCurrentUserOwner = !currentUser || currentUser.id === focalMemberId || focalMemberId === 'usr-admin-romeo' || focalMemberId.toLowerCase().includes('romeo');
+
+  // Modale d'invitation / tag de membre ou d'organisation dans sa lignée
+  const [isTagModalOpen, setIsTagModalOpen] = useState<boolean>(false);
+  const [tagRelationType, setTagRelationType] = useState<'ASCENDANT' | 'DESCENDANT'>('DESCENDANT');
+  const [tagRelationLabel, setTagRelationLabel] = useState<string>('Disciple & Coopté');
+  const [tagSearchQuery, setTagSearchQuery] = useState<string>('');
+  const [selectedCandidate, setSelectedCandidate] = useState<LineageSearchCandidate | null>(null);
+  const [inviteEmail, setInviteEmail] = useState<string>('');
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  const searchResults = React.useMemo(() => {
+    return searchLineageCandidates(tagSearchQuery);
+  }, [tagSearchQuery]);
+
+  const handleSendInvitation = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedCandidate && !inviteEmail.trim()) {
+      return;
+    }
+
+    saveLineageInvitation({
+      fromUserId: currentUser?.id || 'usr-admin-romeo',
+      fromUserName: currentUser?.name || 'Romeo Nonvide',
+      fromUserAvatar: currentUser?.avatarUrl || '/assets/images/romeo_avatar_1792698425983.jpg',
+      toUserId: selectedCandidate?.id,
+      toUserName: selectedCandidate?.name || inviteEmail.trim(),
+      toUserAvatar: selectedCandidate?.avatarUrl,
+      toUserEmail: selectedCandidate ? undefined : inviteEmail.trim(),
+      relationType: tagRelationType,
+      relationLabel: tagRelationLabel
+    });
+
+    setIsTagModalOpen(false);
+    setSelectedCandidate(null);
+    setTagSearchQuery('');
+    setInviteEmail('');
+    setToastMessage(`Demande de lien ${tagRelationType === 'ASCENDANT' ? 'ascendant' : 'descendant'} envoyée avec succès !`);
+    setTimeout(() => setToastMessage(null), 3500);
+  };
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -194,33 +243,76 @@ export const ProfileLineageFrise: React.FC<ProfileLineageFriseProps> = ({
       id="profile-lineage-frise-container"
       className="relative w-full max-w-lg mx-auto flex-1 min-h-0 h-full flex flex-col items-center justify-between bg-white text-stone-900 animate-in fade-in duration-200 select-none overflow-hidden"
     >
-      {/* Barre de retour en arrière si l'utilisateur a navigué dans l'arbre */}
-      {navHistory.length > 0 && (
-        <div className="w-full px-4 pt-3 pb-1 flex items-center justify-between bg-white/95 backdrop-blur-xs border-b border-stone-100 z-30 shrink-0">
-          <button
-            type="button"
-            onClick={handleGoBack}
-            className="flex items-center gap-1.5 text-xs font-semibold text-[#A2482B] hover:text-[#C85A32] transition-colors cursor-pointer"
-          >
-            <ChevronLeft className="w-4 h-4" />
-            <span>Revenir au membre précédent</span>
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              setFocalMemberId(personIdOrName);
-              setNavHistory([]);
-              setExpandedChildId(null);
-              setExpandedGrandchildId(null);
-            }}
-            className="text-[11px] text-stone-500 hover:text-stone-800 flex items-center gap-1 transition-colors cursor-pointer"
-            title="Revenir au profil initial"
-          >
-            <RotateCcw className="w-3 h-3" />
-            <span>Racine</span>
-          </button>
+      {/* Toast de confirmation */}
+      {toastMessage && (
+        <div className="absolute top-3 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-2xl bg-[#1C1917] text-white text-xs font-semibold shadow-xl border border-stone-700 animate-in fade-in flex items-center gap-2">
+          <Sparkles className="w-4 h-4 text-amber-400 shrink-0" />
+          <span>{toastMessage}</span>
         </div>
       )}
+
+      {/* Barre supérieure avec contrôles, retour et bouton Relier dans ma lignée */}
+      <div className="w-full px-4 py-2.5 flex items-center justify-between bg-white/95 backdrop-blur-xs border-b border-stone-100 z-30 shrink-0">
+        <div className="flex items-center gap-2">
+          {navHistory.length > 0 ? (
+            <button
+              type="button"
+              onClick={handleGoBack}
+              className="flex items-center gap-1.5 text-xs font-semibold text-[#A2482B] hover:text-[#C85A32] transition-colors cursor-pointer"
+            >
+              <ChevronLeft className="w-4 h-4" />
+              <span>Revenir en arrière</span>
+            </button>
+          ) : (
+            <div className="flex items-center gap-1.5 text-stone-700">
+              <span className="font-editorial text-xs font-bold text-[#A2482B]">Lignée vivante</span>
+              <span className="text-[10px] text-stone-400">·</span>
+              <span className="text-[11px] text-stone-500 font-medium truncate max-w-[140px] sm:max-w-[200px]">{focalMember.name}</span>
+            </div>
+          )}
+        </div>
+
+        <div className="flex items-center gap-2">
+          {isCurrentUserOwner && (
+            <button
+              type="button"
+              onClick={() => setIsTagModalOpen(true)}
+              className="px-3 py-1.5 rounded-full bg-[#A2482B] hover:bg-[#8A3B22] text-white text-[11px] font-bold shadow-xs transition-all active:scale-95 cursor-pointer flex items-center gap-1.5"
+              title="Inviter ou taguer un membre dans ma lignée"
+            >
+              <UserPlus className="w-3.5 h-3.5" />
+              <span>Relier dans ma lignée</span>
+            </button>
+          )}
+
+          {navHistory.length > 0 && (
+            <button
+              type="button"
+              onClick={() => {
+                setFocalMemberId(personIdOrName);
+                setNavHistory([]);
+                setExpandedChildId(null);
+                setExpandedGrandchildId(null);
+              }}
+              className="p-1.5 text-stone-400 hover:text-stone-800 rounded-full hover:bg-stone-100 transition-colors cursor-pointer"
+              title="Revenir au profil initial"
+            >
+              <RotateCcw className="w-3.5 h-3.5" />
+            </button>
+          )}
+
+          {onClose && (
+            <button
+              type="button"
+              onClick={onClose}
+              className="p-1.5 rounded-full text-stone-400 hover:text-stone-800 hover:bg-stone-100 transition-colors cursor-pointer"
+              title="Fermer"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          )}
+        </div>
+      </div>
 
       {/* Conteneur principal avec défilement fluide et fond blanc pur */}
       <div 
@@ -1006,6 +1098,229 @@ export const ProfileLineageFrise: React.FC<ProfileLineageFriseProps> = ({
               </div>
             </div>
           )}
+        </div>
+      )}
+
+      {/* MODALE D'INVITATION & TAG DANS LA LIGNÉE (Ascendant / Descendant & Individu / Organisation) */}
+      {isTagModalOpen && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200 overflow-y-auto"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setIsTagModalOpen(false);
+          }}
+        >
+          <div 
+            className="relative w-full max-w-md bg-white rounded-3xl p-5 sm:p-6 shadow-2xl border border-stone-200 text-stone-900 animate-in zoom-in-95 duration-150 my-auto max-h-[90dvh] flex flex-col"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between pb-3 border-b border-stone-100 shrink-0">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-full bg-[#A2482B]/10 text-[#A2482B] flex items-center justify-center">
+                  <UserPlus className="w-4 h-4" />
+                </div>
+                <div>
+                  <h3 className="font-editorial text-base font-bold text-stone-900">
+                    Relier dans ma lignée
+                  </h3>
+                  <p className="text-[11px] text-stone-500">
+                    Tisser une filiation avec un individu ou une organisation
+                  </p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsTagModalOpen(false)}
+                className="p-1.5 rounded-full hover:bg-stone-100 text-stone-400 hover:text-stone-700 transition-colors cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <form onSubmit={handleSendInvitation} className="space-y-4 pt-4 overflow-y-auto pr-1">
+              {/* 1. Sens de la relation */}
+              <div>
+                <label className="block text-xs font-semibold text-stone-700 mb-1.5">
+                  Type de filiation
+                </label>
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setTagRelationType('ASCENDANT');
+                      setTagRelationLabel('Mentor & Maître inspirateur');
+                    }}
+                    className={`p-2.5 rounded-2xl border text-left transition-all cursor-pointer flex flex-col gap-0.5 ${
+                      tagRelationType === 'ASCENDANT'
+                        ? 'border-[#C89B3C] bg-[#C89B3C]/10 shadow-xs ring-1 ring-[#C89B3C]'
+                        : 'border-stone-200 hover:border-stone-300 bg-stone-50/80'
+                    }`}
+                  >
+                    <span className="text-xs font-bold text-stone-900 flex items-center gap-1.5">
+                      <ArrowUp className="w-3.5 h-3.5 text-[#C89B3C]" />
+                      <span>Mon Ascendant</span>
+                    </span>
+                    <span className="text-[10px] text-stone-500 leading-tight">
+                      Père, mère, maître, mentor, entreprise formatrice
+                    </span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setTagRelationType('DESCENDANT');
+                      setTagRelationLabel('Disciple & Coopté');
+                    }}
+                    className={`p-2.5 rounded-2xl border text-left transition-all cursor-pointer flex flex-col gap-0.5 ${
+                      tagRelationType === 'DESCENDANT'
+                        ? 'border-[#A2482B] bg-[#A2482B]/10 shadow-xs ring-1 ring-[#A2482B]'
+                        : 'border-stone-200 hover:border-stone-300 bg-stone-50/80'
+                    }`}
+                  >
+                    <span className="text-xs font-bold text-stone-900 flex items-center gap-1.5">
+                      <CornerDownRight className="w-3.5 h-3.5 text-[#A2482B]" />
+                      <span>Mon Descendant</span>
+                    </span>
+                    <span className="text-[10px] text-stone-500 leading-tight">
+                      Enfant, élève, disciple, filiale, filleul coopté
+                    </span>
+                  </button>
+                </div>
+              </div>
+
+              {/* 2. Rôle ou titre de la filiation */}
+              <div>
+                <label className="block text-xs font-medium text-stone-700 mb-1">
+                  Intitulé du lien symbolique
+                </label>
+                <input
+                  type="text"
+                  value={tagRelationLabel}
+                  onChange={(e) => setTagRelationLabel(e.target.value)}
+                  placeholder="Ex : Maître artisan, Guide spirituel, Filiale..."
+                  className="w-full h-10 px-3.5 rounded-xl bg-stone-50 border border-stone-300 text-stone-900 text-xs outline-hidden focus:border-[#A2482B]"
+                  required
+                />
+              </div>
+
+              {/* 3. Recherche par Tag (Membre ou Organisation existante) */}
+              <div>
+                <label className="block text-xs font-medium text-stone-700 mb-1">
+                  Trouver et taguer un membre ou une organisation sur YonyWood
+                </label>
+                <div className="relative">
+                  <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
+                  <input
+                    type="text"
+                    value={tagSearchQuery}
+                    onChange={(e) => {
+                      setTagSearchQuery(e.target.value);
+                      if (selectedCandidate) setSelectedCandidate(null);
+                    }}
+                    placeholder="Tapez un nom, un @pseudo ou une marque (ex: Bio Solaire, Mahougnon...)"
+                    className="w-full h-10 pl-10 pr-4 rounded-xl bg-stone-50 border border-stone-300 text-stone-900 text-xs placeholder:text-stone-400 outline-hidden focus:border-[#A2482B]"
+                  />
+                </div>
+
+                {/* Résultats de recherche instantanés */}
+                {tagSearchQuery.trim() && !selectedCandidate && (
+                  <div className="mt-1.5 max-h-40 overflow-y-auto border border-stone-200 rounded-xl bg-white shadow-lg divide-y divide-stone-100">
+                    {searchResults.length > 0 ? (
+                      searchResults.map((cand) => (
+                        <div
+                          key={cand.id}
+                          onClick={() => {
+                            setSelectedCandidate(cand);
+                            setTagSearchQuery(cand.name);
+                          }}
+                          className="p-2 sm:p-2.5 hover:bg-amber-50/50 flex items-center justify-between cursor-pointer transition-colors"
+                        >
+                          <div className="flex items-center gap-2.5 min-w-0">
+                            <img
+                              src={cand.avatarUrl || '/assets/images/romeo_avatar_1792698425983.jpg'}
+                              alt={cand.name}
+                              className={`w-7 h-7 object-cover shrink-0 ${cand.type === 'ORGANIZATION' ? 'rounded-lg border border-amber-300' : 'rounded-full'}`}
+                            />
+                            <div className="min-w-0">
+                              <p className="text-xs font-bold text-stone-900 truncate">
+                                {cand.name}
+                              </p>
+                              <p className="text-[10px] text-stone-500 truncate">
+                                {cand.type === 'ORGANIZATION' ? '🏛️ Organisation' : '👤 Individu'} · {cand.roleOrSector}
+                              </p>
+                            </div>
+                          </div>
+                          <span className="text-[10px] font-bold text-[#A2482B] shrink-0 ml-2">
+                            Taguer
+                          </span>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="p-3 text-center text-xs text-stone-500">
+                        Aucun membre trouvé sous ce nom. Vous pouvez renseigner son e-mail ci-dessous.
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Membre sélectionné */}
+                {selectedCandidate && (
+                  <div className="mt-2 p-2.5 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-between">
+                    <div className="flex items-center gap-2 min-w-0">
+                      <Check className="w-4 h-4 text-emerald-600 shrink-0" />
+                      <div className="min-w-0">
+                        <span className="text-xs font-bold text-emerald-900 truncate block">
+                          {selectedCandidate.name} ({selectedCandidate.type === 'ORGANIZATION' ? 'Organisation' : 'Membre'})
+                        </span>
+                        <span className="text-[10.5px] text-emerald-700">{selectedCandidate.territory}</span>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSelectedCandidate(null);
+                        setTagSearchQuery('');
+                      }}
+                      className="text-[11px] text-stone-500 hover:text-stone-900 underline ml-2 shrink-0 cursor-pointer"
+                    >
+                      Changer
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              {/* 4. Si non sélectionné : Option d'invitation externe */}
+              {!selectedCandidate && (
+                <div className="pt-1">
+                  <div className="relative flex items-center justify-center my-2">
+                    <div className="border-t border-stone-200 w-full" />
+                    <span className="bg-white px-2 text-[10px] text-stone-400 uppercase tracking-wider">
+                      ou invitation externe
+                    </span>
+                  </div>
+
+                  <label className="block text-xs font-medium text-stone-700 mb-1">
+                    Adresse e-mail ou téléphone de la personne
+                  </label>
+                  <input
+                    type="text"
+                    value={inviteEmail}
+                    onChange={(e) => setInviteEmail(e.target.value)}
+                    placeholder="contact@exemple.com ou +229..."
+                    className="w-full h-10 px-3.5 rounded-xl bg-stone-50 border border-stone-300 text-stone-900 text-xs outline-hidden focus:border-[#A2482B]"
+                  />
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={!selectedCandidate && !inviteEmail.trim()}
+                className="w-full h-11 rounded-xl bg-[#A2482B] hover:bg-[#8A3B22] text-white text-xs font-bold shadow-md shadow-[#A2482B]/20 flex items-center justify-center gap-2 transition-all cursor-pointer active:scale-98 disabled:opacity-40 disabled:cursor-not-allowed mt-3"
+              >
+                <UserPlus className="w-4 h-4" />
+                <span>Envoyer l'invitation d'affiliation</span>
+              </button>
+            </form>
+          </div>
         </div>
       )}
     </div>

@@ -489,18 +489,86 @@ export interface ExplorerStoryItem {
 }
 
 export type UserRole = 'ADMIN' | 'CREATOR' | 'USER';
+export type AccountType = 'INDIVIDUAL' | 'ORGANIZATION';
+export type OrgCategoryType = 'ENTERPRISE' | 'ASSOCIATION' | 'COOPERATIVE' | 'INSTITUTION';
 
 export interface UserAccount {
   id: string;
   email: string;
   name: string;
   role: UserRole;
+  accountType?: AccountType;
+  handle?: string;
   avatarUrl?: string;
+  coverUrl?: string;
   bio?: string;
+  catchphrase?: string;
+  city?: string;
   territory?: string;
   country?: string;
   sharesCount?: number;
+  sharesAcquiredDate?: string;
+  sharesInvestedAmount?: number;
+  sharesEstimatedDividends?: number;
+  phone?: string;
   createdAt: string;
+  // Spécifique Organisation (pour Lumière)
+  orgDetails?: {
+    legalName?: string;
+    orgType?: OrgCategoryType;
+    sector?: string;
+    legalRepresentative?: string;
+    foundationYear?: number;
+    website?: string;
+    accreditedMembers?: string[];
+  };
+  // Spécifique Individu
+  individualDetails?: {
+    firstName?: string;
+    lastName?: string;
+    profession?: string;
+  };
+}
+
+export interface UserVideoSubmission {
+  id: string;
+  userId: string;
+  userType: AccountType;
+  authorName: string;
+  authorAvatarUrl?: string;
+  title: string;
+  synopsis: string;
+  universe: string;
+  videoUrl?: string;
+  thumbnailUrl?: string;
+  partId?: 'part-a' | 'part-b';
+  credits?: {
+    realisation?: string[];
+    protagonistes?: string[];
+    postProduction?: string[];
+  };
+  status: 'PENDING' | 'APPROVED' | 'REJECTED';
+  rejectionReason?: string;
+  createdAt: string;
+  reviewedAt?: string;
+}
+
+export interface LineageRelationItem {
+  id: string;
+  fromUserId: string;
+  fromUserName: string;
+  fromUserAvatar?: string;
+  fromUserType?: AccountType;
+  toUserId?: string;
+  toUserName?: string;
+  toUserAvatar?: string;
+  toUserType?: AccountType;
+  toUserEmail?: string;
+  relationType: 'ASCENDANT' | 'DESCENDANT';
+  relationLabel: string;
+  status: 'PENDING' | 'ACCEPTED' | 'DECLINED';
+  createdAt: string;
+  acceptedAt?: string;
 }
 
 export interface ReportItem {
