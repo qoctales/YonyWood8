@@ -55,95 +55,95 @@ export interface ExplorerCatalogItem {
   iconName?: string;
 }
 
-// 1. SÉRIES DOCUMENTAIRES
+// 1. SÉRIES DOCUMENTAIRES (8 séries officielles)
 const seriesList: ExplorerCatalogItem[] = [
   {
     "id": "jesus-legba",
     "category": "series",
     "title": "Vodun Rays ‹ › Autre Foi",
-    "subtitle": "Deux traditions. Une même question de foi.",
+    "subtitle": "Gardiens des traditions vs Fidèles & religieux",
     "question": "Qu’est-ce qui dans votre foi la plus intime vous relie à ce qui vous dépasse et vous rapproche des autres ?",
-    "photoUrl": "/assets/posters/Esu < > Jesus.png",
-    "badge": "16 pionniers cooptés",
+    "photoUrl": "/assets/posters/vodun-autre-foi.png",
+    "badge": "32 protagonistes",
     "accentColor": "#D97706",
     "iconName": "16-series/jesus-legba"
   },
   {
-    "id": "finagnon-qosqorico",
-    "category": "series",
-    "title": "Bénin < > Le Monde",
-    "subtitle": "Bénin face au monde. Deux territoires. Une même réflexion sur ce qui nous relie à un lieu.",
-    "question": "Quel est ce lien invisible et indestructible qui vous unit charnellement à la terre de vos ancêtres ?",
-    "photoUrl": "/assets/posters/Benin < >.jpg",
-    "badge": "16 pionniers cooptés",
-    "accentColor": "#10B981",
-    "iconName": "16-series/finagnon-qosqorico"
-  },
-  {
-    "id": "blacks-one-beyond-eve",
-    "category": "series",
-    "title": "Blacks One < > Beyond Eve",
-    "subtitle": "La mémoire originelle, la sororité et la diaspora.",
-    "question": "Quelle blessure ou fierté héritée de vos mères portez-vous comme un flambeau dans votre existence ?",
-    "photoUrl": "/assets/posters/Blacks One < > Beyond Eve.png",
-    "badge": "16 pionniers cooptés",
-    "accentColor": "#EC4899",
-    "iconName": "16-series/blacks-one-beyond-eve"
-  },
-  {
-    "id": "dixeat-fiat-luxe",
-    "category": "series",
-    "title": "Fiat Luxe < > Sweet Street",
-    "subtitle": "Quand la matière brute devient or, goût et lumière.",
-    "question": "À quel instant précis avez-vous compris que transformer la matière brute était un acte de pure alchimie spirituelle ?",
-    "photoUrl": "/assets/posters/Fiat Luxe < > Street.jpg",
-    "badge": "16 pionniers cooptés",
-    "accentColor": "#F59E0B",
-    "iconName": "16-series/dixeat-fiat-luxe"
-  },
-  {
     "id": "roots-routes",
     "category": "series",
-    "title": "Roots < > Routes",
-    "subtitle": "L’ancrage ancestral face à la traversée des frontières et des horizons.",
+    "title": "Roots ‹ › Routes",
+    "subtitle": "Ancrés au pays vs Rentrés de la diaspora",
     "question": "L’ancrage dans ses racines ou l’envol sur les routes : où se forge votre véritable identité ?",
-    "photoUrl": "/roots-routes.jpg",
-    "badge": "16 pionniers cooptés",
+    "photoUrl": "/assets/posters/roots-routes.jpg",
+    "badge": "32 protagonistes",
     "accentColor": "#0284C7",
     "iconName": "16-series/roots-routes"
   },
   {
-    "id": "other-eyes-sixth-sense",
+    "id": "coaching-phd",
     "category": "series",
-    "title": "Other Sights < > Third Eye",
-    "subtitle": "La perception intuitive et les mémoires subtiles du vivant.",
-    "question": "Comment développez-vous l’écoute intérieure et la sensibilité aux énergies invisibles ?",
-    "photoUrl": "/assets/posters/Other Eyes < > Third Eye.png",
-    "badge": "16 pionniers cooptés",
+    "title": "Coaching ‹ › PhD",
+    "subtitle": "Coachs & gens d'action vs Docteurs & universitaires",
+    "question": "L’instinct pratique du terrain ou la rigueur de la thèse : comment transformez-vous le monde ?",
+    "photoUrl": "/assets/posters/coaching-phd.png",
+    "badge": "32 protagonistes",
+    "accentColor": "#F59E0B",
+    "iconName": "16-series/coaching-phd"
+  },
+  {
+    "id": "fiat-luxe-builders",
+    "category": "series",
+    "title": "Fiat Luxe ‹ › Builders",
+    "subtitle": "Créateurs d'art & bijoutiers vs Architectes & entrepreneurs",
+    "question": "L’orfèvrerie du millimètre ou la force des fondations : que construisez-vous qui résiste au temps ?",
+    "photoUrl": "/assets/posters/fiat-luxe-builders.png",
+    "badge": "32 protagonistes",
+    "accentColor": "#EAB308",
+    "iconName": "16-series/fiat-luxe-builders"
+  },
+  {
+    "id": "blacks-one-amazones",
+    "category": "series",
+    "title": "Blacks One ‹ › Amazones",
+    "subtitle": "Mémoire masculine noire vs Puissance et souveraineté des femmes",
+    "question": "Comment affirmez-vous votre dignité et votre souveraineté intime face aux tempêtes de l’Histoire ?",
+    "photoUrl": "/assets/posters/blacks-one-amazones.png",
+    "badge": "32 protagonistes",
+    "accentColor": "#EC4899",
+    "iconName": "16-series/blacks-one-amazones"
+  },
+  {
+    "id": "finagnon-qosqorico",
+    "category": "series",
+    "title": "Bénin ‹ › Le Monde",
+    "subtitle": "Défenseurs du terroir/culture béninoise vs Porteurs d'identités du monde",
+    "question": "Quel est ce lien invisible et indestructible qui vous unit charnellement à votre terre et votre terroir ?",
+    "photoUrl": "/assets/posters/benin-monde.jpg",
+    "badge": "32 protagonistes",
+    "accentColor": "#10B981",
+    "iconName": "16-series/finagnon-qosqorico"
+  },
+  {
+    "id": "baobab-bambou",
+    "category": "series",
+    "title": "Baobab ‹ › Bambou",
+    "subtitle": "Mémoire & enracinement des aînés vs Agilité & audace de la jeunesse",
+    "question": "La solidité des racines centenaires ou la souplesse du vent nouveau : quelle sagesse guide vos pas ?",
+    "photoUrl": "/assets/posters/baobab-bambou.jpg",
+    "badge": "32 protagonistes",
+    "accentColor": "#84CC16",
+    "iconName": "16-series/baobab-bambou"
+  },
+  {
+    "id": "pictures-words",
+    "category": "series",
+    "title": "Pictures ‹ › Words",
+    "subtitle": "Créateurs d'arts visuels vs Maîtres du verbe et de la parole",
+    "question": "L’image qui fige le mystère ou la parole scandée qui réveille les consciences : comment touchez-vous l’âme ?",
+    "photoUrl": "/assets/posters/pictures-words.jpg",
+    "badge": "32 protagonistes",
     "accentColor": "#8B5CF6",
-    "iconName": "16-series/other-eyes-sixth-sense"
-  },
-  {
-    "id": "builders-seekers",
-    "category": "series",
-    "title": "Builders < > Seekers",
-    "subtitle": "La rigueur de ceux qui bâtissent face à la quête de ceux qui cherchent le sens.",
-    "question": "Bâtir pierre par pierre ou chercher sans cesse l’horizon : quelle trace laissez-vous au monde ?",
-    "photoUrl": "/assets/posters/Builders < > Seekers.png",
-    "badge": "16 pionniers cooptés",
-    "accentColor": "#D97706",
-    "iconName": "16-series/builders-seekers"
-  },
-  {
-    "id": "focus-phd",
-    "category": "series",
-    "title": "Pictures < > PhD",
-    "subtitle": "Le regard sensible qui capte l’instant < > la rigueur de la recherche qui sonde l’universel.",
-    "question": "Quel a été ce moment précis où votre travail a fait surgir une vérité qui a transformé votre regard ?",
-    "photoUrl": "/assets/posters/Focus < >  PhD.jpg",
-    "badge": "16 pionniers cooptés",
-    "accentColor": "#B45309",
-    "iconName": "16-series/focus-phd"
+    "iconName": "16-series/pictures-words"
   }
 ];
 

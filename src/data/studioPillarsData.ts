@@ -43,66 +43,66 @@ export const STUDIO_PILLARS: StudioPillar[] = [
       {
         id: 'jesus-legba',
         title: 'Vodun Rays ‹ › Autre Foi',
-        subtitle: 'Deux traditions spirituelles face aux épreuves de la foi et au mystère.',
+        subtitle: 'Gardiens des traditions ancestrales face aux fidèles de foi révélée.',
         question: 'Comment votre rapport au sacré ou à la foi vous aide-t-il à traverser le mystère et les épreuves ?',
-        posterUrl: '/assets/posters/Esu < > Jesus.png',
+        posterUrl: '/assets/posters/vodun-autre-foi.jpg',
+        videoUrl: STOCK_VIDEOS[0]
+      },
+      {
+        id: 'roots-routes',
+        title: 'Roots ‹ › Routes',
+        subtitle: 'Ancrés sur la terre natale face aux voyageurs de la diaspora.',
+        question: 'L’ancrage dans ses racines ou l’envol sur les routes : où se forge votre véritable identité ?',
+        posterUrl: '/assets/posters/roots-routes.jpg',
+        videoUrl: STOCK_VIDEOS[2]
+      },
+      {
+        id: 'coaching-phd',
+        title: 'Coaching ‹ › PhD',
+        subtitle: 'Coachs, mentors & gens d’action face aux chercheurs, docteurs & universitaires.',
+        question: 'L’instinct pratique du terrain ou la rigueur de la thèse : comment transformez-vous le monde ?',
+        posterUrl: '/assets/posters/coaching-phd.jpg',
+        videoUrl: STOCK_VIDEOS[3]
+      },
+      {
+        id: 'fiat-luxe-builders',
+        title: 'Fiat Luxe ‹ › Builders',
+        subtitle: 'Artisans d’art, joailliers & esthètes du détail face aux architectes & bâtisseurs.',
+        question: 'L’orfèvrerie du millimètre ou la force des fondations : que construisez-vous qui résiste au temps ?',
+        posterUrl: '/assets/posters/fiat-luxe-builders.jpg',
+        videoUrl: STOCK_VIDEOS[1]
+      },
+      {
+        id: 'blacks-one-amazones',
+        title: 'Blacks One ‹ › Amazones',
+        subtitle: 'Mémoire & souveraineté masculine noire face à la puissance & au courage des femmes.',
+        question: 'Comment affirmez-vous votre dignité et votre souveraineté intime face aux tempêtes de l’Histoire ?',
+        posterUrl: '/assets/posters/blacks-one-amazones.jpg',
         videoUrl: STOCK_VIDEOS[0]
       },
       {
         id: 'benin-monde',
         title: 'Bénin ‹ › Le Monde',
-        subtitle: 'Bénin face au monde : pêcheurs toffinou et paysans des terres sacrées.',
+        subtitle: 'Défenseurs du terroir et de la culture béninoise face aux cultures du reste du monde.',
         question: 'Quel est votre lien intime avec la terre ou l’eau qui nourrit votre communauté ?',
-        posterUrl: '/assets/posters/Benin < >.jpg',
+        posterUrl: '/assets/posters/benin-monde.jpg',
         videoUrl: STOCK_VIDEOS[1]
       },
       {
-        id: 'roots-routes',
-        title: 'Roots ‹ › Routes',
-        subtitle: 'L’ancrage ancestral face à la traversée des frontières et des horizons.',
-        question: 'L’ancrage dans ses racines ou l’envol sur les routes : où se forge votre véritable identité ?',
-        posterUrl: '/roots-routes.jpg',
+        id: 'baobab-bambou',
+        title: 'Baobab ‹ › Bambou',
+        subtitle: 'Mémoire & enracinement des aînés face à l’agilité & l’audace de la jeunesse.',
+        question: 'La solidité des racines centenaires ou la souplesse du vent nouveau : quelle sagesse guide vos pas ?',
+        posterUrl: '/assets/posters/baobab-bambou.jpg',
         videoUrl: STOCK_VIDEOS[2]
       },
       {
-        id: 'builders-seekers',
-        title: 'Builders ‹ › Seekers',
-        subtitle: 'La rigueur de ceux qui bâtissent face à la quête de ceux qui cherchent le sens.',
-        question: 'Bâtir pierre par pierre ou chercher sans cesse l’horizon : quelle trace laissez-vous au monde ?',
-        posterUrl: '/assets/posters/Builders < > Seekers.png',
-        videoUrl: STOCK_VIDEOS[3]
-      },
-      {
-        id: 'pictures-phd',
-        title: 'Pictures ‹ › PhD',
-        subtitle: 'Le regard photographique de l’instant face à la rigueur de la recherche.',
-        question: 'Quel instant décisif a fait surgir la vérité qui a transformé à jamais votre regard ?',
-        posterUrl: '/assets/posters/Focus < >  PhD.jpg',
+        id: 'pictures-words',
+        title: 'Pictures ‹ › Words',
+        subtitle: 'Créateurs du regard visuel face aux maîtres du verbe, de l’écriture et du slam.',
+        question: 'L’image qui fige l’instant ou le mot qui réveille la conscience : comment racontez-vous la vérité ?',
+        posterUrl: '/assets/posters/pictures-words.jpg',
         videoUrl: STOCK_VIDEOS[4]
-      },
-      {
-        id: 'blacks-one-beyond-eve',
-        title: 'Blacks One ‹ › Beyond Eve',
-        subtitle: 'Corps en mouvement, affirmation de soi et dépassement des frontières intérieures.',
-        question: 'Comment l’expression du corps et le mouvement réinventent-ils votre liberté intérieure ?',
-        posterUrl: '/assets/posters/Blacks One < > Beyond Eve.png',
-        videoUrl: STOCK_VIDEOS[0]
-      },
-      {
-        id: 'other-sights-third-eye',
-        title: 'Other Sights ‹ › Third Eye',
-        subtitle: 'Voir au-delà du visible : l’intuition et la perception augmentée du monde.',
-        question: 'Comment percevez-vous avec acuité ce que le regard ordinaire ne permet plus de discerner ?',
-        posterUrl: '/assets/posters/Other Eyes < > Third Eye.png',
-        videoUrl: STOCK_VIDEOS[1]
-      },
-      {
-        id: 'fiat-luxe-sweet-street',
-        title: 'Fiat Luxe ‹ › Sweet Street',
-        subtitle: 'La haute gastronomie et la cuisine populaire des rues en dialogue.',
-        question: 'Comment la saveur d’un plat peut-elle raviver l’histoire et la dignité de tout un peuple ?',
-        posterUrl: '/assets/posters/Fiat Luxe < > Street.jpg',
-        videoUrl: STOCK_VIDEOS[2]
       }
     ]
   },

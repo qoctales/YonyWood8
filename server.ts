@@ -422,6 +422,14 @@ async function startServer() {
         next(e);
       }
     });
+
+    // Express error handler
+    app.use((err: any, _req: Request, res: Response, _next: any) => {
+      console.error('[YonyWood Server Error]:', err);
+      if (!res.headersSent) {
+        res.status(500).json({ error: 'Internal Server Error', message: err?.message || String(err) });
+      }
+    });
   } else {
     app.use(express.static(path.resolve(__dirname, 'dist')));
     app.get('*', (_req: Request, res: Response) => {
@@ -443,13 +451,22 @@ async function startServer() {
   });
 }
 
-process.on('SIGTERM', () => {
-  httpServer.close(() => process.exit(0));
+// Global safety guards
+process.on('uncaughtException', (err) => {
+  console.error('[YonyWood] Uncaught Exception:', err);
 });
 
-process.on('SIGINT', () => {
-  httpServer.close(() => process.exit(0));
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('[YonyWood] Unhandled Rejection at:', promise, 'reason:', reason);
 });
+
+const gracefulShutdown = () => {
+  httpServer.close(() => process.exit(0));
+  setTimeout(() => process.exit(0), 2000).unref();
+};
+
+process.on('SIGTERM', gracefulShutdown);
+process.on('SIGINT', gracefulShutdown);
 
 startServer().catch((err) => {
   console.error('Failed to start server:', err);

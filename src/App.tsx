@@ -74,7 +74,7 @@ const resolveScreenFromPath = (): { screen: ViewScreen | null; redirectFrom?: st
   if (path === '/portrait') {
     return { screen: { type: 'profile' } };
   }
-  if (path === '/co-construction' || path === '/participer') {
+  if (path === '/presentation' || path === '/co-construction' || path === '/participer') {
     return { screen: { type: 'participate' } };
   }
 
@@ -109,7 +109,7 @@ const getScreenRouteInfo = (screen: ViewScreen): { path: string; title: string }
     case 'editorial_backoffice':
       return { path: '/portrait', title: 'Portrait — YonyWood' };
     case 'participate':
-      return { path: '/co-construction', title: 'Co-construction — YonyWood' };
+      return { path: '/presentation', title: 'Présentation — YonyWood' };
     default:
       return { path: '/duos', title: 'Duos — YonyWood' };
   }
@@ -151,8 +151,13 @@ export default function App() {
         let parsed = JSON.parse(saved);
         if (Array.isArray(parsed) && parsed.length > 0) {
           parsed = parsed.map((id: string) => {
-            if (id === 'safer-healer') return 'focus-phd';
-            if (id === 'coaching-unlimited') return 'builders-seekers';
+            if (id === 'safer-healer' || id === 'focus-phd') return 'pictures-words';
+            if (id === 'coaching-unlimited' || id === 'builders-seekers') return 'coaching-phd';
+            if (id === 'other-eyes-sixth-sense') return 'baobab-bambou';
+            if (id === 'finagnon-qosqorico') return 'benin-monde';
+            if (id === 'blacks-one-beyond-eve') return 'blacks-one-amazones';
+            if (id === 'dixeat-fiat-luxe') return 'fiat-luxe-builders';
+            if (id === 'investors-builders') return 'roots-routes';
             return id;
           });
           return parsed;

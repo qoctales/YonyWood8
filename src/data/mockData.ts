@@ -20,8 +20,8 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
     centralQuestion: 'Qu’est-ce qui, un jour, vous a fait sentir que quelque chose de plus grand que vous était présent ?',
     shortSynopsis: 'Quand la tradition ancestrale et la foi révélée dialoguent d’égal à égal face aux grands mystères humains : l’épreuve, le pardon et la transcendance.',
     description: 'Au Bénin, berceau du culte des ancêtres et terre de ferveur biblique, deux croyances cohabitent sous le même toit sans jamais s’affronter frontalement. Cette série met en miroir des dévots de la tradition ancestrale — gardiens des carrefours, messagers de l\'invisible et protecteurs des seuils — avec des pasteurs, religieuses et fidèles chrétiens tournés vers la foi révélée. Face aux grands mystères humains (l\'épreuve de la maladie, le pardon, le deuil, l\'abandon à une puissance supérieure), leurs rituels, louanges et oraisons silencieuses dialoguent d\'égal à égal, révélant la quête universelle d\'une présence supérieure.',
-    coverImage: '/assets/posters/Esu < > Jesus.png',
-    posterUrl: '/assets/posters/Esu < > Jesus.png',
+    coverImage: '/assets/posters/vodun-autre-foi.jpg',
+    posterUrl: '/assets/posters/vodun-autre-foi.jpg',
     teaserVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
     teaserDuration: '1:15',
     universes: [
@@ -136,13 +136,13 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
   {
     id: 'finagnon-qosqorico',
     slug: 'finagnon-qosqorico',
-    title: 'Bénin < > Le Monde',
+    title: 'Bénin ‹ › Le Monde',
     subtitle: 'Racontez un moment où vous avez compris ce qui rend votre pays unique.',
     centralQuestion: 'Racontez un moment où vous avez compris ce qui rend votre pays unique.',
     shortSynopsis: 'Des cités lacustres de Ganvié aux cimes sacrées de Cusco et Pisac, pêcheurs et paysans dialoguent sur l’enracinement, l’eau, la montagne et l’amour inconditionnel d’une terre.',
-    description: 'Des cités lacustres de Ganvié, bâties sur pilotis pour échapper aux razzias du Dahomey, jusqu\'aux terrasses millénaires de Pisac et Cusco au Pérou, perchées à 3 400 mètres d\'altitude. Bénin < > Le Monde réunit des pêcheurs toffinou et des paysans quechuas gardiens de la mémoire. Comment habite-t-on l\'eau ou la roche sacrée ? Que ressent-on lorsqu\'il faut quitter sa lagune ou sa cordillère, et que retrouve-t-on en revenant ? Une épopée intime sur la mémoire des terres nourricières et la résistance poétique des peuples autochtones face à l\'exil.',
-    coverImage: '/assets/posters/Benin < >.jpg',
-    posterUrl: '/assets/posters/Benin < >.jpg',
+    description: 'Des cités lacustres de Ganvié, bâties sur pilotis pour échapper aux razzias du Dahomey, jusqu\'aux terrasses millénaires de Pisac et Cusco au Pérou, perchées à 3 400 mètres d\'altitude. Bénin ‹ › Le Monde réunit des pêcheurs toffinou et des paysans quechuas gardiens de la mémoire. Comment habite-t-on l\'eau ou la roche sacrée ? Que ressent-on lorsqu\'il faut quitter sa lagune ou sa cordillère, et que retrouve-t-on en revenant ? Une épopée intime sur la mémoire des terres nourricières et la résistance poétique des peuples autochtones face à l\'exil.',
+    coverImage: '/assets/posters/benin-monde.jpg',
+    posterUrl: '/assets/posters/benin-monde.jpg',
     teaserVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
     teaserDuration: '1:45',
     universes: [
@@ -171,7 +171,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
           { lang: 'fr', label: 'Français', prompt: 'Racontez un moment où vous avez compris ce qui rend votre pays unique.' },
           { lang: 'quz', label: 'Quechua', prompt: 'Willawayku maypichus yacharqanki wasiykipi kashasqaykita. Maypitaq karqanki, imataq pasarqan ?' },
           { lang: 'fon', label: 'Fongbe', prompt: 'Mǐ ɖɔ hwenu e a mɔ ɖɔ émí ɖò xwégbe nugbó é wú. Fitɛ a ka ɖè bɔ etɛ jɛ ?' },
-          { lang: 'es', label: 'Español', prompt: 'Cuéntanos un momento en el que comprendiste qué hace único a tu país.' },
+          { lang: 'es', label: 'Español', prompt: 'Cuéntanos un moment en el que comprendiste qué hace único a tu país.' },
           { lang: 'en', label: 'English', prompt: 'Tell us about a moment when you realized what makes your country unique.' }
         ]
       },
@@ -234,13 +234,13 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
   {
     id: 'blacks-one-beyond-eve',
     slug: 'blacks-one-beyond-eve',
-    title: 'Blacks One <> Beyond Eve',
-    subtitle: 'Racontez un moment où vous avez vécu une expérience unique liée à l’identité que vous portez.',
-    centralQuestion: 'Racontez un moment où vous avez vécu une expérience unique liée à l’identité que vous portez.',
-    shortSynopsis: 'D’un côté, la voix passionnée et le poing levé d’un leader noir en lutte pour ses convictions ; de l’autre, le discours vibrant d’une femme noire engagée pour la souveraineté des femmes. Deux orateurs d’exception.',
-    description: 'D’un côté, la force de conviction, l’éloquence tranchante et le poing levé de Malik Diop, orateur noir élégamment vêtu, portant haut le verbe de la liberté, de la justice et de l’émancipation civique (Blacks One). De l’autre côté, le discours vibrant et passionné d’Éléonore Vance, leader et oratrice noire se battant avec dignité et ferveur pour les droits et la souveraineté des femmes (Beyond Eve). Deux voix d’une rare élégance, deux combats fraternels qui s’unissent pour affirmer nos souverainetés.',
-    coverImage: '/assets/posters/Blacks One < > Beyond Eve.png',
-    posterUrl: '/assets/posters/Blacks One < > Beyond Eve.png',
+    title: 'Blacks One ‹ › Amazones',
+    subtitle: 'Mémoire & souveraineté masculine noire face à la puissance & au courage des femmes.',
+    centralQuestion: 'Comment affirmez-vous votre dignité et votre souveraineté intime face aux tempêtes de l’Histoire ?',
+    shortSynopsis: 'D’un côté, la voix passionnée et le poing levé d’un leader noir en lutte pour ses convictions ; de l’autre, la bravoure et la souveraineté des Amazones qui défendent la mémoire et l\'émancipation des femmes.',
+    description: 'D’un côté, la force de conviction, l’éloquence tranchante et le poing levé de Malik Diop, orateur noir élégamment vêtu, portant haut le verbe de la liberté, de la justice et de l’émancipation civique (Blacks One). De l’autre côté, l’énergie souveraine des Amazones, guerrières et penseuses de la dignité féminine se battant pour la puissance, l’autonomie et la souveraineté collective des femmes (Amazones). Deux voix d’une rare élégance, deux combats fraternels qui s’unissent pour affirmer nos souverainetés.',
+    coverImage: '/assets/posters/blacks-one-amazones.png',
+    posterUrl: '/assets/posters/blacks-one-amazones.png',
     teaserVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
     teaserDuration: '1:30',
     universes: [
@@ -251,10 +251,10 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         territory: 'Dakar & Diaspora'
       },
       {
-        name: 'Beyond Eve',
-        tagline: 'La parole libérée, la dignité et la lutte pour les droits des femmes',
-        description: 'Une tribune vibrante où résonne le plaidoyer pour la souveraineté des femmes, la sororité et l’émancipation collective.',
-        territory: 'Abidjan, Marseille & Bruxelles'
+        name: 'Amazones',
+        tagline: 'La puissance des femmes, la bravoure et la souveraineté collective',
+        description: 'Une tribune vibrante où résonne le courage des guerrières et le leadership des femmes libres pour l’émancipation collective.',
+        territory: 'Abidjan, Cotonou, Ouidah & Diaspora'
       }
     ],
     effigies: [
@@ -347,27 +347,27 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
   {
     id: 'dixeat-fiat-luxe',
     slug: 'dixeat-fiat-luxe',
-    title: 'Fiat Luxe <> Sweet Street',
-    subtitle: 'Racontez une expérience où vous avez vu la beauté, là où vous ne l’attendiez pas.',
-    centralQuestion: 'Racontez une expérience où vous avez vu la beauté, là où vous ne l’attendiez pas.',
-    shortSynopsis: 'Des marmites populaires de Dantokpa aux tables d’exception à Paris et Milan, des artisans de bouche et scénographes révèlent l’art du don, du détail et du souvenir impérissable.',
-    description: 'Dans la fumée des marmites de Dantokpa à Cotonou, Sweet Street incarne l\'artisanat nourricier populaire : des femmes et cuisiniers qui se lèvent à 4h du matin pour offrir réconfort et dignité à des centaines de travailleurs avec une sauce gombo ou un igname pilé. En écho, Fiat Luxe explore la haute précision des arts de la table, de la scénographie olfactive et de l\'hospitalité d\'exception à Paris, Marrakech et Milan. Tout les sépare en apparence, sauf l\'essentiel : l\'obsession du détail, la générosité du don et la grâce de transformer un simple repas en un souvenir inoubliable.',
-    coverImage: '/assets/posters/Fiat Luxe < > Street.jpg',
-    posterUrl: '/assets/posters/Fiat Luxe < > Street.jpg',
+    title: 'Fiat Luxe ‹ › Builders',
+    subtitle: 'Artisans d’art, joailliers & esthètes du détail face aux architectes & bâtisseurs.',
+    centralQuestion: 'L’orfèvrerie du millimètre ou la force des fondations : que construisez-vous qui résiste au temps ?',
+    shortSynopsis: 'La précision millimétrée de la haute joaillerie et du raffinement face à la puissance bâtisseuse des architectes érigeant les fondations de demain.',
+    description: 'D’un côté, Fiat Luxe célèbre l’exigence de l’artisanat d’art, la haute joaillerie et l’orfèvrerie où chaque millimètre est une œuvre de patience. De l’autre côté, Builders incarne la vision des constructeurs, ingénieurs et architectes qui transforment le sol en cités pérennes. Deux manières magistrales de sculpter la matière.',
+    coverImage: '/assets/posters/fiat-luxe-builders.png',
+    posterUrl: '/assets/posters/fiat-luxe-builders.png',
     teaserVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
     teaserDuration: '1:20',
     universes: [
       {
         name: 'Fiat Luxe',
-        tagline: 'La haute scénographie du détail et le temps suspendu',
-        description: 'L’orfèvrerie des arts de la table, la scénographie olfactive, la précision du geste qui transforme l’éphémère en mémoire inoubliable.',
-        territory: 'Paris, Marrakech, Milan'
+        tagline: 'La haute scénographie du détail et l’orfèvrerie du millimètre',
+        description: 'L’art de la joaillerie, la précision du geste et le raffinement qui traversent les siècles.',
+        territory: 'Paris, Cotonou, Milan'
       },
       {
-        name: 'Sweet Street',
-        tagline: 'L’artisanat nourricier populaire et la générosité brute',
-        description: 'La chaleur des marmites de rue, l’igname pilée au lever du jour, le partage sans fard où chaque repas est un pacte de solidarité.',
-        territory: 'Cotonou, Dantokpa & marchés ouest-africains'
+        name: 'Builders',
+        tagline: 'L’ancrage dans la matière, les structures durables et l’architecture',
+        description: 'Bâtisseurs, ingénieurs et maîtres d’œuvre qui érigent les piliers solides du monde physique.',
+        territory: 'Cotonou, Kigali, Abidjan'
       }
     ],
     questions: [
@@ -440,27 +440,27 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
   {
     id: 'investors-builders',
     slug: 'investors-builders',
-    title: 'Roots <> Routes',
-    subtitle: 'L’ancrage ancestral face à la traversée des frontières et des horizons.',
+    title: 'Roots ‹ › Routes',
+    subtitle: 'Ancrés sur la terre natale face aux voyageurs de la diaspora.',
     centralQuestion: 'L’ancrage dans ses racines ou l’envol sur les routes : où se forge votre véritable identité ?',
     shortSynopsis: 'Une rencontre sensible entre l’ancrage profond dans les racines mémorielles et le souffle d’exploration qui pousse à traverser les frontières.',
-    description: 'D’un côté, la transmission fidèle des racines, la mémoire des terroirs et la préservation des ancrages ancestraux (Roots). De l’autre, l’itinérance, le passage des frontières et la construction d’horizons nouveaux au fil des routes (Routes). Roots <> Routes explore la tension féconde entre appartenance et liberté nomade.',
-    coverImage: '/roots-routes.jpg',
-    posterUrl: '/roots-routes.jpg',
+    description: 'D’un côté, la transmission fidèle des racines, la mémoire des terroirs et la préservation des ancrages ancestraux (Roots). De l’autre, l’itinérance, le passage des frontières et la construction d’horizons nouveaux au fil des routes (Routes). Roots ‹ › Routes explore la tension féconde entre appartenance et liberté nomade.',
+    coverImage: '/assets/posters/roots-routes.jpg',
+    posterUrl: '/assets/posters/roots-routes.jpg',
     teaserVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
     teaserDuration: '1:35',
     universes: [
       {
-        name: 'Diasporas',
-        tagline: 'Le capital patient, l’allocation stratégique et la vision globale',
-        description: 'Mécènes, fonds d’impact et investisseurs de la diaspora qui soutiennent l’économie productive et les visions pérennes.',
-        territory: 'Paris, Dakar, Abidjan & Diaspora'
+        name: 'Roots',
+        tagline: 'L’ancrage sur la terre natale et la fidélité aux ancêtres',
+        description: 'Gardiens du sol d’origine, mémoires du terroir et fidélité indéfectible aux lignées ancestrales.',
+        territory: 'Bénin (Ouidah, Allada, Cotonou)'
       },
       {
-        name: 'Makers',
-        tagline: 'L’ancrage dans la matière, le prototype et la force bâtisseuse',
-        description: 'Entrepreneurs d’infrastructures, ingénieurs et maîtres artisans qui construisent les piliers de l’économie concrète.',
-        territory: 'Cotonou, Kigali, Nairobi, Abidjan'
+        name: 'Routes',
+        tagline: 'La traversée des frontières et le retour fécond de la diaspora',
+        description: 'Ceux qui ont parcouru les horizons du monde et tissent des ponts neufs avec la terre nourricière.',
+        territory: 'Paris, Dakar, Montréal & Diaspora'
       }
     ],
     effigies: [
@@ -555,43 +555,43 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
   {
     id: 'other-eyes-sixth-sense',
     slug: 'other-eyes-sixth-sense',
-    title: 'Other Sights <> Third Eye',
-    subtitle: 'Racontez une expérience qui vous a fait comprendre la difficulté, mais aussi la puissance, de votre différence.',
-    centralQuestion: 'Racontez une expérience qui vous a fait comprendre la difficulté, mais aussi la puissance, de votre différence.',
-    shortSynopsis: 'Quand la non-voyance et les perceptions extrasensorielles dialoguent : que voit-on quand le monde ferme les yeux ?',
-    description: 'Une confrontation sensible et profonde entre deux manières extraordinaires de décoder le réel : d’un côté ceux qui, par la non-voyance ou l’éveil sensoriel, naviguent par l’écho, le toucher et les vibrations (Other Sights) ; de l’autre ceux qui captent les auras, les énergies subtiles et le souffle de l’invisible (Third Eye). Au-delà des jugements ordinaires, leurs récits intimes révèlent la puissance insoupçonnée des sens humains.',
-    coverImage: '/assets/posters/Other Eyes < > Third Eye.png',
-    posterUrl: '/assets/posters/Other Eyes < > Third Eye.png',
+    title: 'Baobab ‹ › Bambou',
+    subtitle: 'Mémoire & enracinement des aînés face à l’agilité & l’audace de la jeunesse.',
+    centralQuestion: 'La solidité des racines centenaires ou la souplesse du vent nouveau : quelle sagesse guide vos pas ?',
+    shortSynopsis: 'La rencontre intergénérationnelle féconde : quand la patience séculaire des aînés transmet son souffle à la vivacité et à l’inventivité des jeunes pousses.',
+    description: 'D’un côté, le Baobab : des sages et aînés dépositaires des récits fondateurs, ancrés solidement face aux tempêtes du temps. De l’autre, le Bambou : de jeunes pousses agiles, audacieuses, qui se plient aux courants du monde contemporain sans jamais rompre. Un dialogue complice entre transmission et réinvention du futur.',
+    coverImage: '/assets/posters/baobab-bambou.jpg',
+    posterUrl: '/assets/posters/baobab-bambou.jpg',
     teaserVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
     teaserDuration: '1:12',
     universes: [
       {
-        name: 'Other Sights',
-        tagline: 'L’acuité sensorielle, l’écoute et la vision intérieure',
-        description: 'Vivre le monde par le son, le souffle du vent et la résonance tactile de la matière.',
-        territory: 'Bénin (Ganvié & Cotonou)'
+        name: 'Baobab',
+        tagline: 'L’enracinement séculaire et la mémoire des aînés',
+        description: 'La patience du temps long, l’ombre bienveillante de la sagesse patriarcale.',
+        territory: 'Bénin (Allada, Ouidah, Abomey)'
       },
       {
-        name: 'Third Eye',
-        tagline: 'La résonance avec l’invisible et les auras',
-        description: 'Percevoir les énergies subtiles, les présences et les mémoires des lieux.',
-        territory: 'Bénin (Ouidah & Abomey)'
+        name: 'Bambou',
+        tagline: 'L’agilité créative et l’audace de la jeunesse',
+        description: 'La flexibilité qui résiste à toutes les tempêtes, l’invention de nouvelles voies.',
+        territory: 'Bénin (Cotonou, Parakou, Porto-Novo)'
       }
     ],
     effigies: [
       {
-        id: 'eff-codjo',
-        name: 'Pascal',
-        role: 'Navigateur sonore & sculpteur de sons',
+        id: 'eff-baobab',
+        name: 'Dossou Zounon',
+        role: 'Doyen patriarche & gardien des mémoires (Allada)',
         photoUrl: '/assets/duos/codjo-blind.jpg',
         videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
         status: 'EFFIGIE_PRINCIPALE'
       },
       {
-        id: 'eff-mawuna',
-        name: 'Mawuna',
-        role: 'Voyante & guérisseuse d’âmes',
-        photoUrl: '/assets/duos/mawuna-medium.jpg',
+        id: 'eff-bambou',
+        name: 'Sénan Agossa',
+        role: 'Entrepreneure & innovatrice de la nouvelle génération',
+        photoUrl: '/assets/protagonists/senan-agossa.jpg',
         videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
         status: 'EFFIGIE_SERIE'
       }
@@ -599,46 +599,46 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
     questions: [
       {
         number: '01',
-        title: 'La Puissance de la Différence',
-        prompt: 'Racontez une expérience qui vous a fait comprendre la difficulté, mais aussi la puissance, de votre différence.',
-        posterUrl: '/assets/duos/codjo-blind.jpg',
+        title: 'La Sagesse du Temps',
+        prompt: 'La solidité des racines centenaires ou la souplesse du vent nouveau : quelle sagesse guide vos pas ?',
+        posterUrl: '/assets/posters/baobab-bambou.jpg',
         audioDuration: '0:45',
         videoAvatarUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-        audioVoiceName: 'Pascal & Mawuna',
+        audioVoiceName: 'Dossou & Sénan',
         translations: [
-          { lang: 'fr', label: 'Français', prompt: 'Racontez une expérience qui vous a fait comprendre la difficulté, mais aussi la puissance, de votre différence.' },
-          { lang: 'en', label: 'English', prompt: 'Tell us about an experience that made you realize the difficulty, but also the power, of your difference.' }
+          { lang: 'fr', label: 'Français', prompt: 'La solidité des racines centenaires ou la souplesse du vent nouveau : quelle sagesse guide vos pas ?' },
+          { lang: 'en', label: 'English', prompt: 'The strength of century-old roots or the flexibility of the new wind: which wisdom guides your steps?' }
         ]
       }
     ],
     episodeCount: 5,
     protagonistsCount: 6,
-    territories: ['Ganvié', 'Cotonou', 'Ouidah', 'Abomey']
+    territories: ['Allada', 'Cotonou', 'Ouidah', 'Porto-Novo']
   },
   {
     id: 'builders-seekers',
     slug: 'builders-seekers',
-    title: 'Builders <> Seekers',
-    subtitle: 'Bâtir pierre par pierre ou chercher sans cesse l’horizon : quelle trace laissez-vous au monde ?',
-    centralQuestion: 'Bâtir pierre par pierre ou chercher sans cesse l’horizon : quelle trace laissez-vous au monde ?',
-    shortSynopsis: 'La rigueur de ceux qui bâtissent dans le réel et la matière face à la quête de ceux qui cherchent le sens et l’horizon.',
-    description: 'D’un côté, ceux qui conçoivent, structurent et assemblent pierre par pierre les piliers du monde concret (Builders). De l’autre, ceux qui explorent l’inconnu, interrogent les limites et cherchent le sens profond de chaque entreprise humaine (Seekers). Une traversée captivante entre la solidité de la construction et la flamme de la recherche.',
-    coverImage: '/assets/posters/Builders < > Seekers.png',
-    posterUrl: '/assets/posters/Builders < > Seekers.png',
+    title: 'Coaching ‹ › PhD',
+    subtitle: 'Coachs, mentors & gens d’action face aux chercheurs, docteurs & universitaires.',
+    centralQuestion: 'L’instinct pratique du terrain ou la rigueur de la thèse : comment transformez-vous le monde ?',
+    shortSynopsis: 'L’action immédiate et le pragmatisme des mentors confrontés à la patience méthodologique et à la profondeur des thèses académiques.',
+    description: 'D’un côté, l’énergie des coachs, stratèges de performance et meneurs d’hommes qui transforment les blocages en victoires concrètes sur le terrain (Coaching). De l’autre, la rigueur des chercheurs doctorants qui passent des années à théoriser, expérimenter et valider les modèles de la connaissance (PhD). Entre l’impulsion et la preuve, deux manières indispensables de faire grandir l’humanité.',
+    coverImage: '/assets/posters/coaching-phd.png',
+    posterUrl: '/assets/posters/coaching-phd.png',
     teaserVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
     teaserDuration: '1:24',
     universes: [
       {
-        name: 'Builders',
-        tagline: 'L’ancrage dans la matière, la structure et la force bâtisseuse',
-        description: 'Bâtisseurs, ingénieurs et architectes qui transforment le monde concret avec rigueur.',
-        territory: 'Cotonou, Kigali & Paris'
+        name: 'Coaching',
+        tagline: 'L’impulsion du terrain, le déclic mental et le mentorat d’impact',
+        description: 'Transformer les doutes en victoires concrètes et libérer le plein potentiel humain.',
+        territory: 'Paris, Cotonou & Abidjan'
       },
       {
-        name: 'Seekers',
-        tagline: 'La quête de sens, l’exploration de l’horizon et la soif de transcendance',
-        description: 'Chercheurs, philosophes et explorateurs guidés par la soif de relier le visible à l’invisible.',
-        territory: 'Paris, Dakar & Monde'
+        name: 'PhD',
+        tagline: 'La rigueur scientifique, la thèse et la preuve par la recherche',
+        description: 'La patience des archives et des laboratoires pour repousser les frontières du savoir.',
+        territory: 'Oxford, Ouagadougou & Lyon'
       }
     ],
     effigies: [
@@ -651,10 +651,10 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         status: 'EFFIGIE_PRINCIPALE'
       },
       {
-        id: 'eff-athlete-lagat',
-        name: 'Aïcha Lagat',
-        role: 'Athlète internationale de saut de haies',
-        photoUrl: '/assets/duos/athlete-hurdle.jpg',
+        id: 'eff-dr-eleonore',
+        name: 'Dre. Éléonore Kaboré',
+        role: 'Docteure en sciences cognitives & Chercheuse',
+        photoUrl: '/assets/duos/researcher-phd.jpg',
         videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
         status: 'EFFIGIE_SERIE'
       }
@@ -662,59 +662,59 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
     questions: [
       {
         number: '01',
-        title: 'Un Autre Possible',
-        prompt: 'Racontez un moment où quelqu’un vous a permis d’entrevoir un autre possible.',
-        posterUrl: '/assets/duos/athlete-hurdle.jpg',
+        title: 'Terrain ou Thèse',
+        prompt: 'L’instinct pratique du terrain ou la rigueur de la thèse : comment transformez-vous le monde ?',
+        posterUrl: '/assets/duos/coach-office.jpg',
         audioDuration: '0:44',
         videoAvatarUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-        audioVoiceName: 'Marc & Aïcha',
+        audioVoiceName: 'Marc & Éléonore',
         translations: [
-          { lang: 'fr', label: 'Français', prompt: 'Racontez un moment où quelqu’un vous a permis d’entrevoir un autre possible.' },
-          { lang: 'en', label: 'English', prompt: 'Tell us about a moment when someone allowed you to glimpse another possibility.' }
+          { lang: 'fr', label: 'Français', prompt: 'L’instinct pratique du terrain ou la rigueur de la thèse : comment transformez-vous le monde ?' },
+          { lang: 'en', label: 'English', prompt: 'The practical instinct of the field or the rigor of the thesis: how do you transform the world?' }
         ]
       },
       {
         number: '02',
-        title: 'Le Dialogue Intérieur',
-        prompt: 'Quelle est la phrase ou la certitude silencieuse que vous vous répétez quand tout votre corps ou votre esprit crie d’arrêter ?',
-        posterUrl: '/assets/duos/coach-office.jpg',
+        title: 'Le Déclic',
+        prompt: 'Quel a été l’instant précis où une intuition est devenue une méthode ou une démonstration imparable ?',
+        posterUrl: '/assets/duos/researcher-phd.jpg',
         audioDuration: '0:40',
         videoAvatarUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
         audioVoiceName: 'Coach Marc',
         translations: [
-          { lang: 'fr', label: 'Français', prompt: 'Quelle est la certitude silencieuse que vous vous répétez au moment de flancher ?' },
-          { lang: 'en', label: 'English', prompt: 'What silent truth do you tell yourself when your whole body wants to give up?' }
+          { lang: 'fr', label: 'Français', prompt: 'Quel a été l’instant précis où une intuition est devenue une méthode ou une démonstration imparable ?' },
+          { lang: 'en', label: 'English', prompt: 'What was the exact moment when an intuition turned into an undeniable method or demonstration?' }
         ]
       }
     ],
     episodeCount: 5,
     protagonistsCount: 6,
-    territories: ['Paris', 'Nairobi', 'Dakar', 'Montréal']
+    territories: ['Paris', 'Ouagadougou', 'Cotonou', 'Lyon']
   },
   {
     id: 'focus-phd',
     slug: 'focus-phd',
-    title: 'Pictures <> PhD',
-    subtitle: 'Racontez une découverte qui a changé votre manière d’observer un sujet ou une personne.',
-    centralQuestion: 'Racontez une découverte qui a changé votre manière d’observer un sujet ou une personne.',
-    shortSynopsis: 'Quand l’instinct visuel d’une photographe documentaire traquant l’émotion humaine rencontre l’exigence intellectuelle d’une chercheuse doctorante dédiée à percer les mystères du savoir : deux manières complémentaires d’éclairer le monde.',
-    description: 'D’un côté, Clara Valmont, photographe d’auteur et reporter indépendante qui saisit l’invisible dans l’épaisseur du réel et immortalise les visages de notre époque (Pictures). De l’autre côté, Dre. Éléonore Kaboré, chercheuse et docteure en sciences cognitives, qui consacre ses journées et ses nuits à élaborer des modèles pour percer les lois profondes de notre environnement (PhD). Deux regards engagés, l’un par la focale, l’autre par la thèse, unis par la même passion de révéler ce qui nous échappe.',
-    coverImage: '/assets/posters/Focus < >  PhD.jpg',
-    posterUrl: '/assets/posters/Focus < >  PhD.jpg',
+    title: 'Pictures ‹ › Words',
+    subtitle: 'Créateurs du regard visuel face aux maîtres du verbe, de l’écriture et du slam.',
+    centralQuestion: 'L’image qui fige l’instant ou le mot qui réveille la conscience : comment racontez-vous la vérité ?',
+    shortSynopsis: 'La confrontation poétique et esthétique entre l’œil du photographe documentaire et la voix vibrante du poète et slameur.',
+    description: 'D’un côté, l’instinct visuel, la lumière et la focale de créateurs d’images qui immortalisent la vérité crue et belle des visages (Pictures). De l’autre, la puissance oratoire, la métaphore ciselée et le souffle des maîtres du verbe et slameurs engagés (Words). Deux arts majeurs qui s’entrelacent pour rendre visible et audible l’indicible.',
+    coverImage: '/assets/posters/pictures-words.jpg',
+    posterUrl: '/assets/posters/pictures-words.jpg',
     teaserVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
     teaserDuration: '1:32',
     universes: [
       {
         name: 'Pictures',
-        tagline: 'L’œil aux aguets, la lumière naturelle, l’instant décisif et la mémoire sensible',
-        description: 'L’argentique et le capteur, la chambre noire, le silence avant le déclic et la volonté d’honorer la dignité des visages.',
+        tagline: 'L’œil aux aguets, la lumière naturelle et la mémoire sensible',
+        description: 'L’argentique et le capteur, la chambre noire, le silence avant le déclic et la dignité des visages.',
         territory: 'Montréal, Paris & Dakar'
       },
       {
-        name: 'PhD',
-        tagline: 'La rigueur de la preuve, la patience des archives, l’hypothèse et la découverte',
-        description: 'Le tableau noir griffonné d’équations, les microscopes, la relecture des pairs et la solitude exaltante de celui qui repousse les frontières du savoir.',
-        territory: 'Oxford, Ouagadougou & Lyon'
+        name: 'Words',
+        tagline: 'Le slam, la poésie vivante et la puissance du verbe',
+        description: 'La scansion des mots, l’éveil des consciences et la beauté du souffle oratoire.',
+        territory: 'Cotonou, Dakar & Port-au-Prince'
       }
     ],
     effigies: [
@@ -727,10 +727,10 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         status: 'EFFIGIE_PRINCIPALE'
       },
       {
-        id: 'eff-dr-eleonore',
-        name: 'Dre. Éléonore Kaboré',
-        role: 'Docteure en sciences cognitives & Chercheuse',
-        photoUrl: '/assets/duos/researcher-phd.jpg',
+        id: 'eff-armel-words',
+        name: 'Armel Hounkpatin',
+        role: 'Slameur & Poète du verbe vivant',
+        photoUrl: '/assets/images/fagnon_agronome_1792933698985.jpg',
         videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
         status: 'EFFIGIE_SERIE'
       }
@@ -738,34 +738,34 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
     questions: [
       {
         number: '01',
-        title: 'Changer de Regard',
-        prompt: 'Racontez une découverte qui a changé votre manière d’observer un sujet ou une personne.',
-        posterUrl: '/assets/duos/photographer-focus.jpg',
+        title: 'Raconter la Vérité',
+        prompt: 'L’image qui fige l’instant ou le mot qui réveille la conscience : comment racontez-vous la vérité ?',
+        posterUrl: '/assets/posters/pictures-words.jpg',
         audioDuration: '0:48',
         videoAvatarUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        audioVoiceName: 'Clara & Éléonore',
+        audioVoiceName: 'Clara & Armel',
         translations: [
-          { lang: 'fr', label: 'Français', prompt: 'Racontez une découverte qui a changé votre manière d’observer un sujet ou une personne.' },
-          { lang: 'en', label: 'English', prompt: 'Tell us about a discovery that changed the way you observe a subject or a person.' }
+          { lang: 'fr', label: 'Français', prompt: 'L’image qui fige l’instant ou le mot qui réveille la conscience : comment racontez-vous la vérité ?' },
+          { lang: 'en', label: 'English', prompt: 'The image freezing the moment or the word awakening conscience: how do you tell the truth?' }
         ]
       },
       {
         number: '02',
-        title: 'Le Doute et l’Obstination',
-        prompt: 'Combien de pellicules brûlées ou d’hypothèses infirmées avant de toucher enfin la grâce d’une découverte qui fait sens ?',
-        posterUrl: '/assets/duos/researcher-phd.jpg',
+        title: 'Le Souffle Créateur',
+        prompt: 'Quelle est la chose la plus difficile à capter : la lumière qui s’efface ou la parole qu’on n’ose prononcer ?',
+        posterUrl: '/assets/duos/photographer-focus.jpg',
         audioDuration: '0:42',
         videoAvatarUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-        audioVoiceName: 'Dre. Éléonore Kaboré',
+        audioVoiceName: 'Clara Valmont',
         translations: [
-          { lang: 'fr', label: 'Français', prompt: 'Combien de doutes traversés avant de toucher enfin la grâce d’une découverte qui fait sens ?' },
-          { lang: 'en', label: 'English', prompt: 'How many doubts did you overcome before finding a discovery that truly made sense?' }
+          { lang: 'fr', label: 'Français', prompt: 'Quelle est la chose la plus difficile à capter : la lumière qui s’efface ou la parole qu’on n’ose prononcer ?' },
+          { lang: 'en', label: 'English', prompt: 'What is harder to capture: fading light or unspoken words?' }
         ]
       }
     ],
     episodeCount: 5,
     protagonistsCount: 6,
-    territories: ['Paris', 'Dakar', 'Ouagadougou', 'Lyon']
+    territories: ['Paris', 'Cotonou', 'Dakar', 'Montréal']
   }
 ];
 
@@ -2636,7 +2636,7 @@ export const DUOS: Duo[] = [
     centralQuestion: 'Qu’est-ce qui, un jour, vous a fait sentir que quelque chose de plus grand que vous était présent ?',
     quoteA: '« Ce n’était pas un coup de tonnerre. C’était la chaleur d’une poignée de terre d’Allada, un jour où je croyais que le monde était mort. »',
     quoteB: '« Je suis entré dans la nef déserte pour fuir la brûlure du soleil. Ce n’est pas un miracle qui m’a retenu : c’était la certitude d’être attendu. »',
-    coverImage: '/assets/posters/Esu < > Jesus.png',
+    coverImage: '/assets/posters/vodun-autre-foi.jpg',
     storyA: (PROTAGONISTS.find(p => p.id === 'dah-zounon') || PROTAGONISTS[2]).stories[0],
     storyB: (PROTAGONISTS.find(p => p.id === 'pere-matthieu') || PROTAGONISTS[3]).stories[0],
     editorialReflection: 'Deux traditions que l’histoire a parfois opposées se découvrent ici une racine commune : l’humilité de l’homme devant ce qui le dépasse et l’impérieuse nécessité de ne pas traverser l’obscurité seul.'
@@ -2645,7 +2645,7 @@ export const DUOS: Duo[] = [
     id: 'duo-finagnon-qosqorico-01',
     slug: 'duo-finagnon-qosqorico-01',
     documentaryId: 'finagnon-qosqorico',
-    documentaryTitle: 'Bénin < > Le Monde',
+    documentaryTitle: 'Bénin ‹ › Le Monde',
     episodeNumber: 'ÉPISODE 01',
     protagonistA: PROTAGONISTS.find(p => p.id === 'tobi-houndegla') || PROTAGONISTS[0],
     protagonistB: PROTAGONISTS.find(p => p.id === 'sayri-quispe') || PROTAGONISTS[1],
@@ -2654,7 +2654,7 @@ export const DUOS: Duo[] = [
     centralQuestion: 'Racontez un moment où vous avez compris ce qui rend votre pays unique.',
     quoteA: '« Le jour où la pirogue a glissé dans la brume sans que j’aie besoin de regarder le rivage. Ganvié n’est pas sur la terre, mais elle est dans mon sang. »',
     quoteB: '« Quand les pieds nus touchent la roche glacée de Pisac à l’aube et que la montagne souffle son premier vent. Là, tu sais que tu n’es pas un étranger. »',
-    coverImage: '/assets/posters/Benin < >.jpg',
+    coverImage: '/assets/posters/benin-monde.jpg',
     storyA: (PROTAGONISTS.find(p => p.id === 'tobi-houndegla') || PROTAGONISTS[0]).stories[0],
     storyB: (PROTAGONISTS.find(p => p.id === 'sayri-quispe') || PROTAGONISTS[1]).stories[0],
     editorialReflection: 'Des pilotis de Ganvié aux terrasses de Pisac, le chez-soi n’est pas une propriété cadastrale : c’est une fidélité organique au rythme d’un élément — l’eau vive ou la pierre d’altitude.'
@@ -2663,79 +2663,79 @@ export const DUOS: Duo[] = [
     id: 'duo-blacks-one-beyond-eve-01',
     slug: 'duo-blacks-one-beyond-eve-01',
     documentaryId: 'blacks-one-beyond-eve',
-    documentaryTitle: 'Blacks One <> Beyond Eve',
+    documentaryTitle: 'Blacks One ‹ › Amazones',
     episodeNumber: 'ÉPISODE 01',
     protagonistA: PROTAGONISTS.find(p => p.id === 'malik-diop') || PROTAGONISTS[4],
     protagonistB: PROTAGONISTS.find(p => p.id === 'eleonore-vance') || PROTAGONISTS[5],
     questionNumber: '01',
     questionTitle: 'L’Identité Portée',
-    centralQuestion: 'Racontez un moment où vous avez vécu une expérience unique liée à l’identité que vous portez.',
+    centralQuestion: 'Comment affirmez-vous votre dignité et votre souveraineté intime face aux tempêtes de l’Histoire ?',
     quoteA: '« L’émancipation commence le jour où l’on refuse de regarder son histoire avec les yeux de ceux qui l’ont confisquée. La dignité ne se négocie pas. »',
-    quoteB: '« On hérite de blessures et de silences imposés. Mon combat et mon art consistent à les fleurir et à en faire des armures de reine pour les femmes libres. »',
-    coverImage: '/assets/posters/Blacks One < > Beyond Eve.png',
+    quoteB: '« Nous portons en nous la bravoure des Amazones. Notre souveraineté n’est pas une faveur : c’est l’affirmation inébranlable de notre dignité et de notre liberté. »',
+    coverImage: '/assets/posters/blacks-one-amazones.png',
     storyA: (PROTAGONISTS.find(p => p.id === 'malik-diop') || PROTAGONISTS[4]).stories[0],
     storyB: (PROTAGONISTS.find(p => p.id === 'eleonore-vance') || PROTAGONISTS[5]).stories[0],
-    editorialReflection: 'Entre la voix ardente d’un leader noir au poing levé luttant pour ses convictions et le discours vibrant d’une oratrice féministe pour les femmes, ce duo célèbre la dignité et la souveraineté intime.'
+    editorialReflection: 'Entre la mémoire souveraine masculine et le souffle émancipateur des Amazones, ce face-à-face proclame la dignité inaltérable de nos histoires.'
   },
   {
     id: 'duo-dixeat-fiat-luxe-01',
     slug: 'duo-dixeat-fiat-luxe-01',
     documentaryId: 'dixeat-fiat-luxe',
-    documentaryTitle: 'Fiat Luxe <> Sweet Street',
+    documentaryTitle: 'Fiat Luxe ‹ › Builders',
     episodeNumber: 'ÉPISODE 01',
     protagonistA: PROTAGONISTS.find(p => p.id === 'helene-saint-amand') || PROTAGONISTS[1],
     protagonistB: PROTAGONISTS.find(p => p.id === 'chef-koffi') || PROTAGONISTS[0],
     questionNumber: '01',
-    questionTitle: 'La Beauté Inattendue',
-    centralQuestion: 'Racontez une expérience où vous avez vu la beauté, là où vous ne l’attendiez pas.',
-    quoteA: '« Ce n’est pas la coupe de cristal qui a touché cette femme, mais le fait que quelqu’un avait remarqué son angoisse et lui offrait un refuge invisible. »',
-    quoteB: '« Quand l’homme s’est assis dans la fumée et a fermé les yeux à la première cuillerée d’igname, ses larmes m’ont dit que je n’étais pas un marchand, mais un frère. »',
-    coverImage: '/assets/posters/Fiat Luxe < > Street.jpg',
+    questionTitle: 'L’Orfèvrerie et la Structure',
+    centralQuestion: 'L’orfèvrerie du millimètre ou la force des fondations : que construisez-vous qui résiste au temps ?',
+    quoteA: '« Dans un joyau ou une monture d’or ciselée, chaque micron de précision raconte la patience de l’esprit humain face à l’éternité. »',
+    quoteB: '« Quand la voûte en béton et terre s’élève face aux vents de l’océan, tu sais que ton geste offre un abri aux générations futures. »',
+    coverImage: '/assets/posters/fiat-luxe-builders.png',
     storyA: (PROTAGONISTS.find(p => p.id === 'helene-saint-amand') || PROTAGONISTS[1]).stories[0],
     storyB: (PROTAGONISTS.find(p => p.id === 'chef-koffi') || PROTAGONISTS[0]).stories[0],
-    editorialReflection: 'Entre la marmite populaire et le salon d’apparat, la grandeur de l’expérience ne réside jamais dans le prix facturé, mais dans l’intensité du soin offert à l’autre.'
+    editorialReflection: 'Du secret de l’atelier joaillier au vacarme des chantiers d’envergure, l’exigence esthétique et la solidité des structures se rejoignent dans un même hommage à l’œuvre durable.'
   },
   {
     id: 'duo-investors-builders-01',
     slug: 'duo-investors-builders-01',
     documentaryId: 'roots-routes',
-    documentaryTitle: 'Roots <> Routes',
+    documentaryTitle: 'Roots ‹ › Routes',
     episodeNumber: 'ÉPISODE 01',
     protagonistA: PROTAGONISTS.find(p => p.id === 'fatou-diallo') || PROTAGONISTS[0],
     protagonistB: PROTAGONISTS.find(p => p.id === 'kwame-mensah') || PROTAGONISTS[1],
     questionNumber: '01',
-    questionTitle: 'Construire ses Rêves',
-    centralQuestion: 'Racontez le moment où un lieu a changé votre façon de construire vos rêves.',
-    quoteA: '« Le jour où j’ai signé ce premier financement pour l’atelier sans garantie bancaire, j’ai compris que ma responsabilité n’était pas de me protéger, mais de faire confiance. »',
-    quoteB: '« Quand la voûte en terre crue a résisté à la première tornade, j’ai su que nos mains portaient une force que nulle machine ne peut remplacer. »',
-    coverImage: '/roots-routes.jpg',
+    questionTitle: 'L’Ancrage et l’Envol',
+    centralQuestion: 'L’ancrage dans ses racines ou l’envol sur les routes : où se forge votre véritable identité ?',
+    quoteA: '« Je n’ai jamais quitté la terre rouge d’Allada et d’Abomey. Ici, mes pas foulent la mémoire exacte de ceux qui m’ont précédée. »',
+    quoteB: '« J’ai traversé les capitales et les aéroports. Mais chaque route que j’ai prise ne faisait que me ramener vers ce rivage essentiel. »',
+    coverImage: '/assets/posters/roots-routes.jpg',
     storyA: (PROTAGONISTS.find(p => p.id === 'fatou-diallo') || PROTAGONISTS[0]).stories[0],
     storyB: (PROTAGONISTS.find(p => p.id === 'kwame-mensah') || PROTAGONISTS[1]).stories[0],
-    editorialReflection: 'Entre l’encre des contrats et la poussière des chantiers, la véritable valeur ne naît pas dans le calcul du profit, mais dans l’engagement réciproque de bâtir ce qui perdure.'
+    editorialReflection: 'Entre l’ancrage fidèle au terroir natal et l’exploration des routes de la diaspora, deux destins se rencontrent dans un amour partagé de l’origine.'
   },
   {
     id: 'duo-other-eyes-sixth-sense-01',
     slug: 'duo-other-eyes-sixth-sense-01',
     documentaryId: 'other-eyes-sixth-sense',
-    documentaryTitle: 'Other Sights <> Third Eye',
+    documentaryTitle: 'Baobab ‹ › Bambou',
     episodeNumber: 'ÉPISODE 01',
     protagonistA: PROTAGONISTS.find(p => p.id === 'codjo-blind') || PROTAGONISTS[0],
     protagonistB: PROTAGONISTS.find(p => p.id === 'mawuna-medium') || PROTAGONISTS[1],
     questionNumber: '01',
-    questionTitle: 'La Puissance de la Différence',
-    centralQuestion: 'Racontez une expérience qui vous a fait comprendre la difficulté, mais aussi la puissance, de votre différence.',
-    quoteA: '« Vos yeux s’arrêtent aux formes. Mes oreilles et ma peau pénètrent l’épaisseur vivante de l’air et la cadence secrète de la nuit. »',
-    quoteB: '« L’invisible n’est pas une absence, c’est une présence subtile. Le cœur doit écouter ce que les yeux ne peuvent enfermer. »',
-    coverImage: '/assets/posters/Other Eyes < > Third Eye.png',
+    questionTitle: 'La Sagesse du Temps',
+    centralQuestion: 'La solidité des racines centenaires ou la souplesse du vent nouveau : quelle sagesse guide vos pas ?',
+    quoteA: '« Le Baobab qui défie les siècles ne tremble pas à chaque coup de vent. Il écoute, et ses racines profondes protègent toute la terre. »',
+    quoteB: '« Le vent peut souffler de toute sa force : le Bambou plie avec grâce, mais ne rompt jamais. La jeunesse s’adapte pour réinventer l’avenir. »',
+    coverImage: '/assets/posters/baobab-bambou.jpg',
     storyA: (PROTAGONISTS.find(p => p.id === 'codjo-blind') || PROTAGONISTS[0]).stories[0],
     storyB: (PROTAGONISTS.find(p => p.id === 'mawuna-medium') || PROTAGONISTS[1]).stories[0],
-    editorialReflection: 'Face à face entre celui qui navigue par le son et le toucher et celle qui décode les souffles invisibles : tous deux nous enseignent que voir le monde n’a jamais été une affaire de rétine, mais d’attention profonde à ce qui vibre.'
+    editorialReflection: 'Quand la mémoire enracinée du Baobab s’allie à l’agilité vive du Bambou, la sagesse des aînés fertilise l’audace des jeunes pousses pour bâtir demain.'
   },
   {
     id: 'duo-coaching-unlimited-01',
     slug: 'duo-coaching-unlimited-01',
     documentaryId: 'builders-seekers',
-    documentaryTitle: 'Builders <> Seekers',
+    documentaryTitle: 'Coaching ‹ › PhD',
     episodeNumber: 'ÉPISODE 01',
     protagonistA: {
       id: 'coach-marc',
@@ -2751,8 +2751,8 @@ export const DUOS: Duo[] = [
       videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
       quote: '« Chaque barrière mentale que l’on fait tomber dans le calme d’un bureau déverrouille dix victoires sur le terrain. »',
       bio: 'Stratège de la haute performance humaine dans son bureau feutré.',
-      universeTag: 'Builders',
-      centralQuestion: 'Comment bâtir des œuvres durables sans perdre de vue la quête de sens ?',
+      universeTag: 'Coaching',
+      centralQuestion: 'L’instinct pratique du terrain ou la rigueur de la thèse : comment transformez-vous le monde ?',
       storiesCount: 4,
       transmissionsCount: 3,
       projectsCount: 2,
@@ -2761,114 +2761,12 @@ export const DUOS: Duo[] = [
           id: 'story-coach-marc-01',
           title: 'Le silence avant la décision',
           questionNumber: '01',
-          questionTitle: 'Un Autre Possible',
+          questionTitle: 'Terrain ou Thèse',
           duration: '07:45',
           videoDurationSeconds: 465,
           summary: 'Marc partage la séance où un champion brisé a retrouvé le désir de s’entraîner.',
           videoCoverUrl: '/assets/duos/coach-office.jpg',
           credits: [{ role: 'story_owner', label: 'Propriétaire', name: 'Marc Valmont' }]
-        }
-      ]
-    } as any,
-    protagonistB: {
-      id: 'athlete-lagat',
-      name: 'Aïcha Lagat',
-      firstName: 'Aïcha',
-      age: 26,
-      role: 'Athlète internationale de saut de haies',
-      country: 'Kenya',
-      territory: 'Nairobi',
-      flag: '🇰🇪',
-      photo: '/assets/duos/athlete-hurdle.jpg',
-      photoUrl: '/assets/duos/athlete-hurdle.jpg',
-      videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-      quote: '« La haie n’est pas un mur : c’est une invitation à voler une fraction de seconde de plus. »',
-      bio: 'Athlète olympique en plein envol au-dessus des haies.',
-      universeTag: 'Seekers',
-      centralQuestion: 'Jusqu’où le corps peut-il obéir à la soif infinie de transcendance ?',
-      storiesCount: 5,
-      transmissionsCount: 2,
-      projectsCount: 3,
-      stories: [
-        {
-          id: 'story-athlete-lagat-01',
-          title: 'Le franchissement du dixième obstacle',
-          questionNumber: '01',
-          questionTitle: 'Un Autre Possible',
-          duration: '06:30',
-          videoDurationSeconds: 390,
-          summary: 'Aïcha raconte la finale des championnats du monde où un faux pas à la 8e haie l’a obligée à réinventer sa foulée.',
-          videoCoverUrl: '/assets/duos/athlete-hurdle.jpg',
-          credits: [{ role: 'story_owner', label: 'Propriétaire', name: 'Aïcha Lagat' }]
-        }
-      ]
-    } as any,
-    questionNumber: '01',
-    questionTitle: 'Un Autre Possible',
-    centralQuestion: 'Racontez un moment où quelqu’un vous a permis d’entrevoir un autre possible.',
-    quoteA: '« Ce n’est jamais la hauteur de l’objectif qui paralyse, c’est le bruit de nos propres doutes. Dans ce bureau, on fait taire le vacarme pour entendre sa vraie puissance. »',
-    quoteB: '« Quand tu es lancée à pleine vitesse et que la haie se dresse, tu ne peux plus hésiter. Tu dois faire confiance à ton impulsion et bondir. »',
-    coverImage: '/assets/posters/Builders < > Seekers.png',
-    storyA: {
-      id: 'story-coach-marc-01',
-      title: 'Le silence avant la décision',
-      questionNumber: '01',
-      questionTitle: 'Un Autre Possible',
-      duration: '07:45',
-      videoDurationSeconds: 465,
-      summary: 'Marc partage la séance où un champion brisé a retrouvé le désir de s’entraîner.',
-      videoCoverUrl: '/assets/duos/coach-office.jpg',
-      credits: [{ role: 'story_owner', label: 'Propriétaire', name: 'Marc Valmont' }]
-    },
-    storyB: {
-      id: 'story-athlete-lagat-01',
-      title: 'Le franchissement du dixième obstacle',
-      questionNumber: '01',
-      questionTitle: 'Un Autre Possible',
-      duration: '06:30',
-      videoDurationSeconds: 390,
-      summary: 'Aïcha raconte la finale des championnats du monde où un faux pas à la 8e haie l’a obligée à réinventer sa foulée.',
-      videoCoverUrl: '/assets/duos/athlete-hurdle.jpg',
-      credits: [{ role: 'story_owner', label: 'Propriétaire', name: 'Aïcha Lagat' }]
-    },
-    editorialReflection: 'Entre la sagesse stratégique d’un mentor dans son bureau et la fulgurance physique d’une hurdleuse en plein saut : la victoire s’invente toujours dans l’alliance de l’esprit et du souffle.'
-  },
-  {
-    id: 'duo-focus-phd-01',
-    slug: 'duo-focus-phd-01',
-    documentaryId: 'focus-phd',
-    documentaryTitle: 'Pictures <> PhD',
-    episodeNumber: 'ÉPISODE 01',
-    protagonistA: {
-      id: 'photographer-clara',
-      name: 'Clara Valmont',
-      firstName: 'Clara',
-      age: 38,
-      role: 'Photographe documentaire',
-      country: 'France & Sénégal',
-      territory: 'Paris & Dakar',
-      flag: '🇫🇷',
-      photo: '/assets/duos/photographer-focus.jpg',
-      photoUrl: '/assets/duos/photographer-focus.jpg',
-      videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-      quote: '« Le cadre n’enferme pas le monde : il l’oblige à se révéler. Quand tu presses le déclencheur, tu ne voles pas une image, tu reçois une confidence. »',
-      bio: 'Quinze ans de reportages visuels, observant la poésie des gestes humbles.',
-      universeTag: 'Pictures',
-      centralQuestion: 'Comment capturer l’âme d’un instant sans trahir la pudeur de celui qui vous regarde ?',
-      storiesCount: 6,
-      transmissionsCount: 4,
-      projectsCount: 2,
-      stories: [
-        {
-          id: 'story-photographer-clara-01',
-          title: 'L’ombre portée du pêcheur de Saint-Louis',
-          questionNumber: '01',
-          questionTitle: 'Changer de Regard',
-          duration: '09:10',
-          videoDurationSeconds: 550,
-          summary: 'Clara raconte l’attente de l’instant décisif sur le fleuve à l’aube.',
-          videoCoverUrl: '/assets/duos/photographer-focus.jpg',
-          credits: [{ role: 'story_owner', label: 'Propriétaire', name: 'Clara Valmont' }]
         }
       ]
     } as any,
@@ -2896,7 +2794,7 @@ export const DUOS: Duo[] = [
           id: 'story-researcher-eleonore-01',
           title: 'L’équation qui répare les silences',
           questionNumber: '01',
-          questionTitle: 'Changer de Regard',
+          questionTitle: 'Terrain ou Thèse',
           duration: '08:15',
           videoDurationSeconds: 495,
           summary: 'Éléonore partage la joie de voir sa thèse valider le savoir oral.',
@@ -2906,16 +2804,118 @@ export const DUOS: Duo[] = [
       ]
     } as any,
     questionNumber: '01',
-    questionTitle: 'Changer de Regard',
-    centralQuestion: 'Racontez une découverte qui a changé votre manière d’observer un sujet ou une personne.',
-    quoteA: '« À travers l’œilleton, le monde s’arrête de courir. Tu attends le battement d’aile, la larme, le sourire : ce millième de seconde où la vie s’avoue toute entière. »',
-    quoteB: '« Des mois devant les chiffres et les carnets, et soudain, la courbe s’aligne. Ce n’est plus une formule, c’est le pouls du vivant qui parle enfin. »',
-    coverImage: '/assets/posters/Focus < >  PhD.jpg',
+    questionTitle: 'Terrain ou Thèse',
+    centralQuestion: 'L’instinct pratique du terrain ou la rigueur de la thèse : comment transformez-vous le monde ?',
+    quoteA: '« Dans le calme d’un bureau comme dans le tumulte du terrain, mon rôle est de faire sauter les verrous mentaux pour libérer la puissance d’action. »',
+    quoteB: '« Une thèse n’est pas un diplôme qu’on contemple : c’est une promesse faite au réel de chercher la vérité au-delà des apparences. »',
+    coverImage: '/assets/posters/coaching-phd.png',
+    storyA: {
+      id: 'story-coach-marc-01',
+      title: 'Le silence avant la décision',
+      questionNumber: '01',
+      questionTitle: 'Terrain ou Thèse',
+      duration: '07:45',
+      videoDurationSeconds: 465,
+      summary: 'Marc partage la séance où un champion brisé a retrouvé le désir de s’entraîner.',
+      videoCoverUrl: '/assets/duos/coach-office.jpg',
+      credits: [{ role: 'story_owner', label: 'Propriétaire', name: 'Marc Valmont' }]
+    },
+    storyB: {
+      id: 'story-researcher-eleonore-01',
+      title: 'L’équation qui répare les silences',
+      questionNumber: '01',
+      questionTitle: 'Terrain ou Thèse',
+      duration: '08:15',
+      videoDurationSeconds: 495,
+      summary: 'Éléonore partage la joie de voir sa thèse valider le savoir oral.',
+      videoCoverUrl: '/assets/duos/researcher-phd.jpg',
+      credits: [{ role: 'story_owner', label: 'Propriétaire', name: 'Dre. Éléonore Kaboré' }]
+    },
+    editorialReflection: 'Entre le déclic pragmatique du coach et la démonstration patiente de la chercheuse, l’action et la pensée s’unissent pour libérer le plein potentiel humain.'
+  },
+  {
+    id: 'duo-focus-phd-01',
+    slug: 'duo-focus-phd-01',
+    documentaryId: 'focus-phd',
+    documentaryTitle: 'Pictures ‹ › Words',
+    episodeNumber: 'ÉPISODE 01',
+    protagonistA: {
+      id: 'photographer-clara',
+      name: 'Clara Valmont',
+      firstName: 'Clara',
+      age: 38,
+      role: 'Photographe documentaire',
+      country: 'France & Sénégal',
+      territory: 'Paris & Dakar',
+      flag: '🇫🇷',
+      photo: '/assets/duos/photographer-focus.jpg',
+      photoUrl: '/assets/duos/photographer-focus.jpg',
+      videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+      quote: '« Le cadre n’enferme pas le monde : il l’oblige à se révéler. Quand tu presses le déclencheur, tu ne voles pas une image, tu reçois une confidence. »',
+      bio: 'Quinze ans de reportages visuels, observant la poésie des gestes humbles.',
+      universeTag: 'Pictures',
+      centralQuestion: 'L’image qui fige l’instant ou le mot qui réveille la conscience : comment racontez-vous la vérité ?',
+      storiesCount: 6,
+      transmissionsCount: 4,
+      projectsCount: 2,
+      stories: [
+        {
+          id: 'story-photographer-clara-01',
+          title: 'L’ombre portée du pêcheur de Saint-Louis',
+          questionNumber: '01',
+          questionTitle: 'Raconter la Vérité',
+          duration: '09:10',
+          videoDurationSeconds: 550,
+          summary: 'Clara raconte l’attente de l’instant décisif sur le fleuve à l’aube.',
+          videoCoverUrl: '/assets/duos/photographer-focus.jpg',
+          credits: [{ role: 'story_owner', label: 'Propriétaire', name: 'Clara Valmont' }]
+        }
+      ]
+    } as any,
+    protagonistB: {
+      id: 'poet-armel',
+      name: 'Armel Hounkpatin',
+      firstName: 'Armel',
+      age: 31,
+      role: 'Slameur & Poète du verbe vivant',
+      country: 'Bénin',
+      territory: 'Cotonou',
+      flag: '🇧🇯',
+      photo: '/assets/images/fagnon_agronome_1792933698985.jpg',
+      photoUrl: '/assets/images/fagnon_agronome_1792933698985.jpg',
+      videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+      quote: '« Le mot a le poids du feu et la douceur de la pluie. Quand je scande mes vers, je réveille la mémoire des ancêtres. »',
+      bio: 'Voix vibrante de la scène slam de Cotonou, mêlant langues locales et souffle contemporain.',
+      universeTag: 'Words',
+      centralQuestion: 'Le verbe peut-il guérir ce que le silence a blessé ?',
+      storiesCount: 5,
+      transmissionsCount: 3,
+      projectsCount: 3,
+      stories: [
+        {
+          id: 'story-poet-armel-01',
+          title: 'Le slam du carrefour Dantokpa',
+          questionNumber: '01',
+          questionTitle: 'Raconter la Vérité',
+          duration: '07:20',
+          videoDurationSeconds: 440,
+          summary: 'Armel raconte comment un poème improvisé au cœur du marché a suspendu la clameur des marchandes.',
+          videoCoverUrl: '/assets/images/fagnon_agronome_1792933698985.jpg',
+          credits: [{ role: 'story_owner', label: 'Propriétaire', name: 'Armel Hounkpatin' }]
+        }
+      ]
+    } as any,
+    questionNumber: '01',
+    questionTitle: 'Raconter la Vérité',
+    centralQuestion: 'L’image qui fige l’instant ou le mot qui réveille la conscience : comment racontez-vous la vérité ?',
+    quoteA: '« À travers le cadre, le monde s’arrête de courir. Quand tu presses le déclencheur, tu ne voles pas une image, tu reçois une confidence sacrée. »',
+    quoteB: '« Le verbe claque comme un tambour dans la nuit. Quand le slam s’élève, les mots percent les cœurs là où aucune ombre ne peut se cacher. »',
+    coverImage: '/assets/posters/pictures-words.jpg',
     storyA: {
       id: 'story-photographer-clara-01',
       title: 'L’ombre portée du pêcheur de Saint-Louis',
       questionNumber: '01',
-      questionTitle: 'Changer de Regard',
+      questionTitle: 'Raconter la Vérité',
       duration: '09:10',
       videoDurationSeconds: 550,
       summary: 'Clara raconte l’attente de l’instant décisif sur le fleuve à l’aube.',
@@ -2923,17 +2923,17 @@ export const DUOS: Duo[] = [
       credits: [{ role: 'story_owner', label: 'Propriétaire', name: 'Clara Valmont' }]
     },
     storyB: {
-      id: 'story-researcher-eleonore-01',
-      title: 'L’équation qui répare les silences',
+      id: 'story-poet-armel-01',
+      title: 'Le slam du carrefour Dantokpa',
       questionNumber: '01',
-      questionTitle: 'Changer de Regard',
-      duration: '08:15',
-      videoDurationSeconds: 495,
-      summary: 'Éléonore partage la joie de voir sa thèse valider le savoir oral.',
-      videoCoverUrl: '/assets/duos/researcher-phd.jpg',
-      credits: [{ role: 'story_owner', label: 'Propriétaire', name: 'Dre. Éléonore Kaboré' }]
+      questionTitle: 'Raconter la Vérité',
+      duration: '07:20',
+      videoDurationSeconds: 440,
+      summary: 'Armel raconte comment un poème improvisé au cœur du marché a suspendu la clameur des marchandes.',
+      videoCoverUrl: '/assets/images/fagnon_agronome_1792933698985.jpg',
+      credits: [{ role: 'story_owner', label: 'Propriétaire', name: 'Armel Hounkpatin' }]
     },
-    editorialReflection: 'D’un côté, l’acuité sensorielle de la photographe qui fige l’émotion éphémère dans la lumière ; de l’autre, la patience méthodique de la chercheuse qui décortique les structures invisibles du savoir. Deux vigies complémentaires de la vérité humaine.'
+    editorialReflection: 'Quand l’œil silencieux de l’objectif répond au rythme percutant de la parole scandée, la vérité humaine s’illumine dans toute son intensité.'
   }
 ];
 

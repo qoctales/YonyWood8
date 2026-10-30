@@ -59,56 +59,56 @@ const PRODUCTIONS: ProductionPoster[] = [
   {
     id: 'jesus-legba',
     title: 'Vodun Rays ‹ › Autre Foi',
-    posterImage: '/assets/posters/Esu < > Jesus.png',
+    posterImage: '/assets/posters/vodun-autre-foi.png',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-    sharePrice: 50
-  },
-  {
-    id: 'finagnon-qosqorico',
-    title: 'Bénin < > Le Monde',
-    posterImage: '/assets/posters/Benin < >.jpg',
-    videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-    sharePrice: 50
-  },
-  {
-    id: 'blacks-one-beyond-eve',
-    title: 'Blacks One < > Beyond Eve',
-    posterImage: '/assets/posters/Blacks One < > Beyond Eve.png',
-    videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-    sharePrice: 50
-  },
-  {
-    id: 'dixeat-fiat-luxe',
-    title: 'Fiat Luxe < > Sweet Street',
-    posterImage: '/assets/posters/Fiat Luxe < > Street.jpg',
-    videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
     sharePrice: 50
   },
   {
     id: 'roots-routes',
-    title: 'Roots < > Routes',
-    posterImage: '/roots-routes.jpg',
+    title: 'Roots ‹ › Routes',
+    posterImage: '/assets/posters/roots-routes.jpg',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
     sharePrice: 50
   },
   {
-    id: 'other-eyes-sixth-sense',
-    title: 'Other Sights < > Third Eye',
-    posterImage: '/assets/posters/Other Eyes < > Third Eye.png',
-    videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-    sharePrice: 50
-  },
-  {
-    id: 'builders-seekers',
-    title: 'Builders < > Seekers',
-    posterImage: '/assets/posters/Builders < > Seekers.png',
+    id: 'coaching-phd',
+    title: 'Coaching ‹ › PhD',
+    posterImage: '/assets/posters/coaching-phd.png',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
     sharePrice: 50
   },
   {
-    id: 'focus-phd',
-    title: 'Pictures < > PhD',
-    posterImage: '/assets/posters/Focus < >  PhD.jpg',
+    id: 'fiat-luxe-builders',
+    title: 'Fiat Luxe ‹ › Builders',
+    posterImage: '/assets/posters/fiat-luxe-builders.png',
+    videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+    sharePrice: 50
+  },
+  {
+    id: 'blacks-one-amazones',
+    title: 'Blacks One ‹ › Amazones',
+    posterImage: '/assets/posters/blacks-one-amazones.png',
+    videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+    sharePrice: 50
+  },
+  {
+    id: 'benin-monde',
+    title: 'Bénin ‹ › Le Monde',
+    posterImage: '/assets/posters/benin-monde.jpg',
+    videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+    sharePrice: 50
+  },
+  {
+    id: 'baobab-bambou',
+    title: 'Baobab ‹ › Bambou',
+    posterImage: '/assets/posters/baobab-bambou.jpg',
+    videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+    sharePrice: 50
+  },
+  {
+    id: 'pictures-words',
+    title: 'Pictures ‹ › Words',
+    posterImage: '/assets/posters/pictures-words.jpg',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
     sharePrice: 50
   }
@@ -121,7 +121,7 @@ const INITIAL_PEER_OFFERS: PeerOffer[] = [
     sellerName: 'Koffi',
     sellerPhoto: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
     seriesTitle: 'Vodun Rays ‹ › Autre Foi',
-    posterImage: '/assets/posters/Esu < > Jesus.png',
+    posterImage: '/assets/posters/vodun-autre-foi.png',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
     sharesCount: 3,
     unitPrice: 55
@@ -131,8 +131,8 @@ const INITIAL_PEER_OFFERS: PeerOffer[] = [
     sellerId: 'nadia-artist',
     sellerName: 'Nadia',
     sellerPhoto: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80',
-    seriesTitle: 'Bénin < > Le Monde',
-    posterImage: '/assets/posters/Benin < >.jpg',
+    seriesTitle: 'Bénin ‹ › Le Monde',
+    posterImage: '/assets/posters/benin-monde.jpg',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
     sharesCount: 5,
     unitPrice: 52
@@ -142,8 +142,8 @@ const INITIAL_PEER_OFFERS: PeerOffer[] = [
     sellerId: 'marcel-speaker',
     sellerName: 'Marcel',
     sellerPhoto: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=400&q=80',
-    seriesTitle: 'Blacks One < > Beyond Eve',
-    posterImage: '/assets/posters/Blacks One < > Beyond Eve.png',
+    seriesTitle: 'Blacks One ‹ › Amazones',
+    posterImage: '/assets/posters/blacks-one-amazones.png',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
     sharesCount: 2,
     unitPrice: 72
@@ -153,8 +153,8 @@ const INITIAL_PEER_OFFERS: PeerOffer[] = [
     sellerId: 'amina-cook',
     sellerName: 'Amina',
     sellerPhoto: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
-    seriesTitle: 'Fiat Luxe < > Sweet Street',
-    posterImage: '/assets/posters/Fiat Luxe < > Street.jpg',
+    seriesTitle: 'Fiat Luxe ‹ › Builders',
+    posterImage: '/assets/posters/fiat-luxe-builders.png',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
     sharesCount: 4,
     unitPrice: 62
@@ -164,8 +164,8 @@ const INITIAL_PEER_OFFERS: PeerOffer[] = [
     sellerId: 'benoit-builder',
     sellerName: 'Benoît',
     sellerPhoto: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80',
-    seriesTitle: 'Roots < > Routes',
-    posterImage: '/roots-routes.jpg',
+    seriesTitle: 'Roots ‹ › Routes',
+    posterImage: '/assets/posters/roots-routes.jpg',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
     sharesCount: 3,
     unitPrice: 68
@@ -173,10 +173,10 @@ const INITIAL_PEER_OFFERS: PeerOffer[] = [
   {
     id: 'peer-6',
     sellerId: 'codjo-voyant',
-    sellerName: 'Pascal',
+    sellerName: 'Dossou & Sénan',
     sellerPhoto: '/assets/duos/codjo-blind.jpg',
-    seriesTitle: 'Other Sights < > Third Eye',
-    posterImage: '/assets/posters/Other Eyes < > Third Eye.png',
+    seriesTitle: 'Baobab ‹ › Bambou',
+    posterImage: '/assets/posters/baobab-bambou.jpg',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
     sharesCount: 4,
     unitPrice: 59
@@ -184,10 +184,10 @@ const INITIAL_PEER_OFFERS: PeerOffer[] = [
   {
     id: 'peer-7',
     sellerId: 'builder-kwame-seller',
-    sellerName: 'Kwame',
-    sellerPhoto: '/assets/duos/kwame-mensah.jpg',
-    seriesTitle: 'Builders < > Seekers',
-    posterImage: '/assets/posters/Builders < > Seekers.png',
+    sellerName: 'Coach Marc',
+    sellerPhoto: '/assets/duos/coach-office.jpg',
+    seriesTitle: 'Coaching ‹ › PhD',
+    posterImage: '/assets/posters/coaching-phd.png',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
     sharesCount: 6,
     unitPrice: 65
@@ -195,10 +195,10 @@ const INITIAL_PEER_OFFERS: PeerOffer[] = [
   {
     id: 'peer-8',
     sellerId: 'clara-focus-seller',
-    sellerName: 'Clara',
+    sellerName: 'Clara & Armel',
     sellerPhoto: '/assets/duos/photographer-focus.jpg',
-    seriesTitle: 'Pictures < > PhD',
-    posterImage: '/assets/posters/Focus < >  PhD.jpg',
+    seriesTitle: 'Pictures ‹ › Words',
+    posterImage: '/assets/posters/pictures-words.jpg',
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
     sharesCount: 5,
     unitPrice: 58
@@ -245,15 +245,22 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
   // Jauge en temps réel sur 256 parts par série (~70% parts souscrites par défaut)
   const [remainingSharesMap, setRemainingSharesMap] = useState<Record<string, number>>({
     'jesus-legba': 77, // 179 souscrites (70% — 77 restantes)
-    'finagnon-qosqorico': 74, // 182 souscrites (71%)
-    'blacks-one-beyond-eve': 80, // 176 souscrites (69%)
-    'dixeat-fiat-luxe': 72, // 184 souscrites (72%)
     'roots-routes': 75, // 181 souscrites (71%)
-    'investors-builders': 75, // compatibilité
-    'other-eyes-sixth-sense': 77, // 179 souscrites (70%)
-    'builders-seekers': 79, // 177 souscrites (69%)
-    'coaching-unlimited': 79, // compatibilité
-    'focus-phd': 76 // 180 souscrites (70%)
+    'coaching-phd': 79, // 177 souscrites (69%)
+    'fiat-luxe-builders': 72, // 184 souscrites (72%)
+    'blacks-one-amazones': 80, // 176 souscrites (69%)
+    'benin-monde': 74, // 182 souscrites (71%)
+    'baobab-bambou': 77, // 179 souscrites (70%)
+    'pictures-words': 76, // 180 souscrites (70%)
+    // Compatibilité
+    'finagnon-qosqorico': 74,
+    'blacks-one-beyond-eve': 80,
+    'dixeat-fiat-luxe': 72,
+    'investors-builders': 75,
+    'other-eyes-sixth-sense': 77,
+    'builders-seekers': 79,
+    'coaching-unlimited': 79,
+    'focus-phd': 76
   });
 
   // Chargement en temps réel des parts restantes depuis Firestore (requête unique optimisée)

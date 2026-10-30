@@ -545,6 +545,12 @@ export const ALL_SERIES_TEAMS: Record<string, SeriesTeamBundle> = {
 
 ALL_SERIES_TEAMS['builders-seekers'] = ALL_SERIES_TEAMS['coaching-unlimited'];
 ALL_SERIES_TEAMS['roots-routes'] = ALL_SERIES_TEAMS['investors-builders'];
+ALL_SERIES_TEAMS['benin-monde'] = ALL_SERIES_TEAMS['finagnon-qosqorico'];
+ALL_SERIES_TEAMS['blacks-one-amazones'] = ALL_SERIES_TEAMS['blacks-one-beyond-eve'];
+ALL_SERIES_TEAMS['fiat-luxe-builders'] = ALL_SERIES_TEAMS['dixeat-fiat-luxe'];
+ALL_SERIES_TEAMS['coaching-phd'] = ALL_SERIES_TEAMS['coaching-unlimited'];
+ALL_SERIES_TEAMS['baobab-bambou'] = ALL_SERIES_TEAMS['other-eyes-sixth-sense'];
+ALL_SERIES_TEAMS['pictures-words'] = ALL_SERIES_TEAMS['focus-phd'];
 
 export const getSeriesCredits = (seriesId: string, duoTitle?: string): SequenceCredits => {
   const team = ALL_SERIES_TEAMS[seriesId] || ALL_SERIES_TEAMS['jesus-legba'];
