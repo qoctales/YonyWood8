@@ -913,4 +913,46 @@ export const BesoinsIcon: React.FC<IconProps> = ({
 export const BesoinsHandsIcon = BesoinsIcon;
 export const BesoinsPuzzleIcon = BesoinsIcon;
 
+/**
+ * EntrepriseFilmDuoIcon:
+ * Symbole officiel « Entreprise » de la barre de navigation :
+ * La bande de pellicule cinéma tournée à 90°, présentant deux cadres verticaux
+ * côte à côte (les deux écrans de tournage du Duo) avec les perforations
+ * horizontales en haut et en bas.
+ */
+export const EntrepriseFilmDuoIcon: React.FC<IconProps & { isActive?: boolean }> = ({ 
+  className = 'w-5 h-5',
+  strokeWidth = 1.75,
+  isActive
+}) => {
+  return (
+    <svg 
+      viewBox="0 0 24 24" 
+      fill="none" 
+      stroke="currentColor" 
+      strokeWidth={strokeWidth} 
+      strokeLinecap="round" 
+      strokeLinejoin="round" 
+      className={`${isActive === true ? 'text-white' : isActive === false ? 'text-[#6E6254]' : ''} ${className}`.trim()}
+      aria-hidden="true"
+    >
+      <title>Entreprise</title>
+      {/* Boîtier rectangulaire cinéma */}
+      <rect x="3" y="4" width="18" height="16" rx="2.5" />
+      {/* Partition centrale verticale séparant les deux écrans en miroir */}
+      <line x1="12" y1="4" x2="12" y2="20" />
+      {/* Pistes de perforations horizontales haut et bas */}
+      <line x1="3" y1="8" x2="21" y2="8" />
+      <line x1="3" y1="16" x2="21" y2="16" />
+      {/* Dentelures haut */}
+      <line x1="7" y1="4" x2="7" y2="8" />
+      <line x1="17" y1="4" x2="17" y2="8" />
+      {/* Dentelures bas */}
+      <line x1="7" y1="16" x2="7" y2="20" />
+      <line x1="17" y1="16" x2="17" y2="20" />
+    </svg>
+  );
+};
+
+
 

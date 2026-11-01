@@ -160,6 +160,12 @@ class CelestialAudioSystem {
       // Ignorer silencieusement
     }
   }
+
+  // Son éclatant et satisfaisant de validation (résonance / vote / enregistrement)
+  playOrbValidate() {
+    this.playOrbSelect();
+  }
 }
 
 export const celestialAudio = new CelestialAudioSystem();
+

@@ -722,6 +722,7 @@ export type ViewScreen =
   | { type: 'my_forest' }
   | { 
       type: 'profile'; 
+      protagonistId?: string;
       returnToDuoId?: string; 
       returnToDuoIndex?: number; 
       returnToDocId?: string; 

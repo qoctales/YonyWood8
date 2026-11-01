@@ -212,7 +212,7 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
   initialTab,
   restoreContext
 }) => {
-  const [activeTab] = useState<'coproduire' | 'marche'>('coproduire');
+  const [activeTab, setActiveTab] = useState<'coproduire' | 'marche'>('coproduire');
 
   // Indexes
   const [currentIndex, setCurrentIndex] = useState<number>(0);
@@ -436,19 +436,77 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
     setTimeout(() => setSuccessToast(null), 4000);
   };
 
+  // Capsules d'incitation à l'achat et vente de parts
+  const SHARE_STORIES = [
+    { id: 'sell-plus', isAdd: true, label: '+ Vendre' },
+    { id: 'aura-shares', title: 'Aura Tech', shares: '5%', price: '50 €', img: '/assets/posters/vodun-autre-foi.png', prodIndex: 0 },
+    { id: 'bio-shares', title: 'Bio Solaire', shares: '10%', price: '100 €', img: '/assets/posters/roots-routes.jpg', prodIndex: 1 },
+    { id: 'kpedetin-shares', title: 'Kpèdétin', shares: '2%', price: '20 €', img: '/assets/posters/coaching-phd.png', prodIndex: 2 },
+    { id: 'terroirs-shares', title: 'Terroirs Agro', shares: '8%', price: '80 €', img: '/assets/posters/fiat-luxe-builders.png', prodIndex: 3 },
+    { id: 'dossou-shares', title: 'Dossou Fret', shares: '4%', price: '40 €', img: '/assets/posters/blacks-one-amazones.png', prodIndex: 4 },
+    { id: 'senami-shares', title: 'Sènami Arch', shares: '6%', price: '60 €', img: '/assets/posters/benin-monde.jpg', prodIndex: 5 },
+  ];
+
   return (
-    <div className="w-full max-w-3xl mx-auto px-3 sm:px-6 py-2 pb-24 sm:pb-28 pt-safe pb-safe h-full max-h-full overflow-hidden flex flex-col justify-between text-[#1C1917]">
+    <div className="w-full h-full max-h-full pb-20 sm:pb-24 pt-safe overflow-hidden flex flex-col justify-between text-[#1C1917] select-none bg-white">
       
       {/* ========================================================================= */}
-      {/* HEADER DISCRET : TITRE COPRODUCTION EN ITALIQUE NOIR AVEC TRAIT TERRACOTTA */}
+      {/* 1. STORIES CAPSULES D'ACTIONS & PARTS EN SQUIRCLES (rounded-2xl)          */}
       {/* ========================================================================= */}
-      <div className="relative flex items-center justify-between h-9 sm:h-10 shrink-0 gap-2 mb-1">
-        <div className="relative flex items-center h-full overflow-visible">
-          <h1 className="font-editorial text-xs sm:text-sm md:text-base font-semibold text-[#1C1917] tracking-normal leading-none whitespace-nowrap pr-2">
-            Valeurs partagées des récits
-          </h1>
-          {/* Petit trait terracotta officiel */}
-          <div className="absolute left-0 -bottom-1.5 w-8 h-0.5 bg-[#A2482B] rounded-full" />
+      <div className="w-full max-w-3xl mx-auto px-3 sm:px-4 pt-1.5 pb-1 shrink-0 h-[84px] sm:h-[90px] flex items-center">
+        <div className="flex items-center gap-2 sm:gap-2.5 overflow-x-auto no-scrollbar py-1 px-1 w-full">
+          {SHARE_STORIES.map((st) => {
+            if (st.isAdd) {
+              return (
+                <div 
+                  key={st.id}
+                  onClick={() => setSuccessToast("Espace vente de parts : choisissez une de vos parts à proposer à la communauté.")}
+                  className="flex flex-col items-center gap-1 cursor-pointer group shrink-0"
+                  title="Mettre en vente mes parts"
+                >
+                  <div className="w-13 h-14 sm:w-14 sm:h-15 rounded-2xl p-0.5 border-2 border-dashed border-[#A2482B] flex items-center justify-center group-hover:scale-105 transition-transform bg-amber-50/50">
+                    <div className="w-full h-full rounded-xl bg-[#A2482B] text-white flex items-center justify-center shadow-xs">
+                      <span className="text-base font-bold">+</span>
+                    </div>
+                  </div>
+                  <span className="text-[10px] font-semibold text-stone-600 tracking-tight">
+                    {st.label}
+                  </span>
+                </div>
+              );
+            }
+
+            return (
+              <div 
+                key={st.id}
+                onClick={() => {
+                  if (st.prodIndex !== undefined) {
+                    setActiveTab('coproduire');
+                    setCurrentIndex(st.prodIndex);
+                  }
+                }}
+                className="flex flex-col items-center gap-1 cursor-pointer group shrink-0"
+                title={`${st.title} • ${st.shares} disponibles`}
+              >
+                <div className="w-13 h-14 sm:w-14 sm:h-15 rounded-2xl p-0.5 border-2 border-[#A2482B] transition-transform group-hover:scale-105 shadow-xs">
+                  <div className="w-full h-full rounded-xl overflow-hidden bg-stone-900 relative">
+                    <img 
+                      src={st.img} 
+                      alt={st.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-black/25" />
+                    <div className="absolute bottom-0 inset-x-0 bg-black/70 text-[8px] font-bold text-center text-amber-300 py-0.5">
+                      {st.shares}
+                    </div>
+                  </div>
+                </div>
+                <span className="text-[9.5px] font-medium text-stone-700 tracking-tight max-w-[54px] truncate text-center">
+                  {st.title}
+                </span>
+              </div>
+            );
+          })}
         </div>
       </div>
 
@@ -461,35 +519,41 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
       )}
 
       {/* ========================================================================= */}
-      {/* PANNEAU UNIQUE AVEC SWIPE (EXACTEMENT COMME SUR PROPOSER UNE HISTOIRE)    */}
-      {/* SANS AUCUN BOUTON NI POINT DE NAVIGATION EN DESSOUS                      */}
+      {/* 2. CARTE 9:16 STRICTEMENT IDENTIQUE EN GÉOMÉTRIE AUX AUTRES PAGES         */}
       {/* ========================================================================= */}
-      <div className="flex-1 flex items-center justify-center py-1 sm:py-2 min-h-0 my-auto overflow-visible px-2 sm:px-6 md:px-10 animate-in fade-in duration-200">
+      <div className="relative flex-1 flex flex-col items-center justify-center min-h-0 py-1 px-3 sm:px-4 my-auto">
         
-        {/* Conteneur de l'écran unique avec swipe et navigation fléchée latérale */}
-        <div className="relative w-full h-full flex items-center justify-center">
-          
-          {/* Flèche Gauche (Navigation rapide latérale) */}
-          <button
-            onClick={handlePrev}
-            className="hidden sm:flex absolute left-2 sm:left-4 lg:left-6 z-20 w-11 h-11 rounded-full bg-white/95 hover:bg-[#A2482B] text-[#1C1917] hover:text-white border border-[#E7E5E4] hover:border-[#A2482B] shadow-xl items-center justify-center transition-all cursor-pointer transform hover:scale-105 active:scale-95"
-            title="Précédent"
-            id="prev-poster-btn"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
+        {/* Flèche Gauche */}
+        <button
+          onClick={handlePrev}
+          className="hidden md:flex absolute left-4 lg:left-8 z-30 w-10 h-10 rounded-full bg-white/90 hover:bg-[#1C1917] text-stone-800 hover:text-white border border-stone-200 shadow-lg items-center justify-center transition-all cursor-pointer transform hover:scale-105 active:scale-95"
+          title="Précédent"
+          id="prev-poster-btn"
+        >
+          <ChevronLeft className="w-5 h-5" />
+        </button>
 
-          {/* CARTE UNIQUE FORMAT VIDÉO VERTICAL 9:16 STRICTEMENT IDENTIQUE À LA PAGE DUOS */}
-          <div
-            onTouchStart={onTouchStart}
-            onTouchMove={onTouchMove}
-            onTouchEnd={onTouchEnd}
-            onMouseDown={onMouseDown}
-            onMouseMove={onMouseMove}
-            onMouseUp={onMouseUp}
-            className="aspect-[9/16] w-[min(calc(100vw-32px),calc((100dvh-200px)*9/16))] max-w-[280px] sm:max-w-[290px] h-[min(500px,calc(100dvh-200px))] mx-auto transition-transform duration-150 ease-out select-none cursor-grab active:cursor-grabbing flex justify-center shrink-0"
-            style={{ transform: `translateX(${swipeOffset}px)` }}
-          >
+        {/* Flèche Droite */}
+        <button
+          onClick={handleNext}
+          className="hidden md:flex absolute right-4 lg:right-8 z-30 w-10 h-10 rounded-full bg-white/90 hover:bg-[#1C1917] text-stone-800 hover:text-white border border-stone-200 shadow-lg items-center justify-center transition-all cursor-pointer transform hover:scale-105 active:scale-95"
+          title="Suivant"
+          id="next-poster-btn"
+        >
+          <ChevronRight className="w-5 h-5" />
+        </button>
+
+        {/* CARTE UNIQUE FORMAT VIDÉO VERTICAL 9:16 STRICTEMENT CALIBRÉE */}
+        <div
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
+          onMouseDown={onMouseDown}
+          onMouseMove={onMouseMove}
+          onMouseUp={onMouseUp}
+          className="relative aspect-[9/16] w-[min(310px,calc(100vw-36px))] sm:w-[320px] max-h-[min(540px,calc(100dvh-220px))] rounded-3xl overflow-hidden shadow-2xl border border-stone-200/90 bg-[#12110F] text-white flex flex-col justify-between select-none"
+          style={{ transform: `translateX(${swipeOffset}px)` }}
+        >
             {/* =================================================================== */}
             {/* VUE A : À L'AFFICHE                                                */}
             {/* =================================================================== */}
@@ -805,20 +869,7 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
             )}
 
           </div>
-
-          {/* Flèche Droite (Navigation rapide latérale) */}
-          <button
-            onClick={handleNext}
-            className="hidden sm:flex absolute right-2 sm:right-4 lg:right-6 z-20 w-11 h-11 rounded-full bg-white/95 hover:bg-[#A2482B] text-[#1C1917] hover:text-white border border-[#E7E5E4] hover:border-[#A2482B] shadow-xl items-center justify-center transition-all cursor-pointer transform hover:scale-105 active:scale-95"
-            title="Suivant"
-            id="next-poster-btn"
-          >
-            <ChevronRight className="w-5 h-5" />
-          </button>
-
         </div>
-
-      </div>
 
       {/* ========================================================================= */}
       {/* MODALE D'ACHAT DE PARTS                                                   */}

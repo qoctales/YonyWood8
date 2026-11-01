@@ -1,18 +1,14 @@
 import React from 'react';
 import { 
-  Clapperboard,
-  Film
+  Clapperboard
 } from 'lucide-react';
 import { ViewScreen } from '../types';
 import { 
   DirectorChairIcon,
+  EntrepriseFilmDuoIcon,
   DuocumentairesTvIcon,
-  LumiereSunDotsIcon,
-  PortraitsViseurIcon,
   ProfileSoloIcon
 } from './YonywoodBrandIcons';
-import { PROTAGONISTS } from '../data/mockData';
-import { useAuth } from '../services/authContext';
 
 interface BottomMenuProps {
   currentScreen: ViewScreen;
@@ -20,15 +16,12 @@ interface BottomMenuProps {
 }
 
 export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigate }) => {
-  const { currentUser } = useAuth();
-
   // Déterminer l'élément actif selon l'écran en cours
   const isStudioActive = currentScreen.type === 'submit_story' || currentScreen.type === 'request_videographer';
-  const isCastingActive = currentScreen.type === 'home' || currentScreen.type === 'matrix_view' || currentScreen.type === 'documentaries' || currentScreen.type === 'documentary_detail';
-  const isDuoActive = currentScreen.type === 'duo_feed' || currentScreen.type === 'duo_detail' || currentScreen.type === 'landing';
-  const isLumiereActive = currentScreen.type === 'enterprise';
-  const isProductionActive = currentScreen.type === 'marketplace';
-  const isProfilActive = 
+  const isEntrepriseActive = currentScreen.type === 'enterprise';
+  const isDialogueActive = currentScreen.type === 'duo_feed' || currentScreen.type === 'duo_detail' || currentScreen.type === 'landing' || currentScreen.type === 'home';
+  const isActionActive = currentScreen.type === 'marketplace';
+  const isPortraitActive = 
     currentScreen.type === 'profile' || 
     currentScreen.type === 'settings' || 
     currentScreen.type === 'portfolio' || 
@@ -38,23 +31,12 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
     currentScreen.type === 'messaging' ||
     currentScreen.type === 'editorial_backoffice';
 
-  // Identité du profil affiché (Roméo par défaut)
-  const profileFirstName = React.useMemo(() => {
-    if (currentScreen.type === 'protagonist_profile' && currentScreen.protagonistId) {
-      const p = PROTAGONISTS.find(prot => prot.id === currentScreen.protagonistId);
-      if (p) {
-        return p.name.split(' ')[0];
-      }
-    }
-    return currentUser?.name?.split(' ')[0] || 'Roméo';
-  }, [currentScreen, currentUser]);
-
   // Ne pas afficher le menu pendant le lecteur vidéo plein écran
   if (currentScreen.type === 'video_player') {
     return null;
   }
 
-  // Exactement six rubriques au singulier : Studio · Miroir · Casting · Lumière · Portrait · Action
+  // Exactement cinq rubriques selon la restructuration : Studio · Entreprise · Dialogue (au centre) · Action · Portrait
   const menuItems = [
     {
       id: 'studio',
@@ -64,57 +46,47 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
       onClick: () => onNavigate({ type: 'submit_story' }),
       screenId: 'menu-item-studio',
       iconClassName: 'w-5 h-5 sm:w-5 sm:h-5 shrink-0',
-      strokeWidth: 1.5
+      strokeWidth: 1.75
     },
     {
-      id: 'duo',
-      label: 'Miroir',
-      icon: DuocumentairesTvIcon, // deux écrans (télé divisée en deux)
-      isActive: isDuoActive,
+      id: 'entreprise',
+      label: 'Entreprise',
+      icon: EntrepriseFilmDuoIcon, // Pellicule tournée à 90°
+      isActive: isEntrepriseActive,
+      onClick: () => onNavigate({ type: 'enterprise' }),
+      screenId: 'menu-item-entreprise',
+      iconClassName: 'w-[19px] h-[19px] sm:w-[20px] sm:h-[20px] shrink-0',
+      strokeWidth: 1.75
+    },
+    {
+      id: 'dialogue',
+      label: 'Dialogue',
+      icon: DuocumentairesTvIcon, // Télé double vintage au centre
+      isActive: isDialogueActive,
       onClick: () => onNavigate({ type: 'duo_feed' }),
-      screenId: 'menu-item-duo',
+      screenId: 'menu-item-dialogue',
       iconClassName: 'w-5 h-5 sm:w-5 sm:h-5 shrink-0',
       strokeWidth: 1.75
     },
     {
-      id: 'casting',
-      label: 'Casting',
-      icon: Film, // bande de pellicule
-      isActive: isCastingActive,
-      onClick: () => onNavigate({ type: 'home' }),
-      screenId: 'menu-item-casting',
-      iconClassName: 'w-[17px] h-[17px] sm:w-[17px] sm:h-[17px] shrink-0',
-      strokeWidth: 1.5
-    },
-    {
-      id: 'lumiere',
-      label: 'Lumière',
-      icon: LumiereSunDotsIcon, // Soleil et constellations
-      isActive: isLumiereActive,
-      onClick: () => onNavigate({ type: 'enterprise' }),
-      screenId: 'menu-item-lumiere',
-      iconClassName: 'w-[19px] h-[19px] sm:w-[20px] sm:h-[20px] shrink-0',
-      strokeWidth: 1.5
-    },
-    {
-      id: 'portrait',
-      label: 'Portrait',
-      icon: ProfileSoloIcon, // petite télé / profil solo (icône singulière officielle)
-      isActive: isProfilActive,
-      onClick: () => onNavigate({ type: 'profile' }),
-      screenId: 'menu-item-portrait',
+      id: 'action',
+      label: 'Action',
+      icon: Clapperboard, // Claquette cinéma
+      isActive: isActionActive,
+      onClick: () => onNavigate({ type: 'marketplace' }),
+      screenId: 'menu-item-action',
       iconClassName: 'w-5 h-5 sm:w-5 sm:h-5 shrink-0',
       strokeWidth: 1.6
     },
     {
-      id: 'production',
-      label: 'Action',
-      icon: Clapperboard, // claquette
-      isActive: isProductionActive,
-      onClick: () => onNavigate({ type: 'marketplace' }),
-      screenId: 'menu-item-production',
+      id: 'portrait',
+      label: 'Portrait',
+      icon: ProfileSoloIcon, // Icône officielle portrait solo
+      isActive: isPortraitActive,
+      onClick: () => onNavigate({ type: 'profile' }),
+      screenId: 'menu-item-portrait',
       iconClassName: 'w-5 h-5 sm:w-5 sm:h-5 shrink-0',
-      strokeWidth: 1.5
+      strokeWidth: 1.6
     }
   ];
 
@@ -148,20 +120,20 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
                     : 'bg-transparent text-stone-600 group-hover:bg-stone-100/80'
                 }`}
               >
-                {item.id === 'lumiere' ? (
-                  <LumiereSunDotsIcon 
+                {item.id === 'entreprise' ? (
+                  <EntrepriseFilmDuoIcon 
                     className={`${item.iconClassName} transition-transform duration-200`} 
                     strokeWidth={item.strokeWidth} 
                     isActive={item.isActive}
                   />
-                ) : item.id === 'duo' ? (
-                  <DuocumentairesTvIcon 
+                ) : item.id === 'studio' ? (
+                  <DirectorChairIcon 
                     className={`${item.iconClassName} transition-transform duration-200`} 
                     strokeWidth={item.strokeWidth || 1.75} 
                     isActive={item.isActive}
                   />
-                ) : item.id === 'studio' ? (
-                  <DirectorChairIcon 
+                ) : item.id === 'dialogue' ? (
+                  <DuocumentairesTvIcon 
                     className={`${item.iconClassName} transition-transform duration-200`} 
                     strokeWidth={item.strokeWidth || 1.75} 
                     isActive={item.isActive}

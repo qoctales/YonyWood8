@@ -54,21 +54,18 @@ const resolveScreenFromPath = (): { screen: ViewScreen | null; redirectFrom?: st
   }
 
   // Nouvelles adresses officielles
-  if (path === '/lumieres') {
+  if (path === '/entreprises' || path === '/entreprise' || path === '/lumieres') {
     const params = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
     const company = params?.get('company') || undefined;
     return { screen: { type: 'enterprise', selectedCompanyId: company } };
   }
-  if (path === '/duos' || path === '/miroir' || path === '/miroirs') {
+  if (path === '/dialogue' || path === '/dialogues' || path === '/duos' || path === '/miroir' || path === '/miroirs') {
     return { screen: { type: 'duo_feed' } };
-  }
-  if (path === '/heritages' || path === '/casting' || path === '/castings') {
-    return { screen: { type: 'home' } };
   }
   if (path === '/studio') {
     return { screen: { type: 'submit_story' } };
   }
-  if (path === '/productions' || path === '/action' || path === '/actions') {
+  if (path === '/action' || path === '/actions' || path === '/productions') {
     return { screen: { type: 'marketplace' } };
   }
   if (path === '/portrait') {
@@ -83,22 +80,21 @@ const resolveScreenFromPath = (): { screen: ViewScreen | null; redirectFrom?: st
 
 const getScreenRouteInfo = (screen: ViewScreen): { path: string; title: string } => {
   switch (screen.type) {
+    case 'duo_feed':
+    case 'duo_detail':
+    case 'landing':
     case 'home':
     case 'matrix_view':
     case 'documentaries':
     case 'documentary_detail':
-      return { path: '/heritages', title: 'Héritage — YonyWood' };
-    case 'duo_feed':
-    case 'duo_detail':
-    case 'landing':
-      return { path: '/duos', title: 'Duo — YonyWood' };
+      return { path: '/dialogue', title: 'Dialogue — YonyWood' };
     case 'enterprise':
-      return { path: '/lumieres', title: 'Lumière — YonyWood' };
+      return { path: '/entreprises', title: 'Entreprise — YonyWood' };
     case 'submit_story':
     case 'request_videographer':
       return { path: '/studio', title: 'Studio — YonyWood' };
     case 'marketplace':
-      return { path: '/productions', title: 'Production — YonyWood' };
+      return { path: '/action', title: 'Action — YonyWood' };
     case 'profile':
     case 'settings':
     case 'portfolio':
@@ -111,7 +107,7 @@ const getScreenRouteInfo = (screen: ViewScreen): { path: string; title: string }
     case 'participate':
       return { path: '/presentation', title: 'Présentation — YonyWood' };
     default:
-      return { path: '/duos', title: 'Duos — YonyWood' };
+      return { path: '/dialogue', title: 'Dialogue — YonyWood' };
   }
 };
 
@@ -239,6 +235,55 @@ export default function App() {
     };
   }, []);
 
+  // Swipe horizontal entre les 5 rubriques principales (Studio ⇄ Entreprise ⇄ Dialogue ⇄ Action ⇄ Portrait)
+  const appTouchStartRef = React.useRef<{ x: number; y: number } | null>(null);
+
+  const getPrimaryTabIndex = (screen: ViewScreen): number => {
+    if (screen.type === 'submit_story' || screen.type === 'request_videographer') return 0;
+    if (screen.type === 'enterprise') return 1;
+    if (screen.type === 'duo_feed' || screen.type === 'landing' || screen.type === 'home' || screen.type === 'matrix_view') return 2;
+    if (screen.type === 'marketplace') return 3;
+    if (screen.type === 'profile' || screen.type === 'settings' || screen.type === 'portfolio' || screen.type === 'transactions' || screen.type === 'protagonist_profile' || screen.type === 'my_forest' || screen.type === 'messaging') return 4;
+    return -1;
+  };
+
+  const PRIMARY_TABS: ViewScreen[] = [
+    { type: 'submit_story' },
+    { type: 'enterprise' },
+    { type: 'duo_feed' },
+    { type: 'marketplace' },
+    { type: 'profile' }
+  ];
+
+  const handleGlobalTouchStart = (e: React.TouchEvent) => {
+    if ((e.target as HTMLElement).closest('input[type="range"]')) return;
+    appTouchStartRef.current = {
+      x: e.touches[0].clientX,
+      y: e.touches[0].clientY
+    };
+  };
+
+  const handleGlobalTouchEnd = (e: React.TouchEvent) => {
+    if (!appTouchStartRef.current) return;
+    const deltaX = e.changedTouches[0].clientX - appTouchStartRef.current.x;
+    const deltaY = e.changedTouches[0].clientY - appTouchStartRef.current.y;
+    appTouchStartRef.current = null;
+
+    // Déplacement horizontal marqué (> 85px) avec faible déplacement vertical (< 50px)
+    if (Math.abs(deltaX) > 85 && Math.abs(deltaY) < 50) {
+      const currentIdx = getPrimaryTabIndex(currentScreen);
+      if (currentIdx !== -1) {
+        if (deltaX < 0 && currentIdx < PRIMARY_TABS.length - 1) {
+          // Swipe gauche -> rubrique suivante
+          setCurrentScreen(PRIMARY_TABS[currentIdx + 1]);
+        } else if (deltaX > 0 && currentIdx > 0) {
+          // Swipe droite -> rubrique précédente
+          setCurrentScreen(PRIMARY_TABS[currentIdx - 1]);
+        }
+      }
+    }
+  };
+
   const isVideoPlayer = currentScreen.type === 'video_player';
   const isDarkScreen = currentScreen.type === 'video_player';
   const isFixedViewportScreen = 
@@ -255,7 +300,7 @@ export default function App() {
       isDarkScreen ? 'bg-[#0E0D0B] text-white' : 'bg-white text-[#1C1917]'
     }`}>
       
-      {/* Header universel YonyWood avec Logo, Slogan et boutons Connexion/Inscription */}
+      {/* Header universel YonyWood avec Logo et Nom de marque au centre */}
       {!isVideoPlayer && (
         <Navbar 
           currentScreen={currentScreen} 
@@ -267,8 +312,12 @@ export default function App() {
         />
       )}
 
-      {/* Main Content Area - Immersion directe parfaitement calibrée */}
-      <main className="flex-1 min-h-0 relative overflow-hidden flex flex-col">
+      {/* Main Content Area avec swipe gestuel entre les pages */}
+      <main 
+        onTouchStart={handleGlobalTouchStart}
+        onTouchEnd={handleGlobalTouchEnd}
+        className="flex-1 min-h-0 relative overflow-hidden flex flex-col"
+      >
         {currentScreen.type === 'landing' && (
           <DuoFeedScreen 
             onNavigate={setCurrentScreen} 
@@ -309,6 +358,7 @@ export default function App() {
         {currentScreen.type === 'profile' && (
           <ProfileSettingsScreen 
             onNavigate={setCurrentScreen}
+            protagonistId={currentScreen.protagonistId}
             selectedDocFilter={selectedSeriesFilter}
             onUpdateDocFilter={handleUpdateDocFilter}
             language={language}

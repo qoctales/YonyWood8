@@ -1917,126 +1917,96 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
   // Badges de rôle discrets & typographiques associés aux séries
 
 
+  const PORTRAIT_PILLARS = [
+    { id: 'parcours', label: 'Parcours', icon: ParcoursDeVieIcon, count: 4 },
+    { id: 'projets', label: 'Projets', icon: ProjetsIcon, count: 4 },
+    { id: 'produits', label: 'Offres', icon: ProduitsServicesIcon, count: 4 },
+    { id: 'besoins', label: 'Besoins', icon: BesoinsHandsIcon, count: 4 }
+  ];
+
   return (
-    <div className="w-full max-w-3xl mx-auto px-3 sm:px-6 py-2 pb-24 sm:pb-28 pt-safe pb-safe h-full max-h-full overflow-hidden flex flex-col justify-between text-[#1C1917]">
+    <div className="w-full h-full max-h-full pb-20 sm:pb-24 pt-safe overflow-hidden flex flex-col justify-between text-[#1C1917] select-none bg-white">
       
       {/* ========================================================================= */}
-      {/* 1. EN-TÊTE HARMONISÉ EXACTEMENT AU MÊME FORMAT QUE TOUTES LES AUTRES PAGES */}
+      {/* 1. STORIES CAPSULES DES 4 PILIERS DU PORTRAIT EN SQUIRCLES (rounded-2xl)  */}
       {/* ========================================================================= */}
-      <div className="relative flex items-center justify-between h-9 sm:h-10 shrink-0 gap-2 mb-1">
-        {/* GAUCHE : Prénom et nom de la personne de la page portrait avec tiret terracotta signature */}
-        <div className="flex items-center gap-2 sm:gap-2.5 h-full shrink-0">
-          <div className="relative flex items-center h-full overflow-visible">
-            <h1 className="font-editorial text-xs sm:text-sm md:text-base font-semibold text-[#1C1917] tracking-normal leading-none whitespace-nowrap pr-2">
-              {profileFullDisplayName}
-            </h1>
-            {/* Petit trait terracotta officiel */}
-            <div className="absolute left-0 -bottom-1.5 w-8 h-0.5 bg-[#A2482B] rounded-full" />
-          </div>
-        </div>
-
-        {/* DROITE : Photo de profil dans son cadre télé rétro aux deux pieds (Pascal) & Bouton Partager */}
-        <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
-          {/* Bouton Retour au Marché (si navigation contextuelle depuis le marché) */}
-          {returnToMarketplace && (
-            <button
-              type="button"
-              onClick={() => onNavigate({
-                type: 'marketplace',
-                initialTab: 'marche',
-                initialPeerOfferId: marketplaceContext?.offerId,
-                initialPeerIndex: marketplaceContext?.offerIndex,
-                restoreContext: marketplaceContext
-              })}
-              className="group flex h-8 sm:h-8.5 px-3 rounded-full bg-[#A2482B] text-white hover:bg-[#8A3B22] border border-[#8A3B22] text-xs font-semibold transition-all shadow-xs items-center gap-1.5 cursor-pointer whitespace-nowrap active:scale-95"
-              title="Retourner à l'annonce sur le Marché"
-              id="btn-return-to-market-header"
-            >
-              <ChevronLeft className="w-3.5 h-3.5 text-white stroke-[2.2]" />
-              <span className="hidden sm:inline">Retour au Marché</span>
-              <span className="sm:hidden">Marché</span>
-            </button>
-          )}
-
-          {/* Bouton Revenir au Duo (si navigation contextuelle depuis un duo) */}
-          {returnToDuoId && (
-            <button
-              type="button"
-              onClick={() => onNavigate({
-                type: 'duo_feed',
-                currentDuoIndex: returnToDuoIndex ?? 0,
-                selectedDocId: returnToDocId
-              })}
-              className="group flex h-8 sm:h-8.5 px-2.5 sm:px-3 rounded-full bg-white hover:bg-[#A2482B] border border-stone-200 hover:border-[#A2482B] text-[#1C1917] hover:text-white text-xs font-semibold transition-all shadow-xs items-center gap-1 sm:gap-1.5 cursor-pointer whitespace-nowrap active:scale-95"
-              title="Revenir au visionnage du Duo"
-              id="btn-return-to-duo-actions"
-            >
-              <ChevronLeft className="w-3.5 h-3.5 text-stone-700 group-hover:text-white stroke-[2.2] transition-colors" />
-              <span className="hidden sm:inline">Duo</span>
-            </button>
-          )}
-
-          {/* 1. Icône Paramètres (Back-Office personnel / organisationnel) : uniquement si propriétaire */}
-          {isOwner && (
-            <button
-              onClick={() => onNavigate({ type: 'settings', returnTo: 'profile' })}
-              id="btn-profile-settings"
-              className="w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-xl bg-white hover:bg-[#A2482B] border border-stone-200 hover:border-[#A2482B] text-stone-700 hover:text-white flex items-center justify-center transition-all shadow-xs cursor-pointer active:scale-95 shrink-0"
-              title="Paramètres & Gestion de compte (Back-Office)"
-            >
-              <Sliders className="w-4 h-4 transition-colors" />
-            </button>
-          )}
-
-          {/* 2. Espace Messagerie */}
-          <button
-            onClick={() => {
-              if (isOwner) {
-                onNavigate({ type: 'messaging' });
-              } else {
-                handleContactProtagonist();
-              }
-            }}
-            id="btn-profile-messaging"
-            className="w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-xl bg-white hover:bg-[#A2482B] border border-stone-200 hover:border-[#A2482B] text-stone-700 hover:text-white flex items-center justify-center transition-all shadow-xs cursor-pointer active:scale-95 shrink-0"
-            title={isOwner ? "Espace messagerie" : `Envoyer un message à ${profileDisplayName || 'Roméo'}`}
-          >
-            <MessageSquare className="w-4 h-4 stroke-[1.8] transition-colors" />
-          </button>
-
-          {/* 3. Partage de la page portrait */}
-          <button
-            onClick={handleShareProfile}
-            id="btn-profile-share-page"
-            className="w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-xl bg-white hover:bg-[#A2482B] border border-stone-200 hover:border-[#A2482B] text-stone-700 hover:text-white flex items-center justify-center transition-all shadow-xs cursor-pointer active:scale-95 shrink-0"
-            title={`Partager la page de ${profileDisplayName || 'Roméo'}`}
-          >
-            <ShareIcon className="w-4 h-4 transition-colors" />
-          </button>
-
-          {/* Petite diapositive carrée épurée avec la photo de la personne (clic propriétaire = paramètres) */}
+      <div className="w-full max-w-3xl mx-auto px-3 sm:px-4 pt-1.5 pb-1 shrink-0 h-[84px] sm:h-[90px] flex items-center justify-between">
+        <div className="flex items-center gap-2 sm:gap-2.5 overflow-x-auto no-scrollbar py-1 px-1">
+          {/* Capsule Profil Solo */}
           <div 
             onClick={() => {
               if (isOwner) onNavigate({ type: 'settings', returnTo: 'profile' });
             }}
-            className={`w-9 h-9 sm:w-10 sm:h-10 p-0.5 sm:p-1 bg-white border border-stone-200/90 rounded-sm sm:rounded shadow-xs shrink-0 flex items-center justify-center ${isOwner ? 'cursor-pointer hover:scale-105 active:scale-95' : ''} transition-transform`}
-            title={isOwner ? "Accéder à mes paramètres" : `Profil de ${profileDisplayName || 'Roméo'}`}
+            className="flex flex-col items-center gap-1 cursor-pointer group shrink-0"
+            title={isOwner ? "Mes paramètres" : profileFullDisplayName}
           >
-              <div className="w-full h-full overflow-hidden bg-stone-100 rounded-[1px] aspect-square">
-                <img
-                  src={userPhoto || '/assets/images/romeo_avatar_1792698425983.jpg'}
-                  alt={profileDisplayName || 'Roméo'}
-                  onError={(e) => {
-                    const target = e.currentTarget;
-                    target.onerror = null;
-                    target.src = '/assets/protagonists/coach-office.jpg';
-                  }}
-                  className="w-full h-full object-cover"
-                />
-              </div>
+            <div className="w-13 h-14 sm:w-14 sm:h-15 rounded-2xl p-0.5 border-2 border-dashed border-[#A2482B] flex items-center justify-center bg-amber-50/50">
+              <img
+                src={userPhoto || '/assets/images/romeo_avatar_1792698425983.jpg'}
+                alt={profileDisplayName || 'Roméo'}
+                className="w-full h-full rounded-xl object-cover"
+              />
             </div>
+            <span className="text-[10px] font-semibold text-stone-700 tracking-tight max-w-[54px] truncate">
+              {profileDisplayName || 'Moi'}
+            </span>
           </div>
+
+          {/* Les 4 Piliers Documentaires */}
+          {PORTRAIT_PILLARS.map((p) => {
+            const isActive = activeCategory === p.id;
+            const Icon = p.icon;
+            return (
+              <div 
+                key={p.id}
+                onClick={() => {
+                  setActiveCategory(p.id as ProfileCategory);
+                  setCategoryIndices(prev => ({ ...prev, [p.id]: 0 }));
+                }}
+                className="flex flex-col items-center gap-1 cursor-pointer group shrink-0"
+                title={`${p.label} (4 vidéos)`}
+              >
+                <div className={`w-13 h-14 sm:w-14 sm:h-15 rounded-2xl p-0.5 border-2 transition-transform group-hover:scale-105 ${
+                  isActive ? 'border-[#A2482B] shadow-xs' : 'border-stone-200'
+                }`}>
+                  <div className={`w-full h-full rounded-xl flex flex-col items-center justify-center ${
+                    isActive ? 'bg-[#A2482B] text-white' : 'bg-stone-100 text-stone-600'
+                  }`}>
+                    <Icon className="w-4 h-4" />
+                    <span className="text-[9px] font-bold mt-0.5">{p.count} vid.</span>
+                  </div>
+                </div>
+                <span className={`text-[9.5px] tracking-tight max-w-[54px] truncate text-center ${
+                  isActive ? 'font-bold text-[#A2482B]' : 'font-medium text-stone-600'
+                }`}>
+                  {p.label}
+                </span>
+              </div>
+            );
+          })}
         </div>
+
+        {/* Boutons Actions Rapides */}
+        <div className="flex items-center gap-1.5 shrink-0 ml-2">
+          <button
+            onClick={() => {
+              if (isOwner) onNavigate({ type: 'messaging' });
+              else handleContactProtagonist();
+            }}
+            className="w-8 h-8 rounded-xl bg-stone-100 hover:bg-[#A2482B] hover:text-white text-stone-700 flex items-center justify-center transition-colors cursor-pointer"
+            title="Messagerie"
+          >
+            <MessageSquare className="w-4 h-4" />
+          </button>
+          <button
+            onClick={handleShareProfile}
+            className="w-8 h-8 rounded-xl bg-stone-100 hover:bg-[#A2482B] hover:text-white text-stone-700 flex items-center justify-center transition-colors cursor-pointer"
+            title="Partager le portrait"
+          >
+            <ShareIcon className="w-4 h-4" />
+          </button>
+        </div>
+      </div>
 
       {/* BANNIÈRE CONTEXTUELLE DE REPRISE D'ACHAT DEPUIS LE MARCHÉ */}
       {returnToMarketplace && marketplaceContext && (
@@ -2140,7 +2110,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                   if ((e.target as HTMLElement).closest('button, a, input, textarea, select')) return;
                   toggleVideoPlayback();
                 }}
-                className="aspect-[9/16] w-[min(calc(100vw-72px),calc((100dvh-240px)*9/16))] max-w-[218px] sm:max-w-[260px] md:max-w-[280px] h-[min(388px,calc(100dvh-240px))] sm:h-[min(460px,calc(100dvh-210px))] md:h-[min(500px,calc(100dvh-190px))] mx-auto rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl border border-stone-200/40 relative flex flex-col justify-between cursor-pointer group select-none shrink-0"
+                className="relative aspect-[9/16] w-[min(310px,calc(100vw-36px))] sm:w-[320px] max-h-[min(540px,calc(100dvh-220px))] mx-auto rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl border border-stone-200/90 flex flex-col justify-between cursor-pointer group select-none shrink-0"
                 style={{ transform: `translateX(${swipeOffsetX}px)` }}
               >
             {/* ================================================================= */}

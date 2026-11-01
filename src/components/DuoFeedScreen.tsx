@@ -1,35 +1,26 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { 
-  Play, 
-  Pause, 
-  Volume2, 
-  VolumeX, 
   ChevronLeft, 
   ChevronRight, 
-  User, 
-  BookOpen,
-  Award,
-  Check,
-  X,
+  BookOpen, 
+  X, 
   Film,
-  Layers,
-  LayoutGrid,
-  ArrowRightLeft,
-  Flag,
-  Ban
+  Sparkles,
+  Plus,
+  HelpCircle,
+  Volume2,
+  VolumeX
 } from 'lucide-react';
 import { celestialAudio } from '../utils/celestialAudio';
-import { motion, AnimatePresence, useMotionValue, useTransform } from 'motion/react';
 import { apiService } from '../services/api';
 import { ViewScreen, Duo, Protagonist } from '../types';
-import { ProtagonistTeaserModal } from './ProtagonistTeaserModal';
-import { ReportModal } from './ReportModal';
+import { DOCUMENTARIES as MOCK_DOCS, DUOS as MOCK_DUOS } from '../data/mockData';
+import { THEMATIC_VALUES, ThematicValue } from '../data/thematicStoriesData';
+import { ResonanceFaceToFaceCard } from './ResonanceFaceToFaceCard';
+import { VideoCardShareModal } from './VideoCardShareModal';
 import { ProfileSoloIcon, TvPlayerIcon } from './YonywoodBrandIcons';
 import { ShareIcon } from './ShareIcon';
-import { ResonanceModal } from './ResonanceModal';
-import { UnifiedVideoCardOverlay } from './UnifiedVideoCardOverlay';
-import { VideoCardShareModal } from './VideoCardShareModal';
-import { blockVideo, getBlockedVideoIds } from '../utils/blockedContent';
+import { getBlockedVideoIds } from '../utils/blockedContent';
 
 interface DuoFeedScreenProps {
   onNavigate: (screen: ViewScreen) => void;
@@ -46,195 +37,198 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
   initialDuoIndex = 0,
   allowedSeriesIds
 }) => {
-  const [selectedDocId, setSelectedDocId] = useState<string | null>(initialDocId || null);
   const [DUOS, setDuos] = useState<Duo[]>([]);
   const [DOCUMENTARIES, setDocumentaries] = useState<any[]>([]);
   const [loadingData, setLoadingData] = useState(true);
-  const [teaserProtagonist, setTeaserProtagonist] = useState<Protagonist | null>(null);
 
-  // Compute starting duo index if initialDuoId is provided
-  const startingIndex = initialDuoId
-    ? 0 // will update in useEffect
-    : initialDuoIndex;
+  // Index du Duo actif (Swipe vertical = 1 publication unique au centre)
+  const [currentIndex, setCurrentIndex] = useState(initialDuoIndex);
 
-  const [currentIndex, setCurrentIndex] = useState(startingIndex);
-  const [isQuestionModalOpen, setIsQuestionModalOpen] = useState(false);
-  const [isReportModalOpen, setIsReportModalOpen] = useState(false);
-  const [customReportTarget, setCustomReportTarget] = useState<{ id: string; title: string; type: 'duo' | 'video' } | null>(null);
-  const [viewMode, setViewMode] = useState<'duo' | 'deck'>('duo');
-  const [deckActiveSide, setDeckActiveSide] = useState<'A' | 'B'>('A');
+  // Position dans le diaporama horizontal du Duo (0: Volet A, 1: Volet B, 2: Face-à-face & Curseur 50/50)
+  const [slideIndex, setSlideIndex] = useState<0 | 1 | 2>(0);
 
-  // Résonance et Partage harmonisés (identiques à la modale protagoniste)
-  const [resonanceTargetPerson, setResonanceTargetPerson] = useState<Protagonist | null>(null);
-  const [shareModalPerson, setShareModalPerson] = useState<Protagonist | null>(null);
-  const [personResonances, setPersonResonances] = useState<Record<string, number>>({});
-  const [copiedPersonId, setCopiedPersonId] = useState<string | null>(null);
+  // Mode Story activé directement dans le feed
+  const [storyModeIndex, setStoryModeIndex] = useState<number | null>(null);
+  const [showStoryQuestion, setShowStoryQuestion] = useState(false);
 
-  const handleSharePerson = (person: Protagonist, e?: React.MouseEvent) => {
-    if (e) e.stopPropagation();
-    setShareModalPerson(person);
-  };
+  // Lecture vidéo
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [isMuted, setIsMuted] = useState<boolean>(false);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  // Modales
+  const [showQuestionModal, setShowQuestionModal] = useState(false);
+  const [shareModalItem, setShareModalItem] = useState<{ title: string; id: string } | null>(null);
+
+  // Vidéos bloquées
+  const [blockedIds, setBlockedIds] = useState<string[]>(() => getBlockedVideoIds());
+
+  // Gestion du swipe tactile et scroll
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
+  const lastScrollTime = useRef<number>(0);
 
   useEffect(() => {
     const loadData = async () => {
-      const [fetchedDuos, fetchedDocs] = await Promise.all([
-        apiService.getDuos(),
-        apiService.getSeries()
-      ]);
-      setDuos(fetchedDuos);
-      setDocumentaries(fetchedDocs);
-      if (initialDuoId) {
-        const idx = fetchedDuos.findIndex((d: any) => d.id === initialDuoId);
-        if (idx !== -1) setCurrentIndex(idx);
+      try {
+        const [fetchedDuos, fetchedDocs] = await Promise.all([
+          apiService.getDuos(),
+          apiService.getSeries()
+        ]);
+        setDuos(fetchedDuos && fetchedDuos.length > 0 ? fetchedDuos : MOCK_DUOS);
+        setDocumentaries(fetchedDocs && fetchedDocs.length > 0 ? fetchedDocs : MOCK_DOCS);
+        if (initialDuoId) {
+          const idx = (fetchedDuos || MOCK_DUOS).findIndex((d: any) => d.id === initialDuoId);
+          if (idx !== -1) setCurrentIndex(idx);
+        }
+      } catch {
+        setDuos(MOCK_DUOS);
+        setDocumentaries(MOCK_DOCS);
+      } finally {
+        setLoadingData(false);
       }
-      setLoadingData(false);
     };
     loadData();
   }, [initialDuoId]);
 
-  // Inline video playback states: videos stay vertical side-by-side
-  const [isPlayingA, setIsPlayingA] = useState(false);
-  const [isPlayingB, setIsPlayingB] = useState(false);
-  const [isMutedA, setIsMutedA] = useState(false);
-  const [isMutedB, setIsMutedB] = useState(false);
-  const [deckMoreMenuA, setDeckMoreMenuA] = useState(false);
-  const [deckMoreMenuB, setDeckMoreMenuB] = useState(false);
-  const [blockedIds, setBlockedIds] = useState<string[]>(() => getBlockedVideoIds());
-
-  // Synchronisation réactive des vidéos bloquées
   useEffect(() => {
-    const handleBlocked = () => {
-      setBlockedIds(getBlockedVideoIds());
-    };
+    const handleBlocked = () => setBlockedIds(getBlockedVideoIds());
     window.addEventListener('yonywood_video_blocked', handleBlocked);
     return () => window.removeEventListener('yonywood_video_blocked', handleBlocked);
   }, []);
 
-  // Fermeture des menus Deck au clic extérieur
-  useEffect(() => {
-    if (!deckMoreMenuA && !deckMoreMenuB) return;
-    const handleOutsideClick = () => {
-      setDeckMoreMenuA(false);
-      setDeckMoreMenuB(false);
-    };
-    document.addEventListener('mousedown', handleOutsideClick);
-    return () => document.removeEventListener('mousedown', handleOutsideClick);
-  }, [deckMoreMenuA, deckMoreMenuB]);
-
-  const videoRefA = useRef<HTMLVideoElement | null>(null);
-  const videoRefB = useRef<HTMLVideoElement | null>(null);
-
-  // Motion values for swipe physics
-  const dragX = useMotionValue(0);
-  const dragRotate = useTransform(dragX, [-300, 0, 300], [-8, 0, 8]);
-  const dragScale = useTransform(dragX, [-300, 0, 300], [0.97, 1, 0.97]);
-  const isDraggingRef = useRef(false);
-
-  // Dynamic feedback stamps
-  const stampPrevOpacity = useTransform(dragX, [20, 90], [0, 1]);
-  const stampNextOpacity = useTransform(dragX, [-20, -90], [0, 1]);
-
-  // Filter duos based on user's profile series filter AND active series selector, excluding blocked videos
-  const baseFilteredDuos = (allowedSeriesIds && allowedSeriesIds.length > 0
+  // Filtrer les Duos
+  const filteredDuos = (allowedSeriesIds && allowedSeriesIds.length > 0
     ? DUOS.filter(d => allowedSeriesIds.includes(d.documentaryId))
     : DUOS
   ).filter(d => !blockedIds.includes(d.protagonistA?.id) && !blockedIds.includes(d.protagonistB?.id));
 
-  const filteredDuos = selectedDocId
-    ? baseFilteredDuos.filter(d => d.documentaryId === selectedDocId)
-    : baseFilteredDuos;
-
   const safeIndex = filteredDuos.length > 0 ? (currentIndex % filteredDuos.length) : 0;
   const currentDuo: Duo | undefined = filteredDuos[safeIndex];
 
-  const activeDoc = selectedDocId 
-    ? DOCUMENTARIES.find(d => d.id === selectedDocId) 
-    : (currentDuo ? DOCUMENTARIES.find(d => d.id === currentDuo.documentaryId) : undefined);
-
-  // Reset playback on duo change or series switch
+  // Reset de la lecture et du volet au changement de duo
   useEffect(() => {
-    setIsPlayingA(false);
-    setIsPlayingB(false);
-  }, [currentIndex, selectedDocId]);
+    setIsPlaying(false);
+    setSlideIndex(0);
+  }, [currentIndex]);
 
-  // Synchronize muted states on video elements
-  useEffect(() => {
-    if (videoRefA.current) videoRefA.current.muted = isMutedA;
-  }, [isMutedA]);
-
-  useEffect(() => {
-    if (videoRefB.current) videoRefB.current.muted = isMutedB;
-  }, [isMutedB]);
-
-  const togglePlayA = (e?: React.MouseEvent) => {
-    if (e) e.stopPropagation();
-    setIsPlayingA(prev => {
-      const next = !prev;
-      if (next) setIsPlayingB(false);
-      return next;
-    });
-  };
-
-  const togglePlayB = (e?: React.MouseEvent) => {
-    if (e) e.stopPropagation();
-    setIsPlayingB(prev => {
-      const next = !prev;
-      if (next) setIsPlayingA(false);
-      return next;
-    });
-  };
-
-  // Handlers for next / prev with direction tracking
-  const handleNext = () => {
+  const handleNextDuo = () => {
+    if (storyModeIndex !== null) return;
     if (filteredDuos.length <= 1) return;
-    dragX.set(0);
-    setIsPlayingA(false);
-    setIsPlayingB(false);
+    setIsPlaying(false);
+    setSlideIndex(0);
     setCurrentIndex(prev => (prev + 1) % filteredDuos.length);
+    celestialAudio.playOrbSelect();
   };
 
-  const handlePrev = () => {
+  const handlePrevDuo = () => {
+    if (storyModeIndex !== null) return;
     if (filteredDuos.length <= 1) return;
-    dragX.set(0);
-    setIsPlayingA(false);
-    setIsPlayingB(false);
+    setIsPlaying(false);
+    setSlideIndex(0);
     setCurrentIndex(prev => (prev - 1 + filteredDuos.length) % filteredDuos.length);
+    celestialAudio.playOrbSelect();
   };
 
-  // Keyboard navigation for desktop
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (['INPUT', 'TEXTAREA'].includes((e.target as HTMLElement).tagName)) return;
+  const goToSlide = (target: 0 | 1 | 2) => {
+    setIsPlaying(false);
+    setSlideIndex(target);
+    celestialAudio.playOrbSelect();
+  };
 
-      if (e.key === 'ArrowRight' || e.key === ' ') {
-        e.preventDefault();
-        handleNext();
-      } else if (e.key === 'ArrowLeft') {
-        e.preventDefault();
-        handlePrev();
+  const nextSlide = () => {
+    if (storyModeIndex !== null) {
+      // En Mode Story : passer à la story suivante
+      setStoryModeIndex(prev => (prev !== null ? (prev + 1) % THEMATIC_VALUES.length : 0));
+      celestialAudio.playOrbSelect();
+      return;
+    }
+    if (slideIndex < 2) {
+      goToSlide((slideIndex + 1) as 0 | 1 | 2);
+    } else {
+      handleNextDuo();
+    }
+  };
+
+  const prevSlide = () => {
+    if (storyModeIndex !== null) {
+      // En Mode Story : passer à la story précédente
+      setStoryModeIndex(prev => (prev !== null ? (prev - 1 + THEMATIC_VALUES.length) % THEMATIC_VALUES.length : 0));
+      celestialAudio.playOrbSelect();
+      return;
+    }
+    if (slideIndex > 0) {
+      goToSlide((slideIndex - 1) as 0 | 1 | 2);
+    } else {
+      handlePrevDuo();
+    }
+  };
+
+  // Gestion du Wheel (Swipe vertical strict = 1 publication change)
+  const handleWheel = (e: React.WheelEvent) => {
+    const now = Date.now();
+    if (now - lastScrollTime.current < 450) return;
+
+    if (Math.abs(e.deltaY) > 30) {
+      lastScrollTime.current = now;
+      if (e.deltaY > 0) {
+        handleNextDuo();
+      } else {
+        handlePrevDuo();
       }
+    } else if (Math.abs(e.deltaX) > 30) {
+      lastScrollTime.current = now;
+      if (e.deltaX > 0) {
+        nextSlide();
+      } else {
+        prevSlide();
+      }
+    }
+  };
+
+  // Touch Swipe
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartRef.current = {
+      x: e.touches[0].clientX,
+      y: e.touches[0].clientY
     };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [filteredDuos.length]);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (!touchStartRef.current) return;
+    const deltaX = e.changedTouches[0].clientX - touchStartRef.current.x;
+    const deltaY = e.changedTouches[0].clientY - touchStartRef.current.y;
+    touchStartRef.current = null;
+
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 40) {
+      if (deltaX < 0) {
+        nextSlide();
+      } else {
+        prevSlide();
+      }
+    } else if (Math.abs(deltaY) > 45) {
+      if (deltaY < 0) {
+        handleNextDuo();
+      } else {
+        handlePrevDuo();
+      }
+    }
+  };
 
   if (loadingData) {
-    return <div className="min-h-screen bg-[#0E0D0B] text-white flex items-center justify-center">Chargement...</div>;
+    return <div className="min-h-screen bg-white text-stone-900 flex items-center justify-center font-medium">Chargement des dialogues...</div>;
   }
 
   if (!currentDuo) {
     return (
       <div className="min-h-[70vh] flex flex-col items-center justify-center p-6 text-center bg-white text-[#1C1917] space-y-3">
         <Film className="w-10 h-10 text-stone-300" />
-        <h3 className="font-editorial text-xl font-bold">Aucun duo dans cette sélection</h3>
-        <p className="text-xs text-stone-500 max-w-xs leading-relaxed">
-          Personnalisez votre expérience dans votre profil pour choisir les séries documentaires que vous souhaitez explorer.
-        </p>
+        <h3 className="font-editorial text-xl font-bold">Aucun dialogue dans cette sélection</h3>
+        <p className="text-xs text-stone-500 max-w-xs">Découvrez les duos en réinitialisant vos filtres.</p>
         <button 
           onClick={() => onNavigate({ type: 'profile' })}
-          className="mt-2 px-5 py-2.5 rounded-full bg-[#A2482B] hover:bg-[#8A3B22] text-white font-semibold text-xs shadow-md transition-colors cursor-pointer"
+          className="mt-2 px-5 py-2.5 rounded-full bg-[#A2482B] text-white font-semibold text-xs shadow-md"
         >
-          Choisir mes séries dans mon Profil
+          Personnaliser mes séries
         </button>
       </div>
     );
@@ -242,807 +236,506 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
 
   const pA = currentDuo.protagonistA;
   const pB = currentDuo.protagonistB;
+  const activeProtagonist = slideIndex === 0 ? pA : pB;
 
-  // Format title to ensure every word (including 2nd word) starts with a capital letter (Title Case)
-  const formatTitleCase = (raw?: string) => {
-    if (!raw) return '';
-    const trimmed = raw.trim();
-    if (!trimmed) return '';
-    return trimmed
-      .split(/(\s+)/)
-      .map(segment => {
-        if (/^\s+$/.test(segment)) return segment;
-        return segment
-          .split('-')
-          .map(sub => sub ? sub.charAt(0).toUpperCase() + sub.slice(1) : '')
-          .join('-');
-      })
-      .join('');
-  };
-
-  // Décomposition du titre de la série en deux noms pour les cartes en face-à-face
-  const rawSeriesTitle = activeDoc?.title || currentDuo.documentaryTitle || '';
-  const isBeninSeries = currentDuo.documentaryId === 'finagnon-qosqorico' || rawSeriesTitle.toLowerCase().includes('benin');
-
-  // Extraction robuste des deux pendants de la série
-  const getSeriesHalves = (): [string, string] => {
-    if (isBeninSeries) return ['Bénin', 'Le Monde'];
-    if (activeDoc?.universes && activeDoc.universes.length >= 2) {
-      return [activeDoc.universes[0].name, activeDoc.universes[1].name];
-    }
-    const splitRegex = /< >|<>|‹ ›|‹›|&lt;&gt;|&lt; &gt;/;
-    if (splitRegex.test(rawSeriesTitle)) {
-      const parts = rawSeriesTitle.split(splitRegex);
-      if (parts.length >= 2 && parts[0].trim() && parts[1].trim()) {
-        return [parts[0].trim(), parts[1].trim()];
-      }
-    }
-    return [pA.universeTag || 'Pôle A', pB.universeTag || 'Pôle B'];
-  };
-
-  // Normalisation spécifique pour Vodun Rays et Autre Foi selon les directives officielles
-  const normalizeUniverseName = (raw?: string) => {
-    if (!raw) return '';
-    const trimmed = raw.trim();
-    if (trimmed.toLowerCase().includes('amen') || trimmed.toLowerCase().includes('amîn') || trimmed.toLowerCase().includes('autre foi') || trimmed.toLowerCase().includes('jésus')) {
-      return 'Autre Foi';
-    }
-    if (trimmed.toLowerCase().includes('vodun') || trimmed.toLowerCase().includes('èṣù')) {
-      return 'Vodun Rays';
-    }
-    return formatTitleCase(trimmed);
-  };
-
-  const [rawPartA, rawPartB] = getSeriesHalves();
-  const seriesNameA = normalizeUniverseName(rawPartA);
-  const seriesNameB = normalizeUniverseName(rawPartB);
-
-  // Titre officiel de la série dans la pastille d'en-tête (ex: Bénin < > Le Monde)
-  const headerPartA = isBeninSeries ? 'Bénin' : seriesNameA;
-  const headerPartB = isBeninSeries ? 'Le Monde' : seriesNameB;
-
-  // Badges de pays / univers sur les cartes vidéo individuelles (ex: Bénin vs Pérou, Vodun Rays vs Autre Foi)
-  const cardTagA = isBeninSeries ? (pA.country || 'Bénin') : normalizeUniverseName(pA.universeTag || rawPartA);
-  const cardTagB = isBeninSeries ? (pB.country || 'Pérou') : normalizeUniverseName(pB.universeTag || rawPartB);
-
-  const themeA = cardTagA;
-  const themeB = cardTagB;
-
-  // Clean quotes helper
-  const cleanQuotes = (str?: string) => {
-    if (!str) return '';
-    return str
-      .replace(/^[«"'\s]+|[»"'\s]+$/g, '')
-      .trim();
-  };
-
-  // Video URLs for inline playback
-  const videoUrlA = pA.videoAvatarUrl 
-    || DOCUMENTARIES.find(d => d.id === currentDuo.documentaryId)?.teaserVideoUrl 
+  const currentVideoUrl = (slideIndex === 0 ? pA.videoAvatarUrl : pB.videoAvatarUrl)
+    || DOCUMENTARIES.find(d => d.id === currentDuo.documentaryId)?.teaserVideoUrl
     || 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4';
 
-  const videoUrlB = pB.videoAvatarUrl 
-    || DOCUMENTARIES.find(d => d.id === currentDuo.documentaryId)?.teaserVideoUrl 
-    || 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4';
+  const rawSeriesTitle = currentDuo.documentaryTitle || 'Dialogue en miroir';
+  const duoQuestion = currentDuo.centralQuestion || currentDuo.questionTitle || activeProtagonist.quote || 'Quelle est la leçon fondamentale que la vie vous a enseignée ?';
+  const firstName = activeProtagonist.name.split(' ')[0];
+  const firstNameA = pA.name.split(' ')[0];
+  const firstNameB = pB.name.split(' ')[0];
+
+  // Story active si en Mode Story
+  const activeThemeStory = storyModeIndex !== null ? THEMATIC_VALUES[storyModeIndex] : null;
+  const storyItem = activeThemeStory?.stories[0];
 
   return (
-    <div className="w-full h-full max-h-full pb-24 sm:pb-28 pt-safe pb-safe overflow-hidden flex flex-col justify-between text-[#1C1917] select-none">
+    <div 
+      onWheel={handleWheel}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      className="w-full h-full max-h-full pb-20 sm:pb-24 pt-safe overflow-hidden flex flex-col justify-between select-none bg-white text-[#1C1917]"
+    >
       
       {/* ========================================================================= */}
-      {/* 1. EN-TÊTE HARMONISÉ EXACTEMENT AU MÊME ENDROIT QUE STUDIO, HÉRITAGES, PRODUCTIONS */}
+      {/* 1. STORIES THÉMATIQUES & DUOS : AUCUN TEXTE SOUS LES VIGNETTES            */}
       {/* ========================================================================= */}
-      <div className="w-full max-w-3xl mx-auto px-3 sm:px-6 py-2 shrink-0">
-        <header className="relative flex items-center justify-between h-9 sm:h-10 shrink-0 gap-2 mb-1">
-          {/* Titre officiel de la page en noir, écrit en Nunito avec trait terracotta */}
-          <div className="relative flex items-center h-full overflow-visible">
-            <h1 className="font-editorial text-xs sm:text-sm md:text-base font-semibold text-[#1C1917] tracking-normal leading-none whitespace-nowrap pr-2">
-              Deux univers mis en miroir
-            </h1>
-            {/* Petit trait terracotta officiel */}
-            <div className="absolute left-0 -bottom-1.5 w-8 h-0.5 bg-[#A2482B] rounded-full" />
-          </div>
-
-          {/* Centre : Le nom officiel de la série centré (affiché sur écrans plus larges pour dégager l'espace mobile) */}
-          <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 items-center justify-center pointer-events-none max-w-[60vw]">
-            <div 
-              key={`duo-series-header-${currentDuo.id}-${headerPartA}-${headerPartB}`}
-              className="inline-flex items-center gap-1 sm:gap-2 h-7 sm:h-8 px-2.5 sm:px-3.5 rounded-full bg-[#A2482B] border border-[#8A3B22] shadow-xs text-[10.5px] sm:text-xs text-white pointer-events-auto select-none"
-              title={`${headerPartA} < > ${headerPartB}`}
-            >
-              <span className="font-sans font-semibold text-white tracking-normal truncate max-w-[130px] text-right">
-                {headerPartA}
-              </span>
-              <span 
-                className="font-mono text-[10px] sm:text-[11px] font-bold text-white/95 px-0.5 select-none shrink-0 tracking-wider flex items-center gap-0.5"
-                title="Face à face"
-              >
-                <span>&lt;</span>
-                <span>&gt;</span>
-              </span>
-              <span className="font-sans font-semibold text-white tracking-normal truncate max-w-[160px] text-left">
-                {headerPartB}
-              </span>
+      <div className="w-full max-w-3xl mx-auto px-3 sm:px-4 py-1.5 sm:py-2 shrink-0 h-[68px] sm:h-[76px] flex items-center">
+        <div className="flex items-center gap-2 sm:gap-2.5 overflow-x-auto no-scrollbar py-1 px-1 w-full">
+          
+          {/* Vignette 0 : "+" */}
+          <div 
+            onClick={() => onNavigate({ type: 'submit_story' })}
+            className="cursor-pointer group shrink-0"
+            title="Créer une story"
+          >
+            <div className="w-12 h-12 sm:w-13 sm:h-13 rounded-2xl p-0.5 border-2 border-dashed border-[#A2482B] flex items-center justify-center group-hover:scale-105 transition-transform bg-amber-50/50">
+              <div className="w-full h-full rounded-xl bg-[#A2482B] text-white flex items-center justify-center shadow-xs">
+                <Plus className="w-4.5 h-4.5" />
+              </div>
             </div>
           </div>
 
-          {/* Côté droit épuré : Bascule deck / duo */}
-          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-            {/* Bascule Vue Duo / Vue Deck avec le noble son celestialAudio */}
-            <button
-              onClick={() => {
-                setViewMode(prev => prev === 'duo' ? 'deck' : 'duo');
-                celestialAudio.playOrbSelect();
-              }}
-              className="flex items-center gap-1 h-7.5 sm:h-8.5 px-2.5 sm:px-3 rounded-full bg-white hover:bg-[#A2482B] border border-stone-200 hover:border-[#A2482B] text-[#1C1917] hover:text-white text-[11px] sm:text-xs font-semibold shadow-xs transition-all cursor-pointer active:scale-95 group/modetoggle shrink-0"
-              title={viewMode === 'duo' ? 'Passer en vue Deck (1 vidéo à la fois)' : 'Passer en vue Duo (2 vidéos côte à côte)'}
-            >
-              {viewMode === 'duo' ? (
-                <>
-                  <Layers className="w-3.5 h-3.5 text-[#A2482B] group-hover/modetoggle:text-white transition-colors" />
-                  <span className="hidden sm:inline">Deck</span>
-                </>
-              ) : (
-                <>
-                  <LayoutGrid className="w-3.5 h-3.5 text-[#A2482B] group-hover/modetoggle:text-white transition-colors" />
-                  <span className="hidden sm:inline">Duo</span>
-                </>
-              )}
-            </button>
-          </div>
-        </header>
-      </div>
-
-      {/* ========================================================================= */}
-      {/* 2. ZONE PRINCIPALE : LE DUO EN FACE-À-FACE (DIPTYQUE PARFAIT)              */}
-      {/* ========================================================================= */}
-      <div className="relative flex-1 flex flex-col items-center justify-center min-h-0 py-1 sm:py-2">
-        
-        {/* Flèche Gauche Desktop / Tablette (Click pour revenir en arrière) */}
-        <button
-          onClick={handlePrev}
-          className="hidden md:flex absolute left-2 lg:left-6 z-30 w-11 h-11 lg:w-12 lg:h-12 rounded-full bg-white/90 hover:bg-[#1C1917] text-stone-800 hover:text-white border border-stone-200 shadow-xl items-center justify-center transition-all cursor-pointer transform hover:scale-105 active:scale-95 group"
-          title="Duo précédent (Glisser à droite)"
-          id="prev-duo-arrow-btn"
-        >
-          <ChevronLeft className="w-6 h-6 group-hover:-translate-x-0.5 transition-transform" />
-        </button>
-
-        {/* Flèche Droite Desktop / Tablette (Click pour avancer) */}
-        <button
-          onClick={handleNext}
-          className="hidden md:flex absolute right-2 lg:right-6 z-30 w-11 h-11 lg:w-12 lg:h-12 rounded-full bg-white/90 hover:bg-[#1C1917] text-stone-800 hover:text-white border border-stone-200 shadow-xl items-center justify-center transition-all cursor-pointer transform hover:scale-105 active:scale-95 group"
-          title="Duo suivant (Glisser à gauche)"
-          id="next-duo-arrow-btn"
-        >
-          <ChevronRight className="w-6 h-6 group-hover:translate-x-0.5 transition-transform" />
-        </button>
-
-        {/* Conteneur Draggable avec Motion (Permanent Swipe) */}
-        <div className="w-full flex justify-center items-center relative overflow-visible my-auto">
-          
-          <AnimatePresence mode="popLayout" initial={false}>
-            <motion.div
-              key={`duo-${currentDuo.id}-${safeIndex}`}
-              drag="x"
-              dragConstraints={{ left: 0, right: 0 }}
-              dragElastic={0.7}
-              style={{ x: dragX, rotate: dragRotate, scale: dragScale }}
-              onDragStart={() => {
-                isDraggingRef.current = true;
-              }}
-              onDragEnd={(e, info) => {
-                const swipeThreshold = 50;
-                const velocityThreshold = 350;
-
-                // Glisser à droite (x positif) -> Revenir au précédent
-                if (info.offset.x > swipeThreshold || info.velocity.x > velocityThreshold) {
-                  handlePrev();
-                } 
-                // Glisser à gauche (x négatif) -> Avancer au suivant
-                else if (info.offset.x < -swipeThreshold || info.velocity.x < -velocityThreshold) {
-                  handleNext();
-                }
-                setTimeout(() => {
-                  isDraggingRef.current = false;
-                }, 80);
-              }}
-              initial={{ 
-                opacity: 0,
-              }}
-              animate={{ 
-                opacity: 1,
-              }}
-              exit={{ 
-                opacity: 0,
-              }}
-              transition={{ duration: 0.28, ease: 'easeInOut' }}
-              className="cursor-grab active:cursor-grabbing w-full max-w-4xl relative flex flex-col items-center justify-center my-auto"
-            >
-              {/* Dynamic Swipe Stamps */}
-              {/* Tampon Gauche : glissé vers la droite -> REVENIR */}
-              <motion.div
-                style={{ opacity: stampPrevOpacity }}
-                className="absolute top-2 left-4 z-40 pointer-events-none transform -rotate-12 bg-emerald-600/90 text-white font-sans font-black text-xs sm:text-sm px-3.5 py-1 rounded-xl border-2 border-white shadow-2xl tracking-wider uppercase backdrop-blur-md"
+          {/* Vignettes Duos : DEUX VIGNETTES COLLÉES (DUO DE PROTAGONISTES) */}
+          {filteredDuos.map((duo, idx) => {
+            const isSelected = storyModeIndex === null && idx === safeIndex;
+            return (
+              <div
+                key={duo.id}
+                onClick={() => {
+                  setStoryModeIndex(null);
+                  setCurrentIndex(idx);
+                  setSlideIndex(0);
+                  celestialAudio.playOrbSelect();
+                }}
+                className="cursor-pointer group shrink-0"
+                title={`${duo.protagonistA.name} ‹ › ${duo.protagonistB.name}`}
               >
-                ← Revenir
-              </motion.div>
+                <div className={`h-12 sm:h-13 rounded-2xl p-0.5 border-2 transition-all group-hover:scale-105 flex items-center gap-0.5 ${
+                  isSelected
+                    ? 'border-[#A2482B] shadow-md ring-2 ring-[#A2482B]/20 scale-105 bg-stone-100'
+                    : 'border-stone-200 hover:border-stone-400 bg-stone-50'
+                }`}>
+                  <div className="w-6 sm:w-6.5 h-full rounded-xl overflow-hidden bg-stone-900 relative">
+                    <img src={duo.protagonistA.photoUrl} alt="" className="w-full h-full object-cover" />
+                  </div>
+                  <div className="w-6 sm:w-6.5 h-full rounded-xl overflow-hidden bg-stone-900 relative">
+                    <img src={duo.protagonistB.photoUrl} alt="" className="w-full h-full object-cover" />
+                  </div>
+                </div>
+              </div>
+            );
+          })}
 
-              {/* Tampon Droit : glissé vers la gauche -> SUIVANT */}
-              <motion.div
-                style={{ opacity: stampNextOpacity }}
-                className="absolute top-2 right-4 z-40 pointer-events-none transform rotate-12 bg-[#A2482B] text-white font-sans font-black text-xs sm:text-sm px-3.5 py-1 rounded-xl border-2 border-white shadow-2xl tracking-wider uppercase backdrop-blur-md"
+          {/* Vignettes Stories Personnelles (1 seule personne qui parle) */}
+          {THEMATIC_VALUES.map((theme, idx) => {
+            const hasStories = theme.stories.length > 0;
+            const isSelected = storyModeIndex === idx;
+            return (
+              <div 
+                key={theme.id}
+                onClick={() => {
+                  if (storyModeIndex === idx) {
+                    setStoryModeIndex(null);
+                  } else {
+                    setStoryModeIndex(idx);
+                    setIsPlaying(true);
+                    celestialAudio.playOrbSelect();
+                  }
+                }}
+                className="cursor-pointer group shrink-0"
+                title={`Story • ${theme.label}`}
               >
-                Suivant →
-              </motion.div>
-
-              {/* ========================================================================= */}
-              {/* MODE 1 : VUE DUO (DIPTYQUE FACE-À-FACE CÔTE À CÔTE)                       */}
-              {/* ========================================================================= */}
-              {viewMode === 'duo' && (
-                <div className="flex items-center justify-center gap-2 sm:gap-5 md:gap-8 relative w-full px-1">
-                  
-                  {/* CARTE PROTAGONISTE A */}
-                  <div 
-                    onClick={(e) => {
-                      if ((e.target as HTMLElement).closest('button, a, input, textarea')) return;
-                      if (isDraggingRef.current) return;
-                      togglePlayA();
-                    }}
-                    className="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl border border-stone-200/80 flex flex-col justify-between aspect-[9/16] w-[min(calc((100vw-24px)/2),calc((100dvh-230px)*9/16))] max-w-[185px] max-h-[min(480px,calc(100dvh-230px))] sm:max-w-none sm:max-h-none sm:w-[min(280px,calc((100dvh-210px)*9/16))] sm:h-[min(520px,calc(100dvh-210px))] lg:w-[min(310px,calc((100dvh-200px)*9/16))] lg:h-[min(550px,calc(100dvh-200px))] shrink-0 transition-all duration-300 cursor-pointer select-none"
-                  >
-                    {/* Background Media: Video when isPlayingA, otherwise Poster Photo */}
-                    {isPlayingA ? (
-                      <video
-                        ref={videoRefA}
-                        key={`desktop-video-a-${currentDuo.id}`}
-                        src={videoUrlA}
-                        autoPlay
-                        loop
-                        playsInline
-                        muted={isMutedA}
-                        className="absolute inset-0 w-full h-full object-cover"
+                <div className={`w-12 h-12 sm:w-13 sm:h-13 rounded-2xl p-0.5 border-2 transition-transform group-hover:scale-105 ${
+                  isSelected 
+                    ? 'border-amber-500 scale-105 shadow-md shadow-amber-500/20' 
+                    : hasStories 
+                      ? 'border-[#A2482B]' 
+                      : 'border-stone-200/60'
+                }`}>
+                  <div className="w-full h-full rounded-xl overflow-hidden bg-stone-900 relative">
+                    {hasStories ? (
+                      <img 
+                        src={theme.stories[0].authorAvatar} 
+                        alt={theme.label}
+                        className="w-full h-full object-cover"
                       />
                     ) : (
-                      <img 
-                        src={pA.photoUrl} 
-                        alt={pA.name} 
-                        referrerPolicy="no-referrer"
-                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-102 transition-transform duration-500 pointer-events-none"
-                      />
-                    )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/25 pointer-events-none" />
-
-                    {/* Overlay standardisé : alignement vertical strict, 5 actions, pas de croix, titre en haut à gauche et prénom épuré en bas à gauche */}
-                    <UnifiedVideoCardOverlay
-                      videoId={pA.id}
-                      titleBadge={cardTagA}
-                      displayName={pA.name}
-                      isPlaying={isPlayingA}
-                      onTogglePlay={togglePlayA}
-                      isMuted={isMutedA}
-                      onToggleMute={() => setIsMutedA(prev => !prev)}
-                      questionText={(pA as any).question || (currentDuo as any).theme || "Quelle vision singulière ce parcours apporte-t-il au monde ?"}
-                      factText={(pA as any).teaserPitch || pA.bio || "Passeur d'un savoir vivant et acteur du dialogue d'héritage."}
-                      onOpenProfile={() => {
-                        onNavigate({
-                          type: 'protagonist_profile',
-                          protagonistId: pA.id,
-                          returnToDuoId: currentDuo.id,
-                          returnToDuoIndex: safeIndex,
-                          returnToDocId: selectedDocId || currentDuo.documentaryId
-                        });
-                      }}
-                      onShare={() => handleSharePerson(pA)}
-                      isShareCopied={copiedPersonId === pA.id}
-                      onReportVideo={() => {
-                        setCustomReportTarget({ id: pA.id, title: pA.name, type: 'video' });
-                        setIsReportModalOpen(true);
-                      }}
-                      onBlockVideo={() => {
-                        handleNext();
-                      }}
-                    />
-                  </div>
-
-                  {/* CARTE PROTAGONISTE B */}
-                  <div 
-                    onClick={(e) => {
-                      if ((e.target as HTMLElement).closest('button, a, input, textarea')) return;
-                      if (isDraggingRef.current) return;
-                      togglePlayB();
-                    }}
-                    className="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl border border-stone-200/80 flex flex-col justify-between aspect-[9/16] w-[min(calc((100vw-24px)/2),calc((100dvh-230px)*9/16))] max-w-[185px] max-h-[min(480px,calc(100dvh-230px))] sm:max-w-none sm:max-h-none sm:w-[min(280px,calc((100dvh-210px)*9/16))] sm:h-[min(520px,calc(100dvh-210px))] lg:w-[min(310px,calc((100dvh-200px)*9/16))] lg:h-[min(550px,calc(100dvh-200px))] shrink-0 transition-all duration-300 cursor-pointer select-none"
-                  >
-                    {/* Background Media: Video when isPlayingB, otherwise Poster Photo */}
-                    {isPlayingB ? (
-                      <video
-                        ref={videoRefB}
-                        key={`desktop-video-b-${currentDuo.id}`}
-                        src={videoUrlB}
-                        autoPlay
-                        loop
-                        playsInline
-                        muted={isMutedB}
-                        className="absolute inset-0 w-full h-full object-cover"
-                      />
-                    ) : (
-                      <img 
-                        src={pB.photoUrl} 
-                        alt={pB.name} 
-                        referrerPolicy="no-referrer"
-                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-102 transition-transform duration-500 pointer-events-none"
-                      />
-                    )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/25 pointer-events-none" />
-
-                    {/* Overlay standardisé : alignement vertical strict, 5 actions, pas de croix, titre en haut à gauche et prénom épuré en bas à gauche */}
-                    <UnifiedVideoCardOverlay
-                      videoId={pB.id}
-                      titleBadge={cardTagB}
-                      displayName={pB.name}
-                      isPlaying={isPlayingB}
-                      onTogglePlay={togglePlayB}
-                      isMuted={isMutedB}
-                      onToggleMute={() => setIsMutedB(prev => !prev)}
-                      questionText={(pB as any).question || (currentDuo as any).theme || "Quelle vision singulière ce parcours apporte-t-il au monde ?"}
-                      factText={(pB as any).teaserPitch || pB.bio || "Passeur d'un savoir vivant et acteur du dialogue d'héritage."}
-                      onOpenProfile={() => {
-                        onNavigate({
-                          type: 'protagonist_profile',
-                          protagonistId: pB.id,
-                          returnToDuoId: currentDuo.id,
-                          returnToDuoIndex: safeIndex,
-                          returnToDocId: selectedDocId || currentDuo.documentaryId
-                        });
-                      }}
-                      onShare={() => handleSharePerson(pB)}
-                      isShareCopied={copiedPersonId === pB.id}
-                      onReportVideo={() => {
-                        setCustomReportTarget({ id: pB.id, title: pB.name, type: 'video' });
-                        setIsReportModalOpen(true);
-                      }}
-                      onBlockVideo={() => {
-                        handleNext();
-                      }}
-                    />
-                  </div>
-
-                </div>
-              )}
-
-              {/* ========================================================================= */}
-              {/* MODE 2 : VUE DECK (1 VIDÉO PLEINE TAILLE AVEC BASCULE VERS LE PENDANT)    */}
-              {/* ========================================================================= */}
-              {viewMode === 'deck' && (
-                <div className="relative flex items-center justify-center w-full px-2">
-                  {deckActiveSide === 'A' ? (
-                    /* CARTE PLEINE TAILLE PROTAGONISTE A */
-                    <div 
-                      onClick={(e) => {
-                        if ((e.target as HTMLElement).closest('button, a, input, textarea')) return;
-                        if (isDraggingRef.current) return;
-                        togglePlayA();
-                      }}
-                      className="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl border border-stone-200/80 flex flex-col justify-between aspect-[9/16] w-auto h-[min(480px,calc(100dvh-230px))] sm:h-[min(520px,calc(100dvh-210px))] lg:h-[min(550px,calc(100dvh-200px))] max-w-[calc(100vw-32px)] shrink-0 transition-all duration-300 cursor-pointer select-none"
-                    >
-                      {isPlayingA ? (
-                        <video
-                          ref={videoRefA}
-                          key={`deck-video-a-${currentDuo.id}`}
-                          src={videoUrlA}
-                          autoPlay
-                          loop
-                          playsInline
-                          muted={isMutedA}
-                          className="absolute inset-0 w-full h-full object-cover"
-                        />
-                      ) : (
-                        <img 
-                          src={pA.photoUrl} 
-                          alt={pA.name} 
-                          referrerPolicy="no-referrer"
-                          className="absolute inset-0 w-full h-full object-cover group-hover:scale-102 transition-transform duration-500 pointer-events-none"
-                        />
-                      )}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/25 pointer-events-none" />
-
-                      {/* Header Deck : Tag pôle + switch vers l'autre pendant */}
-                      <div className="relative z-10 p-3 sm:p-4 flex items-center justify-between gap-1.5">
-                        <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-xs font-bold text-white shadow-md truncate">
-                          {cardTagA}
-                        </span>
-
-                        <div className="flex items-center gap-1.5">
-                          {isPlayingA && (
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setIsMutedA(prev => !prev);
-                              }}
-                              className="w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
-                              title={isMutedA ? "Activer le son" : "Couper le son"}
-                            >
-                              {isMutedA ? (
-                                <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
-                              ) : (
-                                <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
-                              )}
-                            </button>
-                          )}
-
-                          {/* Déclencheur lecteur vidéo en haut à droite (format carré arrondi) */}
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              togglePlayA();
-                            }}
-                            className="w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
-                            title={isPlayingA ? "Mettre en pause" : "Lire la vidéo"}
-                          >
-                            {isPlayingA ? (
-                              <Pause className="w-4 h-4 sm:w-4.5 sm:h-4.5 fill-white text-white" />
-                            ) : (
-                              <TvPlayerIcon className="w-5 h-5 sm:w-6 sm:h-6 text-white transition-transform" strokeWidth={1.6} />
-                            )}
-                          </button>
-
-                          {/* Bouton de bascule vers la vidéo proposée en vis-à-vis (B) */}
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setIsPlayingA(false);
-                              setDeckActiveSide('B');
-                            }}
-                            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/25 hover:bg-[#A2482B] text-white text-xs font-bold backdrop-blur-md border border-white/30 shadow-md transition-all cursor-pointer active:scale-95"
-                            title={`Voir le vis-à-vis : ${pB.name}`}
-                          >
-                            <ArrowRightLeft className="w-3.5 h-3.5" />
-                            <span>Voir {pB.name.split(' ')[0]}</span>
-                          </button>
-                        </div>
+                      <div className="w-full h-full flex items-center justify-center bg-stone-800 text-stone-400">
+                        <Sparkles className="w-3.5 h-3.5" />
                       </div>
-
-                    {/* ICÔNES D'ACTION SUR LE CÔTÉ DROIT DE LA VIDÉO (DESCENDUES AUX 2/3 POUR DÉGAGER LE VISAGE DU PROTAGONISTE) */}
-                    <div 
-                      className="absolute right-3.5 sm:right-5 top-[64%] -translate-y-1/2 z-30 flex flex-col items-center gap-2.5 sm:gap-3 pointer-events-auto"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      {/* 2. Question */}
-                      <button
-                        id={`deck-btn-question-a-${pA.id}`}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setIsQuestionModalOpen(true);
-                        }}
-                        className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
-                        title="Découvrir la question"
-                      >
-                        <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-                      </button>
-
-                      {/* 3. Découvrir son univers complet */}
-                      <button
-                        id={`deck-btn-universe-a-${pA.id}`}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onNavigate({
-                            type: 'protagonist_profile',
-                            protagonistId: pA.id,
-                            returnToDuoId: currentDuo.id,
-                            returnToDuoIndex: safeIndex,
-                            returnToDocId: selectedDocId || currentDuo.documentaryId
-                          });
-                        }}
-                        className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
-                        title={`Découvrir le profil de ${pA.name}`}
-                      >
-                        <ProfileSoloIcon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-                      </button>
-
-                      {/* 4. Bouton Partager */}
-                      <button
-                        id={`deck-btn-share-a-${pA.id}`}
-                        onClick={(e) => handleSharePerson(pA, e)}
-                        className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl backdrop-blur-md border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
-                          copiedPersonId === pA.id
-                            ? 'bg-emerald-700/85 border-emerald-600 text-white'
-                            : 'bg-black/45 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white'
-                        }`}
-                        title={copiedPersonId === pA.id ? "Lien copié !" : "Partager"}
-                      >
-                        {copiedPersonId === pA.id ? (
-                          <Check className="w-4 h-4 text-white" />
-                        ) : (
-                          <ShareIcon className="w-4 h-4 text-white" />
-                        )}
-                      </button>
-
-                    </div>
-
-                    {/* BAS : Prénom uniquement */}
-                    <div 
-                      className="relative z-20 p-4 sm:p-5 pb-7 sm:pb-9 flex flex-col pointer-events-auto cursor-pointer group/title mt-auto"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onNavigate({
-                          type: 'protagonist_profile',
-                          protagonistId: pA.id,
-                          returnToDuoId: currentDuo.id,
-                          returnToDuoIndex: safeIndex,
-                          returnToDocId: selectedDocId || currentDuo.documentaryId
-                        });
-                      }}
-                      title={`Découvrir le profil de ${pA.name}`}
-                    >
-                      <h3 className="font-editorial text-[14px] sm:text-base font-bold text-white tracking-normal leading-tight pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors whitespace-normal break-words">
-                        {pA.name.split(' ')[0]}
-                      </h3>
-                    </div>
-                    </div>
-                  ) : (
-                    /* CARTE PLEINE TAILLE PROTAGONISTE B */
-                    <div 
-                      onClick={(e) => {
-                        if ((e.target as HTMLElement).closest('button, a, input, textarea')) return;
-                        if (isDraggingRef.current) return;
-                        togglePlayB();
-                      }}
-                      className="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl border border-stone-200/80 flex flex-col justify-between aspect-[9/16] w-auto h-[min(480px,calc(100dvh-230px))] sm:h-[min(520px,calc(100dvh-210px))] lg:h-[min(550px,calc(100dvh-200px))] max-w-[calc(100vw-32px)] shrink-0 transition-all duration-300 cursor-pointer select-none"
-                    >
-                      {isPlayingB ? (
-                        <video
-                          ref={videoRefB}
-                          key={`deck-video-b-${currentDuo.id}`}
-                          src={videoUrlB}
-                          autoPlay
-                          loop
-                          playsInline
-                          muted={isMutedB}
-                          className="absolute inset-0 w-full h-full object-cover"
-                        />
-                      ) : (
-                        <img 
-                          src={pB.photoUrl} 
-                          alt={pB.name} 
-                          referrerPolicy="no-referrer"
-                          className="absolute inset-0 w-full h-full object-cover group-hover:scale-102 transition-transform duration-500 pointer-events-none"
-                        />
-                      )}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/25 pointer-events-none" />
-
-                      {/* Header Deck : Tag pôle + switch vers l'autre pendant */}
-                      <div className="relative z-10 p-3 sm:p-4 flex items-center justify-between gap-1.5">
-                        <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-xs font-bold text-white shadow-md truncate">
-                          {cardTagB}
-                        </span>
-
-                        <div className="flex items-center gap-1.5">
-                          {isPlayingB && (
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setIsMutedB(prev => !prev);
-                              }}
-                              className="w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
-                              title={isMutedB ? "Activer le son" : "Couper le son"}
-                            >
-                              {isMutedB ? (
-                                <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
-                              ) : (
-                                <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
-                              )}
-                            </button>
-                          )}
-
-                          {/* Déclencheur lecteur vidéo en haut à droite (format carré arrondi) */}
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              togglePlayB();
-                            }}
-                            className="w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
-                            title={isPlayingB ? "Mettre en pause" : "Lire la vidéo"}
-                          >
-                            {isPlayingB ? (
-                              <Pause className="w-4 h-4 sm:w-4.5 sm:h-4.5 fill-white text-white" />
-                            ) : (
-                              <TvPlayerIcon className="w-5 h-5 sm:w-6 sm:h-6 text-white transition-transform" strokeWidth={1.6} />
-                            )}
-                          </button>
-
-                          {/* Bouton de bascule vers la première vidéo proposée (A) */}
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setIsPlayingB(false);
-                              setDeckActiveSide('A');
-                            }}
-                            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/25 hover:bg-[#A2482B] text-white text-xs font-bold backdrop-blur-md border border-white/30 shadow-md transition-all cursor-pointer active:scale-95"
-                            title={`Voir le vis-à-vis : ${pA.name}`}
-                          >
-                            <ArrowRightLeft className="w-3.5 h-3.5" />
-                            <span>Voir {pA.name.split(' ')[0]}</span>
-                          </button>
-                        </div>
-                      </div>
-
-                    {/* ICÔNES D'ACTION SUR LE CÔTÉ DROIT DE LA VIDÉO (DESCENDUES AUX 2/3 POUR DÉGAGER LE VISAGE DU PROTAGONISTE) */}
-                    <div 
-                      className="absolute right-3.5 sm:right-5 top-[64%] -translate-y-1/2 z-30 flex flex-col items-center gap-2.5 sm:gap-3 pointer-events-auto"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      {/* 2. Question */}
-                      <button
-                        id={`deck-btn-question-b-${pB.id}`}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setIsQuestionModalOpen(true);
-                        }}
-                        className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
-                        title="Découvrir la question"
-                      >
-                        <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-                      </button>
-
-                      {/* 3. Découvrir son univers complet */}
-                      <button
-                        id={`deck-btn-universe-b-${pB.id}`}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onNavigate({
-                            type: 'protagonist_profile',
-                            protagonistId: pB.id,
-                            returnToDuoId: currentDuo.id,
-                            returnToDuoIndex: safeIndex,
-                            returnToDocId: selectedDocId || currentDuo.documentaryId
-                          });
-                        }}
-                        className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-black/45 hover:bg-[#A2482B] backdrop-blur-md border border-white/20 hover:border-[#A2482B] text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95"
-                        title={`Découvrir le profil de ${pB.name}`}
-                      >
-                        <ProfileSoloIcon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-                      </button>
-
-                      {/* 4. Bouton Partager */}
-                      <button
-                        id={`deck-btn-share-b-${pB.id}`}
-                        onClick={(e) => handleSharePerson(pB, e)}
-                        className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl backdrop-blur-md border flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105 active:scale-95 ${
-                          copiedPersonId === pB.id
-                            ? 'bg-emerald-700/85 border-emerald-600 text-white'
-                            : 'bg-black/45 hover:bg-[#A2482B] border-white/20 hover:border-[#A2482B] text-white'
-                        }`}
-                        title={copiedPersonId === pB.id ? "Lien copié !" : "Partager"}
-                      >
-                        {copiedPersonId === pB.id ? (
-                          <Check className="w-4 h-4 text-white" />
-                        ) : (
-                          <ShareIcon className="w-4 h-4 text-white" />
-                        )}
-                      </button>
-
-                    </div>
-
-                    {/* BAS : Prénom uniquement */}
-                    <div 
-                      className="relative z-20 p-4 sm:p-5 pb-7 sm:pb-9 flex flex-col pointer-events-auto cursor-pointer group/title mt-auto"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onNavigate({
-                          type: 'protagonist_profile',
-                          protagonistId: pB.id,
-                          returnToDuoId: currentDuo.id,
-                          returnToDuoIndex: safeIndex,
-                          returnToDocId: selectedDocId || currentDuo.documentaryId
-                        });
-                      }}
-                      title={`Découvrir le profil de ${pB.name}`}
-                    >
-                      <h3 className="font-editorial text-[14px] sm:text-base font-bold text-white tracking-normal leading-tight pb-0.5 drop-shadow-md group-hover/title:text-[#FFE7A3] transition-colors whitespace-normal break-words">
-                        {pB.name.split(' ')[0]}
-                      </h3>
-                    </div>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
-              )}
-
-            </motion.div>
-          </AnimatePresence>
-
+              </div>
+            );
+          })}
         </div>
       </div>
 
-      {/* Modale Question Centrale en Miroir */}
-      {isQuestionModalOpen && (
+      {/* ========================================================================= */}
+      {/* 2. ZONE CENTRALE : 1 PUBLICATION UNIQUE CALIBRÉE OU MODE STORY 3D JEU VIDÉO */}
+      {/* ========================================================================= */}
+      <div className="relative flex-1 flex flex-col items-center justify-center min-h-0 py-1 px-3 sm:px-4 my-auto">
+        
+        {/* Flèche Desktop Gauche */}
+        <button
+          onClick={prevSlide}
+          className="hidden md:flex absolute left-4 lg:left-8 z-30 w-10 h-10 rounded-full bg-white/90 hover:bg-[#1C1917] text-stone-800 hover:text-white border border-stone-200 shadow-lg items-center justify-center transition-all cursor-pointer transform hover:scale-105 active:scale-95"
+          title="Précédent"
+        >
+          <ChevronLeft className="w-5 h-5" />
+        </button>
+
+        {/* Flèche Desktop Droite */}
+        <button
+          onClick={nextSlide}
+          className="hidden md:flex absolute right-4 lg:right-8 z-30 w-10 h-10 rounded-full bg-white/90 hover:bg-[#1C1917] text-stone-800 hover:text-white border border-stone-200 shadow-lg items-center justify-center transition-all cursor-pointer transform hover:scale-105 active:scale-95"
+          title="Suivant"
+        >
+          <ChevronRight className="w-5 h-5" />
+        </button>
+
+        {/* ======================================================================= */}
+        {/* CAS A : LE MODE STORY EST ACTIVÉ (MODE 3D CARROUSEL COVERFLOW JEU VIDÉO) */}
+        {/* ======================================================================= */}
+        {storyModeIndex !== null && activeThemeStory ? (
+          <div className="relative w-full h-full flex flex-col items-center justify-center">
+            
+            {/* Bouton de sortie épuré au sommet des stories */}
+            <div className="absolute top-0 z-40 flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setStoryModeIndex(null)}
+                className="px-3.5 py-1.5 rounded-full bg-stone-900/90 hover:bg-[#A2482B] text-white text-xs font-semibold shadow-lg backdrop-blur-md flex items-center gap-1.5 transition-all cursor-pointer active:scale-95"
+                title="Quitter les stories"
+              >
+                <X className="w-3.5 h-3.5" />
+                <span>Quitter les stories</span>
+              </button>
+            </div>
+
+            {/* SCÈNE 3D PERSPECTIVE JEU VIDÉO */}
+            <div 
+              className="relative w-full h-full flex items-center justify-center pointer-events-none mt-4"
+              style={{ perspective: '1200px', perspectiveOrigin: 'center center' }}
+            >
+              <div 
+                className="relative w-full h-full flex items-center justify-center pointer-events-none"
+                style={{ transformStyle: 'preserve-3d' }}
+              >
+                {/* Carte Précédente en 3D (si existe) */}
+                {(() => {
+                  const prevIdx = (storyModeIndex - 1 + THEMATIC_VALUES.length) % THEMATIC_VALUES.length;
+                  const prevTheme = THEMATIC_VALUES[prevIdx];
+                  const prevStory = prevTheme.stories[0];
+                  return (
+                    <div
+                      onClick={() => setStoryModeIndex(prevIdx)}
+                      className="absolute aspect-[9/16] w-[min(260px,calc(100vw-60px))] sm:w-[280px] max-h-[min(480px,calc(100dvh-240px))] rounded-3xl overflow-hidden shadow-xl border border-stone-200/60 bg-stone-900 text-white cursor-pointer pointer-events-auto transition-transform duration-300 opacity-60 hover:opacity-85"
+                      style={{
+                        transform: 'translate3d(-55%, 0, -150px) rotateY(24deg) scale(0.85)',
+                        zIndex: 10
+                      }}
+                    >
+                      <img 
+                        src={prevStory?.authorAvatar || '/assets/posters/vodun-autre-foi.png'} 
+                        alt="" 
+                        className="w-full h-full object-cover" 
+                      />
+                      <div className="absolute inset-0 bg-black/40" />
+                    </div>
+                  );
+                })()}
+
+                {/* Carte Suivante en 3D (si existe) */}
+                {(() => {
+                  const nextIdx = (storyModeIndex + 1) % THEMATIC_VALUES.length;
+                  const nextTheme = THEMATIC_VALUES[nextIdx];
+                  const nextStory = nextTheme.stories[0];
+                  return (
+                    <div
+                      onClick={() => setStoryModeIndex(nextIdx)}
+                      className="absolute aspect-[9/16] w-[min(260px,calc(100vw-60px))] sm:w-[280px] max-h-[min(480px,calc(100dvh-240px))] rounded-3xl overflow-hidden shadow-xl border border-stone-200/60 bg-stone-900 text-white cursor-pointer pointer-events-auto transition-transform duration-300 opacity-60 hover:opacity-85"
+                      style={{
+                        transform: 'translate3d(55%, 0, -150px) rotateY(-24deg) scale(0.85)',
+                        zIndex: 10
+                      }}
+                    >
+                      <img 
+                        src={nextStory?.authorAvatar || '/assets/posters/roots-routes.jpg'} 
+                        alt="" 
+                        className="w-full h-full object-cover" 
+                      />
+                      <div className="absolute inset-0 bg-black/40" />
+                    </div>
+                  );
+                })()}
+
+                {/* CARTE CENTRALE ACTIVE */}
+                <div 
+                  className="relative aspect-[9/16] w-[min(310px,calc(100vw-36px))] sm:w-[320px] max-h-[min(540px,calc(100dvh-220px))] rounded-3xl overflow-hidden shadow-2xl border border-amber-500/40 bg-[#12110F] text-white flex flex-col justify-between select-none pointer-events-auto"
+                  style={{
+                    transform: 'translate3d(0, 0, 0) scale(1)',
+                    zIndex: 20
+                  }}
+                >
+                  {/* Header Story : Thématique à gauche & Mute à droite */}
+                  <div className="relative z-20 pt-4 px-3 flex items-center justify-between gap-1 pointer-events-auto">
+                    <div className="bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/20">
+                      <span className="text-[11px] font-bold text-amber-300 tracking-wide">
+                        Story • {activeThemeStory.label}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-1.5">
+                      <button
+                        type="button"
+                        onClick={() => setIsMuted(m => !m)}
+                        className="w-8 h-8 rounded-xl bg-black/60 backdrop-blur-md text-white border border-white/20 flex items-center justify-center cursor-pointer hover:bg-black/80"
+                        title={isMuted ? 'Activer le son' : 'Couper le son'}
+                      >
+                        {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Média vidéo ou photo */}
+                  <div 
+                    className="absolute inset-0 z-10 cursor-pointer"
+                    onClick={() => setIsPlaying(p => !p)}
+                  >
+                    {storyItem ? (
+                      <video
+                        ref={videoRef}
+                        key={`story-video-${storyItem.id}`}
+                        src={storyItem.videoUrl}
+                        autoPlay
+                        loop
+                        muted={isMuted}
+                        playsInline
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-stone-900 flex items-center justify-center">
+                        <Sparkles className="w-10 h-10 text-amber-400" />
+                      </div>
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30 pointer-events-none" />
+                  </div>
+
+                  {/* Flanc Droit : Question et Partage */}
+                  <div className="absolute right-2.5 bottom-16 z-30 flex flex-col items-center gap-2 pointer-events-auto">
+                    <button
+                      onClick={() => setShowStoryQuestion(true)}
+                      className="w-8 h-8 rounded-xl bg-black/60 backdrop-blur-md text-white hover:bg-[#A2482B] border border-white/15 flex items-center justify-center transition-all cursor-pointer shadow-sm group"
+                      title="Consulter la question de la story"
+                    >
+                      <HelpCircle className="w-4 h-4 text-amber-300" />
+                    </button>
+                    <button
+                      onClick={() => setShareModalItem({ title: `Story ${activeThemeStory.label}`, id: activeThemeStory.id })}
+                      className="w-8 h-8 rounded-xl bg-black/60 backdrop-blur-md text-white hover:bg-[#A2482B] border border-white/15 flex items-center justify-center transition-all cursor-pointer shadow-sm group"
+                      title="Partager"
+                    >
+                      <ShareIcon className="w-4 h-4" />
+                    </button>
+                  </div>
+
+                  {/* Bas de Story : Prénom */}
+                  <div className="relative z-20 p-4 space-y-0.5 pointer-events-none">
+                    <h2 className="text-xl sm:text-2xl font-bold text-white tracking-wide">
+                      {storyItem?.authorName.split(' ')[0] || activeThemeStory.label}
+                    </h2>
+                  </div>
+
+                  {/* Tiroir Question */}
+                  {showStoryQuestion && (
+                    <div 
+                      className="absolute inset-x-0 bottom-0 z-40 bg-white text-stone-900 rounded-t-3xl p-4 shadow-2xl animate-in slide-in-from-bottom duration-200 space-y-2 select-text"
+                      onClick={e => e.stopPropagation()}
+                    >
+                      <div className="flex items-center justify-between pb-1 border-b border-stone-100">
+                        <span className="text-xs font-bold text-[#A2482B] uppercase tracking-wider">
+                          Thématique : {activeThemeStory.label}
+                        </span>
+                        <button 
+                          onClick={() => setShowStoryQuestion(false)}
+                          className="p-1 rounded-full text-stone-400 hover:text-stone-700"
+                        >
+                          <X className="w-4 h-4" />
+                        </button>
+                      </div>
+                      <p className="text-xs sm:text-sm font-semibold text-stone-800 leading-relaxed">
+                        « {storyItem?.question || activeThemeStory.question || `Racontez comment dans votre vie une expérience vous a appris la valeur de ${activeThemeStory.label.toLowerCase()}.`} »
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          /* ======================================================================= */
+          /* CAS B : PUBLICATION NORMALE (DUO EN 3 VOLETS)                           */
+          /* ======================================================================= */
+          <div className="relative aspect-[9/16] w-[min(310px,calc(100vw-36px))] sm:w-[320px] max-h-[min(540px,calc(100dvh-220px))] rounded-3xl overflow-hidden shadow-2xl border border-stone-200/90 bg-[#12110F] text-white flex flex-col justify-between select-none">
+            
+            {/* VOLET 1 (PROTAGONISTE A) ET VOLET 2 (PROTAGONISTE B) */}
+            {slideIndex !== 2 ? (
+              <>
+                {/* EN-TÊTE DE CARTE : TITRE DE LA SÉRIE EN HAUT À GAUCHE & BOUTON TÉLÉ EN HAUT À DROITE */}
+                <div className="relative z-20 pt-3.5 px-3 flex items-center justify-between gap-1 pointer-events-auto">
+                  <div className="inline-flex w-fit items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 shadow-md max-w-[75%]">
+                    <span className="font-editorial text-xs font-semibold text-white whitespace-nowrap tracking-wide select-none truncate">
+                      {rawSeriesTitle}
+                    </span>
+                  </div>
+
+                  {/* Bouton Télé Vintage de Lecture en haut à droite */}
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsPlaying(p => !p);
+                    }}
+                    className={`w-8.5 h-8.5 rounded-xl flex items-center justify-center transition-all cursor-pointer shadow-md active:scale-95 ${
+                      isPlaying 
+                        ? 'bg-[#A2482B] text-white border border-[#8A3B22]' 
+                        : 'bg-black/60 backdrop-blur-md text-white border border-white/20 hover:bg-black/80'
+                    }`}
+                    title={isPlaying ? 'Mettre en pause' : 'Lancer la vidéo'}
+                  >
+                    <TvPlayerIcon className="w-4.5 h-4.5 text-current" />
+                  </button>
+                </div>
+
+                {/* MEDIA DE FOND : L'IMAGE S'EFFACE POUR LA VIDÉO LORS DE LA LECTURE */}
+                <div 
+                  className="absolute inset-0 z-10 cursor-pointer"
+                  onClick={() => setIsPlaying(p => !p)}
+                >
+                  {isPlaying ? (
+                    <video
+                      ref={videoRef}
+                      key={`video-${slideIndex}-${currentDuo.id}`}
+                      src={currentVideoUrl}
+                      autoPlay
+                      loop
+                      muted={isMuted}
+                      playsInline
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <img 
+                      src={activeProtagonist.photoUrl} 
+                      alt={activeProtagonist.name}
+                      className="w-full h-full object-cover"
+                    />
+                  )}
+
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none" />
+                </div>
+
+                {/* COLONNE D'ICÔNES LATÉRALE DROITE : SQUIRCLES (rounded-xl) */}
+                <div className="absolute right-2.5 bottom-16 z-30 flex flex-col items-center gap-2 pointer-events-auto">
+                  
+                  {/* 1. Icône Question Documentaire */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowQuestionModal(true);
+                    }}
+                    className="w-8 h-8 rounded-xl bg-black/60 backdrop-blur-md text-white hover:bg-[#A2482B] border border-white/15 flex items-center justify-center transition-all cursor-pointer shadow-sm group"
+                    title="Question documentaire"
+                  >
+                    <BookOpen className="w-3.5 h-3.5 text-white group-hover:scale-110 transition-transform" />
+                  </button>
+
+                  {/* 2. Icône Échange ⇄ */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      goToSlide(slideIndex === 0 ? 1 : 0);
+                    }}
+                    className="w-8 h-8 rounded-xl bg-black/60 backdrop-blur-md text-white hover:bg-[#A2482B] border border-white/15 flex items-center justify-center transition-all cursor-pointer shadow-sm group"
+                    title={slideIndex === 0 ? `Voir ${firstNameB}` : `Voir ${firstNameA}`}
+                  >
+                    <span className="font-bold text-xs tracking-tight">⇄</span>
+                  </button>
+
+                  {/* 3. Icône Portrait Solo : ouvre la page portrait de CETTE personne */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onNavigate({ type: 'profile', protagonistId: activeProtagonist.id });
+                    }}
+                    className="w-8 h-8 rounded-xl bg-black/60 backdrop-blur-md text-white hover:bg-[#A2482B] border border-white/15 flex items-center justify-center transition-all cursor-pointer shadow-sm group"
+                    title={`Portrait de ${firstName}`}
+                  >
+                    <ProfileSoloIcon className="w-4 h-4 text-white group-hover:scale-110 transition-transform" />
+                  </button>
+
+                  {/* 4. Icône Partage : l'ancienne icône flèche ascendante + arche */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShareModalItem({ title: `Duo : ${activeProtagonist.name}`, id: activeProtagonist.id });
+                    }}
+                    className="w-8 h-8 rounded-xl bg-black/60 backdrop-blur-md text-white hover:bg-[#A2482B] border border-white/15 flex items-center justify-center transition-all cursor-pointer shadow-sm group"
+                    title="Partager"
+                  >
+                    <ShareIcon className="w-4 h-4" />
+                  </button>
+                </div>
+
+                {/* BAS DE CARTE ÉPURÉ : UNIQUEMENT LE PRÉNOM */}
+                <div className="relative z-20 p-4 space-y-0.5 pointer-events-none">
+                  <h2 className="text-xl sm:text-2xl font-bold text-white tracking-wide">
+                    {firstName}
+                  </h2>
+                </div>
+              </>
+            ) : (
+              /* VOLET 3 : LE FACE-À-FACE ET LE CURSEUR 50/50 ÉPURÉ */
+              <ResonanceFaceToFaceCard
+                protagonistA={pA}
+                protagonistB={pB}
+                seriesTitle={rawSeriesTitle}
+                duoQuestion={duoQuestion}
+                onNavigateToSlide={goToSlide}
+                onNavigateToPortrait={(id) => onNavigate({ type: 'profile', protagonistId: id })}
+              />
+            )}
+
+          </div>
+        )}
+
+      </div>
+
+      {/* ========================================================================= */}
+      {/* 3. MODALES : QUESTION ET PARTAGE                                         */}
+      {/* ========================================================================= */}
+      {showQuestionModal && (
         <div 
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200"
-          onClick={() => setIsQuestionModalOpen(false)}
+          className="fixed inset-0 z-[90] flex items-center justify-center p-4 bg-black/70 backdrop-blur-xs select-none"
+          onClick={() => setShowQuestionModal(false)}
         >
           <div 
-            className="relative w-full max-w-md bg-white rounded-3xl p-6 sm:p-7 shadow-2xl border border-stone-200 text-center animate-in zoom-in-95 duration-200 pointer-events-auto"
-            onClick={(e) => e.stopPropagation()}
+            className="w-full max-w-sm bg-white text-stone-900 rounded-3xl p-5 shadow-2xl border border-stone-200 space-y-3"
+            onClick={e => e.stopPropagation()}
           >
-            <button
-              onClick={() => setIsQuestionModalOpen(false)}
-              className="absolute top-4 right-4 p-1.5 rounded-full hover:bg-stone-100 text-stone-400 hover:text-stone-700 transition-colors"
-            >
-              <X className="w-5 h-5" />
-            </button>
-
-            <div className="w-12 h-12 rounded-full bg-[#A2482B]/15 text-[#A2482B] flex items-center justify-center mx-auto mb-4 border border-[#A2482B]/30">
-              <BookOpen className="w-6 h-6" />
-            </div>
-
-            <div className="mb-4">
-              <span className="inline-block px-3.5 py-1 rounded-full bg-[#A2482B]/10 text-[#A2482B] text-xs font-bold tracking-wide uppercase">
-                Question commune
+            <div className="flex items-center justify-between pb-2 border-b border-stone-100">
+              <span className="text-xs font-bold text-[#A2482B] uppercase tracking-wider">
+                Question documentaire
               </span>
+              <button onClick={() => setShowQuestionModal(false)} className="text-stone-400 hover:text-stone-700">
+                <X className="w-4 h-4" />
+              </button>
             </div>
-
-            <p className="font-serif-editorial text-base sm:text-lg text-stone-800 leading-relaxed italic px-2">
-              « {cleanQuotes(currentDuo.centralQuestion)} »
+            <p className="text-sm font-semibold text-stone-900 leading-relaxed">
+              « {duoQuestion} »
+            </p>
+            <p className="text-xs text-stone-500 leading-relaxed">
+              Sur YonyWood, la question est posée en amont. Les deux protagonistes y répondent chacun dans leur vérité avant d'être reliés en miroir.
             </p>
           </div>
         </div>
       )}
 
-      {/* Modale Teaser Présentation Vidéo avant d'entrer dans l'univers */}
-      <ProtagonistTeaserModal
-        protagonist={teaserProtagonist}
-        onClose={() => setTeaserProtagonist(null)}
-        onEnterUniverse={(id) => {
-          setTeaserProtagonist(null);
-          onNavigate({ type: 'protagonist_profile', protagonistId: id });
-        }}
-      />
-
-      {/* Modal de modération et signalement de vidéo */}
-      {currentDuo && (
-        <ReportModal
-          isOpen={isReportModalOpen}
-          onClose={() => setIsReportModalOpen(false)}
-          targetType="duo"
-          targetId={currentDuo.id}
-          targetTitle={`${currentDuo.documentaryTitle} (${currentDuo.protagonistA.name} <> ${currentDuo.protagonistB.name})`}
-        />
-      )}
-
-      {/* Volet coulissant d'évaluation de la résonance sur la vidéo */}
-      {resonanceTargetPerson && (
-        <ResonanceModal
-          isOpen={Boolean(resonanceTargetPerson)}
-          onClose={() => setResonanceTargetPerson(null)}
-          storyId={`duo-story-${resonanceTargetPerson.id}`}
-          topicId={activeDoc?.title || currentDuo.documentaryTitle || 'duo'}
-          personName={resonanceTargetPerson.name.split(' ')[0]}
-          initialPercentage={personResonances[resonanceTargetPerson.id] || null}
-          onRatingSubmitted={(pct) => {
-            setPersonResonances(prev => ({
-              ...prev,
-              [resonanceTargetPerson.id]: pct
-            }));
-          }}
-        />
-      )}
-
-      {/* Modale de partage & signalement pour vue deck */}
-      {shareModalPerson && (
+      {/* Modale Partage */}
+      {shareModalItem && (
         <VideoCardShareModal
-          isOpen={Boolean(shareModalPerson)}
-          onClose={() => setShareModalPerson(null)}
-          videoTitle={shareModalPerson.name.split(' ')[0]}
-          videoId={shareModalPerson.id}
-          onReport={() => {
-            setCustomReportTarget({ id: shareModalPerson.id, title: shareModalPerson.name, type: 'video' });
-            setIsReportModalOpen(true);
-          }}
-          onNotInterested={() => {
-            blockVideo(shareModalPerson.id);
-            handleNext();
-          }}
+          isOpen={Boolean(shareModalItem)}
+          onClose={() => setShareModalItem(null)}
+          videoTitle={shareModalItem.title}
+          videoId={shareModalItem.id}
         />
       )}
+
     </div>
   );
 };
