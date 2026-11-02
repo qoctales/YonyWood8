@@ -954,5 +954,43 @@ export const EntrepriseFilmDuoIcon: React.FC<IconProps & { isActive?: boolean }>
   );
 };
 
+/**
+ * RoundedSwipeArrowsIcon:
+ * Symbole officiel « Swipe » de YonyWood :
+ * Flèches de défilement aux sommets délicatement arrondis (haut et bas)
+ * et axe central fluide, harmonisé avec les autres icônes rondes de la plateforme.
+ * Utilisé sur les cartes vidéo (Dialogue et Entreprise) pour indiquer la navigation gestuelle.
+ */
+export const RoundedSwipeArrowsIcon: React.FC<IconProps> = ({ 
+  className = 'w-4 h-4',
+  strokeWidth = 1.75 
+}) => {
+  return (
+    <svg 
+      viewBox="0 0 24 24" 
+      fill="none" 
+      stroke="currentColor" 
+      strokeWidth={strokeWidth} 
+      strokeLinecap="round" 
+      strokeLinejoin="round" 
+      className={className}
+      aria-hidden="true"
+    >
+      <title>Navigation par swipe</title>
+      {/* Flèche supérieure arrondie (haut) */}
+      <path d="M 7.5 8 C 9.5 5.2, 14.5 5.2, 16.5 8" />
+      {/* Tige centrale verticale */}
+      <line x1="12" y1="6.8" x2="12" y2="17.2" />
+      {/* Flèche inférieure arrondie (bas) */}
+      <path d="M 7.5 16 C 9.5 18.8, 14.5 18.8, 16.5 16" />
+      {/* Cues horizontaux subtils arrondis pour le swipe 2D */}
+      <circle cx="5" cy="12" r="0.9" fill="currentColor" stroke="none" />
+      <circle cx="19" cy="12" r="0.9" fill="currentColor" stroke="none" />
+    </svg>
+  );
+};
+export const SwipeIcon = RoundedSwipeArrowsIcon;
+export const RoundedSwipeIcon = RoundedSwipeArrowsIcon;
+
 
 

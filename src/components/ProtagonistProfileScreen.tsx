@@ -281,12 +281,9 @@ export const ProtagonistProfileScreen: React.FC<ProtagonistProfileScreenProps> =
                   className="group flex flex-col items-center justify-center p-2.5 rounded-2xl bg-[#FFFFFF] hover:bg-[#FAFAF9] border border-[#C89B3C]/35 hover:border-[#C89B3C] shadow-xs hover:shadow-md transition-all hover:scale-105 active:scale-95 text-center w-28 cursor-pointer"
                   title={petal.label}
                 >
-                  <div className="w-7 h-7 rounded-full bg-[#C89B3C]/10 group-hover:bg-[#C89B3C] text-[#8B6845] group-hover:text-[#FFFFFF] flex items-center justify-center transition-colors">
-                    <Icon className="w-3.5 h-3.5" />
+                  <div className="w-9 h-9 rounded-2xl bg-[#C89B3C]/10 group-hover:bg-[#C89B3C] text-[#8B6845] group-hover:text-[#FFFFFF] flex items-center justify-center transition-colors">
+                    <Icon className="w-4.5 h-4.5" />
                   </div>
-                  <span className="text-[11px] font-semibold text-[#1C1917] group-hover:text-[#8B6845] mt-1 leading-tight">
-                    {petal.label}
-                  </span>
                 </button>
               </div>
             );
@@ -317,26 +314,19 @@ export const ProtagonistProfileScreen: React.FC<ProtagonistProfileScreenProps> =
             </button>
           </div>
 
-          {/* 6 Grid Directions */}
-          <div className="grid grid-cols-2 gap-2.5 pt-2">
+          {/* 6 Grid Directions — Icônes seules, aucun texte */}
+          <div className="grid grid-cols-3 gap-2.5 pt-2">
             {FLOWER_DIRECTIONS.map((petal) => {
               const Icon = petal.icon;
               return (
                 <button
                   key={petal.key}
                   onClick={() => setActiveDimension(petal.key)}
-                  className="flex items-center gap-2.5 p-3 rounded-2xl bg-[#FFFFFF] border border-[#E7E5E4] hover:border-[#C89B3C] text-left transition-all active:scale-98 shadow-xs cursor-pointer"
+                  className="flex items-center justify-center p-3 rounded-2xl bg-[#FFFFFF] border border-[#E7E5E4] hover:border-[#C89B3C] transition-all active:scale-95 shadow-xs cursor-pointer"
+                  title={petal.label}
                 >
-                  <div className="w-8 h-8 rounded-full bg-[#C89B3C]/10 text-[#8B6845] flex items-center justify-center shrink-0">
-                    <Icon className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <p className="text-xs font-bold text-[#1C1917] leading-tight">
-                      {petal.label}
-                    </p>
-                    <p className="text-[10px] text-[#68655D] truncate max-w-[120px]">
-                      {petal.shortDescription}
-                    </p>
+                  <div className="w-10 h-10 rounded-xl bg-[#C89B3C]/10 text-[#8B6845] flex items-center justify-center shrink-0">
+                    <Icon className="w-5 h-5" />
                   </div>
                 </button>
               );

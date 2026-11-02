@@ -256,6 +256,8 @@ export default function App() {
   ];
 
   const handleGlobalTouchStart = (e: React.TouchEvent) => {
+    // Ne pas intercepter les gestes sur Dialogue et Entreprise qui possèdent leur propre navigation horizontale (séquences) et verticale (publications)
+    if (currentScreen.type === 'duo_feed' || currentScreen.type === 'enterprise') return;
     if ((e.target as HTMLElement).closest('input[type="range"]')) return;
     appTouchStartRef.current = {
       x: e.touches[0].clientX,
@@ -264,6 +266,7 @@ export default function App() {
   };
 
   const handleGlobalTouchEnd = (e: React.TouchEvent) => {
+    if (currentScreen.type === 'duo_feed' || currentScreen.type === 'enterprise') return;
     if (!appTouchStartRef.current) return;
     const deltaX = e.changedTouches[0].clientX - appTouchStartRef.current.x;
     const deltaY = e.changedTouches[0].clientY - appTouchStartRef.current.y;

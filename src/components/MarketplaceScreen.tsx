@@ -453,7 +453,7 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
       {/* ========================================================================= */}
       {/* 1. STORIES CAPSULES D'ACTIONS & PARTS EN SQUIRCLES (rounded-2xl)          */}
       {/* ========================================================================= */}
-      <div className="w-full max-w-3xl mx-auto px-3 sm:px-4 pt-1.5 pb-1 shrink-0 h-[84px] sm:h-[90px] flex items-center">
+      <div className="w-full max-w-3xl mx-auto px-3 sm:px-4 pt-1.5 pb-1 shrink-0 h-[72px] sm:h-[80px] flex items-center">
         <div className="flex items-center gap-2 sm:gap-2.5 overflow-x-auto no-scrollbar py-1 px-1 w-full">
           {SHARE_STORIES.map((st) => {
             if (st.isAdd) {
@@ -461,17 +461,14 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
                 <div 
                   key={st.id}
                   onClick={() => setSuccessToast("Espace vente de parts : choisissez une de vos parts à proposer à la communauté.")}
-                  className="flex flex-col items-center gap-1 cursor-pointer group shrink-0"
+                  className="flex flex-col items-center cursor-pointer group shrink-0"
                   title="Mettre en vente mes parts"
                 >
-                  <div className="w-13 h-14 sm:w-14 sm:h-15 rounded-2xl p-0.5 border-2 border-dashed border-[#A2482B] flex items-center justify-center group-hover:scale-105 transition-transform bg-amber-50/50">
+                  <div className="w-12 h-12 sm:w-13 sm:h-13 rounded-2xl p-0.5 border-2 border-dashed border-[#A2482B] flex items-center justify-center group-hover:scale-105 transition-transform bg-amber-50/50">
                     <div className="w-full h-full rounded-xl bg-[#A2482B] text-white flex items-center justify-center shadow-xs">
                       <span className="text-base font-bold">+</span>
                     </div>
                   </div>
-                  <span className="text-[10px] font-semibold text-stone-600 tracking-tight">
-                    {st.label}
-                  </span>
                 </div>
               );
             }
@@ -485,25 +482,18 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
                     setCurrentIndex(st.prodIndex);
                   }
                 }}
-                className="flex flex-col items-center gap-1 cursor-pointer group shrink-0"
-                title={`${st.title} • ${st.shares} disponibles`}
+                className="flex flex-col items-center cursor-pointer group shrink-0"
+                title={st.title}
               >
-                <div className="w-13 h-14 sm:w-14 sm:h-15 rounded-2xl p-0.5 border-2 border-[#A2482B] transition-transform group-hover:scale-105 shadow-xs">
+                <div className="w-12 h-12 sm:w-13 sm:h-13 rounded-2xl p-0.5 border-2 border-[#A2482B] transition-transform group-hover:scale-105 shadow-xs">
                   <div className="w-full h-full rounded-xl overflow-hidden bg-stone-900 relative">
                     <img 
                       src={st.img} 
-                      alt={st.title}
+                      alt=""
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-black/25" />
-                    <div className="absolute bottom-0 inset-x-0 bg-black/70 text-[8px] font-bold text-center text-amber-300 py-0.5">
-                      {st.shares}
-                    </div>
                   </div>
                 </div>
-                <span className="text-[9.5px] font-medium text-stone-700 tracking-tight max-w-[54px] truncate text-center">
-                  {st.title}
-                </span>
               </div>
             );
           })}
@@ -551,7 +541,7 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
           onMouseDown={onMouseDown}
           onMouseMove={onMouseMove}
           onMouseUp={onMouseUp}
-          className="relative aspect-[9/16] w-[min(310px,calc(100vw-36px))] sm:w-[320px] max-h-[min(540px,calc(100dvh-220px))] rounded-3xl overflow-hidden shadow-2xl border border-stone-200/90 bg-[#12110F] text-white flex flex-col justify-between select-none"
+          className="relative aspect-[9/16] w-[min(calc(100vw-64px),calc((100dvh-230px)*9/16))] max-w-[228px] sm:max-w-[270px] md:max-w-[290px] h-[min(410px,calc(100dvh-230px))] sm:h-[min(480px,calc(100dvh-200px))] md:h-[min(520px,calc(100dvh-180px))] rounded-2xl sm:rounded-3xl overflow-hidden border border-stone-200/90 bg-[#12110F] text-white flex flex-col justify-between select-none"
           style={{ transform: `translateX(${swipeOffset}px)` }}
         >
             {/* =================================================================== */}
@@ -559,7 +549,7 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
             {/* =================================================================== */}
             {activeTab === 'coproduire' && currentProd && (
               <div 
-                className="group relative w-full h-full rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-[#FFFFFF] shadow-2xl border border-stone-200/80 flex flex-col justify-between p-2.5 sm:p-4.5 select-none"
+                className="group relative w-full h-full rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-[#FFFFFF] border border-stone-200/80 flex flex-col justify-between p-2.5 sm:p-4.5 select-none"
                 id={`card-coproduire-${currentProd.id}`}
               >
                 {/* 1. Média de fond : Affiche officielle par défaut OU Vidéo si lecture activée */}
@@ -586,14 +576,8 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
                 {/* Voile cinématographique clair pour préserver l'éclat de l'affiche */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20 pointer-events-none" />
 
-                {/* HAUT : Badge du titre de la série à gauche (affiché en entier sans troncature) + Déclencheur Petite Télé en haut à droite */}
-                <div className="relative z-10 flex items-start justify-between gap-2 pointer-events-auto">
-                  <div className="inline-flex items-center px-2.5 sm:px-3 py-1 rounded-2xl sm:rounded-full bg-black/65 backdrop-blur-md border border-white/20 text-[10px] sm:text-[11px] font-semibold text-white shadow-sm leading-snug max-w-[calc(100%-80px)]">
-                    <span className="whitespace-normal break-words text-left">
-                      {currentProd.title}
-                    </span>
-                  </div>
-
+                {/* HAUT : Déclencheur Petite Télé en haut à droite uniquement */}
+                <div className="relative z-10 flex items-center justify-end pointer-events-auto">
                   {/* Déclencheur lecteur vidéo « Petite Télé » standardisé en haut à droite */}
                   <div 
                     className="flex items-center gap-1.5 shrink-0"
@@ -639,62 +623,42 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
                   </div>
                 </div>
 
-
                 {/* CENTRE LIBÉRÉ : Affiche visible et sans encombrement */}
                 <div className="my-auto" />
 
-                {/* BAS : JAUGE EN TEMPS RÉEL SUR 256 PARTS & BOUTON D'ACQUISITION */}
+                {/* BAS : JAUGE MINIMALE SANS LÉGENDES TEXTUELLES & BOUTON D'ACQUISITION */}
                 {(() => {
                   const remaining = remainingSharesMap[currentProd.id] ?? 77;
                   const taken = Math.max(0, 256 - remaining);
                   const percent = Math.min(100, Math.round((taken / 256) * 100));
 
                   return (
-                    <div className="relative z-10 w-full flex flex-col gap-1.5 pt-0.5">
-                      {/* Jauge visuelle fluide sur 256 parts */}
-                      <div className="w-full bg-black/75 backdrop-blur-md rounded-2xl p-2.5 sm:p-3 border border-white/20 shadow-lg space-y-1.5">
-                        <div className="flex items-center justify-between text-[11px] sm:text-xs">
-                          <div className="flex items-center gap-1.5">
-                            <span className="font-bold text-[#FFE7A3] text-xs sm:text-sm">{currentProd.sharePrice} €</span>
-                            <span className="text-white/70 text-[10px] sm:text-[11px]">/ part</span>
-                          </div>
-                          <div className="font-semibold text-white/95 text-right">
-                            <span className="text-[#FFE7A3] font-mono font-bold">{remaining}</span>
-                            <span className="text-white/70 text-[10px] sm:text-[11px]"> / 256 parts restantes</span>
-                          </div>
-                        </div>
-
-                        {/* Barre de jauge */}
-                        <div className="w-full h-2 rounded-full bg-stone-900/90 overflow-hidden border border-white/10 relative">
+                    <div className="relative z-10 w-full flex items-center justify-between gap-2 pt-0.5">
+                      {/* Jauge fine épurée sans légende */}
+                      <div className="flex-1 bg-black/60 backdrop-blur-md rounded-full p-1 border border-white/15 shadow-sm">
+                        <div className="w-full h-1.5 rounded-full bg-stone-900/90 overflow-hidden relative">
                           <div 
-                            className="h-full rounded-full bg-gradient-to-r from-[#A2482B] via-[#C89B3C] to-[#FFE7A3] transition-all duration-700 shadow-sm"
+                            className="h-full rounded-full bg-gradient-to-r from-[#A2482B] via-[#C89B3C] to-[#FFE7A3] transition-all duration-700"
                             style={{ width: `${percent}%` }}
                           />
-                        </div>
-
-                        <div className="flex items-center justify-between text-[9.5px] sm:text-[10px] text-white/70 font-medium">
-                          <span>{taken} parts souscrites ({percent}%)</span>
-                          <span>{taken * 50} € / 12 800 €</span>
                         </div>
                       </div>
 
                       {/* Bouton Acquérir */}
-                      <div className="flex items-center justify-end">
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSelectedProduction(currentProd);
-                            setPurchaseQuantity(1);
-                          }}
-                          id={`btn-coproduire-${currentProd.id}`}
-                          className="h-8 sm:h-8.5 px-3.5 sm:px-4 rounded-full bg-white hover:bg-[#A2482B] text-stone-900 hover:text-white text-[11px] sm:text-xs font-bold backdrop-blur-md transition-all flex items-center gap-1.5 shadow-md border border-stone-200/80 hover:border-[#A2482B] cursor-pointer shrink-0 active:scale-95 group/coprod"
-                          title="Acquérir des parts pour cette série"
-                        >
-                          <Coins className="w-3.5 h-3.5 text-[#C89B3C] group-hover/coprod:text-white transition-colors" />
-                          <span>Acquérir (50 €)</span>
-                          <ArrowRight className="w-3 h-3 text-stone-600 group-hover/coprod:text-white transition-colors ml-0.5" />
-                        </button>
-                      </div>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedProduction(currentProd);
+                          setPurchaseQuantity(1);
+                        }}
+                        id={`btn-coproduire-${currentProd.id}`}
+                        className="h-8 sm:h-8.5 px-3.5 sm:px-4 rounded-full bg-white hover:bg-[#A2482B] text-stone-900 hover:text-white text-[11px] sm:text-xs font-bold backdrop-blur-md transition-all flex items-center gap-1.5 shadow-md border border-stone-200/80 hover:border-[#A2482B] cursor-pointer shrink-0 active:scale-95 group/coprod"
+                        title="Acquérir des parts pour cette série"
+                      >
+                        <Coins className="w-3.5 h-3.5 text-[#C89B3C] group-hover/coprod:text-white transition-colors" />
+                        <span>50 €</span>
+                        <ArrowRight className="w-3 h-3 text-stone-600 group-hover/coprod:text-white transition-colors ml-0.5" />
+                      </button>
                     </div>
                   );
                 })()}
@@ -734,14 +698,8 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
                 {/* Voile cinématographique clair pour préserver l'éclat de l'affiche */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20 pointer-events-none" />
 
-                {/* HAUT : Badge du titre de la série à gauche (affiché en entier sans troncature) + Déclencheur Petite Télé en haut à droite */}
-                <div className="relative z-10 flex items-start justify-between gap-2 pointer-events-auto">
-                  <div className="inline-flex items-center px-2.5 sm:px-3 py-1 rounded-2xl sm:rounded-full bg-black/65 backdrop-blur-md border border-white/20 text-[10px] sm:text-[11px] font-semibold text-white shadow-sm leading-snug max-w-[calc(100%-80px)]">
-                    <span className="whitespace-normal break-words text-left">
-                      {currentOffer.seriesTitle}
-                    </span>
-                  </div>
-
+                {/* HAUT : Déclencheur Petite Télé en haut à droite uniquement */}
+                <div className="relative z-10 flex items-center justify-end pointer-events-auto">
                   {/* Déclencheur lecteur vidéo « Petite Télé » standardisé en haut à droite */}
                   <div 
                     className="flex items-center gap-1.5 shrink-0"

@@ -21,6 +21,7 @@ import {
   ProjetsIcon,
   BesoinsHandsIcon
 } from '../YonywoodBrandIcons';
+import { formatFirstLetterOnly } from '../../utils/textFormatters';
 
 export type DemoProfileCategory = 'parcours' | 'produits' | 'projets' | 'besoins';
 
@@ -229,6 +230,7 @@ export const DemoProfilPascalSection: React.FC = () => {
 
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isMuted, setIsMuted] = useState<boolean>(true);
+  const [videoProgress, setVideoProgress] = useState<number>(0);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   // Swipe tactile
@@ -245,6 +247,7 @@ export const DemoProfilPascalSection: React.FC = () => {
       [activeCategory]: (prev[activeCategory] - 1 + currentVideos.length) % currentVideos.length
     }));
     setIsPlaying(false);
+    setVideoProgress(0);
   };
 
   const handleNextVideo = () => {
@@ -253,6 +256,7 @@ export const DemoProfilPascalSection: React.FC = () => {
       [activeCategory]: (prev[activeCategory] + 1) % currentVideos.length
     }));
     setIsPlaying(false);
+    setVideoProgress(0);
   };
 
   const togglePlayback = (e?: React.MouseEvent) => {
@@ -459,6 +463,12 @@ export const DemoProfilPascalSection: React.FC = () => {
                 loop
                 muted={isMuted}
                 playsInline
+                onTimeUpdate={(e) => {
+                  const v = e.currentTarget;
+                  if (v.duration && v.duration > 0) {
+                    setVideoProgress((v.currentTime / v.duration) * 100);
+                  }
+                }}
                 className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 pointer-events-none ${
                   isPlaying ? 'opacity-100' : 'opacity-0'
                 }`}
@@ -468,10 +478,15 @@ export const DemoProfilPascalSection: React.FC = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/40 pointer-events-none" />
 
               {/* HAUT GAUCHE : Badge de la catégorie ou avancement/statut */}
-              <div className="absolute top-3 left-3 z-20 pointer-events-auto">
-                <div className="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-[10.5px] font-semibold text-white tracking-wide shadow-md flex items-center gap-1.5">
-                  <span>{currentVideo.tag || getCategoryLabel(activeCategory)}</span>
+              <div className="absolute top-3 left-3 z-20 pointer-events-auto flex flex-col items-start gap-1 max-w-[calc(100%-80px)]">
+                <div className="px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 font-editorial text-xs font-semibold text-white tracking-wide shadow-md flex items-center gap-1.5 truncate max-w-full">
+                  <span className="truncate">{formatFirstLetterOnly(currentVideo.tag || getCategoryLabel(activeCategory))}</span>
                 </div>
+                {currentVideo.extraInfo && (
+                  <div className="px-2.5 py-0.5 rounded-full bg-black/55 backdrop-blur-md border border-white/15 text-[10px] sm:text-[10.5px] font-semibold text-[#FFE7A3] tracking-wide shadow-xs flex items-center gap-1 truncate max-w-full">
+                    <span className="truncate">{currentVideo.extraInfo}</span>
+                  </div>
+                )}
               </div>
 
               {/* HAUT DROITE : Bouton de lecture vidéo officiel (reste en haut à droite) */}
@@ -594,47 +609,24 @@ export const DemoProfilPascalSection: React.FC = () => {
                 </button>
               </div>
 
-              {/* BAS : TEXTE CONTEXTUEL STRICTEMENT ÉPURÉ SELON LA CATÉGORIE */}
-              <div className="relative z-10 p-3.5 sm:p-4.5 pr-14 text-white pointer-events-none">
-                {activeCategory === 'parcours' && (
-                  <div>
-                    <h3 className="font-editorial text-base sm:text-lg font-bold leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
-                      Pascal
-                    </h3>
-                    <p className="text-[11px] font-semibold text-white/90 mt-0.5 drop-shadow-md line-clamp-1">
-                      {currentVideo.title}
-                    </p>
+              {/* BAS : PRÉNOM EN BAS À GAUCHE & CURSEUR EN DESSOUS SANS DÉPLACEMENT DU NOM */}
+              <div className="absolute bottom-3.5 sm:bottom-4 left-3.5 sm:left-4 z-20 pointer-events-none flex flex-col items-start">
+                <h3 className="font-editorial text-base sm:text-lg font-bold text-white tracking-wide leading-tight drop-shadow-md truncate max-w-[170px] sm:max-w-[210px]">
+                  Pascal
+                </h3>
+                {/* Hauteur réservée fixe : le nom ne bouge JAMAIS lorsque le curseur apparaît */}
+                <div className="h-2 flex items-center mt-1">
+                  <div 
+                    className={`w-24 sm:w-28 h-1 bg-white/25 rounded-full overflow-hidden shadow-xs transition-opacity duration-200 ${
+                      isPlaying ? 'opacity-100' : 'opacity-0'
+                    }`}
+                  >
+                    <div 
+                      className="h-full bg-white transition-all duration-100 rounded-full"
+                      style={{ width: `${Math.max(2, Math.min(100, videoProgress))}%` }}
+                    />
                   </div>
-                )}
-
-                {activeCategory === 'produits' && (
-                  <div>
-                    <h3 className="font-editorial text-base sm:text-lg font-bold leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] line-clamp-1">
-                      {currentVideo.title}
-                    </h3>
-                  </div>
-                )}
-
-                {activeCategory === 'projets' && (
-                  <div>
-                    <h3 className="font-editorial text-base sm:text-lg font-bold leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] line-clamp-1">
-                      {currentVideo.title}
-                    </h3>
-                    {currentVideo.extraInfo && (
-                      <p className="text-[11px] font-semibold text-[#FFE7A3] mt-0.5 drop-shadow-md line-clamp-1">
-                        {currentVideo.extraInfo}
-                      </p>
-                    )}
-                  </div>
-                )}
-
-                {activeCategory === 'besoins' && (
-                  <div>
-                    <h3 className="font-editorial text-base sm:text-lg font-bold leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] line-clamp-1">
-                      {currentVideo.title}
-                    </h3>
-                  </div>
-                )}
+                </div>
               </div>
 
             </div>

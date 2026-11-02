@@ -685,6 +685,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
   const [isMuted, setIsMuted] = useState<boolean>(true);
   const [videoCurrentTime, setVideoCurrentTime] = useState<number>(0);
   const [videoDuration, setVideoDuration] = useState<number>(0);
+  const [videoProgress, setVideoProgress] = useState<number>(0);
   const [isScrubbing, setIsScrubbing] = useState<boolean>(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
@@ -1458,6 +1459,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
   useEffect(() => {
     setIsPlaying(false);
     setVideoCurrentTime(0);
+    setVideoProgress(0);
     if (videoRef.current) {
       videoRef.current.currentTime = 0;
       videoRef.current.pause();
@@ -1937,22 +1939,19 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
             onClick={() => {
               if (isOwner) onNavigate({ type: 'settings', returnTo: 'profile' });
             }}
-            className="flex flex-col items-center gap-1 cursor-pointer group shrink-0"
+            className="flex flex-col items-center cursor-pointer group shrink-0"
             title={isOwner ? "Mes paramètres" : profileFullDisplayName}
           >
-            <div className="w-13 h-14 sm:w-14 sm:h-15 rounded-2xl p-0.5 border-2 border-dashed border-[#A2482B] flex items-center justify-center bg-amber-50/50">
+            <div className="w-12 h-12 sm:w-13 sm:h-13 rounded-2xl p-0.5 border-2 border-dashed border-[#A2482B] flex items-center justify-center bg-amber-50/50">
               <img
                 src={userPhoto || '/assets/images/romeo_avatar_1792698425983.jpg'}
                 alt={profileDisplayName || 'Roméo'}
                 className="w-full h-full rounded-xl object-cover"
               />
             </div>
-            <span className="text-[10px] font-semibold text-stone-700 tracking-tight max-w-[54px] truncate">
-              {profileDisplayName || 'Moi'}
-            </span>
           </div>
 
-          {/* Les 4 Piliers Documentaires */}
+          {/* Les 4 Piliers Documentaires — Icônes seules, aucun texte */}
           {PORTRAIT_PILLARS.map((p) => {
             const isActive = activeCategory === p.id;
             const Icon = p.icon;
@@ -1963,24 +1962,18 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                   setActiveCategory(p.id as ProfileCategory);
                   setCategoryIndices(prev => ({ ...prev, [p.id]: 0 }));
                 }}
-                className="flex flex-col items-center gap-1 cursor-pointer group shrink-0"
-                title={`${p.label} (4 vidéos)`}
+                className="flex flex-col items-center cursor-pointer group shrink-0"
+                title={p.label}
               >
-                <div className={`w-13 h-14 sm:w-14 sm:h-15 rounded-2xl p-0.5 border-2 transition-transform group-hover:scale-105 ${
+                <div className={`w-12 h-12 sm:w-13 sm:h-13 rounded-2xl p-0.5 border-2 transition-transform group-hover:scale-105 ${
                   isActive ? 'border-[#A2482B] shadow-xs' : 'border-stone-200'
                 }`}>
-                  <div className={`w-full h-full rounded-xl flex flex-col items-center justify-center ${
+                  <div className={`w-full h-full rounded-xl flex items-center justify-center ${
                     isActive ? 'bg-[#A2482B] text-white' : 'bg-stone-100 text-stone-600'
                   }`}>
-                    <Icon className="w-4 h-4" />
-                    <span className="text-[9px] font-bold mt-0.5">{p.count} vid.</span>
+                    <Icon className="w-5 h-5" />
                   </div>
                 </div>
-                <span className={`text-[9.5px] tracking-tight max-w-[54px] truncate text-center ${
-                  isActive ? 'font-bold text-[#A2482B]' : 'font-medium text-stone-600'
-                }`}>
-                  {p.label}
-                </span>
               </div>
             );
           })}
@@ -2055,7 +2048,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
           
           {totalItemsInActiveCategory === 0 || !currentSimulationItem ? (
             /* ÉTAT VIDE : INVITATION À PUBLIER UNE VIDÉO DANS LE STUDIO */
-            <div className="aspect-[9/16] w-[min(calc(100vw-72px),calc((100dvh-240px)*9/16))] max-w-[218px] sm:max-w-[260px] md:max-w-[280px] h-[min(388px,calc(100dvh-240px))] sm:h-[min(460px,calc(100dvh-210px))] md:h-[min(500px,calc(100dvh-190px))] mx-auto rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl border border-stone-200/40 relative flex flex-col justify-between p-4 sm:p-5 text-center my-auto">
+            <div className="aspect-[9/16] w-[min(calc(100vw-64px),calc((100dvh-230px)*9/16))] max-w-[228px] sm:max-w-[270px] md:max-w-[290px] h-[min(410px,calc(100dvh-230px))] sm:h-[min(480px,calc(100dvh-200px))] md:h-[min(520px,calc(100dvh-180px))] mx-auto rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white border border-stone-200/40 relative flex flex-col justify-between p-4 sm:p-5 text-center my-auto">
               <div className="my-auto flex flex-col items-center justify-center space-y-3 px-2">
                 <div className="w-12 h-12 rounded-full bg-[#A2482B]/20 text-[#A2482B] flex items-center justify-center border border-[#A2482B]/40">
                   <Video className="w-6 h-6 text-[#A2482B]" />
@@ -2110,7 +2103,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                   if ((e.target as HTMLElement).closest('button, a, input, textarea, select')) return;
                   toggleVideoPlayback();
                 }}
-                className="relative aspect-[9/16] w-[min(310px,calc(100vw-36px))] sm:w-[320px] max-h-[min(540px,calc(100dvh-220px))] mx-auto rounded-3xl overflow-hidden bg-[#151513] text-white shadow-2xl border border-stone-200/90 flex flex-col justify-between cursor-pointer group select-none shrink-0"
+                className="relative aspect-[9/16] w-[min(calc(100vw-64px),calc((100dvh-230px)*9/16))] max-w-[228px] sm:max-w-[270px] md:max-w-[290px] h-[min(410px,calc(100dvh-230px))] sm:h-[min(480px,calc(100dvh-200px))] md:h-[min(520px,calc(100dvh-180px))] mx-auto rounded-2xl sm:rounded-3xl overflow-hidden bg-[#151513] text-white border border-stone-200/90 flex flex-col justify-between cursor-pointer group select-none shrink-0"
                 style={{ transform: `translateX(${swipeOffsetX}px)` }}
               >
             {/* ================================================================= */}
@@ -2130,6 +2123,12 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                     loop
                     muted={isMuted}
                     playsInline
+                    onTimeUpdate={(e) => {
+                      const v = e.currentTarget;
+                      if (v.duration && v.duration > 0) {
+                        setVideoProgress((v.currentTime / v.duration) * 100);
+                      }
+                    }}
                     className="absolute inset-0 w-full h-full object-cover pointer-events-none"
                   />
                 ) : (
@@ -2143,53 +2142,72 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                 {/* Dégradés pour lisibilité des badges, de la pagination et du texte */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/40 pointer-events-none" />
 
-                {/* Textes contextuels épurés selon la catégorie */}
-                {normalizedCategory === 'parcours' ? (
-                  <div className="absolute bottom-9 sm:bottom-10.5 left-2.5 sm:left-3.5 right-14 z-20 pointer-events-none drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
-                    <p className="text-[11px] sm:text-xs text-white/90 font-medium line-clamp-1">
-                      {currentSimulationItem.title}
-                    </p>
-                  </div>
-                ) : normalizedCategory === 'projets' ? (
-                  <div className="absolute bottom-2.5 sm:bottom-3.5 left-2.5 sm:left-3.5 right-14 z-20 pointer-events-none drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
-                    <h3 className="font-editorial text-[13px] min-[380px]:text-[14px] sm:text-[16px] md:text-[18px] font-bold text-white tracking-tight sm:tracking-normal leading-tight line-clamp-1">
-                      {currentSimulationItem.title}
-                    </h3>
-                    {currentSimulationItem.extraInfo && (
-                      <p className="text-[10px] sm:text-[11px] font-semibold text-[#FFE7A3] mt-0.5 drop-shadow-md line-clamp-1">
-                        {currentSimulationItem.extraInfo}
-                      </p>
-                    )}
-                  </div>
-                ) : (
-                  <div className="absolute bottom-2.5 sm:bottom-3.5 left-2.5 sm:left-3.5 right-14 z-20 pointer-events-none drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
-                    <h3 className="font-editorial text-[13px] min-[380px]:text-[14px] sm:text-[16px] md:text-[18px] font-bold text-white tracking-tight sm:tracking-normal leading-tight line-clamp-1">
-                      {currentSimulationItem.title}
-                    </h3>
-                  </div>
-                )}
+                {/* Overlay standardisé unique : alignement vertical strict, badge en haut à gauche, TvPlayerIcon en haut à droite, prénom en bas à gauche avec barre de lecture en dessous sans saut de texte, et les 5 boutons verticaux au milieu à droite */}
+                {(() => {
+                  let badgeTitle = currentSimulationItem.tag || currentSimulationItem.title || 'Origines & Mémoire';
+                  let subBadgeText: string | undefined = undefined;
 
-                {/* Overlay standardisé unique : alignement vertical strict, badge catégorie en haut à gauche, TvPlayerIcon en haut à droite, prénom en bas à gauche (uniquement parcours), et les 5 boutons verticaux au milieu à droite */}
-                <UnifiedVideoCardOverlay
-                  titleBadge={currentSimulationItem.tag || currentSimulationItem.subtitle || 'Origines & Mémoire'}
-                  displayName={normalizedCategory === 'parcours' ? (profileDisplayName || 'Roméo') : ''}
-                  isPlaying={isPlaying}
-                  onTogglePlay={toggleVideoPlayback}
-                  isMuted={isMuted}
-                  onToggleMute={toggleMute}
-                  questionText={getQuestionText()}
-                  factText={currentSimulationItem.description}
-                  onShare={handleShareProfile}
-                  onReportVideo={() => {
-                    setShareToast("Vidéo signalée à la modération.");
-                    setTimeout(() => setShareToast(null), 2500);
-                  }}
-                  onBlockVideo={() => {
-                    setShareToast("Cette vidéo a été masquée.");
-                    setTimeout(() => setShareToast(null), 2500);
-                  }}
-                  customActionButtons={profileCategoryActionButtons}
-                />
+                  if (normalizedCategory === 'parcours') {
+                    badgeTitle = currentSimulationItem.tag || currentSimulationItem.title || 'Retour au pays';
+                    subBadgeText = undefined;
+                  } else if (normalizedCategory === 'produits') {
+                    badgeTitle = currentSimulationItem.tag || currentSimulationItem.title || 'Transmission orale';
+                    subBadgeText = undefined;
+                  } else if (normalizedCategory === 'projets') {
+                    const titleLower = currentSimulationItem.title.toLowerCase();
+                    badgeTitle = titleLower.includes('atelier')
+                      ? 'L’Atelier créatif'
+                      : titleLower.includes('résidence')
+                      ? 'Résidence lagune'
+                      : titleLower.includes('passeurs')
+                      ? 'Passeurs d’avenir'
+                      : titleLower.includes('mémoires')
+                      ? 'Mémoires vivantes'
+                      : currentSimulationItem.title.split(/[:–—]/)[0].trim();
+
+                    subBadgeText = currentSimulationItem.extraInfo
+                      ? (currentSimulationItem.tag ? `${currentSimulationItem.tag} · ${currentSimulationItem.extraInfo}` : currentSimulationItem.extraInfo)
+                      : currentSimulationItem.tag;
+                  } else if (normalizedCategory === 'besoins') {
+                    const titleLower = currentSimulationItem.title.toLowerCase();
+                    badgeTitle = titleLower.includes('cadreurs')
+                      ? 'Cadreurs & monteurs'
+                      : titleLower.includes('lieux') || titleLower.includes('partenariat')
+                      ? 'Lieux culturels'
+                      : titleLower.includes('numérisation') || titleLower.includes('audio')
+                      ? 'Numérisation audio'
+                      : titleLower.includes('coproducteurs') || titleLower.includes('mécènes')
+                      ? 'Coproducteurs diaspora'
+                      : currentSimulationItem.title.split(/[:–—]/)[0].trim();
+
+                    subBadgeText = currentSimulationItem.tag ? currentSimulationItem.tag : undefined;
+                  }
+
+                  return (
+                    <UnifiedVideoCardOverlay
+                      titleBadge={badgeTitle}
+                      subBadgeText={subBadgeText}
+                      displayName={profileDisplayName || 'Roméo'}
+                      videoProgress={videoProgress}
+                      isPlaying={isPlaying}
+                      onTogglePlay={toggleVideoPlayback}
+                      isMuted={isMuted}
+                      onToggleMute={toggleMute}
+                      questionText={getQuestionText()}
+                      factText={currentSimulationItem.description}
+                      onShare={handleShareProfile}
+                      onReportVideo={() => {
+                        setShareToast("Vidéo signalée à la modération.");
+                        setTimeout(() => setShareToast(null), 2500);
+                      }}
+                      onBlockVideo={() => {
+                        setShareToast("Cette vidéo a été masquée.");
+                        setTimeout(() => setShareToast(null), 2500);
+                      }}
+                      customActionButtons={profileCategoryActionButtons}
+                    />
+                  );
+                })()}
               </div>
 
 

@@ -1,0 +1,6 @@
+{
+  "summary":  "Proposition d'architecture détaillée et plan d'implémentation pour :\n1. Le nouveau format de publication intermittent dans le Feed « Carte à quatre visages » (4 séquences de 8s successives = 32s max, composition 9:16 harmonieuse à 4 portraits).\n2. L'évolution du mode de visionnage des Stories en carrousel de cartes 3D inspiré de la page Studio (vidéos de 64s max, design épuré avec prénom en bas à gauche et icône de question, passerelle de retour fluide vers les duos).",
+  "updatedAt":  "2026-11-01T18:41:52.252757836Z",
+  "requestFeedback":  true,
+  "userFacing":  true
+}

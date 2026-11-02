@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { celestialAudio } from '../utils/celestialAudio';
 import { Protagonist } from '../types';
+import { formatFirstLetterOnly } from '../utils/textFormatters';
 
 interface ResonanceFaceToFaceCardProps {
   protagonistA: Protagonist;
@@ -49,8 +50,8 @@ export const ResonanceFaceToFaceCard: React.FC<ResonanceFaceToFaceCardProps> = (
       {/* En-tête au-dessus du Face-à-face */}
       <div className="relative z-20 flex items-center justify-between gap-1.5">
         <div className="bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/15 max-w-[70%]">
-          <span className="text-[11px] font-semibold text-white tracking-wide truncate block">
-            {seriesTitle || 'Dialogue en miroir'}
+          <span className="font-editorial text-[11px] font-semibold text-white tracking-wide truncate block">
+            {formatFirstLetterOnly(seriesTitle) || 'Dialogue en miroir'}
           </span>
         </div>
 

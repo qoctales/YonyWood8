@@ -288,6 +288,39 @@ export interface Documentary {
   sponsors?: SeriesSponsor[];
 }
 
+export interface FourFacesParticipant {
+  id: string;
+  name: string;
+  firstName: string;
+  avatarUrl: string;
+  videoUrl: string; // Clip calibré à 8s max
+  durationSeconds: number; // 8s max
+  role?: string;
+  territory?: string;
+  quote?: string;
+}
+
+export interface FourFacesPublication {
+  id: string;
+  type: 'four_faces';
+  questionTitle: string;
+  questionIconType: 'conseil' | 'courage' | 'transmission' | 'proverbe' | 'valeur' | 'espoir';
+  theme: string;
+  posterUrl: string;
+  participants: [
+    FourFacesParticipant,
+    FourFacesParticipant,
+    FourFacesParticipant,
+    FourFacesParticipant
+  ];
+  totalMaxDuration: 32;
+  createdAt?: string;
+}
+
+export type FeedPublicationItem = 
+  | { type: 'duo'; data: Duo }
+  | { type: 'four_faces'; data: FourFacesPublication };
+
 export interface Duo {
   id: string;
   slug: string;

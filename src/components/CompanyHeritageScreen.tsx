@@ -4,19 +4,17 @@ import {
   ChevronRight, 
   BookOpen, 
   X, 
-  Sparkles,
-  Plus,
-  HelpCircle,
-  Volume2,
-  VolumeX
+  Plus
 } from 'lucide-react';
 import { ViewScreen } from '../types';
 import { CompanyEntity, CompanyStakeholder, COMPANIES_DATA } from '../data/companyPortraitsData';
-import { ProfileSoloIcon, TvPlayerIcon } from './YonywoodBrandIcons';
+import { ENTERPRISE_STORIES, ThematicStory } from '../data/thematicStoriesData';
+import { ProfileSoloIcon, TvPlayerIcon, RoundedSwipeArrowsIcon } from './YonywoodBrandIcons';
 import { ShareIcon } from './ShareIcon';
+import { StoriesStudioCoverflow } from './StoriesStudioCoverflow';
 import { VideoCardShareModal } from './VideoCardShareModal';
 import { celestialAudio } from '../utils/celestialAudio';
-import { THEMATIC_VALUES, ThematicValue } from '../data/thematicStoriesData';
+import { formatFirstLetterOnly } from '../utils/textFormatters';
 
 export type { CompanyStakeholder, CompanyEntity };
 export { COMPANIES_DATA };
@@ -24,69 +22,126 @@ export { COMPANIES_DATA };
 interface CompanyHeritageScreenProps {
   onNavigate?: (screen: ViewScreen) => void;
   initialCompanyId?: string;
+  selectedCompanyId?: string;
 }
 
-interface CompanyDuo {
+export const ENTERPRISE_CATEGORIES = [
+  'HISTOIRE',
+  'FONDATION',
+  'VISION',
+  'PHILOSOPHIE',
+  'PRODUITS & SERVICES',
+  'CRÉATIVITÉ & INNOVATION',
+  'IMPACT',
+  'ENGAGEMENT'
+] as const;
+
+export type EnterpriseCategory = typeof ENTERPRISE_CATEGORIES[number];
+
+export interface CompanyDuo {
   id: string;
+  category: EnterpriseCategory;
   themeQuestion: string;
-  category: string;
   companyA: CompanyEntity;
   companyB: CompanyEntity;
 }
 
-const COMPANY_DUOS: CompanyDuo[] = [
+// 8 Publications documentaires en duo ordonnées selon les huit catégories officielles
+export const COMPANY_DUOS: CompanyDuo[] = [
   {
     id: 'c-duo-1',
-    themeQuestion: 'Comment concilier innovation technologique et souveraineté locale ?',
-    category: 'Technologie & Énergie',
-    companyA: COMPANIES_DATA[0], // Aura Tech
-    companyB: COMPANIES_DATA[3], // Bio Solaire
+    category: 'HISTOIRE',
+    themeQuestion: 'Comment est née votre histoire et quelles racines continuent de vous porter ?',
+    companyA: COMPANIES_DATA[2] || COMPANIES_DATA[0], // Aura Tech
+    companyB: COMPANIES_DATA[0] || COMPANIES_DATA[1], // Terre Féconde
   },
   {
     id: 'c-duo-2',
-    themeQuestion: 'Pourquoi l’exigence artisanale surpasse-t-elle l’industrialisation aveugle ?',
-    category: 'Luxe & Métiers d’Art',
-    companyA: COMPANIES_DATA[2], // Kpèdétin Joaillerie
-    companyB: COMPANIES_DATA[4], // Nectar Botanique
+    category: 'FONDATION',
+    themeQuestion: 'Quelle étincelle fondatrice a donné vie à votre entreprise ?',
+    companyA: COMPANIES_DATA[1] || COMPANIES_DATA[0], // Hélios Ray
+    companyB: COMPANIES_DATA[3] || COMPANIES_DATA[2], // Kpèdétin Joaillerie
   },
   {
     id: 'c-duo-3',
-    themeQuestion: 'Comment régénérer nos terroirs à travers une logistique responsable ?',
-    category: 'Terroir & Fret Vert',
-    companyA: COMPANIES_DATA[1], // Terroirs & Agro
-    companyB: COMPANIES_DATA[5], // Dossou Logistique
+    category: 'VISION',
+    themeQuestion: 'Quelle vision prospective du monde guide vos ambitions ?',
+    companyA: COMPANIES_DATA[6] || COMPANIES_DATA[0], // Sènami Architecture
+    companyB: COMPANIES_DATA[4] || COMPANIES_DATA[1], // Bio Solaire
   },
   {
     id: 'c-duo-4',
-    themeQuestion: 'Quel dialogue bâtir entre mémoire ancestrale et architecture de demain ?',
-    category: 'Architecture & Patrimoine',
-    companyA: COMPANIES_DATA[6], // Sènami Architecture
-    companyB: COMPANIES_DATA[7], // Kiki Passeur de Mémoire
+    category: 'PHILOSOPHIE',
+    themeQuestion: 'Quelles convictions éthiques et humaines guident chacune de vos décisions ?',
+    companyA: COMPANIES_DATA[7] || COMPANIES_DATA[0], // Kiki Passeur de Mémoire
+    companyB: COMPANIES_DATA[5] || COMPANIES_DATA[1], // Nectar Botanique
+  },
+  {
+    id: 'c-duo-5',
+    category: 'PRODUITS & SERVICES',
+    themeQuestion: 'En quoi vos produits et services transforment-ils concrètement le quotidien ?',
+    companyA: COMPANIES_DATA[5] || COMPANIES_DATA[0], // Dossou Logistique
+    companyB: COMPANIES_DATA[0] || COMPANIES_DATA[1], // Terroirs & Agro
+  },
+  {
+    id: 'c-duo-6',
+    category: 'CRÉATIVITÉ & INNOVATION',
+    themeQuestion: 'Quelle innovation audacieuse a redéfini votre manière de créer et d’agir ?',
+    companyA: COMPANIES_DATA[2] || COMPANIES_DATA[0], // Aura Tech
+    companyB: COMPANIES_DATA[1] || COMPANIES_DATA[1], // Hélios Ray
+  },
+  {
+    id: 'c-duo-7',
+    category: 'IMPACT',
+    themeQuestion: 'Quel impact mesurable apportez-vous à la communauté et aux écosystèmes ?',
+    companyA: COMPANIES_DATA[4] || COMPANIES_DATA[0], // Bio Solaire
+    companyB: COMPANIES_DATA[0] || COMPANIES_DATA[1], // Terre Féconde
+  },
+  {
+    id: 'c-duo-8',
+    category: 'ENGAGEMENT',
+    themeQuestion: 'Quels engagements de responsabilité sociale et écologique portez-vous sans compromis ?',
+    companyA: COMPANIES_DATA[3] || COMPANIES_DATA[0], // Kpèdétin Joaillerie
+    companyB: COMPANIES_DATA[6] || COMPANIES_DATA[1], // Sènami Architecture
   }
 ];
 
 export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({ 
   onNavigate,
-  initialCompanyId
+  initialCompanyId,
+  selectedCompanyId
 }) => {
   const [currentDuoIdx, setCurrentDuoIdx] = useState(0);
   const [slideIndex, setSlideIndex] = useState<0 | 1 | 2>(0);
 
-  // Mode Story activé in-place
-  const [storyModeIndex, setStoryModeIndex] = useState<number | null>(null);
-  const [showStoryQuestion, setShowStoryQuestion] = useState(false);
+  // Visionneuse de stories d'entreprises immersives
+  const [isStoryViewerOpen, setIsStoryViewerOpen] = useState(false);
+  const [storyViewerIndex, setStoryViewerIndex] = useState(0);
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [showQuestionModal, setShowQuestionModal] = useState(false);
   const [shareItem, setShareItem] = useState<{ title: string; id: string } | null>(null);
 
-  // Slider d'évaluation 50/50
+  // Curseur d'évaluation 0-100 (50/50 par défaut)
   const [sliderValue, setSliderValue] = useState<number>(50);
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const touchStartRef = useRef<{ x: number; y: number } | null>(null);
   const lastScrollTime = useRef<number>(0);
+
+  const targetCompany = selectedCompanyId || initialCompanyId;
+  useEffect(() => {
+    if (targetCompany) {
+      const foundIdx = COMPANY_DUOS.findIndex(
+        d => d.companyA.id === targetCompany || d.companyB.id === targetCompany
+      );
+      if (foundIdx !== -1) {
+        setCurrentDuoIdx(foundIdx);
+        setSlideIndex(COMPANY_DUOS[foundIdx].companyA.id === targetCompany ? 0 : 1);
+      }
+    }
+  }, [targetCompany]);
 
   const currentDuo = COMPANY_DUOS[currentDuoIdx] || COMPANY_DUOS[0];
   const compA = currentDuo.companyA;
@@ -103,7 +158,6 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({
   }, [currentDuoIdx]);
 
   const handleNextDuo = () => {
-    if (storyModeIndex !== null) return;
     setIsPlaying(false);
     setSlideIndex(0);
     setCurrentDuoIdx(prev => (prev + 1) % COMPANY_DUOS.length);
@@ -111,7 +165,6 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({
   };
 
   const handlePrevDuo = () => {
-    if (storyModeIndex !== null) return;
     setIsPlaying(false);
     setSlideIndex(0);
     setCurrentDuoIdx(prev => (prev - 1 + COMPANY_DUOS.length) % COMPANY_DUOS.length);
@@ -125,11 +178,6 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({
   };
 
   const nextSlide = () => {
-    if (storyModeIndex !== null) {
-      setStoryModeIndex(prev => (prev !== null ? (prev + 1) % THEMATIC_VALUES.length : 0));
-      celestialAudio.playOrbSelect();
-      return;
-    }
     if (slideIndex < 2) {
       goToSlide((slideIndex + 1) as 0 | 1 | 2);
     } else {
@@ -138,11 +186,6 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({
   };
 
   const prevSlide = () => {
-    if (storyModeIndex !== null) {
-      setStoryModeIndex(prev => (prev !== null ? (prev - 1 + THEMATIC_VALUES.length) % THEMATIC_VALUES.length : 0));
-      celestialAudio.playOrbSelect();
-      return;
-    }
     if (slideIndex > 0) {
       goToSlide((slideIndex - 1) as 0 | 1 | 2);
     } else {
@@ -150,7 +193,39 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({
     }
   };
 
+  // Passerelle Story -> Duo documentaire Entreprise
+  const handleGatewayToDuo = (story: ThematicStory) => {
+    setIsStoryViewerOpen(false);
+    let targetIdx = -1;
+    let preferredSlide: 0 | 1 = 0;
+
+    if (story.duoId) {
+      targetIdx = COMPANY_DUOS.findIndex(d => d.id === story.duoId);
+    }
+    if (targetIdx === -1 && story.authorId) {
+      targetIdx = COMPANY_DUOS.findIndex(d => {
+        if (d.companyA.id === story.authorId || d.companyA.companyName.toLowerCase().includes(story.authorName.toLowerCase())) {
+          preferredSlide = 0;
+          return true;
+        }
+        if (d.companyB.id === story.authorId || d.companyB.companyName.toLowerCase().includes(story.authorName.toLowerCase())) {
+          preferredSlide = 1;
+          return true;
+        }
+        return false;
+      });
+    }
+
+    if (targetIdx !== -1) {
+      setCurrentDuoIdx(targetIdx);
+      setSlideIndex(preferredSlide);
+    }
+    celestialAudio.playOrbSelect();
+  };
+
+  // Gestion du Wheel (Swipe vertical strict = 1 catégorie, horizontal = séquence)
   const handleWheel = (e: React.WheelEvent) => {
+    if (isStoryViewerOpen) return;
     const now = Date.now();
     if (now - lastScrollTime.current < 450) return;
 
@@ -171,129 +246,192 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({
     }
   };
 
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartRef.current = {
+  // Progression de lecture vidéo (curseur qui apparaît lors de la lecture)
+  const [videoProgress, setVideoProgress] = useState(0);
+
+  // Déplacement visuel en temps réel lors du swipe 2D (vertical = catégorie, horizontal = séquence)
+  const [dragOffset, setDragOffset] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const touchStartPos = useRef<{ x: number; y: number; time: number } | null>(null);
+  const isMouseDownRef = useRef(false);
+
+  // Synchronisation du curseur de progression pendant la lecture
+  useEffect(() => {
+    let interval: any;
+    if (isPlaying) {
+      interval = setInterval(() => {
+        if (videoRef.current && videoRef.current.duration) {
+          const pct = (videoRef.current.currentTime / videoRef.current.duration) * 100;
+          setVideoProgress(pct);
+        }
+      }, 100);
+    } else {
+      setVideoProgress(0);
+    }
+    return () => clearInterval(interval);
+  }, [isPlaying]);
+
+  // Touch Swipe avec retour visuel immédiat (drag)
+  const handleCardTouchStart = (e: React.TouchEvent) => {
+    if (isStoryViewerOpen) return;
+    if ((e.target as HTMLElement).closest('button, input, [role="button"]')) return;
+    touchStartPos.current = {
       x: e.touches[0].clientX,
-      y: e.touches[0].clientY
+      y: e.touches[0].clientY,
+      time: Date.now()
     };
+    setIsDragging(true);
   };
 
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (!touchStartRef.current) return;
-    const deltaX = e.changedTouches[0].clientX - touchStartRef.current.x;
-    const deltaY = e.changedTouches[0].clientY - touchStartRef.current.y;
-    touchStartRef.current = null;
+  const handleCardTouchMove = (e: React.TouchEvent) => {
+    if (!touchStartPos.current) return;
+    const currentX = e.touches[0].clientX;
+    const currentY = e.touches[0].clientY;
+    const deltaX = currentX - touchStartPos.current.x;
+    const deltaY = currentY - touchStartPos.current.y;
 
-    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 40) {
-      if (deltaX < 0) {
-        nextSlide();
-      } else {
-        prevSlide();
-      }
-    } else if (Math.abs(deltaY) > 45) {
+    if (Math.abs(deltaY) > Math.abs(deltaX)) {
+      // Swipe vertical prédominant : déplacer la carte de haut en bas (changement de catégorie)
+      setDragOffset({ x: 0, y: Math.max(-130, Math.min(130, deltaY * 0.75)) });
+    } else {
+      // Swipe horizontal prédominant : déplacer la carte de gauche à droite (changement d'entreprise)
+      setDragOffset({ x: Math.max(-110, Math.min(110, deltaX * 0.75)), y: 0 });
+    }
+  };
+
+  const handleCardTouchEnd = (e: React.TouchEvent) => {
+    if (!touchStartPos.current) return;
+    const currentX = e.changedTouches[0].clientX;
+    const currentY = e.changedTouches[0].clientY;
+    const deltaX = currentX - touchStartPos.current.x;
+    const deltaY = currentY - touchStartPos.current.y;
+    const elapsed = Math.max(1, Date.now() - touchStartPos.current.time);
+    touchStartPos.current = null;
+    setIsDragging(false);
+    setDragOffset({ x: 0, y: 0 });
+
+    const velocityY = Math.abs(deltaY) / elapsed;
+    const velocityX = Math.abs(deltaX) / elapsed;
+
+    // Déclenchement vertical : catégorie suivante ou précédente
+    if (Math.abs(deltaY) > Math.abs(deltaX) && (Math.abs(deltaY) > 35 || velocityY > 0.22)) {
       if (deltaY < 0) {
         handleNextDuo();
       } else {
         handlePrevDuo();
       }
+    } else if (Math.abs(deltaX) > 35 || velocityX > 0.22) {
+      // Déclenchement horizontal : entreprise suivante ou précédente
+      if (deltaX < 0) {
+        nextSlide();
+      } else {
+        prevSlide();
+      }
     }
   };
 
-  const activeThemeStory = storyModeIndex !== null ? THEMATIC_VALUES[storyModeIndex] : null;
-  const storyItem = activeThemeStory?.stories[0];
+  // Drag souris desktop
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (isStoryViewerOpen) return;
+    if ((e.target as HTMLElement).closest('button, input, [role="button"]')) return;
+    touchStartPos.current = {
+      x: e.clientX,
+      y: e.clientY,
+      time: Date.now()
+    };
+    isMouseDownRef.current = true;
+    setIsDragging(true);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isMouseDownRef.current || !touchStartPos.current) return;
+    const deltaX = e.clientX - touchStartPos.current.x;
+    const deltaY = e.clientY - touchStartPos.current.y;
+    if (Math.abs(deltaY) > Math.abs(deltaX)) {
+      setDragOffset({ x: 0, y: Math.max(-130, Math.min(130, deltaY * 0.75)) });
+    } else {
+      setDragOffset({ x: Math.max(-110, Math.min(110, deltaX * 0.75)), y: 0 });
+    }
+  };
+
+  const handleMouseUp = (e: React.MouseEvent) => {
+    if (!isMouseDownRef.current || !touchStartPos.current) return;
+    const deltaX = e.clientX - touchStartPos.current.x;
+    const deltaY = e.clientY - touchStartPos.current.y;
+    const elapsed = Math.max(1, Date.now() - touchStartPos.current.time);
+    isMouseDownRef.current = false;
+    touchStartPos.current = null;
+    setIsDragging(false);
+    setDragOffset({ x: 0, y: 0 });
+
+    const velocityY = Math.abs(deltaY) / elapsed;
+    const velocityX = Math.abs(deltaX) / elapsed;
+
+    if (Math.abs(deltaY) > Math.abs(deltaX) && (Math.abs(deltaY) > 35 || velocityY > 0.22)) {
+      if (deltaY < 0) {
+        handleNextDuo();
+      } else {
+        handlePrevDuo();
+      }
+    } else if (Math.abs(deltaX) > 35 || velocityX > 0.22) {
+      if (deltaX < 0) {
+        nextSlide();
+      } else {
+        prevSlide();
+      }
+    }
+  };
 
   return (
     <div 
       onWheel={handleWheel}
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
-      className={`w-full h-full max-h-full pb-20 sm:pb-24 pt-safe overflow-hidden flex flex-col justify-between select-none transition-colors duration-500 ${
-        storyModeIndex !== null 
-          ? 'bg-[#0B0908] text-white' 
-          : 'bg-white text-[#1C1917]'
-      }`}
+      className="w-full h-full max-h-full pb-20 sm:pb-24 pt-safe overflow-hidden flex flex-col justify-between select-none bg-white text-[#1C1917]"
     >
-      
       {/* ========================================================================= */}
-      {/* 1. STORIES THÉMATIQUES EN RECTANGLES ARRONDIS (SQUIRCLES)                 */}
+      {/* 1. STORIES D'ENTREPRISES : 4 STORIES VISIBLES PAR DÉFAUT, SANS SCROLLBAR   */}
+      {/* Bouton "+" 2x plus petit, défilement horizontal infini fluide              */}
       {/* ========================================================================= */}
-      <div className="w-full max-w-3xl mx-auto px-3 sm:px-4 pt-1.5 pb-1 shrink-0 h-[84px] sm:h-[90px] flex items-center">
-        <div className="flex items-center gap-2 sm:gap-2.5 overflow-x-auto no-scrollbar py-1 px-1 w-full">
+      <div className="w-full max-w-3xl mx-auto px-3 sm:px-4 pt-2 pb-1 shrink-0 h-[68px] sm:h-[76px] flex items-center">
+        <div className="flex items-center gap-2 sm:gap-2.5 overflow-x-auto no-scrollbar py-1 px-1 w-full overscroll-x-contain touch-pan-x">
           
-          {/* Vignette 0 : "+" */}
-          <div 
-            onClick={() => onNavigate && onNavigate({ type: 'submit_story' })}
-            className="flex flex-col items-center gap-1 cursor-pointer group shrink-0"
-            title="Créer une story"
+          {/* Bouton "+" deux fois plus petit, sans contour superflu */}
+          <button 
+            type="button"
+            onClick={() => onNavigate?.({ type: 'submit_story' })}
+            className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-[#A2482B] hover:bg-[#8A3B22] text-white flex items-center justify-center shrink-0 shadow-xs active:scale-95 transition-transform cursor-pointer mr-0.5"
+            title="Publier une story entreprise"
           >
-            <div className={`w-13 h-14 sm:w-14 sm:h-15 rounded-2xl p-0.5 border-2 border-dashed border-[#A2482B] flex items-center justify-center group-hover:scale-105 transition-transform ${
-              storyModeIndex !== null ? 'bg-stone-900' : 'bg-amber-50/50'
-            }`}>
-              <div className="w-full h-full rounded-xl bg-[#A2482B] text-white flex items-center justify-center shadow-xs">
-                <Plus className="w-5 h-5" />
+            <Plus className="w-4 h-4 stroke-[2.5]" />
+          </button>
+
+          {/* Vignettes Stories Entreprises (exactement 4 visibles par défaut sur mobile, défilement infini) */}
+          {ENTERPRISE_STORIES.map((story, idx) => (
+            <div
+              key={story.id}
+              onClick={() => {
+                setStoryViewerIndex(idx);
+                setIsStoryViewerOpen(true);
+                celestialAudio.playOrbSelect();
+              }}
+              className="cursor-pointer group shrink-0"
+              title={`${story.authorName} — Story ${story.themeLabel}`}
+            >
+              <div className="w-[52px] h-[52px] sm:w-14 sm:h-14 rounded-2xl p-0.5 border border-stone-200 group-hover:border-[#A2482B] transition-all group-hover:scale-105 bg-stone-50 shadow-xs">
+                <div className="w-full h-full rounded-xl overflow-hidden bg-stone-900 relative">
+                  <img 
+                    src={story.authorAvatar} 
+                    alt="" 
+                    className="w-full h-full object-cover pointer-events-none" 
+                  />
+                </div>
               </div>
             </div>
-            <span className={`text-[10px] font-semibold tracking-tight ${storyModeIndex !== null ? 'text-stone-400' : 'text-stone-600'}`}>
-              +
-            </span>
-          </div>
-
-          {/* Les 8 Valeurs de la Semaine */}
-          {THEMATIC_VALUES.map((theme, idx) => {
-            const hasStories = theme.stories.length > 0;
-            const isSelected = storyModeIndex === idx;
-            return (
-              <div 
-                key={theme.id}
-                onClick={() => {
-                  if (storyModeIndex === idx) {
-                    setStoryModeIndex(null);
-                  } else {
-                    setStoryModeIndex(idx);
-                    setIsPlaying(true);
-                    celestialAudio.playOrbSelect();
-                  }
-                }}
-                className="flex flex-col items-center gap-1 cursor-pointer group shrink-0"
-                title={theme.label}
-              >
-                <div className={`w-13 h-14 sm:w-14 sm:h-15 rounded-2xl p-0.5 border-2 transition-transform group-hover:scale-105 ${
-                  isSelected 
-                    ? 'border-amber-400 scale-105 shadow-md shadow-amber-500/20' 
-                    : hasStories 
-                      ? 'border-[#A2482B]' 
-                      : 'border-stone-200/60'
-                }`}>
-                  <div className="w-full h-full rounded-xl overflow-hidden bg-stone-900 relative">
-                    {hasStories ? (
-                      <img 
-                        src={theme.stories[0].authorAvatar} 
-                        alt={theme.label}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center bg-stone-800 text-stone-400">
-                        <Sparkles className="w-3.5 h-3.5" />
-                      </div>
-                    )}
-                    <div className="absolute inset-0 bg-black/15" />
-                  </div>
-                </div>
-                <span className={`text-[9.5px] tracking-tight max-w-[54px] truncate text-center ${
-                  isSelected 
-                    ? 'font-bold text-amber-400' 
-                    : storyModeIndex !== null ? 'text-stone-400' : 'text-stone-700 font-medium'
-                }`}>
-                  {theme.label}
-                </span>
-              </div>
-            );
-          })}
+          ))}
         </div>
       </div>
 
       {/* ========================================================================= */}
-      {/* 2. ZONE CENTRALE : PUBLICATION ENTREPRISE OU MODE STORY                   */}
+      {/* 2. ZONE CENTRALE : DUOS ENTREPRISE CONFRONTANT 2 MARQUES SUR 1 CATÉGORIE   */}
       {/* ========================================================================= */}
       <div className="relative flex-1 flex flex-col items-center justify-center min-h-0 py-1 px-3 sm:px-4 my-auto">
         
@@ -315,404 +453,296 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({
           <ChevronRight className="w-5 h-5" />
         </button>
 
-        {/* ======================================================================= */}
-        {/* CAS A : LE MODE STORY EST ACTIVÉ                                        */}
-        {/* ======================================================================= */}
-        {storyModeIndex !== null && activeThemeStory ? (
-          <div className="relative aspect-[9/16] w-[min(310px,calc(100vw-36px))] sm:w-[320px] max-h-[min(540px,calc(100dvh-220px))] rounded-3xl overflow-hidden shadow-2xl border border-amber-500/40 bg-[#12110F] text-white flex flex-col justify-between select-none">
-            
-            {/* Header Mode Story : Thématique + Bouton Quitter Mode Story dans le coin */}
-            <div className="relative z-20 pt-4 px-3 flex items-center justify-between gap-1 pointer-events-auto">
-              <div className="bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/20">
-                <span className="text-[11px] font-bold text-amber-300 tracking-wide">
-                  Story • {activeThemeStory.label}
-                </span>
-              </div>
-
-              <div className="flex items-center gap-1.5">
-                <button
-                  type="button"
-                  onClick={() => setIsMuted(m => !m)}
-                  className="w-8 h-8 rounded-xl bg-black/60 backdrop-blur-md text-white border border-white/20 flex items-center justify-center cursor-pointer hover:bg-black/80"
-                  title={isMuted ? 'Activer le son' : 'Couper le son'}
-                >
-                  {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setStoryModeIndex(null)}
-                  className="w-8 h-8 rounded-xl bg-black/60 backdrop-blur-md text-white border border-white/20 flex items-center justify-center cursor-pointer hover:bg-[#A2482B] transition-colors"
-                  title="Revenir aux publications"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-
-            {/* Média de la story */}
-            <div 
-              className="absolute inset-0 z-10 cursor-pointer"
-              onClick={() => setIsPlaying(p => !p)}
-            >
-              {storyItem ? (
-                <video
-                  ref={videoRef}
-                  key={`company-story-${storyItem.id}`}
-                  src={storyItem.videoUrl}
-                  autoPlay
-                  loop
-                  muted={isMuted}
-                  playsInline
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <div className="w-full h-full bg-stone-900 flex items-center justify-center">
-                  <Sparkles className="w-10 h-10 text-amber-400" />
-                </div>
-              )}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30 pointer-events-none" />
-            </div>
-
-            {/* Flanc Droit */}
-            <div className="absolute right-2.5 bottom-16 z-30 flex flex-col items-center gap-2 pointer-events-auto">
-              <button
-                onClick={() => setShowStoryQuestion(true)}
-                className="w-8 h-8 rounded-xl bg-black/60 backdrop-blur-md text-white hover:bg-[#A2482B] border border-white/15 flex items-center justify-center transition-all cursor-pointer shadow-sm group"
-                title="Consulter la question de la story"
-              >
-                <HelpCircle className="w-4 h-4 text-amber-300" />
-              </button>
-              <button
-                onClick={() => setShareItem({ title: `Story ${activeThemeStory.label}`, id: activeThemeStory.id })}
-                className="w-8 h-8 rounded-xl bg-black/60 backdrop-blur-md text-white hover:bg-[#A2482B] border border-white/15 flex items-center justify-center transition-all cursor-pointer shadow-sm group"
-                title="Partager"
-              >
-                <ShareIcon className="w-4 h-4" />
-              </button>
-            </div>
-
-            {/* Bas de Story */}
-            <div className="relative z-20 p-4 space-y-0.5 pointer-events-none">
-              <span className="text-[11px] font-medium text-white/80 block tracking-wide">
-                {activeThemeStory.label}
-              </span>
-              <h2 className="text-xl sm:text-2xl font-bold text-white tracking-wide">
-                {storyItem?.authorName.split(' ')[0] || activeThemeStory.label}
-              </h2>
-            </div>
-
-            {/* Tiroir Question */}
-            {showStoryQuestion && (
-              <div 
-                className="absolute inset-x-0 bottom-0 z-40 bg-white text-stone-900 rounded-t-3xl p-4 shadow-2xl animate-in slide-in-from-bottom duration-200 space-y-2 select-text"
-                onClick={e => e.stopPropagation()}
-              >
-                <div className="flex items-center justify-between pb-1 border-b border-stone-100">
-                  <span className="text-xs font-bold text-[#A2482B] uppercase tracking-wider">
-                    Thématique : {activeThemeStory.label}
+        {/* CARTE FORMAT 9:16 VERTICAL STANDARDISÉE STUDIO AVEC GESTION DU SWIPE 2D */}
+        <div 
+          onTouchStart={handleCardTouchStart}
+          onTouchMove={handleCardTouchMove}
+          onTouchEnd={handleCardTouchEnd}
+          onTouchCancel={() => { touchStartPos.current = null; setIsDragging(false); setDragOffset({ x: 0, y: 0 }); }}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          style={{
+            transform: dragOffset.x !== 0 || dragOffset.y !== 0 ? `translate3d(${dragOffset.x}px, ${dragOffset.y}px, 0)` : undefined,
+            transition: isDragging ? 'none' : 'transform 0.26s cubic-bezier(0.16, 1, 0.3, 1)'
+          }}
+          className="relative aspect-[9/16] w-[min(calc(100vw-64px),calc((100dvh-230px)*9/16))] max-w-[228px] sm:max-w-[270px] md:max-w-[290px] h-[min(410px,calc(100dvh-230px))] sm:h-[min(480px,calc(100dvh-200px))] md:h-[min(520px,calc(100dvh-180px))] rounded-2xl sm:rounded-3xl overflow-hidden border border-stone-200/90 bg-[#12110F] text-white flex flex-col justify-between select-none touch-none cursor-grab active:cursor-grabbing"
+        >
+          
+          {/* SÉQUENCE 1 (ENTREPRISE A) ET SÉQUENCE 2 (ENTREPRISE B) */}
+          {slideIndex !== 2 ? (
+            <>
+              {/* EN-TÊTE : TITRE DE LA CATÉGORIE À GAUCHE & BOUTON TÉLÉ EN HAUT À DROITE */}
+              <div className="relative z-20 pt-3.5 px-3 flex items-center justify-between gap-1 pointer-events-auto">
+                <div className="inline-flex w-fit items-center px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 shadow-md max-w-[75%]">
+                  <span className="font-editorial text-xs font-semibold text-white whitespace-nowrap tracking-wide select-none truncate">
+                    {formatFirstLetterOnly(currentDuo.category)}
                   </span>
-                  <button 
-                    onClick={() => setShowStoryQuestion(false)}
-                    className="p-1 rounded-full text-stone-400 hover:text-stone-700"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
-                </div>
-                <p className="text-xs sm:text-sm font-semibold text-stone-800 leading-relaxed">
-                  « {storyItem?.question || activeThemeStory.question || `Racontez comment dans votre entreprise cette valeur est vécue.`} »
-                </p>
-              </div>
-            )}
-          </div>
-        ) : (
-          /* ======================================================================= */
-          /* CAS B : PUBLICATION ENTREPRISE NORMALE                                  */
-          /* ======================================================================= */
-          <div className="relative aspect-[9/16] w-[min(310px,calc(100vw-36px))] sm:w-[320px] max-h-[min(540px,calc(100dvh-220px))] rounded-3xl overflow-hidden shadow-2xl border border-stone-200/90 bg-[#12110F] text-white flex flex-col justify-between select-none">
-            
-            {/* VOLET 1 (ENTREPRISE A) OU VOLET 2 (ENTREPRISE B) */}
-            {slideIndex !== 2 ? (
-              <>
-                {/* MENU DE NAVIGATION AU-DESSUS DE LA VIDÉO */}
-                <div className="relative z-20 pt-4 px-3 flex items-center justify-between gap-1 pointer-events-auto">
-                  <div className="flex items-center gap-1 bg-black/60 backdrop-blur-md p-0.5 rounded-full border border-white/15">
-                    <button
-                      type="button"
-                      onClick={() => goToSlide(0)}
-                      className={`px-2 py-0.5 rounded-full text-[10px] transition-all cursor-pointer ${
-                        slideIndex === 0 
-                          ? 'bg-[#A2482B] text-white font-bold shadow-xs' 
-                          : 'text-stone-300 hover:text-white font-semibold'
-                      }`}
-                    >
-                      {compA.companyName.split(' ')[0]}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => goToSlide(1)}
-                      className={`px-2 py-0.5 rounded-full text-[10px] transition-all cursor-pointer ${
-                        slideIndex === 1 
-                          ? 'bg-[#A2482B] text-white font-bold shadow-xs' 
-                          : 'text-stone-300 hover:text-white font-semibold'
-                      }`}
-                    >
-                      {compB.companyName.split(' ')[0]}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => goToSlide(2)}
-                      className="px-2 py-0.5 rounded-full text-[10px] font-semibold text-stone-300 hover:text-white transition-all cursor-pointer"
-                    >
-                      Face-à-face
-                    </button>
-                  </div>
-
-                  {/* Bouton Télé Vintage de Lecture en haut à droite */}
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setIsPlaying(p => !p);
-                    }}
-                    className={`w-8 h-8 rounded-xl flex items-center justify-center transition-all cursor-pointer shadow-md active:scale-95 ${
-                      isPlaying 
-                        ? 'bg-[#A2482B] text-white border border-[#8A3B22]' 
-                        : 'bg-black/60 backdrop-blur-md text-white border border-white/20 hover:bg-black/80'
-                    }`}
-                    title={isPlaying ? 'Pause' : 'Lecture vidéo'}
-                  >
-                    <TvPlayerIcon className="w-4.5 h-4.5 text-current" />
-                  </button>
                 </div>
 
-                {/* MEDIA FOND */}
-                <div 
-                  className="absolute inset-0 z-10 cursor-pointer"
-                  onClick={() => setIsPlaying(p => !p)}
+                {/* Bouton Télé Vintage de Lecture en haut à droite — SEUL DÉCLENCHEUR DE LA VIDÉO */}
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsPlaying(p => !p);
+                  }}
+                  className={`w-8.5 h-8.5 rounded-xl flex items-center justify-center transition-all cursor-pointer shadow-md active:scale-95 ${
+                    isPlaying 
+                      ? 'bg-[#A2482B] text-white border border-[#8A3B22]' 
+                      : 'bg-black/60 backdrop-blur-md text-white border border-white/20 hover:bg-black/80'
+                  }`}
+                  title={isPlaying ? 'Pause' : 'Lecture vidéo'}
                 >
-                  {isPlaying ? (
-                    <video
-                      ref={videoRef}
-                      key={`company-video-${activeCompany.id}`}
-                      src={activeCompany.videoUrl || activeCompany.manifestoVideoUrl || 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4'}
-                      autoPlay
-                      loop
-                      muted={isMuted}
-                      playsInline
-                      className="w-full h-full object-cover"
+                  <TvPlayerIcon className="w-4.5 h-4.5 text-current" strokeWidth={1.7} />
+                </button>
+              </div>
+
+              {/* MEDIA FOND : UNIQUEMENT DÉCLENCHÉ PAR LA TÉLÉ VINTAGE */}
+              <div className="absolute inset-0 z-10 overflow-hidden pointer-events-none">
+                {isPlaying ? (
+                  <video
+                    ref={videoRef}
+                    key={`company-video-${activeCompany.id}`}
+                    src={activeCompany.videoUrl || activeCompany.manifestoVideoUrl || 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4'}
+                    autoPlay
+                    loop
+                    muted={isMuted}
+                    playsInline
+                    className="w-full h-full object-cover pointer-events-none"
+                  />
+                ) : (
+                  <img 
+                    src={activeCompany.photoUrl} 
+                    alt={activeCompany.companyName}
+                    className="w-full h-full object-cover pointer-events-none"
+                  />
+                )}
+
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none" />
+              </div>
+
+              {/* COLONNE D'ICÔNES LATÉRALE DROITE : SQUIRCLES (rounded-xl) PARFAITEMENT ALIGNÉS */}
+              <div className="absolute right-2.5 sm:right-3 top-1/2 -translate-y-1/2 z-30 flex flex-col items-center gap-2 pointer-events-auto">
+                {/* 1. Icône Swipe aux flèches arrondies (haut/bas entre duos, gauche/droite entre entreprises) */}
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    nextSlide();
+                  }}
+                  className="w-8 h-8 rounded-xl bg-black/60 backdrop-blur-md text-white hover:bg-[#A2482B] border border-white/15 flex items-center justify-center transition-all cursor-pointer shadow-sm group"
+                  title="Changer de séquence ou swiper haut/bas pour changer de catégorie"
+                >
+                  <RoundedSwipeArrowsIcon className="w-4 h-4 text-white group-hover:scale-110 transition-transform" />
+                </button>
+
+                {/* 2. Question de la catégorie */}
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowQuestionModal(true);
+                  }}
+                  className="w-8 h-8 rounded-xl bg-black/60 backdrop-blur-md text-white hover:bg-[#A2482B] border border-white/15 flex items-center justify-center transition-all cursor-pointer shadow-sm group"
+                  title="Consulter la question"
+                >
+                  <BookOpen className="w-3.5 h-3.5 text-white group-hover:scale-110 transition-transform" />
+                </button>
+
+                {/* 3. Portrait d'entreprise */}
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (onNavigate) {
+                      onNavigate({ type: 'profile', protagonistId: activeCompany.id });
+                    }
+                  }}
+                  className="w-8 h-8 rounded-xl bg-black/60 backdrop-blur-md text-white hover:bg-[#A2482B] border border-white/15 flex items-center justify-center transition-all cursor-pointer shadow-sm group"
+                  title={`Portrait de ${activeCompany.companyName}`}
+                >
+                  <ProfileSoloIcon className="w-4 h-4 text-white group-hover:scale-110 transition-transform" />
+                </button>
+
+                {/* 4. Partage */}
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShareItem({ title: `Documentaire Entreprise : ${currentDuo.category} — ${activeCompany.companyName}`, id: activeCompany.id });
+                  }}
+                  className="w-8 h-8 rounded-xl bg-black/60 backdrop-blur-md text-white hover:bg-[#A2482B] border border-white/15 flex items-center justify-center transition-all cursor-pointer shadow-sm group"
+                  title="Partager"
+                >
+                  <ShareIcon className="w-4 h-4" />
+                </button>
+              </div>
+
+              {/* BAS DE CARTE ÉPURÉ : NOM DE L'ENTREPRISE EN BAS À GAUCHE & CURSEUR EN DESSOUS SANS DÉPLACEMENT */}
+              <div className="absolute bottom-3.5 sm:bottom-4 left-3.5 sm:left-4 z-20 pointer-events-none flex flex-col items-start">
+                <h2 className="font-editorial text-base sm:text-lg font-bold text-white tracking-wide drop-shadow-md truncate max-w-[170px] sm:max-w-[210px] leading-tight">
+                  {activeCompany.companyName}
+                </h2>
+
+                {/* Hauteur réservée fixe : le nom ne bouge JAMAIS lorsque le curseur apparaît */}
+                <div className="h-2 flex items-center mt-1">
+                  <div 
+                    className={`w-24 sm:w-28 h-1 bg-white/25 rounded-full overflow-hidden shadow-xs transition-opacity duration-200 ${
+                      isPlaying ? 'opacity-100' : 'opacity-0'
+                    }`}
+                  >
+                    <div 
+                      className="h-full bg-white transition-all duration-100 rounded-full"
+                      style={{ width: `${Math.max(2, Math.min(100, videoProgress))}%` }}
                     />
-                  ) : (
-                    <img 
-                      src={activeCompany.photoUrl} 
-                      alt={activeCompany.companyName}
-                      className="w-full h-full object-cover"
-                    />
-                  )}
-
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none" />
+                  </div>
                 </div>
+              </div>
+            </>
+          ) : (
+            /* SÉQUENCE 3 : LE FACE-À-FACE DES ENTREPRISES & CURSEUR D'ÉVALUATION 0-100 */
+            <div className="relative w-full h-full p-4 sm:p-5 flex flex-col justify-between select-none bg-[#12110F]">
+              
+              {/* Halo d'ambiance */}
+              <div 
+                className="absolute inset-0 opacity-25 pointer-events-none transition-all duration-300"
+                style={{
+                  background: `radial-gradient(circle at ${sliderValue}% 50%, #A2482B 0%, transparent 70%)`
+                }}
+              />
 
-                {/* COLONNE D'ICÔNES LATÉRALE DROITE : SQUIRCLES (rounded-xl) */}
-                <div className="absolute right-2.5 bottom-16 z-30 flex flex-col items-center gap-2 pointer-events-auto">
-                  {/* 1. Question */}
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setShowQuestionModal(true);
-                    }}
-                    className="w-8 h-8 rounded-xl bg-black/60 backdrop-blur-md text-white hover:bg-[#A2482B] border border-white/15 flex items-center justify-center transition-all cursor-pointer shadow-sm group"
-                    title="Question de vision"
-                  >
-                    <BookOpen className="w-3.5 h-3.5 text-white group-hover:scale-110 transition-transform" />
-                  </button>
-
-                  {/* 2. Échange ⇄ */}
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      goToSlide(slideIndex === 0 ? 1 : 0);
-                    }}
-                    className="w-8 h-8 rounded-xl bg-black/60 backdrop-blur-md text-white hover:bg-[#A2482B] border border-white/15 flex items-center justify-center transition-all cursor-pointer shadow-sm group"
-                    title={slideIndex === 0 ? `Voir ${compB.companyName}` : `Voir ${compA.companyName}`}
-                  >
-                    <span className="font-bold text-xs tracking-tight">⇄</span>
-                  </button>
-
-                  {/* 3. Portrait d'entreprise : ouvre la page portrait de CETTE entreprise */}
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      if (onNavigate) {
-                        onNavigate({ type: 'profile', protagonistId: activeCompany.id });
-                      }
-                    }}
-                    className="w-8 h-8 rounded-xl bg-black/60 backdrop-blur-md text-white hover:bg-[#A2482B] border border-white/15 flex items-center justify-center transition-all cursor-pointer shadow-sm group"
-                    title={`Portrait de ${activeCompany.companyName}`}
-                  >
-                    <ProfileSoloIcon className="w-4 h-4 text-white group-hover:scale-110 transition-transform" />
-                  </button>
-
-                  {/* 4. Partage : l'ancienne icône flèche ascendante + arche */}
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setShareItem({ title: `Documentaire Entreprise : ${activeCompany.companyName}`, id: activeCompany.id });
-                    }}
-                    className="w-8 h-8 rounded-xl bg-black/60 backdrop-blur-md text-white hover:bg-[#A2482B] border border-white/15 flex items-center justify-center transition-all cursor-pointer shadow-sm group"
-                    title="Partager"
-                  >
-                    <ShareIcon className="w-4 h-4" />
-                  </button>
-                </div>
-
-                {/* BAS DE CARTE ÉPURÉ */}
-                <div className="relative z-20 p-4 space-y-0.5 pointer-events-none">
-                  <span className="text-[11px] font-medium text-white/80 block tracking-wide">
+              {/* En-tête de la séquence d'évaluation : Catégorie stricte & retour */}
+              <div className="relative z-20 flex items-center justify-between gap-1.5">
+                <div className="bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/15 max-w-[60%]">
+                  <span className="text-[11px] font-bold text-white tracking-wider uppercase truncate block">
                     {currentDuo.category}
                   </span>
-                  <h2 className="text-xl sm:text-2xl font-bold text-white tracking-wide">
-                    {activeCompany.companyName}
-                  </h2>
-                </div>
-              </>
-            ) : (
-              /* VOLET 3 : LE FACE-À-FACE DES ENTREPRISES & CURSEUR 50/50 ÉPURÉ */
-              <div className="relative w-full h-full p-4 sm:p-5 flex flex-col justify-between select-none bg-[#12110F]">
-                
-                {/* Halo d'ambiance */}
-                <div 
-                  className="absolute inset-0 opacity-25 pointer-events-none transition-all duration-300"
-                  style={{
-                    background: `radial-gradient(circle at ${sliderValue}% 50%, #A2482B 0%, transparent 70%)`
-                  }}
-                />
-
-                {/* Menu de navigation direct au-dessus du face-à-face */}
-                <div className="relative z-20 flex items-center justify-between gap-1.5">
-                  <div className="bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/15 max-w-[50%]">
-                    <span className="text-[10.5px] font-medium text-white tracking-wide truncate block">
-                      {currentDuo.category}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center gap-1 bg-black/60 backdrop-blur-md p-0.5 rounded-full border border-white/15">
-                    <button
-                      type="button"
-                      onClick={() => goToSlide(0)}
-                      className="px-2 py-0.5 rounded-full text-[10px] font-semibold text-stone-300 hover:text-white transition-colors cursor-pointer"
-                    >
-                      {compA.companyName.split(' ')[0]}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => goToSlide(1)}
-                      className="px-2 py-0.5 rounded-full text-[10px] font-semibold text-stone-300 hover:text-white transition-colors cursor-pointer"
-                    >
-                      {compB.companyName.split(' ')[0]}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => goToSlide(2)}
-                      className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#A2482B] text-white shadow-xs cursor-pointer"
-                    >
-                      Face-à-face
-                    </button>
-                  </div>
                 </div>
 
-                {/* Vignettes des deux entreprises */}
-                <div className="relative z-10 grid grid-cols-2 gap-3 my-auto py-2">
-                  <div 
-                    onClick={() => onNavigate && onNavigate({ type: 'profile', protagonistId: compA.id })}
-                    className={`relative rounded-2xl overflow-hidden p-2 border transition-all duration-200 cursor-pointer flex flex-col items-center aspect-[3/4] ${
-                      percentA > 50 
-                        ? 'border-[#A2482B] bg-[#1E1916] shadow-lg shadow-[#A2482B]/20 scale-102' 
-                        : 'border-white/10 bg-black/40 hover:border-white/20'
-                    }`}
-                  >
-                    <div className="relative w-full aspect-square rounded-xl overflow-hidden mb-2">
-                      <img src={compA.photoUrl} alt={compA.companyName} className="w-full h-full object-cover" />
-                      <div className="absolute top-1 left-1 px-1.5 py-0.5 rounded-md bg-black/70 backdrop-blur-xs text-[10px] font-bold text-white">
-                        {percentA}%
-                      </div>
-                    </div>
-                    <h4 className="text-xs font-bold text-white tracking-wide truncate w-full text-center">
-                      {compA.companyName}
-                    </h4>
-                  </div>
-
-                  <div 
-                    onClick={() => onNavigate && onNavigate({ type: 'profile', protagonistId: compB.id })}
-                    className={`relative rounded-2xl overflow-hidden p-2 border transition-all duration-200 cursor-pointer flex flex-col items-center aspect-[3/4] ${
-                      percentB > 50 
-                        ? 'border-amber-500 bg-[#1E1C15] shadow-lg shadow-amber-500/20 scale-102' 
-                        : 'border-white/10 bg-black/40 hover:border-white/20'
-                    }`}
-                  >
-                    <div className="relative w-full aspect-square rounded-xl overflow-hidden mb-2">
-                      <img src={compB.photoUrl} alt={compB.companyName} className="w-full h-full object-cover" />
-                      <div className="absolute top-1 right-1 px-1.5 py-0.5 rounded-md bg-black/70 backdrop-blur-xs text-[10px] font-bold text-amber-300">
-                        {percentB}%
-                      </div>
-                    </div>
-                    <h4 className="text-xs font-bold text-white tracking-wide truncate w-full text-center">
-                      {compB.companyName}
-                    </h4>
-                  </div>
-                </div>
-
-                {/* Curseur de résonance tactile : avec point au milieu à la place de BALANCE */}
-                <div className="relative z-10 bg-black/60 backdrop-blur-md p-3.5 rounded-2xl border border-white/15 space-y-2">
-                  <div className="flex justify-between items-center text-xs font-bold">
-                    <span className={percentA > 50 ? 'text-[#C8603C]' : 'text-stone-300'}>
-                      {compA.companyName.split(' ')[0]} {percentA}%
-                    </span>
-                    <span className="w-1.5 h-1.5 rounded-full bg-white/50" title="Milieu" />
-                    <span className={percentB > 50 ? 'text-amber-400' : 'text-stone-300'}>
-                      {percentB}% {compB.companyName.split(' ')[0]}
-                    </span>
-                  </div>
-                  <div className="relative flex items-center py-1">
-                    <input 
-                      type="range" 
-                      min="0" 
-                      max="100" 
-                      value={sliderValue} 
-                      onChange={(e) => {
-                        const val = parseInt(e.target.value, 10);
-                        setSliderValue(val);
-                        if (val === 50 || val === 75 || val === 25) {
-                          celestialAudio.playOrbSelect();
-                        }
-                      }}
-                      className="w-full h-2 bg-stone-700/80 rounded-lg appearance-none cursor-pointer accent-[#A2482B]" 
-                    />
-                  </div>
-                </div>
-
+                <button
+                  type="button"
+                  onClick={() => goToSlide(0)}
+                  className="px-3 py-1 rounded-full text-[10.5px] font-bold bg-[#A2482B] hover:bg-[#8A3B22] text-white shadow-xs transition-colors cursor-pointer"
+                  title="Revenir à la vidéo"
+                >
+                  ← Vidéo
+                </button>
               </div>
-            )}
 
-          </div>
-        )}
+              {/* Les Deux Entreprises Face-à-Face A et B */}
+              <div className="relative z-10 grid grid-cols-2 gap-3 my-auto py-2">
+                {/* Vignette Entreprise A */}
+                <div 
+                  onClick={() => onNavigate?.({ type: 'profile', protagonistId: compA.id })}
+                  className={`relative rounded-2xl overflow-hidden p-2.5 border transition-all duration-200 cursor-pointer flex flex-col items-center aspect-[3/4] ${
+                    percentA > 50 
+                      ? 'border-[#A2482B] bg-[#1E1916] shadow-lg shadow-[#A2482B]/20 scale-102' 
+                      : 'border-white/10 bg-black/40 hover:border-white/20'
+                  }`}
+                >
+                  <div className="relative w-full aspect-square rounded-xl overflow-hidden mb-2 bg-stone-900">
+                    <img 
+                      src={compA.photoUrl} 
+                      alt={compA.companyName}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute top-1 left-1 px-1.5 py-0.5 rounded-md bg-black/70 backdrop-blur-xs text-[10px] font-bold text-white">
+                      {percentA}%
+                    </div>
+                  </div>
+                  <h4 className="text-xs font-bold text-white tracking-wide truncate w-full text-center">
+                    {compA.companyName}
+                  </h4>
+                </div>
+
+                {/* Vignette Entreprise B */}
+                <div 
+                  onClick={() => onNavigate?.({ type: 'profile', protagonistId: compB.id })}
+                  className={`relative rounded-2xl overflow-hidden p-2.5 border transition-all duration-200 cursor-pointer flex flex-col items-center aspect-[3/4] ${
+                    percentB > 50 
+                      ? 'border-amber-500 bg-[#1E1C15] shadow-lg shadow-amber-500/20 scale-102' 
+                      : 'border-white/10 bg-black/40 hover:border-white/20'
+                  }`}
+                >
+                  <div className="relative w-full aspect-square rounded-xl overflow-hidden mb-2 bg-stone-900">
+                    <img 
+                      src={compB.photoUrl} 
+                      alt={compB.companyName}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute top-1 right-1 px-1.5 py-0.5 rounded-md bg-black/70 backdrop-blur-xs text-[10px] font-bold text-amber-300">
+                      {percentB}%
+                    </div>
+                  </div>
+                  <h4 className="text-xs font-bold text-white tracking-wide truncate w-full text-center">
+                    {compB.companyName}
+                  </h4>
+                </div>
+              </div>
+
+              {/* Curseur d'Évaluation 0 à 100 */}
+              <div className="relative z-10 bg-black/60 backdrop-blur-md p-3.5 rounded-2xl border border-white/15 space-y-2">
+                <div className="flex items-center justify-between text-xs font-bold">
+                  <span className={percentA > 50 ? 'text-[#C8603C]' : 'text-stone-300'}>
+                    {compA.companyName.split(' ')[0]} {percentA}%
+                  </span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-white/50" />
+                  <span className={percentB > 50 ? 'text-amber-400' : 'text-stone-300'}>
+                    {percentB}% {compB.companyName.split(' ')[0]}
+                  </span>
+                </div>
+
+                <div className="relative flex items-center py-1">
+                  <input 
+                    type="range"
+                    min="0"
+                    max="100"
+                    value={sliderValue}
+                    onChange={(e) => {
+                      const val = parseInt(e.target.value, 10);
+                      setSliderValue(val);
+                      if (val === 50 || val === 75 || val === 25) {
+                        celestialAudio.playOrbSelect();
+                      }
+                    }}
+                    className="w-full h-2 bg-stone-700 rounded-lg appearance-none cursor-pointer accent-[#A2482B]"
+                  />
+                </div>
+                <p className="text-[10px] text-center text-stone-400">
+                  Positionnez votre appréciation entre les deux démarches d'entreprise
+                </p>
+              </div>
+
+            </div>
+          )}
+
+        </div>
 
       </div>
 
       {/* ========================================================================= */}
-      {/* 3. MODALES : QUESTION ET PARTAGE                                         */}
+      {/* 3. VISIONNEUSE DE STORIES D'ENTREPRISES PLEIN ÉCRAN                       */}
+      {/* ========================================================================= */}
+      <StoriesStudioCoverflow
+        stories={ENTERPRISE_STORIES}
+        initialIndex={storyViewerIndex}
+        isOpen={isStoryViewerOpen}
+        onClose={() => setIsStoryViewerOpen(false)}
+        onNavigateToDuo={handleGatewayToDuo}
+      />
+
+      {/* ========================================================================= */}
+      {/* 4. MODALE QUESTION DE LA CATÉGORIE                                        */}
       {/* ========================================================================= */}
       {showQuestionModal && (
         <div 
-          className="fixed inset-0 z-[90] flex items-center justify-center p-4 bg-black/70 backdrop-blur-xs select-none" 
+          className="fixed inset-0 z-[90] flex items-center justify-center p-4 bg-black/70 backdrop-blur-xs select-none"
           onClick={() => setShowQuestionModal(false)}
         >
           <div 
-            className="w-full max-w-sm bg-white text-stone-900 rounded-3xl p-5 shadow-2xl border border-stone-200 space-y-3" 
+            className="w-full max-w-sm bg-white text-stone-900 rounded-3xl p-5 shadow-2xl border border-stone-200 space-y-3"
             onClick={e => e.stopPropagation()}
           >
             <div className="flex items-center justify-between pb-2 border-b border-stone-100">
               <span className="text-xs font-bold text-[#A2482B] uppercase tracking-wider">
-                Question de vision
+                Catégorie : {currentDuo.category}
               </span>
               <button onClick={() => setShowQuestionModal(false)} className="text-stone-400 hover:text-stone-700">
                 <X className="w-4 h-4" />
@@ -722,13 +752,13 @@ export const CompanyHeritageScreen: React.FC<CompanyHeritageScreenProps> = ({
               « {currentDuo.themeQuestion} »
             </p>
             <p className="text-xs text-stone-500 leading-relaxed">
-              Deux entreprises et bâtisseurs de terroir répondent à la même question avant d'être mis en miroir.
+              Deux entreprises confrontent leurs visions, leurs réalisations et leurs engagements autour de cette même thématique.
             </p>
           </div>
         </div>
       )}
 
-      {/* MODALE PARTAGE */}
+      {/* Modale Partage */}
       {shareItem && (
         <VideoCardShareModal
           isOpen={Boolean(shareItem)}

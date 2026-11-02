@@ -1,26 +1,26 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { 
   ChevronLeft, 
   ChevronRight, 
   BookOpen, 
   X, 
   Film,
-  Sparkles,
-  Plus,
-  HelpCircle,
-  Volume2,
-  VolumeX
+  Plus
 } from 'lucide-react';
 import { celestialAudio } from '../utils/celestialAudio';
 import { apiService } from '../services/api';
-import { ViewScreen, Duo, Protagonist } from '../types';
+import { ViewScreen, Duo, Protagonist, FeedPublicationItem } from '../types';
 import { DOCUMENTARIES as MOCK_DOCS, DUOS as MOCK_DUOS } from '../data/mockData';
-import { THEMATIC_VALUES, ThematicValue } from '../data/thematicStoriesData';
+import { PERSON_STORIES, ThematicStory } from '../data/thematicStoriesData';
+import { FOUR_FACES_PUBLICATIONS } from '../data/fourFacesFeedData';
 import { ResonanceFaceToFaceCard } from './ResonanceFaceToFaceCard';
 import { VideoCardShareModal } from './VideoCardShareModal';
-import { ProfileSoloIcon, TvPlayerIcon } from './YonywoodBrandIcons';
+import { StoriesStudioCoverflow } from './StoriesStudioCoverflow';
+import { FourFacesCard } from './FourFacesCard';
+import { ProfileSoloIcon, TvPlayerIcon, RoundedSwipeArrowsIcon } from './YonywoodBrandIcons';
 import { ShareIcon } from './ShareIcon';
 import { getBlockedVideoIds } from '../utils/blockedContent';
+import { formatFirstLetterOnly } from '../utils/textFormatters';
 
 interface DuoFeedScreenProps {
   onNavigate: (screen: ViewScreen) => void;
@@ -41,15 +41,15 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
   const [DOCUMENTARIES, setDocumentaries] = useState<any[]>([]);
   const [loadingData, setLoadingData] = useState(true);
 
-  // Index du Duo actif (Swipe vertical = 1 publication unique au centre)
+  // Index de la publication active dans le Feed (Duo ou Carte 4 visages)
   const [currentIndex, setCurrentIndex] = useState(initialDuoIndex);
 
-  // Position dans le diaporama horizontal du Duo (0: Volet A, 1: Volet B, 2: Face-à-face & Curseur 50/50)
+  // Position dans le diaporama horizontal du Duo (0: Volet A, 1: Volet B, 2: Face-à-face & Curseur 0-100)
   const [slideIndex, setSlideIndex] = useState<0 | 1 | 2>(0);
 
-  // Mode Story activé directement dans le feed
-  const [storyModeIndex, setStoryModeIndex] = useState<number | null>(null);
-  const [showStoryQuestion, setShowStoryQuestion] = useState(false);
+  // Visionneuse de stories immersives style Coverflow Studio
+  const [isStoryViewerOpen, setIsStoryViewerOpen] = useState(false);
+  const [storyViewerIndex, setStoryViewerIndex] = useState(0);
 
   // Lecture vidéo
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -76,10 +76,6 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
         ]);
         setDuos(fetchedDuos && fetchedDuos.length > 0 ? fetchedDuos : MOCK_DUOS);
         setDocumentaries(fetchedDocs && fetchedDocs.length > 0 ? fetchedDocs : MOCK_DOCS);
-        if (initialDuoId) {
-          const idx = (fetchedDuos || MOCK_DUOS).findIndex((d: any) => d.id === initialDuoId);
-          if (idx !== -1) setCurrentIndex(idx);
-        }
       } catch {
         setDuos(MOCK_DUOS);
         setDocumentaries(MOCK_DOCS);
@@ -88,7 +84,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
       }
     };
     loadData();
-  }, [initialDuoId]);
+  }, []);
 
   useEffect(() => {
     const handleBlocked = () => setBlockedIds(getBlockedVideoIds());
@@ -96,36 +92,72 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
     return () => window.removeEventListener('yonywood_video_blocked', handleBlocked);
   }, []);
 
-  // Filtrer les Duos
-  const filteredDuos = (allowedSeriesIds && allowedSeriesIds.length > 0
-    ? DUOS.filter(d => allowedSeriesIds.includes(d.documentaryId))
-    : DUOS
-  ).filter(d => !blockedIds.includes(d.protagonistA?.id) && !blockedIds.includes(d.protagonistB?.id));
+  // 1. Filtrer les Duos
+  const filteredDuos = useMemo(() => {
+    return (allowedSeriesIds && allowedSeriesIds.length > 0
+      ? DUOS.filter(d => allowedSeriesIds.includes(d.documentaryId))
+      : DUOS
+    ).filter(d => !blockedIds.includes(d.protagonistA?.id) && !blockedIds.includes(d.protagonistB?.id));
+  }, [DUOS, allowedSeriesIds, blockedIds]);
 
-  const safeIndex = filteredDuos.length > 0 ? (currentIndex % filteredDuos.length) : 0;
-  const currentDuo: Duo | undefined = filteredDuos[safeIndex];
+  // 2. Construire le Feed unifié : Duos documentaires avec Cartes à 4 visages intercalées par intermittence
+  const feedItems = useMemo<FeedPublicationItem[]>(() => {
+    const items: FeedPublicationItem[] = [];
+    let ffIndex = 0;
 
-  // Reset de la lecture et du volet au changement de duo
+    filteredDuos.forEach((duo, idx) => {
+      items.push({ type: 'duo', data: duo });
+      // Par intermittence : insérer une Carte à quatre visages tous les 2 duos
+      if ((idx + 1) % 2 === 0 && FOUR_FACES_PUBLICATIONS.length > 0) {
+        items.push({
+          type: 'four_faces',
+          data: FOUR_FACES_PUBLICATIONS[ffIndex % FOUR_FACES_PUBLICATIONS.length]
+        });
+        ffIndex++;
+      }
+    });
+
+    // S'assurer qu'au moins une carte à 4 visages est présente dans le feed
+    if (items.length > 0 && !items.some(it => it.type === 'four_faces') && FOUR_FACES_PUBLICATIONS.length > 0) {
+      items.push({
+        type: 'four_faces',
+        data: FOUR_FACES_PUBLICATIONS[0]
+      });
+    }
+
+    return items;
+  }, [filteredDuos]);
+
+  // Calibrer l'index initial si initialDuoId spécifié
+  useEffect(() => {
+    if (initialDuoId && feedItems.length > 0) {
+      const idx = feedItems.findIndex(item => item.type === 'duo' && item.data.id === initialDuoId);
+      if (idx !== -1) setCurrentIndex(idx);
+    }
+  }, [initialDuoId, feedItems]);
+
+  const safeIndex = feedItems.length > 0 ? (currentIndex % feedItems.length) : 0;
+  const currentItem: FeedPublicationItem | undefined = feedItems[safeIndex];
+
+  // Reset de la lecture et du volet au changement de publication
   useEffect(() => {
     setIsPlaying(false);
     setSlideIndex(0);
   }, [currentIndex]);
 
-  const handleNextDuo = () => {
-    if (storyModeIndex !== null) return;
-    if (filteredDuos.length <= 1) return;
+  const handleNextPublication = () => {
+    if (feedItems.length <= 1) return;
     setIsPlaying(false);
     setSlideIndex(0);
-    setCurrentIndex(prev => (prev + 1) % filteredDuos.length);
+    setCurrentIndex(prev => (prev + 1) % feedItems.length);
     celestialAudio.playOrbSelect();
   };
 
-  const handlePrevDuo = () => {
-    if (storyModeIndex !== null) return;
-    if (filteredDuos.length <= 1) return;
+  const handlePrevPublication = () => {
+    if (feedItems.length <= 1) return;
     setIsPlaying(false);
     setSlideIndex(0);
-    setCurrentIndex(prev => (prev - 1 + filteredDuos.length) % filteredDuos.length);
+    setCurrentIndex(prev => (prev - 1 + feedItems.length) % feedItems.length);
     celestialAudio.playOrbSelect();
   };
 
@@ -136,44 +168,91 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
   };
 
   const nextSlide = () => {
-    if (storyModeIndex !== null) {
-      // En Mode Story : passer à la story suivante
-      setStoryModeIndex(prev => (prev !== null ? (prev + 1) % THEMATIC_VALUES.length : 0));
-      celestialAudio.playOrbSelect();
-      return;
-    }
-    if (slideIndex < 2) {
-      goToSlide((slideIndex + 1) as 0 | 1 | 2);
+    if (!currentItem) return;
+    if (currentItem.type === 'duo') {
+      if (slideIndex < 2) {
+        goToSlide((slideIndex + 1) as 0 | 1 | 2);
+      } else {
+        handleNextPublication();
+      }
     } else {
-      handleNextDuo();
+      // Pour une Carte à 4 visages, le swipe horizontal avance à la publication suivante
+      handleNextPublication();
     }
   };
 
   const prevSlide = () => {
-    if (storyModeIndex !== null) {
-      // En Mode Story : passer à la story précédente
-      setStoryModeIndex(prev => (prev !== null ? (prev - 1 + THEMATIC_VALUES.length) % THEMATIC_VALUES.length : 0));
-      celestialAudio.playOrbSelect();
-      return;
-    }
-    if (slideIndex > 0) {
-      goToSlide((slideIndex - 1) as 0 | 1 | 2);
+    if (!currentItem) return;
+    if (currentItem.type === 'duo') {
+      if (slideIndex > 0) {
+        goToSlide((slideIndex - 1) as 0 | 1 | 2);
+      } else {
+        handlePrevPublication();
+      }
     } else {
-      handlePrevDuo();
+      handlePrevPublication();
     }
   };
 
-  // Gestion du Wheel (Swipe vertical strict = 1 publication change)
+  // Passerelle Story -> Duo documentaire de l'auteur
+  const handleGatewayToDuo = (story: ThematicStory) => {
+    setIsStoryViewerOpen(false);
+    let targetIndex = -1;
+    let preferredSlide: 0 | 1 = 0;
+
+    // 1. Chercher par duoId
+    if (story.duoId) {
+      targetIndex = feedItems.findIndex(item => 
+        item.type === 'duo' && (item.data.id === story.duoId || item.data.slug === story.duoId)
+      );
+    }
+
+    // 2. Chercher par authorId ou authorName
+    if (targetIndex === -1 && story.authorId) {
+      targetIndex = feedItems.findIndex(item => {
+        if (item.type !== 'duo') return false;
+        const d = item.data;
+        if (d.protagonistA?.id?.toLowerCase().includes(story.authorId.toLowerCase()) || 
+            d.protagonistA?.name?.toLowerCase().includes(story.authorName.toLowerCase())) {
+          preferredSlide = 0;
+          return true;
+        }
+        if (d.protagonistB?.id?.toLowerCase().includes(story.authorId.toLowerCase()) || 
+            d.protagonistB?.name?.toLowerCase().includes(story.authorName.toLowerCase())) {
+          preferredSlide = 1;
+          return true;
+        }
+        return false;
+      });
+    }
+
+    // 3. Chercher par documentaryId
+    if (targetIndex === -1 && story.documentaryId) {
+      targetIndex = feedItems.findIndex(item => item.type === 'duo' && item.data.documentaryId === story.documentaryId);
+    }
+
+    if (targetIndex !== -1) {
+      setCurrentIndex(targetIndex);
+      setSlideIndex(preferredSlide);
+    } else if (feedItems.length > 0) {
+      setCurrentIndex(0);
+      setSlideIndex(0);
+    }
+    celestialAudio.playOrbSelect();
+  };
+
+  // Gestion du Wheel (Swipe vertical = 1 publication change, horizontal = séquence)
   const handleWheel = (e: React.WheelEvent) => {
+    if (isStoryViewerOpen) return;
     const now = Date.now();
     if (now - lastScrollTime.current < 450) return;
 
     if (Math.abs(e.deltaY) > 30) {
       lastScrollTime.current = now;
       if (e.deltaY > 0) {
-        handleNextDuo();
+        handleNextPublication();
       } else {
-        handlePrevDuo();
+        handlePrevPublication();
       }
     } else if (Math.abs(e.deltaX) > 30) {
       lastScrollTime.current = now;
@@ -185,31 +264,138 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
     }
   };
 
-  // Touch Swipe
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartRef.current = {
+  // Progression de lecture vidéo (curseur qui apparaît lors de la lecture)
+  const [videoProgress, setVideoProgress] = useState(0);
+
+  // Déplacement visuel en temps réel lors du swipe 2D (vertical = publication, horizontal = séquence)
+  const [dragOffset, setDragOffset] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const touchStartPos = useRef<{ x: number; y: number; time: number } | null>(null);
+  const isMouseDownRef = useRef(false);
+
+  // Synchronisation du curseur de progression pendant la lecture
+  useEffect(() => {
+    let interval: any;
+    if (isPlaying) {
+      interval = setInterval(() => {
+        if (videoRef.current && videoRef.current.duration) {
+          const pct = (videoRef.current.currentTime / videoRef.current.duration) * 100;
+          setVideoProgress(pct);
+        }
+      }, 100);
+    } else {
+      setVideoProgress(0);
+    }
+    return () => clearInterval(interval);
+  }, [isPlaying]);
+
+  // Touch Swipe avec retour visuel immédiat (drag)
+  const handleCardTouchStart = (e: React.TouchEvent) => {
+    if (isStoryViewerOpen) return;
+    if ((e.target as HTMLElement).closest('button, input, [role="button"]')) return;
+    touchStartPos.current = {
       x: e.touches[0].clientX,
-      y: e.touches[0].clientY
+      y: e.touches[0].clientY,
+      time: Date.now()
     };
+    setIsDragging(true);
   };
 
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (!touchStartRef.current) return;
-    const deltaX = e.changedTouches[0].clientX - touchStartRef.current.x;
-    const deltaY = e.changedTouches[0].clientY - touchStartRef.current.y;
-    touchStartRef.current = null;
+  const handleCardTouchMove = (e: React.TouchEvent) => {
+    if (!touchStartPos.current) return;
+    const currentX = e.touches[0].clientX;
+    const currentY = e.touches[0].clientY;
+    const deltaX = currentX - touchStartPos.current.x;
+    const deltaY = currentY - touchStartPos.current.y;
 
-    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 40) {
+    if (Math.abs(deltaY) > Math.abs(deltaX)) {
+      // Swipe vertical prédominant : déplacer la carte de haut en bas
+      setDragOffset({ x: 0, y: Math.max(-130, Math.min(130, deltaY * 0.75)) });
+    } else {
+      // Swipe horizontal prédominant : déplacer la carte de gauche à droite
+      setDragOffset({ x: Math.max(-110, Math.min(110, deltaX * 0.75)), y: 0 });
+    }
+  };
+
+  const handleCardTouchEnd = (e: React.TouchEvent) => {
+    if (!touchStartPos.current) return;
+    const currentX = e.changedTouches[0].clientX;
+    const currentY = e.changedTouches[0].clientY;
+    const deltaX = currentX - touchStartPos.current.x;
+    const deltaY = currentY - touchStartPos.current.y;
+    const elapsed = Math.max(1, Date.now() - touchStartPos.current.time);
+    touchStartPos.current = null;
+    setIsDragging(false);
+    setDragOffset({ x: 0, y: 0 });
+
+    const velocityY = Math.abs(deltaY) / elapsed;
+    const velocityX = Math.abs(deltaX) / elapsed;
+
+    // Déclenchement vertical : publication suivante ou précédente
+    if (Math.abs(deltaY) > Math.abs(deltaX) && (Math.abs(deltaY) > 35 || velocityY > 0.22)) {
+      if (deltaY < 0) {
+        handleNextPublication();
+      } else {
+        handlePrevPublication();
+      }
+    } else if (Math.abs(deltaX) > 35 || velocityX > 0.22) {
+      // Déclenchement horizontal : protagoniste suivant ou précédent
       if (deltaX < 0) {
         nextSlide();
       } else {
         prevSlide();
       }
-    } else if (Math.abs(deltaY) > 45) {
+    }
+  };
+
+  // Drag souris desktop
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (isStoryViewerOpen) return;
+    if ((e.target as HTMLElement).closest('button, input, [role="button"]')) return;
+    touchStartPos.current = {
+      x: e.clientX,
+      y: e.clientY,
+      time: Date.now()
+    };
+    isMouseDownRef.current = true;
+    setIsDragging(true);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isMouseDownRef.current || !touchStartPos.current) return;
+    const deltaX = e.clientX - touchStartPos.current.x;
+    const deltaY = e.clientY - touchStartPos.current.y;
+    if (Math.abs(deltaY) > Math.abs(deltaX)) {
+      setDragOffset({ x: 0, y: Math.max(-130, Math.min(130, deltaY * 0.75)) });
+    } else {
+      setDragOffset({ x: Math.max(-110, Math.min(110, deltaX * 0.75)), y: 0 });
+    }
+  };
+
+  const handleMouseUp = (e: React.MouseEvent) => {
+    if (!isMouseDownRef.current || !touchStartPos.current) return;
+    const deltaX = e.clientX - touchStartPos.current.x;
+    const deltaY = e.clientY - touchStartPos.current.y;
+    const elapsed = Math.max(1, Date.now() - touchStartPos.current.time);
+    isMouseDownRef.current = false;
+    touchStartPos.current = null;
+    setIsDragging(false);
+    setDragOffset({ x: 0, y: 0 });
+
+    const velocityY = Math.abs(deltaY) / elapsed;
+    const velocityX = Math.abs(deltaX) / elapsed;
+
+    if (Math.abs(deltaY) > Math.abs(deltaX) && (Math.abs(deltaY) > 35 || velocityY > 0.22)) {
       if (deltaY < 0) {
-        handleNextDuo();
+        handleNextPublication();
       } else {
-        handlePrevDuo();
+        handlePrevPublication();
+      }
+    } else if (Math.abs(deltaX) > 35 || velocityX > 0.22) {
+      if (deltaX < 0) {
+        nextSlide();
+      } else {
+        prevSlide();
       }
     }
   };
@@ -218,11 +404,11 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
     return <div className="min-h-screen bg-white text-stone-900 flex items-center justify-center font-medium">Chargement des dialogues...</div>;
   }
 
-  if (!currentDuo) {
+  if (!currentItem) {
     return (
       <div className="min-h-[70vh] flex flex-col items-center justify-center p-6 text-center bg-white text-[#1C1917] space-y-3">
         <Film className="w-10 h-10 text-stone-300" />
-        <h3 className="font-editorial text-xl font-bold">Aucun dialogue dans cette sélection</h3>
+        <h3 className="font-editorial text-xl font-bold">Aucune publication dans cette sélection</h3>
         <p className="text-xs text-stone-500 max-w-xs">Découvrez les duos en réinitialisant vos filtres.</p>
         <button 
           onClick={() => onNavigate({ type: 'profile' })}
@@ -234,130 +420,71 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
     );
   }
 
-  const pA = currentDuo.protagonistA;
-  const pB = currentDuo.protagonistB;
+  // Cas 1 : DUO DOCUMENTAIRE
+  const currentDuo = currentItem.type === 'duo' ? currentItem.data : null;
+  const pA = currentDuo?.protagonistA;
+  const pB = currentDuo?.protagonistB;
   const activeProtagonist = slideIndex === 0 ? pA : pB;
 
-  const currentVideoUrl = (slideIndex === 0 ? pA.videoAvatarUrl : pB.videoAvatarUrl)
-    || DOCUMENTARIES.find(d => d.id === currentDuo.documentaryId)?.teaserVideoUrl
+  const currentVideoUrl = (slideIndex === 0 ? pA?.videoAvatarUrl : pB?.videoAvatarUrl)
+    || (currentDuo ? DOCUMENTARIES.find(d => d.id === currentDuo.documentaryId)?.teaserVideoUrl : undefined)
     || 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4';
 
-  const rawSeriesTitle = currentDuo.documentaryTitle || 'Dialogue en miroir';
-  const duoQuestion = currentDuo.centralQuestion || currentDuo.questionTitle || activeProtagonist.quote || 'Quelle est la leçon fondamentale que la vie vous a enseignée ?';
-  const firstName = activeProtagonist.name.split(' ')[0];
-  const firstNameA = pA.name.split(' ')[0];
-  const firstNameB = pB.name.split(' ')[0];
-
-  // Story active si en Mode Story
-  const activeThemeStory = storyModeIndex !== null ? THEMATIC_VALUES[storyModeIndex] : null;
-  const storyItem = activeThemeStory?.stories[0];
+  const rawSeriesTitle = currentDuo?.documentaryTitle || 'Dialogue en miroir';
+  const duoQuestion = currentDuo?.centralQuestion || currentDuo?.questionTitle || activeProtagonist?.quote || 'Quelle est la leçon fondamentale que la vie vous a enseignée ?';
+  const firstName = activeProtagonist?.name ? activeProtagonist.name.split(' ')[0] : '';
 
   return (
     <div 
       onWheel={handleWheel}
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
       className="w-full h-full max-h-full pb-20 sm:pb-24 pt-safe overflow-hidden flex flex-col justify-between select-none bg-white text-[#1C1917]"
     >
       
       {/* ========================================================================= */}
-      {/* 1. STORIES THÉMATIQUES & DUOS : AUCUN TEXTE SOUS LES VIGNETTES            */}
+      {/* 1. STORIES INDIVIDUELLES : 4 STORIES VISIBLES PAR DÉFAUT, SANS SCROLLBAR   */}
+      {/* Bouton "+" 2x plus petit, défilement infini fluide                         */}
       {/* ========================================================================= */}
-      <div className="w-full max-w-3xl mx-auto px-3 sm:px-4 py-1.5 sm:py-2 shrink-0 h-[68px] sm:h-[76px] flex items-center">
-        <div className="flex items-center gap-2 sm:gap-2.5 overflow-x-auto no-scrollbar py-1 px-1 w-full">
+      <div className="w-full max-w-3xl mx-auto px-3 sm:px-4 pt-2 pb-1 shrink-0 h-[68px] sm:h-[76px] flex items-center">
+        <div className="flex items-center gap-2 sm:gap-2.5 overflow-x-auto no-scrollbar py-1 px-1 w-full overscroll-x-contain touch-pan-x">
           
-          {/* Vignette 0 : "+" */}
-          <div 
+          {/* Bouton "+" deux fois plus petit, sans contour superflu */}
+          <button 
+            type="button"
             onClick={() => onNavigate({ type: 'submit_story' })}
-            className="cursor-pointer group shrink-0"
+            className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-[#A2482B] hover:bg-[#8A3B22] text-white flex items-center justify-center shrink-0 shadow-xs active:scale-95 transition-transform cursor-pointer mr-0.5"
             title="Créer une story"
           >
-            <div className="w-12 h-12 sm:w-13 sm:h-13 rounded-2xl p-0.5 border-2 border-dashed border-[#A2482B] flex items-center justify-center group-hover:scale-105 transition-transform bg-amber-50/50">
-              <div className="w-full h-full rounded-xl bg-[#A2482B] text-white flex items-center justify-center shadow-xs">
-                <Plus className="w-4.5 h-4.5" />
+            <Plus className="w-4 h-4 stroke-[2.5]" />
+          </button>
+
+          {/* Vignettes Stories Individuelles (exactement 4 visibles par défaut sur mobile, défilement horizontal infini) */}
+          {PERSON_STORIES.map((story, idx) => (
+            <div
+              key={story.id}
+              onClick={() => {
+                setStoryViewerIndex(idx);
+                setIsStoryViewerOpen(true);
+                celestialAudio.playOrbSelect();
+              }}
+              className="cursor-pointer group shrink-0"
+              title={`${story.authorName} — Story ${story.themeLabel}`}
+            >
+              <div className="w-[52px] h-[52px] sm:w-14 sm:h-14 rounded-2xl p-0.5 border border-stone-200 group-hover:border-[#A2482B] transition-all group-hover:scale-105 bg-stone-50 shadow-xs">
+                <div className="w-full h-full rounded-xl overflow-hidden bg-stone-900 relative">
+                  <img 
+                    src={story.authorAvatar} 
+                    alt="" 
+                    className="w-full h-full object-cover pointer-events-none" 
+                  />
+                </div>
               </div>
             </div>
-          </div>
-
-          {/* Vignettes Duos : DEUX VIGNETTES COLLÉES (DUO DE PROTAGONISTES) */}
-          {filteredDuos.map((duo, idx) => {
-            const isSelected = storyModeIndex === null && idx === safeIndex;
-            return (
-              <div
-                key={duo.id}
-                onClick={() => {
-                  setStoryModeIndex(null);
-                  setCurrentIndex(idx);
-                  setSlideIndex(0);
-                  celestialAudio.playOrbSelect();
-                }}
-                className="cursor-pointer group shrink-0"
-                title={`${duo.protagonistA.name} ‹ › ${duo.protagonistB.name}`}
-              >
-                <div className={`h-12 sm:h-13 rounded-2xl p-0.5 border-2 transition-all group-hover:scale-105 flex items-center gap-0.5 ${
-                  isSelected
-                    ? 'border-[#A2482B] shadow-md ring-2 ring-[#A2482B]/20 scale-105 bg-stone-100'
-                    : 'border-stone-200 hover:border-stone-400 bg-stone-50'
-                }`}>
-                  <div className="w-6 sm:w-6.5 h-full rounded-xl overflow-hidden bg-stone-900 relative">
-                    <img src={duo.protagonistA.photoUrl} alt="" className="w-full h-full object-cover" />
-                  </div>
-                  <div className="w-6 sm:w-6.5 h-full rounded-xl overflow-hidden bg-stone-900 relative">
-                    <img src={duo.protagonistB.photoUrl} alt="" className="w-full h-full object-cover" />
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-
-          {/* Vignettes Stories Personnelles (1 seule personne qui parle) */}
-          {THEMATIC_VALUES.map((theme, idx) => {
-            const hasStories = theme.stories.length > 0;
-            const isSelected = storyModeIndex === idx;
-            return (
-              <div 
-                key={theme.id}
-                onClick={() => {
-                  if (storyModeIndex === idx) {
-                    setStoryModeIndex(null);
-                  } else {
-                    setStoryModeIndex(idx);
-                    setIsPlaying(true);
-                    celestialAudio.playOrbSelect();
-                  }
-                }}
-                className="cursor-pointer group shrink-0"
-                title={`Story • ${theme.label}`}
-              >
-                <div className={`w-12 h-12 sm:w-13 sm:h-13 rounded-2xl p-0.5 border-2 transition-transform group-hover:scale-105 ${
-                  isSelected 
-                    ? 'border-amber-500 scale-105 shadow-md shadow-amber-500/20' 
-                    : hasStories 
-                      ? 'border-[#A2482B]' 
-                      : 'border-stone-200/60'
-                }`}>
-                  <div className="w-full h-full rounded-xl overflow-hidden bg-stone-900 relative">
-                    {hasStories ? (
-                      <img 
-                        src={theme.stories[0].authorAvatar} 
-                        alt={theme.label}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center bg-stone-800 text-stone-400">
-                        <Sparkles className="w-3.5 h-3.5" />
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+          ))}
         </div>
       </div>
 
       {/* ========================================================================= */}
-      {/* 2. ZONE CENTRALE : 1 PUBLICATION UNIQUE CALIBRÉE OU MODE STORY 3D JEU VIDÉO */}
+      {/* 2. ZONE CENTRALE DU FEED : DUO DOCUMENTAIRE OU CARTE À QUATRE VISAGES      */}
       {/* ========================================================================= */}
       <div className="relative flex-1 flex flex-col items-center justify-center min-h-0 py-1 px-3 sm:px-4 my-auto">
         
@@ -379,190 +506,29 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
           <ChevronRight className="w-5 h-5" />
         </button>
 
-        {/* ======================================================================= */}
-        {/* CAS A : LE MODE STORY EST ACTIVÉ (MODE 3D CARROUSEL COVERFLOW JEU VIDÉO) */}
-        {/* ======================================================================= */}
-        {storyModeIndex !== null && activeThemeStory ? (
-          <div className="relative w-full h-full flex flex-col items-center justify-center">
-            
-            {/* Bouton de sortie épuré au sommet des stories */}
-            <div className="absolute top-0 z-40 flex items-center gap-2">
-              <button
-                type="button"
-                onClick={() => setStoryModeIndex(null)}
-                className="px-3.5 py-1.5 rounded-full bg-stone-900/90 hover:bg-[#A2482B] text-white text-xs font-semibold shadow-lg backdrop-blur-md flex items-center gap-1.5 transition-all cursor-pointer active:scale-95"
-                title="Quitter les stories"
-              >
-                <X className="w-3.5 h-3.5" />
-                <span>Quitter les stories</span>
-              </button>
-            </div>
-
-            {/* SCÈNE 3D PERSPECTIVE JEU VIDÉO */}
-            <div 
-              className="relative w-full h-full flex items-center justify-center pointer-events-none mt-4"
-              style={{ perspective: '1200px', perspectiveOrigin: 'center center' }}
-            >
-              <div 
-                className="relative w-full h-full flex items-center justify-center pointer-events-none"
-                style={{ transformStyle: 'preserve-3d' }}
-              >
-                {/* Carte Précédente en 3D (si existe) */}
-                {(() => {
-                  const prevIdx = (storyModeIndex - 1 + THEMATIC_VALUES.length) % THEMATIC_VALUES.length;
-                  const prevTheme = THEMATIC_VALUES[prevIdx];
-                  const prevStory = prevTheme.stories[0];
-                  return (
-                    <div
-                      onClick={() => setStoryModeIndex(prevIdx)}
-                      className="absolute aspect-[9/16] w-[min(260px,calc(100vw-60px))] sm:w-[280px] max-h-[min(480px,calc(100dvh-240px))] rounded-3xl overflow-hidden shadow-xl border border-stone-200/60 bg-stone-900 text-white cursor-pointer pointer-events-auto transition-transform duration-300 opacity-60 hover:opacity-85"
-                      style={{
-                        transform: 'translate3d(-55%, 0, -150px) rotateY(24deg) scale(0.85)',
-                        zIndex: 10
-                      }}
-                    >
-                      <img 
-                        src={prevStory?.authorAvatar || '/assets/posters/vodun-autre-foi.png'} 
-                        alt="" 
-                        className="w-full h-full object-cover" 
-                      />
-                      <div className="absolute inset-0 bg-black/40" />
-                    </div>
-                  );
-                })()}
-
-                {/* Carte Suivante en 3D (si existe) */}
-                {(() => {
-                  const nextIdx = (storyModeIndex + 1) % THEMATIC_VALUES.length;
-                  const nextTheme = THEMATIC_VALUES[nextIdx];
-                  const nextStory = nextTheme.stories[0];
-                  return (
-                    <div
-                      onClick={() => setStoryModeIndex(nextIdx)}
-                      className="absolute aspect-[9/16] w-[min(260px,calc(100vw-60px))] sm:w-[280px] max-h-[min(480px,calc(100dvh-240px))] rounded-3xl overflow-hidden shadow-xl border border-stone-200/60 bg-stone-900 text-white cursor-pointer pointer-events-auto transition-transform duration-300 opacity-60 hover:opacity-85"
-                      style={{
-                        transform: 'translate3d(55%, 0, -150px) rotateY(-24deg) scale(0.85)',
-                        zIndex: 10
-                      }}
-                    >
-                      <img 
-                        src={nextStory?.authorAvatar || '/assets/posters/roots-routes.jpg'} 
-                        alt="" 
-                        className="w-full h-full object-cover" 
-                      />
-                      <div className="absolute inset-0 bg-black/40" />
-                    </div>
-                  );
-                })()}
-
-                {/* CARTE CENTRALE ACTIVE */}
-                <div 
-                  className="relative aspect-[9/16] w-[min(310px,calc(100vw-36px))] sm:w-[320px] max-h-[min(540px,calc(100dvh-220px))] rounded-3xl overflow-hidden shadow-2xl border border-amber-500/40 bg-[#12110F] text-white flex flex-col justify-between select-none pointer-events-auto"
-                  style={{
-                    transform: 'translate3d(0, 0, 0) scale(1)',
-                    zIndex: 20
-                  }}
-                >
-                  {/* Header Story : Thématique à gauche & Mute à droite */}
-                  <div className="relative z-20 pt-4 px-3 flex items-center justify-between gap-1 pointer-events-auto">
-                    <div className="bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/20">
-                      <span className="text-[11px] font-bold text-amber-300 tracking-wide">
-                        Story • {activeThemeStory.label}
-                      </span>
-                    </div>
-
-                    <div className="flex items-center gap-1.5">
-                      <button
-                        type="button"
-                        onClick={() => setIsMuted(m => !m)}
-                        className="w-8 h-8 rounded-xl bg-black/60 backdrop-blur-md text-white border border-white/20 flex items-center justify-center cursor-pointer hover:bg-black/80"
-                        title={isMuted ? 'Activer le son' : 'Couper le son'}
-                      >
-                        {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Média vidéo ou photo */}
-                  <div 
-                    className="absolute inset-0 z-10 cursor-pointer"
-                    onClick={() => setIsPlaying(p => !p)}
-                  >
-                    {storyItem ? (
-                      <video
-                        ref={videoRef}
-                        key={`story-video-${storyItem.id}`}
-                        src={storyItem.videoUrl}
-                        autoPlay
-                        loop
-                        muted={isMuted}
-                        playsInline
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-stone-900 flex items-center justify-center">
-                        <Sparkles className="w-10 h-10 text-amber-400" />
-                      </div>
-                    )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30 pointer-events-none" />
-                  </div>
-
-                  {/* Flanc Droit : Question et Partage */}
-                  <div className="absolute right-2.5 bottom-16 z-30 flex flex-col items-center gap-2 pointer-events-auto">
-                    <button
-                      onClick={() => setShowStoryQuestion(true)}
-                      className="w-8 h-8 rounded-xl bg-black/60 backdrop-blur-md text-white hover:bg-[#A2482B] border border-white/15 flex items-center justify-center transition-all cursor-pointer shadow-sm group"
-                      title="Consulter la question de la story"
-                    >
-                      <HelpCircle className="w-4 h-4 text-amber-300" />
-                    </button>
-                    <button
-                      onClick={() => setShareModalItem({ title: `Story ${activeThemeStory.label}`, id: activeThemeStory.id })}
-                      className="w-8 h-8 rounded-xl bg-black/60 backdrop-blur-md text-white hover:bg-[#A2482B] border border-white/15 flex items-center justify-center transition-all cursor-pointer shadow-sm group"
-                      title="Partager"
-                    >
-                      <ShareIcon className="w-4 h-4" />
-                    </button>
-                  </div>
-
-                  {/* Bas de Story : Prénom */}
-                  <div className="relative z-20 p-4 space-y-0.5 pointer-events-none">
-                    <h2 className="text-xl sm:text-2xl font-bold text-white tracking-wide">
-                      {storyItem?.authorName.split(' ')[0] || activeThemeStory.label}
-                    </h2>
-                  </div>
-
-                  {/* Tiroir Question */}
-                  {showStoryQuestion && (
-                    <div 
-                      className="absolute inset-x-0 bottom-0 z-40 bg-white text-stone-900 rounded-t-3xl p-4 shadow-2xl animate-in slide-in-from-bottom duration-200 space-y-2 select-text"
-                      onClick={e => e.stopPropagation()}
-                    >
-                      <div className="flex items-center justify-between pb-1 border-b border-stone-100">
-                        <span className="text-xs font-bold text-[#A2482B] uppercase tracking-wider">
-                          Thématique : {activeThemeStory.label}
-                        </span>
-                        <button 
-                          onClick={() => setShowStoryQuestion(false)}
-                          className="p-1 rounded-full text-stone-400 hover:text-stone-700"
-                        >
-                          <X className="w-4 h-4" />
-                        </button>
-                      </div>
-                      <p className="text-xs sm:text-sm font-semibold text-stone-800 leading-relaxed">
-                        « {storyItem?.question || activeThemeStory.question || `Racontez comment dans votre vie une expérience vous a appris la valeur de ${activeThemeStory.label.toLowerCase()}.`} »
-                      </p>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        ) : (
-          /* ======================================================================= */
-          /* CAS B : PUBLICATION NORMALE (DUO EN 3 VOLETS)                           */
-          /* ======================================================================= */
-          <div className="relative aspect-[9/16] w-[min(310px,calc(100vw-36px))] sm:w-[320px] max-h-[min(540px,calc(100dvh-220px))] rounded-3xl overflow-hidden shadow-2xl border border-stone-200/90 bg-[#12110F] text-white flex flex-col justify-between select-none">
+        {/* BRANCHE A : CARTE À QUATRE VISAGES (PAR INTERMITTENCE) */}
+        {currentItem.type === 'four_faces' ? (
+          <FourFacesCard
+            publication={currentItem.data}
+            isActive={!isStoryViewerOpen}
+            onComplete={handleNextPublication}
+          />
+        ) : currentDuo && pA && pB && activeProtagonist ? (
+          /* BRANCHE B : DUO DOCUMENTAIRE CLASSIQUE (3 SÉQUENCES : A, B, CURSEUR 0-100) */
+          <div 
+            onTouchStart={handleCardTouchStart}
+            onTouchMove={handleCardTouchMove}
+            onTouchEnd={handleCardTouchEnd}
+            onTouchCancel={() => { touchStartPos.current = null; setIsDragging(false); setDragOffset({ x: 0, y: 0 }); }}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            style={{
+              transform: dragOffset.x !== 0 || dragOffset.y !== 0 ? `translate3d(${dragOffset.x}px, ${dragOffset.y}px, 0)` : undefined,
+              transition: isDragging ? 'none' : 'transform 0.26s cubic-bezier(0.16, 1, 0.3, 1)'
+            }}
+            className="relative aspect-[9/16] w-[min(calc(100vw-64px),calc((100dvh-230px)*9/16))] max-w-[228px] sm:max-w-[270px] md:max-w-[290px] h-[min(410px,calc(100dvh-230px))] sm:h-[min(480px,calc(100dvh-200px))] md:h-[min(520px,calc(100dvh-180px))] rounded-2xl sm:rounded-3xl overflow-hidden border border-stone-200/90 bg-[#12110F] text-white flex flex-col justify-between select-none touch-none cursor-grab active:cursor-grabbing"
+          >
             
             {/* VOLET 1 (PROTAGONISTE A) ET VOLET 2 (PROTAGONISTE B) */}
             {slideIndex !== 2 ? (
@@ -571,11 +537,11 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                 <div className="relative z-20 pt-3.5 px-3 flex items-center justify-between gap-1 pointer-events-auto">
                   <div className="inline-flex w-fit items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 shadow-md max-w-[75%]">
                     <span className="font-editorial text-xs font-semibold text-white whitespace-nowrap tracking-wide select-none truncate">
-                      {rawSeriesTitle}
+                      {formatFirstLetterOnly(rawSeriesTitle)}
                     </span>
                   </div>
 
-                  {/* Bouton Télé Vintage de Lecture en haut à droite */}
+                  {/* Bouton Télé Vintage de Lecture en haut à droite — SEUL DÉCLENCHEUR DE LA VIDÉO */}
                   <button
                     type="button"
                     onClick={(e) => {
@@ -593,11 +559,8 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                   </button>
                 </div>
 
-                {/* MEDIA DE FOND : L'IMAGE S'EFFACE POUR LA VIDÉO LORS DE LA LECTURE */}
-                <div 
-                  className="absolute inset-0 z-10 cursor-pointer"
-                  onClick={() => setIsPlaying(p => !p)}
-                >
+                {/* MEDIA DE FOND : UNIQUEMENT DÉCLENCHÉ PAR LA TÉLÉ VINTAGE (AUCUN CLIC PARASITE) */}
+                <div className="absolute inset-0 z-10 overflow-hidden pointer-events-none">
                   {isPlaying ? (
                     <video
                       ref={videoRef}
@@ -607,23 +570,48 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       loop
                       muted={isMuted}
                       playsInline
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover pointer-events-none"
                     />
                   ) : (
-                    <img 
-                      src={activeProtagonist.photoUrl} 
+                    <img
+                      src={activeProtagonist.photoUrl}
                       alt={activeProtagonist.name}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover pointer-events-none"
                     />
                   )}
-
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none" />
+                  {/* Voiles pour contraste */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/40 pointer-events-none" />
                 </div>
 
-                {/* COLONNE D'ICÔNES LATÉRALE DROITE : SQUIRCLES (rounded-xl) */}
-                <div className="absolute right-2.5 bottom-16 z-30 flex flex-col items-center gap-2 pointer-events-auto">
-                  
-                  {/* 1. Icône Question Documentaire */}
+                {/* COLONNE D'ACTIONS LATÉRALE DROITE (5 ICÔNES ÉPURÉES AVEC SWIPE ARRONDI) */}
+                <div className="absolute right-2.5 sm:right-3 top-1/2 -translate-y-1/2 z-30 flex flex-col items-center gap-2 pointer-events-auto">
+                  {/* 1. Mute toggle si vidéo */}
+                  {isPlaying && (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setIsMuted(m => !m);
+                      }}
+                      className="w-8 h-8 rounded-xl bg-black/60 backdrop-blur-md text-white hover:bg-[#A2482B] border border-white/15 flex items-center justify-center transition-all cursor-pointer shadow-sm group"
+                      title={isMuted ? 'Activer le son' : 'Couper le son'}
+                    >
+                      {isMuted ? <span className="text-xs">🔇</span> : <span className="text-xs">🔊</span>}
+                    </button>
+                  )}
+
+                  {/* 2. Icône Swipe aux flèches arrondies (haut/bas entre publications, gauche/droite entre protagonistes) */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      nextSlide();
+                    }}
+                    className="w-8 h-8 rounded-xl bg-black/60 backdrop-blur-md text-white hover:bg-[#A2482B] border border-white/15 flex items-center justify-center transition-all cursor-pointer shadow-sm group"
+                    title="Changer de séquence ou swiper haut/bas pour changer de publication"
+                  >
+                    <RoundedSwipeArrowsIcon className="w-4 h-4 text-white group-hover:scale-110 transition-transform" />
+                  </button>
+
+                  {/* 3. Icône Question Documentaire */}
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
@@ -632,22 +620,10 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                     className="w-8 h-8 rounded-xl bg-black/60 backdrop-blur-md text-white hover:bg-[#A2482B] border border-white/15 flex items-center justify-center transition-all cursor-pointer shadow-sm group"
                     title="Question documentaire"
                   >
-                    <BookOpen className="w-3.5 h-3.5 text-white group-hover:scale-110 transition-transform" />
+                    <BookOpen className="w-4 h-4 text-white group-hover:scale-110 transition-transform" />
                   </button>
 
-                  {/* 2. Icône Échange ⇄ */}
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      goToSlide(slideIndex === 0 ? 1 : 0);
-                    }}
-                    className="w-8 h-8 rounded-xl bg-black/60 backdrop-blur-md text-white hover:bg-[#A2482B] border border-white/15 flex items-center justify-center transition-all cursor-pointer shadow-sm group"
-                    title={slideIndex === 0 ? `Voir ${firstNameB}` : `Voir ${firstNameA}`}
-                  >
-                    <span className="font-bold text-xs tracking-tight">⇄</span>
-                  </button>
-
-                  {/* 3. Icône Portrait Solo : ouvre la page portrait de CETTE personne */}
+                  {/* 4. Icône Portrait Solo */}
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
@@ -659,7 +635,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                     <ProfileSoloIcon className="w-4 h-4 text-white group-hover:scale-110 transition-transform" />
                   </button>
 
-                  {/* 4. Icône Partage : l'ancienne icône flèche ascendante + arche */}
+                  {/* 5. Icône Partage */}
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
@@ -672,15 +648,29 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                   </button>
                 </div>
 
-                {/* BAS DE CARTE ÉPURÉ : UNIQUEMENT LE PRÉNOM */}
-                <div className="relative z-20 p-4 space-y-0.5 pointer-events-none">
-                  <h2 className="text-xl sm:text-2xl font-bold text-white tracking-wide">
+                {/* BAS DE CARTE ÉPURÉ : PRÉNOM EN BAS À GAUCHE & CURSEUR EN DESSOUS SANS DÉPLACEMENT DU NOM */}
+                <div className="absolute bottom-3.5 sm:bottom-4 left-3.5 sm:left-4 z-20 pointer-events-none flex flex-col items-start">
+                  <h2 className="font-editorial text-base sm:text-lg font-bold text-white tracking-wide drop-shadow-md truncate max-w-[170px] sm:max-w-[210px] leading-tight">
                     {firstName}
                   </h2>
+
+                  {/* Hauteur réservée fixe : le nom ne bouge JAMAIS lorsque le curseur apparaît */}
+                  <div className="h-2 flex items-center mt-1">
+                    <div 
+                      className={`w-24 sm:w-28 h-1 bg-white/25 rounded-full overflow-hidden shadow-xs transition-opacity duration-200 ${
+                        isPlaying ? 'opacity-100' : 'opacity-0'
+                      }`}
+                    >
+                      <div 
+                        className="h-full bg-white transition-all duration-100 rounded-full"
+                        style={{ width: `${Math.max(2, Math.min(100, videoProgress))}%` }}
+                      />
+                    </div>
+                  </div>
                 </div>
               </>
             ) : (
-              /* VOLET 3 : LE FACE-À-FACE ET LE CURSEUR 50/50 ÉPURÉ */
+              /* VOLET 3 : LE FACE-À-FACE ET LE CURSEUR D'ÉVALUATION 0-100 ÉPURÉ */
               <ResonanceFaceToFaceCard
                 protagonistA={pA}
                 protagonistB={pB}
@@ -692,12 +682,23 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
             )}
 
           </div>
-        )}
+        ) : null}
 
       </div>
 
       {/* ========================================================================= */}
-      {/* 3. MODALES : QUESTION ET PARTAGE                                         */}
+      {/* 3. VISIONNEUSE DE STORIES EN CARROUSEL 3D (STYLE PAGE STUDIO, 64s MAX)     */}
+      {/* ========================================================================= */}
+      <StoriesStudioCoverflow
+        stories={PERSON_STORIES}
+        initialIndex={storyViewerIndex}
+        isOpen={isStoryViewerOpen}
+        onClose={() => setIsStoryViewerOpen(false)}
+        onNavigateToDuo={handleGatewayToDuo}
+      />
+
+      {/* ========================================================================= */}
+      {/* 4. MODALES : QUESTION ET PARTAGE                                         */}
       {/* ========================================================================= */}
       {showQuestionModal && (
         <div 

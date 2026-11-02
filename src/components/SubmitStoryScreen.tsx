@@ -21,6 +21,7 @@ import { TvPlayerIcon } from './YonywoodBrandIcons';
 import { celestialAudio } from '../utils/celestialAudio';
 import { useAuth } from '../services/authContext';
 import { saveUserVideoSubmission } from '../utils/userVideoService';
+import { formatFirstLetterOnly } from '../utils/textFormatters';
 
 export interface TaggedCollaborator {
   id: string;
@@ -1328,7 +1329,7 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                       pointerEvents,
                       transition: isDraggingRef.current ? 'none' : 'transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.24s ease'
                     }}
-                    className={`absolute aspect-[9/16] w-[min(calc(100vw-64px),calc((100dvh-230px)*9/16))] max-w-[228px] sm:max-w-[270px] md:max-w-[290px] h-[min(410px,calc(100dvh-230px))] sm:h-[min(480px,calc(100dvh-200px))] md:h-[min(520px,calc(100dvh-180px))] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl flex flex-col justify-between p-3 sm:p-4 cursor-pointer select-none bg-[#151513] text-white border transition-colors ${
+                    className={`absolute aspect-[9/16] w-[min(calc(100vw-64px),calc((100dvh-230px)*9/16))] max-w-[228px] sm:max-w-[270px] md:max-w-[290px] h-[min(410px,calc(100dvh-230px))] sm:h-[min(480px,calc(100dvh-200px))] md:h-[min(520px,calc(100dvh-180px))] rounded-2xl sm:rounded-3xl overflow-hidden flex flex-col justify-between p-3 sm:p-4 cursor-pointer select-none bg-[#151513] text-white border transition-colors ${
                       isCenter ? 'border-stone-200/90 ring-1 ring-white/30' : 'border-white/15'
                     }`}
                   >
@@ -1364,12 +1365,14 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                     {/* HAUT : Badge Titre à gauche + Télévision lecteur à droite */}
                     {/* ========================================================= */}
                     <div className="relative z-10 flex items-center justify-between gap-1.5 pointer-events-auto w-full min-w-0">
-                      <span 
-                        className="inline-flex items-center px-2.5 sm:px-3 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-[10px] sm:text-[11px] font-semibold tracking-wide text-white shadow-sm shrink-0 whitespace-nowrap leading-none select-none max-w-[calc(100%-80px)] truncate"
-                        title={item.title}
-                      >
-                        {item.title}
-                      </span>
+                      <div className="inline-flex w-fit items-center px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 shadow-md max-w-[calc(100%-80px)]">
+                        <span 
+                          className="font-editorial text-xs font-semibold text-white whitespace-nowrap tracking-wide select-none truncate"
+                          title={item.title}
+                        >
+                          {formatFirstLetterOnly(item.title)}
+                        </span>
+                      </div>
 
                       {/* Déclencheur lecteur vidéo « Petite Télé » en haut à droite */}
                       <div 

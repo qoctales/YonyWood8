@@ -25,6 +25,7 @@ import {
 } from 'lucide-react';
 import { ShareIcon } from './ShareIcon';
 import { SingleAlveoleIcon, ProfileSoloIcon, TvPlayerIcon, ProfilePhotoTvFrame } from './YonywoodBrandIcons';
+import { formatFirstLetterOnly } from '../utils/textFormatters';
 import { ViewScreen } from '../types';
 import { DUOS, DOCUMENTARIES, PROTAGONISTS } from '../data/mockData';
 
@@ -593,8 +594,8 @@ export const UniverseDimensionPage: React.FC<UniverseDimensionPageProps> = ({
 
                   {/* Top Badges */}
                   <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-10">
-                    <span className="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-xs text-white text-[10px] font-bold tracking-wide uppercase border border-white/20">
-                      {item.seriesTitle}
+                    <span className="px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 font-editorial text-xs font-semibold text-white tracking-wide shadow-md">
+                      {formatFirstLetterOnly(item.seriesTitle)}
                     </span>
                     <div className="flex items-center gap-2">
                       <span className="px-2.5 py-1 rounded-full bg-[#C89B3C] text-[#FFFFFF] text-[10px] font-bold shadow-xs">
@@ -1306,8 +1307,8 @@ export const UniverseDimensionPage: React.FC<UniverseDimensionPageProps> = ({
 
                   {/* Top Badge & Déclencheur Vidéo */}
                   <div className="absolute top-4 inset-x-4 flex justify-between items-center z-10">
-                    <span className="px-2.5 py-1 rounded-full bg-black/70 backdrop-blur-xs text-white text-[10px] font-bold tracking-wide uppercase border border-white/20">
-                      Vidéo de Présentation Principale
+                    <span className="px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 font-editorial text-xs font-semibold text-white tracking-wide shadow-md">
+                      {formatFirstLetterOnly('Vidéo de présentation principale')}
                     </span>
                     <button
                       type="button"

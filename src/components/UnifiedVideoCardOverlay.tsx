@@ -13,6 +13,7 @@ import { TvPlayerIcon, ProfileSoloIcon } from './YonywoodBrandIcons';
 import { ShareIcon } from './ShareIcon';
 import { VideoCardShareModal } from './VideoCardShareModal';
 import { blockVideo } from '../utils/blockedContent';
+import { formatFirstLetterOnly } from '../utils/textFormatters';
 
 export interface UnifiedVideoCardOverlayProps {
   // Identifiant optionnel pour le blocage effectif
@@ -21,11 +22,15 @@ export interface UnifiedVideoCardOverlayProps {
   // Haut gauche
   titleBadge: string;
   badgeIcon?: React.ReactNode;
+  subBadgeText?: string;
 
   // Bas gauche
   displayName: string;
   preserveFullName?: boolean;
   roleSubtitle?: string;
+
+  // Video progress
+  videoProgress?: number;
 
   // Lecteur vidéo en haut à droite
   isPlaying: boolean;
@@ -70,9 +75,11 @@ export const UnifiedVideoCardOverlay: React.FC<UnifiedVideoCardOverlayProps> = (
   videoId,
   titleBadge,
   badgeIcon,
+  subBadgeText,
   displayName,
   preserveFullName = false,
   roleSubtitle,
+  videoProgress = 0,
   isPlaying,
   onTogglePlay,
   isMuted = false,
@@ -138,11 +145,16 @@ export const UnifiedVideoCardOverlay: React.FC<UnifiedVideoCardOverlayProps> = (
       {/* =================================================================== */}
       {/* HAUT GAUCHE : TITRE / THÉMATIQUE / ENTREPRISE (BADGE ÉPURÉ)        */}
       {/* =================================================================== */}
-      <div className="absolute top-3 sm:top-3.5 left-3 sm:left-3.5 z-20 pointer-events-auto max-w-[calc(100%-80px)]">
-        <div className="px-2.5 sm:px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-[10px] sm:text-[11px] font-semibold text-white tracking-wide shadow-md flex items-center gap-1.5 truncate">
+      <div className="absolute top-3.5 left-3.5 z-20 pointer-events-auto max-w-[calc(100%-80px)] flex flex-col items-start gap-1">
+        <div className="px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 font-editorial text-xs font-semibold text-white tracking-wide shadow-md flex items-center gap-1.5 truncate max-w-full">
           {badgeIcon && <span className="shrink-0">{badgeIcon}</span>}
-          <span className="truncate">{titleBadge}</span>
+          <span className="truncate">{formatFirstLetterOnly(titleBadge)}</span>
         </div>
+        {subBadgeText && (
+          <div className="px-2.5 py-0.5 rounded-full bg-black/55 backdrop-blur-md border border-white/15 text-[10px] sm:text-[10.5px] font-semibold text-[#FFE7A3] tracking-wide shadow-xs flex items-center gap-1 truncate max-w-full">
+            <span className="truncate">{subBadgeText}</span>
+          </div>
+        )}
       </div>
 
       {/* =================================================================== */}
@@ -271,17 +283,32 @@ export const UnifiedVideoCardOverlay: React.FC<UnifiedVideoCardOverlayProps> = (
       </div>
 
       {/* =================================================================== */}
-      {/* BAS GAUCHE : PRÉNOM EN ENTIER (SANS TRONCATURE PAR POINTS DE SUSPENSION) */}
+      {/* BAS GAUCHE : PRÉNOM / NOM POSITIONNÉ DE FAÇON UNIFORME               */}
       {/* =================================================================== */}
-      <div className={`absolute bottom-2.5 sm:bottom-3.5 left-2.5 sm:left-3.5 ${showCastingScore || castingScore !== undefined ? 'right-20 sm:right-24' : 'right-10 sm:right-12'} z-20 pointer-events-auto`}>
-        <h3 className="font-editorial text-[13px] min-[380px]:text-[14px] sm:text-[16px] md:text-[18px] font-semibold text-white tracking-normal leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] whitespace-normal break-words">
-          {preserveFullName ? displayName : cleanDisplayName}
-        </h3>
+      <div className="absolute bottom-3.5 sm:bottom-4 left-3.5 sm:left-4 z-20 pointer-events-none flex flex-col items-start">
+        {displayName ? (
+          <h3 className="font-editorial text-base sm:text-lg font-bold text-white tracking-wide leading-tight drop-shadow-md truncate max-w-[170px] sm:max-w-[210px]">
+            {preserveFullName ? displayName : cleanDisplayName}
+          </h3>
+        ) : null}
         {roleSubtitle && (
           <p className="text-[10px] sm:text-xs text-stone-300 font-medium tracking-wide drop-shadow-md truncate mt-0.5">
             {roleSubtitle}
           </p>
         )}
+        {/* Hauteur réservée fixe : le nom ne bouge JAMAIS lorsque le curseur apparaît */}
+        <div className="h-2 flex items-center mt-1">
+          <div 
+            className={`w-24 sm:w-28 h-1 bg-white/25 rounded-full overflow-hidden shadow-xs transition-opacity duration-200 ${
+              isPlaying ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
+            <div 
+              className="h-full bg-white transition-all duration-100 rounded-full"
+              style={{ width: `${Math.max(2, Math.min(100, videoProgress))}%` }}
+            />
+          </div>
+        </div>
       </div>
 
       {/* =================================================================== */}
