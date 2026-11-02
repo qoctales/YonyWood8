@@ -7,8 +7,8 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="YonyWood" />
-    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/svg+xml" href="/yonywood-icone.svg" />
+    <link rel="apple-touch-icon" href="/yonywood-icone.svg" />
     <link rel="manifest" href="/manifest.json" />
     <title>YonyWood — Des histoires qui nous relient</title>
     <meta name="description" content="Réseau documentaire vivant — Des histoires qui nous relient. Deux univers, une même question, une même forêt." />
@@ -19,6 +19,25 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+      /* Suppression radicale et universelle des barres de défilement mobiles WebKit/Blink/Gecko */
+      *::-webkit-scrollbar,
+      *::-webkit-scrollbar-thumb,
+      *::-webkit-scrollbar-track,
+      *::-webkit-scrollbar-corner {
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
+        background: transparent !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        -webkit-appearance: none !important;
+      }
+      *, *::before, *::after {
+        -ms-overflow-style: none !important;
+        scrollbar-width: none !important;
+      }
+    </style>
     <script>
       (function() {
         // Intercept Vite HMR WebSocket in container preview environment to avoid connection closure errors

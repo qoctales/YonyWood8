@@ -27,8 +27,8 @@ const QUADRANT_POSITIONS = [
   'col-start-2 row-start-2', // 4. Bas à droite
 ];
 
-// Durée de 16 secondes par participant (environ 16s x 4 = 64s au total)
-const STEP_DURATION_SECONDS = 16;
+// Durée de 8 secondes par participant (8s x 4 = 32s au total)
+const STEP_DURATION_SECONDS = 8;
 
 export const FourFacesCard: React.FC<FourFacesCardProps> = ({
   publication,
@@ -37,14 +37,15 @@ export const FourFacesCard: React.FC<FourFacesCardProps> = ({
 }) => {
   // Index de la séquence en cours (0: Haut-gauche, 1: Haut-droite, 2: Bas-gauche, 3: Bas-droite)
   const [activeStep, setActiveStep] = useState<0 | 1 | 2 | 3>(0);
-  // Temps écoulé dans la séquence courante (0 à 16 secondes)
+  // Temps écoulé dans la séquence courante (0 à 8 secondes)
   const [stepElapsed, setStepElapsed] = useState<number>(0);
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
   const [isMuted, setIsMuted] = useState<boolean>(true);
   const [isCompleted, setIsCompleted] = useState<boolean>(false);
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const timerRef = useRef<any>(null);
+  const activeStepRef = useRef<0 | 1 | 2 | 3>(0);
+  activeStepRef.current = activeStep;
 
   const currentParticipant: FourFacesParticipant = publication.participants[activeStep] || publication.participants[0];
   const activeFirstName = currentParticipant?.firstName || '';
@@ -62,42 +63,40 @@ export const FourFacesCard: React.FC<FourFacesCardProps> = ({
     }
   }, [isActive, publication.id]);
 
-  // Horloge de la séquence de 16 secondes par personne (64s au total)
-  // Progression ordonnée : 1. Haut-gauche -> 2. Haut-droite -> 3. Bas-gauche -> 4. Bas-droite
+  // Horloge de la séquence des 4 participants (8s par personne = 32s au total)
+  // Progression ordonnée stricte : 0 (Haut-gauche) -> 1 (Haut-droite) -> 2 (Bas-gauche) -> 3 (Bas-droite)
   useEffect(() => {
     if (!isPlaying || !isActive || isCompleted) {
-      if (timerRef.current) clearInterval(timerRef.current);
       return;
     }
 
-    timerRef.current = setInterval(() => {
+    const timer = setInterval(() => {
       setStepElapsed(prev => {
         const nextTime = prev + 0.1;
-        // 16 secondes par étape
         if (nextTime >= STEP_DURATION_SECONDS) {
-          // Passer à la personne suivante dans l'ordre strict : 0 -> 1 -> 2 -> 3
-          setActiveStep(currentStep => {
-            if (currentStep < 3) {
-              const nextStep = (currentStep + 1) as 0 | 1 | 2 | 3;
-              celestialAudio.playOrbSelect();
-              return nextStep;
-            } else {
-              // Fin des 4 cartes (4 x 16s = 64s)
-              setIsCompleted(true);
-              setIsPlaying(false);
+          const current = activeStepRef.current;
+          if (current < 3) {
+            // Passer au participant suivant (0 -> 1, 1 -> 2, 2 -> 3)
+            const nextStep = (current + 1) as 0 | 1 | 2 | 3;
+            activeStepRef.current = nextStep;
+            setActiveStep(nextStep);
+            celestialAudio.playOrbSelect();
+            return 0;
+          } else {
+            // Le 4ème participant (index 3) a joué l'intégralité de sa vidéo (8s)
+            setIsCompleted(true);
+            setIsPlaying(false);
+            setTimeout(() => {
               onComplete?.();
-              return currentStep;
-            }
-          });
-          return 0;
+            }, 500);
+            return STEP_DURATION_SECONDS;
+          }
         }
         return nextTime;
       });
     }, 100);
 
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
+    return () => clearInterval(timer);
   }, [isPlaying, isActive, isCompleted, onComplete]);
 
   // Relance de la vidéo lors d'un changement d'étape
@@ -112,6 +111,7 @@ export const FourFacesCard: React.FC<FourFacesCardProps> = ({
 
   const handleRestart = (e: React.MouseEvent) => {
     e.stopPropagation();
+    activeStepRef.current = 0;
     setActiveStep(0);
     setStepElapsed(0);
     setIsCompleted(false);
@@ -121,6 +121,7 @@ export const FourFacesCard: React.FC<FourFacesCardProps> = ({
 
   const handleSelectParticipant = (idx: 0 | 1 | 2 | 3, e: React.MouseEvent) => {
     e.stopPropagation();
+    activeStepRef.current = idx;
     setActiveStep(idx);
     setStepElapsed(0);
     setIsCompleted(false);
@@ -129,7 +130,7 @@ export const FourFacesCard: React.FC<FourFacesCardProps> = ({
   };
 
   return (
-    <div className="relative aspect-[9/16] w-[min(calc(100vw-56px),calc((100dvh-215px)*9/16))] max-w-[240px] sm:max-w-[276px] md:max-w-[298px] h-[min(425px,calc(100dvh-215px))] sm:h-[min(490px,calc(100dvh-190px))] md:h-[min(530px,calc(100dvh-170px))] rounded-2xl sm:rounded-3xl overflow-hidden border border-[#C86747]/60 bg-gradient-to-b from-[#A84A2C] via-[#943F24] to-[#7B321B] text-white flex flex-col justify-between select-none shadow-2xl">
+    <div className="relative aspect-[9/16] w-[min(calc(100vw-64px),calc((100dvh-230px)*9/16))] max-w-[228px] sm:max-w-[270px] md:max-w-[290px] h-[min(410px,calc(100dvh-230px))] sm:h-[min(480px,calc(100dvh-200px))] md:h-[min(520px,calc(100dvh-180px))] rounded-2xl sm:rounded-3xl overflow-hidden border border-[#C86747]/60 bg-gradient-to-b from-[#A84A2C] via-[#943F24] to-[#7B321B] text-white flex flex-col justify-between select-none shadow-2xl">
       
       {/* Halo lumineux chaleureux en fond terracotta */}
       <div 

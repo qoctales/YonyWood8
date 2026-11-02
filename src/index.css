@@ -23,6 +23,9 @@
     --color-terracotta: #A2482B;
     --color-terracotta-hover: #8A3B22;
 
+    /* Fond d'en-tête chaleureux (Logo YonyWood + Stories) */
+    --color-header-bg: #F7EFE6;
+
     /* Design tokens Lumières & Organisation */
     --gold: #c9962b;
     --terracotta: #944f32;
@@ -224,15 +227,61 @@
     animation: none !important;
     transition: none !important;
   }
-}/* Utilitaires de défilement masqué multi-navigateurs (iOS, Android, Chrome, Safari, Firefox) */
-.no-scrollbar::-webkit-scrollbar {
+}
+
+/* Utilitaires de défilement masqué multi-navigateurs (iOS, Android, Chrome, Safari, Firefox) */
+*::-webkit-scrollbar,
+*::-webkit-scrollbar-thumb,
+*::-webkit-scrollbar-track,
+*::-webkit-scrollbar-corner,
+.no-scrollbar::-webkit-scrollbar,
+.no-scrollbar::-webkit-scrollbar-thumb,
+.no-scrollbar::-webkit-scrollbar-track,
+[class*="overflow-x-auto"]::-webkit-scrollbar,
+[class*="overflow-x-auto"]::-webkit-scrollbar-thumb,
+[class*="overflow-x-auto"]::-webkit-scrollbar-track,
+[class*="overflow-y-auto"]::-webkit-scrollbar,
+[class*="overflow-y-auto"]::-webkit-scrollbar-thumb,
+[class*="overflow-y-auto"]::-webkit-scrollbar-track {
   display: none !important;
   width: 0 !important;
   height: 0 !important;
+  background: transparent !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  -webkit-appearance: none !important;
 }
 
-.no-scrollbar {
+*,
+.no-scrollbar,
+[class*="overflow-x-auto"],
+[class*="overflow-y-auto"] {
   -ms-overflow-style: none !important;
   scrollbar-width: none !important;
-  -webkit-overflow-scrolling: touch;
+  -webkit-overflow-scrolling: auto !important;
 }
+
+/* Logo officiel YonyWood — Redimensionnement réactif fluide via clamp() */
+.yonywood-header-logo {
+  /* Mobile (< 600px) : 55 à 60 % de la largeur, max 240px (hauteur 44 à 48px) */
+  width: clamp(215px, 58vw, 240px);
+  height: auto;
+  aspect-ratio: 2046 / 420;
+  max-width: 100%;
+}
+
+@media (min-width: 600px) {
+  /* Tablette (600 à 1024px) : 260 à 300px (hauteur 54 à 60px) */
+  .yonywood-header-logo {
+    width: clamp(260px, 32vw, 300px);
+  }
+}
+
+@media (min-width: 1024px) {
+  /* Web / Desktop (> 1024px) : 280 à 320px (hauteur 58 à 66px) */
+  .yonywood-header-logo {
+    width: clamp(285px, 22vw, 320px);
+  }
+}
+
+

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 32 2046 420" width="2046" height="420" role="img" aria-label="YonyWood">
+  <g fill="none" stroke-width="36" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Yony (Crème sur fond terracotta ou foncé) -->
+    <g stroke="#FFF6EC">
+      <path d="M59 90V135A59 59 0 0 0 177 135V90M177 135V270A30 30 0 0 1 147 300H59"/>
+      <circle cx="335" cy="226" r="75" transform="translate(41 0)"/>
+      <path d="M492 300V210A59 59 0 0 1 610 210V300" transform="translate(83 0)"/>
+      <path d="M693 150V242A59 59 0 0 0 811 242V150M811 242V365A29 29 0 0 1 782 394H693" transform="translate(124 0)"/>
+    </g>
+    <!-- Wood (Crème) -->
+    <g stroke="#FFF6EC">
+      <path d="M930 90V252A47.5 47.5 0 0 0 1025 252V150M1025 252A47.5 47.5 0 0 0 1120 252V90" transform="translate(167 0)"/>
+      <g transform="translate(207 0)" stroke-width="28">
+        <rect x="1200" y="148" width="312" height="156" rx="20"/>
+        <line x1="1356" y1="148" x2="1356" y2="304"/>
+        <line x1="1245" y1="304" x2="1216" y2="352"/>
+        <line x1="1467" y1="304" x2="1496" y2="352"/>
+      </g>
+      <g transform="translate(247 0)">
+        <circle cx="1665" cy="226" r="75"/>
+        <path d="M1740 90V300"/>
+      </g>
+    </g>
+  </g>
+  <!-- Yeux de la télé-robot (Crème sur fond foncé ou Terracotta si applicable) -->
+  <g fill="#FFF6EC" transform="translate(207 0)">
+    <circle cx="1277" cy="226" r="19"/>
+    <circle cx="1435" cy="226" r="19"/>
+  </g>
+</svg>

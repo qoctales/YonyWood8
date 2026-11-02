@@ -440,45 +440,55 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
     >
       
       {/* ========================================================================= */}
-      {/* 1. STORIES INDIVIDUELLES : 4 STORIES VISIBLES PAR DÉFAUT, SANS SCROLLBAR   */}
-      {/* Bouton "+" 2x plus petit, défilement infini fluide                         */}
+      {/* 1. EN-TÊTE STORIES : FOND BEIGE #F7EFE6 PLEINE LARGEUR & COINS ARRONDIS    */}
       {/* ========================================================================= */}
-      <div className="w-full max-w-3xl mx-auto px-3 sm:px-4 pt-2 pb-1 shrink-0 h-[68px] sm:h-[76px] flex items-center">
-        <div className="flex items-center gap-2 sm:gap-2.5 overflow-x-auto no-scrollbar py-1 px-1 w-full overscroll-x-contain touch-pan-x">
-          
-          {/* Bouton "+" deux fois plus petit, sans contour superflu */}
-          <button 
-            type="button"
-            onClick={() => onNavigate({ type: 'submit_story' })}
-            className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-[#A2482B] hover:bg-[#8A3B22] text-white flex items-center justify-center shrink-0 shadow-xs active:scale-95 transition-transform cursor-pointer mr-0.5"
-            title="Créer une story"
+      <div 
+        className="w-full shrink-0 z-30 rounded-b-[22px]"
+        style={{ 
+          backgroundColor: 'var(--color-header-bg, #F7EFE6)',
+          boxShadow: '0 2px 12px rgba(46, 27, 20, 0.06)' 
+        }}
+      >
+        <div className="w-full max-w-3xl mx-auto px-3 sm:px-4 pt-1 pb-2 shrink-0 h-[68px] sm:h-[76px] flex items-center overflow-hidden">
+          <div 
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'auto' }}
+            className="flex items-center gap-2 sm:gap-2.5 overflow-x-auto no-scrollbar py-1 px-1 pb-5 -mb-4 w-full overscroll-x-contain touch-pan-x"
           >
-            <Plus className="w-4 h-4 stroke-[2.5]" />
-          </button>
-
-          {/* Vignettes Stories Individuelles (exactement 4 visibles par défaut sur mobile, défilement horizontal infini) */}
-          {PERSON_STORIES.map((story, idx) => (
-            <div
-              key={story.id}
-              onClick={() => {
-                setStoryViewerIndex(idx);
-                setIsStoryViewerOpen(true);
-                celestialAudio.playOrbSelect();
-              }}
-              className="cursor-pointer group shrink-0"
-              title={`${story.authorName} — Story ${story.themeLabel}`}
+            
+            {/* Bouton "+" deux fois plus petit, sans contour superflu */}
+            <button 
+              type="button"
+              onClick={() => onNavigate({ type: 'submit_story' })}
+              className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-[#A2482B] hover:bg-[#8A3B22] text-white flex items-center justify-center shrink-0 shadow-xs active:scale-95 transition-transform cursor-pointer mr-0.5"
+              title="Créer une story"
             >
-              <div className="w-[52px] h-[52px] sm:w-14 sm:h-14 rounded-2xl p-0.5 border border-stone-200 group-hover:border-[#A2482B] transition-all group-hover:scale-105 bg-stone-50 shadow-xs">
-                <div className="w-full h-full rounded-xl overflow-hidden bg-stone-900 relative">
-                  <img 
-                    src={story.authorAvatar} 
-                    alt="" 
-                    className="w-full h-full object-cover pointer-events-none" 
-                  />
+              <Plus className="w-4 h-4 stroke-[2.5]" />
+            </button>
+
+            {/* Vignettes Stories Individuelles avec anneau blanc net sur fond beige */}
+            {PERSON_STORIES.map((story, idx) => (
+              <div
+                key={story.id}
+                onClick={() => {
+                  setStoryViewerIndex(idx);
+                  setIsStoryViewerOpen(true);
+                  celestialAudio.playOrbSelect();
+                }}
+                className="cursor-pointer group shrink-0"
+                title={`${story.authorName} — Story ${story.themeLabel}`}
+              >
+                <div className="w-[52px] h-[52px] sm:w-14 sm:h-14 rounded-2xl p-0.5 border-2 border-white ring-1 ring-black/5 group-hover:border-[#A2482B] transition-all group-hover:scale-105 bg-white shadow-xs">
+                  <div className="w-full h-full rounded-xl overflow-hidden bg-stone-900 relative">
+                    <img 
+                      src={story.authorAvatar} 
+                      alt="" 
+                      className="w-full h-full object-cover pointer-events-none" 
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
 
@@ -582,7 +592,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                       pointerEvents,
                       transition: isDragging ? 'none' : 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.26s ease'
                     }}
-                    className={`absolute aspect-[9/16] w-[min(calc(100vw-56px),calc((100dvh-215px)*9/16))] max-w-[240px] sm:max-w-[276px] md:max-w-[298px] h-[min(425px,calc(100dvh-215px))] sm:h-[min(490px,calc(100dvh-190px))] md:h-[min(530px,calc(100dvh-170px))] rounded-2xl sm:rounded-3xl overflow-hidden border ${
+                    className={`absolute aspect-[9/16] w-[min(calc(100vw-64px),calc((100dvh-230px)*9/16))] max-w-[228px] sm:max-w-[270px] md:max-w-[290px] h-[min(410px,calc(100dvh-230px))] sm:h-[min(480px,calc(100dvh-200px))] md:h-[min(520px,calc(100dvh-180px))] rounded-2xl sm:rounded-3xl overflow-hidden border ${
                       idx === 1 ? 'bg-[#A2482B]' : 'bg-[#12110F]'
                     } text-white flex flex-col justify-between select-none ${
                       isCenter 

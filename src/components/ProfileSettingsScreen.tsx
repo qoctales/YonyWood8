@@ -1930,87 +1930,68 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
     <div className="w-full h-full max-h-full pb-20 sm:pb-24 pt-safe overflow-hidden flex flex-col justify-between text-[#1C1917] select-none bg-white">
       
       {/* ========================================================================= */}
-      {/* 1. STORIES CAPSULES DES 4 PILIERS DU PORTRAIT EN SQUIRCLES (rounded-2xl)  */}
+      {/* 1. EN-TÊTE ÉPURÉ DU PORTRAIT : FOND BEIGE #F7EFE6 & ACTIONS                */}
       {/* ========================================================================= */}
-      <div className="w-full max-w-3xl mx-auto px-3 sm:px-4 pt-1.5 pb-1 shrink-0 h-[84px] sm:h-[90px] flex items-center justify-between">
-        <div className="flex items-center gap-2 sm:gap-2.5 overflow-x-auto no-scrollbar py-1 px-1">
-          {/* Capsule Profil Solo */}
-          <div 
-            onClick={() => {
-              if (isOwner) onNavigate({ type: 'settings', returnTo: 'profile' });
-            }}
-            className="flex flex-col items-center cursor-pointer group shrink-0"
-            title={isOwner ? "Mes paramètres" : profileFullDisplayName}
-          >
-            <div className="w-12 h-12 sm:w-13 sm:h-13 rounded-2xl p-0.5 border-2 border-dashed border-[#A2482B] flex items-center justify-center bg-amber-50/50">
-              <img
-                src={userPhoto || '/assets/images/romeo_avatar_1792698425983.jpg'}
-                alt={profileDisplayName || 'Roméo'}
-                className="w-full h-full rounded-xl object-cover"
-              />
+      <div 
+        className="w-full shrink-0 z-30 rounded-b-[22px]"
+        style={{ 
+          backgroundColor: 'var(--color-header-bg, #F7EFE6)',
+          boxShadow: '0 2px 12px rgba(46, 27, 20, 0.06)' 
+        }}
+      >
+        <div className="w-full max-w-3xl mx-auto px-3 sm:px-4 pt-1 pb-2 shrink-0 h-[76px] sm:h-[84px] flex items-center justify-between">
+          <div className="flex items-center py-1 px-1">
+            {/* Capsule Profil Solo avec anneau blanc net */}
+            <div 
+              onClick={() => {
+                if (isOwner) onNavigate({ type: 'settings', returnTo: 'profile' });
+              }}
+              className="flex flex-col items-center cursor-pointer group shrink-0"
+              title={isOwner ? "Mes paramètres" : profileFullDisplayName}
+            >
+              <div className="w-12 h-12 sm:w-13 sm:h-13 rounded-2xl p-0.5 border-2 border-white ring-1 ring-black/5 flex items-center justify-center bg-white shadow-xs">
+                <img
+                  src={userPhoto || '/assets/images/romeo_avatar_1792698425983.jpg'}
+                  alt={profileDisplayName || 'Roméo'}
+                  className="w-full h-full rounded-xl object-cover"
+                />
+              </div>
             </div>
           </div>
 
-          {/* Les 4 Piliers Documentaires — Icônes seules, aucun texte */}
-          {PORTRAIT_PILLARS.map((p) => {
-            const isActive = activeCategory === p.id;
-            const Icon = p.icon;
-            return (
-              <div 
-                key={p.id}
-                onClick={() => {
-                  setActiveCategory(p.id as ProfileCategory);
-                  setCategoryIndices(prev => ({ ...prev, [p.id]: 0 }));
-                }}
-                className="flex flex-col items-center cursor-pointer group shrink-0"
-                title={p.label}
+          {/* Boutons Actions Rapides */}
+          <div className="flex items-center gap-1.5 shrink-0 ml-2">
+            {/* Bouton retour vers le duo : UNIQUEMENT lorsqu'on visite le portrait d'un protagoniste */}
+            {!isOwner && (
+              <button
+                type="button"
+                onClick={() => onNavigate({ type: 'duo_feed' })}
+                className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-white hover:bg-[#A2482B] text-stone-700 hover:text-white border border-stone-200 text-xs font-semibold shadow-xs transition-colors cursor-pointer mr-0.5"
+                title="Revenir au duo"
               >
-                <div className={`w-12 h-12 sm:w-13 sm:h-13 rounded-2xl p-0.5 border-2 transition-transform group-hover:scale-105 ${
-                  isActive ? 'border-[#A2482B] shadow-xs' : 'border-stone-200'
-                }`}>
-                  <div className={`w-full h-full rounded-xl flex items-center justify-center ${
-                    isActive ? 'bg-[#A2482B] text-white' : 'bg-stone-100 text-stone-600'
-                  }`}>
-                    <Icon className="w-5 h-5" />
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span>Duo</span>
+              </button>
+            )}
 
-        {/* Boutons Actions Rapides */}
-        <div className="flex items-center gap-1.5 shrink-0 ml-2">
-          {/* Bouton retour vers le duo : UNIQUEMENT lorsqu'on visite le portrait d'un protagoniste */}
-          {!isOwner && (
             <button
-              type="button"
-              onClick={() => onNavigate({ type: 'duo_feed' })}
-              className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-stone-100 hover:bg-[#A2482B] text-stone-700 hover:text-white border border-stone-200 text-xs font-semibold shadow-xs transition-colors cursor-pointer mr-0.5"
-              title="Revenir au duo"
+              onClick={() => {
+                if (isOwner) onNavigate({ type: 'messaging' });
+                else handleContactProtagonist();
+              }}
+              className="w-8 h-8 rounded-xl bg-white hover:bg-[#A2482B] hover:text-white text-stone-700 border border-stone-200/80 shadow-xs flex items-center justify-center transition-colors cursor-pointer"
+              title="Messagerie"
             >
-              <ArrowLeft className="w-3.5 h-3.5" />
-              <span>Duo</span>
+              <MessageSquare className="w-4 h-4" />
             </button>
-          )}
-
-          <button
-            onClick={() => {
-              if (isOwner) onNavigate({ type: 'messaging' });
-              else handleContactProtagonist();
-            }}
-            className="w-8 h-8 rounded-xl bg-stone-100 hover:bg-[#A2482B] hover:text-white text-stone-700 flex items-center justify-center transition-colors cursor-pointer"
-            title="Messagerie"
-          >
-            <MessageSquare className="w-4 h-4" />
-          </button>
-          <button
-            onClick={handleShareProfile}
-            className="w-8 h-8 rounded-xl bg-stone-100 hover:bg-[#A2482B] hover:text-white text-stone-700 flex items-center justify-center transition-colors cursor-pointer"
-            title="Partager le portrait"
-          >
-            <ShareIcon className="w-4 h-4" />
-          </button>
+            <button
+              onClick={handleShareProfile}
+              className="w-8 h-8 rounded-xl bg-white hover:bg-[#A2482B] hover:text-white text-stone-700 border border-stone-200/80 shadow-xs flex items-center justify-center transition-colors cursor-pointer"
+              title="Partager le portrait"
+            >
+              <ShareIcon className="w-4 h-4" />
+            </button>
+          </div>
         </div>
       </div>
 

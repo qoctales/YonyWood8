@@ -61,6 +61,16 @@ function renderCleanQuestion(rawQuestion?: string) {
   return text;
 }
 
+function getProtagonistDisplayName(fullName: string): string {
+  if (!fullName) return '';
+  const trimmed = fullName.trim();
+  if (/^(Père|Soeur|Frère|Dr|Dre|Coach|Maître|Dah)\b/i.test(trimmed)) {
+    const parts = trimmed.split(/\s+/);
+    return parts.slice(0, 2).join(' ');
+  }
+  return trimmed.split(/\s+/)[0];
+}
+
 export const ResonanceFaceToFaceCard: React.FC<ResonanceFaceToFaceCardProps> = ({
   protagonistA,
   protagonistB,
@@ -93,8 +103,8 @@ export const ResonanceFaceToFaceCard: React.FC<ResonanceFaceToFaceCardProps> = (
   // Onglet actif : 'question' par défaut
   const [activeTab, setActiveTab] = useState<'question' | 'evaluation'>('question');
 
-  const firstNameA = protagonistA.name.split(' ')[0];
-  const firstNameB = protagonistB.name.split(' ')[0];
+  const displayNameA = getProtagonistDisplayName(protagonistA.name);
+  const displayNameB = getProtagonistDisplayName(protagonistB.name);
 
   const handleSliderChange = (criterionId: keyof CriteriaValues, value: number) => {
     setCriteria(prev => {
@@ -113,7 +123,7 @@ export const ResonanceFaceToFaceCard: React.FC<ResonanceFaceToFaceCardProps> = (
   };
 
   return (
-    <div className="relative w-full h-full max-h-full rounded-2xl sm:rounded-3xl overflow-hidden bg-gradient-to-b from-[#A84A2C] via-[#943F24] to-[#7B321B] text-white p-3 sm:p-3.5 flex flex-col justify-between select-none border border-[#C86747]/60 shadow-2xl">
+    <div className="relative w-full h-full max-h-full rounded-2xl sm:rounded-3xl overflow-hidden bg-gradient-to-b from-[#A84A2C] via-[#943F24] to-[#7B321B] text-white p-2.5 sm:p-3 md:p-3.5 flex flex-col justify-between select-none border border-[#C86747]/60 shadow-2xl">
       
       {/* Halo lumineux doux et chaud sur le fond terracotta */}
       <div 
@@ -124,44 +134,44 @@ export const ResonanceFaceToFaceCard: React.FC<ResonanceFaceToFaceCardProps> = (
       />
 
       {/* ========================================================================= */}
-      {/* MOITIÉ HAUTE (0% - 50%) : TITRE & VIGNETTES EN SYMÉTRIE VERTICALE         */}
+      {/* SECTION HAUTE : TITRE & VIGNETTES EN VRAIE PRÉSENCE VISUELLE              */}
       {/* ========================================================================= */}
-      <div className="relative z-20 h-1/2 flex flex-col justify-between pb-1">
+      <div className="relative z-20 flex-1 flex flex-col justify-between min-h-0 pt-0.5 sm:pt-1 pb-1.5 sm:pb-2">
         
         {/* 1. Titre de la série centré au sommet */}
-        <div className="flex items-center justify-center w-full pt-0.5 sm:pt-1">
-          <div className="bg-black/35 backdrop-blur-md px-3 sm:px-3.5 py-0.5 sm:py-1 rounded-full border border-white/20 shadow-xs max-w-[92%]">
-            <span className="font-editorial text-[10.5px] sm:text-[11px] font-semibold text-white tracking-wide truncate block text-center drop-shadow-xs">
+        <div className="flex items-center justify-center w-full shrink-0">
+          <div className="bg-black/35 backdrop-blur-md px-3.5 sm:px-4 py-1 rounded-full border border-white/20 shadow-xs max-w-[94%]">
+            <span className="font-editorial text-[10.5px] sm:text-[11.5px] font-semibold text-white tracking-wide truncate block text-center drop-shadow-xs">
               {formatFirstLetterOnly(seriesTitle) || 'Dialogue en miroir'}
             </span>
           </div>
         </div>
 
-        {/* 2. Face-à-face centré verticalement dans la moitié haute */}
-        <div className="flex-1 flex items-center justify-between w-full px-4 sm:px-5">
+        {/* 2. Face-à-face centré verticalement : vignettes généreuses et affirmées */}
+        <div className="flex-1 flex items-center justify-around w-full px-1 sm:px-2 my-auto min-h-0">
           
           {/* Protagoniste A (Gauche) */}
           <div 
             onClick={() => onNavigateToSlide ? onNavigateToSlide(0) : onNavigateToPortrait(protagonistA.id)}
             className="group flex flex-col items-center cursor-pointer transition-transform active:scale-95"
-            title={`Voir la vidéo de ${firstNameA}`}
+            title={`Voir la vidéo de ${displayNameA}`}
           >
-            <div className="relative w-13 sm:w-15 aspect-[3/4] rounded-xl overflow-hidden border-2 border-white/90 shadow-lg bg-black/40 group-hover:scale-105 transition-transform">
+            <div className="relative w-19 sm:w-23 md:w-25 aspect-[3/4] rounded-xl sm:rounded-2xl overflow-hidden border-2 border-white/95 shadow-xl bg-black/40 group-hover:scale-105 transition-transform">
               <img 
                 src={protagonistA.photoUrl} 
-                alt={firstNameA}
+                alt={displayNameA}
                 className="w-full h-full object-cover pointer-events-none"
               />
             </div>
-            {/* Prénom entier affiché en police fine et ajustée, sans troncature */}
-            <span className="mt-1 text-[9.5px] sm:text-[10px] font-medium text-white/95 tracking-tight text-center whitespace-nowrap drop-shadow-xs px-0.5">
-              {firstNameA}
+            {/* Prénom entier affiché en police lisible et nette */}
+            <span className="mt-1.5 text-[11px] sm:text-xs md:text-[12.5px] font-semibold text-white/95 tracking-tight text-center whitespace-nowrap drop-shadow-xs px-0.5">
+              {displayNameA}
             </span>
           </div>
 
           {/* SYMBOLES ‹ › ÉPURÉS */}
-          <div className="flex items-center justify-center px-1">
-            <span className="font-editorial text-sm sm:text-base text-white/70 tracking-widest pointer-events-none select-none">
+          <div className="flex items-center justify-center px-1 shrink-0">
+            <span className="font-editorial text-lg sm:text-xl md:text-2xl text-white/75 tracking-widest pointer-events-none select-none">
               ‹ ›
             </span>
           </div>
@@ -170,18 +180,18 @@ export const ResonanceFaceToFaceCard: React.FC<ResonanceFaceToFaceCardProps> = (
           <div 
             onClick={() => onNavigateToSlide ? onNavigateToSlide(2) : onNavigateToPortrait(protagonistB.id)}
             className="group flex flex-col items-center cursor-pointer transition-transform active:scale-95"
-            title={`Voir la vidéo de ${firstNameB}`}
+            title={`Voir la vidéo de ${displayNameB}`}
           >
-            <div className="relative w-13 sm:w-15 aspect-[3/4] rounded-xl overflow-hidden border-2 border-white/90 shadow-lg bg-black/40 group-hover:scale-105 transition-transform">
+            <div className="relative w-19 sm:w-23 md:w-25 aspect-[3/4] rounded-xl sm:rounded-2xl overflow-hidden border-2 border-white/95 shadow-xl bg-black/40 group-hover:scale-105 transition-transform">
               <img 
                 src={protagonistB.photoUrl} 
-                alt={firstNameB}
+                alt={displayNameB}
                 className="w-full h-full object-cover pointer-events-none"
               />
             </div>
-            {/* Prénom entier affiché en police fine et ajustée, sans troncature */}
-            <span className="mt-1 text-[9.5px] sm:text-[10px] font-medium text-white/95 tracking-tight text-center whitespace-nowrap drop-shadow-xs px-0.5">
-              {firstNameB}
+            {/* Prénom entier affiché en police lisible et nette */}
+            <span className="mt-1.5 text-[11px] sm:text-xs md:text-[12.5px] font-semibold text-white/95 tracking-tight text-center whitespace-nowrap drop-shadow-xs px-0.5">
+              {displayNameB}
             </span>
           </div>
 
@@ -190,20 +200,20 @@ export const ResonanceFaceToFaceCard: React.FC<ResonanceFaceToFaceCardProps> = (
       </div>
 
       {/* ========================================================================= */}
-      {/* MOITIÉ BASSE (50% - 100%) : ESPACE BLANC SYMÉTRIQUEMENT CENTRÉ            */}
+      {/* SECTION BASSE : BOÎTE BLANCHE AGRANDIE TRÈS LARGEMENT                     */}
       {/* ========================================================================= */}
-      <div className="relative z-20 h-1/2 flex flex-col items-center justify-center pt-1">
+      <div className="relative z-20 w-full shrink-0 pt-0.5 pb-0.5 flex flex-col items-center">
         
-        {/* Espace blanc compacté d'au moins 25% pour équilibrer la géométrie */}
-        <div className="w-full h-[126px] sm:h-[136px] bg-white text-stone-900 rounded-2xl sm:rounded-3xl p-2.5 sm:p-3 shadow-xl border border-white/40 flex flex-col justify-between overflow-hidden">
+        {/* Boîte blanche généreuse occupant largement l'espace inférieur */}
+        <div className="w-full h-[215px] sm:h-[245px] md:h-[265px] bg-white text-stone-900 rounded-2xl sm:rounded-3xl p-3 sm:p-3.5 md:p-4 shadow-xl border border-white/40 flex flex-col justify-between overflow-hidden">
           
           {/* BARRE DE BASCULE DIRECTE : ICÔNE LIVRE & ICÔNE AWARD (ÉVALUATION) */}
-          <div className="flex items-center justify-between pb-1 border-b border-stone-100 shrink-0">
-            <span className="text-[10px] uppercase tracking-wider font-bold text-stone-500">
-              {activeTab === 'question' ? 'La Question' : 'Évaluation'}
+          <div className="flex items-center justify-between pb-1.5 sm:pb-2 border-b border-stone-100 shrink-0">
+            <span className="text-[10.5px] sm:text-xs uppercase tracking-wider font-bold text-stone-500">
+              {activeTab === 'question' ? 'Question' : 'Évaluation'}
             </span>
 
-            <div className="flex items-center gap-1 bg-stone-100 p-0.5 rounded-full border border-stone-200">
+            <div className="flex items-center gap-1.5 bg-stone-100 p-0.5 sm:p-1 rounded-full border border-stone-200">
               {/* Icône du Livre (Question) */}
               <button
                 type="button"
@@ -211,7 +221,7 @@ export const ResonanceFaceToFaceCard: React.FC<ResonanceFaceToFaceCardProps> = (
                   setActiveTab('question');
                   celestialAudio.playOrbSelect();
                 }}
-                className={`p-1 rounded-full transition-all cursor-pointer ${
+                className={`p-1.5 rounded-full transition-all cursor-pointer ${
                   activeTab === 'question'
                     ? 'bg-[#A2482B] text-white shadow-xs'
                     : 'text-stone-400 hover:text-stone-700'
@@ -219,7 +229,7 @@ export const ResonanceFaceToFaceCard: React.FC<ResonanceFaceToFaceCardProps> = (
                 title="Afficher la question"
                 aria-label="Afficher la question"
               >
-                <BookOpen className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                <BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </button>
 
               {/* Icône Award (Évaluation / Résonance) */}
@@ -229,7 +239,7 @@ export const ResonanceFaceToFaceCard: React.FC<ResonanceFaceToFaceCardProps> = (
                   setActiveTab('evaluation');
                   celestialAudio.playOrbSelect();
                 }}
-                className={`p-1 rounded-full transition-all cursor-pointer ${
+                className={`p-1.5 rounded-full transition-all cursor-pointer ${
                   activeTab === 'evaluation'
                     ? 'bg-[#A2482B] text-white shadow-xs'
                     : 'text-stone-400 hover:text-stone-700'
@@ -237,48 +247,48 @@ export const ResonanceFaceToFaceCard: React.FC<ResonanceFaceToFaceCardProps> = (
                 title="Afficher l'évaluation"
                 aria-label="Afficher l'évaluation"
               >
-                <Award className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                <Award className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </button>
             </div>
           </div>
 
           {/* CONTENU SELON L'ONGLET SÉLECTIONNÉ */}
           {activeTab === 'question' ? (
-            /* =================== VUE QUESTION (AÉRÉE, ÉLÉGANTE, BIEN CADRÉE) =================== */
-            <div className="flex-1 flex flex-col items-center justify-center px-1.5 py-0.5 text-center animate-in fade-in duration-150">
-              <p className="font-editorial text-[12px] sm:text-[13px] text-stone-800 leading-snug sm:leading-relaxed italic text-center max-w-[96%]">
+            /* =================== VUE QUESTION (AÉRÉE, ÉLÉGANTE, POLICE OPTIMISÉE) =================== */
+            <div className="flex-1 flex flex-col items-center justify-center px-2 sm:px-4 py-2 text-center animate-in fade-in duration-150">
+              <p className="font-editorial text-[14.5px] sm:text-[16.5px] md:text-[18px] text-stone-800 leading-relaxed sm:leading-loose italic text-center max-w-[96%] font-medium">
                 {renderCleanQuestion(duoQuestion)}
               </p>
             </div>
           ) : (
-            /* =================== VUE ÉVALUATION (3 CURSEURS HARMONIEUX ET DÉGAGÉS) =================== */
-            <div className="flex-1 flex flex-col justify-between py-0.5 animate-in fade-in duration-150">
+            /* =================== VUE ÉVALUATION (3 CURSEURS HARMONIEUX ET BIEN DÉGAGÉS) =================== */
+            <div className="flex-1 flex flex-col justify-between pt-2 pb-1 sm:pt-3 sm:pb-1.5 animate-in fade-in duration-150">
               {CRITERIA_CONFIG.map((crit) => {
                 const val = criteria[crit.id]; // 0 à 100, 50 = milieu
                 const pctA = 100 - val;
                 const pctB = val;
 
                 return (
-                  <div key={crit.id} className="space-y-0.5">
+                  <div key={crit.id} className="space-y-1 sm:space-y-1.5">
                     {/* Ligne d'en-tête du critère avec pourcentages harmonisés */}
-                    <div className="flex items-center justify-between text-[10px] font-medium leading-none">
-                      <span className="font-mono text-[10.5px] text-stone-500">
+                    <div className="flex items-center justify-between text-xs sm:text-[13px] font-medium leading-none">
+                      <span className="font-mono text-xs sm:text-[12.5px] text-stone-500 font-semibold">
                         {pctA}%
                       </span>
                       
-                      <span className="font-editorial text-[10.5px] text-stone-800 tracking-wide font-medium">
+                      <span className="font-editorial text-xs sm:text-[13.5px] text-stone-800 tracking-wide font-bold">
                         {crit.label}
                       </span>
 
-                      <span className="font-mono text-[10.5px] text-stone-500">
+                      <span className="font-mono text-xs sm:text-[12.5px] text-stone-500 font-semibold">
                         {pctB}%
                       </span>
                     </div>
 
                     {/* Ligne d'évaluation épurée */}
-                    <div className="relative flex items-center py-0.5">
+                    <div className="relative flex items-center py-1 sm:py-1.5">
                       {/* Rail gris clair de base */}
-                      <div className="absolute inset-x-0 h-1.5 rounded-full overflow-hidden bg-stone-100 border border-stone-200 pointer-events-none">
+                      <div className="absolute inset-x-0 h-2 sm:h-2.5 rounded-full overflow-hidden bg-stone-100 border border-stone-200 pointer-events-none">
                         {/* Remplissage terracotta fluide vers la gauche */}
                         {val < 50 && (
                           <div 
@@ -308,14 +318,14 @@ export const ResonanceFaceToFaceCard: React.FC<ResonanceFaceToFaceCardProps> = (
                         max="100"
                         value={val}
                         onChange={(e) => handleSliderChange(crit.id, parseInt(e.target.value, 10))}
-                        className="relative z-20 w-full h-3.5 opacity-0 cursor-pointer"
+                        className="relative z-20 w-full h-5 opacity-0 cursor-pointer"
                         aria-label={`Curseur de ${crit.label}`}
                       />
 
                       {/* Curseur unique en couleur terracotta (#A2482B) avec cerclage blanc net */}
                       <div 
-                        className="absolute top-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-[#A2482B] border-2 border-white shadow-xs pointer-events-none transition-all duration-75 z-10"
-                        style={{ left: `calc(${val}% - 7px)` }}
+                        className="absolute top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-[#A2482B] border-2 border-white shadow-md pointer-events-none transition-all duration-75 z-10"
+                        style={{ left: `calc(${val}% - 8px)` }}
                       />
                     </div>
                   </div>

@@ -14,19 +14,26 @@ export const Navbar: React.FC<NavbarProps> = ({ currentScreen, onNavigate }) => 
   }
 
   return (
-    <header className="shrink-0 z-40 w-full backdrop-blur-md bg-white/95 border-b border-stone-100 shadow-2xs">
-      <div className="w-full px-4 h-12 sm:h-14 flex items-center justify-center relative">
-        {/* Logo et Nom du projet YonyWood centré au milieu, sans boutons superflus */}
+    <header 
+      className="shrink-0 z-40 w-full select-none"
+      style={{ backgroundColor: 'var(--color-header-bg, #F7EFE6)' }}
+    >
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 sm:py-4 lg:py-5 flex items-center justify-center relative">
+        {/* Logo officiel YonyWood centré au milieu avec transition fluide clamp() */}
         <div 
           onClick={() => onNavigate({ type: 'duo_feed' })}
-          className="flex items-center justify-center cursor-pointer group select-none py-1"
+          className="flex items-center justify-center cursor-pointer group select-none transition-transform active:scale-[0.99]"
           id="nav-logo"
           title="YonyWood"
         >
           <img 
-            src="/yonywood-logo-espaces-70.svg" 
+            src="/yonywood-logo-espace.svg" 
             alt="YonyWood" 
-            className="h-7 sm:h-8 md:h-9 w-auto object-contain select-none group-hover:opacity-90 transition-opacity"
+            width={2046}
+            height={420}
+            loading="eager"
+            decoding="async"
+            className="yonywood-header-logo object-contain select-none group-hover:opacity-90 transition-opacity"
           />
         </div>
       </div>
