@@ -5,7 +5,8 @@ import {
   BookOpen, 
   X, 
   Film,
-  Plus
+  Plus,
+  Award
 } from 'lucide-react';
 import { celestialAudio } from '../utils/celestialAudio';
 import { apiService } from '../services/api';
@@ -44,8 +45,8 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
   // Index de la publication active dans le Feed (Duo ou Carte 4 visages)
   const [currentIndex, setCurrentIndex] = useState(initialDuoIndex);
 
-  // Position dans le diaporama horizontal du Duo (0: Volet A, 1: Volet B, 2: Face-à-face & Curseur 0-100)
-  const [slideIndex, setSlideIndex] = useState<0 | 1 | 2>(0);
+  // Position dans le diaporama horizontal du Duo (0: Volet A, 1: Question & Curseur au centre par défaut, 2: Volet B)
+  const [slideIndex, setSlideIndex] = useState<0 | 1 | 2>(1);
 
   // Visionneuse de stories immersives style Coverflow Studio
   const [isStoryViewerOpen, setIsStoryViewerOpen] = useState(false);
@@ -139,16 +140,16 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
   const safeIndex = feedItems.length > 0 ? (currentIndex % feedItems.length) : 0;
   const currentItem: FeedPublicationItem | undefined = feedItems[safeIndex];
 
-  // Reset de la lecture et du volet au changement de publication
+  // Arrivée par défaut sur la carte Question au centre pour chaque publication Duo
   useEffect(() => {
     setIsPlaying(false);
-    setSlideIndex(0);
-  }, [currentIndex]);
+    setSlideIndex(currentItem?.type === 'duo' ? 1 : 0);
+  }, [currentIndex, currentItem?.type]);
 
   const handleNextPublication = () => {
     if (feedItems.length <= 1) return;
     setIsPlaying(false);
-    setSlideIndex(0);
+    setSlideIndex(1);
     setCurrentIndex(prev => (prev + 1) % feedItems.length);
     celestialAudio.playOrbSelect();
   };
@@ -156,7 +157,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
   const handlePrevPublication = () => {
     if (feedItems.length <= 1) return;
     setIsPlaying(false);
-    setSlideIndex(0);
+    setSlideIndex(1);
     setCurrentIndex(prev => (prev - 1 + feedItems.length) % feedItems.length);
     celestialAudio.playOrbSelect();
   };
@@ -198,7 +199,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
   const handleGatewayToDuo = (story: ThematicStory) => {
     setIsStoryViewerOpen(false);
     let targetIndex = -1;
-    let preferredSlide: 0 | 1 = 0;
+    let preferredSlide: 0 | 1 | 2 = 0;
 
     // 1. Chercher par duoId
     if (story.duoId) {
@@ -219,7 +220,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
         }
         if (d.protagonistB?.id?.toLowerCase().includes(story.authorId.toLowerCase()) || 
             d.protagonistB?.name?.toLowerCase().includes(story.authorName.toLowerCase())) {
-          preferredSlide = 1;
+          preferredSlide = 2;
           return true;
         }
         return false;
@@ -424,15 +425,13 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
   const currentDuo = currentItem.type === 'duo' ? currentItem.data : null;
   const pA = currentDuo?.protagonistA;
   const pB = currentDuo?.protagonistB;
-  const activeProtagonist = slideIndex === 0 ? pA : pB;
-
-  const currentVideoUrl = (slideIndex === 0 ? pA?.videoAvatarUrl : pB?.videoAvatarUrl)
-    || (currentDuo ? DOCUMENTARIES.find(d => d.id === currentDuo.documentaryId)?.teaserVideoUrl : undefined)
-    || 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4';
 
   const rawSeriesTitle = currentDuo?.documentaryTitle || 'Dialogue en miroir';
-  const duoQuestion = currentDuo?.centralQuestion || currentDuo?.questionTitle || activeProtagonist?.quote || 'Quelle est la leçon fondamentale que la vie vous a enseignée ?';
-  const firstName = activeProtagonist?.name ? activeProtagonist.name.split(' ')[0] : '';
+  const duoQuestion = currentDuo?.centralQuestion || currentDuo?.questionTitle || pA?.quote || 'Quelle est la leçon fondamentale que la vie vous a enseignée ?';
+
+  const docTeaser = currentDuo ? DOCUMENTARIES.find(d => d.id === currentDuo.documentaryId)?.teaserVideoUrl : undefined;
+  const videoUrlA = pA?.videoAvatarUrl || docTeaser || 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4';
+  const videoUrlB = pB?.videoAvatarUrl || docTeaser || 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4';
 
   return (
     <div 
@@ -513,8 +512,8 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
             isActive={!isStoryViewerOpen}
             onComplete={handleNextPublication}
           />
-        ) : currentDuo && pA && pB && activeProtagonist ? (
-          /* BRANCHE B : DUO DOCUMENTAIRE CLASSIQUE (3 SÉQUENCES : A, B, CURSEUR 0-100) */
+        ) : currentDuo && pA && pB ? (
+          /* BRANCHE B : CARROUSEL 3D DU TRIPTYQUE DU DUO (A, ÉVALUATION, B) */
           <div 
             onTouchStart={handleCardTouchStart}
             onTouchMove={handleCardTouchMove}
@@ -523,164 +522,238 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
             onMouseDown={handleMouseDown}
             onMouseMove={handleMouseMove}
             onMouseUp={handleMouseUp}
-            style={{
-              transform: dragOffset.x !== 0 || dragOffset.y !== 0 ? `translate3d(${dragOffset.x}px, ${dragOffset.y}px, 0)` : undefined,
-              transition: isDragging ? 'none' : 'transform 0.26s cubic-bezier(0.16, 1, 0.3, 1)'
+            className="relative w-full flex-1 flex items-center justify-center min-h-0 select-none touch-none"
+            style={{ 
+              perspective: '1200px',
+              perspectiveOrigin: 'center center'
             }}
-            className="relative aspect-[9/16] w-[min(calc(100vw-64px),calc((100dvh-230px)*9/16))] max-w-[228px] sm:max-w-[270px] md:max-w-[290px] h-[min(410px,calc(100dvh-230px))] sm:h-[min(480px,calc(100dvh-200px))] md:h-[min(520px,calc(100dvh-180px))] rounded-2xl sm:rounded-3xl overflow-hidden border border-stone-200/90 bg-[#12110F] text-white flex flex-col justify-between select-none touch-none cursor-grab active:cursor-grabbing"
           >
-            
-            {/* VOLET 1 (PROTAGONISTE A) ET VOLET 2 (PROTAGONISTE B) */}
-            {slideIndex !== 2 ? (
-              <>
-                {/* EN-TÊTE DE CARTE : TITRE DE LA SÉRIE EN HAUT À GAUCHE & BOUTON TÉLÉ EN HAUT À DROITE */}
-                <div className="relative z-20 pt-3.5 px-3 flex items-center justify-between gap-1 pointer-events-auto">
-                  <div className="inline-flex w-fit items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 shadow-md max-w-[75%]">
-                    <span className="font-editorial text-xs font-semibold text-white whitespace-nowrap tracking-wide select-none truncate">
-                      {formatFirstLetterOnly(rawSeriesTitle)}
-                    </span>
-                  </div>
+            <div 
+              className="relative w-full h-full flex items-center justify-center pointer-events-none"
+              style={{ transformStyle: 'preserve-3d' }}
+            >
+              {[0, 1, 2].map((idx) => {
+                const diff = idx - slideIndex;
+                const isCenter = diff === 0;
 
-                  {/* Bouton Télé Vintage de Lecture en haut à droite — SEUL DÉCLENCHEUR DE LA VIDÉO */}
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setIsPlaying(p => !p);
+                let transformStyle = '';
+                let zIndex = 10;
+                let opacity = 0;
+                let pointerEvents: 'auto' | 'none' = 'none';
+
+                if (diff === 0) {
+                  // Carte active au centre
+                  transformStyle = `translateX(${dragOffset.x}px) translateY(${dragOffset.y}px) translateZ(45px) rotateY(${dragOffset.x * -0.1}deg) scale(1)`;
+                  zIndex = 30;
+                  opacity = 1;
+                  pointerEvents = 'auto';
+                } else if (diff === 1) {
+                  // Voisine droite (ex: Évaluation quand sur A, ou B quand sur Évaluation)
+                  transformStyle = `translateX(calc(58% + ${dragOffset.x}px)) translateY(${dragOffset.y * 0.4}px) translateZ(-50px) rotateY(-22deg) scale(0.86)`;
+                  zIndex = 20;
+                  opacity = 0.78;
+                  pointerEvents = 'auto';
+                } else if (diff === -1) {
+                  // Voisine gauche (ex: A quand sur Évaluation, ou Évaluation quand sur B)
+                  transformStyle = `translateX(calc(-58% + ${dragOffset.x}px)) translateY(${dragOffset.y * 0.4}px) translateZ(-50px) rotateY(22deg) scale(0.86)`;
+                  zIndex = 20;
+                  opacity = 0.78;
+                  pointerEvents = 'auto';
+                } else {
+                  // Carte éloignée
+                  transformStyle = `translateX(calc(${diff > 0 ? '110%' : '-110%'} + ${dragOffset.x}px)) translateZ(-160px) rotateY(${diff > 0 ? '-35deg' : '35deg'}) scale(0.72)`;
+                  zIndex = 10;
+                  opacity = 0;
+                  pointerEvents = 'none';
+                }
+
+                return (
+                  <div
+                    key={`duo-slide-${currentDuo.id}-${idx}`}
+                    onClick={() => {
+                      if (!isCenter) {
+                        goToSlide(idx as 0 | 1 | 2);
+                      }
                     }}
-                    className={`w-8.5 h-8.5 rounded-xl flex items-center justify-center transition-all cursor-pointer shadow-md active:scale-95 ${
-                      isPlaying 
-                        ? 'bg-[#A2482B] text-white border border-[#8A3B22]' 
-                        : 'bg-black/60 backdrop-blur-md text-white border border-white/20 hover:bg-black/80'
+                    style={{
+                      transform: transformStyle,
+                      zIndex,
+                      opacity,
+                      pointerEvents,
+                      transition: isDragging ? 'none' : 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.26s ease'
+                    }}
+                    className={`absolute aspect-[9/16] w-[min(calc(100vw-56px),calc((100dvh-215px)*9/16))] max-w-[240px] sm:max-w-[276px] md:max-w-[298px] h-[min(425px,calc(100dvh-215px))] sm:h-[min(490px,calc(100dvh-190px))] md:h-[min(530px,calc(100dvh-170px))] rounded-2xl sm:rounded-3xl overflow-hidden border ${
+                      idx === 1 ? 'bg-[#A2482B]' : 'bg-[#12110F]'
+                    } text-white flex flex-col justify-between select-none ${
+                      isCenter 
+                        ? idx === 1
+                          ? 'border-[#C86747] shadow-2xl ring-1 ring-[#E27857]/40'
+                          : 'border-stone-200/90 shadow-2xl ring-1 ring-white/20' 
+                        : 'border-white/15 shadow-lg cursor-pointer hover:border-white/30'
                     }`}
-                    title={isPlaying ? 'Mettre en pause' : 'Lancer la vidéo'}
                   >
-                    <TvPlayerIcon className="w-4.5 h-4.5 text-current" />
-                  </button>
-                </div>
-
-                {/* MEDIA DE FOND : UNIQUEMENT DÉCLENCHÉ PAR LA TÉLÉ VINTAGE (AUCUN CLIC PARASITE) */}
-                <div className="absolute inset-0 z-10 overflow-hidden pointer-events-none">
-                  {isPlaying ? (
-                    <video
-                      ref={videoRef}
-                      key={`video-${slideIndex}-${currentDuo.id}`}
-                      src={currentVideoUrl}
-                      autoPlay
-                      loop
-                      muted={isMuted}
-                      playsInline
-                      className="w-full h-full object-cover pointer-events-none"
-                    />
-                  ) : (
-                    <img
-                      src={activeProtagonist.photoUrl}
-                      alt={activeProtagonist.name}
-                      className="w-full h-full object-cover pointer-events-none"
-                    />
-                  )}
-                  {/* Voiles pour contraste */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/40 pointer-events-none" />
-                </div>
-
-                {/* COLONNE D'ACTIONS LATÉRALE DROITE (5 ICÔNES ÉPURÉES AVEC SWIPE ARRONDI) */}
-                <div className="absolute right-2.5 sm:right-3 top-1/2 -translate-y-1/2 z-30 flex flex-col items-center gap-2 pointer-events-auto">
-                  {/* 1. Mute toggle si vidéo */}
-                  {isPlaying && (
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setIsMuted(m => !m);
-                      }}
-                      className="w-8 h-8 rounded-xl bg-black/60 backdrop-blur-md text-white hover:bg-[#A2482B] border border-white/15 flex items-center justify-center transition-all cursor-pointer shadow-sm group"
-                      title={isMuted ? 'Activer le son' : 'Couper le son'}
-                    >
-                      {isMuted ? <span className="text-xs">🔇</span> : <span className="text-xs">🔊</span>}
-                    </button>
-                  )}
-
-                  {/* 2. Icône Swipe aux flèches arrondies (haut/bas entre publications, gauche/droite entre protagonistes) */}
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      nextSlide();
-                    }}
-                    className="w-8 h-8 rounded-xl bg-black/60 backdrop-blur-md text-white hover:bg-[#A2482B] border border-white/15 flex items-center justify-center transition-all cursor-pointer shadow-sm group"
-                    title="Changer de séquence ou swiper haut/bas pour changer de publication"
-                  >
-                    <RoundedSwipeArrowsIcon className="w-4 h-4 text-white group-hover:scale-110 transition-transform" />
-                  </button>
-
-                  {/* 3. Icône Question Documentaire */}
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setShowQuestionModal(true);
-                    }}
-                    className="w-8 h-8 rounded-xl bg-black/60 backdrop-blur-md text-white hover:bg-[#A2482B] border border-white/15 flex items-center justify-center transition-all cursor-pointer shadow-sm group"
-                    title="Question documentaire"
-                  >
-                    <BookOpen className="w-4 h-4 text-white group-hover:scale-110 transition-transform" />
-                  </button>
-
-                  {/* 4. Icône Portrait Solo */}
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onNavigate({ type: 'profile', protagonistId: activeProtagonist.id });
-                    }}
-                    className="w-8 h-8 rounded-xl bg-black/60 backdrop-blur-md text-white hover:bg-[#A2482B] border border-white/15 flex items-center justify-center transition-all cursor-pointer shadow-sm group"
-                    title={`Portrait de ${firstName}`}
-                  >
-                    <ProfileSoloIcon className="w-4 h-4 text-white group-hover:scale-110 transition-transform" />
-                  </button>
-
-                  {/* 5. Icône Partage */}
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setShareModalItem({ title: `Duo : ${activeProtagonist.name}`, id: activeProtagonist.id });
-                    }}
-                    className="w-8 h-8 rounded-xl bg-black/60 backdrop-blur-md text-white hover:bg-[#A2482B] border border-white/15 flex items-center justify-center transition-all cursor-pointer shadow-sm group"
-                    title="Partager"
-                  >
-                    <ShareIcon className="w-4 h-4" />
-                  </button>
-                </div>
-
-                {/* BAS DE CARTE ÉPURÉ : PRÉNOM EN BAS À GAUCHE & CURSEUR EN DESSOUS SANS DÉPLACEMENT DU NOM */}
-                <div className="absolute bottom-3.5 sm:bottom-4 left-3.5 sm:left-4 z-20 pointer-events-none flex flex-col items-start">
-                  <h2 className="font-editorial text-base sm:text-lg font-bold text-white tracking-wide drop-shadow-md truncate max-w-[170px] sm:max-w-[210px] leading-tight">
-                    {firstName}
-                  </h2>
-
-                  {/* Hauteur réservée fixe : le nom ne bouge JAMAIS lorsque le curseur apparaît */}
-                  <div className="h-2 flex items-center mt-1">
-                    <div 
-                      className={`w-24 sm:w-28 h-1 bg-white/25 rounded-full overflow-hidden shadow-xs transition-opacity duration-200 ${
-                        isPlaying ? 'opacity-100' : 'opacity-0'
-                      }`}
-                    >
-                      <div 
-                        className="h-full bg-white transition-all duration-100 rounded-full"
-                        style={{ width: `${Math.max(2, Math.min(100, videoProgress))}%` }}
+                    {idx === 1 ? (
+                      /* VOLET 2 : LA CARTE D'ÉVALUATION ET DE RÉSONANCE AU CENTRE DU TRIPTYQUE */
+                      <ResonanceFaceToFaceCard
+                        protagonistA={pA}
+                        protagonistB={pB}
+                        seriesTitle={rawSeriesTitle}
+                        duoQuestion={duoQuestion}
+                        duoId={currentDuo.id}
+                        onNavigateToSlide={goToSlide}
+                        onNavigateToPortrait={(id) => onNavigate({ type: 'profile', protagonistId: id })}
                       />
-                    </div>
-                  </div>
-                </div>
-              </>
-            ) : (
-              /* VOLET 3 : LE FACE-À-FACE ET LE CURSEUR D'ÉVALUATION 0-100 ÉPURÉ */
-              <ResonanceFaceToFaceCard
-                protagonistA={pA}
-                protagonistB={pB}
-                seriesTitle={rawSeriesTitle}
-                duoQuestion={duoQuestion}
-                onNavigateToSlide={goToSlide}
-                onNavigateToPortrait={(id) => onNavigate({ type: 'profile', protagonistId: id })}
-              />
-            )}
+                    ) : (
+                      /* VOLET 1 (idx === 0, A) OU VOLET 3 (idx === 2, B) : CARTES VIDÉO DES PROTAGONISTES */
+                      (() => {
+                        const protagonist = idx === 0 ? pA : pB;
+                        const otherProtagonist = idx === 0 ? pB : pA;
+                        const otherSlideTarget = idx === 0 ? 2 : 0;
+                        const videoUrl = idx === 0 ? videoUrlA : videoUrlB;
+                        const pFirstName = protagonist.name.split(' ')[0];
+                        const otherFirstName = otherProtagonist.name.split(' ')[0];
+                        const isThisVideoPlaying = isCenter && isPlaying;
 
+                        return (
+                          <>
+                            {/* EN-TÊTE DE CARTE : TITRE DE LA SÉRIE EN HAUT À GAUCHE & BOUTON TÉLÉ EN HAUT À DROITE */}
+                            <div className="relative z-20 pt-3.5 px-3 flex items-center justify-between gap-1 pointer-events-auto">
+                              <div className="inline-flex w-fit items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 shadow-md max-w-[75%]">
+                                <span className="font-editorial text-xs font-semibold text-white whitespace-nowrap tracking-wide select-none truncate">
+                                  {formatFirstLetterOnly(rawSeriesTitle)}
+                                </span>
+                              </div>
+
+                              {/* Bouton Télé Vintage de Lecture en haut à droite */}
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setIsPlaying(p => !p);
+                                }}
+                                className={`w-8.5 h-8.5 rounded-xl flex items-center justify-center transition-all cursor-pointer shadow-md active:scale-95 ${
+                                  isThisVideoPlaying 
+                                    ? 'bg-[#A2482B] text-white border border-[#8A3B22]' 
+                                    : 'bg-black/60 backdrop-blur-md text-white border border-white/20 hover:bg-black/80'
+                                }`}
+                                title={isThisVideoPlaying ? 'Mettre en pause' : 'Lancer la vidéo'}
+                              >
+                                <TvPlayerIcon className="w-4.5 h-4.5 text-current" />
+                              </button>
+                            </div>
+
+                            {/* MEDIA DE FOND : VIDÉO OU PHOTO HD */}
+                            <div className="absolute inset-0 z-10 overflow-hidden pointer-events-none">
+                              {isThisVideoPlaying ? (
+                                <video
+                                  ref={videoRef}
+                                  key={`video-${idx}-${currentDuo.id}`}
+                                  src={videoUrl}
+                                  autoPlay
+                                  loop
+                                  muted={isMuted}
+                                  playsInline
+                                  className="w-full h-full object-cover pointer-events-none"
+                                />
+                              ) : (
+                                <img
+                                  src={protagonist.photoUrl}
+                                  alt={protagonist.name}
+                                  className="w-full h-full object-cover pointer-events-none"
+                                />
+                              )}
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/40 pointer-events-none" />
+                            </div>
+
+
+                            {/* COLONNE D'ACTIONS LATÉRALE DROITE (ÉPURÉE : MUTE, PROTAGONISTE MIROIR, PORTRAIT, PARTAGE) */}
+                            <div className="absolute right-2.5 sm:right-3 top-1/2 -translate-y-1/2 z-30 flex flex-col items-center gap-2.5 pointer-events-auto">
+                              {/* 1. Mute toggle si vidéo en lecture */}
+                              {isThisVideoPlaying && (
+                                <button
+                                  type="button"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setIsMuted(m => !m);
+                                  }}
+                                  className="w-8.5 h-8.5 rounded-xl bg-black/60 backdrop-blur-md text-white hover:bg-[#A2482B] border border-white/15 flex items-center justify-center transition-all cursor-pointer shadow-sm group"
+                                  title={isMuted ? 'Activer le son' : 'Couper le son'}
+                                >
+                                  {isMuted ? <span className="text-xs">🔇</span> : <span className="text-xs">🔊</span>}
+                                </button>
+                              )}
+
+                              {/* 2. Photo de profil du second protagoniste : bascule directement vers sa vidéo */}
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  goToSlide(otherSlideTarget as 0 | 2);
+                                }}
+                                className="w-9 h-9 rounded-xl overflow-hidden p-0.5 border border-white/30 hover:border-[#A2482B] shadow-md flex items-center justify-center transition-all cursor-pointer group active:scale-95 bg-black/60 backdrop-blur-md"
+                                title={`Passer à la vidéo de ${otherFirstName}`}
+                              >
+                                <img 
+                                  src={otherProtagonist.photoUrl} 
+                                  alt={otherFirstName}
+                                  className="w-full h-full object-cover rounded-lg group-hover:scale-110 transition-transform pointer-events-none"
+                                />
+                              </button>
+
+                              {/* 3. Icône Portrait Solo */}
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  onNavigate({ type: 'profile', protagonistId: protagonist.id });
+                                }}
+                                className="w-8.5 h-8.5 rounded-xl bg-black/60 backdrop-blur-md text-white hover:bg-[#A2482B] border border-white/15 flex items-center justify-center transition-all cursor-pointer shadow-sm group"
+                                title={`Portrait de ${pFirstName}`}
+                              >
+                                <ProfileSoloIcon className="w-4 h-4 text-white group-hover:scale-110 transition-transform" />
+                              </button>
+
+                              {/* 4. Icône Partage */}
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setShareModalItem({ title: `Duo : ${protagonist.name}`, id: protagonist.id });
+                                }}
+                                className="w-8.5 h-8.5 rounded-xl bg-black/60 backdrop-blur-md text-white hover:bg-[#A2482B] border border-white/15 flex items-center justify-center transition-all cursor-pointer shadow-sm group"
+                                title="Partager"
+                              >
+                                <ShareIcon className="w-4 h-4" />
+                              </button>
+                            </div>
+
+                            {/* BAS DE CARTE ÉPURÉ : PRÉNOM EN BAS À GAUCHE & CURSEUR EN DESSOUS */}
+                            <div className="absolute bottom-3.5 sm:bottom-4 left-3.5 sm:left-4 z-20 pointer-events-none flex flex-col items-start">
+                              <h2 className="font-editorial text-base sm:text-lg font-bold text-white tracking-wide drop-shadow-md truncate max-w-[170px] sm:max-w-[210px] leading-tight">
+                                {pFirstName}
+                              </h2>
+
+                              <div className="h-2 flex items-center mt-1">
+                                <div 
+                                  className={`w-20 sm:w-24 h-1 bg-white/25 rounded-full overflow-hidden shadow-xs transition-opacity duration-200 ${
+                                    isThisVideoPlaying ? 'opacity-100' : 'opacity-0'
+                                  }`}
+                                >
+                                  <div 
+                                    className="h-full bg-white transition-all duration-100 rounded-full"
+                                    style={{ width: `${Math.max(2, Math.min(100, videoProgress))}%` }}
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </>
+                        );
+                      })()
+                    )}
+                  </div>
+                );
+              })}
+            </div>
           </div>
         ) : null}
 
@@ -711,7 +784,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
           >
             <div className="flex items-center justify-between pb-2 border-b border-stone-100">
               <span className="text-xs font-bold text-[#A2482B] uppercase tracking-wider">
-                Question documentaire
+                Question
               </span>
               <button onClick={() => setShowQuestionModal(false)} className="text-stone-400 hover:text-stone-700">
                 <X className="w-4 h-4" />
@@ -719,9 +792,6 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
             </div>
             <p className="text-sm font-semibold text-stone-900 leading-relaxed">
               « {duoQuestion} »
-            </p>
-            <p className="text-xs text-stone-500 leading-relaxed">
-              Sur YonyWood, la question est posée en amont. Les deux protagonistes y répondent chacun dans leur vérité avant d'être reliés en miroir.
             </p>
           </div>
         </div>

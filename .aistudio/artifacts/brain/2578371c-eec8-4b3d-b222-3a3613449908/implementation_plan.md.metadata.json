@@ -1,0 +1,6 @@
+{
+  "summary":  "Plan d'implémentation pour l'évolution immersive des Duos YonyWood :\n1. Transition du triptyque de duo vers un carrousel 3D (style Studio) révélant les 3 cartes (Protagoniste A à gauche, Évaluation au centre, Protagoniste B à droite) avec accès direct par photo de profil et icône d'évaluation.\n2. Refonte complète de la carte d'évaluation : retrait du bouton '← Vidéo', remontée des vignettes des deux protagonistes en haut, suppression des noms sur les curseurs et introduction de 3 critères d'évaluation raffinés (Résonance, Authenticité, Impact) avec doubles jauges interactives.",
+  "updatedAt":  "2026-11-02T13:12:16.957027355Z",
+  "requestFeedback":  true,
+  "userFacing":  true
+}

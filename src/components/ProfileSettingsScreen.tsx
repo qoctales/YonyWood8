@@ -1981,6 +1981,19 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
 
         {/* Boutons Actions Rapides */}
         <div className="flex items-center gap-1.5 shrink-0 ml-2">
+          {/* Bouton retour vers le duo : UNIQUEMENT lorsqu'on visite le portrait d'un protagoniste */}
+          {!isOwner && (
+            <button
+              type="button"
+              onClick={() => onNavigate({ type: 'duo_feed' })}
+              className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-stone-100 hover:bg-[#A2482B] text-stone-700 hover:text-white border border-stone-200 text-xs font-semibold shadow-xs transition-colors cursor-pointer mr-0.5"
+              title="Revenir au duo"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span>Duo</span>
+            </button>
+          )}
+
           <button
             onClick={() => {
               if (isOwner) onNavigate({ type: 'messaging' });
