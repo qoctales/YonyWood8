@@ -936,7 +936,7 @@ export const EntrepriseFilmDuoIcon: React.FC<IconProps & { isActive?: boolean }>
       className={`${isActive === true ? 'text-white' : isActive === false ? 'text-[#6E6254]' : ''} ${className}`.trim()}
       aria-hidden="true"
     >
-      <title>Entreprise</title>
+      <title>Focus</title>
       {/* Boîtier rectangulaire cinéma */}
       <rect x="3" y="4" width="18" height="16" rx="2.5" />
       {/* Partition centrale verticale séparant les deux écrans en miroir */}
@@ -991,6 +991,104 @@ export const RoundedSwipeArrowsIcon: React.FC<IconProps> = ({
 };
 export const SwipeIcon = RoundedSwipeArrowsIcon;
 export const RoundedSwipeIcon = RoundedSwipeArrowsIcon;
+
+/**
+ * CameraLensFocusIcon:
+ * Symbole officiel « Focus » de la barre de navigation :
+ * Objectif de caméra avec diaphragme interne et anneaux de mise au point,
+ * incarnant le zoom optique et la focalisation documentaire.
+ */
+export const CameraLensFocusIcon: React.FC<IconProps & { isActive?: boolean }> = ({ 
+  className = 'w-5 h-5',
+  strokeWidth = 1.75,
+  isActive
+}) => {
+  return (
+    <svg 
+      viewBox="0 0 24 24" 
+      fill="none" 
+      stroke="currentColor" 
+      strokeWidth={strokeWidth} 
+      strokeLinecap="round" 
+      strokeLinejoin="round" 
+      className={`${isActive === true ? 'text-white' : isActive === false ? 'text-[#6E6254]' : ''} ${className}`.trim()}
+      aria-hidden="true"
+    >
+      <title>Focus</title>
+      {/* 4 coins du viseur de caméra */}
+      <path d="M 3.5 8 V 5.5 A 2 2 0 0 1 5.5 3.5 H 8" />
+      <path d="M 16 3.5 H 18.5 A 2 2 0 0 1 20.5 5.5 V 8" />
+      <path d="M 20.5 16 V 18.5 A 2 2 0 0 1 18.5 20.5 H 16" />
+      <path d="M 8 20.5 H 5.5 A 2 2 0 0 1 3.5 18.5 V 16" />
+      {/* Point au centre (viseur de caméra épuré avec point de focalisation uniquement, sans cercle) */}
+      <circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none" />
+    </svg>
+  );
+};
+
+/**
+ * PapyrusScrollIcon:
+ * Symbole papyrus / parchemin antique officiel pour la présentation du sujet.
+ */
+export const PapyrusScrollIcon: React.FC<IconProps> = ({
+  className = 'w-5 h-5',
+  strokeWidth = 1.75
+}) => {
+  return (
+    <svg 
+      viewBox="0 0 24 24" 
+      fill="none" 
+      stroke="currentColor" 
+      strokeWidth={strokeWidth} 
+      strokeLinecap="round" 
+      strokeLinejoin="round" 
+      className={className}
+      aria-hidden="true"
+    >
+      <title>Présentation du sujet</title>
+      {/* Parchemin déroulé avec enroulements supérieur et inférieur */}
+      <path d="M19 17V5a2 2 0 0 0-2-2H4" />
+      <path d="M8 21h12a2 2 0 0 0 2-2v-2H10" />
+      <path d="M4 3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6" />
+      {/* Lignes d'écriture manuscrites */}
+      <line x1="8" y1="7" x2="16" y2="7" />
+      <line x1="8" y1="11" x2="16" y2="11" />
+      <line x1="8" y1="15" x2="13" y2="15" />
+    </svg>
+  );
+};
+
+/**
+ * DoorArchIcon:
+ * Symbole porte voûtée pour entrer dans les vidéos du sujet.
+ */
+export const DoorArchIcon: React.FC<IconProps> = ({
+  className = 'w-5 h-5',
+  strokeWidth = 1.75
+}) => {
+  return (
+    <svg 
+      viewBox="0 0 24 24" 
+      fill="none" 
+      stroke="currentColor" 
+      strokeWidth={strokeWidth} 
+      strokeLinecap="round" 
+      strokeLinejoin="round" 
+      className={className}
+      aria-hidden="true"
+    >
+      <title>Entrer dans le sujet</title>
+      {/* Cadre avec voûte arrondie en haut */}
+      <path d="M5 21V9a7 7 0 0 1 14 0v12" />
+      {/* Seuil au bas */}
+      <line x1="3" y1="21" x2="21" y2="21" />
+      {/* Ligne médiane de double porte */}
+      <path d="M12 9v12" />
+      {/* Poignée ronde de porte */}
+      <circle cx="10" cy="14" r="0.8" fill="currentColor" />
+    </svg>
+  );
+};
 
 
 

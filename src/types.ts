@@ -714,6 +714,7 @@ export type ViewScreen =
   | { type: 'matrix_view' }
   | { type: 'duo_feed'; selectedDocId?: string; currentDuoIndex?: number }
   | { type: 'enterprise'; selectedCompanyId?: string }
+  | { type: 'focus'; selectedTopicId?: string; selectedCompanyId?: string }
   | { 
       type: 'marketplace'; 
       initialPeerOfferId?: string; 

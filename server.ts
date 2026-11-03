@@ -188,6 +188,11 @@ app.get('/memoires', (_req: Request, res: Response) => {
   res.redirect(301, '/sagesses');
 });
 
+// Redirection permanente /entreprises -> /focus
+app.get(['/entreprises', '/entreprise', '/lumieres'], (_req: Request, res: Response) => {
+  res.redirect(301, '/focus');
+});
+
 app.get('/api/explorer/topics/:category', (req: Request, res: Response) => {
   let { category } = req.params;
   if (category === 'memoires') {

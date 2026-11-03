@@ -28,6 +28,7 @@ import { BottomMenu } from './components/BottomMenu';
 import { Navbar } from './components/Navbar';
 import { AuthModal } from './components/AuthModal';
 import { CompanyHeritageScreen } from './components/CompanyHeritageScreen';
+import { FocusScreen } from './components/FocusScreen';
 import { ParticipateScreen } from './components/ParticipateScreen';
 import { io } from 'socket.io-client';
 
@@ -37,8 +38,8 @@ const resolveScreenFromPath = (): { screen: ViewScreen | null; redirectFrom?: st
   const path = window.location.pathname.toLowerCase().replace(/\/+$/, '');
   
   // Redirections permanentes des anciennes adresses vers les nouvelles
-  if (path === '/portraits' || path === '/lumiere') {
-    return { screen: { type: 'enterprise' }, redirectFrom: path, redirectTo: '/lumieres' };
+  if (path === '/portraits' || path === '/lumiere' || path === '/lumieres' || path === '/entreprises' || path === '/entreprise') {
+    return { screen: { type: 'focus' }, redirectFrom: path, redirectTo: '/focus' };
   }
   if (path === '/perspectives' || path === '/duo') {
     return { screen: { type: 'duo_feed' }, redirectFrom: path, redirectTo: '/duos' };
@@ -54,10 +55,10 @@ const resolveScreenFromPath = (): { screen: ViewScreen | null; redirectFrom?: st
   }
 
   // Nouvelles adresses officielles
-  if (path === '/entreprises' || path === '/entreprise' || path === '/lumieres') {
+  if (path === '/focus') {
     const params = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
-    const company = params?.get('company') || undefined;
-    return { screen: { type: 'enterprise', selectedCompanyId: company } };
+    const topic = params?.get('topic') || params?.get('company') || undefined;
+    return { screen: { type: 'focus', selectedTopicId: topic } };
   }
   if (path === '/dialogue' || path === '/dialogues' || path === '/duos' || path === '/miroir' || path === '/miroirs') {
     return { screen: { type: 'duo_feed' } };
@@ -88,8 +89,9 @@ const getScreenRouteInfo = (screen: ViewScreen): { path: string; title: string }
     case 'documentaries':
     case 'documentary_detail':
       return { path: '/dialogue', title: 'Dialogue — YonyWood' };
+    case 'focus':
     case 'enterprise':
-      return { path: '/entreprises', title: 'Entreprise — YonyWood' };
+      return { path: '/focus', title: 'Focus — YonyWood' };
     case 'submit_story':
     case 'request_videographer':
       return { path: '/studio', title: 'Studio — YonyWood' };
@@ -235,12 +237,12 @@ export default function App() {
     };
   }, []);
 
-  // Swipe horizontal entre les 5 rubriques principales (Studio ⇄ Entreprise ⇄ Dialogue ⇄ Action ⇄ Portrait)
+  // Swipe horizontal entre les 5 rubriques principales (Studio ⇄ Focus ⇄ Dialogue ⇄ Action ⇄ Portrait)
   const appTouchStartRef = React.useRef<{ x: number; y: number } | null>(null);
 
   const getPrimaryTabIndex = (screen: ViewScreen): number => {
     if (screen.type === 'submit_story' || screen.type === 'request_videographer') return 0;
-    if (screen.type === 'enterprise') return 1;
+    if (screen.type === 'focus' || screen.type === 'enterprise') return 1;
     if (screen.type === 'duo_feed' || screen.type === 'landing' || screen.type === 'home' || screen.type === 'matrix_view') return 2;
     if (screen.type === 'marketplace') return 3;
     if (screen.type === 'profile' || screen.type === 'settings' || screen.type === 'portfolio' || screen.type === 'transactions' || screen.type === 'protagonist_profile' || screen.type === 'my_forest' || screen.type === 'messaging') return 4;
@@ -249,15 +251,15 @@ export default function App() {
 
   const PRIMARY_TABS: ViewScreen[] = [
     { type: 'submit_story' },
-    { type: 'enterprise' },
+    { type: 'focus' },
     { type: 'duo_feed' },
     { type: 'marketplace' },
     { type: 'profile' }
   ];
 
   const handleGlobalTouchStart = (e: React.TouchEvent) => {
-    // Ne pas intercepter les gestes sur Dialogue et Entreprise qui possèdent leur propre navigation horizontale (séquences) et verticale (publications)
-    if (currentScreen.type === 'duo_feed' || currentScreen.type === 'enterprise') return;
+    // Ne pas intercepter les gestes sur Dialogue et Focus qui possèdent leur propre navigation horizontale (séquences) et verticale (sujets)
+    if (currentScreen.type === 'duo_feed' || currentScreen.type === 'focus' || currentScreen.type === 'enterprise') return;
     if ((e.target as HTMLElement).closest('input[type="range"]')) return;
     appTouchStartRef.current = {
       x: e.touches[0].clientX,
@@ -266,7 +268,7 @@ export default function App() {
   };
 
   const handleGlobalTouchEnd = (e: React.TouchEvent) => {
-    if (currentScreen.type === 'duo_feed' || currentScreen.type === 'enterprise') return;
+    if (currentScreen.type === 'duo_feed' || currentScreen.type === 'focus' || currentScreen.type === 'enterprise') return;
     if (!appTouchStartRef.current) return;
     const deltaX = e.changedTouches[0].clientX - appTouchStartRef.current.x;
     const deltaY = e.changedTouches[0].clientY - appTouchStartRef.current.y;
@@ -294,6 +296,7 @@ export default function App() {
     currentScreen.type === 'landing' || 
     currentScreen.type === 'home' || 
     currentScreen.type === 'matrix_view' || 
+    currentScreen.type === 'focus' ||
     currentScreen.type === 'enterprise' ||
     currentScreen.type === 'marketplace' ||
     currentScreen.type === 'submit_story';
@@ -341,10 +344,10 @@ export default function App() {
           />
         )}
 
-        {currentScreen.type === 'enterprise' && (
-          <CompanyHeritageScreen 
+        {(currentScreen.type === 'focus' || currentScreen.type === 'enterprise') && (
+          <FocusScreen 
             onNavigate={setCurrentScreen} 
-            initialCompanyId={currentScreen.selectedCompanyId}
+            initialTopicId={currentScreen.type === 'focus' ? currentScreen.selectedTopicId : currentScreen.selectedCompanyId}
           />
         )}
 

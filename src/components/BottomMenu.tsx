@@ -5,6 +5,7 @@ import {
 import { ViewScreen } from '../types';
 import { 
   DirectorChairIcon,
+  CameraLensFocusIcon,
   EntrepriseFilmDuoIcon,
   DuocumentairesTvIcon,
   ProfileSoloIcon
@@ -18,7 +19,7 @@ interface BottomMenuProps {
 export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigate }) => {
   // Déterminer l'élément actif selon l'écran en cours
   const isStudioActive = currentScreen.type === 'submit_story' || currentScreen.type === 'request_videographer';
-  const isEntrepriseActive = currentScreen.type === 'enterprise';
+  const isFocusActive = currentScreen.type === 'focus' || currentScreen.type === 'enterprise';
   const isDialogueActive = currentScreen.type === 'duo_feed' || currentScreen.type === 'duo_detail' || currentScreen.type === 'landing' || currentScreen.type === 'home';
   const isActionActive = currentScreen.type === 'marketplace';
   const isPortraitActive = 
@@ -36,7 +37,7 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
     return null;
   }
 
-  // Exactement cinq rubriques selon la restructuration : Studio · Entreprise · Dialogue (au centre) · Action · Portrait
+  // Exactement cinq rubriques selon la structure YonyWood : Studio · Focus (2ème) · Dialogue (au centre) · Action · Portrait
   const menuItems = [
     {
       id: 'studio',
@@ -49,13 +50,13 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
       strokeWidth: 1.75
     },
     {
-      id: 'entreprise',
-      label: 'Entreprise',
-      icon: EntrepriseFilmDuoIcon, // Pellicule tournée à 90°
-      isActive: isEntrepriseActive,
-      onClick: () => onNavigate({ type: 'enterprise' }),
-      screenId: 'menu-item-entreprise',
-      iconClassName: 'w-[19px] h-[19px] sm:w-[20px] sm:h-[20px] shrink-0',
+      id: 'focus',
+      label: 'Focus',
+      icon: CameraLensFocusIcon, // Objectif de caméra évoquant le zoom et la mise au point
+      isActive: isFocusActive,
+      onClick: () => onNavigate({ type: 'focus' }),
+      screenId: 'menu-item-focus',
+      iconClassName: 'w-5 h-5 sm:w-5 sm:h-5 shrink-0',
       strokeWidth: 1.75
     },
     {
@@ -120,7 +121,13 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
                     : 'bg-transparent text-stone-600 group-hover:bg-stone-100/80'
                 }`}
               >
-                {item.id === 'entreprise' ? (
+                {item.id === 'focus' ? (
+                  <CameraLensFocusIcon 
+                    className={`${item.iconClassName} transition-transform duration-200`} 
+                    strokeWidth={item.strokeWidth} 
+                    isActive={item.isActive}
+                  />
+                ) : item.id === 'entreprise' ? (
                   <EntrepriseFilmDuoIcon 
                     className={`${item.iconClassName} transition-transform duration-200`} 
                     strokeWidth={item.strokeWidth} 

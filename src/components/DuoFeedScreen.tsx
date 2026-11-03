@@ -440,13 +440,12 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
     >
       
       {/* ========================================================================= */}
-      {/* 1. EN-TÊTE STORIES : FOND BEIGE #F7EFE6 PLEINE LARGEUR & COINS ARRONDIS    */}
+      {/* 1. EN-TÊTE STORIES : DÉGRADÉ BEIGE 50% VERS BLANC, SANS COINS NI OMBRE    */}
       {/* ========================================================================= */}
       <div 
-        className="w-full shrink-0 z-30 rounded-b-[22px]"
+        className="w-full shrink-0 z-30 border-none shadow-none rounded-none"
         style={{ 
-          backgroundColor: 'var(--color-header-bg, #F7EFE6)',
-          boxShadow: '0 2px 12px rgba(46, 27, 20, 0.06)' 
+          background: 'var(--color-header-stories-gradient, linear-gradient(to bottom, var(--color-header-stories, #F8EFE4), #FFFFFF))' 
         }}
       >
         <div className="w-full max-w-3xl mx-auto px-3 sm:px-4 pt-1 pb-2 shrink-0 h-[68px] sm:h-[76px] flex items-center overflow-hidden">
@@ -465,7 +464,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
               <Plus className="w-4 h-4 stroke-[2.5]" />
             </button>
 
-            {/* Vignettes Stories Individuelles avec anneau blanc net sur fond beige */}
+            {/* Vignettes Stories Individuelles avec anneaux blancs nets rehaussés d'une ombre très légère */}
             {PERSON_STORIES.map((story, idx) => (
               <div
                 key={story.id}
@@ -477,7 +476,10 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                 className="cursor-pointer group shrink-0"
                 title={`${story.authorName} — Story ${story.themeLabel}`}
               >
-                <div className="w-[52px] h-[52px] sm:w-14 sm:h-14 rounded-2xl p-0.5 border-2 border-white ring-1 ring-black/5 group-hover:border-[#A2482B] transition-all group-hover:scale-105 bg-white shadow-xs">
+                <div 
+                  className="w-[52px] h-[52px] sm:w-14 sm:h-14 rounded-2xl p-0.5 border-2 border-white ring-1 ring-black/5 group-hover:border-[#A2482B] transition-all group-hover:scale-105 bg-white"
+                  style={{ boxShadow: 'var(--story-ring-shadow, 0 1px 6px rgba(46, 27, 20, 0.12))' }}
+                >
                   <div className="w-full h-full rounded-xl overflow-hidden bg-stone-900 relative">
                     <img 
                       src={story.authorAvatar} 

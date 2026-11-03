@@ -29,7 +29,7 @@ const AFRIKA_FUN_CARDS: CompanyCard[] = [
     id: 'intro',
     type: 'intro',
     companyName: 'Africafun',
-    title: 'Espace Entreprise',
+    title: 'Focus',
     photoUrl: '/assets/Onboardings/Voyage.png',
     quote: 'Un espace vivant dédié à la valorisation authentique de l’entreprise. Ici, collaborateurs, créateurs et partenaires racontent l’histoire humaine, les savoir-faire et l’âme qui font votre réalité.'
   },
@@ -118,7 +118,7 @@ export const DemoEntrepriseSection: React.FC = () => {
       {/* En-tête Entreprises : titre exactement au même endroit que Studio */}
       <div className="w-full flex items-center justify-between mb-4 sm:mb-6 px-3 sm:px-6">
         <h3 className="font-editorial text-3xl font-bold text-stone-900">
-          Entreprises
+          Focus
         </h3>
       </div>
 

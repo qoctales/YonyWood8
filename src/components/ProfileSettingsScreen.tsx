@@ -1930,18 +1930,17 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
     <div className="w-full h-full max-h-full pb-20 sm:pb-24 pt-safe overflow-hidden flex flex-col justify-between text-[#1C1917] select-none bg-white">
       
       {/* ========================================================================= */}
-      {/* 1. EN-TÊTE ÉPURÉ DU PORTRAIT : FOND BEIGE #F7EFE6 & ACTIONS                */}
+      {/* 1. EN-TÊTE ÉPURÉ DU PORTRAIT : DÉGRADÉ BEIGE 50% VERS BLANC, SANS OMBRE     */}
       {/* ========================================================================= */}
       <div 
-        className="w-full shrink-0 z-30 rounded-b-[22px]"
+        className="w-full shrink-0 z-30 border-none shadow-none rounded-none"
         style={{ 
-          backgroundColor: 'var(--color-header-bg, #F7EFE6)',
-          boxShadow: '0 2px 12px rgba(46, 27, 20, 0.06)' 
+          background: 'var(--color-header-stories-gradient, linear-gradient(to bottom, var(--color-header-stories, #F8EFE4), #FFFFFF))' 
         }}
       >
         <div className="w-full max-w-3xl mx-auto px-3 sm:px-4 pt-1 pb-2 shrink-0 h-[76px] sm:h-[84px] flex items-center justify-between">
           <div className="flex items-center py-1 px-1">
-            {/* Capsule Profil Solo avec anneau blanc net */}
+            {/* Capsule Profil Solo avec anneau blanc net rehaussé d'une ombre légère */}
             <div 
               onClick={() => {
                 if (isOwner) onNavigate({ type: 'settings', returnTo: 'profile' });
@@ -1949,7 +1948,10 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
               className="flex flex-col items-center cursor-pointer group shrink-0"
               title={isOwner ? "Mes paramètres" : profileFullDisplayName}
             >
-              <div className="w-12 h-12 sm:w-13 sm:h-13 rounded-2xl p-0.5 border-2 border-white ring-1 ring-black/5 flex items-center justify-center bg-white shadow-xs">
+              <div 
+                className="w-12 h-12 sm:w-13 sm:h-13 rounded-2xl p-0.5 border-2 border-white ring-1 ring-black/5 flex items-center justify-center bg-white"
+                style={{ boxShadow: 'var(--story-ring-shadow, 0 1px 6px rgba(46, 27, 20, 0.12))' }}
+              >
                 <img
                   src={userPhoto || '/assets/images/romeo_avatar_1792698425983.jpg'}
                   alt={profileDisplayName || 'Roméo'}
