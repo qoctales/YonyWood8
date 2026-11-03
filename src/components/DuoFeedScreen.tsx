@@ -6,7 +6,9 @@ import {
   X, 
   Film,
   Plus,
-  Award
+  Award,
+  Play,
+  Pause
 } from 'lucide-react';
 import { celestialAudio } from '../utils/celestialAudio';
 import { apiService } from '../services/api';
@@ -430,8 +432,12 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
   const duoQuestion = currentDuo?.centralQuestion || currentDuo?.questionTitle || pA?.quote || 'Quelle est la leçon fondamentale que la vie vous a enseignée ?';
 
   const docTeaser = currentDuo ? DOCUMENTARIES.find(d => d.id === currentDuo.documentaryId)?.teaserVideoUrl : undefined;
-  const videoUrlA = pA?.videoAvatarUrl || docTeaser || 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4';
-  const videoUrlB = pB?.videoAvatarUrl || docTeaser || 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4';
+  const getValidVideo = (url?: string) => {
+    if (!url || url.includes('commondatastorage.googleapis.com')) return '/sample.mp4';
+    return url;
+  };
+  const videoUrlA = getValidVideo(pA?.videoAvatarUrl || docTeaser);
+  const videoUrlB = getValidVideo(pB?.videoAvatarUrl || docTeaser);
 
   return (
     <div 
@@ -477,7 +483,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                 title={`${story.authorName} — Story ${story.themeLabel}`}
               >
                 <div 
-                  className="w-[52px] h-[52px] sm:w-14 sm:h-14 rounded-2xl p-0.5 border-2 border-white ring-1 ring-white/10 group-hover:border-[#A2482B] transition-all group-hover:scale-105 bg-black"
+                  className="w-[52px] h-[52px] sm:w-14 sm:h-14 rounded-2xl p-0.5 border border-stone-800/80 group-hover:border-[#A2482B] transition-all group-hover:scale-105 bg-stone-900"
                   style={{ boxShadow: 'var(--story-ring-shadow, 0 1px 8px rgba(0, 0, 0, 0.6))' }}
                 >
                   <div className="w-full h-full rounded-xl overflow-hidden bg-stone-900 relative">
@@ -585,6 +591,8 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                     onClick={() => {
                       if (!isCenter) {
                         goToSlide(idx as 0 | 1 | 2);
+                      } else if (idx !== 1) {
+                        setIsPlaying(p => !p);
                       }
                     }}
                     style={{
@@ -676,6 +684,15 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                               )}
                               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/40 pointer-events-none" />
                             </div>
+
+                            {/* BOUTON PLAY AU CENTRE QUAND EN PAUSE SUR LA CARTE ACTIVE */}
+                            {!isThisVideoPlaying && isCenter && (
+                              <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none">
+                                <div className="w-14 h-14 rounded-full bg-black/45 backdrop-blur-md border border-white/25 text-white flex items-center justify-center shadow-2xl transition-transform hover:scale-110">
+                                  <Play className="w-6 h-6 ml-0.5 fill-white text-white opacity-90" />
+                                </div>
+                              </div>
+                            )}
 
 
                             {/* COLONNE D'ACTIONS LATÉRALE DROITE (ÉPURÉE : MUTE, PROTAGONISTE MIROIR, PORTRAIT, PARTAGE) */}

@@ -72,7 +72,7 @@ export const ProtagonistTeaserModal: React.FC<ProtagonistTeaserModalProps> = ({
   // Video Teaser URL (prioritize story video or standard teaser)
   const teaserVideo = protagonist.stories?.[0]?.videoCoverUrl && protagonist.stories[0].videoCoverUrl.endsWith('.mp4')
     ? protagonist.stories[0].videoCoverUrl
-    : 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4';
+    : '/sample.mp4';
 
   const posterImg = protagonist.photoUrl || '/assets/protagonists/koffi-tisserand.jpg';
 

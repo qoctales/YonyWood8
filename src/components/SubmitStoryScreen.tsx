@@ -640,7 +640,7 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
       title: titleClean,
       synopsis: `Soumission pour ${selectedFinalChoice?.title || 'le Studio'} (${selectedPartId === 'part-a' ? 'Volet 1' : 'Volet 2'}). En attente de validation éditoriale.`,
       universe: activePillar?.id || 'studio',
-      videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+      videoUrl: '/sample.mp4',
       thumbnailUrl: selectedFinalChoice?.posterUrl || '/assets/images/selfie_video_story.jpg',
       partId: selectedPartId,
       credits: {
@@ -670,9 +670,24 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
     const parts = isMirrorTheme ? getSeriesParts(selectedFinalChoice) : null;
 
     return (
-      <div className="w-full max-w-3xl mx-auto px-3 sm:px-6 pt-2 pb-24 sm:pb-28 pt-safe pb-safe h-full max-h-full overflow-hidden flex flex-col justify-between text-[#1C1917] select-none bg-white">
-        {/* EN-TÊTE HARMONISÉ AVEC RETOUR VERS LE DUO DE CHOIX */}
-        <div className="relative flex items-center justify-between h-9 sm:h-11 shrink-0 gap-2 mb-1.5 sm:mb-2">
+      <div className="w-full h-full max-h-full pb-20 sm:pb-24 pt-safe overflow-hidden flex flex-col justify-between text-[#1C1917] select-none bg-white">
+        {/* EN-TÊTE STUDIO : FOND NOIR AVEC SLOGAN DU PROJET CENTRÉ SOUS LE LOGO */}
+        <div 
+          className="w-full shrink-0 z-30 border-none shadow-none rounded-none bg-black"
+          style={{ 
+            backgroundColor: '#000000'
+          }}
+        >
+          <div className="w-full max-w-3xl mx-auto px-3 sm:px-4 shrink-0 h-[68px] sm:h-[76px] flex items-center justify-center">
+            <span className="font-editorial text-sm sm:text-base md:text-lg font-medium tracking-wide text-white select-none text-center">
+              Stories are roots and stars
+            </span>
+          </div>
+        </div>
+
+        <div className="flex-1 w-full max-w-3xl mx-auto px-3 sm:px-6 pt-2 pb-24 sm:pb-28 min-h-0 overflow-hidden flex flex-col justify-between">
+          {/* EN-TÊTE HARMONISÉ AVEC RETOUR VERS LE DUO DE CHOIX */}
+          <div className="relative flex items-center justify-between h-9 sm:h-11 shrink-0 gap-2 mb-1.5 sm:mb-2">
           <div className="flex items-center gap-1.5 sm:gap-2 h-full min-w-0">
             <button
               onClick={() => setIsUploadScreenActive(false)}
@@ -896,27 +911,37 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
             {toastMessage}
           </div>
         )}
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="w-full max-w-3xl mx-auto px-3 sm:px-6 pt-1 sm:pt-2 pb-20 sm:pb-24 pt-safe pb-safe h-full max-h-full overflow-hidden flex flex-col justify-between text-[#1C1917] select-none">
+    <div className="w-full h-full max-h-full pb-20 sm:pb-24 pt-safe overflow-hidden flex flex-col justify-between text-[#1C1917] select-none bg-white">
       
       {/* ========================================================================= */}
-      {/* 1. EN-TÊTE HARMONISÉ AVEC FIL D'ARIANE SELON LE NIVEAU ACTIF              */}
+      {/* 1. EN-TÊTE STUDIO : FOND NOIR AVEC SLOGAN DU PROJET CENTRÉ SOUS LE LOGO    */}
       {/* ========================================================================= */}
-      <div className="relative flex items-center justify-between h-8 sm:h-10 shrink-0 gap-2 mb-0.5 sm:mb-1">
-        <div className="flex items-center gap-1.5 sm:gap-2.5 min-w-0 flex-1 h-full">
-          {/* Niveau 0 : 4 portes pour partager son histoire */}
-          {isLevel0 && (
-            <div className="relative flex items-center h-full overflow-visible">
-              <h1 className="font-editorial text-xs sm:text-sm md:text-base font-semibold text-[#1C1917] tracking-normal leading-none whitespace-nowrap pr-2">
-                4 portes pour partager son histoire
-              </h1>
-              <div className="absolute left-0 -bottom-1.5 w-8 h-0.5 bg-[#A2482B] rounded-full" />
-            </div>
-          )}
+      <div 
+        className="w-full shrink-0 z-30 border-none shadow-none rounded-none bg-black"
+        style={{ 
+          backgroundColor: '#000000'
+        }}
+      >
+        <div className="w-full max-w-3xl mx-auto px-3 sm:px-4 shrink-0 h-[68px] sm:h-[76px] flex items-center justify-center">
+          <span className="font-editorial text-sm sm:text-base md:text-lg font-medium tracking-wide text-white select-none text-center">
+            Stories are roots and stars
+          </span>
+        </div>
+      </div>
+
+      {/* 2. ZONE CONTENU ET CARROUSEL 3D */}
+      <div className="flex-1 w-full max-w-3xl mx-auto px-3 sm:px-6 pt-1 sm:pt-2 min-h-0 overflow-hidden flex flex-col justify-between">
+        
+        {/* EN-TÊTE HARMONISÉ AVEC FIL D'ARIANE SELON LE NIVEAU ACTIF (UNIQUEMENT HORS NIVEAU 0 OU SI QUITTER) */}
+        {(!isLevel0 || preselectedDocumentaryId) && (
+          <div className="relative flex items-center justify-between h-8 sm:h-10 shrink-0 gap-2 mb-0.5 sm:mb-1">
+            <div className="flex items-center gap-1.5 sm:gap-2.5 min-w-0 flex-1 h-full">
 
           {/* Niveau 1 : 4 Portes › Nom de la Porte */}
           {isLevel1 && activePillar && (
@@ -1031,6 +1056,7 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
           )}
         </div>
       </div>
+      )}
 
       {/* ========================================================================= */}
       {/* 2. ZONE CENTRALE : DUO DE VIDÉOS CENTRÉ (TOUJOURS CÔTE À CÔTE MÊME SUR MOBILE) */}
@@ -1048,7 +1074,7 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                 {/* Image selfie vidéo afro-futuriste OU Vidéo si lecture */}
                 {duoPreviewVideo === 'upload' ? (
                   <video
-                    src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+                    src="/sample.mp4"
                     autoPlay
                     loop
                     playsInline
@@ -1131,7 +1157,7 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                 {/* Image personne filmée par un pro OU Vidéo si lecture */}
                 {duoPreviewVideo === 'expert' ? (
                   <video
-                    src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
+                    src="/sample.mp4"
                     autoPlay
                     loop
                     playsInline
@@ -1589,6 +1615,7 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
         </div>
       )}
 
+      </div>
     </div>
   );
 };

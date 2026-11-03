@@ -60,56 +60,56 @@ const PRODUCTIONS: ProductionPoster[] = [
     id: 'blacks-one-amazones',
     title: 'Blacks One ‹ › Amazones',
     posterImage: encodeURI('/assets/posters/Blacks One ‹ › Amazones.png'),
-    videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+    videoPreviewUrl: '/sample.mp4',
     sharePrice: 50
   },
   {
     id: 'baobab-bambou',
     title: 'Baobabs ‹ › Bambous',
     posterImage: encodeURI('/assets/posters/Baobabs ‹ › Bambous.jpg'),
-    videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+    videoPreviewUrl: '/sample.mp4',
     sharePrice: 50
   },
   {
     id: 'coaching-phd',
     title: 'Coaching ‹ › PhD',
     posterImage: encodeURI('/assets/posters/Coaching ‹ › PhD.jpg'),
-    videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+    videoPreviewUrl: '/sample.mp4',
     sharePrice: 50
   },
   {
     id: 'jesus-legba',
     title: 'Vodun Rays ‹ › Autre Foi',
     posterImage: encodeURI('/assets/posters/Vodun Rays ‹ › Autre Foi.png'),
-    videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+    videoPreviewUrl: '/sample.mp4',
     sharePrice: 50
   },
   {
     id: 'roots-routes',
     title: 'Roots < > Routes',
     posterImage: encodeURI('/assets/posters/Roots < > Routes.png'),
-    videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+    videoPreviewUrl: '/sample.mp4',
     sharePrice: 50
   },
   {
     id: 'fiat-luxe-builders',
     title: 'Fiat Luxe ‹ › Builders',
     posterImage: encodeURI('/assets/posters/Fiat Luxe ‹ › Builders.jpg'),
-    videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+    videoPreviewUrl: '/sample.mp4',
     sharePrice: 50
   },
   {
     id: 'pictures-words',
     title: 'Pictures ‹ › Words',
     posterImage: encodeURI('/assets/posters/Pictures ‹ › Words.jpg'),
-    videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+    videoPreviewUrl: '/sample.mp4',
     sharePrice: 50
   },
   {
     id: 'benin-monde',
     title: 'Benin ‹ › Le Monde',
     posterImage: encodeURI('/assets/posters/Benin ‹ › Le Monde.jpg'),
-    videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+    videoPreviewUrl: '/sample.mp4',
     sharePrice: 50
   }
 ];
@@ -122,7 +122,7 @@ const INITIAL_PEER_OFFERS: PeerOffer[] = [
     sellerPhoto: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
     seriesTitle: 'Vodun Rays ‹ › Autre Foi',
     posterImage: '/assets/posters/vodun-autre-foi.png',
-    videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+    videoPreviewUrl: '/sample.mp4',
     sharesCount: 3,
     unitPrice: 55
   },
@@ -133,7 +133,7 @@ const INITIAL_PEER_OFFERS: PeerOffer[] = [
     sellerPhoto: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80',
     seriesTitle: 'Bénin ‹ › Le Monde',
     posterImage: '/assets/posters/benin-monde.jpg',
-    videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+    videoPreviewUrl: '/sample.mp4',
     sharesCount: 5,
     unitPrice: 52
   },
@@ -144,7 +144,7 @@ const INITIAL_PEER_OFFERS: PeerOffer[] = [
     sellerPhoto: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=400&q=80',
     seriesTitle: 'Blacks One ‹ › Amazones',
     posterImage: '/assets/posters/blacks-one-amazones.png',
-    videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+    videoPreviewUrl: '/sample.mp4',
     sharesCount: 2,
     unitPrice: 72
   },
@@ -155,7 +155,7 @@ const INITIAL_PEER_OFFERS: PeerOffer[] = [
     sellerPhoto: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
     seriesTitle: 'Fiat Luxe ‹ › Builders',
     posterImage: '/assets/posters/fiat-luxe-builders.png',
-    videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+    videoPreviewUrl: '/sample.mp4',
     sharesCount: 4,
     unitPrice: 62
   },
@@ -166,7 +166,7 @@ const INITIAL_PEER_OFFERS: PeerOffer[] = [
     sellerPhoto: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80',
     seriesTitle: 'Roots ‹ › Routes',
     posterImage: '/assets/posters/roots-routes.jpg',
-    videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+    videoPreviewUrl: '/sample.mp4',
     sharesCount: 3,
     unitPrice: 68
   },
@@ -177,7 +177,7 @@ const INITIAL_PEER_OFFERS: PeerOffer[] = [
     sellerPhoto: '/assets/duos/codjo-blind.jpg',
     seriesTitle: 'Baobab ‹ › Bambou',
     posterImage: '/assets/posters/baobab-bambou.jpg',
-    videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+    videoPreviewUrl: '/sample.mp4',
     sharesCount: 4,
     unitPrice: 59
   },
@@ -188,7 +188,7 @@ const INITIAL_PEER_OFFERS: PeerOffer[] = [
     sellerPhoto: '/assets/duos/coach-office.jpg',
     seriesTitle: 'Coaching ‹ › PhD',
     posterImage: '/assets/posters/coaching-phd.png',
-    videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+    videoPreviewUrl: '/sample.mp4',
     sharesCount: 6,
     unitPrice: 65
   },
@@ -199,7 +199,7 @@ const INITIAL_PEER_OFFERS: PeerOffer[] = [
     sellerPhoto: '/assets/duos/photographer-focus.jpg',
     seriesTitle: 'Pictures ‹ › Words',
     posterImage: '/assets/posters/pictures-words.jpg',
-    videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+    videoPreviewUrl: '/sample.mp4',
     sharesCount: 5,
     unitPrice: 58
   }
@@ -439,22 +439,17 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
   // Capsules d'incitation à l'achat et vente de parts basées sur les 8 séries documentaires
   interface ShareStoryItem {
     id: string;
-    isAdd?: boolean;
-    label?: string;
-    title?: string;
-    img?: string;
-    prodIndex?: number;
+    title: string;
+    img: string;
+    prodIndex: number;
   }
 
-  const SHARE_STORIES: ShareStoryItem[] = [
-    { id: 'sell-plus', isAdd: true, label: '+ Vendre' },
-    ...PRODUCTIONS.map((prod, idx) => ({
-      id: `story-prod-${prod.id}`,
-      title: prod.title,
-      img: prod.posterImage,
-      prodIndex: idx
-    }))
-  ];
+  const SHARE_STORIES: ShareStoryItem[] = PRODUCTIONS.map((prod, idx) => ({
+    id: `story-prod-${prod.id}`,
+    title: prod.title,
+    img: prod.posterImage,
+    prodIndex: idx
+  }));
 
   return (
     <div className="w-full h-full max-h-full pb-20 sm:pb-24 pt-safe overflow-hidden flex flex-col justify-between text-[#1C1917] select-none bg-white">
@@ -473,54 +468,32 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'auto' }}
             className="flex items-center gap-2 sm:gap-2.5 overflow-x-auto no-scrollbar py-1 px-1 pb-5 -mb-4 w-full"
           >
-            {SHARE_STORIES.map((st) => {
-              if (st.isAdd) {
-                return (
-                  <div 
-                    key={st.id}
-                    onClick={() => setSuccessToast("Espace vente de parts : choisissez une de vos parts à proposer à la communauté.")}
-                    className="flex flex-col items-center cursor-pointer group shrink-0"
-                    title="Mettre en vente mes parts"
-                  >
-                    <div 
-                      className="w-12 h-12 sm:w-13 sm:h-13 rounded-2xl p-0.5 border-2 border-dashed border-[#A2482B] flex items-center justify-center group-hover:scale-105 transition-transform bg-[#A2482B]/20"
-                      style={{ boxShadow: 'var(--story-ring-shadow, 0 1px 8px rgba(0, 0, 0, 0.6))' }}
-                    >
-                      <div className="w-full h-full rounded-xl bg-[#A2482B] text-white flex items-center justify-center shadow-xs">
-                        <span className="text-base font-bold">+</span>
-                      </div>
-                    </div>
-                  </div>
-                );
-              }
-
-              return (
+            {SHARE_STORIES.map((st) => (
+              <div 
+                key={st.id}
+                onClick={() => {
+                  if (st.prodIndex !== undefined) {
+                    setActiveTab('coproduire');
+                    setCurrentIndex(st.prodIndex);
+                  }
+                }}
+                className="flex flex-col items-center cursor-pointer group shrink-0"
+                title={st.title}
+              >
                 <div 
-                  key={st.id}
-                  onClick={() => {
-                    if (st.prodIndex !== undefined) {
-                      setActiveTab('coproduire');
-                      setCurrentIndex(st.prodIndex);
-                    }
-                  }}
-                  className="flex flex-col items-center cursor-pointer group shrink-0"
-                  title={st.title}
+                  className="w-12 h-12 sm:w-13 sm:h-13 rounded-2xl p-0.5 border border-stone-800/80 bg-stone-900 transition-transform group-hover:scale-105"
+                  style={{ boxShadow: 'var(--story-ring-shadow, 0 1px 8px rgba(0, 0, 0, 0.6))' }}
                 >
-                  <div 
-                    className="w-12 h-12 sm:w-13 sm:h-13 rounded-2xl p-0.5 border-2 border-white ring-1 ring-white/10 bg-black transition-transform group-hover:scale-105"
-                    style={{ boxShadow: 'var(--story-ring-shadow, 0 1px 8px rgba(0, 0, 0, 0.6))' }}
-                  >
-                    <div className="w-full h-full rounded-xl overflow-hidden bg-stone-900 relative">
-                      <img 
-                        src={st.img} 
-                        alt="" 
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
+                  <div className="w-full h-full rounded-xl overflow-hidden bg-stone-900 relative">
+                    <img 
+                      src={st.img} 
+                      alt="" 
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                 </div>
-              );
-            })}
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -581,7 +554,7 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
                 {isPlaying ? (
                   <video
                     ref={videoRef}
-                    src={currentProd.videoPreviewUrl}
+                    src={(!currentProd.videoPreviewUrl || currentProd.videoPreviewUrl.includes('commondatastorage.googleapis.com')) ? '/sample.mp4' : currentProd.videoPreviewUrl}
                     poster={currentProd.posterImage}
                     autoPlay
                     loop

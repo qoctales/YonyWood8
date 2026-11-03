@@ -75,29 +75,19 @@ export const FourFacesCard: React.FC<FourFacesCardProps> = ({
         const nextTime = prev + 0.1;
         if (nextTime >= STEP_DURATION_SECONDS) {
           const current = activeStepRef.current;
-          if (current < 3) {
-            // Passer au participant suivant (0 -> 1, 1 -> 2, 2 -> 3)
-            const nextStep = (current + 1) as 0 | 1 | 2 | 3;
-            activeStepRef.current = nextStep;
-            setActiveStep(nextStep);
-            celestialAudio.playOrbSelect();
-            return 0;
-          } else {
-            // Le 4ème participant (index 3) a joué l'intégralité de sa vidéo (8s)
-            setIsCompleted(true);
-            setIsPlaying(false);
-            setTimeout(() => {
-              onComplete?.();
-            }, 500);
-            return STEP_DURATION_SECONDS;
-          }
+          // Passer fluidement au participant suivant (0 -> 1 -> 2 -> 3 -> 0)
+          const nextStep = ((current + 1) % 4) as 0 | 1 | 2 | 3;
+          activeStepRef.current = nextStep;
+          setActiveStep(nextStep);
+          celestialAudio.playOrbSelect();
+          return 0;
         }
         return nextTime;
       });
     }, 100);
 
     return () => clearInterval(timer);
-  }, [isPlaying, isActive, isCompleted, onComplete]);
+  }, [isPlaying, isActive, isCompleted]);
 
   // Relance de la vidéo lors d'un changement d'étape
   useEffect(() => {
@@ -203,8 +193,8 @@ export const FourFacesCard: React.FC<FourFacesCardProps> = ({
               onClick={(e) => handleSelectParticipant(idx as 0 | 1 | 2 | 3, e)}
               className={`relative rounded-2xl overflow-hidden transition-all duration-300 border bg-stone-900 ${posClass} ${
                 isThisActive 
-                  ? 'border-2 border-white ring-2 ring-white/60 shadow-2xl scale-[1.02] z-20 opacity-100' 
-                  : 'border-white/20 opacity-65 hover:opacity-90 z-10'
+                  ? 'border-2 border-[#A2482B] ring-2 ring-[#A2482B]/30 shadow-2xl scale-[1.02] z-20 opacity-100' 
+                  : 'border-white/10 opacity-70 hover:opacity-90 z-10'
               }`}
             >
               {/* Image de couverture toujours présente en fond pour éviter tout écran vide */}
@@ -219,8 +209,8 @@ export const FourFacesCard: React.FC<FourFacesCardProps> = ({
               {isThisActive && isPlaying && (
                 <video
                   ref={videoRef}
-                  key={`fourface-video-${participant.id}-${idx}`}
-                  src={participant.videoUrl}
+                  key={`fourface-video-${participant.id}-${idx}-${activeStep}`}
+                  src={participant.videoUrl || '/sample.mp4'}
                   poster={participant.avatarUrl}
                   autoPlay
                   loop={true}

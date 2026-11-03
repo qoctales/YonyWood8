@@ -117,13 +117,22 @@ export const VideoPlayerScreen: React.FC<VideoPlayerScreenProps> = ({
         <div className="relative w-full h-full max-w-sm sm:max-w-md max-h-[84vh] aspect-[9/16] flex items-center justify-center p-2 sm:p-4">
           <div className="relative w-full h-full rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-[#1B1916] group/player">
             
-            <img
-              src={story.videoCoverUrl}
-              alt={story.title}
-              className={`w-full h-full object-cover transition-transform duration-1000 ${
-                isPlaying ? 'scale-105 filter brightness-95' : 'scale-100 filter brightness-75'
-              }`}
-            />
+            {isPlaying ? (
+              <video
+                src={(!story.videoUrl || story.videoUrl.includes('commondatastorage.googleapis.com')) ? '/sample.mp4' : story.videoUrl}
+                autoPlay
+                loop
+                playsInline
+                muted={isMuted}
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <img
+                src={story.videoCoverUrl}
+                alt={story.title}
+                className="w-full h-full object-cover filter brightness-75"
+              />
+            )}
             
             {/* Cinematic grain and subtle vignette */}
             <div className="absolute inset-0 bg-radial from-transparent via-black/20 to-black/70 pointer-events-none" />

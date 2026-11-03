@@ -22,7 +22,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
     description: 'Au Bénin, berceau du culte des ancêtres et terre de ferveur biblique, deux croyances cohabitent sous le même toit sans jamais s’affronter frontalement. Cette série met en miroir des dévots de la tradition ancestrale — gardiens des carrefours, messagers de l\'invisible et protecteurs des seuils — avec des pasteurs, religieuses et fidèles chrétiens tournés vers la foi révélée. Face aux grands mystères humains (l\'épreuve de la maladie, le pardon, le deuil, l\'abandon à une puissance supérieure), leurs rituels, louanges et oraisons silencieuses dialoguent d\'égal à égal, révélant la quête universelle d\'une présence supérieure.',
     coverImage: encodeURI('/assets/posters/Vodun Rays ‹ › Autre Foi.png'),
     posterUrl: encodeURI('/assets/posters/Vodun Rays ‹ › Autre Foi.png'),
-    teaserVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+    teaserVideoUrl: '/sample.mp4',
     teaserDuration: '1:15',
     universes: [
       {
@@ -44,7 +44,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         name: 'Mahougnon Zounon',
         role: 'Gardien du sanctuaire des mémoires ancestrales (Ouidah)',
         photoUrl: '/assets/duos/mahougnon_esu_portrait_1791701582891.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+        videoUrl: '/sample.mp4',
         status: 'EFFIGIE_PRINCIPALE'
       },
       {
@@ -52,7 +52,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         name: 'Dieudonné Dossou',
         role: 'Prêtre et théologien du dialogue des mémoires',
         photoUrl: '/assets/duos/duo_pere_matthieu_1791655226601.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+        videoUrl: '/sample.mp4',
         status: 'EFFIGIE_SERIE'
       }
     ],
@@ -63,7 +63,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         prompt: 'Qu’est-ce qui, un jour, vous a fait sentir que quelque chose de plus grand que vous était présent ?',
         posterUrl: 'https://images.unsplash.com/photo-1548625361-195b05a76bb8?auto=format&fit=crop&w=800&q=80',
         audioDuration: '0:42',
-        videoAvatarUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+        videoAvatarUrl: '/sample.mp4',
         audioVoiceName: 'Mahougnon & Dieudonné',
         translations: [
           { lang: 'fr', label: 'Français', prompt: 'Qu’est-ce qui, un jour, vous a fait sentir que quelque chose de plus grand que vous était présent ?' },
@@ -77,7 +77,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         prompt: 'Racontez-nous une épreuve ou un moment difficile de votre vie où votre foi a été mise à l\'épreuve. Qu\'avez-vous vécu ?',
         posterUrl: 'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=800&q=80',
         audioDuration: '0:38',
-        videoAvatarUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+        videoAvatarUrl: '/sample.mp4',
         audioVoiceName: 'Sœur Blandine Dossou',
         translations: [
           { lang: 'fr', label: 'Français', prompt: 'Racontez-nous une épreuve ou un moment difficile de votre vie où votre foi a été mise à l\'épreuve. Qu\'avez-vous vécu ?' },
@@ -93,7 +93,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         prompt: 'Si vous pouviez transmettre une seule chose de votre foi à quelqu\'un qui cherche aujourd\'hui son chemin, quelle histoire de votre vie lui raconteriez-vous pour lui montrer ce qu\'elle représente pour vous ?',
         posterUrl: 'https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=800&q=80',
         audioDuration: '0:45',
-        videoAvatarUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+        videoAvatarUrl: '/sample.mp4',
         audioVoiceName: 'Dieudonné',
         translations: [
           { lang: 'fr', label: 'Français', prompt: 'Si vous pouviez transmettre une seule chose de votre foi à quelqu\'un qui cherche aujourd\'hui son chemin, quelle histoire de votre vie lui raconteriez-vous ?' },
@@ -108,7 +108,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         prompt: 'Racontez-nous l\'histoire d\'une personne que votre foi a mise sur votre chemin et qui a profondément changé votre manière de voir la vie. Qu\'avez-vous appris d\'elle ?',
         posterUrl: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=800&q=80',
         audioDuration: '0:49',
-        videoAvatarUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+        videoAvatarUrl: '/sample.mp4',
         audioVoiceName: 'Mahougnon',
         translations: [
           { lang: 'fr', label: 'Français', prompt: 'Racontez-nous l\'histoire d\'une personne que votre foi a mise sur votre chemin et qui a profondément changé votre manière de voir la vie.' },
@@ -121,7 +121,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         prompt: 'Imaginez que dans cent ans, quelqu\'un découvre votre histoire sans jamais vous avoir rencontré. Quelle histoire de votre vie voudriez-vous qu\'il connaisse pour comprendre ce que votre foi vous a appris ?',
         posterUrl: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=800&q=80',
         audioDuration: '0:52',
-        videoAvatarUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+        videoAvatarUrl: '/sample.mp4',
         audioVoiceName: 'Voix de la Communauté',
         translations: [
           { lang: 'fr', label: 'Français', prompt: 'Imaginez que dans cent ans, quelqu\'un découvre votre histoire sans jamais vous avoir rencontré. Quelle histoire voudriez-vous qu\'il connaisse ?' },
@@ -143,7 +143,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
     description: 'Des cités lacustres de Ganvié, bâties sur pilotis pour échapper aux razzias du Dahomey, jusqu\'aux terrasses millénaires de Pisac et Cusco au Pérou, perchées à 3 400 mètres d\'altitude. Bénin ‹ › Le Monde réunit des pêcheurs toffinou et des paysans quechuas gardiens de la mémoire. Comment habite-t-on l\'eau ou la roche sacrée ? Que ressent-on lorsqu\'il faut quitter sa lagune ou sa cordillère, et que retrouve-t-on en revenant ? Une épopée intime sur la mémoire des terres nourricières et la résistance poétique des peuples autochtones face à l\'exil.',
     coverImage: encodeURI('/assets/posters/Benin ‹ › Le Monde.jpg'),
     posterUrl: encodeURI('/assets/posters/Benin ‹ › Le Monde.jpg'),
-    teaserVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+    teaserVideoUrl: '/sample.mp4',
     teaserDuration: '1:45',
     universes: [
       {
@@ -165,7 +165,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         title: 'Le Pays Unique',
         prompt: 'Racontez un moment où vous avez compris ce qui rend votre pays unique.',
         audioDuration: '0:40',
-        videoAvatarUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+        videoAvatarUrl: '/sample.mp4',
         audioVoiceName: 'Tobi & Sayri (Bénin / Pérou)',
         translations: [
           { lang: 'fr', label: 'Français', prompt: 'Racontez un moment où vous avez compris ce qui rend votre pays unique.' },
@@ -180,7 +180,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         title: 'Partir',
         prompt: 'Racontez-nous une fois où vous avez dû quitter un lieu qui comptait profondément pour vous. Qu\'avez-vous ressenti en partant ?',
         audioDuration: '0:36',
-        videoAvatarUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+        videoAvatarUrl: '/sample.mp4',
         audioVoiceName: 'Koffi Tisserand',
         translations: [
           { lang: 'fr', label: 'Français', prompt: 'Racontez-nous une fois où vous avez dû quitter un lieu qui comptait profondément pour vous. Qu\'avez-vous ressenti en partant ?' },
@@ -194,7 +194,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         title: 'Revenir',
         prompt: 'Racontez-nous votre histoire d\'un retour dans un lieu qui avait changé — ou qui vous avait changé. Qu\'avez-vous découvert en y revenant ?',
         audioDuration: '0:44',
-        videoAvatarUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+        videoAvatarUrl: '/sample.mp4',
         audioVoiceName: 'Amara Tisserande',
         translations: [
           { lang: 'fr', label: 'Français', prompt: 'Racontez-nous votre histoire d\'un retour dans un lieu qui avait changé — ou qui vous avait changé. Qu\'avez-vous découvert en y revenant ?' },
@@ -206,7 +206,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         title: 'Ce qui Reste',
         prompt: 'Racontez-nous quelque chose de votre territoire que vous avez reçu de ceux qui étaient là avant vous et que vous voulez absolument préserver. Pourquoi ?',
         audioDuration: '0:48',
-        videoAvatarUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+        videoAvatarUrl: '/sample.mp4',
         audioVoiceName: 'Piroguiers de Ganvié',
         translations: [
           { lang: 'fr', label: 'Français', prompt: 'Racontez-nous quelque chose de votre territoire reçu des aïeux et que vous voulez absolument préserver.' },
@@ -219,7 +219,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         title: 'Demain',
         prompt: 'Imaginez que quelqu\'un découvre votre territoire dans cent ans. Quelle histoire aimeriez-vous qu\'il connaisse pour comprendre ce que ce lieu représente pour vous ?',
         audioDuration: '0:50',
-        videoAvatarUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+        videoAvatarUrl: '/sample.mp4',
         audioVoiceName: 'Chant Collectif Ganvié & Andes',
         translations: [
           { lang: 'fr', label: 'Français', prompt: 'Imaginez que quelqu\'un découvre votre territoire dans cent ans. Quelle histoire aimeriez-vous qu\'il connaisse ?' },
@@ -241,7 +241,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
     description: 'D’un côté, la force de conviction, l’éloquence tranchante et le poing levé de Malik Diop, orateur noir élégamment vêtu, portant haut le verbe de la liberté, de la justice et de l’émancipation civique (Blacks One). De l’autre côté, l’énergie souveraine des Amazones, guerrières et penseuses de la dignité féminine se battant pour la puissance, l’autonomie et la souveraineté collective des femmes (Amazones). Deux voix d’une rare élégance, deux combats fraternels qui s’unissent pour affirmer nos souverainetés.',
     coverImage: encodeURI('/assets/posters/Blacks One ‹ › Amazones.png'),
     posterUrl: encodeURI('/assets/posters/Blacks One ‹ › Amazones.png'),
-    teaserVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+    teaserVideoUrl: '/sample.mp4',
     teaserDuration: '1:30',
     universes: [
       {
@@ -263,7 +263,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         name: 'Malik Diop',
         role: 'Penseur civique, orateur & passeur de mémoires',
         photoUrl: '/assets/protagonists/malik-diop.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+        videoUrl: '/sample.mp4',
         status: 'EFFIGIE_PRINCIPALE'
       },
       {
@@ -271,7 +271,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         name: 'Éléonore Vance',
         role: 'Artiste peintre visionnaire & icône féministe',
         photoUrl: '/assets/protagonists/eleonore-vance.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+        videoUrl: '/sample.mp4',
         status: 'EFFIGIE_SERIE'
       }
     ],
@@ -281,7 +281,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         title: 'L\'Identité Portée',
         prompt: 'Racontez un moment où vous avez vécu une expérience unique liée à l’identité que vous portez.',
         audioDuration: '0:39',
-        videoAvatarUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+        videoAvatarUrl: '/sample.mp4',
         audioVoiceName: 'Malik & Éléonore',
         translations: [
           { lang: 'fr', label: 'Français', prompt: 'Racontez un moment où vous avez vécu une expérience unique liée à l’identité que vous portez.' },
@@ -294,7 +294,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         title: 'Le Regard des Autres',
         prompt: 'Racontez-nous une fois où le regard de quelqu\'un sur vous a changé votre manière de vous regarder vous-même. Qu\'avez-vous vécu ?',
         audioDuration: '0:43',
-        videoAvatarUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+        videoAvatarUrl: '/sample.mp4',
         audioVoiceName: 'Éléonore (Marseille)',
         translations: [
           { lang: 'fr', label: 'Français', prompt: 'Racontez-nous une fois où le regard de quelqu\'un a changé votre manière de vous regarder vous-même.' },
@@ -307,7 +307,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         title: 'CE QUE L\'ON PORTE',
         prompt: 'Racontez-nous quelque chose que vous avez reçu de votre histoire, de votre famille ou de ceux qui vous ont précédé et que vous portez encore aujourd\'hui. Qu\'est-ce que cela représente pour vous ?',
         audioDuration: '0:47',
-        videoAvatarUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+        videoAvatarUrl: '/sample.mp4',
         audioVoiceName: 'Malik Barou (Dakar)',
         translations: [
           { lang: 'fr', label: 'Français', prompt: 'Racontez-nous quelque chose que vous avez reçu de votre histoire ou de vos ancêtres et que vous portez encore aujourd\'hui.' },
@@ -320,7 +320,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         title: 'Devenir',
         prompt: 'Racontez-nous un moment où vous avez compris que vous étiez en train de devenir quelqu\'un de différent de ce que vous aviez imaginé. Qu\'est-ce qui avait changé ?',
         audioDuration: '0:41',
-        videoAvatarUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+        videoAvatarUrl: '/sample.mp4',
         audioVoiceName: 'Collectif Beyond Eve',
         translations: [
           { lang: 'fr', label: 'Français', prompt: 'Racontez-nous un moment où vous avez compris que vous deveniez quelqu\'un de différent de ce que vous aviez imaginé.' },
@@ -332,7 +332,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         title: 'À Celui qui Viendra',
         prompt: 'Racontez-nous une histoire de votre vie que vous aimeriez transmettre à quelqu\'un qui viendra après vous pour l\'aider à comprendre quelque chose que vous avez appris.',
         audioDuration: '0:50',
-        videoAvatarUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+        videoAvatarUrl: '/sample.mp4',
         audioVoiceName: 'Ablaye Cissoko & Voix Dakar',
         translations: [
           { lang: 'fr', label: 'Français', prompt: 'Racontez-nous une histoire de votre vie que vous aimeriez transmettre à la génération suivante.' },
@@ -354,7 +354,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
     description: 'D’un côté, Fiat Luxe célèbre l’exigence de l’artisanat d’art, la haute joaillerie et l’orfèvrerie où chaque millimètre est une œuvre de patience. De l’autre côté, Builders incarne la vision des constructeurs, ingénieurs et architectes qui transforment le sol en cités pérennes. Deux manières magistrales de sculpter la matière.',
     coverImage: encodeURI('/assets/posters/Fiat Luxe ‹ › Builders.jpg'),
     posterUrl: encodeURI('/assets/posters/Fiat Luxe ‹ › Builders.jpg'),
-    teaserVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+    teaserVideoUrl: '/sample.mp4',
     teaserDuration: '1:20',
     universes: [
       {
@@ -376,7 +376,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         title: 'La Beauté Inattendue',
         prompt: 'Racontez une expérience où vous avez vu la beauté, là où vous ne l’attendiez pas.',
         audioDuration: '0:35',
-        videoAvatarUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+        videoAvatarUrl: '/sample.mp4',
         audioVoiceName: 'Chef Koffi & Hélène',
         translations: [
           { lang: 'fr', label: 'Français', prompt: 'Racontez une expérience où vous avez vu la beauté, là où vous ne l’attendiez pas.' },
@@ -389,7 +389,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         title: 'L\'Attention',
         prompt: 'Racontez-nous une fois où vous avez accordé une attention particulière à quelqu\'un pour lui offrir quelque chose qu\'il n\'oublierait pas. Pourquoi avez-vous voulu faire cela pour cette personne ?',
         audioDuration: '0:44',
-        videoAvatarUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+        videoAvatarUrl: '/sample.mp4',
         audioVoiceName: 'Hélène Saint-Amand',
         translations: [
           { lang: 'fr', label: 'Français', prompt: 'Racontez-nous une fois où vous avez accordé une attention particulière à quelqu\'un pour lui offrir quelque chose qu\'il n\'oublierait pas.' },
@@ -401,7 +401,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         title: 'Le Détail',
         prompt: 'Racontez-nous une expérience que vous avez créée et dont vous vous souvenez encore à cause d\'un tout petit détail. Pourquoi ce détail avait-il autant d\'importance ?',
         audioDuration: '0:42',
-        videoAvatarUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+        videoAvatarUrl: '/sample.mp4',
         audioVoiceName: 'Chef Koffi (Dantokpa)',
         translations: [
           { lang: 'fr', label: 'Français', prompt: 'Racontez-nous une expérience dont vous vous souvenez à cause d\'un tout petit détail.' },
@@ -413,7 +413,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         title: 'La Surprise',
         prompt: 'Racontez-nous une fois où vous avez voulu surprendre quelqu\'un et où les choses ne se sont pas passées exactement comme prévu. Qu\'avez-vous découvert à ce moment-là ?',
         audioDuration: '0:46',
-        videoAvatarUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+        videoAvatarUrl: '/sample.mp4',
         audioVoiceName: 'Scénographe Fiat Luxe',
         translations: [
           { lang: 'fr', label: 'Français', prompt: 'Racontez-nous une fois où vous avez voulu surprendre quelqu\'un et où les choses ne se sont pas passées exactement comme prévu.' },
@@ -425,7 +425,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         title: 'CE QUE L\'ON OFFRE',
         prompt: 'Racontez-nous une chose que vous avez offerte à quelqu\'un et dont vous vous souvenez encore aujourd\'hui. Qu\'est-ce que cette histoire représente pour vous ?',
         audioDuration: '0:50',
-        videoAvatarUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+        videoAvatarUrl: '/sample.mp4',
         audioVoiceName: 'Chœur Cotonou & Paris',
         translations: [
           { lang: 'fr', label: 'Français', prompt: 'Racontez-nous une chose que vous avez offerte à quelqu\'un et dont vous vous souvenez encore aujourd\'hui.' },
@@ -447,7 +447,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
     description: 'D’un côté, la transmission fidèle des racines, la mémoire des terroirs et la préservation des ancrages ancestraux (Roots). De l’autre, l’itinérance, le passage des frontières et la construction d’horizons nouveaux au fil des routes (Routes). Roots < > Routes explore la tension féconde entre appartenance et liberté nomade.',
     coverImage: encodeURI('/assets/posters/Roots < > Routes.png'),
     posterUrl: encodeURI('/assets/posters/Roots < > Routes.png'),
-    teaserVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+    teaserVideoUrl: '/sample.mp4',
     teaserDuration: '1:35',
     universes: [
       {
@@ -469,7 +469,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         name: 'Fatou Diallo',
         role: 'Investisseuse à impact & Mécène (Paris & Dakar)',
         photoUrl: '/assets/duos/fatou-diallo.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+        videoUrl: '/sample.mp4',
         status: 'EFFIGIE_PRINCIPALE'
       },
       {
@@ -477,7 +477,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         name: 'Kwame Mensah',
         role: 'Ingénieur & Bâtisseur d’ouvrages (Cotonou & Kigali)',
         photoUrl: '/assets/duos/kwame-mensah.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+        videoUrl: '/sample.mp4',
         status: 'EFFIGIE_SERIE'
       }
     ],
@@ -488,7 +488,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         prompt: 'Racontez le moment où un lieu a changé votre façon de construire vos rêves.',
         posterUrl: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80',
         audioDuration: '0:42',
-        videoAvatarUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+        videoAvatarUrl: '/sample.mp4',
         audioVoiceName: 'Fatou Diallo & Kwame Mensah',
         translations: [
           { lang: 'fr', label: 'Français', prompt: 'Racontez le moment où un lieu a changé votre façon de construire vos rêves.' },
@@ -501,7 +501,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         prompt: 'Racontez-nous une situation critique où tout semblait menacer de s’effondrer. Comment avez-vous tenu le cap ?',
         posterUrl: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=800&q=80',
         audioDuration: '0:45',
-        videoAvatarUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+        videoAvatarUrl: '/sample.mp4',
         audioVoiceName: 'Kwame Mensah',
         translations: [
           { lang: 'fr', label: 'Français', prompt: 'Racontez-nous une situation critique où tout semblait menacer de s’effondrer. Comment avez-vous tenu le cap ?' },
@@ -514,7 +514,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         prompt: 'Racontez-nous une rencontre entre financeur et bâtisseur qui a changé votre regard sur la valeur de ce que vous faites.',
         posterUrl: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80',
         audioDuration: '0:40',
-        videoAvatarUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+        videoAvatarUrl: '/sample.mp4',
         audioVoiceName: 'Fatou Diallo',
         translations: [
           { lang: 'fr', label: 'Français', prompt: 'Racontez-nous une rencontre entre financeur et bâtisseur qui a changé votre regard sur la valeur de ce que vous faites.' },
@@ -527,7 +527,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         prompt: 'Que vous a appris la poussière du chantier ou la confrontation à la matière que les chiffres ne disaient pas ?',
         posterUrl: 'https://images.unsplash.com/photo-1541888946425-d0fbb186c5f7?auto=format&fit=crop&w=800&q=80',
         audioDuration: '0:48',
-        videoAvatarUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+        videoAvatarUrl: '/sample.mp4',
         audioVoiceName: 'Bâtisseurs du réel',
         translations: [
           { lang: 'fr', label: 'Français', prompt: 'Que vous a appris la poussière du chantier que les chiffres ne disaient pas ?' },
@@ -540,7 +540,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         prompt: 'Dans cinquante ans, quelle empreinte tangible souhaitez-vous que votre alliance ait laissée dans le tissu humain et économique ?',
         posterUrl: 'https://images.unsplash.com/photo-1519999482648-25049ddd37b1?auto=format&fit=crop&w=800&q=80',
         audioDuration: '0:50',
-        videoAvatarUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+        videoAvatarUrl: '/sample.mp4',
         audioVoiceName: 'Voix de la Communauté',
         translations: [
           { lang: 'fr', label: 'Français', prompt: 'Dans cinquante ans, quelle empreinte tangible souhaitez-vous avoir laissée ?' },
@@ -562,7 +562,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
     description: 'D’un côté, le Baobab : des sages et aînés dépositaires des récits fondateurs, ancrés solidement face aux tempêtes du temps. De l’autre, le Bambou : de jeunes pousses agiles, audacieuses, qui se plient aux courants du monde contemporain sans jamais rompre. Un dialogue complice entre transmission et réinvention du futur.',
     coverImage: encodeURI('/assets/posters/Baobabs ‹ › Bambous.jpg'),
     posterUrl: encodeURI('/assets/posters/Baobabs ‹ › Bambous.jpg'),
-    teaserVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+    teaserVideoUrl: '/sample.mp4',
     teaserDuration: '1:12',
     universes: [
       {
@@ -584,7 +584,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         name: 'Dossou Zounon',
         role: 'Doyen patriarche & gardien des mémoires (Allada)',
         photoUrl: '/assets/duos/codjo-blind.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+        videoUrl: '/sample.mp4',
         status: 'EFFIGIE_PRINCIPALE'
       },
       {
@@ -592,7 +592,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         name: 'Sénan Agossa',
         role: 'Entrepreneure & innovatrice de la nouvelle génération',
         photoUrl: '/assets/protagonists/senan-agossa.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+        videoUrl: '/sample.mp4',
         status: 'EFFIGIE_SERIE'
       }
     ],
@@ -603,7 +603,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         prompt: 'La solidité des racines centenaires ou la souplesse du vent nouveau : quelle sagesse guide vos pas ?',
         posterUrl: '/assets/posters/baobab-bambou.jpg',
         audioDuration: '0:45',
-        videoAvatarUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+        videoAvatarUrl: '/sample.mp4',
         audioVoiceName: 'Dossou & Sénan',
         translations: [
           { lang: 'fr', label: 'Français', prompt: 'La solidité des racines centenaires ou la souplesse du vent nouveau : quelle sagesse guide vos pas ?' },
@@ -625,7 +625,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
     description: 'D’un côté, l’énergie des coachs, stratèges de performance et meneurs d’hommes qui transforment les blocages en victoires concrètes sur le terrain (Coaching). De l’autre, la rigueur des chercheurs doctorants qui passent des années à théoriser, expérimenter et valider les modèles de la connaissance (PhD). Entre l’impulsion et la preuve, deux manières indispensables de faire grandir l’humanité.',
     coverImage: '/assets/posters/coaching-phd.png',
     posterUrl: '/assets/posters/coaching-phd.png',
-    teaserVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+    teaserVideoUrl: '/sample.mp4',
     teaserDuration: '1:24',
     universes: [
       {
@@ -647,7 +647,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         name: 'Coach Marc',
         role: 'Mentor de performance & Stratège mental',
         photoUrl: '/assets/duos/coach-office.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+        videoUrl: '/sample.mp4',
         status: 'EFFIGIE_PRINCIPALE'
       },
       {
@@ -655,7 +655,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         name: 'Dre. Éléonore Kaboré',
         role: 'Docteure en sciences cognitives & Chercheuse',
         photoUrl: '/assets/duos/researcher-phd.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+        videoUrl: '/sample.mp4',
         status: 'EFFIGIE_SERIE'
       }
     ],
@@ -666,7 +666,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         prompt: 'L’instinct pratique du terrain ou la rigueur de la thèse : comment transformez-vous le monde ?',
         posterUrl: '/assets/duos/coach-office.jpg',
         audioDuration: '0:44',
-        videoAvatarUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+        videoAvatarUrl: '/sample.mp4',
         audioVoiceName: 'Marc & Éléonore',
         translations: [
           { lang: 'fr', label: 'Français', prompt: 'L’instinct pratique du terrain ou la rigueur de la thèse : comment transformez-vous le monde ?' },
@@ -679,7 +679,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         prompt: 'Quel a été l’instant précis où une intuition est devenue une méthode ou une démonstration imparable ?',
         posterUrl: '/assets/duos/researcher-phd.jpg',
         audioDuration: '0:40',
-        videoAvatarUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+        videoAvatarUrl: '/sample.mp4',
         audioVoiceName: 'Coach Marc',
         translations: [
           { lang: 'fr', label: 'Français', prompt: 'Quel a été l’instant précis où une intuition est devenue une méthode ou une démonstration imparable ?' },
@@ -701,7 +701,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
     description: 'D’un côté, l’instinct visuel, la lumière et la focale de créateurs d’images qui immortalisent la vérité crue et belle des visages (Pictures). De l’autre, la puissance oratoire, la métaphore ciselée et le souffle des maîtres du verbe et slameurs engagés (Words). Deux arts majeurs qui s’entrelacent pour rendre visible et audible l’indicible.',
     coverImage: '/assets/posters/pictures-words.jpg',
     posterUrl: '/assets/posters/pictures-words.jpg',
-    teaserVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+    teaserVideoUrl: '/sample.mp4',
     teaserDuration: '1:32',
     universes: [
       {
@@ -723,7 +723,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         name: 'Clara Valmont',
         role: 'Photographe documentaire & Auteure visuelle',
         photoUrl: '/assets/duos/photographer-focus.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+        videoUrl: '/sample.mp4',
         status: 'EFFIGIE_PRINCIPALE'
       },
       {
@@ -731,7 +731,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         name: 'Armel Hounkpatin',
         role: 'Slameur & Poète du verbe vivant',
         photoUrl: '/assets/images/fagnon_agronome_1792933698985.jpg',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+        videoUrl: '/sample.mp4',
         status: 'EFFIGIE_SERIE'
       }
     ],
@@ -742,7 +742,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         prompt: 'L’image qui fige l’instant ou le mot qui réveille la conscience : comment racontez-vous la vérité ?',
         posterUrl: '/assets/posters/pictures-words.jpg',
         audioDuration: '0:48',
-        videoAvatarUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+        videoAvatarUrl: '/sample.mp4',
         audioVoiceName: 'Clara & Armel',
         translations: [
           { lang: 'fr', label: 'Français', prompt: 'L’image qui fige l’instant ou le mot qui réveille la conscience : comment racontez-vous la vérité ?' },
@@ -755,7 +755,7 @@ const INITIAL_DOCUMENTARIES: Documentary[] = [
         prompt: 'Quelle est la chose la plus difficile à capter : la lumière qui s’efface ou la parole qu’on n’ose prononcer ?',
         posterUrl: '/assets/duos/photographer-focus.jpg',
         audioDuration: '0:42',
-        videoAvatarUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+        videoAvatarUrl: '/sample.mp4',
         audioVoiceName: 'Clara Valmont',
         translations: [
           { lang: 'fr', label: 'Français', prompt: 'Quelle est la chose la plus difficile à capter : la lumière qui s’efface ou la parole qu’on n’ose prononcer ?' },
@@ -2401,8 +2401,8 @@ export const PROTAGONISTS: Protagonist[] = [
     flag: '🇫🇷',
     photo: '/assets/duos/coach-office.jpg',
     photoUrl: '/assets/duos/coach-office.jpg',
-    videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-    teaserVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+    videoPreviewUrl: '/sample.mp4',
+    teaserVideoUrl: '/sample.mp4',
     quote: '« Chaque barrière mentale que l’on fait tomber dans le calme d’un bureau déverrouille dix victoires sur le terrain. »',
     bio: 'Ancien conseiller de dirigeants et d’athlètes de classe mondiale, Marc a consacré vingt ans à explorer la mécanique invisible de la confiance et du rebond psychologique.',
     universeTag: 'Coaching',
@@ -2470,8 +2470,8 @@ export const PROTAGONISTS: Protagonist[] = [
     flag: '🇰🇪',
     photo: '/assets/duos/athlete-hurdle.jpg',
     photoUrl: '/assets/duos/athlete-hurdle.jpg',
-    videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-    teaserVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+    videoPreviewUrl: '/sample.mp4',
+    teaserVideoUrl: '/sample.mp4',
     quote: '« La haie n’est pas un mur : c’est une invitation à voler une fraction de seconde de plus. »',
     bio: 'Championne d’Afrique du 400m haies, Aïcha incarne la persévérance absolue et l’élégance du geste sous la pression des grands stades.',
     universeTag: 'Sans Limites',
@@ -2524,8 +2524,8 @@ export const PROTAGONISTS: Protagonist[] = [
     flag: '🇫🇷',
     photo: '/assets/duos/photographer-focus.jpg',
     photoUrl: '/assets/duos/photographer-focus.jpg',
-    videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-    teaserVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+    videoPreviewUrl: '/sample.mp4',
+    teaserVideoUrl: '/sample.mp4',
     quote: '« Le cadre n’enferme pas le monde : il l’oblige à se révéler. Quand tu presses le déclencheur, tu ne voles pas une image, tu reçois une confidence. »',
     bio: 'Quinze ans de reportages au long cours à travers le Sahel et les mégapoles contemporaines, explorant les résonances intimes entre mémoire et territoire.',
     universeTag: 'Focus',
@@ -2578,8 +2578,8 @@ export const PROTAGONISTS: Protagonist[] = [
     flag: '🇧🇫',
     photo: '/assets/duos/researcher-phd.jpg',
     photoUrl: '/assets/duos/researcher-phd.jpg',
-    videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-    teaserVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+    videoPreviewUrl: '/sample.mp4',
+    teaserVideoUrl: '/sample.mp4',
     quote: '« Une thèse n’est pas un diplôme qu’on accroche : c’est une promesse faite au réel de ne jamais se contenter des apparences ni des réponses faciles. »',
     bio: 'Formée entre Ouagadougou et Lyon, elle allie enquêtes de terrain et modélisation complexe pour comprendre la transmission des savoirs et la résilience collective.',
     universeTag: 'PhD',
@@ -2748,7 +2748,7 @@ export const DUOS: Duo[] = [
       flag: '🇫🇷',
       photo: '/assets/duos/coach-office.jpg',
       photoUrl: '/assets/duos/coach-office.jpg',
-      videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+      videoPreviewUrl: '/sample.mp4',
       quote: '« Chaque barrière mentale que l’on fait tomber dans le calme d’un bureau déverrouille dix victoires sur le terrain. »',
       bio: 'Stratège de la haute performance humaine dans son bureau feutré.',
       universeTag: 'Coaching',
@@ -2781,7 +2781,7 @@ export const DUOS: Duo[] = [
       flag: '🇧🇫',
       photo: '/assets/duos/researcher-phd.jpg',
       photoUrl: '/assets/duos/researcher-phd.jpg',
-      videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+      videoPreviewUrl: '/sample.mp4',
       quote: '« Une thèse n’est pas un diplôme qu’on accroche : c’est une promesse faite au réel de ne jamais se contenter des apparences. »',
       bio: 'Chercheuse passionnée reliant données de terrain et mémoire vivante.',
       universeTag: 'PhD',
@@ -2850,7 +2850,7 @@ export const DUOS: Duo[] = [
       flag: '🇫🇷',
       photo: '/assets/duos/photographer-focus.jpg',
       photoUrl: '/assets/duos/photographer-focus.jpg',
-      videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+      videoPreviewUrl: '/sample.mp4',
       quote: '« Le cadre n’enferme pas le monde : il l’oblige à se révéler. Quand tu presses le déclencheur, tu ne voles pas une image, tu reçois une confidence. »',
       bio: 'Quinze ans de reportages visuels, observant la poésie des gestes humbles.',
       universeTag: 'Pictures',
@@ -2883,7 +2883,7 @@ export const DUOS: Duo[] = [
       flag: '🇧🇯',
       photo: '/assets/images/fagnon_agronome_1792933698985.jpg',
       photoUrl: '/assets/images/fagnon_agronome_1792933698985.jpg',
-      videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+      videoPreviewUrl: '/sample.mp4',
       quote: '« Le mot a le poids du feu et la douceur de la pluie. Quand je scande mes vers, je réveille la mémoire des ancêtres. »',
       bio: 'Voix vibrante de la scène slam de Cotonou, mêlant langues locales et souffle contemporain.',
       universeTag: 'Words',
@@ -2961,7 +2961,7 @@ export const VIDEOGRAPHERS: Videographer[] = [
     languages: ['Français', 'Fòn', 'Yorùbá'],
     rate: 'À partir de 180 €',
     estimatedRateEuros: 180,
-    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+    videoUrl: '/sample.mp4',
     protagonistId: 'dah-zounon',
     availability: 'Disponible sous 48h',
     rating: 4.9,
@@ -2986,7 +2986,7 @@ export const VIDEOGRAPHERS: Videographer[] = [
     rateInfo: 'Accompagnement solidaire certifié YonyWood',
     rate: 'À partir de 210 €',
     estimatedRateEuros: 210,
-    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+    videoUrl: '/sample.mp4',
     protagonistId: 'sayri-quispe',
     availability: 'Disponible cette semaine',
     rating: 4.8,
@@ -3011,7 +3011,7 @@ export const VIDEOGRAPHERS: Videographer[] = [
     rateInfo: 'Agrément charte qualité YonyWood',
     rate: 'À partir de 250 €',
     estimatedRateEuros: 250,
-    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
+    videoUrl: '/sample.mp4',
     protagonistId: 'fatou-diallo',
     availability: 'Disponible sur rendez-vous',
     rating: 5.0,
@@ -3036,7 +3036,7 @@ export const VIDEOGRAPHERS: Videographer[] = [
     rateInfo: 'Mission conventionnée YonyWood',
     rate: 'À partir de 320 €',
     estimatedRateEuros: 320,
-    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+    videoUrl: '/sample.mp4',
     protagonistId: 'coach-marc',
     availability: 'Disponible sous 72h',
     rating: 4.9,

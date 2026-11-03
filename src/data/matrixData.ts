@@ -3,13 +3,13 @@ import { get16StoriesForTopic } from './explorerTopicsData';
 
 // Sample stock videos for presentation teasers
 const TEASER_VIDEOS = [
-  'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-  'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-  'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
-  'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-  'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-  'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4',
-  'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'
+  '/sample.mp4',
+  '/sample.mp4',
+  '/sample.mp4',
+  '/sample.mp4',
+  '/sample.mp4',
+  '/sample.mp4',
+  '/sample.mp4'
 ];
 
 export interface MatrixSeriesConfig {

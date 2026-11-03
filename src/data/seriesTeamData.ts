@@ -45,7 +45,7 @@ export const ALL_SERIES_TEAMS: Record<string, SeriesTeamBundle> = {
         pledgeAmount: 18500,
         joinedAt: '15 Janvier 2026',
         bio: 'Mécène culturel et entrepreneur engagé dans la préservation des récits sacrés.',
-        videoPresentationUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+        videoPresentationUrl: '/sample.mp4',
         protagonistId: 'dah-zounon'
       },
       {
@@ -56,7 +56,7 @@ export const ALL_SERIES_TEAMS: Record<string, SeriesTeamBundle> = {
         pledgeAmount: 9200,
         joinedAt: '03 Février 2026',
         bio: 'Productrice audiovisuelle et spécialiste des narrations immersives d\'Afrique de l\'Ouest.',
-        videoPresentationUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4'
+        videoPresentationUrl: '/sample.mp4'
       },
       {
         id: 'prod-malik',
@@ -66,7 +66,7 @@ export const ALL_SERIES_TEAMS: Record<string, SeriesTeamBundle> = {
         pledgeAmount: 3400,
         joinedAt: '22 Février 2026',
         bio: 'Contributeur de la diaspora finançant la coproduction citoyenne.',
-        videoPresentationUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4'
+        videoPresentationUrl: '/sample.mp4'
       },
       {
         id: 'prod-amina',
@@ -76,7 +76,7 @@ export const ALL_SERIES_TEAMS: Record<string, SeriesTeamBundle> = {
         pledgeAmount: 2500,
         joinedAt: '08 Mars 2026',
         bio: 'Médecin et passionnée d\'archives orales vivantes.',
-        videoPresentationUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4'
+        videoPresentationUrl: '/sample.mp4'
       }
     ],
     distributors: [

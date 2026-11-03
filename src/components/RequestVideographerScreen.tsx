@@ -248,7 +248,7 @@ export const RequestVideographerScreen: React.FC<RequestVideographerScreenProps>
           {/* Lecteur Vidéo */}
           <video
             ref={videoRef}
-            src={currentVideographer.videoUrl || 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4'}
+            src={currentVideographer.videoUrl || '/sample.mp4'}
             poster={currentVideographer.photoUrl || currentVideographer.photo}
             autoPlay
             loop

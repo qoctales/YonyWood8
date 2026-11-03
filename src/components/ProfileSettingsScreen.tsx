@@ -231,7 +231,7 @@ const MEDIA_POSTER_PRESETS = [
 const MEDIA_VIDEO_PRESETS = [
   { name: 'Extrait Lagune', url: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4' },
   { name: 'Bande-annonce Cinéma', url: 'https://media.w3.org/2010/05/sintel/trailer.mp4' },
-  { name: 'Court Documentaire', url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4' },
+  { name: 'Court Documentaire', url: '/sample.mp4' },
 ];
 
 // Sous-composant : En-tête haut de vidéo avec capsule opaque à gauche & Déclencheur vidéo + Partager à droite
@@ -409,7 +409,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
           country: foundInMatrix.country || 'Bénin',
           flag: foundInMatrix.flag || '🇧🇯',
           photoUrl: foundInMatrix.photoUrl,
-          teaserVideoUrl: foundInMatrix.teaserVideoUrl || 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+          teaserVideoUrl: foundInMatrix.teaserVideoUrl || '/sample.mp4',
           quote: foundInMatrix.teaserPitch,
           bio: foundInMatrix.teaserPitch ? foundInMatrix.teaserPitch.replace(/«|»/g, '').trim() : `Passeur de savoirs et créateur dans la transmission ${foundInMatrix.universeTag || series.seriesTitle}.`,
           universeTag: foundInMatrix.universeTag,
@@ -439,7 +439,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
             country: p.country || 'Bénin',
             flag: p.flag || '🇧🇯',
             photoUrl: p.photoUrl,
-            teaserVideoUrl: p.teaserVideoUrl || 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+            teaserVideoUrl: p.teaserVideoUrl || '/sample.mp4',
             quote: p.teaserPitch,
             bio: p.teaserPitch ? p.teaserPitch.replace(/«|»/g, '').trim() : `Passeur de savoirs et créateur dans la transmission ${p.universeTag || 'YonyWood'}.`,
             universeTag: p.universeTag,
@@ -462,7 +462,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
       country: 'Bénin',
       photoUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80',
       bio: 'Artisan et passeur de savoirs dans la transmission des savoirs ancestraux.',
-      teaserVideoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+      teaserVideoUrl: '/sample.mp4',
       stories: []
     } as unknown as Protagonist;
   }, [protagonistId, isOwner]);
@@ -566,7 +566,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
       setProfileEditBio(targetProtagonist.bio);
       setProfileEditPhoto(targetProtagonist.photoUrl);
 
-      const vUrl = targetProtagonist.teaserVideoUrl || (targetProtagonist.stories && targetProtagonist.stories[0]?.videoUrl) || 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4';
+      const vUrl = targetProtagonist.teaserVideoUrl || (targetProtagonist.stories && targetProtagonist.stories[0]?.videoUrl) || '/sample.mp4';
       const pUrl = targetProtagonist.photoUrl || '/assets/protagonists/amara-tisserande.jpg';
 
       setRecits([
@@ -591,7 +591,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
           quote: '« Pour comprendre la matière, il faut accepter de ralentir et d’écouter. »',
           duration: '08:40',
           viewsCount: 890,
-          videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+          videoUrl: '/sample.mp4',
           posterUrl: pUrl
         }
       ]);
@@ -713,7 +713,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
   // =========================================================================
   const [recits, setRecits] = useState<UserRecitItem[]>(() => {
     if (targetProtagonist) {
-      const vUrl = targetProtagonist.teaserVideoUrl || (targetProtagonist.stories && targetProtagonist.stories[0]?.videoUrl) || 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4';
+      const vUrl = targetProtagonist.teaserVideoUrl || (targetProtagonist.stories && targetProtagonist.stories[0]?.videoUrl) || '/sample.mp4';
       const pUrl = targetProtagonist.photoUrl || '/assets/protagonists/amara-tisserande.jpg';
       return [
         {
@@ -737,7 +737,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
           quote: '« Pour comprendre la matière, il faut accepter de ralentir et d’écouter. »',
           duration: '08:40',
           viewsCount: 890,
-          videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+          videoUrl: '/sample.mp4',
           posterUrl: pUrl
         }
       ];
@@ -752,7 +752,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
         quote: '« Partir permet de voir le monde, mais revenir permet de se reconnaître soi-même dans la terre de ses ancêtres. »',
         duration: '06:15',
         viewsCount: 2840,
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+        videoUrl: '/sample.mp4',
         posterUrl: '/assets/images/romeo_arriving_cotonou_1792698426939.jpg'
       },
       {
@@ -784,7 +784,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
         submissionDate: '15 Fév 2026',
         viewsCount: 1200 + idx * 300,
         duration: st.duration || '07:30',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+        videoUrl: '/sample.mp4',
         posterUrl: st.videoCoverUrl || '/assets/duos/codjo-blind.jpg'
       }));
     }
@@ -822,7 +822,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
         submissionDate: '05 Mar 2026',
         viewsCount: 230,
         duration: '5:10',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+        videoUrl: '/sample.mp4',
         posterUrl: '/assets/posters/Blacks One < > Beyond Eve.png'
       }
     ];
@@ -889,7 +889,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
       growthRatePercent: 18.0,
       liquidityScore: 'Élevée',
       status: 'En diffusion',
-      videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+      videoUrl: '/sample.mp4',
       posterUrl: '/assets/posters/Blacks One < > Beyond Eve.png'
     },
     {
@@ -909,7 +909,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
       growthRatePercent: 11.8,
       liquidityScore: 'Moyenne',
       status: 'En tournage',
-      videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+      videoUrl: '/sample.mp4',
       posterUrl: '/assets/posters/Fiat Luxe < > Street.jpg'
     },
     {
@@ -929,7 +929,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
       growthRatePercent: 29.0,
       liquidityScore: 'Élevée',
       status: 'En production',
-      videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+      videoUrl: '/sample.mp4',
       posterUrl: '/assets/posters/Diasporas < > Makers.jpg'
     },
     {
@@ -949,7 +949,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
       growthRatePercent: 32.5,
       liquidityScore: 'Élevée',
       status: 'En tournage',
-      videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+      videoUrl: '/sample.mp4',
       posterUrl: '/assets/posters/Other Eyes < > Third Eye.png'
     }
   ]);
@@ -971,7 +971,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
           stock: '3 pièces numérotées',
           description: 'Pièce tissée sur métier traditionnel en fil de coton biologique cultivé localement et teinté à l’indigo naturel.',
           specs: '180 x 60 cm • 100% Coton brut biologique',
-          videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+          videoUrl: '/sample.mp4',
           posterUrl: '/assets/protagonists/amara-tisserande.jpg'
         },
         {
@@ -985,7 +985,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
           stock: '6 places disponibles',
           description: 'Une marche de 3 heures pour déceler les polyrythmies du vivant et la mémoire des gestes.',
           specs: 'Durée : 3h00 • Matériel fourni',
-          videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+          videoUrl: '/sample.mp4',
           posterUrl: '/assets/protagonists/koffi-tisserand.jpg'
         }
       ];
@@ -1002,7 +1002,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
         stock: '3 pièces numérotées',
         description: 'Pièce tissée sur métier traditionnel en fil de coton biologique cultivé localement et teinté à l’indigo naturel.',
         specs: '180 x 60 cm • 100% Coton brut biologique',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+        videoUrl: '/sample.mp4',
         posterUrl: '/assets/protagonists/amara-tisserande.jpg'
       },
       {
@@ -1030,7 +1030,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
         stock: '2 exemplaires disponibles',
         description: 'Navette sculptée à la main par les menuisiers de Porto-Novo dans des chutes de charpentes centenaires.',
         specs: 'Longueur : 28 cm • Bois d’iroko poli à la cire d’abeille',
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+        videoUrl: '/sample.mp4',
         posterUrl: '/assets/protagonists/chef-koffi.jpg'
       }
     ];
@@ -1050,7 +1050,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
       backersCount: 42,
       daysRemaining: 18,
       description: 'Financement d’un studio d’enregistrement flottant à Ganvié pour sauvegarder les oraisons et contes aquatiques.',
-      videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+      videoUrl: '/sample.mp4',
       posterUrl: '/assets/posters/Benin < >.jpg'
     },
     {
@@ -1079,7 +1079,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
       urgency: 'Prioritaire',
       description: 'Recherche de coopératives agricoles féminines produisant 50 kg de fil écru sans intrants chimiques pour notre atelier de formation.',
       impact: 'Garantit 6 mois d’apprentissage continu pour 12 apprentis sans recours aux matières synthétiques.',
-      videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+      videoUrl: '/sample.mp4',
       posterUrl: '/assets/protagonists/amara-tisserande.jpg'
     },
     {
@@ -1089,7 +1089,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
       urgency: 'D’ici fin avril',
       description: 'Pour capturer les voix des anciens sur les berges sans distorsion avec microphone stéréo XY.',
       impact: 'Permettra d’archiver 25 entretiens avant la saison des pluies.',
-      videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+      videoUrl: '/sample.mp4',
       posterUrl: '/assets/posters/Blacks One < > Beyond Eve.png'
     }
   ]);
@@ -1252,7 +1252,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
     }
 
     const pPhoto = targetProtagonist?.photoUrl || '/assets/protagonists/amara-tisserande.jpg';
-    const pVideo = targetProtagonist?.teaserVideoUrl || 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4';
+    const pVideo = targetProtagonist?.teaserVideoUrl || '/sample.mp4';
     const pName = targetProtagonist?.name || 'Artisan';
 
     if (normalizedCategory === 'parcours') {
@@ -1273,7 +1273,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
           subtitle: 'Savoirs traditionnels',
           description: 'Années de formation et secrets transmis de génération en génération.',
           posterUrl: pPhoto,
-          videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+          videoUrl: '/sample.mp4',
           duration: '08:40',
           tag: 'Transmission'
         },
@@ -1317,7 +1317,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
           subtitle: 'Immersion & Savoir-faire',
           description: 'Initiation pratique aux techniques et gestes du métier.',
           posterUrl: pPhoto,
-          videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+          videoUrl: '/sample.mp4',
           duration: '05:45',
           tag: '40 € / pers. • 2h30'
         },
@@ -1337,7 +1337,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
           subtitle: 'Production locale solidaire',
           description: 'Objets décoratifs et utilitaires réalisés par notre collectif.',
           posterUrl: pPhoto,
-          videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+          videoUrl: '/sample.mp4',
           duration: '03:50',
           tag: '45 € • Boutique solidaire'
         }
@@ -1373,7 +1373,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
           subtitle: 'Transmission aux écoles',
           description: 'Ateliers découvertes dans les écoles de la région.',
           posterUrl: pPhoto,
-          videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+          videoUrl: '/sample.mp4',
           duration: '06:20',
           tag: '85% financé',
           extraInfo: '5 100 € récoltés • 30 contributeurs'
@@ -1384,7 +1384,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
           subtitle: 'Projet partagé concrétisé',
           description: 'Ouverture de nos espaces à tous les visiteurs et partenaires.',
           posterUrl: pPhoto,
-          videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+          videoUrl: '/sample.mp4',
           duration: '04:45',
           tag: '100% financé',
           extraInfo: '8 000 € récoltés • 45 contributeurs'
@@ -1419,7 +1419,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
         subtitle: 'Sécurité & Ergonomie',
         description: 'Matériel sécurisé adapté aux artisans en formation.',
         posterUrl: pPhoto,
-        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+        videoUrl: '/sample.mp4',
         duration: '04:15',
         tag: 'Urgence : En cours'
       },
@@ -1650,8 +1650,41 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
     if (targetProtagonist?.name) return targetProtagonist.name;
     if (userFullName) return userFullName;
     if (currentUser?.name) return currentUser.name;
-    return 'Pascal Cossi';
+    return 'Roméo Nonvide';
   }, [targetProtagonist, userFullName, currentUser]);
+
+  // Pays et drapeau pour la barre noire du portrait
+  const countryName = useMemo(() => {
+    if (targetProtagonist?.country) return targetProtagonist.country;
+    if (currentUser?.country) return currentUser.country;
+    if (userTerritory) {
+      const parts = userTerritory.split(',');
+      if (parts.length > 1) return parts[parts.length - 1].trim();
+      return userTerritory.trim();
+    }
+    return 'Bénin';
+  }, [targetProtagonist, currentUser, userTerritory]);
+
+  const countryFlag = useMemo(() => {
+    const c = countryName.toLowerCase();
+    if (c.includes('bénin') || c.includes('benin')) return '🇧🇯';
+    if (c.includes('france')) return '🇫🇷';
+    if (c.includes('togo')) return '🇹🇬';
+    if (c.includes('sénégal') || c.includes('senegal')) return '🇸🇳';
+    if (c.includes('ivoire')) return '🇨🇮';
+    if (c.includes('cameroun') || c.includes('cameroon')) return '🇨🇲';
+    if (c.includes('ghana')) return '🇬🇭';
+    if (c.includes('nigeria') || c.includes('nigéria')) return '🇳🇬';
+    if (c.includes('mali')) return '🇲🇱';
+    if (c.includes('burkina')) return '🇧🇫';
+    if (c.includes('gabon')) return '🇬🇦';
+    if (c.includes('congo')) return '🇨🇬';
+    if (c.includes('belgique') || c.includes('belgium')) return '🇧🇪';
+    if (c.includes('canada')) return '🇨🇦';
+    if (c.includes('suisse') || c.includes('switzerland')) return '🇨🇭';
+    if (c.includes('états-unis') || c.includes('usa') || c.includes('united states')) return '🇺🇸';
+    return '🇧🇯';
+  }, [countryName]);
 
   // Boutons de navigation verticale du profil dans l'ordre strict requis (la lignée est désormais dans l'en-tête de page) :
   // 1. Le parcours de vie (ParcoursDeVieIcon)
@@ -1930,34 +1963,46 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
     <div className="w-full h-full max-h-full pb-20 sm:pb-24 pt-safe overflow-hidden flex flex-col justify-between text-[#1C1917] select-none bg-white">
       
       {/* ========================================================================= */}
-      {/* 1. EN-TÊTE ÉPURÉ DU PORTRAIT : DÉGRADÉ BEIGE 50% VERS BLANC, SANS OMBRE     */}
+      {/* 1. EN-TÊTE ÉPURÉ DU PORTRAIT : FOND NOIR AVEC NOM DE LA PERSONNE & DRAPEAU */}
       {/* ========================================================================= */}
       <div 
-        className="w-full shrink-0 z-30 border-none shadow-none rounded-none"
+        className="w-full shrink-0 z-30 border-none shadow-none rounded-none bg-black"
         style={{ 
-          background: 'var(--color-header-stories-gradient, linear-gradient(to bottom, var(--color-header-stories, #F8EFE4), #FFFFFF))' 
+          backgroundColor: '#000000'
         }}
       >
-        <div className="w-full max-w-3xl mx-auto px-3 sm:px-4 pt-1 pb-2 shrink-0 h-[76px] sm:h-[84px] flex items-center justify-between">
-          <div className="flex items-center py-1 px-1">
-            {/* Capsule Profil Solo avec anneau blanc net rehaussé d'une ombre légère */}
+        <div className="w-full max-w-3xl mx-auto px-3 sm:px-4 pt-1.5 pb-2 shrink-0 h-[72px] sm:h-[80px] flex items-center justify-between">
+          <div className="flex items-center gap-3 py-1 px-1 min-w-0">
+            {/* Capsule Profil Solo : photo épurée SANS contour blanc pour une élégance maximale */}
             <div 
               onClick={() => {
                 if (isOwner) onNavigate({ type: 'settings', returnTo: 'profile' });
               }}
-              className="flex flex-col items-center cursor-pointer group shrink-0"
+              className="flex items-center cursor-pointer group shrink-0"
               title={isOwner ? "Mes paramètres" : profileFullDisplayName}
             >
-              <div 
-                className="w-12 h-12 sm:w-13 sm:h-13 rounded-2xl p-0.5 border-2 border-white ring-1 ring-black/5 flex items-center justify-center bg-white"
-                style={{ boxShadow: 'var(--story-ring-shadow, 0 1px 6px rgba(46, 27, 20, 0.12))' }}
-              >
+              <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl overflow-hidden bg-stone-900 shrink-0">
                 <img
                   src={userPhoto || '/assets/images/romeo_avatar_1792698425983.jpg'}
                   alt={profileDisplayName || 'Roméo'}
-                  className="w-full h-full rounded-xl object-cover"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform"
                 />
               </div>
+            </div>
+
+            {/* Nom de la personne + Petit drapeau pour son pays */}
+            <div className="flex flex-col justify-center min-w-0">
+              <div className="flex items-center gap-2">
+                <span className="font-editorial text-sm sm:text-base font-bold text-white tracking-wide truncate">
+                  {profileFullDisplayName}
+                </span>
+                <span className="text-base sm:text-lg shrink-0" role="img" aria-label={countryName} title={countryName}>
+                  {countryFlag}
+                </span>
+              </div>
+              <span className="text-[11px] sm:text-xs text-stone-300 font-medium truncate">
+                {countryName}
+              </span>
             </div>
           </div>
 
@@ -4372,7 +4417,7 @@ export const ProfileSettingsScreen: React.FC<ProfileSettingsScreenProps> = ({
                       backersCount: 0,
                       daysRemaining: addFormProjectDays,
                       description: 'Projet solidaire et participatif pour valoriser et transmettre nos savoir-faire.',
-                      videoUrl: addFormVideoUrl || 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+                      videoUrl: addFormVideoUrl || '/sample.mp4',
                       posterUrl: '/assets/posters/Benin < >.jpg'
                     };
                     setInitiatives(prev => [newInit, ...prev]);

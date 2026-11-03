@@ -1891,7 +1891,7 @@ export const MatrixExplorer: React.FC<MatrixExplorerProps> = ({
               <video 
                 ref={videoRef}
                 key={`modal-video-${modalPerson.id}`}
-                src={modalPerson.teaserVideoUrl || 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4'} 
+                src={modalPerson.teaserVideoUrl || '/sample.mp4'} 
                 poster={modalPerson.photoUrl}
                 playsInline
                 autoPlay

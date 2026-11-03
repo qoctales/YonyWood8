@@ -3,9 +3,10 @@ import {
   ChevronLeft, 
   ChevronRight, 
   Plus, 
-  X,
-  Volume2,
-  VolumeX
+  X, 
+  Volume2, 
+  VolumeX,
+  Play
 } from 'lucide-react';
 import { ViewScreen } from '../types';
 import { 
@@ -379,7 +380,7 @@ export const FocusScreen: React.FC<FocusScreenProps> = ({
                 title={`${story.authorName} — ${story.themeLabel}`}
               >
                 <div 
-                  className="w-[52px] h-[52px] sm:w-14 sm:h-14 rounded-2xl p-0.5 border-2 border-white ring-1 ring-white/10 group-hover:border-[#A2482B] transition-all group-hover:scale-105 bg-black"
+                  className="w-[52px] h-[52px] sm:w-14 sm:h-14 rounded-2xl p-0.5 border border-stone-800/80 group-hover:border-[#A2482B] transition-all group-hover:scale-105 bg-stone-900"
                   style={{ boxShadow: 'var(--story-ring-shadow, 0 1px 8px rgba(0, 0, 0, 0.6))' }}
                 >
                   <div className="w-full h-full rounded-xl overflow-hidden bg-stone-900 relative">
@@ -564,15 +565,25 @@ export const FocusScreen: React.FC<FocusScreenProps> = ({
                 <video
                   ref={videoRef}
                   key={currentSequence.id}
-                  src={currentSequence.videoUrl}
+                  src={(!currentSequence.videoUrl || currentSequence.videoUrl.includes('commondatastorage.googleapis.com')) ? '/sample.mp4' : currentSequence.videoUrl}
                   playsInline
                   autoPlay
                   muted={isMuted}
+                  loop
                   onTimeUpdate={handleTimeUpdate}
                   onEnded={handleVideoEnded}
                   className="w-full h-full object-cover pointer-events-none"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/35 pointer-events-none" />
+
+                {/* Bouton Play au centre si en pause */}
+                {!isPlaying && (
+                  <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none">
+                    <div className="w-14 h-14 rounded-full bg-black/45 backdrop-blur-md border border-white/25 text-white flex items-center justify-center shadow-2xl transition-transform hover:scale-110">
+                      <Play className="w-6 h-6 ml-0.5 fill-white text-white opacity-90" />
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* BOUTONS SUR LE CÔTÉ DROIT, AU MILIEU : PORTRAIT ET PARTAGE (comme sur la capture) */}
