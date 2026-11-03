@@ -30,30 +30,30 @@ const STOCK_VIDEOS = [
 
 export const STUDIO_PILLARS: StudioPillar[] = [
   // =========================================================================
-  // 1. MIROIR (8 séries documentaires diptyques)
+  // 1. DIALOGUE (8 séries documentaires diptyques)
   // =========================================================================
   {
     id: 'duos',
-    title: 'Miroir',
+    title: 'Dialogue',
     subtitle: 'Deux univers face à face, une même question humaine universelle',
     question: 'Face à quel alter ego d’un autre monde souhaitez-vous confronter votre propre vécu ?',
     posterUrl: '/assets/images/pillar_duos_afro_1792601147557.jpg',
     videoUrl: STOCK_VIDEOS[0],
     items: [
       {
-        id: 'jesus-legba',
-        title: 'Vodun Rays ‹ › Autre Foi',
-        subtitle: 'Gardiens des traditions ancestrales face aux fidèles de foi révélée.',
-        question: 'Comment votre rapport au sacré ou à la foi vous aide-t-il à traverser le mystère et les épreuves ?',
-        posterUrl: '/assets/posters/vodun-autre-foi.jpg',
+        id: 'blacks-one-amazones',
+        title: 'Blacks One ‹ › Amazones',
+        subtitle: 'Mémoire & souveraineté masculine noire face à la puissance & au courage des femmes.',
+        question: 'Comment affirmez-vous votre dignité et votre souveraineté intime face aux tempêtes de l’Histoire ?',
+        posterUrl: encodeURI('/assets/posters/Blacks One ‹ › Amazones.png'),
         videoUrl: STOCK_VIDEOS[0]
       },
       {
-        id: 'roots-routes',
-        title: 'Roots ‹ › Routes',
-        subtitle: 'Ancrés sur la terre natale face aux voyageurs de la diaspora.',
-        question: 'L’ancrage dans ses racines ou l’envol sur les routes : où se forge votre véritable identité ?',
-        posterUrl: '/assets/posters/roots-routes.jpg',
+        id: 'baobab-bambou',
+        title: 'Baobabs ‹ › Bambous',
+        subtitle: 'Mémoire & enracinement des aînés face à l’agilité & l’audace de la jeunesse.',
+        question: 'La solidité des racines centenaires ou la souplesse du vent nouveau : quelle sagesse guide vos pas ?',
+        posterUrl: encodeURI('/assets/posters/Baobabs ‹ › Bambous.jpg'),
         videoUrl: STOCK_VIDEOS[2]
       },
       {
@@ -61,58 +61,58 @@ export const STUDIO_PILLARS: StudioPillar[] = [
         title: 'Coaching ‹ › PhD',
         subtitle: 'Coachs, mentors & gens d’action face aux chercheurs, docteurs & universitaires.',
         question: 'L’instinct pratique du terrain ou la rigueur de la thèse : comment transformez-vous le monde ?',
-        posterUrl: '/assets/posters/coaching-phd.jpg',
+        posterUrl: encodeURI('/assets/posters/Coaching ‹ › PhD.jpg'),
         videoUrl: STOCK_VIDEOS[3]
+      },
+      {
+        id: 'jesus-legba',
+        title: 'Vodun Rays ‹ › Autre Foi',
+        subtitle: 'Gardiens des traditions ancestrales face aux fidèles de foi révélée.',
+        question: 'Comment votre rapport au sacré ou à la foi vous aide-t-il à traverser le mystère et les épreuves ?',
+        posterUrl: encodeURI('/assets/posters/Vodun Rays ‹ › Autre Foi.png'),
+        videoUrl: STOCK_VIDEOS[0]
+      },
+      {
+        id: 'roots-routes',
+        title: 'Roots < > Routes',
+        subtitle: 'Ancrés sur la terre natale face aux voyageurs de la diaspora.',
+        question: 'L’ancrage dans ses racines ou l’envol sur les routes : où se forge votre véritable identité ?',
+        posterUrl: encodeURI('/assets/posters/Roots < > Routes.png'),
+        videoUrl: STOCK_VIDEOS[2]
       },
       {
         id: 'fiat-luxe-builders',
         title: 'Fiat Luxe ‹ › Builders',
         subtitle: 'Artisans d’art, joailliers & esthètes du détail face aux architectes & bâtisseurs.',
         question: 'L’orfèvrerie du millimètre ou la force des fondations : que construisez-vous qui résiste au temps ?',
-        posterUrl: '/assets/posters/fiat-luxe-builders.jpg',
+        posterUrl: encodeURI('/assets/posters/Fiat Luxe ‹ › Builders.jpg'),
         videoUrl: STOCK_VIDEOS[1]
-      },
-      {
-        id: 'blacks-one-amazones',
-        title: 'Blacks One ‹ › Amazones',
-        subtitle: 'Mémoire & souveraineté masculine noire face à la puissance & au courage des femmes.',
-        question: 'Comment affirmez-vous votre dignité et votre souveraineté intime face aux tempêtes de l’Histoire ?',
-        posterUrl: '/assets/posters/blacks-one-amazones.jpg',
-        videoUrl: STOCK_VIDEOS[0]
-      },
-      {
-        id: 'benin-monde',
-        title: 'Bénin ‹ › Le Monde',
-        subtitle: 'Défenseurs du terroir et de la culture béninoise face aux cultures du reste du monde.',
-        question: 'Quel est votre lien intime avec la terre ou l’eau qui nourrit votre communauté ?',
-        posterUrl: '/assets/posters/benin-monde.jpg',
-        videoUrl: STOCK_VIDEOS[1]
-      },
-      {
-        id: 'baobab-bambou',
-        title: 'Baobab ‹ › Bambou',
-        subtitle: 'Mémoire & enracinement des aînés face à l’agilité & l’audace de la jeunesse.',
-        question: 'La solidité des racines centenaires ou la souplesse du vent nouveau : quelle sagesse guide vos pas ?',
-        posterUrl: '/assets/posters/baobab-bambou.jpg',
-        videoUrl: STOCK_VIDEOS[2]
       },
       {
         id: 'pictures-words',
         title: 'Pictures ‹ › Words',
         subtitle: 'Créateurs du regard visuel face aux maîtres du verbe, de l’écriture et du slam.',
         question: 'L’image qui fige l’instant ou le mot qui réveille la conscience : comment racontez-vous la vérité ?',
-        posterUrl: '/assets/posters/pictures-words.jpg',
+        posterUrl: encodeURI('/assets/posters/Pictures ‹ › Words.jpg'),
         videoUrl: STOCK_VIDEOS[4]
+      },
+      {
+        id: 'benin-monde',
+        title: 'Benin ‹ › Le Monde',
+        subtitle: 'Défenseurs du terroir et de la culture béninoise face aux cultures du reste du monde.',
+        question: 'Quel est votre lien intime avec la terre ou l’eau qui nourrit votre communauté ?',
+        posterUrl: encodeURI('/assets/posters/Benin ‹ › Le Monde.jpg'),
+        videoUrl: STOCK_VIDEOS[1]
       }
     ]
   },
 
   // =========================================================================
-  // 2. CASTING (8 catégories x 8 sous-catégories = 64 thématiques)
+  // 2. AUTRE SUJET (8 catégories x 8 sous-catégories = 64 thématiques)
   // =========================================================================
   {
     id: 'itinerant',
-    title: 'Casting',
+    title: 'Autre sujet',
     subtitle: 'La voix des témoins et passeurs : plusieurs regards partagent leur point de vue',
     question: 'Quel savoir, quel rite ou quelle sagesse locale votre voix doit-elle transmettre ?',
     posterUrl: '/assets/images/pillar_casting_phoenix.png',
@@ -745,11 +745,11 @@ export const STUDIO_PILLARS: StudioPillar[] = [
   },
 
   // =========================================================================
-  // 3. LUMIÈRE (8 thématiques vivantes au cœur des collectifs et entreprises)
+  // 3. AUTRE THÉMATIQUE (8 thématiques vivantes au cœur des collectifs et entreprises)
   // =========================================================================
   {
     id: 'organisations',
-    title: 'Lumière',
+    title: 'Autre thématique',
     subtitle: 'Les 8 thématiques vivantes au cœur des collectifs et entreprises',
     question: 'Quel défi collectif et quelle fierté humaine soudent votre organisation de l’intérieur ?',
     posterUrl: '/assets/images/pillar_org_afro_1792601150815.jpg',

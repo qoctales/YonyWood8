@@ -57,59 +57,59 @@ interface PeerOffer {
 
 const PRODUCTIONS: ProductionPoster[] = [
   {
-    id: 'jesus-legba',
-    title: 'Vodun Rays ‹ › Autre Foi',
-    posterImage: '/assets/posters/vodun-autre-foi.png',
+    id: 'blacks-one-amazones',
+    title: 'Blacks One ‹ › Amazones',
+    posterImage: encodeURI('/assets/posters/Blacks One ‹ › Amazones.png'),
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
     sharePrice: 50
   },
   {
-    id: 'roots-routes',
-    title: 'Roots ‹ › Routes',
-    posterImage: '/assets/posters/roots-routes.jpg',
-    videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+    id: 'baobab-bambou',
+    title: 'Baobabs ‹ › Bambous',
+    posterImage: encodeURI('/assets/posters/Baobabs ‹ › Bambous.jpg'),
+    videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
     sharePrice: 50
   },
   {
     id: 'coaching-phd',
     title: 'Coaching ‹ › PhD',
-    posterImage: '/assets/posters/coaching-phd.png',
+    posterImage: encodeURI('/assets/posters/Coaching ‹ › PhD.jpg'),
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+    sharePrice: 50
+  },
+  {
+    id: 'jesus-legba',
+    title: 'Vodun Rays ‹ › Autre Foi',
+    posterImage: encodeURI('/assets/posters/Vodun Rays ‹ › Autre Foi.png'),
+    videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+    sharePrice: 50
+  },
+  {
+    id: 'roots-routes',
+    title: 'Roots < > Routes',
+    posterImage: encodeURI('/assets/posters/Roots < > Routes.png'),
+    videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
     sharePrice: 50
   },
   {
     id: 'fiat-luxe-builders',
     title: 'Fiat Luxe ‹ › Builders',
-    posterImage: '/assets/posters/fiat-luxe-builders.png',
+    posterImage: encodeURI('/assets/posters/Fiat Luxe ‹ › Builders.jpg'),
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-    sharePrice: 50
-  },
-  {
-    id: 'blacks-one-amazones',
-    title: 'Blacks One ‹ › Amazones',
-    posterImage: '/assets/posters/blacks-one-amazones.png',
-    videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
-    sharePrice: 50
-  },
-  {
-    id: 'benin-monde',
-    title: 'Bénin ‹ › Le Monde',
-    posterImage: '/assets/posters/benin-monde.jpg',
-    videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-    sharePrice: 50
-  },
-  {
-    id: 'baobab-bambou',
-    title: 'Baobab ‹ › Bambou',
-    posterImage: '/assets/posters/baobab-bambou.jpg',
-    videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
     sharePrice: 50
   },
   {
     id: 'pictures-words',
     title: 'Pictures ‹ › Words',
-    posterImage: '/assets/posters/pictures-words.jpg',
+    posterImage: encodeURI('/assets/posters/Pictures ‹ › Words.jpg'),
     videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+    sharePrice: 50
+  },
+  {
+    id: 'benin-monde',
+    title: 'Benin ‹ › Le Monde',
+    posterImage: encodeURI('/assets/posters/Benin ‹ › Le Monde.jpg'),
+    videoPreviewUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
     sharePrice: 50
   }
 ];
@@ -436,15 +436,15 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
     setTimeout(() => setSuccessToast(null), 4000);
   };
 
-  // Capsules d'incitation à l'achat et vente de parts
+  // Capsules d'incitation à l'achat et vente de parts basées sur les 8 séries documentaires
   const SHARE_STORIES = [
     { id: 'sell-plus', isAdd: true, label: '+ Vendre' },
-    { id: 'aura-shares', title: 'Aura Tech', shares: '5%', price: '50 €', img: '/assets/posters/vodun-autre-foi.png', prodIndex: 0 },
-    { id: 'bio-shares', title: 'Bio Solaire', shares: '10%', price: '100 €', img: '/assets/posters/roots-routes.jpg', prodIndex: 1 },
-    { id: 'kpedetin-shares', title: 'Kpèdétin', shares: '2%', price: '20 €', img: '/assets/posters/coaching-phd.png', prodIndex: 2 },
-    { id: 'terroirs-shares', title: 'Terroirs Agro', shares: '8%', price: '80 €', img: '/assets/posters/fiat-luxe-builders.png', prodIndex: 3 },
-    { id: 'dossou-shares', title: 'Dossou Fret', shares: '4%', price: '40 €', img: '/assets/posters/blacks-one-amazones.png', prodIndex: 4 },
-    { id: 'senami-shares', title: 'Sènami Arch', shares: '6%', price: '60 €', img: '/assets/posters/benin-monde.jpg', prodIndex: 5 },
+    ...PRODUCTIONS.map((prod, idx) => ({
+      id: `story-prod-${prod.id}`,
+      title: prod.title,
+      img: prod.posterImage,
+      prodIndex: idx
+    }))
   ];
 
   return (
@@ -592,8 +592,17 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
                 {/* Voile cinématographique clair pour préserver l'éclat de l'affiche */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20 pointer-events-none" />
 
-                {/* HAUT : Déclencheur Petite Télé en haut à droite uniquement */}
-                <div className="relative z-10 flex items-center justify-end pointer-events-auto">
+                {/* HAUT : Titre de la série à gauche + Déclencheur Petite Télé en haut à droite */}
+                <div className="relative z-10 flex items-center justify-between gap-1.5 pointer-events-auto w-full min-w-0">
+                  <div className="inline-flex items-center px-2.5 sm:px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 shadow-md max-w-[calc(100%-80px)]">
+                    <span 
+                      className="font-editorial text-[11px] sm:text-xs font-semibold text-white whitespace-nowrap tracking-wide select-none truncate block"
+                      title={currentProd.title}
+                    >
+                      {currentProd.title}
+                    </span>
+                  </div>
+
                   {/* Déclencheur lecteur vidéo « Petite Télé » standardisé en haut à droite */}
                   <div 
                     className="flex items-center gap-1.5 shrink-0"

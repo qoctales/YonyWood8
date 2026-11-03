@@ -971,10 +971,10 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                   setPlayingCardId(null);
                 }}
                 className="font-normal text-stone-500 hover:text-stone-900 transition-colors cursor-pointer flex items-center gap-1 group py-1 shrink-0"
-                title="Revenir aux catégories Casting"
+                title="Revenir à Autre sujet"
               >
                 <ChevronLeft className="w-4 h-4 text-stone-400 group-hover:text-stone-700 group-hover:-translate-x-0.5 transition-transform" />
-                <span className="text-xs sm:text-sm font-medium">Casting</span>
+                <span className="text-xs sm:text-sm font-medium">Autre sujet</span>
               </button>
 
               <span className="text-stone-300 font-light text-xs" aria-hidden="true">›</span>
