@@ -15,10 +15,10 @@ export const Navbar: React.FC<NavbarProps> = ({ currentScreen, onNavigate }) => 
 
   return (
     <header 
-      className="shrink-0 z-40 w-full select-none border-none shadow-none rounded-none"
-      style={{ backgroundColor: 'var(--color-header-logo, #F4ECE1)' }}
+      className="shrink-0 z-40 w-full select-none border-none shadow-none rounded-none bg-white"
+      style={{ backgroundColor: '#FFFFFF' }}
     >
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 sm:py-4 lg:py-5 flex items-center justify-center relative">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 sm:py-4 lg:py-5 flex items-center justify-center relative bg-white">
         {/* Logo officiel YonyWood centré au milieu avec transition fluide clamp() */}
         <div 
           onClick={() => onNavigate({ type: 'duo_feed' })}

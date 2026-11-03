@@ -437,7 +437,16 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
   };
 
   // Capsules d'incitation à l'achat et vente de parts basées sur les 8 séries documentaires
-  const SHARE_STORIES = [
+  interface ShareStoryItem {
+    id: string;
+    isAdd?: boolean;
+    label?: string;
+    title?: string;
+    img?: string;
+    prodIndex?: number;
+  }
+
+  const SHARE_STORIES: ShareStoryItem[] = [
     { id: 'sell-plus', isAdd: true, label: '+ Vendre' },
     ...PRODUCTIONS.map((prod, idx) => ({
       id: `story-prod-${prod.id}`,
@@ -451,15 +460,15 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
     <div className="w-full h-full max-h-full pb-20 sm:pb-24 pt-safe overflow-hidden flex flex-col justify-between text-[#1C1917] select-none bg-white">
       
       {/* ========================================================================= */}
-      {/* 1. EN-TÊTE STORIES PRODUCTIONS : DÉGRADÉ BEIGE 50% VERS BLANC, SANS OMBRE  */}
+      {/* 1. EN-TÊTE STORIES PRODUCTIONS : FOND NOIR                                */}
       {/* ========================================================================= */}
       <div 
-        className="w-full shrink-0 z-30 border-none shadow-none rounded-none"
+        className="w-full shrink-0 z-30 border-none shadow-none rounded-none bg-black"
         style={{ 
-          background: 'var(--color-header-stories-gradient, linear-gradient(to bottom, var(--color-header-stories, #F8EFE4), #FFFFFF))' 
+          backgroundColor: '#000000'
         }}
       >
-        <div className="w-full max-w-3xl mx-auto px-3 sm:px-4 pt-1 pb-2 shrink-0 h-[72px] sm:h-[80px] flex items-center overflow-hidden">
+        <div className="w-full max-w-3xl mx-auto px-3 sm:px-4 pt-1.5 pb-2 shrink-0 h-[72px] sm:h-[80px] flex items-center overflow-hidden">
           <div 
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'auto' }}
             className="flex items-center gap-2 sm:gap-2.5 overflow-x-auto no-scrollbar py-1 px-1 pb-5 -mb-4 w-full"
@@ -474,8 +483,8 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
                     title="Mettre en vente mes parts"
                   >
                     <div 
-                      className="w-12 h-12 sm:w-13 sm:h-13 rounded-2xl p-0.5 border-2 border-dashed border-[#A2482B] flex items-center justify-center group-hover:scale-105 transition-transform bg-amber-50/50"
-                      style={{ boxShadow: 'var(--story-ring-shadow, 0 1px 6px rgba(46, 27, 20, 0.12))' }}
+                      className="w-12 h-12 sm:w-13 sm:h-13 rounded-2xl p-0.5 border-2 border-dashed border-[#A2482B] flex items-center justify-center group-hover:scale-105 transition-transform bg-[#A2482B]/20"
+                      style={{ boxShadow: 'var(--story-ring-shadow, 0 1px 8px rgba(0, 0, 0, 0.6))' }}
                     >
                       <div className="w-full h-full rounded-xl bg-[#A2482B] text-white flex items-center justify-center shadow-xs">
                         <span className="text-base font-bold">+</span>
@@ -498,13 +507,13 @@ export const MarketplaceScreen: React.FC<MarketplaceScreenProps> = ({
                   title={st.title}
                 >
                   <div 
-                    className="w-12 h-12 sm:w-13 sm:h-13 rounded-2xl p-0.5 border-2 border-white ring-1 ring-black/5 bg-white transition-transform group-hover:scale-105"
-                    style={{ boxShadow: 'var(--story-ring-shadow, 0 1px 6px rgba(46, 27, 20, 0.12))' }}
+                    className="w-12 h-12 sm:w-13 sm:h-13 rounded-2xl p-0.5 border-2 border-white ring-1 ring-white/10 bg-black transition-transform group-hover:scale-105"
+                    style={{ boxShadow: 'var(--story-ring-shadow, 0 1px 8px rgba(0, 0, 0, 0.6))' }}
                   >
                     <div className="w-full h-full rounded-xl overflow-hidden bg-stone-900 relative">
                       <img 
                         src={st.img} 
-                        alt=""
+                        alt="" 
                         className="w-full h-full object-cover"
                       />
                     </div>

@@ -24,12 +24,12 @@
     --color-terracotta-hover: #8A3B22;
 
     /* Couleurs de l'en-tête officielles YonyWood */
-    --color-header-logo: #F4ECE1;
-    --color-header-stories: rgba(162, 72, 43, 0.20);
-    --color-header-stories-gradient: rgba(162, 72, 43, 0.20);
-    --color-header-bg: var(--color-header-logo);
-    /* Ombre très légère préservant la netteté des anneaux blancs sur fond clair */
-    --story-ring-shadow: 0 1px 6px rgba(46, 27, 20, 0.16);
+    --color-header-logo: #FFFFFF;
+    --color-header-stories: #000000;
+    --color-header-stories-gradient: #000000;
+    --color-header-bg: #FFFFFF;
+    /* Ombre très légère préservant la netteté des anneaux blancs sur fond noir */
+    --story-ring-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
 
     /* Design tokens Lumières & Organisation */
     --gold: #c9962b;
