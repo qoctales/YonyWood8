@@ -6,13 +6,15 @@ export interface StudioPillarItem {
   posterUrl: string;
   videoUrl: string;
   badge?: string;
+  durationBadge?: string;
   accentColor?: string;
   subCategories?: StudioPillarItem[];
 }
 
 export interface StudioPillar {
-  id: 'duos' | 'itinerant' | 'organisations' | 'soi';
+  id: 'duos' | 'soi' | 'itinerant' | 'organisations' | 'teaser';
   title: string;
+  durationBadge?: string;
   subtitle: string;
   question: string;
   posterUrl: string;
@@ -35,7 +37,8 @@ export const STUDIO_PILLARS: StudioPillar[] = [
   {
     id: 'duos',
     title: 'Dialogue',
-    subtitle: 'Deux univers face à face, une même question humaine universelle',
+    durationBadge: "Jusqu'à 2 minutes 56",
+    subtitle: 'Une série avec deux perspectives. On choisit la sienne et on raconte une histoire posée.',
     question: 'Face à quel alter ego d’un autre monde souhaitez-vous confronter votre propre vécu ?',
     posterUrl: '/assets/images/pillar_duos_afro_1792601147557.jpg',
     videoUrl: STOCK_VIDEOS[0],
@@ -108,12 +111,64 @@ export const STUDIO_PILLARS: StudioPillar[] = [
   },
 
   // =========================================================================
-  // 2. RUSH (8 catégories x 8 sous-catégories = 64 thématiques)
+  // 2. PORTRAIT (jusqu'à 2 minutes 56 - 4 directions d’expression et d’affirmation de soi)
+  // =========================================================================
+  {
+    id: 'soi',
+    title: 'Portrait',
+    durationBadge: "Jusqu'à 2 minutes 56",
+    subtitle: 'On se raconte soi-même dans les quatre directions d’expression et d’affirmation de soi.',
+    question: 'Quelle dimension intime de votre histoire humaine souhaitez-vous offrir au monde ?',
+    posterUrl: '/assets/images/pillar_soi_afro_1792601150131.jpg',
+    videoUrl: STOCK_VIDEOS[3],
+    items: [
+      {
+        id: 'soi-parcours',
+        title: 'Parcours de vie',
+        durationBadge: "Jusqu'à 2 minutes 56",
+        subtitle: 'Son histoire, les étapes qui l’ont construite.',
+        question: 'Quelles étapes fondatrices et quels tournants ont sculpté la personne que vous êtes ?',
+        posterUrl: '/assets/images/studio_soi_parcours_1792608978314.jpg',
+        videoUrl: STOCK_VIDEOS[3]
+      },
+      {
+        id: 'soi-produits-services',
+        title: 'Produits et services',
+        durationBadge: "Jusqu'à 2 minutes 56",
+        subtitle: 'Ce qu’elle fait, vend ou propose.',
+        question: 'Quelle offre, création ou savoir-faire d’excellence mettez-vous au service d’autrui ?',
+        posterUrl: '/assets/images/ps_mode_1792086355077.jpg',
+        videoUrl: STOCK_VIDEOS[0]
+      },
+      {
+        id: 'soi-projets',
+        title: 'Projets',
+        durationBadge: "Jusqu'à 2 minutes 56",
+        subtitle: 'Ses projets en cours, éventuellement en financement participatif.',
+        question: 'Quel chantier enthousiasmant ou création porteuse souhaitez-vous propulser ?',
+        posterUrl: '/assets/images/projets_social_1792086395729.jpg',
+        videoUrl: STOCK_VIDEOS[1]
+      },
+      {
+        id: 'soi-besoins-opportunites',
+        title: 'Besoins et opportunités',
+        durationBadge: "Jusqu'à 2 minutes 56",
+        subtitle: 'Recherche d’emploi ou de collaborateur, opportunité offerte, etc.',
+        question: 'Quel appel à compétences ou quelle opportunité d’alliance lancez-vous à la communauté ?',
+        posterUrl: '/assets/images/recruit_videographer_1791825865262.jpg',
+        videoUrl: STOCK_VIDEOS[2]
+      }
+    ]
+  },
+
+  // =========================================================================
+  // 3. RUSH (32 secondes - 8 catégories x 8 sous-catégories = 64 thématiques)
   // =========================================================================
   {
     id: 'itinerant',
     title: 'Rush',
-    subtitle: 'La voix des témoins et passeurs : plusieurs regards partagent leur point de vue',
+    durationBadge: '32 secondes',
+    subtitle: 'Une histoire courte, racontée vite et sans mise en scène, autour d’une valeur humaine fondamentale.',
     question: 'Quel savoir, quel rite ou quelle sagesse locale votre voix doit-elle transmettre ?',
     posterUrl: '/assets/images/pillar_casting_phoenix.png',
     videoUrl: STOCK_VIDEOS[1],
@@ -745,12 +800,13 @@ export const STUDIO_PILLARS: StudioPillar[] = [
   },
 
   // =========================================================================
-  // 3. INSERT (8 thématiques vivantes au cœur des collectifs et entreprises)
+  // 4. INSERT (8 secondes - 8 thématiques vivantes au cœur des collectifs et entreprises)
   // =========================================================================
   {
     id: 'organisations',
     title: 'Insert',
-    subtitle: 'Les 8 thématiques vivantes au cœur des collectifs et entreprises',
+    durationBadge: '8 secondes',
+    subtitle: 'Le partage d’une leçon de vie en une phrase, un proverbe ou une affirmation inspirante. Chacun de ces partages sera mis en relation avec trois autres partages. La présentation se fait par série de quatre.',
     question: 'Quel défi collectif et quelle fierté humaine soudent votre organisation de l’intérieur ?',
     posterUrl: '/assets/images/pillar_org_afro_1792601150815.jpg',
     videoUrl: STOCK_VIDEOS[2],
@@ -823,47 +879,26 @@ export const STUDIO_PILLARS: StudioPillar[] = [
   },
 
   // =========================================================================
-  // 4. PORTRAIT (4 directions d’expression et d’affirmation de soi)
+  // 5. TEASER (16 secondes - libre)
   // =========================================================================
   {
-    id: 'soi',
-    title: 'Portrait',
-    subtitle: 'Les 4 directions d’expression et d’affirmation de soi',
-    question: 'Quelle dimension intime de votre histoire humaine souhaitez-vous offrir au monde ?',
-    posterUrl: '/assets/images/pillar_soi_afro_1792601150131.jpg',
-    videoUrl: STOCK_VIDEOS[3],
+    id: 'teaser',
+    title: 'Teaser',
+    durationBadge: '16 secondes',
+    subtitle: 'Une présentation rapide qui peut être une publicité, une inspiration, ou la mise en lumière d’une personnalité, d’une marque ou d’un savoir-faire.',
+    question: 'Quel message percutant, inspiration ou savoir-faire souhaitez-vous mettre en lumière en 16 secondes ?',
+    posterUrl: '/assets/images/pillar_routes_afro_1792601148651.jpg',
+    videoUrl: STOCK_VIDEOS[4],
     items: [
       {
-        id: 'soi-parcours',
-        title: 'Parcours de vie',
-        subtitle: 'Son histoire, les étapes qui l’ont construite.',
-        question: 'Quelles étapes fondatrices et quels tournants ont sculpté la personne que vous êtes ?',
-        posterUrl: '/assets/images/studio_soi_parcours_1792608978314.jpg',
-        videoUrl: STOCK_VIDEOS[3]
-      },
-      {
-        id: 'soi-produits-services',
-        title: 'Produits et services',
-        subtitle: 'Ce qu’elle fait, vend ou propose.',
-        question: 'Quelle offre, création ou savoir-faire d’excellence mettez-vous au service d’autrui ?',
-        posterUrl: '/assets/images/ps_mode_1792086355077.jpg',
-        videoUrl: STOCK_VIDEOS[0]
-      },
-      {
-        id: 'soi-projets',
-        title: 'Projets',
-        subtitle: 'Ses projets en cours, éventuellement en financement participatif.',
-        question: 'Quel chantier enthousiasmant ou création porteuse souhaitez-vous propulser ?',
-        posterUrl: '/assets/images/projets_social_1792086395729.jpg',
-        videoUrl: STOCK_VIDEOS[1]
-      },
-      {
-        id: 'soi-besoins-opportunites',
-        title: 'Besoins et opportunités',
-        subtitle: 'Recherche d’emploi ou de collaborateur, opportunité offerte, etc.',
-        question: 'Quel appel à compétences ou quelle opportunité d’alliance lancez-vous à la communauté ?',
-        posterUrl: '/assets/images/recruit_videographer_1791825865262.jpg',
-        videoUrl: STOCK_VIDEOS[2]
+        id: 'teaser-libre',
+        title: 'Teaser',
+        badge: '16s',
+        durationBadge: '16 secondes',
+        subtitle: 'Une présentation rapide qui peut être une publicité, une inspiration, ou la mise en lumière d’une personnalité, d’une marque ou d’un savoir-faire.',
+        question: 'Quel message percutant, inspiration ou savoir-faire souhaitez-vous mettre en lumière en 16 secondes ?',
+        posterUrl: '/assets/images/pillar_routes_afro_1792601148651.jpg',
+        videoUrl: STOCK_VIDEOS[4]
       }
     ]
   }

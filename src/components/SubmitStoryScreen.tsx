@@ -347,7 +347,7 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
 }) => {
   const { currentUser } = useAuth();
 
-  // 1. Niveau 0 : 4 Portes (Miroir, Casting, Lumière, Portrait)
+  // 1. Niveau 0 : 5 Portes (Dialogue, Portrait, Rush, Insert, Teaser)
   const [selectedPillarIndex, setSelectedPillarIndex] = useState(0);
   const [activePillar, setActivePillar] = useState<StudioPillar | null>(null);
 
@@ -1570,14 +1570,21 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
             className="w-[min(calc(100vw-64px),290px)] max-w-[290px] bg-[#FAF7F2] rounded-3xl p-4 sm:p-5 shadow-2xl border border-stone-200 space-y-3 animate-in zoom-in-95 duration-200 text-stone-800"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Header épuré : Papyrus + Titre (fermeture au clic extérieur) */}
+            {/* Header épuré : Papyrus + Durée + Titre (fermeture au clic extérieur) */}
             <div className="flex items-center gap-2.5 border-b border-stone-200/80 pb-2.5">
               <div className="w-7.5 h-7.5 rounded-xl bg-[#A2482B]/10 text-[#A2482B] flex items-center justify-center shrink-0">
                 <Scroll className="w-3.5 h-3.5" />
               </div>
-              <h3 className="font-editorial text-sm sm:text-base font-semibold text-stone-900 truncate">
-                {synopsisModalItem.title}
-              </h3>
+              <div className="flex flex-col min-w-0 flex-1">
+                {(synopsisModalItem as any).durationBadge && (
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#A2482B]">
+                    {(synopsisModalItem as any).durationBadge}
+                  </span>
+                )}
+                <h3 className="font-editorial text-sm sm:text-base font-semibold text-stone-900 leading-snug break-words">
+                  {synopsisModalItem.title}
+                </h3>
+              </div>
             </div>
 
             {/* Corps du synopsis naturel (pas de fioritures ni boutons lourds) */}

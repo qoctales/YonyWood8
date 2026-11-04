@@ -29,6 +29,17 @@ export interface FocusSequence {
 
 export type FocusCategory = 'Entreprise' | 'Association' | 'Personnalité' | 'Produit du terroir';
 
+/** Longueur maximale recommandée pour les titres Focus afin d'éviter les coupures sur mobile */
+export const FOCUS_MAX_TITLE_LENGTH = 20;
+
+/** Formate et tronque proprement un titre si nécessaire */
+export const clampFocusTitle = (title: string, maxLength = FOCUS_MAX_TITLE_LENGTH): string => {
+  if (!title) return '';
+  const trimmed = title.trim();
+  if (trimmed.length <= maxLength) return trimmed;
+  return `${trimmed.slice(0, maxLength - 1).trimEnd()}…`;
+};
+
 export interface FocusTopic {
   id: string;
   title: string;
@@ -121,7 +132,7 @@ export const FOCUS_TOPICS: FocusTopic[] = [
   },
   {
     id: 'topic-ia-ancestrale',
-    title: 'IA & Sagesses Ancestrales',
+    title: 'IA & Sagesses du Fâ',
     category: 'Entreprise',
     posterUrl: '/assets/posters/baobab-bambou.jpg',
     tagline: 'Quand les modèles génératifs dialoguent avec la cosmogonie du Fâ.',
@@ -182,7 +193,7 @@ export const FOCUS_TOPICS: FocusTopic[] = [
   },
   {
     id: 'topic-mahougnon-rythme',
-    title: 'Mahougnon & le Rythme Vivant',
+    title: 'Mahougnon Rythme',
     category: 'Personnalité',
     posterUrl: '/assets/posters/jesus-esu.jpg',
     tagline: 'L’épopée d’un maître tambour qui transcende le jazz et le vodun.',
@@ -243,7 +254,7 @@ export const FOCUS_TOPICS: FocusTopic[] = [
   },
   {
     id: 'topic-sentinelles-ganvie',
-    title: 'Sentinelles de Ganvié',
+    title: 'Sentinelles Ganvié',
     category: 'Association',
     posterUrl: '/assets/posters/benin-monde.jpg',
     tagline: 'L’alliance solidaire des piroguiers et des biologistes lacustres.',
@@ -304,7 +315,7 @@ export const FOCUS_TOPICS: FocusTopic[] = [
   },
   {
     id: 'topic-e-vivi-terroirs',
-    title: 'E-Vivi Savoirs & Terroirs',
+    title: 'E-Vivi Terroirs',
     category: 'Produit du terroir',
     posterUrl: '/assets/posters/e-vivi-fiat-luxe.png',
     tagline: 'La réhabilitation des semences anciennes et de la gastronomie médicinale.',
@@ -365,7 +376,7 @@ export const FOCUS_TOPICS: FocusTopic[] = [
   },
   {
     id: 'topic-amazones-leadership',
-    title: 'Collectif Amazones Vivantes',
+    title: 'Amazones Vivantes',
     category: 'Association',
     posterUrl: '/assets/posters/blacks-one-amazones.jpg',
     tagline: 'Héritières du courage d’Agoodjié : athlétisme, sororité et résilience.',
@@ -426,7 +437,7 @@ export const FOCUS_TOPICS: FocusTopic[] = [
   },
   {
     id: 'topic-senami-architecture',
-    title: 'Senami & les Terres Rouges',
+    title: 'Senami Terres Rouges',
     category: 'Personnalité',
     posterUrl: '/assets/posters/dixeat-fiat-luxe.jpg',
     tagline: 'L’architecture bioclimatique inspirée des palais d’argile du Danxomè.',

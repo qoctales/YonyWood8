@@ -14,7 +14,9 @@ import {
   FOCUS_TOPICS, 
   FocusTopic, 
   FocusSequence, 
-  getNextSequentialSequence 
+  getNextSequentialSequence,
+  FOCUS_MAX_TITLE_LENGTH,
+  clampFocusTitle
 } from '../data/focusTopicsData';
 import { ENTERPRISE_STORIES } from '../data/thematicStoriesData';
 import { 
@@ -448,11 +450,11 @@ export const FocusScreen: React.FC<FocusScreenProps> = ({
           <div className="relative z-30 pt-3.5 px-3 flex items-center justify-between gap-1 pointer-events-auto">
             {/* Titre du sujet / entreprise / personnalité en haut à gauche */}
             <div 
-              className="inline-flex w-fit items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 shadow-md max-w-[70%]"
+              className="inline-flex w-fit items-center gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 shadow-md max-w-[calc(100%-52px)]"
               title={currentTopic.title}
             >
               <span className="font-editorial text-xs font-semibold text-white whitespace-nowrap tracking-wide select-none truncate">
-                {formatFirstLetterOnly(currentTopic.title)}
+                {clampFocusTitle(formatFirstLetterOnly(currentTopic.title), FOCUS_MAX_TITLE_LENGTH)}
               </span>
             </div>
 
@@ -668,7 +670,7 @@ export const FocusScreen: React.FC<FocusScreenProps> = ({
                 <span className="text-[10px] font-bold uppercase tracking-wider text-[#A2482B]">
                   {currentTopic.category}
                 </span>
-                <h3 className="font-editorial text-sm sm:text-base font-semibold text-stone-900 truncate">
+                <h3 className="font-editorial text-sm sm:text-base font-semibold text-stone-900 leading-snug break-words">
                   {currentTopic.title}
                 </h3>
               </div>
