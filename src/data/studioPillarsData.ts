@@ -108,11 +108,11 @@ export const STUDIO_PILLARS: StudioPillar[] = [
   },
 
   // =========================================================================
-  // 2. AUTRE SUJET (8 catégories x 8 sous-catégories = 64 thématiques)
+  // 2. RUSH (8 catégories x 8 sous-catégories = 64 thématiques)
   // =========================================================================
   {
     id: 'itinerant',
-    title: 'Autre sujet',
+    title: 'Rush',
     subtitle: 'La voix des témoins et passeurs : plusieurs regards partagent leur point de vue',
     question: 'Quel savoir, quel rite ou quelle sagesse locale votre voix doit-elle transmettre ?',
     posterUrl: '/assets/images/pillar_casting_phoenix.png',
@@ -745,11 +745,11 @@ export const STUDIO_PILLARS: StudioPillar[] = [
   },
 
   // =========================================================================
-  // 3. AUTRE THÉMATIQUE (8 thématiques vivantes au cœur des collectifs et entreprises)
+  // 3. INSERT (8 thématiques vivantes au cœur des collectifs et entreprises)
   // =========================================================================
   {
     id: 'organisations',
-    title: 'Autre thématique',
+    title: 'Insert',
     subtitle: 'Les 8 thématiques vivantes au cœur des collectifs et entreprises',
     question: 'Quel défi collectif et quelle fierté humaine soudent votre organisation de l’intérieur ?',
     posterUrl: '/assets/images/pillar_org_afro_1792601150815.jpg',

@@ -13,7 +13,8 @@ import {
   DuocumentairesTvIcon,
   PortraitsViseurIcon,
   ProfileSoloIcon,
-  LumiereSunDotsIcon
+  LumiereSunDotsIcon,
+  ActionClapperboardIcon
 } from './YonywoodBrandIcons';
 import { DemoStudioSection } from './landing/DemoStudioSection';
 import { DemoHeritagesSection } from './landing/DemoHeritagesSection';
@@ -50,7 +51,7 @@ export const LandingScreen: React.FC<LandingScreenProps> = ({ onNavigate }) => {
     { id: 'heritages', label: 'Casting', icon: Film, screenId: 'menu-demo-heritage' },
     { id: 'entreprise', label: 'Lumière', icon: LumiereSunDotsIcon, screenId: 'menu-demo-lumiere' },
     { id: 'profil', label: 'Portrait', icon: ProfileSoloIcon, screenId: 'menu-demo-portrait' },
-    { id: 'productions', label: 'Action', icon: Clapperboard, screenId: 'menu-demo-production' },
+    { id: 'productions', label: 'Action', icon: ActionClapperboardIcon, screenId: 'menu-demo-production' },
   ];
 
   return (

@@ -417,12 +417,16 @@ export const DuocumentairesTvIcon: React.FC<DuoIconProps> = ({
       className={`${isActive === true ? 'text-white' : isActive === false ? 'text-[#6E6254]' : ''} ${className}`.trim()}
       aria-hidden="true"
     >
-      <title>Duo</title>
-      <rect x="3" y="5.925" width="18" height="9" rx="2" />
-      <path d="M 12 5.925 L 12 14.925" />
-      <circle cx="7.5" cy="10.425" r="1" fill="currentColor" stroke="none" />
-      <circle cx="16.5" cy="10.425" r="1" fill="currentColor" stroke="none" />
-      <path d="M 5.7 14.925 L 3.7 18.075 M 18.3 14.925 L 20.3 18.075" />
+      <title>Dialogue</title>
+      {/* Boîtier double carré noble (ratio 2:1 exact : 21 x 10.5 -> deux carrés parfaits de 10.5 x 10.5) */}
+      <rect x="1.5" y="5.2" width="21" height="10.5" rx="2.2" />
+      {/* Séparation médiane formant les deux compartiments carrés */}
+      <line x1="12" y1="5.2" x2="12" y2="15.7" />
+      {/* Deux pupilles centrales au cœur de chaque carré (terracotta au repos, blanches en mode actif) */}
+      <circle cx="6.75" cy="10.45" r="1.35" fill={isActive ? 'currentColor' : '#A2482B'} stroke="none" />
+      <circle cx="17.25" cy="10.45" r="1.35" fill={isActive ? 'currentColor' : '#A2482B'} stroke="none" />
+      {/* Deux pieds courts et robustes de téléviseur console (hauteur 3px, angle 29° fidèle à la capture) */}
+      <path d="M 5.6 15.7 L 3.9 18.7 M 18.4 15.7 L 20.1 18.7" />
     </svg>
   );
 };
@@ -432,15 +436,19 @@ export const DuoNavIcon = DuocumentairesTvIcon;
 
 /**
  * ProfileSoloIcon:
- * Symbole officiel « Profil » du projet :
+ * Symbole officiel « Portrait » du projet :
  * Écran-tête singulier en forme de télé retournée formant un visage
- * (rectangle arrondi, deux points pour les yeux, deux petits pieds vintage évasés vers l'extérieur).
+ * (rectangle arrondi, deux yeux terracotta au repos, deux petits pieds vintage).
  * Utilisée dans la barre de navigation et sur les cartes vidéo pour renvoyer vers le profil.
- * Ne contient JAMAIS de photo.
  */
-export const ProfileSoloIcon: React.FC<IconProps> = ({ 
+export interface ProfileSoloIconProps extends IconProps {
+  isActive?: boolean;
+}
+
+export const ProfileSoloIcon: React.FC<ProfileSoloIconProps> = ({ 
   className = 'w-5 h-5',
-  strokeWidth = 1.55 
+  strokeWidth = 1.75,
+  isActive
 }) => {
   return (
     <svg 
@@ -450,19 +458,20 @@ export const ProfileSoloIcon: React.FC<IconProps> = ({
       strokeWidth={strokeWidth} 
       strokeLinecap="round" 
       strokeLinejoin="round" 
-      className={className}
+      className={`${isActive === true ? 'text-white' : isActive === false ? 'text-[#6E6254]' : ''} ${className}`.trim()}
       aria-hidden="true"
     >
+      <title>Portrait</title>
       {/* Boîtier / tête rétro compacte du protagoniste solo */}
-      <rect x="6.25" y="5.5" width="11.5" height="10.5" rx="2.4" />
+      <rect x="5.2" y="3.6" width="13.6" height="11.8" rx="2.6" />
 
-      {/* Regard / yeux du protagoniste singulier (2 points nets) */}
-      <circle cx="10.3" cy="10.75" r="0.9" fill="currentColor" stroke="none" />
-      <circle cx="13.7" cy="10.75" r="0.9" fill="currentColor" stroke="none" />
+      {/* Regard / yeux du protagoniste (terracotta au repos, blanc en mode actif) */}
+      <circle cx="9.9" cy="9.5" r="1.1" fill={isActive ? 'currentColor' : '#A2482B'} stroke="none" />
+      <circle cx="14.1" cy="9.5" r="1.1" fill={isActive ? 'currentColor' : '#A2482B'} stroke="none" />
 
       {/* Piétement vintage évasé vers l'extérieur (les deux petits pieds) */}
-      <path d="M 9.2 16 L 7.4 19.8" />
-      <path d="M 14.8 16 L 16.6 19.8" />
+      <path d="M 8.6 15.4 L 6.2 20.5" />
+      <path d="M 15.4 15.4 L 17.8 20.5" />
     </svg>
   );
 };
@@ -576,6 +585,7 @@ export const DirectorChairIcon: React.FC<StudioChairIconProps> = ({
   strokeWidth = 1.75,
   isActive
 }) => {
+  const accentColor = isActive ? 'currentColor' : '#A2482B';
   return (
     <svg 
       viewBox="0 0 24 24" 
@@ -588,7 +598,9 @@ export const DirectorChairIcon: React.FC<StudioChairIconProps> = ({
       aria-hidden="true"
     >
       <title>Studio</title>
-      <rect x="5" y="3.5" width="14" height="4.5" rx="1" />
+      {/* Dossier supérieur en toile terracotta au repos, blanc en mode actif */}
+      <rect x="5" y="3.5" width="14" height="4.5" rx="1" stroke={accentColor} />
+      {/* Structure et piétement ciseau en X */}
       <path d="M 6.5 8 L 6.5 14 M 17.5 8 L 17.5 14 M 4.5 14 L 19.5 14 M 7 14 L 17.5 21 M 17 14 L 6.5 21" />
     </svg>
   );
@@ -596,6 +608,47 @@ export const DirectorChairIcon: React.FC<StudioChairIconProps> = ({
 
 export const StudioChairIcon = DirectorChairIcon;
 export const StudioIcon = DirectorChairIcon;
+
+/**
+ * ActionClapperboardIcon:
+ * Symbole officiel « Action » de la barre de navigation :
+ * Claquette de cinéma avec ses deux hachures caractéristiques sur le bras supérieur
+ * (teintées en terracotta au repos, blanches en mode actif).
+ */
+export interface ActionClapperProps extends IconProps {
+  isActive?: boolean;
+}
+
+export const ActionClapperboardIcon: React.FC<ActionClapperProps> = ({
+  className = 'w-5 h-5',
+  strokeWidth = 1.75,
+  isActive
+}) => {
+  const accentColor = isActive ? 'currentColor' : '#A2482B';
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={strokeWidth}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={`${isActive === true ? 'text-white' : isActive === false ? 'text-[#6E6254]' : ''} ${className}`.trim()}
+      aria-hidden="true"
+    >
+      <title>Action</title>
+      {/* Bras de claquette supérieur */}
+      <path d="M 20.2 6 L 3 11 L 2.1 8.6 A 2.2 2.2 0 0 1 3.4 5.8 L 17.1 0.8 A 2.2 2.2 0 0 1 19.9 2.1 L 20.2 3 Z" />
+      {/* Deux hachures de claquette en terracotta au repos, blanches en actif */}
+      <path d="M 6.3 5.3 L 9.4 9.2" stroke={accentColor} />
+      <path d="M 12.5 3.4 L 15.6 7.4" stroke={accentColor} />
+      {/* Boîtier inférieur de la claquette */}
+      <path d="M 3 11 H 21 V 19 A 2 2 0 0 1 19 21 H 5 A 2 2 0 0 1 3 19 Z" />
+    </svg>
+  );
+};
+
+export const ActionClapperIcon = ActionClapperboardIcon;
 
 /**
  * FilmReelIcon:
@@ -1020,8 +1073,8 @@ export const CameraLensFocusIcon: React.FC<IconProps & { isActive?: boolean }> =
       <path d="M 16 3.5 H 18.5 A 2 2 0 0 1 20.5 5.5 V 8" />
       <path d="M 20.5 16 V 18.5 A 2 2 0 0 1 18.5 20.5 H 16" />
       <path d="M 8 20.5 H 5.5 A 2 2 0 0 1 3.5 18.5 V 16" />
-      {/* Point au centre (viseur de caméra épuré avec point de focalisation uniquement, sans cercle) */}
-      <circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none" />
+      {/* Point au centre (viseur de caméra épuré avec point de focalisation terracotta au repos, blanc en actif) */}
+      <circle cx="12" cy="12" r="1.65" fill={isActive ? 'currentColor' : '#A2482B'} stroke="none" />
     </svg>
   );
 };

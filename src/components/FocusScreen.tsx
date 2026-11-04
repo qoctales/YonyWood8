@@ -6,7 +6,8 @@ import {
   X, 
   Volume2, 
   VolumeX,
-  Play
+  Play,
+  Scroll
 } from 'lucide-react';
 import { ViewScreen } from '../types';
 import { 
@@ -19,7 +20,6 @@ import { ENTERPRISE_STORIES } from '../data/thematicStoriesData';
 import { 
   ProfileSoloIcon, 
   TvPlayerIcon,
-  PapyrusScrollIcon,
   DoorArchIcon
 } from './YonywoodBrandIcons';
 import { ShareIcon } from './ShareIcon';
@@ -533,7 +533,7 @@ export const FocusScreen: React.FC<FocusScreenProps> = ({
                   className="w-10 h-10 rounded-xl bg-black/60 hover:bg-black/80 backdrop-blur-md border border-white/20 text-white flex items-center justify-center shadow-lg transition-transform active:scale-95 cursor-pointer"
                   title="À propos de ce sujet"
                 >
-                  <PapyrusScrollIcon className="w-5 h-5 text-white" />
+                  <Scroll className="w-5 h-5 text-white" />
                 </button>
 
                 {/* Icône de la PORTE (entre dans les vidéos du sujet, SANS texte Choisir) */}
@@ -647,59 +647,39 @@ export const FocusScreen: React.FC<FocusScreenProps> = ({
       </div>
 
       {/* ========================================================================= */}
-      {/* 3. MODALE PAPYRUS : PRÉSENTATION DE CE DONT IL S'AGIT                     */}
+      {/* 3. MODALE D'INFORMATION ÉPURÉE (CALQUÉE SUR LA MODALE STUDIO)             */}
       {/* ========================================================================= */}
       {showPapyrusModal && (
         <div 
           onClick={() => setShowPapyrusModal(false)}
-          className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200"
         >
+          {/* Largeur strictement égale à celle de la carte vidéo */}
           <div 
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-sm rounded-3xl bg-[#1C1917] border border-white/20 text-white p-5 sm:p-6 shadow-2xl relative flex flex-col gap-3.5 animate-in zoom-in-95"
+            className="w-[min(calc(100vw-64px),290px)] max-w-[290px] bg-[#FAF7F2] rounded-3xl p-4 sm:p-5 shadow-2xl border border-stone-200 space-y-3 animate-in zoom-in-95 duration-200 text-stone-800"
           >
-            {/* Bouton Fermer */}
-            <button
-              onClick={() => setShowPapyrusModal(false)}
-              className="absolute top-4 right-4 w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-stone-300 hover:text-white transition-colors cursor-pointer"
-              title="Fermer"
-            >
-              <X className="w-4 h-4" />
-            </button>
-
-            {/* En-tête Papyrus */}
-            <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-[#A2482B] text-white flex items-center justify-center shrink-0">
-                <PapyrusScrollIcon className="w-5 h-5 text-white" />
+            {/* Header épuré : Icône Scroll + Catégorie & Titre (fermeture au clic extérieur) */}
+            <div className="flex items-center gap-2.5 border-b border-stone-200/80 pb-2.5">
+              <div className="w-7.5 h-7.5 rounded-xl bg-[#A2482B]/10 text-[#A2482B] flex items-center justify-center shrink-0">
+                <Scroll className="w-3.5 h-3.5" />
               </div>
-              <div className="flex flex-col">
-                <span className="text-[10px] uppercase tracking-wider text-[#C89B3C] font-semibold">
+              <div className="flex flex-col min-w-0 flex-1">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#A2482B]">
                   {currentTopic.category}
                 </span>
-                <h3 className="font-editorial text-base font-bold text-white leading-tight">
+                <h3 className="font-editorial text-sm sm:text-base font-semibold text-stone-900 truncate">
                   {currentTopic.title}
                 </h3>
               </div>
             </div>
 
             {/* Texte de présentation : de quoi il s'agit */}
-            <div className="py-1 border-t border-white/10">
-              <p className="text-xs sm:text-sm text-stone-300 font-light leading-relaxed">
+            <div className="py-1">
+              <p className="text-stone-700 text-xs sm:text-[13px] leading-relaxed">
                 {currentTopic.description}
               </p>
             </div>
-
-            {/* Bouton d'entrée direct depuis le papyrus */}
-            <button
-              onClick={() => {
-                setShowPapyrusModal(false);
-                handleEnterSubject();
-              }}
-              className="w-full mt-1 py-2.5 rounded-full bg-[#A2482B] hover:bg-[#8A3B22] text-white text-xs font-bold transition-all flex items-center justify-center gap-2 shadow-md cursor-pointer active:scale-95"
-            >
-              <DoorArchIcon className="w-4 h-4" />
-              <span>Ouvrir les vidéos</span>
-            </button>
           </div>
         </div>
       )}

@@ -680,7 +680,7 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
         >
           <div className="w-full max-w-3xl mx-auto px-3 sm:px-4 shrink-0 h-[68px] sm:h-[76px] flex items-center justify-center">
             <span className="font-editorial text-sm sm:text-base md:text-lg font-medium tracking-wide text-white select-none text-center">
-              Stories are roots and stars
+              Stories Are Roots & Stars
             </span>
           </div>
         </div>
@@ -930,7 +930,7 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
       >
         <div className="w-full max-w-3xl mx-auto px-3 sm:px-4 shrink-0 h-[68px] sm:h-[76px] flex items-center justify-center">
           <span className="font-editorial text-sm sm:text-base md:text-lg font-medium tracking-wide text-white select-none text-center">
-            Stories are roots and stars
+            Stories Are Roots & Stars
           </span>
         </div>
       </div>
@@ -943,7 +943,7 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
           <div className="relative flex items-center justify-between h-8 sm:h-10 shrink-0 gap-2 mb-0.5 sm:mb-1">
             <div className="flex items-center gap-1.5 sm:gap-2.5 min-w-0 flex-1 h-full">
 
-          {/* Niveau 1 : 4 Portes › Nom de la Porte */}
+          {/* Niveau 1 : Retour › Nom de la Porte */}
           {isLevel1 && activePillar && (
             <div className="flex items-center gap-1.5 sm:gap-2 h-full min-w-0">
               <button
@@ -954,10 +954,10 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                   setPlayingCardId(null);
                 }}
                 className="font-normal text-stone-500 hover:text-stone-900 transition-colors cursor-pointer flex items-center gap-1 group py-1 shrink-0"
-                title="Revenir aux 4 Portes"
+                title="Retour"
               >
                 <ChevronLeft className="w-4 h-4 text-stone-400 group-hover:text-stone-700 group-hover:-translate-x-0.5 transition-transform" />
-                <span className="text-xs sm:text-sm">4 Portes</span>
+                <span className="text-xs sm:text-sm">Retour</span>
               </button>
 
               <span className="text-stone-300 font-light text-xs" aria-hidden="true">›</span>
@@ -971,7 +971,7 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
             </div>
           )}
 
-          {/* Niveau 2 : 4 Portes › Casting › Catégorie */}
+          {/* Niveau 2 : Retour › Casting › Catégorie */}
           {isLevel2 && activePillar && activeCastingCategory && (
             <div className="flex items-center gap-1.5 sm:gap-2 h-full min-w-0">
               <button
@@ -982,9 +982,9 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                   setPlayingCardId(null);
                 }}
                 className="font-normal text-stone-500 hover:text-stone-900 transition-colors cursor-pointer items-center gap-1 group py-1 shrink-0 hidden sm:flex"
-                title="Revenir aux 4 Portes"
+                title="Retour"
               >
-                <span className="text-xs">4 Portes</span>
+                <span className="text-xs">Retour</span>
               </button>
 
               <span className="text-stone-300 font-light text-xs hidden sm:inline" aria-hidden="true">›</span>
@@ -996,10 +996,10 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
                   setPlayingCardId(null);
                 }}
                 className="font-normal text-stone-500 hover:text-stone-900 transition-colors cursor-pointer flex items-center gap-1 group py-1 shrink-0"
-                title="Revenir à Autre sujet"
+                title={`Revenir à ${activePillar?.title || 'Rush'}`}
               >
                 <ChevronLeft className="w-4 h-4 text-stone-400 group-hover:text-stone-700 group-hover:-translate-x-0.5 transition-transform" />
-                <span className="text-xs sm:text-sm font-medium">Autre sujet</span>
+                <span className="text-xs sm:text-sm font-medium">{activePillar?.title || 'Rush'}</span>
               </button>
 
               <span className="text-stone-300 font-light text-xs" aria-hidden="true">›</span>
@@ -1570,24 +1570,14 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
             className="w-[min(calc(100vw-64px),290px)] max-w-[290px] bg-[#FAF7F2] rounded-3xl p-4 sm:p-5 shadow-2xl border border-stone-200 space-y-3 animate-in zoom-in-95 duration-200 text-stone-800"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Header épuré : Papyrus + Titre + Croix fermer discrète */}
-            <div className="flex items-center justify-between gap-2 border-b border-stone-200 pb-2.5">
-              <div className="flex items-center gap-2 min-w-0 flex-1">
-                <div className="w-7.5 h-7.5 rounded-xl bg-[#A2482B]/10 text-[#A2482B] flex items-center justify-center shrink-0">
-                  <Scroll className="w-3.5 h-3.5" />
-                </div>
-                <h3 className="font-editorial text-sm sm:text-base font-semibold text-stone-900 truncate">
-                  {synopsisModalItem.title}
-                </h3>
+            {/* Header épuré : Papyrus + Titre (fermeture au clic extérieur) */}
+            <div className="flex items-center gap-2.5 border-b border-stone-200/80 pb-2.5">
+              <div className="w-7.5 h-7.5 rounded-xl bg-[#A2482B]/10 text-[#A2482B] flex items-center justify-center shrink-0">
+                <Scroll className="w-3.5 h-3.5" />
               </div>
-              <button
-                type="button"
-                onClick={() => setSynopsisModalItem(null)}
-                className="w-7 h-7 rounded-full bg-stone-200/70 hover:bg-stone-300 text-stone-700 flex items-center justify-center transition-colors cursor-pointer shrink-0"
-                title="Fermer"
-              >
-                <X className="w-3.5 h-3.5" />
-              </button>
+              <h3 className="font-editorial text-sm sm:text-base font-semibold text-stone-900 truncate">
+                {synopsisModalItem.title}
+              </h3>
             </div>
 
             {/* Corps du synopsis naturel (pas de fioritures ni boutons lourds) */}

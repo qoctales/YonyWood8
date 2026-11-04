@@ -1,13 +1,11 @@
 import React from 'react';
-import { 
-  Clapperboard
-} from 'lucide-react';
 import { ViewScreen } from '../types';
 import { 
   DirectorChairIcon,
   CameraLensFocusIcon,
   EntrepriseFilmDuoIcon,
   DuocumentairesTvIcon,
+  ActionClapperboardIcon,
   ProfileSoloIcon
 } from './YonywoodBrandIcons';
 
@@ -42,7 +40,7 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
     {
       id: 'studio',
       label: 'Studio',
-      icon: DirectorChairIcon,
+      icon: DirectorChairIcon, // Fauteuil réalisateur avec dossier toile terracotta au repos
       isActive: isStudioActive,
       onClick: () => onNavigate({ type: 'submit_story' }),
       screenId: 'menu-item-studio',
@@ -52,7 +50,7 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
     {
       id: 'focus',
       label: 'Focus',
-      icon: CameraLensFocusIcon, // Objectif de caméra évoquant le zoom et la mise au point
+      icon: CameraLensFocusIcon, // Viseur optique avec cible terracotta au repos
       isActive: isFocusActive,
       onClick: () => onNavigate({ type: 'focus' }),
       screenId: 'menu-item-focus',
@@ -62,7 +60,7 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
     {
       id: 'dialogue',
       label: 'Dialogue',
-      icon: DuocumentairesTvIcon, // Télé double vintage au centre
+      icon: DuocumentairesTvIcon, // Télé double carré avec pupilles terracotta au repos et pieds courts
       isActive: isDialogueActive,
       onClick: () => onNavigate({ type: 'duo_feed' }),
       screenId: 'menu-item-dialogue',
@@ -72,22 +70,22 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
     {
       id: 'action',
       label: 'Action',
-      icon: Clapperboard, // Claquette cinéma
+      icon: ActionClapperboardIcon, // Claquette de cinéma avec hachures terracotta au repos
       isActive: isActionActive,
       onClick: () => onNavigate({ type: 'marketplace' }),
       screenId: 'menu-item-action',
       iconClassName: 'w-5 h-5 sm:w-5 sm:h-5 shrink-0',
-      strokeWidth: 1.6
+      strokeWidth: 1.75
     },
     {
       id: 'portrait',
       label: 'Portrait',
-      icon: ProfileSoloIcon, // Icône officielle portrait solo
+      icon: ProfileSoloIcon, // Tête télé vintage avec yeux terracotta au repos
       isActive: isPortraitActive,
       onClick: () => onNavigate({ type: 'profile' }),
       screenId: 'menu-item-portrait',
       iconClassName: 'w-5 h-5 sm:w-5 sm:h-5 shrink-0',
-      strokeWidth: 1.6
+      strokeWidth: 1.75
     }
   ];
 
@@ -121,36 +119,11 @@ export const BottomMenu: React.FC<BottomMenuProps> = ({ currentScreen, onNavigat
                     : 'bg-transparent text-stone-600 group-hover:bg-stone-100/80'
                 }`}
               >
-                {item.id === 'focus' ? (
-                  <CameraLensFocusIcon 
-                    className={`${item.iconClassName} transition-transform duration-200`} 
-                    strokeWidth={item.strokeWidth} 
-                    isActive={item.isActive}
-                  />
-                ) : item.id === 'entreprise' ? (
-                  <EntrepriseFilmDuoIcon 
-                    className={`${item.iconClassName} transition-transform duration-200`} 
-                    strokeWidth={item.strokeWidth} 
-                    isActive={item.isActive}
-                  />
-                ) : item.id === 'studio' ? (
-                  <DirectorChairIcon 
-                    className={`${item.iconClassName} transition-transform duration-200`} 
-                    strokeWidth={item.strokeWidth || 1.75} 
-                    isActive={item.isActive}
-                  />
-                ) : item.id === 'dialogue' ? (
-                  <DuocumentairesTvIcon 
-                    className={`${item.iconClassName} transition-transform duration-200`} 
-                    strokeWidth={item.strokeWidth || 1.75} 
-                    isActive={item.isActive}
-                  />
-                ) : (
-                  <Icon 
-                    className={`${item.iconClassName} transition-transform duration-200`} 
-                    strokeWidth={item.strokeWidth} 
-                  />
-                )}
+                <Icon 
+                  className={`${item.iconClassName} transition-transform duration-200`} 
+                  strokeWidth={item.strokeWidth || 1.75} 
+                  isActive={item.isActive}
+                />
               </div>
 
               {/* Libellé textuel en noms communs uniformes, toujours affiché en entier sans troncature */}

@@ -27,10 +27,12 @@ export interface FocusSequence {
   subtitles?: FocusSubtitle[];
 }
 
+export type FocusCategory = 'Entreprise' | 'Association' | 'Personnalité' | 'Produit du terroir';
+
 export interface FocusTopic {
   id: string;
   title: string;
-  category: 'Entreprise' | 'Équipe' | 'Artiste' | 'Intelligence Artificielle' | 'Patrimoine' | 'Agroécologie';
+  category: FocusCategory | string;
   posterUrl: string;
   tagline: string;
   description: string;
@@ -120,7 +122,7 @@ export const FOCUS_TOPICS: FocusTopic[] = [
   {
     id: 'topic-ia-ancestrale',
     title: 'IA & Sagesses Ancestrales',
-    category: 'Intelligence Artificielle',
+    category: 'Entreprise',
     posterUrl: '/assets/posters/baobab-bambou.jpg',
     tagline: 'Quand les modèles génératifs dialoguent avec la cosmogonie du Fâ.',
     description: 'Chercheurs, prêtresses et informaticiens encodent la mémoire orale et les systèmes de décision binaires traditionnels.',
@@ -181,7 +183,7 @@ export const FOCUS_TOPICS: FocusTopic[] = [
   {
     id: 'topic-mahougnon-rythme',
     title: 'Mahougnon & le Rythme Vivant',
-    category: 'Artiste',
+    category: 'Personnalité',
     posterUrl: '/assets/posters/jesus-esu.jpg',
     tagline: 'L’épopée d’un maître tambour qui transcende le jazz et le vodun.',
     description: 'Une plongée intime dans l’atelier sonore où résonnent peaux de chèvre tendues, gongs doubles et synthétiseurs modulaires.',
@@ -242,7 +244,7 @@ export const FOCUS_TOPICS: FocusTopic[] = [
   {
     id: 'topic-sentinelles-ganvie',
     title: 'Sentinelles de Ganvié',
-    category: 'Équipe',
+    category: 'Association',
     posterUrl: '/assets/posters/benin-monde.jpg',
     tagline: 'L’alliance solidaire des piroguiers et des biologistes lacustres.',
     description: 'Une communauté sur pilotis qui protège les eaux du lac Nokoué et transmet l’art de naviguer sans moteur.',
@@ -303,7 +305,7 @@ export const FOCUS_TOPICS: FocusTopic[] = [
   {
     id: 'topic-e-vivi-terroirs',
     title: 'E-Vivi Savoirs & Terroirs',
-    category: 'Agroécologie',
+    category: 'Produit du terroir',
     posterUrl: '/assets/posters/e-vivi-fiat-luxe.png',
     tagline: 'La réhabilitation des semences anciennes et de la gastronomie médicinale.',
     description: 'Une maison culinaire et agricole qui remet au goût du jour le fonio sauvage, le néré et les infusions botaniques du Bénin.',
@@ -364,7 +366,7 @@ export const FOCUS_TOPICS: FocusTopic[] = [
   {
     id: 'topic-amazones-leadership',
     title: 'Collectif Amazones Vivantes',
-    category: 'Équipe',
+    category: 'Association',
     posterUrl: '/assets/posters/blacks-one-amazones.jpg',
     tagline: 'Héritières du courage d’Agoodjié : athlétisme, sororité et résilience.',
     description: 'Une équipe de jeunes femmes sportives de haut niveau et entrepreneures qui portent haut l’héritage guerrier pacifié.',
@@ -425,7 +427,7 @@ export const FOCUS_TOPICS: FocusTopic[] = [
   {
     id: 'topic-senami-architecture',
     title: 'Senami & les Terres Rouges',
-    category: 'Artiste',
+    category: 'Personnalité',
     posterUrl: '/assets/posters/dixeat-fiat-luxe.jpg',
     tagline: 'L’architecture bioclimatique inspirée des palais d’argile du Danxomè.',
     description: 'Une bâtisseuse contemporaine qui réinvente les voûtes nubiennes et les enduits végétaux pour rafraîchir les villes sans climatiseurs.',
