@@ -18,7 +18,7 @@ import {
   FOCUS_MAX_TITLE_LENGTH,
   clampFocusTitle
 } from '../data/focusTopicsData';
-import { ENTERPRISE_STORIES } from '../data/thematicStoriesData';
+import { ENTERPRISE_STORIES, FOCUS_THEMATIC_STORIES } from '../data/thematicStoriesData';
 import { 
   ProfileSoloIcon, 
   TvPlayerIcon,
@@ -137,6 +137,21 @@ export const FocusScreen: React.FC<FocusScreenProps> = ({
     setIsPlaying(true);
     celestialAudio.playOrbSelect();
   };
+
+  // RACCOURCI STORY -> OUVERTURE DIRECTE DE LA THÉMATIQUE (Clic sur la petite porte dans la story)
+  const handleOpenTopicFromStory = useCallback((topicId: string) => {
+    setIsStoryViewerOpen(false);
+    const targetIdx = FOCUS_TOPICS.findIndex(t => t.id === topicId || t.title.toLowerCase() === topicId.toLowerCase());
+    if (targetIdx !== -1) {
+      setTopicIndex(targetIdx);
+    }
+    // Entrée directe dans les vidéos où les histoires sont racontées autour de la thématique
+    setIsTopicOpened(true);
+    setIsPlaying(true);
+    setShowPapyrusModal(false);
+    setVideoProgress(0);
+    celestialAudio.playOrbSelect();
+  }, []);
 
   // Gestion du play / pause de la balise vidéo
   useEffect(() => {
@@ -369,8 +384,8 @@ export const FocusScreen: React.FC<FocusScreenProps> = ({
               <Plus className="w-4 h-4 stroke-[2.5]" />
             </button>
 
-            {/* Vignettes Stories avec anneaux blancs nets rehaussés d'une ombre élégante sur fond noir */}
-            {ENTERPRISE_STORIES.map((story, idx) => (
+            {/* Vignettes Stories thématiques (publicités / teasers des sujets) */}
+            {FOCUS_THEMATIC_STORIES.map((story, idx) => (
               <div
                 key={story.id}
                 onClick={() => {
@@ -691,9 +706,10 @@ export const FocusScreen: React.FC<FocusScreenProps> = ({
       {/* ========================================================================= */}
       <StoriesStudioCoverflow
         isOpen={isStoryViewerOpen}
-        stories={ENTERPRISE_STORIES}
+        stories={FOCUS_THEMATIC_STORIES}
         initialIndex={storyViewerIndex}
         onClose={() => setIsStoryViewerOpen(false)}
+        onNavigateToTopic={handleOpenTopicFromStory}
       />
 
       {/* ========================================================================= */}

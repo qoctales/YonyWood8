@@ -140,6 +140,48 @@ export const getSeriesParts = (choice: StudioPillarItem | null): {
   };
 };
 
+export const getCardDurationLabel = (item: StudioPillar | StudioPillarItem | null, pillar?: StudioPillar | null): string => {
+  if (!item) return '2 minutes 56 maximum';
+  const id = item.id.toLowerCase();
+  const pillarId = pillar?.id?.toLowerCase();
+
+  if (id === 'teaser' || id === 'teaser-libre' || pillarId === 'teaser') {
+    return '16 secondes maximum';
+  }
+  if (id === 'duos' || pillarId === 'duos') {
+    return '2 minutes 56 maximum';
+  }
+  if (id === 'soi' || pillarId === 'soi' || id.startsWith('soi-')) {
+    return '2 minutes 56 maximum';
+  }
+  if (
+    id === 'itinerant' || 
+    pillarId === 'itinerant' || 
+    id.startsWith('cat-') || 
+    id.startsWith('sagesses-') || 
+    id.startsWith('territoires-') || 
+    id.startsWith('expertises-') || 
+    id.startsWith('personnalites-') || 
+    id.startsWith('epreuves-') || 
+    id.startsWith('ps-') || 
+    id.startsWith('projets-') || 
+    id.startsWith('liens-')
+  ) {
+    return '32 secondes maximum';
+  }
+  if (id === 'organisations' || pillarId === 'organisations' || id.startsWith('lum-')) {
+    return '8 secondes maximum';
+  }
+
+  const badge = ((item as any).durationBadge || '').toLowerCase();
+  if (badge.includes('16')) return '16 secondes maximum';
+  if (badge.includes('32')) return '32 secondes maximum';
+  if (badge.includes('8')) return '8 secondes maximum';
+  if (badge.includes('2 min') || badge.includes('2:56') || badge.includes('2 minutes')) return '2 minutes 56 maximum';
+
+  return '2 minutes 56 maximum';
+};
+
 interface CollaboratorMentionInputProps {
   label: string;
   sublabel: string;
@@ -1570,28 +1612,28 @@ export const SubmitStoryScreen: React.FC<SubmitStoryScreenProps> = ({
             className="w-[min(calc(100vw-64px),290px)] max-w-[290px] bg-[#FAF7F2] rounded-3xl p-4 sm:p-5 shadow-2xl border border-stone-200 space-y-3 animate-in zoom-in-95 duration-200 text-stone-800"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Header épuré : Papyrus + Durée + Titre (fermeture au clic extérieur) */}
+            {/* Header épuré : Papyrus + Nom de la carte uniquement (fermeture au clic extérieur) */}
             <div className="flex items-center gap-2.5 border-b border-stone-200/80 pb-2.5">
               <div className="w-7.5 h-7.5 rounded-xl bg-[#A2482B]/10 text-[#A2482B] flex items-center justify-center shrink-0">
                 <Scroll className="w-3.5 h-3.5" />
               </div>
               <div className="flex flex-col min-w-0 flex-1">
-                {(synopsisModalItem as any).durationBadge && (
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#A2482B]">
-                    {(synopsisModalItem as any).durationBadge}
-                  </span>
-                )}
                 <h3 className="font-editorial text-sm sm:text-base font-semibold text-stone-900 leading-snug break-words">
                   {synopsisModalItem.title}
                 </h3>
               </div>
             </div>
 
-            {/* Corps du synopsis naturel (pas de fioritures ni boutons lourds) */}
-            <div className="py-1">
+            {/* Corps de la présentation textuelle avec durée en dessous */}
+            <div className="py-1 space-y-2.5">
               <p className="text-stone-700 text-xs sm:text-[13px] leading-relaxed">
                 {synopsisModalItem.subtitle}
               </p>
+
+              {/* Durée sous la présentation textuelle */}
+              <div className="pt-2 border-t border-stone-200/80 text-xs font-semibold text-[#A2482B] flex items-center justify-between">
+                <span>Durée : {getCardDurationLabel(synopsisModalItem, activePillar)}</span>
+              </div>
             </div>
           </div>
         </div>

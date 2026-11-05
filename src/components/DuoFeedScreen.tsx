@@ -620,6 +620,7 @@ export const DuoFeedScreen: React.FC<DuoFeedScreenProps> = ({
                         seriesTitle={rawSeriesTitle}
                         duoQuestion={duoQuestion}
                         duoId={currentDuo.id}
+                        isActive={isCenter}
                         onNavigateToSlide={goToSlide}
                         onNavigateToPortrait={(id) => onNavigate({ type: 'profile', protagonistId: id })}
                       />

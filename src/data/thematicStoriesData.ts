@@ -17,6 +17,7 @@ export interface ThematicStory {
   documentaryId?: string;
   partnerName?: string;
   partnerAvatar?: string;
+  topicId?: string;
 }
 
 export interface ThematicValue {
@@ -388,3 +389,127 @@ export const ALL_INDIVIDUAL_STORIES: ThematicStory[] = THEMATIC_VALUES.flatMap(t
 // Stories filtrées par type (particuliers vs entreprises)
 export const PERSON_STORIES: ThematicStory[] = ALL_INDIVIDUAL_STORIES.filter(s => s.authorType !== 'enterprise');
 export const ENTERPRISE_STORIES: ThematicStory[] = ALL_INDIVIDUAL_STORIES.filter(s => s.authorType === 'enterprise');
+
+// Stories représentatives des différentes thématiques de la page Focus (mini-publicités / teasers de 16 secondes)
+export const FOCUS_THEMATIC_STORIES: ThematicStory[] = [
+  {
+    id: 'story-focus-finagnon',
+    themeId: 'topic-finagnon-tech',
+    topicId: 'topic-finagnon-tech',
+    themeLabel: 'Finagnon Tech Hub',
+    authorId: 'adelaide-kpadonou',
+    authorName: 'Adélaïde Kpadonou',
+    authorRole: 'Directrice R&D & Savoirs',
+    authorAvatar: '/assets/protagonists/adjovi-blandine.jpg',
+    authorTerritory: 'Ganvié, Bénin',
+    authorType: 'enterprise',
+    storyTitle: 'Finagnon Tech Hub',
+    question: 'L’essor du premier campus technologique lacustre et solaire.',
+    videoUrl: '/sample.mp4',
+    durationSeconds: 16,
+    createdAt: 'À l’affiche'
+  },
+  {
+    id: 'story-focus-ia',
+    themeId: 'topic-ia-ancestrale',
+    topicId: 'topic-ia-ancestrale',
+    themeLabel: 'IA & Sagesses du Fâ',
+    authorId: 'helene-saint-amand',
+    authorName: 'Pr. Hélène Saint-Amand',
+    authorRole: 'Éthique Algorithmique',
+    authorAvatar: '/assets/protagonists/helene-saint-amand.jpg',
+    authorTerritory: 'Cotonou, Bénin',
+    authorType: 'enterprise',
+    storyTitle: 'IA & Sagesses du Fâ',
+    question: 'Quand les modèles génératifs dialoguent avec la cosmogonie du Fâ.',
+    videoUrl: '/sample.mp4',
+    durationSeconds: 16,
+    createdAt: 'À l’affiche'
+  },
+  {
+    id: 'story-focus-mahougnon',
+    themeId: 'topic-mahougnon-rythme',
+    topicId: 'topic-mahougnon-rythme',
+    themeLabel: 'Mahougnon Rythme',
+    authorId: 'mahougnon-zounon',
+    authorName: 'Mahougnon Zounon',
+    authorRole: 'Percussionniste & Compositeur',
+    authorAvatar: '/assets/protagonists/mahougnon-zounon.jpg',
+    authorTerritory: 'Ouidah, Bénin',
+    authorType: 'enterprise',
+    storyTitle: 'Mahougnon Rythme',
+    question: 'L’épopée d’un maître tambour qui transcende le jazz et le vodun.',
+    videoUrl: '/sample.mp4',
+    durationSeconds: 16,
+    createdAt: 'À l’affiche'
+  },
+  {
+    id: 'story-focus-ganvie',
+    themeId: 'topic-sentinelles-ganvie',
+    topicId: 'topic-sentinelles-ganvie',
+    themeLabel: 'Sentinelles Ganvié',
+    authorId: 'tobi-houndegla',
+    authorName: 'Tobi Houndegla',
+    authorRole: 'Maître Piroguier & Pêcheur',
+    authorAvatar: '/assets/protagonists/tobi-ganvie.jpg',
+    authorTerritory: 'Lac Nokoué, Bénin',
+    authorType: 'enterprise',
+    storyTitle: 'Sentinelles Ganvié',
+    question: 'L’alliance solidaire des piroguiers et des biologistes lacustres.',
+    videoUrl: '/sample.mp4',
+    durationSeconds: 16,
+    createdAt: 'À l’affiche'
+  },
+  {
+    id: 'story-focus-evivi',
+    themeId: 'topic-e-vivi-terroirs',
+    topicId: 'topic-e-vivi-terroirs',
+    themeLabel: 'E-Vivi Terroirs',
+    authorId: 'chef-koffi',
+    authorName: 'Chef Koffi',
+    authorRole: 'Maître Cuisinier & Fondateur',
+    authorAvatar: '/assets/protagonists/chef-koffi.jpg',
+    authorTerritory: 'Ouidah & Cotonou',
+    authorType: 'enterprise',
+    storyTitle: 'E-Vivi Terroirs',
+    question: 'La réhabilitation des semences anciennes et de la gastronomie médicinale.',
+    videoUrl: '/sample.mp4',
+    durationSeconds: 16,
+    createdAt: 'À l’affiche'
+  },
+  {
+    id: 'story-focus-amazones',
+    themeId: 'topic-amazones-leadership',
+    topicId: 'topic-amazones-leadership',
+    themeLabel: 'Amazones Vivantes',
+    authorId: 'sika-dossou',
+    authorName: 'Sika Dossou',
+    authorRole: 'Maître Tisserande & Formatrice',
+    authorAvatar: '/assets/protagonists/sika-dossou.jpg',
+    authorTerritory: 'Abomey, Bénin',
+    authorType: 'enterprise',
+    storyTitle: 'Amazones Vivantes',
+    question: 'L’héritage guerrier réinventé en leadership féminin et autonomie.',
+    videoUrl: '/sample.mp4',
+    durationSeconds: 16,
+    createdAt: 'À l’affiche'
+  },
+  {
+    id: 'story-focus-senami',
+    themeId: 'topic-senami-architecture',
+    topicId: 'topic-senami-architecture',
+    themeLabel: 'Sènami Architecture',
+    authorId: 'senami-houndete',
+    authorName: 'Sènami Houndété',
+    authorRole: 'Architecte Bioclimatique',
+    authorAvatar: '/assets/images/senami_architecte_1792933801804.jpg',
+    authorTerritory: 'Porto-Novo, Bénin',
+    authorType: 'enterprise',
+    storyTitle: 'Sènami Architecture',
+    question: 'Réconcilier le béton et la terre crue dans le bâti d’Afrique de l’Ouest.',
+    videoUrl: '/sample.mp4',
+    durationSeconds: 16,
+    createdAt: 'À l’affiche'
+  }
+];
+

@@ -10,7 +10,7 @@ import {
 } from 'lucide-react';
 import { ThematicStory } from '../data/thematicStoriesData';
 import { celestialAudio } from '../utils/celestialAudio';
-import { TvPlayerIcon } from './YonywoodBrandIcons';
+import { TvPlayerIcon, DoorArchIcon } from './YonywoodBrandIcons';
 import { formatFirstLetterOnly } from '../utils/textFormatters';
 
 interface StoriesStudioCoverflowProps {
@@ -19,6 +19,7 @@ interface StoriesStudioCoverflowProps {
   isOpen: boolean;
   onClose: () => void;
   onNavigateToDuo?: (story: ThematicStory) => void;
+  onNavigateToTopic?: (topicId: string) => void;
 }
 
 export const StoriesStudioCoverflow: React.FC<StoriesStudioCoverflowProps> = ({
@@ -26,7 +27,8 @@ export const StoriesStudioCoverflow: React.FC<StoriesStudioCoverflowProps> = ({
   initialIndex = 0,
   isOpen,
   onClose,
-  onNavigateToDuo
+  onNavigateToDuo,
+  onNavigateToTopic
 }) => {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
@@ -385,27 +387,50 @@ export const StoriesStudioCoverflow: React.FC<StoriesStudioCoverflowProps> = ({
                   </div>
 
                   {/* ========================================================================= */}
-                  {/* BAS DE CARTE : PRÉNOM EN BAS À GAUCHE & CURSEUR DE LECTURE SANS DÉPLACEMENT */}
+                  {/* BAS DE CARTE : PRÉNOM & PROGRESSION À GAUCHE — PORTE DU SUJET À DROITE     */}
                   {/* ========================================================================= */}
-                  <div className="absolute bottom-3.5 sm:bottom-4 left-3.5 sm:left-4 z-20 pointer-events-auto flex flex-col items-start">
+                  <div className="absolute bottom-3.5 sm:bottom-4 left-3.5 sm:left-4 right-3.5 sm:right-4 z-20 pointer-events-auto flex items-end justify-between gap-2">
                     {/* Prénom toujours en bas à gauche */}
-                    <h2 className="font-editorial text-base sm:text-lg font-bold text-white tracking-wide drop-shadow-md truncate max-w-[170px] sm:max-w-[210px] leading-tight">
-                      {firstName}
-                    </h2>
+                    <div className="flex flex-col items-start min-w-0">
+                      <h2 className="font-editorial text-base sm:text-lg font-bold text-white tracking-wide drop-shadow-md truncate max-w-[130px] sm:max-w-[170px] leading-tight">
+                        {firstName}
+                      </h2>
 
-                    {/* Hauteur réservée fixe : le prénom ne bouge JAMAIS lorsque la lecture démarre */}
-                    <div className="h-2 flex items-center mt-1">
-                      <div 
-                        className={`w-24 sm:w-28 h-1 bg-white/25 rounded-full overflow-hidden shadow-xs transition-opacity duration-200 ${
-                          isCenter && isPlaying ? 'opacity-100' : 'opacity-0'
-                        }`}
-                      >
+                      {/* Hauteur réservée fixe : le prénom ne bouge JAMAIS lorsque la lecture démarre */}
+                      <div className="h-2 flex items-center mt-1">
                         <div 
-                          className="h-full bg-white transition-all duration-100 rounded-full"
-                          style={{ width: `${Math.min(100, (storyElapsed / 64) * 100)}%` }}
-                        />
+                          className={`w-20 sm:w-24 h-1 bg-white/25 rounded-full overflow-hidden shadow-xs transition-opacity duration-200 ${
+                            isCenter && isPlaying ? 'opacity-100' : 'opacity-0'
+                          }`}
+                        >
+                          <div 
+                            className="h-full bg-white transition-all duration-100 rounded-full"
+                            style={{ width: `${Math.min(100, (storyElapsed / 64) * 100)}%` }}
+                          />
+                        </div>
                       </div>
                     </div>
+
+                    {/* Petite icône porte pour entrer directement dans la thématique Focus */}
+                    {(story.topicId || onNavigateToTopic || onNavigateToDuo) && (
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (story.topicId && onNavigateToTopic) {
+                            onNavigateToTopic(story.topicId);
+                          } else if (onNavigateToTopic) {
+                            onNavigateToTopic(story.themeId || story.id);
+                          } else if (onNavigateToDuo) {
+                            onNavigateToDuo(story);
+                          }
+                        }}
+                        className="w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-xl bg-black/60 hover:bg-[#A2482B] active:bg-[#8A3B22] text-white border border-white/25 hover:border-[#A2482B] flex items-center justify-center shadow-lg backdrop-blur-md transition-all cursor-pointer hover:scale-105 active:scale-95 shrink-0"
+                        title={`Entrer dans les vidéos de la thématique ${storyThemeTitle}`}
+                      >
+                        <DoorArchIcon className="w-4 h-4 text-white" strokeWidth={1.75} />
+                      </button>
+                    )}
                   </div>
 
                 </div>
